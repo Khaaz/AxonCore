@@ -1,0 +1,32 @@
+{
+    "name": "Axon",
+    "description": "AxonCore - Bot client, core module (eris lib)",
+    "avatar": "url",
+
+    "version": "1.0",
+    "lib": "eris",
+    "client": "Axon",
+
+    "links": {
+        "website": "",
+        "invite": "",
+        "invitePermission": "",
+        "server": "",
+    
+        "github": "https://github.com/khaazz/AxonCore",
+        "trello": "",
+        "sentry": ""
+    },
+    
+
+    "owners": {
+        "khaaz": {
+            "name": "KhaaZ#0001",
+            "id": "179908288337412096"
+        },
+        "example": {
+            "name": "example#1234",
+            "id": "123456789"
+        }
+    }
+}

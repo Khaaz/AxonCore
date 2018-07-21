@@ -1,0 +1,45 @@
+{
+  "name": "axoncore",
+  "version": "1.5.0",
+  "description": "AxonCore - AxonClient: Framework, Command/Event handler to interact with Eris library.",
+  "author": "KhaaZ#0001",
+  "license": "ISC",
+  "dependencies": {
+    "eris": "git+https://github.com/Khaazz/eris.git#axoncore",
+    "esm": "^3.0.72"
+  },
+  "devDependencies": {
+    "cloc": "^2.3.3",
+    "eslint": "^5.1.0",
+    "yarn": "^1.7.0"
+  },
+  "optionalDependencies": {
+    "chalk": "^2.4.1",
+    "eventemitter3": "^3.1.0",
+    "moment": "^2.22.2",
+    "mongoose": "^5.2.3",
+    "pm2": "^3.0.0",
+    "winston": "^3.0.0"
+  },
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint .",
+    "test": "node -r esm test/index.js",
+    "example": "node -r esm example/src/index.js",
+    "examplepm2": "node -r esm example/scripts/start.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Khaazz/AxonCore.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Khaazz/AxonCore/issues"
+  },
+  "homepage": "https://github.com/Khaazz/AxonCore#readme",
+  "keywords": [
+    "bot",
+    "discord",
+    "bot",
+    "eris"
+  ]
+}

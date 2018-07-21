@@ -1,0 +1,78 @@
+{
+    "env": {
+        "browser": true,
+        "es6": true,
+        "node": true,
+        "mongo": true
+    },
+    "extends": "eslint:recommended",
+    "parserOptions": {
+        "ecmaVersion": 8,
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "sourceType": "module"
+    },
+    "rules": {
+        "indent": [
+            "error",
+            4
+        ],
+        "linebreak-style": [
+            "error",
+            "unix"
+        ],
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "no-irregular-whitespace": [
+            "error",
+            {
+                "skipStrings": true,
+                "skipComments": true,
+                "skipRegExps": true,
+                "skipTemplates": true
+            }
+        ],
+        "no-mixed-spaces-and-tabs": [
+            "error",
+            "smart-tabs"
+        ],
+        "no-console": [
+            "error",
+            {
+                "allow": [
+                    "log",
+                    "warn",
+                    "error",
+                    "time",
+                    "timeEnd"
+                ]
+            }
+        ],
+        "prefer-const": [
+            "error"
+        ],
+        "no-var": [
+            "error"
+        ],
+        "no-use-before-define": [
+            "error",
+            {
+                "functions": true,
+                "classes": true,
+                "variables": true
+            }
+        ],
+        "no-case-declarations": [
+            "error"
+        ]
+
+
+    }
+}

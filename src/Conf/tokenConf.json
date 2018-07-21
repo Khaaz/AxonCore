@@ -1,0 +1,47 @@
+{
+    "bot": {
+        "id": "bot id",
+        "token": "token"
+    },
+
+    "sentry": "",
+
+    "webHook": {
+        "uptime": {
+            "id": "",
+            "token": ""
+        },
+        "loader": {
+            "id": "",
+            "token": ""
+        },
+        "interact": {
+            "id": "",
+            "token": ""
+        },
+        "shards": {
+            "id": "",
+            "token": ""
+        },
+        "error": {
+            "id": "",
+            "token": ""
+        },
+        "warn": {
+            "id": "",
+            "token": ""
+        },
+        "eval": {
+            "id": "",
+            "token": ""
+        },
+        "guildLog": {
+            "id": "",
+            "token": ""
+        }
+    },
+
+    "API": {
+        "example": "token"
+    }
+}
