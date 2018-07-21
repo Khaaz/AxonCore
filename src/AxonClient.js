@@ -689,15 +689,15 @@ class AxonClient extends Eris.Client {
      */
     async fetchAxonConf() {
         try {
-            let easeConf = await this.DBprovider.fetchAxon();
-            if (!easeConf) {
-                easeConf = await this.DBprovider.initAxon();
+            let axonConf = await this.DBprovider.fetchAxon();
+            if (!axonConf) {
+                axonConf = await this.DBprovider.initAxon();
             }
-            return easeConf;
+            return axonConf;
         } catch (err) {
             try {
-                const newEaseConf = await this.DBprovider.initAxon();
-                return newEaseConf;
+                const newAxonConf = await this.DBprovider.initAxon();
+                return newAxonConf;
             } catch (e) {
                 return e;
             }
