@@ -114,13 +114,13 @@ class Module extends Base {
      */
     initSubCommands(command) {
         if(!command.subCommands || !command.subcmds.length) {
-            throw new AxonError(`Command: ${command.label} - Couldn't init subcommands.`, 'INIT', `Module(${this.label})`);
+            throw new AxonError(`Command   : ${command.label} - Couldn't init subcommands.`, 'INIT', `Module(${this.label})`);
         }
 
         for (const [, value] of Object.entries(command.subcmds)) {
             const newSubcmd = new value(this);
             if (!newSubcmd.isSubcmd) {
-                throw new AxonError(`Command: ${command.label} ${newSubcmd.label} - Couldn't init subcommand: Not a subcommand.`, 'INIT', `Module(${this.label})`);
+                throw new AxonError(`Command   : ${command.label} ${newSubcmd.label} - Couldn't init subcommand: Not a subcommand.`, 'INIT', `Module(${this.label})`);
             }
 
             if (newSubcmd.hasSubcmd) {
@@ -155,7 +155,7 @@ class Module extends Base {
         }
 
         this.commands.set(command.label, command); // add the command to the Map of commands.
-        this._client.Logger.info(`Command: ${command.label} - Command loaded and initialised. [Module: ${this.label}]`);
+        this._client.Logger.info(`-Command- : ${command.label} - Command ready. [Module: ${this.label}]`);
         
     }
 
@@ -188,7 +188,7 @@ class Module extends Base {
         }
         subCommand.parentCommand = command;
         command.subCommands.set(subCommand.label, subCommand); // add the command to the Map of commands.
-        this._client.Logger.info(`SubCommand: ${subCommand.label} - SubCommand loaded and initialised. [Command: ${command.label}](Module: ${this.label})`);
+        this._client.Logger.info(`SubCommand: ${subCommand.label} - SubCommand ready. [Command: ${command.label}](Module: ${this.label})`);
     }
     
     /**
@@ -200,10 +200,10 @@ class Module extends Base {
      */
     registerEvent(event) {
         if(event.label.includes(' ')) {
-            throw new Error(`[INIT](${this.label}) - Event: ${event.label} Event label may not have spaces`);
+            throw new Error(`[INIT](${this.label}) - Event: ${event.label} - Event label may not have spaces`);
         }
         if(this.events.has(event.label) ) {
-            throw new Error(`[INIT](${this.label}) - Event ${event.label} You have already registered a event in this module.`);
+            throw new Error(`[INIT](${this.label}) - Event: ${event.label} - You have already registered a event in this module.`);
         }
         
         //if ( !this.checkAttributes(event) ) {
@@ -212,7 +212,7 @@ class Module extends Base {
 
         this.events.set(event.label, event); // add the command to the Map of commands.
 
-        this._client.Logger.info(`Event: ${event.label} - Event loaded and initialised. [Module: ${this.label}]`);
+        this._client.Logger.info(`-Event-   : ${event.label} - Event ready. [Module: ${this.label}]`);
     }
 
     /**

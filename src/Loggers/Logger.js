@@ -22,9 +22,9 @@ const colors = {
     emerg: chalk.bold.magenta,
     error: chalk.bold.red,
     warn: chalk.bold.yellow,
-    debug: chalk.bgBlue,
-    notice: chalk.bgCyan,
-    info: chalk.bgGreen,
+    debug: chalk.blue,
+    notice: chalk.cyan,
+    info: chalk.green,
     verbose: chalk.white,
 };
 

@@ -326,7 +326,7 @@ class AxonClient extends Eris.Client {
         }
 
         this.modules.set(module.label, module); // add the module in modules Map (references to module object)
-        this.Logger.info(`Module: ${module.label} - Commands loaded and initialised. [${module.commands.size}]`);
+        this.Logger.info(`*Module*  : ${module.label} - Commands loaded and initialised. [${module.commands.size}]`);
     }
 
     /**
