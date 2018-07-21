@@ -341,7 +341,7 @@ class AxonClient extends Eris.Client {
             const newModule = new value(this);
             this.registerModule(newModule);
         }
-        this.Logger.info('All Modules loaded!');
+        this.Logger.info(`AxonClient: All Modules loaded and ready! [${this.modules.size}]`);
     }
 
     /**
