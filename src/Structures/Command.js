@@ -792,7 +792,7 @@ class Command extends Base {
         errMsg = errMsg || this.Template.message.error.general;
 
         this.sendError(msg.channel, errMsg);
-        Promise.reject(new AxonError(`Type: ${typeList[type.toLowerCase()]}`, this.modules, this, err));
+        Promise.reject(new AxonError(`Type: ${typeList[type.toLowerCase()]}`, this.module, this, err));
     }
 
     /**
