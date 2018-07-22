@@ -1,7 +1,7 @@
 'use strict';
 
-import UtilRE from './Utils';
-
+import Util from './Utils';
+const UtilRE = Util.regex;
 // Error
 import AxonError from '../Errors/AxonError';
 
