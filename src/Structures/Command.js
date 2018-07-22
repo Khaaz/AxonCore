@@ -791,8 +791,8 @@ class Command extends Base {
 
         errMsg = errMsg || this.Template.message.error.general;
 
-        this.bot.Logger.error(`[${msg.command.module.label}] - ${msg.command.label}\nType: ${typeList[type.toLowerCase()]}\n${err.stack}`);
-        return this.sendError(msg.channel, errMsg);
+        this.sendError(msg.channel, errMsg);
+        Promise.reject(new AxonError(`Type: ${typeList[type.toLowerCase()]}`, this.modules, this, err));
     }
 
     /**
