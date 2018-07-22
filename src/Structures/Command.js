@@ -793,10 +793,11 @@ class Command extends Base {
 
         this.sendError(msg.channel, errMsg);
         
-        const newErr = new Error();
-        newErr.message = `Type: ${typeList[type.toLowerCase()]} | ${err ? err.message : ''}`;
-        err && (err.stackk ? (newErr.stack = err.stack) : '');
-        throw newErr;
+        if (err) {
+            err.message = `Type: ${typeList[type.toLowerCase()]} | ${err.message}`;
+            throw err;
+        }
+        throw new Error(`Type: ${typeList[type.toLowerCase()]}`);
     }
 
     /**
