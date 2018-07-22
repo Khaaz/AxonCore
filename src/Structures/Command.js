@@ -792,7 +792,11 @@ class Command extends Base {
         errMsg = errMsg || this.Template.message.error.general;
 
         this.sendError(msg.channel, errMsg);
-        throw new AxonError(`Type: ${typeList[type.toLowerCase()]}`, this.module, this, err);
+        
+        const newErr = new Error();
+        newErr.message = `Type: ${typeList[type.toLowerCase()]} | ${err ? err.message : ''}`;
+        err && (err.stackk ? (newErr.stack = err.stack) : '');
+        throw newErr;
     }
 
     /**
