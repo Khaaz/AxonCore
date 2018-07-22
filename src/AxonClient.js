@@ -925,7 +925,7 @@ class AxonClient extends Eris.Client {
         }
         const blacklist = Array.from(this.blacklistedUsers);
         try {
-            const axon = await this.DBprovider.updateEaseBlacklistUser(blacklist);
+            const axon = await this.DBprovider.updateBlacklistUser(blacklist);
             return axon;
         } catch (err) {
             throw new AxonError('Cannot update blacklisted users.', 'DB ERROR', 'BlacklistUser', err);
@@ -950,7 +950,7 @@ class AxonClient extends Eris.Client {
         }
         const blacklist = Array.from(this.blacklistedUsers);
         try {
-            const axon = await this.DBprovider.updateEaseBlacklistGuild(blacklist);
+            const axon = await this.DBprovider.updateBlacklistGuild(blacklist);
             return axon;
         } catch (err) {
             throw new AxonError('Cannot update blacklisted guilds.', 'DB ERROR', 'BlacklistGuild', err);
