@@ -189,6 +189,5 @@ class Resolver {
     }
 }
 
-export default {
-    Resolver
-};
+export default Resolver;
+
