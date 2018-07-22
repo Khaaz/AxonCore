@@ -6,6 +6,8 @@ import Eris from 'eris';
 // misc
 import logo from './Conf/logo';
 
+import packageJSON from '../package.json';
+
 // Core
 import Module from './Structures/Module';
 import Command from './Structures/Command';
@@ -83,6 +85,16 @@ class AxonClient extends Eris.Client {
         /** Cool logging */
         console.log(logo);
         
+        /**
+         * Client specification
+         * version/base/author/url
+         */
+        this.client = {
+            name: packageJSON.name,
+            version: packageJSON.version,
+            author: packageJSON.author,
+            github: packageJSON.repository.url
+        };
         /**
          * Collection of Modules
          * Module Label => Module Object
