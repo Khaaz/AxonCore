@@ -40,7 +40,7 @@ class Resolver {
 
         const mention = UtilRE.userMention.exec(args[0]);
 
-        const user = (mention && mention[1]) || // User mention
+        const user = (mention && mention[1]) && users.get(mention[1]) || // User mention
         (UtilRE.id.test(args[0]) && users.get(args[0])) || // User ID
         (args.all.indexOf('#') > -1 && users.find(u => `${u.username}#${u.discriminator}` === args.all)) || // Username + discrim
         users.find(u => u.username === args.all) || // Username
@@ -75,7 +75,7 @@ class Resolver {
 
         const mention = UtilRE.userMention.exec(args[0]);
 
-        const member = (mention && mention[1]) || // User mention
+        const member = (mention && mention[1]) && members.get(mention[1]) || // User mention
         (UtilRE.id.test(args[0]) && members.get(args[0])) || // User ID
         (args.all.indexOf('#') > -1 && members.find(m => `${m.username}#${m.discriminator}` === args.all)) || // Username + discrim
         members.find(m => m.username === args.all) || // Username
@@ -115,7 +115,7 @@ class Resolver {
 
         const mention = UtilRE.roleMention.exec(args[0]);
 
-        const role = (mention && mention[1]) || // mention
+        const role = (mention && mention[1]) && roles.get(mention[1]) || // mention
         (UtilRE.id.test(args[0]) && roles.get(args[0])) || // id
         roles.find(m => m.name === args.all) || // name
         roles.find(m => m.name.toLowerCase() === args.lower) || //// name lower
@@ -150,7 +150,7 @@ class Resolver {
 
         const mention = UtilRE.channelMention.exec(args[0]);
 
-        const channel = (mention && mention[1]) ||
+        const channel = (mention && mention[1]) && channels.get(mention[1]) ||
         (UtilRE.id.test(args[0]) && channels.get(args[0])) ||
         channels.find(c => c.name === args.all) || // name
         channels.find(c => c.name.toLowerCase() === args.lower) || //// name lower
