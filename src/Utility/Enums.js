@@ -30,7 +30,7 @@ const permissionsNames = [
 
 const adminPerms = [
     'administrator',
-    'manageServer',
+    'manageGuild',
 ];
 
 export default {

@@ -370,8 +370,9 @@ class Command extends Base {
         }
 
         // time spent since last uses <= cooldown chose for that command
-        if ( (Date.now() - cooldown) <= this.options.cooldown) {
-            return cooldown; // return time left (does cooldown)
+        const curCD = Date.now() - cooldown;
+        if ( curCD <= this.options.cooldown) {
+            return curCD; // return time left (does cooldown)
         }
 
         // delete current time for this user.
