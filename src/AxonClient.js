@@ -51,6 +51,9 @@ class AxonClient extends Eris.Client {
      * @param {String} token
      * @param {Object} options
      * @param {Object} config - Axon options
+     * @param {Object} generalConfig - Axon options
+     * @param {Object} templateConfig - Axon options
+     * @param {Object} tokenConfig - Axon options
      * @param {Object} modules - Object with all modules to add in the bot
      *
      * @prop {Collection<Module>} modules - All modules in the client [key: label, value: module]
@@ -79,13 +82,18 @@ class AxonClient extends Eris.Client {
      *
      * @memberof AxonClient
      */
-    constructor(token, options, config, modules) {
+    constructor(token, options, config, generalConfig, templateConfig, tokenConfig, modules) {
         super(token, options);
 
         /** Cool logging */
         console.log(logo);
         
         /**
+        
+        this.generalConfig = generalConfig;
+        this.templateConfig = templateConfig;
+        this.tokenConfig = tokenConfig;
+        
          * Client specification
          * version/base/author/url
          */
@@ -231,23 +239,23 @@ class AxonClient extends Eris.Client {
      *
      * @memberof AxonClient
      */
-    async initConfigs(config) {
+    initConfigs(config) {
         try {
-            this._configs.general = await this._Util.readJson(config.configPath.general);
+            this._configs.general = this.generalConfig;
         } catch(err) {
             this._configs.general = generalConf;
             this.Logger.warn(new AxonError('Couldn\'t init custom configs General (default values)', 'INIT', 'Configs', err).stack);
         }
 
         try {
-            this._configs.template = await this._Util.readJson(config.configPath.template);
+            this._configs.template = this.templateConfig;
         } catch(err) {
             this._configs.template = templateConf;
             this.Logger.warn(new AxonError('Couldn\'t init custom configs Template (default values)', 'INIT', 'Configs', err).stack);
         }
 
         try {
-            this._configs._tokens = await this._Util.readJson(config.configPath.tokens);
+            this._configs._tokens = this.tokenConfig;
         } catch(err) {
             this._configs.tokens = tokenConf;
             this.Logger.warn(new AxonError('Couldn\'t init custom configs Token (default values)', 'INIT', 'Configs', err).stack);
@@ -383,7 +391,7 @@ class AxonClient extends Eris.Client {
 
     /**
      * Init Bot status
-     * Default method. Overrided by initStatus in child.
+     * Default method. Overridden by initStatus in child.
      *
      * @memberof AxonClient
      */
