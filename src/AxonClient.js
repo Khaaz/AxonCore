@@ -239,7 +239,7 @@ class AxonClient extends Eris.Client {
      *
      * @memberof AxonClient
      */
-    initConfigs(config) {
+    initConfigs() {
         try {
             this._configs.general = this.generalConfig;
         } catch(err) {
