@@ -13,8 +13,8 @@ import * as modules from './modules/index';
  * @extends {AxonCore.AxonClient}
  */
 class Client extends AxonClient {
-    constructor(token, options, config) {
-        super(token, options, config, modules);
+    constructor(token, options, config, generalConfig, templateConfig, tokenConfig) {
+        super(token, options, config, generalConfig, templateConfig, tokenConfig, modules);
 
         this.param = 1; // personal stuff
         this._param = 2; // personal hided stuff
