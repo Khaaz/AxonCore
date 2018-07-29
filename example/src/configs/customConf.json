@@ -15,12 +15,6 @@
         "admins": ["179908288337412096"]
     },
 
-    "configPath": {
-        "general": "/home/khaaz/GIT/Axon/example/src/configs/generalConf.json",
-        "template": "/home/khaaz/GIT/Axon/example/src/configs/templateConf.json",
-        "tokens": "/home/khaaz/GIT/Axon/example/src/configs/tokenConf.json"
-    },
-
     "debugMode": false,
 
     "customLogger": true,
