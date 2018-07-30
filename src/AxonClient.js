@@ -88,15 +88,15 @@ class AxonClient extends Eris.Client {
         /** Cool logging */
         console.log(logo);
         
-        /**
-        
         this.generalConfig = generalConfig;
         this.templateConfig = templateConfig;
         this.tokenConfig = tokenConfig;
         
+        /**
          * Client specification
          * version/base/author/url
          */
+        
         this.client = {
             name: packageJSON.name,
             version: packageJSON.version,
