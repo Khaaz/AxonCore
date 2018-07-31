@@ -18,11 +18,23 @@ class Collection extends Map {
      */
     constructor(baseObject) {
         super();
-        this.baseObject = baseObject;
+        this.baseObject = baseObject ? baseObject : null;
     }
 
     /**
+     * Map to array
+     *
+     * @returns {Array<Class>}
+     * @memberof Collection
+     */
+    toArray() {
+        return [...this.values];
+    }
+    
+    /**
      * Add an object
+     * If baseObject, add only if instance of baseObject
+     * If no baseObject, add
      * 
      * @arg {String} value - The ID of the object
      * @arg {Object} key - The object data
@@ -34,8 +46,8 @@ class Collection extends Map {
         if(existing && !replace) {
             return existing;
         }
-        if(!(value instanceof this.baseObject || value.constructor.name === this.baseObject.name)) {
-            value = new this.baseObject(value);
+        if(this.baseObject && !(value instanceof this.baseObject)) {
+            return null;
         }
 
         this.set(key, value);
