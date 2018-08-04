@@ -45,8 +45,6 @@ class Client extends AxonClient {
         });
     }
 
-    initConfigs()
-
     NotinitStatus() {
         // called after everything (after ready event)
         // overrides default editStatus
