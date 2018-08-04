@@ -291,7 +291,9 @@ class AxonClient extends Eris.Client {
      *
      * @memberof AxonClient
      */
-    initOwners(config){
+    initOwners(AxonOptionObject){
+
+        const config = AxonOptionObject.generalConfig;
 
         this.staff.owners = Object.values(config.ids.owners);
         this.staff.admins = Object.values(config.ids.admins);
