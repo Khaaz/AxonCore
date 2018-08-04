@@ -35,6 +35,10 @@ import DefLogger from './Loggers/DefLogger';
 import AxonError from './Errors/AxonError';
 import AxonCommandError from './Errors/AxonCommandError';
 
+// Key verifier
+
+import keyCompare from './Utility/Utils';
+
 /**
  * AxonCore - Client constructor
  *
@@ -82,15 +86,11 @@ class AxonClient extends Eris.Client {
      *
      * @memberof AxonClient
      */
-    constructor(token, options, config, generalConfig, templateConfig, tokenConfig, modules) {
+    constructor(token, options, config, modules) {
         super(token, options);
 
         /** Cool logging */
         console.log(logo);
-        
-        this.generalConfig = generalConfig;
-        this.templateConfig = templateConfig;
-        this.tokenConfig = tokenConfig;
         
         /**
          * Client specification
@@ -239,31 +239,49 @@ class AxonClient extends Eris.Client {
      *
      * @memberof AxonClient
      */
-    initConfigs() {
-        try {
-            this._configs.general = this.generalConfig;
-        } catch(err) {
-            this._configs.general = generalConf;
-            this.Logger.warn(new AxonError('Couldn\'t init custom configs General (default values)', 'INIT', 'Configs', err).stack);
+
+    initConfigs(AxonOptionObject) {
+        const generalConfig = AxonOptionObject.generalConfig;
+        const templateConfig = AxonOptionObject.templateConfig;
+        const tokenConfig = AxonOptionObject.tokenConfig;
+
+        if (keyCompare(generalConf, generalConfig) === true) {
+            try {
+                this._configs.general = generalConfig;
+            } catch (err) {
+                this._configs.general = generalConf;
+                this.Logger.warn(new AxonError('Couldn\'t init custom general config (default values)', 'INIT', 'Configs', err).stack);
+            }
+        }
+        else {
+            this.Logger.warn(new AxonError('Invalid generalConfig file').stack);
         }
 
-        try {
-            this._configs.template = this.templateConfig;
-        } catch(err) {
-            this._configs.template = templateConf;
-            this.Logger.warn(new AxonError('Couldn\'t init custom configs Template (default values)', 'INIT', 'Configs', err).stack);
+        if (keyCompare(templateConf, templateConfig) === true) {
+            try {
+                this._configs.template = templateConfig;
+            } catch (err) {
+                this._configs.template = templateConf;
+                this.Logger.warn(new AxonError('Couldn\'t init custom template config (default values)', 'INIT', 'Configs', err).stack);
+            }
+        }
+        else {
+            this.Logger.warn(new AxonError('Invalid templateConfig file').stack);
         }
 
-        try {
-            this._configs._tokens = this.tokenConfig;
-        } catch(err) {
-            this._configs.tokens = tokenConf;
-            this.Logger.warn(new AxonError('Couldn\'t init custom configs Token (default values)', 'INIT', 'Configs', err).stack);
+        if (keyCompare(tokenConf, tokenConfig) === true) {
+            try {
+                this._configs._tokens = tokenConfig;
+            } catch (err) {
+                this._configs.tokens = tokenConf;
+                this.Logger.warn(new AxonError('Couldn\'t init custom token config (default values)', 'INIT', 'Configs', err).stack);
+            }
         }
-
+        else {
+            this.Logger.warn(new AxonError('Invalid tokenConfig file').stack);
+        }
         this.infos.owners = Object.values(this._configs.general.owners).map(o => o.name);
         this.infos.links = this._configs.general.links;
-
         this.Logger.info('Configs initialized!');
     }
 

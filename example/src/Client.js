@@ -13,28 +13,28 @@ import * as modules from './modules/index';
  * @extends {AxonCore.AxonClient}
  */
 class Client extends AxonClient {
-    constructor(token, options, config, generalConfig, templateConfig, tokenConfig) {
-        super(token, options, config, generalConfig, templateConfig, tokenConfig, modules);
+    constructor(token, options, AxonOptionObject) {
+        super(token, options, AxonOptionObject.AxonConfig, modules);
 
         this.param = 1; // personal stuff
-        this._param = 2; // personal hided stuff
+        this._param = 2; // personal hidden stuff
     }
 
     initStaff() {
         // called before init and other. Called before creating modules
         // override default initStaff
-        // setup bot staff as convenience. Can be anything
+        // setup bot staff as per your convenience. Can be anything
         this.staff.contributor = [];
         console.log('child initStaff');
     }
 
     init() {
-        // override default init.
-        // called aftet _init has run.
-        // used to init all other stuff (personal/custom)
+        // overrides default init.
+        // called after _init has run.
+        // used to init all other stuff (personal / custom)
         
 
-        // this should returns a Promise ideally
+        // this should return a Promise ideally
         return new Promise((resolve, reject) => {
             try {
                 this.customInitMethod();
@@ -43,21 +43,23 @@ class Client extends AxonClient {
                 reject(err);
             }
         });
-    }    
+    }
+
+    initConfigs()
 
     NotinitStatus() {
         // called after everything (after ready event)
-        // override default editStatus
+        // overrides default editStatus
         // used to setup custom status
         console.log('override default initStatus');
     }
 
-    customInitMethod() {
+    $customInitMethod() {
         console.log('customInitMethod');
         // custom init method that init stuff
     }
 
-    customMethod() {
+    $customMethod() {
         // custom method used anywhere?
     }
 }
