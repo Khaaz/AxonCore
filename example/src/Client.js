@@ -14,7 +14,7 @@ import * as modules from './modules/index';
  */
 class Client extends AxonClient {
     constructor(token, options, AxonOptionObject) {
-        super(token, options, AxonOptionObject.AxonConfig, modules);
+        super(token, options, AxonOptionObject, modules);
 
         this.param = 1; // personal stuff
         this._param = 2; // personal hidden stuff
