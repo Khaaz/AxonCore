@@ -35,6 +35,12 @@ import DefLogger from './Loggers/DefLogger';
 import AxonError from './Errors/AxonError';
 import AxonCommandError from './Errors/AxonCommandError';
 
+// Key verifier
+
+import Util from './Utility/Utils';
+
+const keyCompare = Util.keyCompare;
+
 /**
  * AxonCore - Client constructor
  *
@@ -51,6 +57,9 @@ class AxonClient extends Eris.Client {
      * @param {String} token
      * @param {Object} options
      * @param {Object} config - Axon options
+     * @param {Object} generalConfig - Axon options
+     * @param {Object} templateConfig - Axon options
+     * @param {Object} tokenConfig - Axon options
      * @param {Object} modules - Object with all modules to add in the bot
      *
      * @prop {Collection<Module>} modules - All modules in the client [key: label, value: module]
@@ -79,16 +88,17 @@ class AxonClient extends Eris.Client {
      *
      * @memberof AxonClient
      */
-    constructor(token, options, config, modules) {
+    constructor(token, options, AxonOptionObject, modules) {
         super(token, options);
 
         /** Cool logging */
         console.log(logo);
-        
+        const config = AxonOptionObject.AxonConfig;
         /**
          * Client specification
          * version/base/author/url
          */
+        
         this.client = {
             name: packageJSON.name,
             version: packageJSON.version,
@@ -231,31 +241,41 @@ class AxonClient extends Eris.Client {
      *
      * @memberof AxonClient
      */
-    async initConfigs(config) {
-        try {
-            this._configs.general = await this._Util.readJson(config.configPath.general);
-        } catch(err) {
+
+    initConfigs(AxonOptionObject) {
+        const generalConfig = AxonOptionObject.generalConfig;
+        const templateConfig = AxonOptionObject.templateConfig;
+        const tokenConfig = AxonOptionObject.tokenConfig;
+        const generalConfig2 = AxonOptionObject.generalConfig;
+        generalConfig2.owners = {};
+
+        if (generalConfig && keyCompare(generalConf, generalConfig2)) {
+            this._configs.general = generalConfig;
+        }
+        else {
             this._configs.general = generalConf;
-            this.Logger.warn(new AxonError('Couldn\'t init custom configs General (default values)', 'INIT', 'Configs', err).stack);
+            this.Logger.warn(new AxonError('Couldn\'t init custom general config (default values)', 'INIT', 'Configs').stack);
         }
 
-        try {
-            this._configs.template = await this._Util.readJson(config.configPath.template);
-        } catch(err) {
+        if (templateConfig && keyCompare(templateConf, templateConfig)) {
+            this._configs.template = templateConfig;
+            
+        }
+        else {
             this._configs.template = templateConf;
-            this.Logger.warn(new AxonError('Couldn\'t init custom configs Template (default values)', 'INIT', 'Configs', err).stack);
+            this.Logger.warn(new AxonError('Couldn\'t init custom template config (default values)', 'INIT', 'Configs').stack);
         }
 
-        try {
-            this._configs._tokens = await this._Util.readJson(config.configPath.tokens);
-        } catch(err) {
+        if (tokenConfig && keyCompare(tokenConf, tokenConfig)) {
+            this._configs._tokens = tokenConfig;
+        }
+        else {
             this._configs.tokens = tokenConf;
-            this.Logger.warn(new AxonError('Couldn\'t init custom configs Token (default values)', 'INIT', 'Configs', err).stack);
+            this.Logger.warn(new AxonError('Couldn\'t init custom token config (default values)', 'INIT', 'Configs').stack);
         }
 
         this.infos.owners = Object.values(this._configs.general.owners).map(o => o.name);
         this.infos.links = this._configs.general.links;
-
         this.Logger.info('Configs initialized!');
     }
 
@@ -265,7 +285,9 @@ class AxonClient extends Eris.Client {
      *
      * @memberof AxonClient
      */
-    initOwners(config){
+    initOwners(AxonOptionObject){
+
+        const config = AxonOptionObject.generalConfig;
 
         this.staff.owners = Object.values(config.ids.owners);
         this.staff.admins = Object.values(config.ids.admins);
@@ -383,7 +405,7 @@ class AxonClient extends Eris.Client {
 
     /**
      * Init Bot status
-     * Default method. Overrided by initStatus in child.
+     * Default method. Overridden by initStatus in child.
      *
      * @memberof AxonClient
      */
