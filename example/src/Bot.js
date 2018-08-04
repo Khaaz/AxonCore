@@ -4,6 +4,15 @@ import Client from './Client';
 
 import config from './configs/customConf.json';
 import tokenConf from './configs/tokenConf.json';
+import generalConf from './configs/generalConf.json';
+import templateConf from './configs/templateConf.json';
+
+const AxonOptionObject = {
+    AxonConfig : config,
+    generalConfig: generalConf,
+    templateConfig: templateConf,
+    tokenConfig: tokenConf
+};
 
 const Bot = new Client(
     tokenConf.bot.token,
@@ -16,7 +25,7 @@ const Bot = new Client(
         messageLimit: 100,
         restMode: true
     },
-    config
+    AxonOptionObject
 );
 
 export default Bot;
