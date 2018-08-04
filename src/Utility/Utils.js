@@ -8,10 +8,11 @@ const regex = {
 const other = {};
 
 /**
- * Ensures that all prop of obj1 exists in obj2.
- * Doesn't compare values. Exept if it an object, then it check for prop names again
+ * Ensures that all property names of obj1 exists in obj2.
+ * Doesn't compare values. Exept if it is an object, then it check for property names again
  * @param {Object} obj1 Default config
  * @param {Object} obj2 Custom config (Config to compare with)
+ * @yields Boolean
  */
 const keyCompare = function compareObject(obj1, obj2) {
     for (const key in obj1) {
