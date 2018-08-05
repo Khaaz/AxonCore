@@ -195,8 +195,8 @@ class AxonClient extends Eris.Client {
             description: config.general.description || defConf.general.description || 'AxonClient - Discord Bot Client for Eris [KhaaZ#0001]'
         };
 
-        this.initConfigs(config); // this._configs => cache Template, General configs
-        this.initOwners(config); // this.staff => Load and cache staff Owners + Admins
+        this.initConfigs(AxonOptionObject); // this._configs => cache Template, General configs
+        this.initOwners(AxonOptionObject.AxonConfig); // this.staff => Load and cache staff Owners + Admins
 
         /**
          * - Global events -
@@ -285,10 +285,7 @@ class AxonClient extends Eris.Client {
      *
      * @memberof AxonClient
      */
-    initOwners(AxonOptionObject){
-
-        const config = AxonOptionObject.generalConfig;
-
+    initOwners(config) {
         this.staff.owners = Object.values(config.ids.owners);
         this.staff.admins = Object.values(config.ids.admins);
 
