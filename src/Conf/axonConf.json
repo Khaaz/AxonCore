@@ -5,17 +5,6 @@
         "version": "1.0.0",
         "library": "eris"
     },
-
-    "links": {
-        "website": "",
-        "invite": "",
-        "server": "",
-    
-        "github": "https://github.com/khaazz/AxonCore",
-        "trello": "",
-        "sentry": "",
-        "grafana": ""
-    },
     
     "prefix": {
         "general": "e!",
@@ -26,14 +15,14 @@
     "staff": {
         "owners": [ 
             {
-                "name": "KhaaZ#0001",
-                "id": "179908288337412096"
+                "name": "",
+                "id": ""
             }
         ],
         "admins": [ 
             {
-                "name": "KhaaZ#0001",
-                "id": "179908288337412096"
+                "name": "",
+                "id": ""
             }
         ]
     },

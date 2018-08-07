@@ -15,7 +15,7 @@ class Pong extends Command {
 
         this.infos = {
             owner: ['KhaaZ'],
-            cmdName: 'ping pong',
+            name: 'ping pong',
             description: 'Pong the bot.',
             examples: ['ping pong'],
             arguments: []
@@ -24,6 +24,9 @@ class Pong extends Command {
         this.options.argsMin = 0;
         this.options.cooldown = 3000;
         this.options.guildOnly = false;
+
+        this.permissions.user.needed = ['manageGuild'];
+        this.permissions.staff.bypass = [...this.axon.staff.owners, ...this.axon.staff.admins];
     }
 
     async execute({ msg }) {

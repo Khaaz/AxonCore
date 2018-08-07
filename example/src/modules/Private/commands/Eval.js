@@ -14,13 +14,14 @@ class Eval extends Command {
 
         this.infos = {
             owner: ['AS04', 'Ape', 'KhaaZ'],
-            cmdName: 'eval',
+            name: 'eval',
             description: 'Eval js code.',
             examples: ['eval you should know what goes in here'],
             arguments: [['js code', false]]
         };
 
         this.options.argsMin = 1;
+        this.options.cooldown = null;
 
         this.permissions.staff.needed = this.axon.staff.owners;
     }
@@ -75,8 +76,8 @@ class Eval extends Command {
             return this.sendMessage(msg.channel, `\`\`\`js\n${evaled}\`\`\``);
 
         } catch (err) {
-            this.bot.Logger.debug(err.stack);
-            return this.sendMessage(msg.channel, err.message);
+            this.Logger.debug(err.stack);
+            return this.sendMessage(msg.channel, err.message ? err.message : err.name);
         }
     }
 }
