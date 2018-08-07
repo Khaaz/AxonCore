@@ -18,9 +18,9 @@
     },
     
     "prefix": {
-        "general": "a!",
+        "general": "e!",
         "owner": "!!",
-        "admin": "a."
+        "admin": "e."
     },
     
     "staff": {
@@ -41,5 +41,5 @@
     "debugMode": false,
 
     "customLogger": false,
-    "customDB": true
+    "customDB": false
 }

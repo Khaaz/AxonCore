@@ -2,18 +2,26 @@
 
 import Client from './Client';
 
-import config from './configs/customConf.json';
+import axonConf from './configs/customConf.json';
 import tokenConf from './configs/tokenConf.json';
-import generalConf from './configs/generalConf.json';
 import templateConf from './configs/templateConf.json';
 
-const AxonOptionObject = {
-    AxonConfig : config,
-    generalConfig: generalConf,
-    templateConfig: templateConf,
-    tokenConfig: tokenConf
+const AxonOptions = {
+    axonConf: axonConf,
+    templateConf: templateConf,
+    tokenConf: tokenConf,
+    
+    resolver: null,
+    utils: null,
+    axonSchema: null,
+    guildSchema: null
 };
 
+/**
+ * new AxonClient(token, erisOptions, AxonOptions, modules)
+ * 
+ * new Client(token, erisOptions, AxonOptions) => Modules imported in Client
+ */
 const Bot = new Client(
     tokenConf.bot.token,
     {
@@ -25,7 +33,7 @@ const Bot = new Client(
         messageLimit: 100,
         restMode: true
     },
-    AxonOptionObject
+    AxonOptions
 );
 
 export default Bot;

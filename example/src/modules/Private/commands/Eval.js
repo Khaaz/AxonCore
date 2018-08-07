@@ -22,7 +22,7 @@ class Eval extends Command {
 
         this.options.argsMin = 1;
 
-        this.permissions.staff.needed = this.bot.staff.owners;
+        this.permissions.staff.needed = this.axon.staff.owners;
     }
 
     async execute({ msg, args, /* eslint-disable */guildConf/* eslint-enable */ }) {
@@ -31,7 +31,7 @@ class Eval extends Command {
             const Util = this.Util;
             const Resolver = this.Resolver;
             const Template = this.Template
-            const axon = this.bot;
+            const axon = this.axon;
             const guild = msg.channel.guild;
             const channel = msg.channel;
             /* eslint-enable */
