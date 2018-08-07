@@ -3,8 +3,6 @@
 import Base from './Base';
 
 // Utility
-import Resolver from '../Utility/Resolver';
-import Utils from '../Utility/Utils';
 import Enum from '../Utility/Enums';
 
 // Error
@@ -26,12 +24,13 @@ class Command extends Base {
      *
      * @param {Object<Module>} module
      *
-     * @prop {Object<AxonClient>} bot - The bot Object
-     * @prop {Object<Module>} module - The module object
+     * @prop {Object<AxonClient>} bot - Getter _module.bot
+     * @prop {Object<Module>} _module - The module object
+     * @prop {Object<Module>} module - GETTER _module
      * @prop {Object} _cooldown - Map of current cooldown (global per user) [key: userID, value: Date.now()]
-     * @prop {Object} Resolver - Resolver object to access reolver methods
-     * @prop {Object} Util - Util object to access utils methods
-     * @prop {Object} Template
+     * @prop {Object} Resolver - [GETTER] Resolver object to access reolver methods
+     * @prop {Object} Util - [GETTER] Util object to access utils methods
+     * @prop {Object} Template - [GETER] Template object to access templating property
      * @prop {String} label - The command label (name/id)
      * @prop {Array<String>} aliases - Array of commands aliases **including the command label
      * @prop {Boolean} enabled - if the command is enabled | default: true (enabled)
@@ -77,14 +76,13 @@ class Command extends Base {
      * @memberof Command
      */
     constructor(module) {
-        super();
+        super(module.axon);
         
         /**
-         * bot references to Axon Client
-         * module references to the module the command is in
+         * [GETTER] - bot references to Axon Client
+         * [GETTER] -  (private) module references to the module the command is in 
          */
-        this.bot = module._client;
-        this.module = module; //(module Object)
+        this._module = module; //(module Object)
 
         /**
          * Handle Cooldown
@@ -94,11 +92,8 @@ class Command extends Base {
 
         /**
          * ShortCut - Reusable class
-         * Resolver / Util / Template
+         * Resolver [GETTER] / Util [GETTER] / Template [GETTER]
          */
-        this.Resolver = Resolver;
-        this.Utils = Utils;
-        this.Template = this.bot._configs.template;
 
         // Command main options
         this.label = 'label';
@@ -133,10 +128,10 @@ class Command extends Base {
          */
         this.infos = {
             owners: [], // ['Eleos'] OR ['Eleos', 'Ape']
-            cmdName: '', // 'mail' OR 'mail all' (for subcommmands)
+            name: '', // 'mail' OR 'mail all' (for subcommmands)
             description: '', // 'A cool command that does things.' <-- With the dot!
             examples: [], // ['suggestion Hey can we add this thanks', ...]
-            arguments: [] // [['argument name', optional?], [..., ...]] for example: [['id', false], ['name', true]]
+            arguments: [] // [['argument name', needed?], [..., ...]] for example: [['id', true], ['name', false]]
         };
 
         /**
@@ -200,6 +195,18 @@ class Command extends Base {
     }
 
     //
+    // ****** GETTER ******
+    //
+
+    get module() {
+        return this._module;
+    }
+
+    get Template() {
+        return this.axon.configs.template;
+    }
+
+    //
     // ****** MAIN - EXECUTE ******
     //
 
@@ -233,20 +240,8 @@ class Command extends Base {
             return this.sendCooldown(msg.channel, cd);
         }
 
-        /**
-         * Permissions checkers
-         * bypass - one of the perms (override) => doesn't go through others chercker
-         * needed - all perms => still go through other checkers
-         */
-
-        let bypass = false;
-        /** Bypass: if one of the perm is true => Exec the command */
-        if ( this._checkPermsUserBypass(msg) || this._checkUserBypass(msg) || this._checkRoleBypass(msg) || this._checkChannelBypass(msg) || this._checkStaffBypass(msg) ) { // permission bypass perms
-            bypass = true;
-        }
-        
-        /** Needed: if one of the perms is false => doesn't exec the command */
-        if ( !bypass && !(this._checkPermsUserNeeded(msg) && this._checkUserNeeded(msg) && this._checkRoleNeeded(msg) && this._checkChannelNeeded(msg) && this._checkStaffNeeded(msg)) ) {
+        /** Permissions checkers */
+        if (!this.canExecute(msg)) {
             /** Sends invalid perm message in case of invalid perm [option enabled] */
             if (this.options.invalidPermissionMessage) {
                 return this.sendUserPerms(msg.channel);
@@ -341,13 +336,14 @@ class Command extends Base {
     /**
      * Send Help message in the current channel
      * Perm checks were done before
+     * Call custom sendHelp (Client method if it exist instead of default one)
      *
      * @param {Object<Message>} msg - The message object
      * @returns {Promise}
      * @memberof Command
      */
     sendHelp({msg, /*args*/}) {
-        return this.sendMessage(msg.channel, 'help for ' + this.label);
+        return (this.axon.sendHelp ? this.axon.sendHelp(this, msg) : this.sendMessage(msg.channel, 'help for ' + this.label));
     }
 
     //
@@ -381,6 +377,28 @@ class Command extends Base {
         return false; // doesn't cooldown
     }
 
+    /**
+     * Permission checker - Does the user has perm to exec command/not
+     * Bypass - one of the perms (override) => doesn't go through others chercker
+     * Needed - all perms => still go through other checkers
+     *
+     * @param {Object<Message>} msg - Message Object
+     * @returns {Boolean} true: user can execute command
+     * @memberof Command
+     */
+    canExecute(msg) {
+        /** Bypass: if one of the perm is true => Exec the command */
+        if ( this._checkPermsUserBypass(msg) || this._checkUserBypass(msg) || this._checkRoleBypass(msg) || this._checkChannelBypass(msg) || this._checkStaffBypass(msg) ) { // permission bypass perms
+            return true;
+        }
+
+        /** Needed: if one of the perms is false => doesn't exec the command */
+        if ( !(this._checkPermsUserNeeded(msg) && this._checkUserNeeded(msg) && this._checkRoleNeeded(msg) && this._checkChannelNeeded(msg) && this._checkStaffNeeded(msg)) ) {
+            return false;
+        }
+        return true;
+    }
+    
     /**
      * Check bot permission
      * (= permssions in config)
@@ -581,6 +599,7 @@ class Command extends Base {
      * @param {Object<Member>} member - the member object
      * @param {Object} guildConf - the guild Config from the DB
      * @returns {Boolean} true if user is a mod / false if not
+     * @
      * @memberof Command
      */
     isUserMod(member, guildConf) {

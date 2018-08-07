@@ -6,7 +6,7 @@
 
     "sentry": "",
 
-    "webHook": {
+    "webhooks": {
         "uptime": {
             "id": "",
             "token": ""
@@ -15,27 +15,11 @@
             "id": "",
             "token": ""
         },
-        "interact": {
-            "id": "",
-            "token": ""
-        },
-        "shards": {
-            "id": "",
-            "token": ""
-        },
         "error": {
             "id": "",
             "token": ""
         },
-        "warn": {
-            "id": "",
-            "token": ""
-        },
-        "eval": {
-            "id": "",
-            "token": ""
-        },
-        "guildLog": {
+        "misc": {
             "id": "",
             "token": ""
         }

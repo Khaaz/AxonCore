@@ -1,35 +1,75 @@
-const regex = {
-    userMention: /<@!?([0-9]+)>$/,
-    roleMention: /<@&([0-9]+)>$/,
-    channelMention: /<#([0-9]+)>$/,
-    id: /^[0-9]+$/
-};
+'use strict';
 
-const other = {};
+import fs from 'fs';
+import util from 'util';
+const readFile = util.promisify(fs.readFile);
+const writeFile = util.promisify(fs.writeFile);
 
 /**
- * Ensures that all property names of obj1 exists in obj2.
- * Doesn't compare values. Exept if it is an object, then it check for property names again
- * @param {Object} obj1 Default config
- * @param {Object} obj2 Custom config (Config to compare with)
- * @yields Boolean
+ * General Utility Class for AxonCore
+ * 
+ * All methods useful and usable everywhere
+ * 
+ * @author KhaaZ
+ *
+ * @class Utils
  */
-const keyCompare = function compareObject(obj1, obj2) {
-    for (const key in obj1) {
-        if (obj2[key] == undefined) {
-            return false;
+class Utils {
+    constructor() {
+        this.userMention = /<@!?([0-9]+)>$/;
+        this.roleMention = /<@&([0-9]+)>$/;
+        this.channelMention = /<#([0-9]+)>$/;
+        this.id = /^[0-9]+$/;
+    }
+
+    async readJson(path) {
+        try {
+            const txt = await readFile(path);
+            const conf = JSON.parse(txt);
+            if (!conf) {
+                throw new Error('Path incorrect');
+            }
+            return conf;
+        } catch(err) {
+            return Promise.reject(err);
         }
-        if (typeof obj1[key] === 'object' && !(obj1[key] instanceof Array)) {
-            if (!compareObject(obj1[key], obj2[key])) {
+        
+    }
+    
+    async writeJson(path, obj) {
+        try {
+            const txt = JSON.stringify(obj);
+            const res = await writeFile(path, txt);
+            return res;
+        } catch(err) {
+            return err;
+        }
+        
+    }
+
+    /**
+     * Ensures that all property names of obj1 exists in obj2.
+     * Doesn't compare values. Exept if it is an object, then it check for property names again
+     * 
+     * @param {Object} obj1 - Default config
+     * @param {Object} obj2 - Custom config (Config to compare with)
+     * @returns {Boolean} true: obj2 has at least all prop of obj1
+     * @memberof Utils
+     */
+    compareObject(obj1, obj2) {
+        for (const key in obj1) {
+            if (obj2[key] == undefined) {
                 return false;
             }
+            if (typeof obj1[key] === 'object' && !(obj1[key] instanceof Array)) {
+                if (!this.compareObject(obj1[key], obj2[key])) {
+                    return false;
+                }
+            }
         }
+        return true;
     }
-    return true;
-};
 
-export default {
-    regex,
-    other,
-    keyCompare
-};
+}
+
+export default new Utils();

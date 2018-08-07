@@ -15,8 +15,41 @@ import util from 'util';
  * @class Base
  */
 class Base {
-    constructor() {
+    constructor(axonClient) {
+        this._axon = axonClient;
     }
+
+    //
+    // ****** GETTER ******
+    //
+
+    get axon() {
+        return this._axon;
+    }
+
+    get bot() {
+        return this._axon.client;
+    }
+
+    get Logger() {
+        return this._axon.Logger;
+    }
+
+    get Resolver() {
+        return this._axon.Resolver;
+    }
+
+    get AxonUtils() {
+        return this._axon.AxonUtils;
+    }
+
+    get Utils() {
+        return this._axon.Utils;
+    }
+
+    //
+    // ****** MISC ******
+    //
 
     toString() {
         return this.constructor.name;
@@ -42,9 +75,9 @@ class Base {
         return base;
     }
 
-    inspect() {
+    [util.inspect.custom]() {
         // http://stackoverflow.com/questions/5905492/dynamic-function-name-in-javascript
-        const copy = new (new Function(`return function ${this.constructor.name}(){}`)());
+        const copy = new {[this.constructor.name]: class {}}[this.constructor.name]();
         for(const key in this) {
             if(this.hasOwnProperty(key) && !key.startsWith('_') && this[key] !== undefined) {
                 copy[key] = this[key];
@@ -54,9 +87,5 @@ class Base {
     }
 }
 
-// Node 6+ util.custom.inspect symbol support - https://github.com/nodejs/node/issues/15549
-if(util.inspect.custom) {
-    Base.prototype[util.inspect.custom] = Base.prototype.inspect;
-}
 
 export default Base;

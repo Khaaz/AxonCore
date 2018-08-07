@@ -1,7 +1,7 @@
 'use string';
 
-import {Console } from 'console';
-import util from 'util';
+import { Console } from 'console';
+import { format } from 'util';
 
 /**
  * Default Logger with time and custom method
@@ -98,9 +98,62 @@ class DefLogger extends Console {
         this.log(mess);
     }
 
+    /**
+     * Other Logging
+     * Client log
+     *
+     * @param {String} input
+     * @memberof DefLogger
+     */
+    axon(input) {
+        const mess = this.parseTime() + ' - [ AXON  ] => ' + input;
+        this.log(mess);
+    }
+
+
+    /** ?? */
+    /**
+     * Other Logging
+     * INIT
+     *
+     * @param {String} input
+     * @memberof DefLogger
+     */
+    init(input,) {
+        const mess = this.parseTime() + ' - [ INIT  ] => ' + input;
+        this.log(mess);
+    }
+
+    /**
+     * Other Logging
+     * Module log
+     *
+     * @param {String} input
+     * @param {Module} module
+     * @memberof DefLogger
+     */
+    module(input, module) {
+        const mess = this.parseTime() + ` - [MODULE ] => [${module.label}] ${input}`;
+        this.log(mess);
+    }
+
+    /**
+     * Other Logging
+     * Commands log...
+     *
+     * @param {String} input
+     * @memberof DefLogger
+     */
+    command(input) {
+        const mess = this.parseTime() + ' - [COMMAND] => ' + input;
+        this.log(mess);
+    }
+    /** ?? */
+    
+
     parseTime() {
         const current = new Date();
-        const formated = util.format('[ %s ]', current.getHours() + 'h:' + current.getMinutes() + 'm:' + current.getSeconds() + 's');
+        const formated = format('[ %s ]', current.getHours() + 'h:' + current.getMinutes() + 'm:' + current.getSeconds() + 's');
         return formated;
     }
 

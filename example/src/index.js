@@ -16,7 +16,7 @@ try {
 process.on('uncaughtException', (err) => {
     Bot.Logger.emerg(err.stack);
     
-    Bot.emit('error', err);
+    Bot.client.emit('error', err);
     
     process.exit(1);
 });
@@ -24,19 +24,19 @@ process.on('uncaughtException', (err) => {
 process.on('unhandledRejection', (err) => {
     Bot.Logger.error(err.stack);
 
-    Bot.emit('error', err);
+    Bot.client.emit('error', err);
     
 });
 
-Bot.on('error', (err) => {
+Bot.client.on('error', (err) => {
     Bot.Logger.error(err.stack);
 });
 
-Bot.on('warn', (msg) => {
+Bot.client.on('warn', (msg) => {
     Bot.Logger.warn(msg);
 });
 
 // Connection
-Bot.connect();
+Bot.client.connect();
 
 Bot.Logger.notice('=== ONLINE ===');
