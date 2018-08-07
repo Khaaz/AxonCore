@@ -32,6 +32,10 @@ import Utils from './Utility/Utils';
 
 import util from 'util';
 
+// Loggers
+import ChalkLogger from './Loggers/ChalkLogger';
+import DefLogger from './Loggers/DefLogger';
+
 // Errors
 import AxonError from './Errors/AxonError';
 import AxonCommandError from './Errors/AxonCommandError';

@@ -18,9 +18,9 @@
     },
     
     "prefix": {
-        "general": "l",
-        "owner": "l!",
-        "admin": "LEEE"
+        "general": "a!",
+        "owner": "!!",
+        "admin": "a."
     },
     
     "staff": {
