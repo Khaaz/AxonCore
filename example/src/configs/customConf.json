@@ -28,6 +28,10 @@
             {
                 "name": "KhaaZ#0001",
                 "id": "179908288337412096"
+            },
+            {
+                "name": "Jack™#1312",
+                "id": "211431972789157888"
             }
         ],
         "admins": [ 
@@ -40,6 +44,6 @@
 
     "debugMode": false,
 
-    "customLogger": false,
+    "customLogger": true,
     "customDB": true
 }

@@ -43,7 +43,7 @@ const customF = winston.format.printf(info => {
     return `${util.format('[%s]', time)} - [${colors[info.level](levelDesc[info.level])}] ${colors[info.level](info.level)}: ${info.message}`;
 });
 
-const Logger = winston.createLogger({
+const WinstonLogger = winston.createLogger({
     levels: levels,
     format: winston.format.combine(
         winston.format.simple(),
@@ -72,4 +72,4 @@ const Logger = winston.createLogger({
 });
 
 
-export default Logger;
+export default WinstonLogger;

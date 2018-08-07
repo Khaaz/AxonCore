@@ -32,7 +32,7 @@ import Utils from './Utility/Utils';
 import util from 'util';
 
 // Loggers
-import Logger from './Loggers/Logger';
+import ChalkLogger from './Loggers/ChalkLogger';
 import DefLogger from './Loggers/DefLogger';
 
 // Errors
@@ -92,7 +92,14 @@ class AxonClient {
 
         /** Eris Client initialisation */
         this._client = new Eris.Client(token, erisOptions);
-
+        try {
+            this._client.connect();
+            console.log('Client Connected');
+        } catch (err) {
+            console.log(err);
+        }
+        
+        
         /**
          * Collection of Modules
          * Module Label => Module Object
@@ -135,7 +142,7 @@ class AxonClient {
          */
         /** Logger */
         this._customLogger = axonOptions.axonConf.customLogger || defAxonConf.customLogger || false;
-        this.Logger = this._customLogger ? Logger : new DefLogger();
+        this.Logger = this._customLogger ? ChalkLogger : DefLogger;
         /** DB */
         this._customDB = axonOptions.axonConf.customDB || defAxonConf.customDB || false;
         this.DBprovider = this._customDB ? MongoService : JsonService;
@@ -147,11 +154,8 @@ class AxonClient {
         
         /**
          * Bot Staff
-         * - Owners
-         * - Admins
-         * - Contributors
-         * - Moderators
-         * - Members
+         * - owners
+         * - admins
          */
         this.staff = {};
 
@@ -206,7 +210,7 @@ class AxonClient {
         this.initOwners(axonOptions); // this.staff => Load and cache staff Owners + Admins
         //this.initLogger(axonOptions);
         //this.initDB(axonOptions);
-        //this.initListener(axonOptions)
+        this.initListener(axonOptions);
         //this.initWH(axonOptions);
 
         /**
@@ -230,6 +234,10 @@ class AxonClient {
     get client() {
         return this._client;
     }
+
+    get webhooks() {
+        return this._configs._tokens.webhooks;
+    }
     //
     // ****** INIT ******
     //
@@ -241,9 +249,32 @@ class AxonClient {
      */
     onReady() {
         this.Logger.axon('=== Instance Ready! ===');
+        if (this.webhooks.uptime.id && this.webhooks.uptime.token && this.webhooks.uptime.id.lenght > 0 && this.webhooks.uptime.token.length > 0) {
+            this.client.executeWebhook(this.webhooks.uptime.id, this.webhooks.uptime.token, {
+                username: `Status - ${this.client.user.username}`,
+                avatarURL: this.client.user.avatarURL,
+                embeds: [{
+                    color: 2067276,
+                    timestamp: new Date(),
+                    description: '**Instance Ready!**'
+                }]
+            });
+        }
+
         this._init().then(() => {
             this.client.ready = true;
             this.Logger.axon('=== Initialisation over - Bot Ready! ===');
+            if (this.webhooks.uptime.id && this.webhooks.uptime.token && this.webhooks.uptime.id.lenght > 0 && this.webhooks.uptime.token.length > 0) {
+                this.client.executeWebhook(this.webhooks.uptime.id, this.webhooks.uptime.token, {
+                    username: `Status - ${this.client.user.username}`,
+                    avatarURL: this.client.user.avatarURL,
+                    embeds: [{
+                        color: 2067276,
+                        timestamp: new Date(),
+                        description: '**Bot Ready!**'
+                    }]
+                });
+            }
         });
     }
 
@@ -266,7 +297,7 @@ class AxonClient {
 
     initConfigs({ axonConf, templateConf, tokenConf }) {
 
-        if (axonConf && axonConf.staff && axonConf.staff.owners) {
+        if (axonConf && this.Utils.compareObject(defAxonConf, axonConf)) {
             this._configs.axon = axonConf;
         } else {
             this._configs.axon = defAxonConf;
@@ -320,7 +351,7 @@ class AxonClient {
      */
     initListener({ tokenConf: config }) {
         const webhooks = config.webhooks;
-        const boolean = webhooks.error.id && webhooks.error.token;
+        const boolean = webhooks.error.id && webhooks.error.token && webhooks.error.id.lenght > 0 && webhooks.error.token.length > 0;
 
         process.on('uncaughtException', (err) => {
             this.Logger.emerg(err.stack);
@@ -330,15 +361,12 @@ class AxonClient {
                     username: `Exception - ${this.client.user.username}`,
                     avatarURL: this.client.user.avatarURL,
                     embeds: [{
-                        color: 2067276,
+                        color: 15158332,
                         timestamp: new Date(),
                         description: err.stack.length > 1950 ? err.message : err.stack
                     }]
-
                 });
             }
-
-            process.exit(1);
         });
         
         process.on('unhandledRejection', (err) => {
@@ -349,7 +377,7 @@ class AxonClient {
                     username: `Rejection - ${this.client.user.username}`,
                     avatarURL: this.client.user.avatarURL,
                     embeds: [{
-                        color: 2067276,
+                        color: 15158332,
                         timestamp: new Date(),
                         description: err.stack.length > 1950 ? err.message : err.stack
                     }]
@@ -367,11 +395,10 @@ class AxonClient {
                     username: `Error - ${this.client.user.username}`,
                     avatarURL: this.client.user.avatarURL,
                     embeds: [{
-                        color: 2067276,
+                        color: 15158332,
                         timestamp: new Date(),
                         description: err.stack.length > 1950 ? err.message : err.stack
                     }]
-
                 });
             }
         });
@@ -388,7 +415,6 @@ class AxonClient {
                         timestamp: new Date(),
                         description: msg
                     }]
-
                 });
             }
         });

@@ -17,7 +17,7 @@ class Ping extends Command {
 
         this.infos = {
             owner: ['KhaaZ'],
-            cmdName: 'ping',
+            name: 'ping',
             description: 'Ping the bot.',
             examples: ['ping'],
             arguments: []
