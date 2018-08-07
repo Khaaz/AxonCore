@@ -1,3 +1,0 @@
-import Signale from 'Signale';
-
-// ?

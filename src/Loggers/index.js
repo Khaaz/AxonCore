@@ -23,10 +23,10 @@ class LoggerHandler {
             break;
         }
             
-        // Other Logger thing?
+        // Chalk logger
         case 2: {
             try {
-                Logger = require('./Logger').default;
+                Logger = require('./ChalkLogger').default;
             } catch (err) {
                 Logger = DefLogger;
                 Logger.error('The specified logger is missing dependencies, the default logger will be used instead.');
