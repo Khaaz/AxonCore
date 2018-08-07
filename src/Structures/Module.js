@@ -30,6 +30,7 @@ class Module extends Base {
      * @param {Object<AxonClient>} client 
      * 
      * @prop {Object<AxonClient>} _client - Ease Client reference
+     * @prop {Object<AxonClient>} bot - GETTER _client
      * @prop {String} label - Module label (name/id)
      * @prop {Collection<Command>} commands - Commands in the modules [key: label, value: command Obj]
      * @prop {Collection<EventF>} events - Events in the modules [key: label, value: event Obj]
@@ -41,12 +42,7 @@ class Module extends Base {
      */
     constructor(client) {
 
-        super();
-
-        /**
-         * Reference to client. Hided/private prop
-         */
-        this._client = client;
+        super(client);
 
         this.label = 'moduleLabel';
 
@@ -72,6 +68,15 @@ class Module extends Base {
         };
 
     }
+
+    //
+    // ****** GETTER ******
+    //
+
+
+    //
+    // ****** CORE ******
+    //
 
     /**
      * Init a module with all commands and events.
@@ -155,7 +160,7 @@ class Module extends Base {
         }
 
         this.commands.set(command.label, command); // add the command to the Map of commands.
-        this._client.Logger.info(`-Command- : ${command.label} - Command ready. [Module: ${this.label}]`);
+        this.axon.Logger.command(`${command.label} - Command ready. [Module: ${this.label}]`);
         
     }
 
@@ -188,7 +193,7 @@ class Module extends Base {
         }
         subCommand.parentCommand = command;
         command.subCommands.set(subCommand.label, subCommand); // add the command to the Map of commands.
-        this._client.Logger.info(`SubCommand: ${subCommand.label} - SubCommand ready. [Command: ${command.label}](Module: ${this.label})`);
+        this.axon.Logger.command(`SubCommand: ${subCommand.label} - Subcommand ready. [Command: ${command.label}](Module: ${this.label})`);
     }
     
     /**
@@ -212,7 +217,7 @@ class Module extends Base {
 
         this.events.set(event.label, event); // add the command to the Map of commands.
 
-        this._client.Logger.info(`-Event-   : ${event.label} - Event ready. [Module: ${this.label}]`);
+        this.axon.Logger.info(`-Event-   : ${event.label} - Event ready. [Module: ${this.label}]`);
     }
 
     /**

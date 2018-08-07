@@ -2,17 +2,19 @@
 
 import { Console } from 'console';
 import { format } from 'util';
+import chalk from 'chalk';
 
 /**
- * Default Logger with time and custom method
+ * Logger with time and custom method
+ * Colorful logger
  * Allow clean logging without any dependency
  * 
  * @author KhaaZ
  * 
- * @class DefLogger
+ * @class ChalkLogger
  * @extends {Console}
  */
-class DefLogger extends Console {
+class ChalkLogger extends Console {
     
     constructor() {
         super(process.stdout, process.stderr); // Create default Console instance - Node v8 support
@@ -26,7 +28,7 @@ class DefLogger extends Console {
      * @memberof DefLogger
      */
     emerg(input) {
-        const mess = this.parseTime() + ' - [ EMERG ] => ' + input;
+        const mess = chalk.bold.magenta(this.parseTime() + ' - [ EMERG ] => ') + input;
         super.error(mess);
     }
 
@@ -37,7 +39,7 @@ class DefLogger extends Console {
      * @memberof DefLogger
      */
     error(input) {
-        const mess = this.parseTime() + ' - [ ERROR ] => ' + input;
+        const mess = chalk.bold.red(this.parseTime() + ' - [ ERROR ] => ') + input;
         super.error(mess);
     }
 
@@ -49,7 +51,7 @@ class DefLogger extends Console {
      * @memberof DefLogger
      */
     warn(input) {
-        const mess = this.parseTime() + ' - [ WARN  ] => ' + input;
+        const mess = chalk.bold.yellow(this.parseTime() + ' - [ WARN  ] => ') + input;
         super.warn(mess);
     }
 
@@ -60,7 +62,7 @@ class DefLogger extends Console {
      * @memberof DefLogger
      */
     debug(input) {
-        const mess = this.parseTime() + ' - [ DEBUG ] => ' + input;
+        const mess = chalk.blue(this.parseTime() + ' - [ DEBUG ] => ') + input;
         this.log(mess);
     }
 
@@ -71,7 +73,7 @@ class DefLogger extends Console {
      * @memberof DefLogger
      */
     notice(input) {
-        const mess = this.parseTime() + ' - [NOTICE ] => ' + input;
+        const mess = chalk.cyan(this.parseTime() + ' - [NOTICE ] => ') + input;
         this.log(mess);
     }
 
@@ -82,7 +84,7 @@ class DefLogger extends Console {
      * @memberof DefLogger
      */
     info(input) {
-        const mess = this.parseTime() + ' - [ INFO  ] => ' + input;
+        const mess = chalk.green(this.parseTime() + ' - [ INFO  ] => ') + input;
         this.log(mess);
     }
 
@@ -94,7 +96,7 @@ class DefLogger extends Console {
      * @memberof DefLogger
      */
     verbose(input) {
-        const mess = this.parseTime() + ' - [VERBOSE] => ' + input;
+        const mess = chalk.white(this.parseTime() + ' - [VERBOSE] => ') + input;
         this.log(mess);
     }
 
@@ -106,7 +108,7 @@ class DefLogger extends Console {
      * @memberof DefLogger
      */
     axon(input) {
-        const mess = this.parseTime() + ' - [ AXON  ] => ' + input;
+        const mess = chalk.bold.green(this.parseTime() + ' - [ AXON  ] => ') + input;
         this.log(mess);
     }
 
@@ -119,7 +121,7 @@ class DefLogger extends Console {
      * @param {String} input
      * @memberof DefLogger
      */
-    init(input) {
+    init(input,) {
         const mess = this.parseTime() + ' - [ INIT  ] => ' + input;
         this.log(mess);
     }
@@ -159,4 +161,4 @@ class DefLogger extends Console {
 
 }
 
-export default new DefLogger();
+export default new ChalkLogger();

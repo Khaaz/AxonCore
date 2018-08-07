@@ -27,14 +27,14 @@ class AxonCommandError extends Error {
         this.module = module.toString();
         this.command = command.toString();
 
-        const short =  `${this.name} => [${this.module}] - ${this.command}\n${ctx} : ${err.name}`;
+        const short =  `${this.name} => [${this.module}] - ${this.command}\n${ctx} : ${err.name ? err.name : ''}`;
         Object.defineProperty(this, 'short', {
             value: short,
             writable: false
         });
 
         Object.defineProperty(this, 'message', {
-            value: short + ' | ' + err.message,
+            value: short + ' | ' + err.message ? err.message : '',
             writable: false
         });
 

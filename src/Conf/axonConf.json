@@ -1,0 +1,34 @@
+{
+    "general": {
+        "name": "Axon",
+        "description": "AxonCore - Bot client, core module (eris lib)",
+        "version": "1.0.0",
+        "library": "eris"
+    },
+    
+    "prefix": {
+        "general": "e!",
+        "owner": "!!",
+        "admin": "e."
+    },
+    
+    "staff": {
+        "owners": [ 
+            {
+                "name": "",
+                "id": ""
+            }
+        ],
+        "admins": [ 
+            {
+                "name": "",
+                "id": ""
+            }
+        ]
+    },
+
+    "debugMode": false,
+
+    "logger": 0,
+    "customDB": false
+}

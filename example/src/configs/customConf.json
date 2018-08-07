@@ -1,28 +1,49 @@
 {
     "general": {
-        "name": "AxonTest",
-        "description": "AxonCore Test - Bot client, core module (eris lib)"
+        "name": "Axon",
+        "description": "AxonCore - Bot client, core module (eris lib)",
+        "version": "1.0.0",
+        "library": "eris"
+    },
+
+    "links": {
+        "website": "",
+        "invite": "",
+        "server": "",
+    
+        "github": "https://github.com/khaazz/AxonCore",
+        "trello": "",
+        "sentry": "",
+        "grafana": ""
     },
     
     "prefix": {
-        "general": "//",
-        "owner": "!!",
-        "admin": "e."
+        "general": "l",
+        "owner": "l!",
+        "admin": "LEEE"
     },
     
-    "ids": {
-        "owners": ["179908288337412096"],
-        "admins": ["179908288337412096"]
-    },
-
-    "configPath": {
-        "general": "/home/khaaz/GIT/Axon/example/src/configs/generalConf.json",
-        "template": "/home/khaaz/GIT/Axon/example/src/configs/templateConf.json",
-        "tokens": "/home/khaaz/GIT/Axon/example/src/configs/tokenConf.json"
+    "staff": {
+        "owners": [ 
+            {
+                "name": "KhaaZ#0001",
+                "id": "179908288337412096"
+            },
+            {
+                "name": "Jack™#1312",
+                "id": "211431972789157888"
+            }
+        ],
+        "admins": [ 
+            {
+                "name": "KhaaZ#0001",
+                "id": "179908288337412096"
+            }
+        ]
     },
 
     "debugMode": false,
 
-    "customLogger": true,
+    "logger": 0,
     "customDB": true
 }

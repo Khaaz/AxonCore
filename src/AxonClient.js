@@ -6,16 +6,19 @@ import Eris from 'eris';
 // misc
 import logo from './Conf/logo';
 
+import packageJSON from '../package.json';
+
 // Core
+//import Base from './Structures/Base';
 import Module from './Structures/Module';
 import Command from './Structures/Command';
 import EventF from './Structures/EventF';
+import LoggerHandler from './Loggers/index';
 
 // Configs
-import defConf from './Conf/defConf.json';
-import generalConf from './Conf/generalConf.json';
-import templateConf from './Conf/templateConf.json';
-import tokenConf from './Conf/tokenConf.json';
+import defAxonConf from './Conf/axonConf.json';
+import defTemplateConf from './Conf/templateConf.json';
+import defTokenConf from './Conf/tokenConf.json';
 
 // Database
 import JsonService from './Database/JsonService';
@@ -23,11 +26,11 @@ import MongoService from './Database/MongoService';
 
 // Utility
 import Collection from './Utility/Collection';
-import AxonUtil from './Utility/AxonUtil';
+import AxonUtils from './Utility/AxonUtils';
+import Resolver from './Utility/Resolver';
+import Utils from './Utility/Utils';
 
-// Loggers
-import Logger from './Loggers/Logger';
-import DefLogger from './Loggers/DefLogger';
+import util from 'util';
 
 // Errors
 import AxonError from './Errors/AxonError';
@@ -39,18 +42,18 @@ import AxonCommandError from './Errors/AxonCommandError';
  * @author KhaaZ
  * 
  * @class AxonClient
- * @extends {Eris.Client}
  */
-class AxonClient extends Eris.Client {
+class AxonClient {
 
     /**
      * Creates an instance of EaseClient.
      *
      * @param {String} token
-     * @param {Object} options
-     * @param {Object} config - Axon options
+     * @param {Object} options - Eri options
+     * @param {Object} axonOptions - Axon options
      * @param {Object} modules - Object with all modules to add in the bot
      *
+     * @prop {Object} AxonClient - Object with AxonClient specifications (versions, author). Define BASE for the bot
      * @prop {Collection<Module>} modules - All modules in the client [key: label, value: module]
      * @prop {Collection<Command>} commands - All commands in the client [key: label, value: command]
      * @prop {Collection<EventF>} events - All events in the client [key: label, value: event]
@@ -62,14 +65,17 @@ class AxonClient extends Eris.Client {
      * @prop {Object} Logger - Custom Logger => default with console extends or colored chalk/winston
      * @prop {Boolean} _customDB - Use MongoDB (mongoose) or JsonDB (default)
      * @prop {Object} DBprovider - DBService (mongoose or JSON)
-     * @prop {Object} _Util - Util methods for Axon
+     * @prop {Object} AxonUtil - Util methods for Axon
+     * @prop {Object} Resolver - Resolver
+     * @prop {Object} Utils - Utils methods general
      * @prop {Object} staff - Users id for staff members (updated with current roles)
      * @prop {Object} params - Bot params
      * - debugMode (boolean)  : enable to show commands latency
      * - prefix (Array)       : default bot prefix
      * - ownerPrefix (string) : owner prefix - override perms/cd
      * - adminPrefix (srting) : admins prefix - override perms/cd
-     * @prop {Object} _configs - configs (general, template)
+     * @prop {Object} _configs - configs (general, template, _token)
+     * @prop {Object} configs - [GETTER] _configs
      * @prop {Object} infos - Default infos about the bot: owners/name/links etc (misc)
      *
      * EXTERNAL METHOD
@@ -77,11 +83,19 @@ class AxonClient extends Eris.Client {
      *
      * @memberof AxonClient
      */
-    constructor(token, options, config, modules) {
-        super(token, options);
-
+    constructor(token, erisOptions, axonOptions, modules) {
         /** Cool logging */
         console.log(logo);
+
+        /** Eris Client initialisation */
+        this._client = new Eris.Client(token, erisOptions);
+        try {
+            this._client.connect();
+            console.log('Client Connected');
+        } catch (err) {
+            console.log(err);
+        }
+        
         
         /**
          * Collection of Modules
@@ -101,17 +115,20 @@ class AxonClient extends Eris.Client {
         this.commandAliases = new Map();
         this.events = new Collection(EventF);
 
-        /**
-         * Blacklisted users and guilds
-         */
-        this.blacklistedUsers = new Set();
-        this.blacklistedGuilds = new Set();
+        /** DataModels */
+        this.models = new Collection();
 
         /**
          * Cache of GuildConfigs from the DB
          * Guild ID => guildConfig
          */
-        this.guildConfigs = new Collection(Object);
+        this.guildConfigs = new Collection();
+
+        /**
+         * Blacklisted users and guilds
+         */
+        this.blacklistedUsers = new Set();
+        this.blacklistedGuilds = new Set();
 
         /**
          * Private - internal 
@@ -121,22 +138,21 @@ class AxonClient extends Eris.Client {
          * Utility for AxonClient
          */
         /** Logger */
-        this._customLogger = config.customLogger || defConf.customLogger || false;
-        this.Logger = this._customLogger ? Logger : new DefLogger();
-        /** DB */
-        this._customDB = config.customDB || defConf.customDB || false;
-        this.DBprovider = this._customDB ? MongoService : JsonService;
-        /** Axon Util */
-        this._Util = AxonUtil;
-        
+        this.Logger = LoggerHandler.pickLogger(axonOptions.axonConf);
 
+        /** DB */
+        this._customDB = axonOptions.axonConf.customDB || defAxonConf.customDB || false;
+        this.DBprovider = this._customDB ? MongoService : JsonService;
+        
+        /** UTILITY (global cache) */
+        this.AxonUtils = AxonUtils;
+        this.Resolver = axonOptions.resolver || Resolver;
+        this.Utils = axonOptions.utils || Utils;
+        
         /**
          * Bot Staff
-         * - Owners
-         * - Admins
-         * - Contributors
-         * - Moderators
-         * - Members
+         * - owners
+         * - admins
          */
         this.staff = {};
 
@@ -145,21 +161,22 @@ class AxonClient extends Eris.Client {
          * Prefixes - debug - misc
          */
         this.params = {
-            debugMode: config.debugMode || defConf.debugMode || false,
+            debugMode: axonOptions.axonConf.debugMode || defAxonConf.debugMode || false,
             prefix: [
-                config.prefix.general || defConf.prefix.general || 'e!',
+                axonOptions.axonConf.prefix.general || defAxonConf.prefix.general
             ],
-            ownerPrefix: config.prefix.owner || defConf.prefix.owner || '!!', // meant to be same prefix on all AxonClient instance (global override)
-            adminPrefix: config.prefix.admin || defConf.prefix.admin || 'e.', // meant to be different prefix on all AxonClient instanc (global override)
+            ownerPrefix: axonOptions.axonConf.prefix.owner || defAxonConf.prefix.owner, // meant to be same prefix on all AxonClient instance (global override)
+            adminPrefix: axonOptions.axonConf.prefix.admin || defAxonConf.prefix.admin // meant to be different prefix on all AxonClient instance (global override)
         };
 
         /**
+         * [GETER] - configs
          * Init config Object from json configs
-         * configs.general
+         * configs.axon
          * configs.template
+         * configs._token
          */
         this._configs = {};
-        
 
         /**
          * General infos - Description
@@ -169,23 +186,55 @@ class AxonClient extends Eris.Client {
          * infos.links - Object
          */
         this.infos = {
-            name: config.general.name || defConf.general.name || 'AxonClient',
-            description: config.general.description || defConf.general.description || 'AxonClient - Discord Bot Client for Eris [KhaaZ#0001]'
+            name: axonOptions.axonConf.general.name || defAxonConf.general.name,
+            description: axonOptions.axonConf.general.description || defAxonConf.general.description,
+            version: axonOptions.axonConf.general.version || defAxonConf.general.version,
+            library: axonOptions.axonConf.general.library || defAxonConf.general.library
         };
 
-        this.initConfigs(config); // this._configs => cache Template, General configs
-        this.initOwners(config); // this.staff => Load and cache staff Owners + Admins
+        /**
+         * Client specification
+         * version/base/author/url
+         */
+        this.axonInfos = {
+            name: packageJSON.name,
+            version: packageJSON.version,
+            author: packageJSON.author,
+            github: packageJSON.repository.url
+        };
+
+        this.initConfigs(axonOptions); // this._configs => cache Template, General configs
+        this.initOwners(axonOptions); // this.staff => Load and cache staff Owners + Admins
+        //this.initLogger(axonOptions);
+        //this.initDB(axonOptions);
+        this.initListener(axonOptions);
+        //this.initWH(axonOptions);
 
         /**
          * - Global events -
          */
-        this.once('ready', this.onReady.bind(this));
-        this.once('shardPreReady', this.onShardPreReady.bind(this));
+        this.client.once('ready', this.onReady.bind(this));
+        this.client.once('shardPreReady', this.onShardPreReady.bind(this));
 
-        this.on('messageCreate', this.onMessageCreate.bind(this));
+        this.client.on('messageCreate', this.onMessageCreate.bind(this));
 
     }
 
+    //
+    // ****** GETTER ******
+    //
+
+    get configs() {
+        return this._configs;
+    }
+
+    get client() {
+        return this._client;
+    }
+
+    get webhooks() {
+        return this._configs._tokens.webhooks;
+    }
     //
     // ****** INIT ******
     //
@@ -196,10 +245,33 @@ class AxonClient extends Eris.Client {
      * @memberof AxonClient
      */
     onReady() {
-        this.Logger.notice('=== Instance Ready! ===');
+        this.Logger.axon('=== Instance Ready! ===');
+        if (this.webhooks.uptime.id && this.webhooks.uptime.token && this.webhooks.uptime.id.lenght > 0 && this.webhooks.uptime.token.length > 0) {
+            this.client.executeWebhook(this.webhooks.uptime.id, this.webhooks.uptime.token, {
+                username: `Status - ${this.client.user.username}`,
+                avatarURL: this.client.user.avatarURL,
+                embeds: [{
+                    color: 2067276,
+                    timestamp: new Date(),
+                    description: '**Instance Ready!**'
+                }]
+            });
+        }
+
         this._init().then(() => {
-            this.ready = true;
-            this.Logger.notice('=== Initialisation over - Bot Ready! ===');
+            this.client.ready = true;
+            this.Logger.axon('=== Initialisation over - Bot Ready! ===');
+            if (this.webhooks.uptime.id && this.webhooks.uptime.token && this.webhooks.uptime.id.lenght > 0 && this.webhooks.uptime.token.length > 0) {
+                this.client.executeWebhook(this.webhooks.uptime.id, this.webhooks.uptime.token, {
+                    username: `Status - ${this.client.user.username}`,
+                    avatarURL: this.client.user.avatarURL,
+                    embeds: [{
+                        color: 2067276,
+                        timestamp: new Date(),
+                        description: '**Bot Ready!**'
+                    }]
+                });
+            }
         });
     }
 
@@ -209,8 +281,8 @@ class AxonClient extends Eris.Client {
      * @memberof AxonClient
      */
     onShardPreReady() { // ???????????????????????????????????????? needed ???????????????????????
-        this.preReady = true;
-        this.Logger.notice('=== Pre-ready! ===');
+        this.client.preReady = true;
+        this.Logger.axon('=== Pre-ready! ===');
     }
 
     /**
@@ -219,48 +291,134 @@ class AxonClient extends Eris.Client {
      *
      * @memberof AxonClient
      */
-    async initConfigs(config) {
-        try {
-            this._configs.general = await this._Util.readJson(config.configPath.general);
-        } catch(err) {
-            this._configs.general = generalConf;
-            this.Logger.warn(new AxonError('Couldn\'t init custom configs General (default values)', 'INIT', 'Configs', err).stack);
+
+    initConfigs({ axonConf, templateConf, tokenConf }) {
+
+        if (axonConf && this.Utils.compareObject(defAxonConf, axonConf)) {
+            this._configs.axon = axonConf;
+        } else {
+            this._configs.axon = defAxonConf;
+            this.Logger.warn(new AxonError('Couldn\'t init custom template config (default values)', 'INIT', 'Configs').stack);
         }
 
-        try {
-            this._configs.template = await this._Util.readJson(config.configPath.template);
-        } catch(err) {
+        if (templateConf && this.Utils.compareObject(defTemplateConf, templateConf)) {
             this._configs.template = templateConf;
-            this.Logger.warn(new AxonError('Couldn\'t init custom configs Template (default values)', 'INIT', 'Configs', err).stack);
+        } else {
+            this._configs.template = defTemplateConf;
+            this.Logger.warn(new AxonError('Couldn\'t init custom template config (default values)', 'INIT', 'Configs').stack);
         }
 
-        try {
-            this._configs._tokens = await this._Util.readJson(config.configPath.tokens);
-        } catch(err) {
-            this._configs.tokens = tokenConf;
-            this.Logger.warn(new AxonError('Couldn\'t init custom configs Token (default values)', 'INIT', 'Configs', err).stack);
+        if (tokenConf && this.Utils.compareObject(defTokenConf, tokenConf)) {
+            this._configs._tokens = tokenConf;
+        } else {
+            this._configs.tokens = defTokenConf;
+            this.Logger.warn(new AxonError('Couldn\'t init custom token config (default values)', 'INIT', 'Configs').stack);
         }
 
-        this.infos.owners = Object.values(this._configs.general.owners).map(o => o.name);
-        this.infos.links = this._configs.general.links;
+        /** Init infos */
+        this.infos.owners = Object.values(this._configs.axon.staff.owners).map(o => o.name);
+        this.configs.axon.links && (this.infos.links = this.configs.axon.links);
 
-        this.Logger.info('Configs initialized!');
+        this.Logger.init('Configs initialised!');
     }
 
     /**
      * Init Bot staff
      * Create Bot staff object according to roles in Ease server
-     *
+     * 
+     * @param {Object} config - AxonOptions
      * @memberof AxonClient
      */
-    initOwners(config){
+    initOwners({ axonConf: config }){
 
-        this.staff.owners = Object.values(config.ids.owners);
-        this.staff.admins = Object.values(config.ids.admins);
-
-        this.Logger.info('Owners initialized!');
+        this.staff.owners = config.staff.owners.map(o => o.id);
+        if (config.staff.admins) {
+            this.staff.admins = config.staff.admins.map(o => o.id);
+        }
+            
+        this.Logger.init('Owners engaged!');
     }
     
+    /**
+     * Init Listeners
+     * Initialize error listeners
+     *
+     * @param {Object} { tokenConf: config }
+     * @memberof AxonClient
+     */
+    initListener({ tokenConf: config }) {
+        const webhooks = config.webhooks;
+        const boolean = webhooks.error.id && webhooks.error.token && webhooks.error.id.lenght > 0 && webhooks.error.token.length > 0;
+
+        process.on('uncaughtException', (err) => {
+            this.Logger.emerg(err.stack);
+
+            if (boolean) {
+                this.client.executeWebhook(webhooks.error.id, webhooks.error.token, {
+                    username: `Exception - ${this.client.user.username}`,
+                    avatarURL: this.client.user.avatarURL,
+                    embeds: [{
+                        color: 15158332,
+                        timestamp: new Date(),
+                        description: err.stack.length > 1950 ? err.message : err.stack
+                    }]
+                });
+            }
+        });
+        
+        process.on('unhandledRejection', (err) => {
+            this.Logger.error(err.stack);
+        
+            if (boolean) {
+                this.client.executeWebhook(webhooks.error.id, webhooks.error.token, {
+                    username: `Rejection - ${this.client.user.username}`,
+                    avatarURL: this.client.user.avatarURL,
+                    embeds: [{
+                        color: 15158332,
+                        timestamp: new Date(),
+                        description: err.stack.length > 1950 ? err.message : err.stack
+                    }]
+
+                });
+            }
+            
+        });
+        
+        this.client.on('error', (err) => {
+            this.Logger.error(err.stack);
+
+            if (boolean) {
+                this.client.executeWebhook(webhooks.error.id, webhooks.error.token, {
+                    username: `Error - ${this.client.user.username}`,
+                    avatarURL: this.client.user.avatarURL,
+                    embeds: [{
+                        color: 15158332,
+                        timestamp: new Date(),
+                        description: err.stack.length > 1950 ? err.message : err.stack
+                    }]
+                });
+            }
+        });
+        
+        this.client.on('warn', (msg) => {
+            this.Logger.warn(msg);
+
+            if (boolean) {
+                this.client.executeWebhook(webhooks.error.id, webhooks.error.token, {
+                    username: `Warn - ${this.client.user.username}`,
+                    avatarURL: this.client.user.avatarURL,
+                    embeds: [{
+                        color: 15105570,
+                        timestamp: new Date(),
+                        description: msg
+                    }]
+                });
+            }
+        });
+
+        this.Logger.init('Error listeners bound!');
+    }
+
     /**
      * Init all other Client modules - methods - content
      * Run after ready event.
@@ -326,7 +484,7 @@ class AxonClient extends Eris.Client {
         }
 
         this.modules.set(module.label, module); // add the module in modules Map (references to module object)
-        this.Logger.info(`*Module*  : ${module.label} - Commands loaded and initialised. [${module.commands.size}]`);
+        this.Logger.module(`Commands loaded and initialised. [${module.commands.size}]`, module);
     }
 
     /**
@@ -341,7 +499,7 @@ class AxonClient extends Eris.Client {
             const newModule = new value(this);
             this.registerModule(newModule);
         }
-        this.Logger.info('All Modules loaded!');
+        this.Logger.init(`All Modules loaded and ready! [${this.modules.size}]`);
     }
 
     /**
@@ -366,20 +524,22 @@ class AxonClient extends Eris.Client {
             this.blacklistedGuilds.add(guild);
         }
 
-        this.Logger.info('Axon config initialized!');
+        this.Logger.init('Axon config initialised!');
     }
 
     /**
      * Init Bot status
-     * Default method. Overrided by initStatus in child.
+     * Default method. Overridden by initStatus in child.
      *
      * @memberof AxonClient
      */
     initStatus() {
-        this.editStatus(null, {
+        this.client.editStatus(null, {
             name: `AxonCore | ${this.params.prefix[0]}help`,
             type: 0
         });
+
+        this.Logger.init('Status setup!');
     }
 
     //
@@ -399,7 +559,7 @@ class AxonClient extends Eris.Client {
      * @memberof AxonClient
      */
     async onMessageCreate(msg) {
-        if (!this.ready) {
+        if (!this.client.ready) {
             return;
         }
 
@@ -670,7 +830,7 @@ class AxonClient extends Eris.Client {
      */
     sendFullHelp(msg) {
         try {
-            this.createMessage(msg.channel.id, 'full help msg');
+            this.client.createMessage(msg.channel.id, 'full help msg');
         } catch (err) {
             console.log(err);
         }
@@ -747,7 +907,7 @@ class AxonClient extends Eris.Client {
         if (msg.channel.guild && this.guildConfigs.has(msg.channel.guild.id) && this.guildConfigs.get(msg.channel.guild.id).prefix.length) {
             prefixes = this.guildConfigs.get(msg.channel.guild.id).prefix;
         }
-        return (msg.content.startsWith(`${this.user.mention} `) && `${this.user.mention} `) || prefixes.find(prefix => msg.content.startsWith(prefix));
+        return (msg.content.startsWith(`${this.client.user.mention} `) && `${this.client.user.mention} `) || prefixes.find(prefix => msg.content.startsWith(prefix));
     }
 
     /**
@@ -835,9 +995,9 @@ class AxonClient extends Eris.Client {
      * @memberof AxonClient
      */
     _isGuildIgnored(msg, guildConf) {
-        return guildConf.ignoredUsers.find(u => u === msg.author.id) || // User is ignored
-            guildConf.ignoredRoles.find(r => msg.member.roles && msg.member.roles.includes(r)) || // Role is ignored
-            guildConf.ignoredChannels.find(c => c === msg.channel.id); // Channel is ignored
+        return guildConf.ignoredUsers.find(u => u === msg.author.id) // User is ignored
+            || guildConf.ignoredRoles.find(r => msg.member.roles && msg.member.roles.includes(r)) // Role is ignored
+            || guildConf.ignoredChannels.find(c => c === msg.channel.id); // Channel is ignored
     }
 
     /**
@@ -913,7 +1073,7 @@ class AxonClient extends Eris.Client {
         }
         const blacklist = Array.from(this.blacklistedUsers);
         try {
-            const axon = await this.DBprovider.updateEaseBlacklistUser(blacklist);
+            const axon = await this.DBprovider.updateBlacklistUser(blacklist);
             return axon;
         } catch (err) {
             throw new AxonError('Cannot update blacklisted users.', 'DB ERROR', 'BlacklistUser', err);
@@ -938,7 +1098,7 @@ class AxonClient extends Eris.Client {
         }
         const blacklist = Array.from(this.blacklistedUsers);
         try {
-            const axon = await this.DBprovider.updateEaseBlacklistGuild(blacklist);
+            const axon = await this.DBprovider.updateBlacklistGuild(blacklist);
             return axon;
         } catch (err) {
             throw new AxonError('Cannot update blacklisted guilds.', 'DB ERROR', 'BlacklistGuild', err);
@@ -1062,9 +1222,9 @@ class AxonClient extends Eris.Client {
         return base;
     }
 
-    inspect() {
+    [util.inspect.custom]() {
         // http://stackoverflow.com/questions/5905492/dynamic-function-name-in-javascript
-        const copy = new (new Function(`return function ${this.constructor.name}(){}`)());
+        const copy = new {[this.constructor.name]: class {}}[this.constructor.name]();
         for(const key in this) {
             if(this.hasOwnProperty(key) && !key.startsWith('_') && this[key] !== undefined) {
                 copy[key] = this[key];
