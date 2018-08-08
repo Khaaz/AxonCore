@@ -1,4 +1,4 @@
-'use string';
+'use strict';
 import { Signale } from 'signale';
 import figures from 'figures';
 
