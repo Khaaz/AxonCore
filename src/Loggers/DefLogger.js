@@ -119,7 +119,7 @@ class DefLogger extends Console {
      * @param {String} input
      * @memberof DefLogger
      */
-    init(input,) {
+    init(input) {
         const mess = this.parseTime() + ' - [ INIT  ] => ' + input;
         this.log(mess);
     }

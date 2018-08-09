@@ -13,6 +13,7 @@ import packageJSON from '../package.json';
 import Module from './Structures/Module';
 import Command from './Structures/Command';
 import EventF from './Structures/EventF';
+import LoggerHandler from './Loggers/index';
 
 // Configs
 import defAxonConf from './Conf/axonConf.json';
@@ -141,8 +142,8 @@ class AxonClient {
          * Utility for AxonClient
          */
         /** Logger */
-        this._customLogger = axonOptions.axonConf.customLogger || defAxonConf.customLogger || false;
-        this.Logger = this._customLogger ? ChalkLogger : DefLogger;
+        this.Logger = LoggerHandler.pickLogger(axonOptions.axonConf);
+
         /** DB */
         this._customDB = axonOptions.axonConf.customDB || defAxonConf.customDB || false;
         this.DBprovider = this._customDB ? MongoService : JsonService;
@@ -322,7 +323,7 @@ class AxonClient {
         this.infos.owners = Object.values(this._configs.axon.staff.owners).map(o => o.name);
         this.configs.axon.links && (this.infos.links = this.configs.axon.links);
 
-        this.Logger.axon('[INIT] Configs initialised!');
+        this.Logger.init('Configs initialised!');
     }
 
     /**
@@ -339,7 +340,7 @@ class AxonClient {
             this.staff.admins = config.staff.admins.map(o => o.id);
         }
             
-        this.Logger.axon('[INIT] Owners engaged!');
+        this.Logger.init('Owners engaged!');
     }
     
     /**
@@ -419,7 +420,7 @@ class AxonClient {
             }
         });
 
-        this.Logger.axon('[INIT] Error listeners bound!');
+        this.Logger.init('Error listeners bound!');
     }
 
     /**
@@ -487,7 +488,7 @@ class AxonClient {
         }
 
         this.modules.set(module.label, module); // add the module in modules Map (references to module object)
-        this.Logger.axon(`*MODULE*  : ${module.label} - Commands loaded and initialised. [${module.commands.size}]`);
+        this.Logger.module(`Commands loaded and initialised. [${module.commands.size}]`, module);
     }
 
     /**
@@ -502,7 +503,7 @@ class AxonClient {
             const newModule = new value(this);
             this.registerModule(newModule);
         }
-        this.Logger.axon(`[INIT] All Modules loaded and ready! [${this.modules.size}]`);
+        this.Logger.init(`All Modules loaded and ready! [${this.modules.size}]`);
     }
 
     /**
@@ -527,7 +528,7 @@ class AxonClient {
             this.blacklistedGuilds.add(guild);
         }
 
-        this.Logger.axon('[INIT] Axon config initialised!');
+        this.Logger.init('Axon config initialised!');
     }
 
     /**
@@ -542,7 +543,7 @@ class AxonClient {
             type: 0
         });
 
-        this.Logger.axon('[INIT] Status setup!');
+        this.Logger.init('Status setup!');
     }
 
     //

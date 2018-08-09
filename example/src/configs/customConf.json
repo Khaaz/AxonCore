@@ -44,6 +44,6 @@
 
     "debugMode": false,
 
-    "customLogger": true,
+    "logger": 0,
     "customDB": true
 }

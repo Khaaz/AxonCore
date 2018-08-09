@@ -29,6 +29,6 @@
 
     "debugMode": false,
 
-    "customLogger": false,
+    "logger": 0,
     "customDB": false
 }
