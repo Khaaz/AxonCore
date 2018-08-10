@@ -16,10 +16,10 @@ export { default as Resolver } from './src/Utility/Resolver';
 export { default as Enums } from './src/Utility/Enums';
 //DataBase
 export { default as JsonService } from './src/Database/JsonService';
-export { default as MongoService } from './src/Database/MongoService';
+//export { default as MongoService } from './src/Database/MongoService';
 // Mongoose Models
-export { default as AxonSchema } from './src/Database/Models/AxonSchema';
-export { default as GuildSchema } from './src/Database/Models/GuildSchema';
+//export { default as AxonSchema } from './src/Database/Models/AxonSchema';
+//export { default as GuildSchema } from './src/Database/Models/GuildSchema';
 
 // Loggers
 export { default as DefLogger } from './src/Loggers/DefLogger';
