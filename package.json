@@ -19,6 +19,7 @@
     "moment": "^2.22.2",
     "mongoose": "^5.2.3",
     "pm2": "^3.0.0",
+    "signale": "^1.2.1",
     "winston": "^3.0.0"
   },
   "main": "index.js",
@@ -26,7 +27,8 @@
     "lint": "eslint .",
     "test": "node -r esm test/index.js",
     "example": "node -r esm example/src/index.js",
-    "examplepm2": "node -r esm example/scripts/start.js"
+    "examplepm2": "node -r esm example/scripts/start.js",
+    "pm2logs": "pm2 logs --lines 100 AxonCore"
   },
   "repository": {
     "type": "git",
