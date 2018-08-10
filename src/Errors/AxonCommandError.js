@@ -24,8 +24,8 @@ class AxonCommandError extends Error {
     constructor(module, command, ctx, err) {
         super();
 
-        this.module = module.toString();
-        this.command = command.toString();
+        this.module = (typeof module === 'string') ? module : (module.toString() || '');
+        this.command = (typeof command === 'string') ? command : (command.toString() || '');
 
         const short =  `${this.name} => [${this.module}] - ${this.command}\n${ctx} : ${err.name ? err.name : ''}`;
         Object.defineProperty(this, 'short', {

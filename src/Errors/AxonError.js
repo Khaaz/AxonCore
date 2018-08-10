@@ -24,13 +24,13 @@ class AxonError extends Error {
     constructor(message, module, command, err) {
         super();
 
-        this.command = typeof command === 'string' ? command : (command.toString() || null);
-        this.module = typeof module === 'string' ? module : (module.toString() || null);
+        this.module = (typeof module === 'string') ? module : (module.toString() || null);
+        this.command = (typeof command === 'string') ? command : (command.toString() || null);
 
         const short =  `${this.name} => ` 
             + (this.module ? `[${this.module}] ` : '') 
             + (this.command ? `${this.command} ` : '')
-            + (err ? `\n${err.name} - ` : '\n');
+            + ((err && err.name) ? `\n${err.name} - ` : '\n');
         
         Object.defineProperty(this, 'short', {
             value: short,
@@ -38,15 +38,11 @@ class AxonError extends Error {
         });
 
         Object.defineProperty(this, 'message', {
-            value: short + message + ' | ' + 
-                (err ? 
-                    err.message ? err.message 
-                        : err.name ? err.name : '' 
-                    : ''),
+            value: short + message + ' | ' + (err ? (err.message || err.name || '') : ''),
             writable: false
         });
 
-        if (err) {
+        if (err && err.stack) {
             Object.defineProperty(this, 'stack', {
                 value: this.message + '\n' + err.stack,
                 writable: false
