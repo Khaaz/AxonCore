@@ -30,5 +30,5 @@
     "debugMode": false,
 
     "logger": 0,
-    "customDB": false
+    "db": 0
 }

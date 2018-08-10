@@ -7,7 +7,7 @@
     "sentry": "",
 
     "webhooks": {
-        "uptime": {
+        "status": {
             "id": "",
             "token": ""
         },
