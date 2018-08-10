@@ -7,29 +7,29 @@ const options = {
         verbose: {
             badge: figures.info,
             label: 'verbose',
-            color: 'gray'
+            color: 'gray',
         },
         axon: {
             badge: figures.star,
             label: 'axon',
-            color: 'magenta'
+            color: 'magenta',
         },
         init: {
             badge: figures.play,
             label: 'init',
-            color: 'green'
+            color: 'green',
         },
         moduleS: {
             badge: figures.squareSmallFilled,
             label: 'module',
-            color: 'cyan'
+            color: 'cyan',
         },
         command: {
             badge: figures.squareSmall,
             label: 'command',
-            color: 'cyanBright'
-        }
-    }
+            color: 'cyanBright',
+        },
+    },
 };
 
 class SignaleLogger extends Signale {
@@ -37,7 +37,7 @@ class SignaleLogger extends Signale {
         super(options);
 
         this.config({
-            displayTimestamp: true
+            displayTimestamp: true,
         });
     }
 
@@ -50,9 +50,8 @@ class SignaleLogger extends Signale {
     }
 
     module(input, module) {
-        this.moduleS({prefix: module.label, message: input});
+        this.moduleS({ prefix: module.label, message: input });
     }
-
 }
 
 export default new SignaleLogger(options);

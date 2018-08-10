@@ -2,23 +2,15 @@
 
 import Base from './Base';
 
-// Utility
-//import Enums from '../Utility/Enums';
-
-// Error
-//import AxonError from '../Errors/AxonError';
-//import AxonCommandError from './Errors/AxonCommandError';
-
 /**
  * AxonCore - Command contructor
  *
  * @author KhaaZ
- * 
+ *
  * @class Command
  * @extends Base
  */
 class Command extends Base {
-
     /**
      * Creates an instance of Command.
      *
@@ -43,7 +35,7 @@ class Command extends Base {
      * @prop {Collection<Command>} subCommands - Map of subcommands if hasSubcmd = true / else null
      * @prop {Object<Map>} subCommandsAliases - Map of subcommands aliases if hasSubcmd = true / else null
      * @prop {Boolean} serverBypass - if the command can't be server disabled | default: false (can be disabled)
-     * 
+     *
      * @prop {Object} infos - Default infos about the command
      *  - owner(Array)  // ['Eleos'] OR ['Eleos', 'Ape']
      *  - cmdName(String) // 'mail' OR 'mail all' (for subcommmands)
@@ -51,7 +43,7 @@ class Command extends Base {
      *  - examples(Array) // ['suggestion Hey can we add this thanks', ...]
      *  - arguments(Array) // ['id', 'user', 'channel', ...]
      *  - customArguments(String) // If not empty, this string will be used instead of arguments
-     * 
+     *
      * @prop {Object} options - Default options for the command
      *  - argsMin(Number)                   : 0 // min arg required
      *  - invalidUsage(Boolean)             : true // trigger help command on invalid usage = args required and no args given
@@ -60,7 +52,7 @@ class Command extends Base {
      *  - guildOnly(Boolean)                : true // command usable only in guilds
      *  - hidden(Boolean)                   : false // commands totally hidden from help commmand
      *  - cooldown(Number)                  : 3000 // cooldown for the command
-     * 
+     *
      * @prop {Object} permissions - Default permissions for the bot/users
      *           - needed: needs to have all permissions in the Array to use the command
      *           - bypass: having at least one of the perms in the Array allow to use the command
@@ -77,12 +69,12 @@ class Command extends Base {
      */
     constructor(module) {
         super(module.axon);
-        
+
         /**
          * [GETTER] - bot references to Axon Client
-         * [GETTER] -  (private) module references to the module the command is in 
+         * [GETTER] -  (private) module references to the module the command is in
          */
-        this._module = module; //(module Object)
+        this._module = module; // (module Object)
 
         /**
          * Handle Cooldown
@@ -104,7 +96,7 @@ class Command extends Base {
          * Subcommands related
          * Default values
          */
-        this.isSubcmd = false; 
+        this.isSubcmd = false;
         this.parentCommand = null; // reference parent command
         this.hasSubcmd = false;
         // temp var used to init subcommands
@@ -114,8 +106,8 @@ class Command extends Base {
          * Initiated only if subcommands
          * (here to keep track of names)
          */
-        //this.subCommands = new Collection(Command) || {}; // create Map instance by default if there is subcmd so we can init subcmd easily
-        //this.subCommandsAliases = new Map() || {}; // create Map instance by default if there is subcmd so we can init subcmd aliases easily
+        // this.subCommands = new Collection(Command) || {}; // create Map instance by default if there is subcmd so we can init subcmd easily
+        // this.subCommandsAliases = new Map() || {}; // create Map instance by default if there is subcmd so we can init subcmd aliases easily
 
         /**
          * Bypass all perms - true = prevent the command to be server disabled
@@ -131,7 +123,7 @@ class Command extends Base {
             name: '', // 'mail' OR 'mail all' (for subcommmands)
             description: '', // 'A cool command that does things.' <-- With the dot!
             examples: [], // ['suggestion Hey can we add this thanks', ...]
-            arguments: [] // [['argument name', needed?], [..., ...]] for example: [['id', true], ['name', false]]
+            arguments: [], // [['argument name', needed?], [..., ...]] for example: [['id', true], ['name', false]]
         };
 
         /**
@@ -145,23 +137,23 @@ class Command extends Base {
             deleteCommand: false, // delete input after trigger
             guildOnly: false, // command usable only in guild
             hidden: false, // hide command from help command
-            cooldown: 3000 // cooldown between each usage of the same command
+            cooldown: 3000, // cooldown between each usage of the same command
         };
 
         /**
          * Handle permissions
          * bot perms
          * user perms
-         * 
+         *
          * Optional posible override for:
          *  - users ID
          *  - roles ID
          *  - channels Id
-         * 
+         *
          * Bot Staff override
-         * 
+         *
          * custom function for special permission case
-         * 
+         *
          * needed => needed to have all <NEEDED> permissions to execute the command
          * bypass => needed to have one <BYPASS> permissions to execute the command (override needed as well)
          */
@@ -171,26 +163,26 @@ class Command extends Base {
             serverAdmin: false, // administrator / manageServer (Utility.Enums.adminPerms)
             user: {
                 needed: [], // optional | example: ['manageMessage','manageRole'] -- needs both
-                bypass: [] // optional | example: ['manageMessage','manageRole'] -- needs one of the two :: aka having one of the perm allow to use the command -- bypass everything
+                bypass: [], // optional | example: ['manageMessage','manageRole'] -- needs one of the two :: aka having one of the perm allow to use the command -- bypass everything
             },
             usersID: {
                 needed: [], // optional
-                bypass: [] // optional -- bypass everything
+                bypass: [], // optional -- bypass everything
             },
             rolesID: {
                 needed: [], // optional
-                bypass: [] // optional -- bypass everything
+                bypass: [], // optional -- bypass everything
             },
             channelsID: {
                 needed: [], // optional
-                bypass: [] // optional -- bypass everything
+                bypass: [], // optional -- bypass everything
             },
             staff: {
                 needed: [], // optional
-                bypass: [] // optional -- bypass everything
+                bypass: [], // optional -- bypass everything
             }, // [this.bot.staff.owner, this.bot.staff.admins] Owner - admins - contribs - regs | bypass no matter what
-            
-            //custom: function();
+
+            // custom: function();
         };
     }
 
@@ -218,25 +210,25 @@ class Command extends Base {
      * @memberof Command
      */
     _execute(message) {
-        const {msg, args, guildConf} = message;
+        const { msg, args, guildConf } = message;
 
         /** Test for Mod Only / serverMod command | serverAdmin command */
-        if ( ((guildConf.modOnly || this.permissions.serverMod ) && !this.AxonUtils.isMod(msg.member, guildConf)) || this.permissions.serverAdmin && !this.AxonUtils.isAdmin(msg.member) ) {
+        if (((guildConf.modOnly || this.permissions.serverMod) && !this.AxonUtils.isMod(msg.member, guildConf)) || (this.permissions.serverAdmin && !this.AxonUtils.isAdmin(msg.member))) {
             /** Sends invalid perm message in case of invalid perm [option enabled] */
-            if (!guildConf.modOnly && this.options.invalidPermissionMessage ) { // doesn't send back invalid perm if mod Only
+            if (!guildConf.modOnly && this.options.invalidPermissionMessage) { // doesn't send back invalid perm if mod Only
                 return this.sendUserPerms(msg.channel);
             }
             return Promise.resolve();
         }
 
         /** Test for bot permissions */
-        if (!this._checkPermsBot(msg) ) {
+        if (!this._checkPermsBot(msg)) {
             return this.sendBotPerms(msg.channel);
         }
 
         /** Test for Cooldown - Send Cooldown message */
         const cd = this._shouldCooldown(msg);
-        if (typeof(cd) === 'number') {
+        if (typeof (cd) === 'number') {
             return this.sendCooldown(msg.channel, cd);
         }
 
@@ -255,7 +247,7 @@ class Command extends Base {
 
         /** Sends invalid usage message in case of invalid usage (not enough argument) [option enabled] */
         if (args.length < this.options.argsMin && this.options.invalidUsage && !this.options.hidden) {
-            return this.sendHelp({msg, args})
+            return this.sendHelp({ msg, args })
                 .then(() => {
                     this._cooldown[msg.author.id] = Date.now();
                 });
@@ -279,13 +271,13 @@ class Command extends Base {
         const { msg, args } = message;
 
         /** Check bot perms */
-        if ( !this._checkPermsBot(msg) ) {
+        if (!this._checkPermsBot(msg)) {
             return this.sendBotPerms(msg.channel);
         }
 
         /** Sends invalid usage message in case of invalid usage (not enough argument) [option enabled] */
         if (args.length < this.options.argsMin && this.options.invalidUsage && !this.options.hidden) {
-            return this.sendHelp({msg, args});
+            return this.sendHelp({ msg, args });
         }
 
         if (this.options.deleteCommand) { // delete input
@@ -305,19 +297,19 @@ class Command extends Base {
     _executeDM(message) {
         const { msg, args } = message;
 
-        if(this.options.guildOnly) { //guild only
+        if (this.options.guildOnly) { // guild only
             return Promise.resolve();
         }
 
         /** Test for Cooldown - Send Cooldown message */
         const cd = this._shouldCooldown(msg);
-        if (typeof(cd) === 'number') {
+        if (typeof (cd) === 'number') {
             return this.sendCooldown(msg.channel, cd);
         }
 
         /** Sends invalid usage message in case of invalid usage (not enough argument) [option enabled] */
         if (args.length < this.options.argsMin && this.options.invalidUsage && !this.options.hidden) {
-            return this.sendHelp({msg, args})
+            return this.sendHelp({ msg, args })
                 .then(() => {
                     this._cooldown[msg.author.id] = Date.now();
                 });
@@ -342,7 +334,7 @@ class Command extends Base {
      * @returns {Promise}
      * @memberof Command
      */
-    sendHelp({msg, /*args*/}) {
+    sendHelp({ msg /* args*/}) {
         return (this.axon.sendHelp ? this.axon.sendHelp(this, msg) : this.sendMessage(msg.channel, 'help for ' + this.label));
     }
 
@@ -359,21 +351,21 @@ class Command extends Base {
      */
     _shouldCooldown(msg) {
         const cooldown = this._cooldown[msg.author.id];
-        
+
         // no cooldown registered yet
-        if (!cooldown) { 
+        if (!cooldown) {
             return false; // doesn't cooldown
         }
 
         // time spent since last uses <= cooldown chose for that command
         const curCD = Date.now() - cooldown;
-        if ( curCD <= this.options.cooldown) {
+        if (curCD <= this.options.cooldown) {
             return curCD; // return time left (does cooldown)
         }
 
         // delete current time for this user.
         delete this._cooldown[msg.author.id];
-        
+
         return false; // doesn't cooldown
     }
 
@@ -388,28 +380,26 @@ class Command extends Base {
      */
     canExecute(msg) {
         /** Bypass: if one of the perm is true => Exec the command */
-        if ( this._checkPermsUserBypass(msg) 
-            || this._checkUserBypass(msg) 
-            || this._checkRoleBypass(msg) 
-            || this._checkChannelBypass(msg) 
-            || this._checkStaffBypass(msg) ) {
-            
+        if (this._checkPermsUserBypass(msg)
+            || this._checkUserBypass(msg)
+            || this._checkRoleBypass(msg)
+            || this._checkChannelBypass(msg)
+            || this._checkStaffBypass(msg)) {
             return true;
         }
 
         /** Needed: if one of the perms is false => doesn't exec the command */
-        if ( !this._checkPermsUserNeeded(msg) 
-            || !this._checkUserNeeded(msg) 
-            || !this._checkRoleNeeded(msg) 
-            || !this._checkChannelNeeded(msg) 
-            || !this._checkStaffNeeded(msg) ) {
-            
+        if (!this._checkPermsUserNeeded(msg)
+            || !this._checkUserNeeded(msg)
+            || !this._checkRoleNeeded(msg)
+            || !this._checkChannelNeeded(msg)
+            || !this._checkStaffNeeded(msg)) {
             return false;
         }
 
         return true;
     }
-    
+
     /**
      * Check bot permission
      * (= permssions in config)
@@ -439,7 +429,7 @@ class Command extends Base {
         }
         const user = msg.member;
         for (const userPerm of this.permissions.user.bypass) {
-            if (user.permission.has(userPerm) ) {
+            if (user.permission.has(userPerm)) {
                 return true;
             }
         }
@@ -460,7 +450,7 @@ class Command extends Base {
         }
         const user = msg.member;
         for (const userPerm of this.permissions.user.needed) {
-            if (!user.permission.has(userPerm) ) {
+            if (!user.permission.has(userPerm)) {
                 return false;
             }
         }
@@ -511,7 +501,7 @@ class Command extends Base {
         }
         const roles = msg.member.roles;
         for (const role of this.permissions.rolesID.bypass) {
-            if (roles.find(role) ) {
+            if (roles.find(role)) {
                 return true;
             }
         }
@@ -532,7 +522,7 @@ class Command extends Base {
         }
         const roles = msg.member.roles;
         for (const role of this.permissions.rolesID.needed) {
-            if (!roles.find(role) ) {
+            if (!roles.find(role)) {
                 return false;
             }
         }
@@ -624,7 +614,7 @@ class Command extends Base {
     sendUserPerms(channel) {
         return this.sendError(channel, this.Template.message.error.permSource)
             .then((msg) => {
-                if(msg) {
+                if (msg) {
                     setTimeout(() => msg.delete(), 9000);
                 }
             });
@@ -641,7 +631,7 @@ class Command extends Base {
     sendDestPerms(channel) {
         return this.sendError(channel, this.Template.message.error.permDest)
             .then((msg) => {
-                if(msg) {
+                if (msg) {
                     setTimeout(() => msg.delete(), 9000);
                 }
             });
@@ -656,9 +646,9 @@ class Command extends Base {
      * @memberof Command
      */
     sendCooldown(channel, time) {
-        return this.sendError(channel, this.Template.message.error.cooldown + ` - **${Math.ceil(time/100)/10}sec** remaining..`)
+        return this.sendError(channel, this.Template.message.error.cooldown + ` - **${Math.ceil(time / 100) / 10}sec** remaining..`)
             .then((msg) => {
-                if(msg) {
+                if (msg) {
                     setTimeout(() => msg.delete(), 5000);
                 }
             });

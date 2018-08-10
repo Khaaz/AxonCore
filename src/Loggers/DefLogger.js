@@ -6,14 +6,13 @@ import { format } from 'util';
 /**
  * Default Logger with time and custom method
  * Allow clean logging without any dependency
- * 
+ *
  * @author KhaaZ
- * 
+ *
  * @class DefLogger
  * @extends {Console}
  */
 class DefLogger extends Console {
-    
     constructor() {
         super(process.stdout, process.stderr); // Create default Console instance - Node v8 support
     }
@@ -115,7 +114,7 @@ class DefLogger extends Console {
      * @param {String} input
      * @memberof DefLogger
      */
-    init(input,) {
+    init(input) {
         const mess = this.parseTime() + ' - [ INIT  ] => ' + input;
         this.log(mess);
     }
@@ -162,14 +161,13 @@ class DefLogger extends Console {
         }
         this.log(mess);
     }
-    
+
 
     parseTime() {
         const current = new Date();
         const formated = format('[ %s ]', current.getHours() + 'h:' + current.getMinutes() + 'm:' + current.getSeconds() + 's');
         return formated;
     }
-
 }
 
 export default new DefLogger();

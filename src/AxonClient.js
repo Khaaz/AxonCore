@@ -40,11 +40,10 @@ import AxonCommandError from './Errors/AxonCommandError';
  * AxonCore - Client constructor
  *
  * @author KhaaZ
- * 
+ *
  * @class AxonClient
  */
 class AxonClient {
-
     /**
      * Creates an instance of AxonClient.
      *
@@ -85,8 +84,8 @@ class AxonClient {
         console.log(logo);
 
         /**
-         * Initialise Handler, 
-         * Internal cache, Major compenents 
+         * Initialise Handler,
+         * Internal cache, Major compenents
          */
         /** Logger */
         this.initLogger(axonOptions); // this.Logger
@@ -97,7 +96,7 @@ class AxonClient {
         this.Utils = axonOptions.utils || Utils;
         this.Resolver = axonOptions.resolver || Resolver;
 
-        /** 
+        /**
          * Initialise Configs
          * - axon
          * - template
@@ -105,8 +104,8 @@ class AxonClient {
          */
         this.initConfigs(axonOptions); // this._configs [GETTER - this.configs]
 
-        /** 
-         * Initialise CORE 
+        /**
+         * Initialise CORE
          * Collections/Containers/Structures
          */
 
@@ -127,8 +126,8 @@ class AxonClient {
          */
         this.blacklistedUsers = new Set();
         this.blacklistedGuilds = new Set();
-        
-        /** 
+
+        /**
          * Initialise Eris Client
          */
         this._client = new Eris.Client(token, erisOptions); // [GETTER - this.client]
@@ -147,10 +146,10 @@ class AxonClient {
         this.params = {
             debugMode: axonOptions.axonConf.debugMode || defAxonConf.debugMode || false,
             prefix: [
-                axonOptions.axonConf.prefix.general || defAxonConf.prefix.general
+                axonOptions.axonConf.prefix.general || defAxonConf.prefix.general,
             ],
             ownerPrefix: axonOptions.axonConf.prefix.owner || defAxonConf.prefix.owner, // meant to be same prefix on all AxonClient instance (global override)
-            adminPrefix: axonOptions.axonConf.prefix.admin || defAxonConf.prefix.admin // meant to be different prefix on all AxonClient instance (global override)
+            adminPrefix: axonOptions.axonConf.prefix.admin || defAxonConf.prefix.admin, // meant to be different prefix on all AxonClient instance (global override)
         };
 
         /**
@@ -173,9 +172,8 @@ class AxonClient {
             name: packageJSON.name,
             version: packageJSON.version,
             author: packageJSON.author,
-            github: packageJSON.repository.url
+            github: packageJSON.repository.url,
         };
-
     }
 
     //
@@ -213,8 +211,8 @@ class AxonClient {
         this.Logger.verbose('- Test verbose -');
         this.Logger.axon('- Test AXON -');
         this.Logger.init('- Test INIT -');
-        //this.Logger.module('- Test module -');
-        //this.Logger.command('- Test command -');
+        // this.Logger.module('- Test module -');
+        // this.Logger.command('- Test command -');
         console.log(' ');
     }
 
@@ -253,16 +251,16 @@ class AxonClient {
         this.Logger.init('Configs initialised!');
     }
 
-    initOwners({ axonConf: config }){
+    initOwners({ axonConf: config }) {
         this.staff = {};
 
         this.staff.owners = config.staff.owners.map(o => o.id);
         if (config.staff.admins) {
             this.staff.admins = config.staff.admins.map(o => o.id);
         }
-            
+
         this.Logger.init('Owners engaged!');
-        
+
         /** Init Bot Staff (custom) */
         if (this.initStaff) {
             this.initStaff();
@@ -277,7 +275,7 @@ class AxonClient {
     /**
      * START METHOD
      * AxonClient class already created
-     * 
+     *
      * @memberof AxonClient
      */
     start() {
@@ -288,7 +286,7 @@ class AxonClient {
             .catch(err => {
                 this.Logger.error(err);
             });
-        
+
         this._init()
             .then(() => {
                 this.Logger.axon('=== AxonClient Ready! ===');
@@ -310,14 +308,14 @@ class AxonClient {
             try {
                 /** Init Error listeners */
                 this.initListener();
-                
+
                 /** Init modules, commands */
                 this.initAllModules(this._tempModules); // load modules
                 delete this._tempModules;
-                
+
                 /** Axon init (blacklist/global cache) */
                 await this.initAxon(); // load blacklisted users - guild
-                
+
                 /** Additional */
                 if (this.init) { // if child class has init
                     await this.init();
@@ -341,14 +339,14 @@ class AxonClient {
         this.client.ready = true;
         /** Status */
         this.initStatus(); // execute default status function in Axon or override
-        
+
         this.AxonUtils.triggerWebhook('status', {
             color: 2067276,
             timestamp: new Date(),
-            description: '**Instance Ready!**'
+            description: '**Instance Ready!**',
         });
     }
-    
+
     /**
      * Initialize error listeners + webhooks
      *
@@ -361,38 +359,37 @@ class AxonClient {
             this.AxonUtils.triggerWebhook('error', {
                 color: 15158332,
                 timestamp: new Date(),
-                description: (err.stack && err.stack.length > 1950) ? err.message : err.stack
+                description: (err.stack && err.stack.length > 1950) ? err.message : err.stack,
             }, `Exception - ${this.client.user.username}`);
         });
-        
+
         process.on('unhandledRejection', (err) => {
             this.Logger.emerg(err.stack);
-        
+
             this.AxonUtils.triggerWebhook('error', {
                 color: 15158332,
                 timestamp: new Date(),
-                description: (err.stack && err.stack.length > 1950) ? err.message : err.stack
+                description: (err.stack && err.stack.length > 1950) ? err.message : err.stack,
             }, `Rejection - ${this.client.user.username}`);
-            
         });
-        
+
         this.client.on('error', (err) => {
             this.Logger.error(err.stack);
 
             this.AxonUtils.triggerWebhook('error', {
                 color: 15158332,
                 timestamp: new Date(),
-                description: (err.stack && err.stack.length > 1950) ? err.message : err.stack
+                description: (err.stack && err.stack.length > 1950) ? err.message : err.stack,
             });
         });
-        
+
         this.client.on('warn', (msg) => {
             this.Logger.warn(msg);
-            
+
             this.AxonUtils.triggerWebhook('error', {
                 color: 15105570,
                 timestamp: new Date(),
-                description: msg
+                description: msg,
             }, `Warn - ${this.client.user.username}`);
         });
 
@@ -407,8 +404,8 @@ class AxonClient {
      * @memberof AxonClient
      */
     initAllModules(modules) {
-        for (const [, value] of Object.entries(modules)) {
-            const newModule = new value(this);
+        for (const [, Value] of Object.entries(modules)) {
+            const newModule = new Value(this);
             this.registerModule(newModule);
         }
         this.Logger.init(`[AxonClient] Initialised! Modules loaded -${this.modules.size}-`);
@@ -422,15 +419,14 @@ class AxonClient {
      * @memberof AxonClient
      */
     registerModule(module) {
-        //init instance module and add it to the Map
+        // init instance module and add it to the Map
         if (this.modules.has(module.label)) {
             throw new AxonError(`AxonClient - Module: ${module.label} already registered!`, 'INIT');
         }
 
         for (const [label, cmd] of module.commands) {
-
             if (this.commands.has(label)) {
-                throw new AxonError(`${module.label} - Command: ${label} already registered!`, 'INIT',);
+                throw new AxonError(`${module.label} - Command: ${label} already registered!`, 'INIT');
             }
             this.commands.set(label, cmd); // add the command in the commands Map (references to module.commands.get(label))
 
@@ -442,7 +438,7 @@ class AxonClient {
             }
         }
         this.modules.set(module.label, module); // add the module in modules Map (references to module object)
-        
+
         this.Logger.initModule(module);
     }
 
@@ -461,10 +457,10 @@ class AxonClient {
             throw new AxonError('Can\'t retrieve AxonSchema', 'INIT', 'DB ERROR', err);
         }
 
-        for(const user of axonSchema.bannedUsers) { // init blacklisted users
+        for (const user of axonSchema.bannedUsers) { // init blacklisted users
             this.blacklistedUsers.add(user);
         }
-        for(const guild of axonSchema.bannedGuilds) { // init blacklisted guilds
+        for (const guild of axonSchema.bannedGuilds) { // init blacklisted guilds
             this.blacklistedGuilds.add(guild);
         }
 
@@ -480,7 +476,7 @@ class AxonClient {
     initStatus() {
         this.client.editStatus(null, {
             name: `AxonCore | ${this.params.prefix[0]}help`,
-            type: 0
+            type: 0,
         });
 
         this.Logger.axon('Status setup!');
@@ -513,7 +509,7 @@ class AxonClient {
         }
 
         /** ignore cached blacklisted users */
-        if (this.blacklistedUsers.has(msg.author.id) ) {
+        if (this.blacklistedUsers.has(msg.author.id)) {
             return;
         }
 
@@ -521,9 +517,9 @@ class AxonClient {
         if (!msg.channel.guild) {
             return this._execDM(msg);
         }
-        
+
         /** ignore cached blacklisted guilds */
-        if(this.blacklistedGuilds.has(msg.channel.guild.id)) {
+        if (this.blacklistedGuilds.has(msg.channel.guild.id)) {
             return;
         }
 
@@ -532,21 +528,21 @@ class AxonClient {
         /**
          * Get guild Conf from DB
          * Cache in this.guildConfigs (only on first messageCreate in this guild)
-         * 
+         *
          * Mongo dependant (or local DB)
          */
         let guildConf = this.guildConfigs.get(msg.channel.guild.id);
         if (!guildConf) {
             try {
-                guildConf =  await this.fetchGuildConf(msg.channel.guild.id); // retrieve DB get guildConf  
-            } catch(err) {
+                guildConf =  await this.fetchGuildConf(msg.channel.guild.id); // retrieve DB get guildConf
+            } catch (err) {
                 throw new AxonCommandError('OnMessage', 'DB ERROR - guildConfig', `Guild: ${msg.channel.guild.id}`, err);
             }
             this.guildConfigs.set(msg.channel.guild.id, guildConf);
         }
 
         /** Admin override */
-        if (msg.content.startsWith(this.params.ownerPrefix) && this.AxonUtils.isBotOwner(msg.author.id) || msg.content.startsWith(this.params.adminPrefix) && this.AxonUtils.isBotAdmin(msg.author.id)) { // ADMIN override everything
+        if ((msg.content.startsWith(this.params.ownerPrefix) && this.AxonUtils.isBotOwner(msg.author.id)) || (msg.content.startsWith(this.params.adminPrefix) && this.AxonUtils.isBotAdmin(msg.author.id))) { // ADMIN override everything
             return this._execAdmin(msg, guildConf);
         }
 
@@ -579,7 +575,6 @@ class AxonClient {
 
             return this._execCommand(msg, args, command, guildConf);
         }
-
     }
 
     /**
@@ -595,7 +590,6 @@ class AxonClient {
      * @memberof AxonClient
      */
     _execCommand(msg, args, command, guildConf) {
-        
         if (this.params.debugMode) {
             this.Logger.verbose(`Execution of ${command.label}`);
             console.time('- Net');
@@ -606,7 +600,7 @@ class AxonClient {
                     console.timeEnd('- Net');
                 })
                 .catch(err => {
-                    this.Logger.error(new AxonCommandError(command.module, command, `Guild: ${msg.channel.guild.id}`,err).stack);
+                    this.Logger.error(new AxonCommandError(command.module, command, `Guild: ${msg.channel.guild.id}`, err).stack);
                     console.timeEnd('- Net');
                     return;
                 });
@@ -631,7 +625,6 @@ class AxonClient {
      * @memberof AxonClient
      */
     _execAdmin(msg, guildConf) {
-
         msg.prefix = this.params.adminPrefix;
 
         const args = msg.content.replace(/<@!/g, '<@').substring(msg.prefix.length).split(' ');
@@ -649,7 +642,7 @@ class AxonClient {
         }
         msg.command = command;
 
-        /** 
+        /**
          * Execution with/without debugMode
          * Logging/Error handling
          */
@@ -709,7 +702,7 @@ class AxonClient {
             }
             msg.command = command;
 
-            /** 
+            /**
              * Execution with/without debugMode
              * Logging/Error handling
              */
@@ -717,7 +710,7 @@ class AxonClient {
                 this.Logger.verbose(`DM Execution of ${command.label}`);
                 console.time('- Net');
                 console.time('- Node');
-                
+
                 command._executeDM({ msg, args })
                     .then(() => {
                         console.timeEnd('- Net');
@@ -747,7 +740,6 @@ class AxonClient {
      * @memberof AxonClient
      */
     _execHelp(msg, args, guildConf) {
-
         if (args.length === 0) {
             return this.sendFullHelp(msg);
         }
@@ -762,11 +754,11 @@ class AxonClient {
         }
         msg.command = command;
 
-        command.sendHelp({msg, args, guildConf});
+        command.sendHelp({ msg, args, guildConf });
     }
-    
+
     /**
-     * Send full help in DM 
+     * Send full help in DM
      * Respecting permissions
      *
      * @param {Object<Message>} msg
@@ -916,7 +908,7 @@ class AxonClient {
             return undefined;
         }
 
-        if ( guildConf && ( (this._isModuleDisabled(command, guildConf) && !command.module.serverBypass) || (this._isCommandDisabled(command, guildConf) && !command.serverBypass) ) ) { // check module/command server disabled
+        if (guildConf && ((this._isModuleDisabled(command, guildConf) && !command.module.serverBypass) || (this._isCommandDisabled(command, guildConf) && !command.serverBypass))) { // check module/command server disabled
             return;
         }
 
@@ -953,8 +945,7 @@ class AxonClient {
     registerGuildPrefix(gID, prefixArr) {
         return this.DBprovider.updateGuildPrefix(gID, prefixArr)
             .then((guildSchema) => {
-
-                if(!this.guildConfigs.has(gID)) {
+                if (!this.guildConfigs.has(gID)) {
                     this.guildConfigs.set(gID, guildSchema);
                 } else {
                     const conf = this.guildConfigs.get(gID);
@@ -1020,7 +1011,7 @@ class AxonClient {
      * Checkers were done before calling updateStateModule
      * the module exist/is not a serverBypass module
      * boolean true = disable module / false = enable
-     * 
+     *
      * @param {String} guildID - The guild ID
      * @param {String} label - The module label
      * @param {Boolean} boolean - If disable the module (false) or enable (true)
@@ -1031,12 +1022,12 @@ class AxonClient {
         let conf;
         try {
             conf = this.guildConfigs.get(guildID) || this.fetchGuildConf(guildID); // get from cache or from DB if not found
-        } catch(err) {
+        } catch (err) {
             throw err;
         }
 
-        boolean ? conf.modules.includes(label) && (conf.modules = conf.modules.filter(c => c != label)) : !conf.modules.includes(label) && conf.modules.push(label);
-        
+        boolean ? conf.modules.includes(label) && (conf.modules = conf.modules.filter(c => c !== label)) : !conf.modules.includes(label) && conf.modules.push(label);
+
         try {
             const newConf = await this.DBprovider.updateModule(guildID, conf.modules);
             this.guildConfigs.set(guildID, newConf);
@@ -1051,7 +1042,7 @@ class AxonClient {
      * Checkers were done before calling updateStateCommand
      * the command exist/is not a serverBypass command
      * boolean true = disable command / false = enable
-     * 
+     *
      * @param {String} guildID - The guild ID
      * @param {String} label - The command label
      * @param {Boolean} boolean - If disable the command (false) or enable (true)
@@ -1062,12 +1053,12 @@ class AxonClient {
         let conf;
         try {
             conf = this.guildConfigs.get(guildID) || this.fetchGuildConf(guildID); // get from cache or from DB if not found
-        } catch(err) {
+        } catch (err) {
             throw err;
         }
 
-        boolean ? conf.commands.includes(label) && (conf.commands = conf.commands.filter(c => c != label)) : !conf.commands.includes(label) && conf.commands.push(label);
-        
+        boolean ? conf.commands.includes(label) && (conf.commands = conf.commands.filter(c => c !== label)) : !conf.commands.includes(label) && conf.commands.push(label);
+
         try {
             const newConf = await this.DBprovider.updateCommand(guildID, conf.commands);
             this.guildConfigs.set(guildID, newConf);
@@ -1082,7 +1073,7 @@ class AxonClient {
      * Checkers were done before calling updateStateEvent
      * the event exist/is not a serverBypass event
      * boolean true = disable event / false = enable
-     * 
+     *
      * @param {String} guildID - The guild ID
      * @param {String} label - The event label
      * @param {Boolean} boolean - If disable the event (false) or enable (true)
@@ -1093,12 +1084,12 @@ class AxonClient {
         let conf;
         try {
             conf = this.guildConfigs.get(guildID) || this.fetchGuildConf(guildID); // get from cache or from DB if not found
-        } catch(err) {
+        } catch (err) {
             throw err;
         }
 
-        boolean ? conf.events.includes(label) && (conf.events = conf.events.filter(c => c != label)) : !conf.events.includes(label) && conf.events.push(label);
-        
+        boolean ? conf.events.includes(label) && (conf.events = conf.events.filter(c => c !== label)) : !conf.events.includes(label) && conf.events.push(label);
+
         try {
             const newConf = await this.DBprovider.updateEvent(guildID, conf.events);
             this.guildConfigs.set(guildID, newConf);
@@ -1114,15 +1105,15 @@ class AxonClient {
 
     toJSON() {
         const base = {};
-        for(const key in this) {
-            if(!base.hasOwnProperty(key) && this.hasOwnProperty(key) && !key.startsWith('_')) {
-                if(!this[key]) {
+        for (const key in this) {
+            if (!base.hasOwnProperty(key) && this.hasOwnProperty(key) && !key.startsWith('_')) {
+                if (!this[key]) {
                     base[key] = this[key];
-                } else if(this[key] instanceof Set) {
+                } else if (this[key] instanceof Set) {
                     base[key] = Array.from(this[key]);
-                } else if(this[key] instanceof Map) {
+                } else if (this[key] instanceof Map) {
                     base[key] = Array.from(this[key].values());
-                } else if(typeof this[key].toJSON === 'function') {
+                } else if (typeof this[key].toJSON === 'function') {
                     base[key] = this[key].toJSON();
                 } else {
                     base[key] = this[key];
@@ -1134,9 +1125,9 @@ class AxonClient {
 
     [util.inspect.custom]() {
         // http://stackoverflow.com/questions/5905492/dynamic-function-name-in-javascript
-        const copy = new {[this.constructor.name]: class {}}[this.constructor.name]();
-        for(const key in this) {
-            if(this.hasOwnProperty(key) && !key.startsWith('_') && this[key] !== undefined) {
+        const copy = new { [this.constructor.name]: class {} }[this.constructor.name]();
+        for (const key in this) {
+            if (this.hasOwnProperty(key) && !key.startsWith('_') && this[key] !== undefined) {
                 copy[key] = this[key];
             }
         }

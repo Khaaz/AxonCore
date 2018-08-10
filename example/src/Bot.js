@@ -7,19 +7,19 @@ import tokenConf from './configs/tokenConf.json';
 import templateConf from './configs/templateConf.json';
 
 const AxonOptions = {
-    axonConf: axonConf,
-    templateConf: templateConf,
-    tokenConf: tokenConf,
-    
+    axonConf,
+    templateConf,
+    tokenConf,
+
     resolver: null,
     utils: null,
     axonSchema: null,
-    guildSchema: null
+    guildSchema: null,
 };
 
 /**
  * new AxonClient(token, erisOptions, AxonOptions, modules)
- * 
+ *
  * new Client(token, erisOptions, AxonOptions) => Modules imported in Client
  */
 const Bot = new Client(
@@ -31,7 +31,7 @@ const Bot = new Client(
         disableEveryone: true,
         getAllUsers: true,
         messageLimit: 100,
-        restMode: true
+        restMode: true,
     },
     AxonOptions
 );

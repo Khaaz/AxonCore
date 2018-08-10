@@ -4,8 +4,6 @@ import Axon from './Models/AxonSchema';
 import Guild from './Models/GuildSchema';
 
 class MongoService {
-    constructor() {}
-
     /**
      * Retrieve Axon schema from DB (unique schema)
      *
@@ -61,12 +59,12 @@ class MongoService {
             ID : '1',
         },
         {
-            ID: '1'
+            ID: '1',
         },
         {
             new: true,
             upsert: true,
-            setDefaultsOnInsert: true
+            setDefaultsOnInsert: true,
         });
     }
 
@@ -88,7 +86,7 @@ class MongoService {
         {
             new: true,
             upsert: true,
-            setDefaultsOnInsert: true
+            setDefaultsOnInsert: true,
         });
     }
 
@@ -106,8 +104,8 @@ class MongoService {
         },
         {
             $set: {
-                bannedUsers: blacklistedUsers
-            }
+                bannedUsers: blacklistedUsers,
+            },
         },
         {
             new: true,
@@ -129,8 +127,8 @@ class MongoService {
         },
         {
             $set: {
-                bannedUsers: blacklistedGuilds
-            }
+                bannedUsers: blacklistedGuilds,
+            },
         },
         {
             new: true,
@@ -153,8 +151,8 @@ class MongoService {
         },
         {
             $set: {
-                prefix: prefixArr
-            }
+                prefix: prefixArr,
+            },
         },
         {
             new: true,
@@ -176,8 +174,8 @@ class MongoService {
         },
         {
             $set: {
-                modules: modulesArr
-            }
+                modules: modulesArr,
+            },
         },
         {
             new: true,
@@ -199,15 +197,15 @@ class MongoService {
         },
         {
             $set: {
-                commands: commandsArr
-            }
+                commands: commandsArr,
+            },
         },
         {
             new: true,
             upsert: true,
         });
     }
-    
+
     /**
      * Update the guilds events array for that guild
      *
@@ -222,8 +220,8 @@ class MongoService {
         },
         {
             $set: {
-                events: eventsArr
-            }
+                events: eventsArr,
+            },
         },
         {
             new: true,

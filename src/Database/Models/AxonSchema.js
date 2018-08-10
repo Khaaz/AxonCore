@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 
 const axonSchema = new Schema({
     /** Index */
-    ID: { type: String, required: true, index: true}, // ID
+    ID: { type: String, required: true, index: true }, // ID
     prefix: { type: String, default: 'e!' },
 
     prefixes: { type: Object, default: {} }, // Object {guildID: [Array of prefix]} => into Map Object || (save for prefix?) (currenctly running with prefix in guildSchema)
@@ -28,10 +28,10 @@ const axonSchema = new Schema({
     /**
      * \/ Customs \/
      */
-    
+
 }, {
     strict: false,
-    minimize: false
+    minimize: false,
 });
 
 export default mongoose.model('Axon', axonSchema);

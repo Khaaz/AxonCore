@@ -5,19 +5,18 @@ import { inspect } from 'util';
 import { Command } from '../../../../..';
 
 class Eval extends Command {
-
     constructor(module) {
         super(module);
 
         this.label = 'eval';
-        this.aliases = ['eval','e'];
+        this.aliases = ['eval', 'e'];
 
         this.infos = {
             owner: ['AS04', 'Ape', 'KhaaZ'],
             name: 'eval',
             description: 'Eval js code.',
             examples: ['eval you should know what goes in here'],
-            arguments: [['js code', false]]
+            arguments: [['js code', false]],
         };
 
         this.options.argsMin = 1;
@@ -40,13 +39,13 @@ class Eval extends Command {
             let evaled = await eval(args.join(' '));
 
             switch (typeof evaled) {
-            case 'object': {
-                evaled = inspect(evaled, { depth: 0, showHidden: true });
-                break;
-            }
-            default: {
-                evaled = String(evaled);
-            }
+                case 'object': {
+                    evaled = inspect(evaled, { depth: 0, showHidden: true });
+                    break;
+                }
+                default: {
+                    evaled = String(evaled);
+                }
             }
 
             /** Just for security. */
@@ -74,7 +73,6 @@ class Eval extends Command {
                 }
             }
             return this.sendMessage(msg.channel, `\`\`\`js\n${evaled}\`\`\``);
-
         } catch (err) {
             this.Logger.debug(err.stack);
             return this.sendMessage(msg.channel, err.message ? err.message : err.name);
