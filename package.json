@@ -17,10 +17,9 @@
     "chalk": "^2.4.1",
     "eventemitter3": "^3.1.0",
     "moment": "^2.22.2",
-    "mongoose": "^5.2.3",
+    "mongoose": "^5.2.7",
     "pm2": "^3.0.0",
-    "signale": "^1.2.1",
-    "winston": "^3.0.0"
+    "signale": "^1.2.1"
   },
   "main": "index.js",
   "scripts": {
