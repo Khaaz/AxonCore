@@ -33,7 +33,23 @@ const adminPerms = [
     'manageGuild',
 ];
 
+const typeWH = {
+    status: 'Status',
+    loader: 'Loader',
+    error: 'Error',
+    misc: 'Misc',
+};
+
+const typeError = {
+    api: 'DAPI error - failed to retrieve from Discord',
+    db: 'DB error - failed to retrieve from the DB',
+    internal: 'Internal error - AxonClient/internal methods',
+    unexpected: 'Unexpected error'
+};
+
 export default {
     permissionsNames,
-    adminPerms
+    adminPerms,
+    typeWH,
+    typeError
 };

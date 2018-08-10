@@ -28,23 +28,106 @@ class Base {
     }
 
     get bot() {
-        return this._axon.client;
+        return this.axon.client;
     }
 
     get Logger() {
-        return this._axon.Logger;
+        return this.axon.Logger;
     }
 
     get Resolver() {
-        return this._axon.Resolver;
+        return this.axon.Resolver;
     }
 
     get AxonUtils() {
-        return this._axon.AxonUtils;
+        return this.axon.AxonUtils;
     }
 
     get Utils() {
-        return this._axon.Utils;
+        return this.axon.Utils;
+    }
+
+    //
+    // ****** METHODS ******
+    //
+
+    /**
+     * DM targeted user if the bot is able to retrieve DM channel.
+     * Reject promise if not
+     *
+     * @param {Object<User>} user - user object to get the DM channel
+     * @param {Object|String} content - string or object (embed)
+     * @returns
+     * @memberof Command
+     */
+    sendDM(user, content) {
+        return this.AxonUtils.sendDM(user, content);
+    }
+
+    /**
+     * Send a message.
+     * Check for bot permissions + message/embed length
+     *
+     * @param {Object<Channel>} channel - The channel Object
+     * @param {Object/String} content - Message content, String or Embed Object
+     * @returns {Promise<Message?>}
+     * @memberof Command
+     */
+    sendMessage(channel, content) {
+        return this.AxonUtils.sendMessage(channel, content);
+    }
+
+    /**
+     * Edit a message
+     *
+     * @param {Object<Message>} message - The message object to edit
+     * @param {Object/String} content - Object (embed) or String
+     * @returns {Promise<Message?>}
+     * @memberof Command
+     */
+    editMessage(message, content) {
+        return this.AxonUtils.editMessage(message, content);
+    }
+
+    /**
+     * Send an error message. Add the error emote to the content
+     * Check for sendMessage perms
+     *
+     * @param {Object<Channel>} channel - The channel Object
+     * @param {String} content - error message content (String only)
+     * @returns {Promise<Message?>}
+     * @memberof Command
+     */
+    sendError(channel, content) {
+        return this.AxonUtils.sendError(channel, content);
+    }
+
+    /**
+     * Send a success message. Add the success emote to the content
+     * Check for sendMessage perms
+     *
+     * @param {Object<Channel>} channel - The channel Object
+     * @param {String} content - error message content (String only)
+     * @returns {Promise<Message?>}
+     * @memberof Command
+     */
+    sendSuccess(channel, content) {
+        return this.AxonUtils.sendSuccess(channel, content);
+    }
+
+    /**
+     * Handle errors (send error message/log)
+     * Call sendError
+     *
+     * @param {Object<Message>} msg - The message Object
+     * @param {Object<Error>} err - The error message
+     * @param {String} type - Type of error (api, db, internal)
+     * @param {String} errMsg - optional error message
+     * @returns {Promise}
+     * @memberof Command
+     */
+    error(msg, err, type, errMsg) {
+        return this.AxonUtils.error(msg, err, type, errMsg);
     }
 
     //

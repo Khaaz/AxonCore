@@ -3,10 +3,10 @@
 import Base from './Base';
 
 // Utility
-import Enum from '../Utility/Enums';
+//import Enums from '../Utility/Enums';
 
 // Error
-import AxonError from '../Errors/AxonError';
+//import AxonError from '../Errors/AxonError';
 //import AxonCommandError from './Errors/AxonCommandError';
 
 /**
@@ -221,7 +221,7 @@ class Command extends Base {
         const {msg, args, guildConf} = message;
 
         /** Test for Mod Only / serverMod command | serverAdmin command */
-        if ( ((guildConf.modOnly || this.permissions.serverMod ) && !this.isUserMod(msg.member, guildConf)) || this.permissions.serverAdmin && !this.isUserAdmin(msg.member) ) {
+        if ( ((guildConf.modOnly || this.permissions.serverMod ) && !this.AxonUtils.isMod(msg.member, guildConf)) || this.permissions.serverAdmin && !this.AxonUtils.isAdmin(msg.member) ) {
             /** Sends invalid perm message in case of invalid perm [option enabled] */
             if (!guildConf.modOnly && this.options.invalidPermissionMessage ) { // doesn't send back invalid perm if mod Only
                 return this.sendUserPerms(msg.channel);
@@ -230,7 +230,7 @@ class Command extends Base {
         }
 
         /** Test for bot permissions */
-        if ( this.permissions.bot.length && !this._checkPermsBot(msg) ) {
+        if (!this._checkPermsBot(msg) ) {
             return this.sendBotPerms(msg.channel);
         }
 
@@ -388,14 +388,25 @@ class Command extends Base {
      */
     canExecute(msg) {
         /** Bypass: if one of the perm is true => Exec the command */
-        if ( this._checkPermsUserBypass(msg) || this._checkUserBypass(msg) || this._checkRoleBypass(msg) || this._checkChannelBypass(msg) || this._checkStaffBypass(msg) ) { // permission bypass perms
+        if ( this._checkPermsUserBypass(msg) 
+            || this._checkUserBypass(msg) 
+            || this._checkRoleBypass(msg) 
+            || this._checkChannelBypass(msg) 
+            || this._checkStaffBypass(msg) ) {
+            
             return true;
         }
 
         /** Needed: if one of the perms is false => doesn't exec the command */
-        if ( !(this._checkPermsUserNeeded(msg) && this._checkUserNeeded(msg) && this._checkRoleNeeded(msg) && this._checkChannelNeeded(msg) && this._checkStaffNeeded(msg)) ) {
+        if ( !this._checkPermsUserNeeded(msg) 
+            || !this._checkUserNeeded(msg) 
+            || !this._checkRoleNeeded(msg) 
+            || !this._checkChannelNeeded(msg) 
+            || !this._checkStaffNeeded(msg) ) {
+            
             return false;
         }
+
         return true;
     }
     
@@ -408,13 +419,10 @@ class Command extends Base {
      * @memberof Command
      */
     _checkPermsBot(msg) {
-        const botUser = msg.channel.guild.members.get(this.bot.user.id);
-        for (const botPerm of this.permissions.bot) {
-            if (!botUser.permission.has(botPerm) ) {
-                return false;
-            }
+        if (!this.permissions.bot.length) {
+            return true;
         }
-        return true;
+        return this.AxonUtils.botHasPerms(msg.channel, this.permissions.bot);
     }
 
     /**
@@ -452,11 +460,11 @@ class Command extends Base {
         }
         const user = msg.member;
         for (const userPerm of this.permissions.user.needed) {
-            if (user.permission.has(userPerm) ) {
-                return true;
+            if (!user.permission.has(userPerm) ) {
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
     /**
@@ -523,12 +531,12 @@ class Command extends Base {
             return true;
         }
         const roles = msg.member.roles;
-        for (const role of this.permissions.rolesID.bypass) {
-            if (roles.find(role) ) {
-                return true;
+        for (const role of this.permissions.rolesID.needed) {
+            if (!roles.find(role) ) {
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
     /**
@@ -592,233 +600,6 @@ class Command extends Base {
     //
     // ****** EXTERNAL ******
     //
-
-    /**
-     * Check if the user is a mod or higher (admins are always mod)
-     *
-     * @param {Object<Member>} member - the member object
-     * @param {Object} guildConf - the guild Config from the DB
-     * @returns {Boolean} true if user is a mod / false if not
-     * @
-     * @memberof Command
-     */
-    isUserMod(member, guildConf) {
-        if ( guildConf.modUsers.find(u => u === member.id) ) {
-            return true;
-        }
-
-        const roles = member.roles;
-        for ( const role of guildConf.modRoles ) {
-            if (roles.find(r => r === role) ) {
-                return true;
-            }
-        }
-
-        if (this.isUserAdmin(member)) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Check is the user is an Admin
-     *
-     * @param {Object<Member>} member - The member object
-     * @returns {Boolean} true if admin / false if not
-     * @memberof Command
-     */
-    isUserAdmin(member) {
-        for (const perm of Enum.adminPerms) {
-            if (member.permission.has(perm)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * DM targeted user if the bot is able to retrieve DM channel.
-     * Reject promise if not
-     *
-     * @param {Object<User>} user - user object to get the DM channel
-     * @param {Object|String} content - string or object (embed)
-     * @returns
-     * @memberof Command
-     */
-    sendDM(user, content) {
-        return this.bot.getDMChannel(user.id)
-            .then(chan => {
-                return this.sendMessage(chan, content);
-            })
-            .catch(err => {
-                return Promise.reject('DM disabled or bot blocked' + err);
-            });
-    }
-    /**
-     * Send a message.
-     * Check for bot permissions + message/embed length
-     *
-     * @param {Object<Channel>} channel - The channel Object
-     * @param {Object/String} content - Message content, String or Embed Object
-     * @returns {Promise<Message?>}
-     * @memberof Command
-     */
-    sendMessage(channel, content) {
-        let botUser;
-        if (channel.guild) {
-            botUser = channel.guild.members.get(this.bot.user.id);
-            if (!botUser.permission.has('sendMessages') ) { // check if bot has sendMessage perm in the channel.
-                return Promise.resolve();
-            }
-        }
-        if (content instanceof Object) {
-
-            if (channel.guild && !botUser.permission.has('embedLinks') ) { // check if bot has embedPermission perm in the channel.
-                return Promise.resolve();
-            }
-
-            if (content.embed.length > 6000) {
-                throw new AxonError('[EMBED]: embed > 6000', this.module.label, this.label);
-            }
-            if (content.embed.description && content.embed.description.length > 2048) {
-                throw new AxonError('[EMBED]: description > 2048', this.module.label, this.label);
-            }
-            if (content.embed.title && content.embed.title.length > 256) {
-                throw new AxonError('[EMBED]: title > 256', this.module.label, this.label);
-            }
-            if (content.embed.author && content.embed.author.name && content.embed.author.name.length > 256) {
-                throw new AxonError('[EMBED]: author > 256', this.module.label, this.label);
-            }
-            if (content.embed.footer && content.embed.footer.text && content.embed.footer.text.length > 2048) {
-                throw new AxonError('[EMBED]: footer > 2048', this.module.label, this.label);
-            }
-            if (content.embed.fields) {
-                if (content.embed.fields.length > 25) {
-                    throw new AxonError('[EMBED]: fields > 25', this.module.label, this.label);
-                }
-                for (const field in content.embed.fields) {
-                    if (field.name > 256 || field.value > 1024) {
-                        throw new AxonError('[EMBED]: field: name > 256 ; value > 1024', this.module.label, this.label);
-                    }
-                }
-            }
-        } else {
-            if (content.length > 2000) {
-                throw new AxonError('[EMBED]: content > 2000', this.module.label, this.label);
-            }
-        }
-
-        return this.bot.createMessage(channel.id, content);
-    }
-
-    /**
-     * Edit a message
-     *
-     * @param {Object<Message>} message - The message object to edit
-     * @param {Object/String} content - Object (embed) or String
-     * @returns {Promise<Message?>}
-     * @memberof Command
-     */
-    editMessage(message, content) {
-        if (!message || !content) {
-            return Promise.resolve();
-        }
-        if (content instanceof Object) {
-
-            if (message.channel.guild && !message.channel.guild.members.get(this.bot.user.id).permission.has('embedLinks') ) { // check if bot has embedPermission perm in the channel.
-                return Promise.resolve();
-            }
-
-            if (content.embed.length > 6000) {
-                throw new AxonError('[EMBED]: embed > 6000', this.module.label, this.label);
-            }
-            if (content.embed.description && content.embed.description.length > 2048) {
-                throw new AxonError('[EMBED]: description > 2048', this.module.label, this.label);
-            }
-            if (content.embed.title && content.embed.title.length > 256) {
-                throw new AxonError('[EMBED]: title > 256', this.module.label, this.label);
-            }
-            if (content.embed.author && content.embed.author.name && content.embed.author.name.length > 256) {
-                throw new AxonError('[EMBED]: author > 256', this.module.label, this.label);
-            }
-            if (content.embed.footer && content.embed.footer.text && content.embed.footer.text.length > 2048) {
-                throw new AxonError('[EMBED]: footer > 2048', this.module.label, this.label);
-            }
-            if (content.embed.fields) {
-                if (content.embed.fields.length > 25) {
-                    throw new AxonError('[EMBED]: fields > 25', this.module.label, this.label);
-                }
-                for (const field in content.embed.fields) {
-                    if (field.name > 256 || field.value > 1024) {
-                        throw new AxonError('[EMBED]: field: name > 256 ; value > 1024', this.module.label, this.label);
-                    }
-                }
-            }
-        } else {
-            if (content.length > 2000) {
-                throw new AxonError('[EMBED]: content > 2000', this.module.label, this.label);
-            }
-        }
-
-        return message.edit(content);
-    }
-
-    /**
-     * Send an error message. Add the error emote to the content
-     * Check for sendMessage perms
-     *
-     * @param {Object<Channel>} channel - The channel Object
-     * @param {String} content - error message content (String only)
-     * @returns {Promise<Message?>}
-     * @memberof Command
-     */
-    sendError(channel, content) {
-        return this.sendMessage(channel, this.Template.emote.error + ' ' + content);
-    }
-
-    /**
-     * Send a success message. Add the success emote to the content
-     * Check for sendMessage perms
-     *
-     * @param {Object<Channel>} channel - The channel Object
-     * @param {String} content - error message content (String only)
-     * @returns {Promise<Message?>}
-     * @memberof Command
-     */
-    sendSuccess(channel, content) {
-        return this.sendMessage(channel, this.Template.emote.success + ' ' + content);
-    }
-
-    /**
-     * Handle errors (send error message/log)
-     * Call sendError
-     *
-     * @param {Object<Message>} msg - The message Object
-     * @param {Object<Error>} err - The error message
-     * @param {String} type - Type of error (api, db, internal)
-     * @param {String} errMsg - optional error message
-     * @returns {Promise}
-     * @memberof Command
-     */
-    error(msg, err, type, errMsg) {
-
-        const typeList = {
-            api: 'API request error',
-            db: 'DB error - failed to retrieve from the DB',
-            internal: 'Internal error - internal method'
-        };
-
-        errMsg = errMsg || this.Template.message.error.general;
-
-        this.sendError(msg.channel, errMsg);
-        
-        if (err) {
-            err.message = `Type: ${typeList[type.toLowerCase()]} | ${err.message}`;
-            throw err;
-        }
-        throw new Error(`Type: ${typeList[type.toLowerCase()]}`);
-    }
 
     /**
      * Send an error message for invalid Bot permissions
