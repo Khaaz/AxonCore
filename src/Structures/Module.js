@@ -160,7 +160,7 @@ class Module extends Base {
         }
 
         this.commands.set(command.label, command); // add the command to the Map of commands.
-        this.axon.Logger.command(`${command.label} - Command ready. [Module: ${this.label}]`);
+        this.axon.Logger.initCommand(command);
         
     }
 
@@ -193,7 +193,7 @@ class Module extends Base {
         }
         subCommand.parentCommand = command;
         command.subCommands.set(subCommand.label, subCommand); // add the command to the Map of commands.
-        this.axon.Logger.command(`SubCommand: ${subCommand.label} - Subcommand ready. [Command: ${command.label}](Module: ${this.label})`);
+        this.axon.Logger.initSubCmd(subCommand);
     }
     
     /**
@@ -217,7 +217,7 @@ class Module extends Base {
 
         this.events.set(event.label, event); // add the command to the Map of commands.
 
-        this.axon.Logger.info(`-Event-   : ${event.label} - Event ready. [Module: ${this.label}]`);
+        this.axon.Logger.initEvent(`-Event-   : ${event.label} - Event ready. [Module: ${this.label}]`);
     }
 
     /**
