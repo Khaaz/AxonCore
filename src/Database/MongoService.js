@@ -20,7 +20,8 @@ class MongoService {
     }
 
     /**
-     * Retreive the Guild Schema for the specfici guidld
+     * Retreive the Guild Schema for the specific guild
+     * WARNING: LEAN (faster but no mongo methods)
      *
      * @static
      * @param {String} gID - guild ID
@@ -28,6 +29,21 @@ class MongoService {
      * @memberof MongoService
      */
     static fetchGuild(gID) {
+        return Guild.findOne({
+            guildID : gID,
+        }).lean();
+    }
+
+    /**
+     * Retreive the Guild Schema for the specific guild
+     * NOT LEAN
+     *
+     * @static
+     * @param {String} gID - guild ID
+     * @returns {Promise<Object|null>} GuildSchema Object or null
+     * @memberof MongoService
+     */
+    static fetchGuildSchema(gID) {
         return Guild.findOne({
             guildID : gID,
         });
