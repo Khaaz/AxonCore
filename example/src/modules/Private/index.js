@@ -3,10 +3,9 @@
 import { Module } from '../../../..';
 
 import * as commands from './commands/index';
-//import * as events from './commands/index';
+// import * as events from './commands/index';
 
 class Private extends Module {
-
     constructor(...args) {
         super(...args);
 

@@ -3,7 +3,6 @@
 import { Command } from '../../../../..';
 
 class Pong extends Command {
-
     constructor(module) {
         super(module);
 
@@ -18,7 +17,7 @@ class Pong extends Command {
             name: 'ping pong',
             description: 'Pong the bot.',
             examples: ['ping pong'],
-            arguments: []
+            arguments: [],
         };
 
         this.options.argsMin = 0;
@@ -38,7 +37,7 @@ class Pong extends Command {
         }
 
         const diff = (Date.now() - start);
-        
+
         return this.editMessage(mess, `BADABOUM! \`${diff}ms\``);
     }
 }

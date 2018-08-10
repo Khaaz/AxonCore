@@ -8,14 +8,13 @@ import chalk from 'chalk';
  * Logger with time and custom method
  * Colorful logger
  * Allow clean logging without any dependency
- * 
+ *
  * @author KhaaZ
- * 
+ *
  * @class ChalkLogger
  * @extends {Console}
  */
 class ChalkLogger extends Console {
-    
     constructor() {
         super(process.stdout, process.stderr); // Create default Console instance - Node v8 support
     }
@@ -117,7 +116,7 @@ class ChalkLogger extends Console {
      * @param {String} input
      * @memberof DefLogger
      */
-    init(input,) {
+    init(input) {
         const mess = chalk.cyan(this.parseTime() + ' - [ INIT  ] => ') + input;
         this.log(mess);
     }
@@ -170,7 +169,6 @@ class ChalkLogger extends Console {
         const formated = format('[ %s ]', current.getHours() + 'h:' + current.getMinutes() + 'm:' + current.getSeconds() + 's');
         return formated;
     }
-
 }
 
 export default new ChalkLogger();

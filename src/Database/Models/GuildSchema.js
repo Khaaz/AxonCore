@@ -5,15 +5,15 @@ const Schema = mongoose.Schema;
 
 const guildSchema = new Schema({
     /** Index */
-    guildID: { type: String, required: true, index: true}, //GUILD ID
+    guildID: { type: String, required: true, index: true }, // GUILD ID
 
     prefix: { type: Array, default: [] }, // default e! :: always has @mention when registering guild Prefix
 
-    /** 
+    /**
      * Core
      */
     modules: { type: Array, default: [] }, // Array of disabled modules
-    
+
     commands: { type: Array, default: [] }, // Arrayd of disabled commands
     events: { type: Array, default: [] }, // Array of disabled events
 
@@ -34,17 +34,17 @@ const guildSchema = new Schema({
     /**
      * Moderation
      */
-    modOnly: { type: Boolean, default: false},
+    modOnly: { type: Boolean, default: false },
     modRoles: { type: Array, default: [], required: false },
     modUsers: { type: Array, default: [], required: false },
 
     /**
      * \/ Customs \/
      */
-    
+
 }, {
     autoIndex: true,
-    minimize: false
+    minimize: false,
 });
 
 export default mongoose.model('Guild', guildSchema);

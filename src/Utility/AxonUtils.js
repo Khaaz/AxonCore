@@ -4,7 +4,7 @@ import Enums from './Enums';
 
 /**
  * Utility Class for AxonCore
- * 
+ *
  * AxonClient Specific methods
  * Internal uses + external
  * All methods useful for internal uses or AxonClient specific
@@ -53,14 +53,13 @@ class AxonUtils {
                 username: opt ? opt : (`${type[0].toUpperCase() + type.slice(1)} - ${this.axon.client.user.username}`),
                 avatarURL: this.axon.client.user.avatarURL,
                 embeds: [
-                    embed
-                ]
+                    embed,
+                ],
             })
                 .catch(err => {
                     this.axon.Logger.error('Webhook issue' + err);
                 });
         }
-            
     }
 
     //
@@ -77,7 +76,7 @@ class AxonUtils {
      */
     botHasPerms(channel, permissions) {
         for (const perm of permissions) {
-            if(!channel.permissionsOf(this.bot.user.id).has(perm)) {
+            if (!channel.permissionsOf(this.bot.user.id).has(perm)) {
                 return false;
             }
         }
@@ -94,7 +93,7 @@ class AxonUtils {
      */
     userHasPerm(member, permissions) {
         for (const perm of permissions) {
-            if(!member.permissions.has(perm)) {
+            if (!member.permissions.has(perm)) {
                 return false;
             }
         }
@@ -164,13 +163,13 @@ class AxonUtils {
      * @memberof Command
      */
     isMod(member, guildConf) {
-        if ( guildConf.modUsers.find(u => u === member.id) ) {
+        if (guildConf.modUsers.find(u => u === member.id)) {
             return true;
         }
 
         const roles = member.roles;
-        for ( const role of guildConf.modRoles ) {
-            if (roles.find(r => r === role) ) {
+        for (const role of guildConf.modRoles) {
+            if (roles.find(r => r === role)) {
                 return true;
             }
         }
@@ -181,7 +180,7 @@ class AxonUtils {
 
         return false;
     }
-    
+
     //
     // ****** MESSAGES METHODS ******
     //
@@ -199,13 +198,12 @@ class AxonUtils {
         let botUser;
         if (channel.guild) {
             botUser = channel.guild.members.get(this.bot.user.id);
-            if (!botUser.permission.has('sendMessages') ) { // check if bot has sendMessage perm in the channel.
+            if (!botUser.permission.has('sendMessages')) { // check if bot has sendMessage perm in the channel.
                 return Promise.resolve();
             }
         }
         if (content instanceof Object) {
-
-            if (channel.guild && !channel.guild.members.get(this.bot.user.id).permission.has('embedLinks') ) { // check if bot has embedPermission perm in the channel.
+            if (channel.guild && !channel.guild.members.get(this.bot.user.id).permission.has('embedLinks')) { // check if bot has embedPermission perm in the channel.
                 return Promise.resolve();
             }
 
@@ -234,10 +232,8 @@ class AxonUtils {
                     }
                 }
             }
-        } else {
-            if (content.length > 2000) {
-                throw new Error('[MESSAGE]: content > 2000');
-            }
+        } else if (content.length > 2000) {
+            throw new Error('[MESSAGE]: content > 2000');
         }
 
         return channel.createMessage(content);
@@ -257,8 +253,7 @@ class AxonUtils {
             return Promise.resolve();
         }
         if (content instanceof Object) {
-
-            if (message.channel.guild && !message.channel.guild.members.get(this.bot.user.id).permission.has('embedLinks') ) { // check if bot has embedPermission perm in the channel.
+            if (message.channel.guild && !message.channel.guild.members.get(this.bot.user.id).permission.has('embedLinks')) { // check if bot has embedPermission perm in the channel.
                 return Promise.resolve();
             }
 
@@ -287,10 +282,8 @@ class AxonUtils {
                     }
                 }
             }
-        } else {
-            if (content.length > 2000) {
-                throw new Error('[MESSAGE]: content > 2000');
-            }
+        } else if (content.length > 2000) {
+            throw new Error('[MESSAGE]: content > 2000');
         }
 
         return message.edit(content);
@@ -307,12 +300,8 @@ class AxonUtils {
      */
     sendDM(user, content) {
         return this.bot.getDMChannel(user.id)
-            .then(chan => {
-                return this.sendMessage(chan, content);
-            })
-            .catch(err => {
-                return Promise.reject('DM disabled or bot blocked\n' + err);
-            });
+            .then(chan => this.sendMessage(chan, content))
+            .catch(err => Promise.reject('DM disabled or bot blocked\n' + err));
     }
 
     /**
@@ -357,7 +346,7 @@ class AxonUtils {
 
         errMsg = errMsg || this.Template.message.error.general;
         this.sendError(msg.channel, errMsg);
-        
+
         if (err) {
             err.message = `Type: ${typeList[type.toLowerCase()]} | ${err.message}`;
             throw err;

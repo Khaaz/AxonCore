@@ -9,9 +9,9 @@ import util from 'util';
  * inspect
  *
  * Based of Eris.Base
- * 
+ *
  * @author KhaaZ
- * 
+ *
  * @class Base
  */
 class Base {
@@ -138,17 +138,18 @@ class Base {
         return this.constructor.name;
     }
 
+    /** From ERIS */
     toJSON() {
         const base = {};
-        for(const key in this) {
-            if(!base.hasOwnProperty(key) && this.hasOwnProperty(key) && !key.startsWith('_')) {
-                if(!this[key]) {
+        for (const key in this) {
+            if (!base.hasOwnProperty(key) && this.hasOwnProperty(key) && !key.startsWith('_')) {
+                if (!this[key]) {
                     base[key] = this[key];
-                } else if(this[key] instanceof Set) {
+                } else if (this[key] instanceof Set) {
                     base[key] = Array.from(this[key]);
-                } else if(this[key] instanceof Map) {
+                } else if (this[key] instanceof Map) {
                     base[key] = Array.from(this[key].values());
-                } else if(typeof this[key].toJSON === 'function') {
+                } else if (typeof this[key].toJSON === 'function') {
                     base[key] = this[key].toJSON();
                 } else {
                     base[key] = this[key];
@@ -158,11 +159,12 @@ class Base {
         return base;
     }
 
+    /** From ERIS */
     [util.inspect.custom]() {
         // http://stackoverflow.com/questions/5905492/dynamic-function-name-in-javascript
-        const copy = new {[this.constructor.name]: class {}}[this.constructor.name]();
-        for(const key in this) {
-            if(this.hasOwnProperty(key) && !key.startsWith('_') && this[key] !== undefined) {
+        const copy = new { [this.constructor.name]: class {} }[this.constructor.name]();
+        for (const key in this) {
+            if (this.hasOwnProperty(key) && !key.startsWith('_') && this[key] !== undefined) {
                 copy[key] = this[key];
             }
         }

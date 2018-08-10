@@ -25,7 +25,7 @@ const permissionsNames = [
     'manageNicknames',
     'manageRoles',
     'manageWebhooks',
-    'manageEmojis'
+    'manageEmojis',
 ];
 
 const adminPerms = [
@@ -44,12 +44,12 @@ const typeError = {
     api: 'DAPI error - failed to retrieve from Discord',
     db: 'DB error - failed to retrieve from the DB',
     internal: 'Internal error - AxonClient/internal methods',
-    unexpected: 'Unexpected error'
+    unexpected: 'Unexpected error',
 };
 
 export default {
     permissionsNames,
     adminPerms,
     typeWH,
-    typeError
+    typeError,
 };

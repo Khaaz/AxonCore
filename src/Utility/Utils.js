@@ -7,9 +7,9 @@ const writeFile = util.promisify(fs.writeFile);
 
 /**
  * General Utility Class for AxonCore
- * 
+ *
  * All methods useful and usable everywhere
- * 
+ *
  * @author KhaaZ
  *
  * @class Utils
@@ -20,7 +20,7 @@ class Utils {
         this.roleMention = /<@&([0-9]+)>$/;
         this.channelMention = /<#([0-9]+)>$/;
         this.id = /^[0-9]+$/;
-        
+
         this.hexCode = /^#?([0-9A-Fa-f]{6})$/;
     }
 
@@ -31,8 +31,8 @@ class Utils {
     /**
      * Split a content (String), according to correct linebreaks.
      * split at 1900 char
-     * 
-     * @param {String} content 
+     *
+     * @param {String} content
      * @returns {Array<String>/String} The array of content string splitted or the original String
      */
     splitMessage(content) {
@@ -42,7 +42,7 @@ class Utils {
 
     /**
      * Returns the guild prefix of the given msg.
-     * 
+     *
      * @param {Object<AxonClient>} client - AxonClient
      * @param {Object} msg - Message object given at the command.
      * @returns {String} The prefix as string.
@@ -53,14 +53,12 @@ class Utils {
 
     /**
      * Sort a users roles
-     * 
+     *
      * @param {Array} array - The roles to sort
      * @returns {Array} sorted array
      */
     sortRoles(roles) {
-        return roles.sort((a, b) => {
-            return b.position - a.position;
-        });
+        return roles.sort((a, b) => b.position - a.position);
     }
 
     //
@@ -74,27 +72,25 @@ class Utils {
                 throw new Error('Path incorrect');
             }
             return conf;
-        } catch(err) {
+        } catch (err) {
             return Promise.reject(err);
         }
-        
     }
-    
+
     async writeJson(path, obj) {
         try {
             const txt = JSON.stringify(obj);
             const res = await writeFile(path, txt);
             return res;
-        } catch(err) {
+        } catch (err) {
             return err;
         }
-        
     }
 
     /**
      * Ensures that all property names of obj1 exists in obj2.
      * Doesn't compare values. Exept if it is an object, then it check for property names again
-     * 
+     *
      * @param {Object} obj1 - Default config
      * @param {Object} obj2 - Custom config (Config to compare with)
      * @returns {Boolean} true: obj2 has at least all prop of obj1
@@ -113,7 +109,6 @@ class Utils {
         }
         return true;
     }
-
 }
 
 export default new Utils();

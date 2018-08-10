@@ -1,8 +1,6 @@
 'use strict';
 
 class JsonService {
-    constructor() {}
-
     /**
      * Retrieve Axon schema from DB (unique schema)
      *
@@ -11,7 +9,7 @@ class JsonService {
      * @memberof MongoService
      */
     static fetchAxon() {
-        
+        //
     }
 
     /**
@@ -23,7 +21,7 @@ class JsonService {
      * @memberof MongoService
      */
     static fetchGuild(gID) {
-        
+        //
     }
 
     /**
@@ -34,7 +32,7 @@ class JsonService {
      * @memberof MongoService
      */
     static initAxon() {
-        
+        //
     }
 
     /**
@@ -46,7 +44,7 @@ class JsonService {
      * @memberof MongoService
      */
     static initGuild(gID) {
-        
+        //
     }
 
     /**
@@ -58,7 +56,7 @@ class JsonService {
      * @memberof MongoService
      */
     static updateBlacklistUser(blacklistedUsers) {
-        
+        //
     }
 
     /**
@@ -70,7 +68,7 @@ class JsonService {
      * @memberof MongoService
      */
     static updateBlacklistGuild(blacklistedGuilds) {
-        
+        //
     }
 
     /**
@@ -83,7 +81,7 @@ class JsonService {
      * @memberof MongoService
      */
     static updateGuildPrefix(gID, prefixArr) {
-        
+        //
     }
 
     /**
@@ -95,7 +93,7 @@ class JsonService {
      * @memberof MongoService
      */
     static updateModule(gID, modulesArr) {
-        
+        //
     }
 
     /**
@@ -107,9 +105,9 @@ class JsonService {
      * @memberof MongoService
      */
     static updateCommand(gID, commandsArr) {
-        
+        //
     }
-    
+
     /**
      * Update the guilds events array for that guild
      *
@@ -119,7 +117,7 @@ class JsonService {
      * @memberof MongoService
      */
     static updateEvent(gID, eventsArr) {
-        
+        //
     }
 
     /**
@@ -132,7 +130,7 @@ class JsonService {
      * @memberof MongoService
      */
     static saveSchema(schema) {
-        
+        //
     }
 }
 
