@@ -8,20 +8,15 @@ import logo from './Conf/logo';
 
 import packageJSON from '../package.json';
 
-// Core
-//import Base from './Structures/Base';
-import Module from './Structures/Module';
-import Command from './Structures/Command';
-import EventF from './Structures/EventF';
-
 // Configs
 import defAxonConf from './Conf/axonConf.json';
 import defTemplateConf from './Conf/templateConf.json';
 import defTokenConf from './Conf/tokenConf.json';
 
-// Database
-import JsonService from './Database/JsonService';
-import MongoService from './Database/MongoService';
+// Core
+import Module from './Structures/Module';
+import Command from './Structures/Command';
+import EventF from './Structures/EventF';
 
 // Utility
 import Collection from './Utility/Collection';
@@ -31,9 +26,11 @@ import Utils from './Utility/Utils';
 
 import util from 'util';
 
+// Database
+import DBHandler from './Database/index';
+
 // Loggers
-import ChalkLogger from './Loggers/ChalkLogger';
-import DefLogger from './Loggers/DefLogger';
+import LoggerHandler from './Loggers/index';
 
 // Errors
 import AxonError from './Errors/AxonError';
@@ -49,40 +46,37 @@ import AxonCommandError from './Errors/AxonCommandError';
 class AxonClient {
 
     /**
-     * Creates an instance of EaseClient.
+     * Creates an instance of AxonClient.
      *
      * @param {String} token
-     * @param {Object} options - Eri options
+     * @param {Object} options - Eris options
      * @param {Object} axonOptions - Axon options
      * @param {Object} modules - Object with all modules to add in the bot
      *
-     * @prop {Object} AxonClient - Object with AxonClient specifications (versions, author). Define BASE for the bot
-     * @prop {Collection<Module>} modules - All modules in the client [key: label, value: module]
-     * @prop {Collection<Command>} commands - All commands in the client [key: label, value: command]
-     * @prop {Collection<EventF>} events - All events in the client [key: label, value: event]
-     * @prop {Map<String>} commandAliases - All aliases in the client [key: alias, value: commandLabel]
-     * @prop {Set<String>} blacklistedUsers - Cached black listed users
-     * @prop {Set<String>} blacklistedGuilds - Cached black listed guilds
-     * @prop {Collection<Object>} guildConfigs - Guild configs [key: guildID, value: {guild config Object}
-     * @prop {Boolean} _customLogger - Use Custom logger or default logger
-     * @prop {Object} Logger - Custom Logger => default with console extends or colored chalk/winston
-     * @prop {Boolean} _customDB - Use MongoDB (mongoose) or JsonDB (default)
-     * @prop {Object} DBprovider - DBService (mongoose or JSON)
-     * @prop {Object} AxonUtil - Util methods for Axon
+     * @prop {Object} Logger - Default Logger/Chalk Logger/Signale Logger
+     * @prop {Object} DBprovider - JSON(default)/Mongoose
+     * @prop {Object} AxonUtil - Util methods Axon
      * @prop {Object} Resolver - Resolver
      * @prop {Object} Utils - Utils methods general
-     * @prop {Object} staff - Users id for staff members (updated with current roles)
+     * @prop {Object} _configs - configs (axon, template, _tokens) [GETTER: configs]
+     * @prop {Collection<Module>} modules - All modules in the client [key: label, value: module]
+     * @prop {Collection<Command>} commands - All commands in the client [key: label, value: command]
+     * @prop {Map<String>} commandAliases - All aliases in the client [key: alias, value: commandLabel]
+     * @prop {Collection<EventF>} events - All events in the client [key: label, value: event]
+     * @prop {Collection<Object>} models - All models in client (global models) [key: schemaLabel, value: schema]
+     * @prop {Collection<Object>} guildConfigs - Guild configs [key: guildID, value: {guild config Object}]
+     * @prop {Object} AxonClient - Object with AxonClient specifications (versions, author). Define BASE for the bot
+     * @prop {Set<String>} blacklistedUsers - Cached black listed users
+     * @prop {Set<String>} blacklistedGuilds - Cached black listed guilds
+     * @prop {Object<Eris.Client>} _client - Eris Client [GETER: client]
+     * @prop {Object} staff - Object of bot staff (user IDs) (owners, admins, ..+)
      * @prop {Object} params - Bot params
      * - debugMode (boolean)  : enable to show commands latency
      * - prefix (Array)       : default bot prefix
      * - ownerPrefix (string) : owner prefix - override perms/cd
-     * - adminPrefix (srting) : admins prefix - override perms/cd
-     * @prop {Object} _configs - configs (general, template, _token)
-     * @prop {Object} configs - [GETTER] _configs
+     * - adminPrefix (string) : admins prefix - override perms/cd
      * @prop {Object} infos - Default infos about the bot: owners/name/links etc (misc)
-     *
-     * EXTERNAL METHOD
-     * Promise<Object> registerGuildPrefix(gID, prefixArr) : Promise
+     * @prop {Object} axonInfos - Infos about Client (AxonClient)
      *
      * @memberof AxonClient
      */
@@ -90,77 +84,64 @@ class AxonClient {
         /** Cool logging */
         console.log(logo);
 
-        /** Eris Client initialisation */
-        this._client = new Eris.Client(token, erisOptions);
-        try {
-            this._client.connect();
-            console.log('Client Connected');
-        } catch (err) {
-            console.log(err);
-        }
-        
-        
         /**
-         * Collection of Modules
-         * Module Label => Module Object
+         * Initialise Handler, 
+         * Internal cache, Major compenents 
          */
+        /** Logger */
+        this.initLogger(axonOptions); // this.Logger
+        /** DB */
+        this.initDB(axonOptions); // this.DBprovider
+        /** Utility */
+        this.AxonUtils = new AxonUtils(this);
+        this.Utils = axonOptions.utils || Utils;
+        this.Resolver = axonOptions.resolver || Resolver;
+
+        /** 
+         * Initialise Configs
+         * - axon
+         * - template
+         * - _tokens
+         */
+        this.initConfigs(axonOptions); // this._configs [GETTER - this.configs]
+
+        /** 
+         * Initialise CORE 
+         * Collections/Containers/Structures
+         */
+
+        /** Modules */
         this._tempModules = modules; // deleted after modules are initialised
-        this.modules = new Collection(Module);
-
-        /**
-         * Commands and events
-         * Command Label => ref Command Object
-         * Command Alias => Command label
-         * 
-         * Event Label => ref EventF function
-         */
-        this.commands = new Collection(Command);
-        this.commandAliases = new Map();
-        this.events = new Collection(EventF);
-
+        this.modules = new Collection(Module); // Module Label => Module Object
+        /** Commands, Events */
+        this.commands = new Collection(Command); // Command Label => ref Command Object
+        this.commandAliases = new Map(); // Command Alias => Command label
+        this.events = new Collection(EventF); // Event Label => ref EventF function
         /** DataModels */
-        this.models = new Collection();
+        this.models = new Collection(); // Schema label => Schema Object
+        /** GuildConfigs */
+        this.guildConfigs = new Collection(); // Guild ID => guildConfig
 
         /**
-         * Cache of GuildConfigs from the DB
-         * Guild ID => guildConfig
-         */
-        this.guildConfigs = new Collection();
-
-        /**
-         * Blacklisted users and guilds
+         * Initialise Blacklisted users and guilds
          */
         this.blacklistedUsers = new Set();
         this.blacklistedGuilds = new Set();
+        
+        /** 
+         * Initialise Eris Client
+         */
+        this._client = new Eris.Client(token, erisOptions); // [GETTER - this.client]
 
         /**
-         * Private - internal 
-         * 
-         * Use Custom Logger or default console
-         * Use MongoDB (mongoose) or default jsonDB
-         * Utility for AxonClient
-         */
-        /** Logger */
-        this._customLogger = axonOptions.axonConf.customLogger || defAxonConf.customLogger || false;
-        this.Logger = this._customLogger ? ChalkLogger : DefLogger;
-        /** DB */
-        this._customDB = axonOptions.axonConf.customDB || defAxonConf.customDB || false;
-        this.DBprovider = this._customDB ? MongoService : JsonService;
-        
-        /** UTILITY (global cache) */
-        this.AxonUtils = AxonUtils;
-        this.Resolver = axonOptions.resolver || Resolver;
-        this.Utils = axonOptions.utils || Utils;
-        
-        /**
-         * Bot Staff
+         * Initialise Bot Staff
          * - owners
          * - admins
          */
-        this.staff = {};
+        this.initOwners(axonOptions); // this.staff
 
         /**
-         * Custom settings
+         * Bot settings
          * Prefixes - debug - misc
          */
         this.params = {
@@ -173,53 +154,27 @@ class AxonClient {
         };
 
         /**
-         * [GETER] - configs
-         * Init config Object from json configs
-         * configs.axon
-         * configs.template
-         * configs._token
+         * General infos
          */
-        this._configs = {};
 
-        /**
-         * General infos - Description
-         * 
-         * Init from initConfigs():
-         * infos.owners - Array
-         * infos.links - Object
-         */
+        /** Bot informations */
         this.infos = {
             name: axonOptions.axonConf.general.name || defAxonConf.general.name,
             description: axonOptions.axonConf.general.description || defAxonConf.general.description,
             version: axonOptions.axonConf.general.version || defAxonConf.general.version,
-            library: axonOptions.axonConf.general.library || defAxonConf.general.library
+            library: axonOptions.axonConf.general.library || defAxonConf.general.library,
+            owners: Object.values(this._configs.axon.staff.owners).map(o => o.name),
         };
+        /** Init infos */
+        this.configs.axon.links && (this.infos.links = this.configs.axon.links);
 
-        /**
-         * Client specification
-         * version/base/author/url
-         */
+        /** Client specification */
         this.axonInfos = {
             name: packageJSON.name,
             version: packageJSON.version,
             author: packageJSON.author,
             github: packageJSON.repository.url
         };
-
-        this.initConfigs(axonOptions); // this._configs => cache Template, General configs
-        this.initOwners(axonOptions); // this.staff => Load and cache staff Owners + Admins
-        //this.initLogger(axonOptions);
-        //this.initDB(axonOptions);
-        this.initListener(axonOptions);
-        //this.initWH(axonOptions);
-
-        /**
-         * - Global events -
-         */
-        this.client.once('ready', this.onReady.bind(this));
-        this.client.once('shardPreReady', this.onShardPreReady.bind(this));
-
-        this.client.on('messageCreate', this.onMessageCreate.bind(this));
 
     }
 
@@ -238,9 +193,143 @@ class AxonClient {
     get webhooks() {
         return this._configs._tokens.webhooks;
     }
+
+    //
+    // ****** INSTANCE INIT METHOD (AXONCLIENT CREATION) ******
+    //
+
+    initLogger(axonOptions) {
+        this.Logger = axonOptions.logger || LoggerHandler.pickLogger(axonOptions.axonConf);
+        this.Logger.axon('Logger ready');
+
+        /** LOGGER TESTING */
+        console.log(' ');
+        this.Logger.emerg('- Test EMERG -');
+        this.Logger.error('- Test ERROR -');
+        this.Logger.warn('- Test WARN -');
+        this.Logger.debug('- Test DEBUG -');
+        this.Logger.notice('- Test notice -');
+        this.Logger.info('- Test info -');
+        this.Logger.verbose('- Test verbose -');
+        this.Logger.axon('- Test AXON -');
+        this.Logger.init('- Test INIT -');
+        //this.Logger.module('- Test module -');
+        //this.Logger.command('- Test command -');
+        console.log(' ');
+    }
+
+    initDB(axonOptions) {
+        this.DBprovider = axonOptions.db || DBHandler.pickDBService(axonOptions.axonConf, this.Logger);
+        this.Logger.axon('DB ready');
+    }
+
+    initConfigs({ axonConf, templateConf, tokenConf }) {
+        this._configs = {};
+
+        /** Axon Config */
+        if (axonConf && this.Utils.compareObject(defAxonConf, axonConf)) {
+            this._configs.axon = axonConf;
+        } else {
+            this._configs.axon = defAxonConf;
+            this.Logger.warn(new AxonError('Couldn\'t init custom axon config (used default values)', 'INIT', 'Configs').stack);
+        }
+
+        /** Template Config */
+        if (templateConf && this.Utils.compareObject(defTemplateConf, templateConf)) {
+            this._configs.template = templateConf;
+        } else {
+            this._configs.template = defTemplateConf;
+            this.Logger.warn(new AxonError('Couldn\'t init custom template config (used default values)', 'INIT', 'Configs').stack);
+        }
+
+        /** Token Config */
+        if (tokenConf && this.Utils.compareObject(defTokenConf, tokenConf)) {
+            this._configs._tokens = tokenConf;
+        } else {
+            this._configs.tokens = defTokenConf;
+            this.Logger.warn(new AxonError('Couldn\'t init custom token config (used default values)', 'INIT', 'Configs').stack);
+        }
+
+        this.Logger.init('Configs initialised!');
+    }
+
+    initOwners({ axonConf: config }){
+        this.staff = {};
+
+        this.staff.owners = config.staff.owners.map(o => o.id);
+        if (config.staff.admins) {
+            this.staff.admins = config.staff.admins.map(o => o.id);
+        }
+            
+        this.Logger.init('Owners engaged!');
+        
+        /** Init Bot Staff (custom) */
+        if (this.initStaff) {
+            this.initStaff();
+            this.Logger.init('Staff engaged!');
+        }
+    }
+
     //
     // ****** INIT ******
     //
+
+    /**
+     * START METHOD
+     * AxonClient class already created
+     * 
+     * @memberof AxonClient
+     */
+    start() {
+        this.client.connect()
+            .then(() => {
+                this.Logger.axon('=== BotClient Connected! ===');
+            })
+            .catch(err => {
+                this.Logger.error(err);
+            });
+        
+        this._init()
+            .then(() => {
+                this.Logger.axon('=== AxonClient Ready! ===');
+            })
+            .catch(err => {
+                this.Logger.error(err);
+            });
+
+        /**
+         * - Global events -
+         */
+        this.client.once('ready', this.onReady.bind(this));
+
+        this.client.on('messageCreate', this.onMessageCreate.bind(this));
+    }
+
+    _init() {
+        return new Promise(async(resolve, reject) => {
+            try {
+                /** Init Error listeners */
+                this.initListener();
+                
+                /** Init modules, commands */
+                this.initAllModules(this._tempModules); // load modules
+                delete this._tempModules;
+                
+                /** Axon init (blacklist/global cache) */
+                await this.initAxon(); // load blacklisted users - guild
+                
+                /** Additional */
+                if (this.init) { // if child class has init
+                    await this.init();
+                    this.Logger.init('Personal init');
+                }
+
+                resolve(true);
+            } catch (err) {
+                reject(err);
+            }
+        });
+    }
 
     /**
      * Call Init Method on Ready event
@@ -248,213 +337,81 @@ class AxonClient {
      * @memberof AxonClient
      */
     onReady() {
-        this.Logger.axon('=== Instance Ready! ===');
-        if (this.webhooks.uptime.id && this.webhooks.uptime.token && this.webhooks.uptime.id.lenght > 0 && this.webhooks.uptime.token.length > 0) {
-            this.client.executeWebhook(this.webhooks.uptime.id, this.webhooks.uptime.token, {
-                username: `Status - ${this.client.user.username}`,
-                avatarURL: this.client.user.avatarURL,
-                embeds: [{
-                    color: 2067276,
-                    timestamp: new Date(),
-                    description: '**Instance Ready!**'
-                }]
-            });
-        }
-
-        this._init().then(() => {
-            this.client.ready = true;
-            this.Logger.axon('=== Initialisation over - Bot Ready! ===');
-            if (this.webhooks.uptime.id && this.webhooks.uptime.token && this.webhooks.uptime.id.lenght > 0 && this.webhooks.uptime.token.length > 0) {
-                this.client.executeWebhook(this.webhooks.uptime.id, this.webhooks.uptime.token, {
-                    username: `Status - ${this.client.user.username}`,
-                    avatarURL: this.client.user.avatarURL,
-                    embeds: [{
-                        color: 2067276,
-                        timestamp: new Date(),
-                        description: '**Bot Ready!**'
-                    }]
-                });
-            }
+        this.Logger.axon('=== BotClient Ready! ===');
+        this.client.ready = true;
+        /** Status */
+        this.initStatus(); // execute default status function in Axon or override
+        
+        this.AxonUtils.triggerWebhook('status', {
+            color: 2067276,
+            timestamp: new Date(),
+            description: '**Instance Ready!**'
         });
-    }
-
-    /**
-     * init prefix on shard ready event?
-     *
-     * @memberof AxonClient
-     */
-    onShardPreReady() { // ???????????????????????????????????????? needed ???????????????????????
-        this.client.preReady = true;
-        this.Logger.axon('=== Pre-ready! ===');
-    }
-
-    /**
-     * Init configs files
-     * Init this.infos
-     *
-     * @memberof AxonClient
-     */
-
-    initConfigs({ axonConf, templateConf, tokenConf }) {
-
-        if (axonConf && this.Utils.compareObject(defAxonConf, axonConf)) {
-            this._configs.axon = axonConf;
-        } else {
-            this._configs.axon = defAxonConf;
-            this.Logger.warn(new AxonError('Couldn\'t init custom template config (default values)', 'INIT', 'Configs').stack);
-        }
-
-        if (templateConf && this.Utils.compareObject(defTemplateConf, templateConf)) {
-            this._configs.template = templateConf;
-        } else {
-            this._configs.template = defTemplateConf;
-            this.Logger.warn(new AxonError('Couldn\'t init custom template config (default values)', 'INIT', 'Configs').stack);
-        }
-
-        if (tokenConf && this.Utils.compareObject(defTokenConf, tokenConf)) {
-            this._configs._tokens = tokenConf;
-        } else {
-            this._configs.tokens = defTokenConf;
-            this.Logger.warn(new AxonError('Couldn\'t init custom token config (default values)', 'INIT', 'Configs').stack);
-        }
-
-        /** Init infos */
-        this.infos.owners = Object.values(this._configs.axon.staff.owners).map(o => o.name);
-        this.configs.axon.links && (this.infos.links = this.configs.axon.links);
-
-        this.Logger.axon('[INIT] Configs initialised!');
-    }
-
-    /**
-     * Init Bot staff
-     * Create Bot staff object according to roles in Ease server
-     * 
-     * @param {Object} config - AxonOptions
-     * @memberof AxonClient
-     */
-    initOwners({ axonConf: config }){
-
-        this.staff.owners = config.staff.owners.map(o => o.id);
-        if (config.staff.admins) {
-            this.staff.admins = config.staff.admins.map(o => o.id);
-        }
-            
-        this.Logger.axon('[INIT] Owners engaged!');
     }
     
     /**
-     * Init Listeners
-     * Initialize error listeners
+     * Initialize error listeners + webhooks
      *
-     * @param {Object} { tokenConf: config }
      * @memberof AxonClient
      */
-    initListener({ tokenConf: config }) {
-        const webhooks = config.webhooks;
-        const boolean = webhooks.error.id && webhooks.error.token && webhooks.error.id.lenght > 0 && webhooks.error.token.length > 0;
-
+    initListener() {
         process.on('uncaughtException', (err) => {
             this.Logger.emerg(err.stack);
 
-            if (boolean) {
-                this.client.executeWebhook(webhooks.error.id, webhooks.error.token, {
-                    username: `Exception - ${this.client.user.username}`,
-                    avatarURL: this.client.user.avatarURL,
-                    embeds: [{
-                        color: 15158332,
-                        timestamp: new Date(),
-                        description: err.stack.length > 1950 ? err.message : err.stack
-                    }]
-                });
-            }
+            this.AxonUtils.triggerWebhook('error', {
+                color: 15158332,
+                timestamp: new Date(),
+                description: (err.stack && err.stack.length > 1950) ? err.message : err.stack
+            }, `Exception - ${this.client.user.username}`);
         });
         
         process.on('unhandledRejection', (err) => {
-            this.Logger.error(err.stack);
+            this.Logger.emerg(err.stack);
         
-            if (boolean) {
-                this.client.executeWebhook(webhooks.error.id, webhooks.error.token, {
-                    username: `Rejection - ${this.client.user.username}`,
-                    avatarURL: this.client.user.avatarURL,
-                    embeds: [{
-                        color: 15158332,
-                        timestamp: new Date(),
-                        description: err.stack.length > 1950 ? err.message : err.stack
-                    }]
-
-                });
-            }
+            this.AxonUtils.triggerWebhook('error', {
+                color: 15158332,
+                timestamp: new Date(),
+                description: (err.stack && err.stack.length > 1950) ? err.message : err.stack
+            }, `Rejection - ${this.client.user.username}`);
             
         });
         
         this.client.on('error', (err) => {
             this.Logger.error(err.stack);
 
-            if (boolean) {
-                this.client.executeWebhook(webhooks.error.id, webhooks.error.token, {
-                    username: `Error - ${this.client.user.username}`,
-                    avatarURL: this.client.user.avatarURL,
-                    embeds: [{
-                        color: 15158332,
-                        timestamp: new Date(),
-                        description: err.stack.length > 1950 ? err.message : err.stack
-                    }]
-                });
-            }
+            this.AxonUtils.triggerWebhook('error', {
+                color: 15158332,
+                timestamp: new Date(),
+                description: (err.stack && err.stack.length > 1950) ? err.message : err.stack
+            });
         });
         
         this.client.on('warn', (msg) => {
             this.Logger.warn(msg);
-
-            if (boolean) {
-                this.client.executeWebhook(webhooks.error.id, webhooks.error.token, {
-                    username: `Warn - ${this.client.user.username}`,
-                    avatarURL: this.client.user.avatarURL,
-                    embeds: [{
-                        color: 15105570,
-                        timestamp: new Date(),
-                        description: msg
-                    }]
-                });
-            }
+            
+            this.AxonUtils.triggerWebhook('error', {
+                color: 15105570,
+                timestamp: new Date(),
+                description: msg
+            }, `Warn - ${this.client.user.username}`);
         });
 
-        this.Logger.axon('[INIT] Error listeners bound!');
+        this.Logger.axon('Error listeners bound!');
     }
 
     /**
-     * Init all other Client modules - methods - content
-     * Run after ready event.
+     * Init and create instance of all modules
+     * Modules are imported from index.js as a global Object
      *
-     * Child methods (build it support:
-     * - initStaff() => initialise staff regarding all parameters you want - run before Modules initialisation
-     * - init() => Other initialisation - run after creating of commands etc
-     * 
+     * @param {Object} modules - Object of Modules file
      * @memberof AxonClient
      */
-    _init() {
-        return new Promise(async(resolve, reject) => {
-            try {
-                /** check if there is an initStaff method in child + run it */
-                this.initStaff && await this.initStaff(); // init bot staff (custom) before init modules
-                
-                /** Init modules/ commands */
-                this.initAllModules(this._tempModules); // load modules
-                delete this._tempModules;
-                /** Axon init (blacklist/global cache) */
-                await this.initAxon(); // load blacklisted users - guild
-                
-                /** Status */
-                this.initStatus(); // execute default status function in Axon or override
-
-                /** Additional */
-                this.init && await this.init(); // if child class has init method - run it.
-                
-                resolve(true);
-            } catch (err) {
-                reject(err);
-            }
-        });
+    initAllModules(modules) {
+        for (const [, value] of Object.entries(modules)) {
+            const newModule = new value(this);
+            this.registerModule(newModule);
+        }
+        this.Logger.init(`[AxonClient] Initialised! Modules loaded -${this.modules.size}-`);
     }
 
     /**
@@ -467,7 +424,7 @@ class AxonClient {
     registerModule(module) {
         //init instance module and add it to the Map
         if (this.modules.has(module.label)) {
-            throw new AxonError(`Module: ${module} already registered!`, 'INIT');
+            throw new AxonError(`AxonClient - Module: ${module.label} already registered!`, 'INIT');
         }
 
         for (const [label, cmd] of module.commands) {
@@ -483,26 +440,10 @@ class AxonClient {
                 }
                 this.commandAliases.set(alias, label); // add the commands aliases in aliases Map (references to the command label)
             }
-
         }
-
         this.modules.set(module.label, module); // add the module in modules Map (references to module object)
-        this.Logger.axon(`*MODULE*  : ${module.label} - Commands loaded and initialised. [${module.commands.size}]`);
-    }
-
-    /**
-     * Init and create instance of all modules
-     * Modules are imported from index.js as a global Object
-     *
-     * @param {Object} modules - Object of Modules file
-     * @memberof AxonClient
-     */
-    initAllModules(modules) {
-        for (const [, value] of Object.entries(modules)) {
-            const newModule = new value(this);
-            this.registerModule(newModule);
-        }
-        this.Logger.axon(`[INIT] All Modules loaded and ready! [${this.modules.size}]`);
+        
+        this.Logger.initModule(module);
     }
 
     /**
@@ -542,7 +483,7 @@ class AxonClient {
             type: 0
         });
 
-        this.Logger.axon('[INIT] Status setup!');
+        this.Logger.axon('Status setup!');
     }
 
     //
@@ -599,13 +540,13 @@ class AxonClient {
             try {
                 guildConf =  await this.fetchGuildConf(msg.channel.guild.id); // retrieve DB get guildConf  
             } catch(err) {
-                throw new AxonError('OnMessage - Can\'t retrieve Guild Config', 'DB ERROR', `Guild: ${msg.channel.guild.id}`, err);
+                throw new AxonCommandError('OnMessage', 'DB ERROR - guildConfig', `Guild: ${msg.channel.guild.id}`, err);
             }
             this.guildConfigs.set(msg.channel.guild.id, guildConf);
         }
 
         /** Admin override */
-        if (msg.content.startsWith(this.params.ownerPrefix) && this._isOwner(msg) || msg.content.startsWith(this.params.adminPrefix) && this._isAdmin(msg)) { // ADMIN override everything
+        if (msg.content.startsWith(this.params.ownerPrefix) && this.AxonUtils.isBotOwner(msg.author.id) || msg.content.startsWith(this.params.adminPrefix) && this.AxonUtils.isBotAdmin(msg.author.id)) { // ADMIN override everything
             return this._execAdmin(msg, guildConf);
         }
 
@@ -665,7 +606,7 @@ class AxonClient {
                     console.timeEnd('- Net');
                 })
                 .catch(err => {
-                    this.Logger.error(new AxonCommandError(command.module, command, 'Guild: ' + msg.channel.guild.id ,err).stack);
+                    this.Logger.error(new AxonCommandError(command.module, command, `Guild: ${msg.channel.guild.id}`,err).stack);
                     console.timeEnd('- Net');
                     return;
                 });
@@ -673,7 +614,7 @@ class AxonClient {
         } else {
             command._execute({ msg, args, guildConf })
                 .catch(err => {
-                    this.Logger.error(new AxonCommandError(command.module, command, 'Guild: ' + msg.channel.guild.id, err).stack);
+                    this.Logger.error(new AxonCommandError(command.module, command, `Guild: ${msg.channel.guild.id}`, err).stack);
                     return;
                 });
         }
@@ -722,14 +663,14 @@ class AxonClient {
                     console.timeEnd('- Net');
                 })
                 .catch(err => {
-                    this.Logger.error(new AxonCommandError(command.module, command, 'Guild: ' + msg.channel.guild.id, err).stack);
+                    this.Logger.error(new AxonCommandError(command.module, command, `Guild: ${msg.channel.guild.id}`, err).stack);
                     return;
                 });
             console.timeEnd('- Node');
         } else {
             command._executeAdmin({ msg, args, guildConf })
                 .catch(err => {
-                    this.Logger.error(new AxonCommandError(command.module, command, 'Guild: ' + msg.channel.guild.id, err).stack);
+                    this.Logger.error(new AxonCommandError(command.module, command, `Guild: ${msg.channel.guild.id}`, err).stack);
                     return;
                 });
         }
@@ -782,14 +723,14 @@ class AxonClient {
                         console.timeEnd('- Net');
                     })
                     .catch(err => {
-                        this.Logger.error(new AxonCommandError(command.module, command, 'DM: ' + msg.author.id, err).stack);
+                        this.Logger.error(new AxonCommandError(command.module, command, `DM: ${msg.author.id}`, err).stack);
                         return;
                     });
                 console.timeEnd('- Node');
             } else {
                 command._executeDM({ msg, args })
                     .catch(err => {
-                        this.Logger.error(new AxonCommandError(command.module, command, 'DM: ' + msg.author.id, err).stack);
+                        this.Logger.error(new AxonCommandError(command.module, command, `DM: ${msg.author.id}`, err).stack);
                         return;
                     });
             }
@@ -829,15 +770,59 @@ class AxonClient {
      * Respecting permissions
      *
      * @param {Object<Message>} msg
+     * @return {Promise<Message>}
      * @memberof AxonClient
      */
     sendFullHelp(msg) {
         try {
-            this.client.createMessage(msg.channel.id, 'full help msg');
+            return this.client.createMessage(msg.channel.id, 'full help msg');
         } catch (err) {
             console.log(err);
         }
     }
+
+    //
+    // ****** CHECKERS ******
+    //
+
+    /**
+     * Check if the user/role/channel is guild ignored
+     *
+     * @param {Object<Message>} msg
+     * @param {Object} guildConf
+     * @returns {Boolean} true if either one of the three is ignored / false if none
+     * @memberof AxonClient
+     */
+    _isGuildIgnored(msg, guildConf) {
+        return guildConf.ignoredUsers.find(u => u === msg.author.id) // User is ignored
+            || guildConf.ignoredRoles.find(r => msg.member.roles && msg.member.roles.includes(r)) // Role is ignored
+            || guildConf.ignoredChannels.find(c => c === msg.channel.id); // Channel is ignored
+    }
+
+    /**
+     * Check if the command is server disabled
+     *
+     * @param {Object<Command>} command - The command object
+     * @param {Object} guildConf - The guild Config object
+     * @returns {Boolean} true if disabled / undefined if not
+     * @memberof AxonClient
+     */
+    _isCommandDisabled(command, guildConf) {
+        return guildConf.commands.find(c => c === command.label);
+    }
+
+    /**
+     * Check if the module is server disabled
+     *
+     * @param {Object<Command>} command - The command object
+     * @param {Object} guildConf - The guild Config object
+     * @returns {Boolean} true if disabled / undefined if not
+     * @memberof AxonClient
+     */
+    _isModuleDisabled(command, guildConf) {
+        return guildConf.modules.find(m => m === command.module.label);
+    }
+
     //
     // ****** DATABASE ******
     // initialisation/fetch
@@ -862,7 +847,7 @@ class AxonClient {
                 const newAxonConf = await this.DBprovider.initAxon();
                 return newAxonConf;
             } catch (e) {
-                return e;
+                throw e;
             }
         }
     }
@@ -887,13 +872,13 @@ class AxonClient {
                 const newGuildConf = await this.DBprovider.initGuild(gID);
                 return newGuildConf;
             } catch (e) {
-                return e;
+                throw e;
             }
         }
     }
 
     //
-    //****** INTERNAL (Resolvers)
+    // ****** INTERNAL (Resolvers) ******
     //
 
     /**
@@ -953,81 +938,6 @@ class AxonClient {
     }
 
     //
-    // ****** CHECKERS ******
-    //
-
-    /**
-     * Check if the user is an owner or an admin
-     *
-     * @param {Object<Message>} msg
-     * @returns {boolean} the value if found / undefined if not
-     * @memberof AxonClient
-     */
-    _isStaff(msg) {
-        return this._isOwner(msg) || this._isAdmin(msg);
-    }
-
-    /**
-     * Check if the user is an owner
-     *
-     * @param {Object<Message>} msg
-     * @returns {boolean} the value if found / undefined if not (act as boolean)
-     * @memberof AxonClient
-     */
-    _isOwner(msg) {
-        return this.staff.owners.find(u => u === msg.author.id);
-    }
-
-    /**
-     * Check if the user is an admin
-     *
-     * @param {Object<Message>} msg
-     * @returns {boolean} the value if found / undefined if not
-     * @memberof AxonClient
-     */
-    _isAdmin(msg) {
-        return this.staff.admins.find(u => u === msg.author.id);
-    }
-
-    /**
-     * Check if the user/role/channel is guild ignored
-     *
-     * @param {Object<Message>} msg
-     * @param {Object} guildConf
-     * @returns {Boolean} true if either one of the three is ignored / false if none
-     * @memberof AxonClient
-     */
-    _isGuildIgnored(msg, guildConf) {
-        return guildConf.ignoredUsers.find(u => u === msg.author.id) // User is ignored
-            || guildConf.ignoredRoles.find(r => msg.member.roles && msg.member.roles.includes(r)) // Role is ignored
-            || guildConf.ignoredChannels.find(c => c === msg.channel.id); // Channel is ignored
-    }
-
-    /**
-     * Check if the command is server disabled
-     *
-     * @param {Object<Command>} command - The command object
-     * @param {Object} guildConf - The guild Config object
-     * @returns {Boolean} true if disabled / undefined if not
-     * @memberof AxonClient
-     */
-    _isCommandDisabled(command, guildConf) {
-        return guildConf.commands.find(c => c === command.label);
-    }
-
-    /**
-     * Check if the module is server disabled
-     *
-     * @param {Object<Command>} command - The command object
-     * @param {Object} guildConf - The guild Config object
-     * @returns {Boolean} true if disabled / undefined if not
-     * @memberof AxonClient
-     */
-    _isModuleDisabled(command, guildConf) {
-        return guildConf.modules.find(m => m === command.module.label);
-    }
-
-    //
     // ****** EXTERNAL ******
     //
 
@@ -1052,9 +962,6 @@ class AxonClient {
                 }
 
                 return guildSchema;
-            })
-            .catch((err) => {
-                return new AxonError('Couldn\'t retrieve prefix','DB', 'guild: ' + gID, err);
             });
     }
 
@@ -1079,7 +986,7 @@ class AxonClient {
             const axon = await this.DBprovider.updateBlacklistUser(blacklist);
             return axon;
         } catch (err) {
-            throw new AxonError('Cannot update blacklisted users.', 'DB ERROR', 'BlacklistUser', err);
+            throw err;
         }
     }
 
@@ -1104,7 +1011,7 @@ class AxonClient {
             const axon = await this.DBprovider.updateBlacklistGuild(blacklist);
             return axon;
         } catch (err) {
-            throw new AxonError('Cannot update blacklisted guilds.', 'DB ERROR', 'BlacklistGuild', err);
+            throw err;
         }
     }
 
@@ -1125,7 +1032,7 @@ class AxonClient {
         try {
             conf = this.guildConfigs.get(guildID) || this.fetchGuildConf(guildID); // get from cache or from DB if not found
         } catch(err) {
-            throw new AxonError('UpdateStateModule - Can\'t retrieve Guild Config', 'DB ERROR', `Guild: ${guildID}` , err);
+            throw err;
         }
 
         boolean ? conf.modules.includes(label) && (conf.modules = conf.modules.filter(c => c != label)) : !conf.modules.includes(label) && conf.modules.push(label);
@@ -1135,7 +1042,7 @@ class AxonClient {
             this.guildConfigs.set(guildID, newConf);
             return newConf;
         } catch (err) {
-            throw new AxonError('UpdateStateModule - Cannot update state Module.', 'DB ERROR', `Guild: ${guildID}`, err);
+            throw err;
         }
     }
 
@@ -1156,7 +1063,7 @@ class AxonClient {
         try {
             conf = this.guildConfigs.get(guildID) || this.fetchGuildConf(guildID); // get from cache or from DB if not found
         } catch(err) {
-            throw new AxonError('UpdateStateCommand - Can\'t retrieve Guild Config', 'DB ERROR', `Guild: ${guildID}` , err);
+            throw err;
         }
 
         boolean ? conf.commands.includes(label) && (conf.commands = conf.commands.filter(c => c != label)) : !conf.commands.includes(label) && conf.commands.push(label);
@@ -1166,7 +1073,7 @@ class AxonClient {
             this.guildConfigs.set(guildID, newConf);
             return newConf;
         } catch (err) {
-            throw new AxonError('UpdateStateCommand - Cannot update state Command.', 'DB ERROR', `Guild: ${guildID}`, err);
+            throw err;
         }
     }
 
@@ -1187,7 +1094,7 @@ class AxonClient {
         try {
             conf = this.guildConfigs.get(guildID) || this.fetchGuildConf(guildID); // get from cache or from DB if not found
         } catch(err) {
-            throw new AxonError('UpdateStateEvent - Can\'t retrieve Guild Config', 'DB ERROR', `Guild: ${guildID}` , err);
+            throw err;
         }
 
         boolean ? conf.events.includes(label) && (conf.events = conf.events.filter(c => c != label)) : !conf.events.includes(label) && conf.events.push(label);
@@ -1197,7 +1104,7 @@ class AxonClient {
             this.guildConfigs.set(guildID, newConf);
             return newConf;
         } catch (err) {
-            throw new AxonError('UpdateStateEvent - Cannot update state Event.', 'DB ERROR', `Guild: ${guildID}`, err);
+            throw err;
         }
     }
 
