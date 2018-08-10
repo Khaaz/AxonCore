@@ -99,8 +99,7 @@ class DefLogger extends Console {
     }
 
     /**
-     * Other Logging
-     * Client log
+     * AxonClient informations
      *
      * @param {String} input
      * @memberof DefLogger
@@ -110,11 +109,8 @@ class DefLogger extends Console {
         this.log(mess);
     }
 
-
-    /** ?? */
     /**
-     * Other Logging
-     * INIT
+     * Initialisation - Client infos
      *
      * @param {String} input
      * @memberof DefLogger
@@ -125,30 +121,47 @@ class DefLogger extends Console {
     }
 
     /**
-     * Other Logging
-     * Module log
+     * Initialisation - Module infos
      *
-     * @param {String} input
      * @param {Module} module
      * @memberof DefLogger
      */
-    module(input, module) {
-        const mess = this.parseTime() + ` - [MODULE ] => [${module.label}] ${input}`;
+    initModule(module) {
+        const mess = this.parseTime() + ' - [MODULE ] => ' + `[${module.label}] Initialised! Commands loaded -${module.commands.size}-`;
         this.log(mess);
     }
 
     /**
-     * Other Logging
-     * Commands log...
+     * Initialisation - Command infos
      *
-     * @param {String} input
+     * @param {Command} command
      * @memberof DefLogger
      */
-    command(input) {
-        const mess = this.parseTime() + ' - [COMMAND] => ' + input;
+    initCommand(command) {
+        let mess;
+        if (command.hasSubcmd) {
+            mess = this.parseTime() + ' - [COMMAND] => ' + `*${command.label} | Initialised! SubCommands loaded -${command.subCommands.size}-`;
+        } else {
+            mess = this.parseTime() + ' - [COMMAND] => ' + `*${command.label} | Initialised!`;
+        }
         this.log(mess);
     }
-    /** ?? */
+
+    /**
+     * Initialisation - SubCommand infos
+     *
+     * @param {Command} sub
+     * @memberof DefLogger
+     */
+    initSubCmd(sub) {
+        let mess;
+        if (sub.hasSubcmd) {
+            mess = this.parseTime() + ' - [SUBCMD ] => ' + `${sub.label} | Initialised! SubCommands loaded -${sub.subCommands.size}-`;
+        } else {
+            mess = this.parseTime() + ' - [SUBCMD ] => ' + `${sub.label} | Initialised!`;
+        }
+        this.log(mess);
+    }
     
 
     parseTime() {

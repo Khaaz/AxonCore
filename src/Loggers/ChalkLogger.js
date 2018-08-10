@@ -73,7 +73,7 @@ class ChalkLogger extends Console {
      * @memberof DefLogger
      */
     notice(input) {
-        const mess = chalk.cyan(this.parseTime() + ' - [NOTICE ] => ') + input;
+        const mess = chalk.bold.green(this.parseTime() + ' - [NOTICE ] => ') + input;
         this.log(mess);
     }
 
@@ -101,57 +101,69 @@ class ChalkLogger extends Console {
     }
 
     /**
-     * Other Logging
-     * Client log
+     * AxonClient informations
      *
      * @param {String} input
      * @memberof DefLogger
      */
     axon(input) {
-        const mess = chalk.bold.green(this.parseTime() + ' - [ AXON  ] => ') + input;
+        const mess = chalk.bold.cyan(this.parseTime() + ' - [ AXON  ] => ' + input);
         this.log(mess);
     }
 
-
-    /** ?? */
     /**
-     * Other Logging
-     * INIT
+     * Initialisation - Client infos
      *
      * @param {String} input
      * @memberof DefLogger
      */
     init(input,) {
-        const mess = this.parseTime() + ' - [ INIT  ] => ' + input;
+        const mess = chalk.cyan(this.parseTime() + ' - [ INIT  ] => ') + input;
         this.log(mess);
     }
 
     /**
-     * Other Logging
-     * Module log
+     * Initialisation - Module infos
      *
-     * @param {String} input
      * @param {Module} module
      * @memberof DefLogger
      */
-    module(input, module) {
-        const mess = this.parseTime() + ` - [MODULE ] => [${module.label}] ${input}`;
+    initModule(module) {
+        const mess = chalk.cyan(this.parseTime() + ' - [MODULE ] => ') + `[${module.label}] Initialised! Commands loaded -${module.commands.size}-`;
         this.log(mess);
     }
 
     /**
-     * Other Logging
-     * Commands log...
+     * Initialisation - Command infos
      *
-     * @param {String} input
+     * @param {Command} command
      * @memberof DefLogger
      */
-    command(input) {
-        const mess = this.parseTime() + ' - [COMMAND] => ' + input;
+    initCommand(command) {
+        let mess;
+        if (command.hasSubcmd) {
+            mess = chalk.cyan(this.parseTime() + ' - [COMMAND] => ') + `*${command.label} | Initialised! SubCommands loaded -${command.subCommands.size}-`;
+        } else {
+            mess = chalk.cyan(this.parseTime() + ' - [COMMAND] => ') + `*${command.label} | Initialised!`;
+        }
         this.log(mess);
     }
-    /** ?? */
-    
+
+    /**
+     * Initialisation - SubCommand infos
+     *
+     * @param {Command} sub
+     * @memberof DefLogger
+     */
+    initSubCmd(sub) {
+        let mess;
+        if (sub.hasSubcmd) {
+            mess = chalk.cyan(this.parseTime() + ' - [SUBCMD ] => ') + `${sub.label} | Initialised! SubCommands loaded -${sub.subCommands.size}-`;
+        } else {
+            mess = chalk.cyan(this.parseTime() + ' - [SUBCMD ] => ') + `${sub.label} | Initialised!`;
+        }
+        this.log(mess);
+    }
 
     parseTime() {
         const current = new Date();
