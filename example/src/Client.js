@@ -67,12 +67,12 @@ class Client extends AxonClient {
 
     sendFullHelp(msg) {
         //override sendFullHelp method
-        this.createMessage(msg.channel.id, 'Full Help override').catch();
+        return this.client.createMessage(msg.channel.id, 'Full Help override').catch();
     }
 
     sendHelp(command, msg) {
         //override sendHelp method
-        this.client.createMessage(msg.channel.id, `Help override for ${command.label}`).catch();
+        return this.client.createMessage(msg.channel.id, `Help override for ${command.label}`).catch();
     }
 }
 
