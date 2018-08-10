@@ -15,7 +15,7 @@ pm2.connect(function(err) {
         name: 'AxonCore',
         exec_mode : 'fork',
         max_memory_restart : '1G',
-        cwd: 'src',
+        cwd: 'example/src',
         error: '../logs/error.err',
         output: '../../logs/output.log',
         pid: '../../logs/pid.pid',
