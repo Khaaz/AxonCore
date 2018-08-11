@@ -93,7 +93,7 @@ class AxonClient {
         this.initDB(axonOptions); // this.DBprovider
         /** Utility */
         this.AxonUtils = new AxonUtils(this);
-        this.Utils = axonOptions.utils || Utils;
+        this.Utils = new axonOptions.utils() || new Utils(); // eslint-disable-line
         this.Resolver = axonOptions.resolver || Resolver;
 
         /**

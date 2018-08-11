@@ -98,7 +98,7 @@ class Utils {
      */
     compareObject(obj1, obj2) {
         for (const key in obj1) {
-            if (obj2[key] == undefined) {
+            if (obj2[key] === undefined) {
                 return false;
             }
             if (typeof obj1[key] === 'object' && !(obj1[key] instanceof Array)) {
@@ -111,4 +111,4 @@ class Utils {
     }
 }
 
-export default new Utils();
+export default Utils;

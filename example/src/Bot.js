@@ -6,13 +6,15 @@ import axonConf from './configs/customConf.json';
 import tokenConf from './configs/tokenConf.json';
 import templateConf from './configs/templateConf.json';
 
+import MyUtils from './MyUtils';
+
 const AxonOptions = {
     axonConf,
     templateConf,
     tokenConf,
 
     resolver: null,
-    utils: null,
+    utils: MyUtils, // use your own Utils
     axonSchema: null,
     guildSchema: null,
 };
