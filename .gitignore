@@ -1,6 +1,5 @@
 # configs file
 example/src/configs/tokenConf.json
-example/src/configs/customConf.json
 
 # Logs
 logs

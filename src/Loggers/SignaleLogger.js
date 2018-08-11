@@ -57,13 +57,13 @@ class SignaleLogger extends Signale {
 
     // Custom methods
     initModule(module) {
-        this.moduleS(`${module.label} Initialised! ${module.commands.size} Commands loaded.`);
+        this.moduleS(`[${module.label}] Initialised! Commands loaded -${module.commands.size}-`);
     }
 
     initCommand(command) {
         let mess;
         if (command.hasSubcmd) {
-            mess = `${command.label} Initialised! ${command.subCommands.size} Subcommands loaded.`;
+            mess = `${command.label} Initialised! Subcommands loaded -${command.subCommands.size}-`;
         } else {
             mess = `${command.label} Initialised!`;
         }
@@ -73,7 +73,7 @@ class SignaleLogger extends Signale {
     initSubCmd(sub) {
         let mess;
         if (sub.hasSubcmd) {
-            mess = `${sub.label} Initialised! ${sub.subCommands.size} Subcommands loaded.`;
+            mess = `${sub.label} Initialised! Subcommands loaded -${sub.subCommands.size}-`;
         } else {
             mess = `${sub.label} Initialised!`;
         }
