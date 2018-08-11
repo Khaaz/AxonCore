@@ -20,13 +20,18 @@ const options = {
             color: 'green',
         },
         moduleS: {
-            badge: figures.squareSmallFilled,
+            badge: 'M',
             label: 'module',
+            color: 'blue',
+        },
+        commandS: {
+            badge: 'C',
+            label: 'command',
             color: 'cyan',
         },
-        command: {
-            badge: figures.squareSmall,
-            label: 'command',
+        subcmdS: {
+            badge: 'c',
+            label: 'subcmd',
             color: 'cyanBright',
         },
     },
@@ -41,6 +46,7 @@ class SignaleLogger extends Signale {
         });
     }
 
+    // Renames
     emerg(input) {
         this.fatal(input);
     }
@@ -49,8 +55,29 @@ class SignaleLogger extends Signale {
         this.note(input);
     }
 
-    module(input, module) {
-        this.moduleS({ prefix: module.label, message: input });
+    // Custom methods
+    initModule(module) {
+        this.moduleS(`${module.label} Initialised! ${module.commands.size} Commands loaded.`);
+    }
+
+    initCommand(command) {
+        let mess;
+        if (command.hasSubcmd) {
+            mess = `${command.label} Initialised! ${command.subCommands.size} Subcommands loaded.`;
+        } else {
+            mess = `${command.label} Initialised!`;
+        }
+        this.commandS(mess);
+    }
+
+    initSubCmd(sub) {
+        let mess;
+        if (sub.hasSubcmd) {
+            mess = `${sub.label} Initialised! ${sub.subCommands.size} Subcommands loaded.`;
+        } else {
+            mess = `${sub.label} Initialised!`;
+        }
+        this.subcmdS(mess);
     }
 }
 
