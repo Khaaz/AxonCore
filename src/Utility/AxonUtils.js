@@ -67,16 +67,17 @@ class AxonUtils {
     //
 
     /**
-     * Check if the bot has correct perm in targeted channel
+     * Check if the user has correct perm in targeted channel
      *
      * @param {Object<Channel>} channel - Channel object
      * @param {Array<String>} permissions - List of permissions to test
-     * @returns {Boolean} true if bot has permissions
+     * @param {Object<User>} user - User to test | Default to bot
+     * @returns {Boolean} true if user has permissions
      * @memberof AxonUtils
      */
-    botHasPerms(channel, permissions) {
+    hasChannelPerms(channel, permissions, user = this.bot.user) {
         for (const perm of permissions) {
-            if (!channel.permissionsOf(this.bot.user.id).has(perm)) {
+            if (!channel.permissionsOf(user.id).has(perm)) {
                 return false;
             }
         }
@@ -84,14 +85,14 @@ class AxonUtils {
     }
 
     /**
-     * Check if the user has correct perm to execute
+     * Check if the member has correct perm to execute
      *
      * @param {Object<Member>} member - Member object
      * @param {Array<String>} permissions - List of permissions to test
-     * @returns {Boolean} true if bot has permissions
+     * @returns {Boolean} true if member has permissions
      * @memberof AxonUtils
      */
-    userHasPerm(member, permissions) {
+    hasPerms(member, permissions = []) {
         for (const perm of permissions) {
             if (!member.permissions.has(perm)) {
                 return false;
@@ -119,7 +120,7 @@ class AxonUtils {
      * @memberof AxonUtils
      */
     isBotAdmin(uID) {
-        return this.axon.staff.admins.find(u => u === uID);
+        return this.isBotOwner(uID) || this.axon.staff.admins.find(u => u === uID);
     }
 
     /**
@@ -195,15 +196,12 @@ class AxonUtils {
      * @memberof Command
      */
     sendMessage(channel, content) {
-        let botUser;
-        if (channel.guild) {
-            botUser = channel.guild.members.get(this.bot.user.id);
-            if (!botUser.permission.has('sendMessages')) { // check if bot has sendMessage perm in the channel.
-                return Promise.resolve();
-            }
+        if (channel.guild && !this.hasChannelPerms(channel, ['sendMessages'])) { // check if bot has sendMessage perm in the channel.
+            return Promise.resolve();
         }
+
         if (content instanceof Object) {
-            if (channel.guild && !channel.guild.members.get(this.bot.user.id).permission.has('embedLinks')) { // check if bot has embedPermission perm in the channel.
+            if (channel.guild && !this.hasChannelPerms(channel, ['embedLinks'])) { // check if bot has embedPermission perm in the channel.
                 return Promise.resolve();
             }
 
@@ -253,7 +251,7 @@ class AxonUtils {
             return Promise.resolve();
         }
         if (content instanceof Object) {
-            if (message.channel.guild && !message.channel.guild.members.get(this.bot.user.id).permission.has('embedLinks')) { // check if bot has embedPermission perm in the channel.
+            if (message.channel.guild && !this.hasChannelPerms(message.channel, ['embedLinks'])) { // check if bot has embedLinks perm in the channel.
                 return Promise.resolve();
             }
 
