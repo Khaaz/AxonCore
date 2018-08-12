@@ -1,11 +1,4 @@
 {
-    "bot": {
-        "id": "bot id",
-        "token": "token"
-    },
-
-    "sentry": "",
-
     "webhooks": {
         "status": {
             "id": "",
@@ -23,9 +16,5 @@
             "id": "",
             "token": ""
         }
-    },
-
-    "API": {
-        "example": "token"
     }
 }
