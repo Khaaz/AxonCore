@@ -23,6 +23,7 @@ class Eval extends Command {
         this.options.cooldown = null;
 
         this.permissions.staff.needed = this.axon.staff.owners;
+        this.permissions.staff.bypass = this.axon.staff.owners;
     }
 
     async execute({ msg, args, /* eslint-disable */guildConf/* eslint-enable */ }) {
