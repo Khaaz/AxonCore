@@ -33,7 +33,7 @@ class AxonCommandError extends Error {
         });
 
         Object.defineProperty(this, 'message', {
-            value: short + ' | ' + err.message ? err.message : '',
+            value: short + ' | ' + (err.message ? err.message : ''),
             writable: false,
         });
 
