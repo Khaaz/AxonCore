@@ -1,6 +1,6 @@
 {
   "name": "axoncore",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "AxonCore - AxonClient: Framework, Command/Event handler to interact with Eris library.",
   "author": "KhaaZ#0001",
   "license": "ISC",

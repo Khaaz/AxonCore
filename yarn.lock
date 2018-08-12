@@ -528,8 +528,8 @@ emitter-listener@^1.1.1:
     shimmer "^1.2.0"
 
 "eris@git+https://github.com/Khaazz/eris.git#axoncore":
-  version "0.8.6"
-  resolved "git+https://github.com/Khaazz/eris.git#827c5ea2364cf90745ca76102e680197ee5a296a"
+  version "0.9.0"
+  resolved "git+https://github.com/Khaazz/eris.git#f91c7cf92c6bfc42dad6ac62aab128fffd69a162"
   dependencies:
     ws "^6.0.0"
   optionalDependencies:
@@ -956,8 +956,8 @@ ignore-walk@^3.0.1:
     minimatch "^3.0.4"
 
 ignore@^4.0.2:
-  version "4.0.5"
-  resolved "https://registry.yarnpkg.com/ignore/-/ignore-4.0.5.tgz#333535a20325ba4852c4ddb135d47392aa035e6d"
+  version "4.0.6"
+  resolved "https://registry.yarnpkg.com/ignore/-/ignore-4.0.6.tgz#750e3db5862087b4737ebac8207ffd1ef27b25fc"
 
 imurmurhash@^0.1.4:
   version "0.1.4"
