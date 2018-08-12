@@ -1,9 +1,10 @@
 'use strict';
 
-import Util from './Utils';
+import Utils from './Utils';
 // Error
 import AxonError from '../Errors/AxonError';
 
+const Util = new Utils();
 /**
  * Resolver class for AxonClient
  *
@@ -15,7 +16,7 @@ class Resolver {
     /**
      * User resolver
      *
-     * @param {Object<AxonClient>} client - The bot client
+     * @param {Object<Eris.Client>} client - The bot client
      * @param {Array|String} args - Array of arguments resolved by the command.
      * @returns {Object|null} The user object / null if not found / error if error (incorect args)
      */
