@@ -23,8 +23,16 @@ class AxonError extends Error {
     constructor(message, module, command, err) {
         super();
 
-        this.module = (typeof module === 'string') ? module : (module.toString() || null);
-        this.command = (typeof command === 'string') ? command : (command.toString() || null);
+        if (module) {
+            this.module = (typeof module === 'string') ? module : ((module.toString && module.toString()) || null);
+        } else {
+            this.module = null;
+        }
+        if (command) {
+            this.command = (typeof command === 'string') ? command : ((command.toString && command.toString()) || null);
+        } else {
+            this.command = null;
+        }
 
         const short =  `${this.name} => `
             + (this.module ? `[${this.module}] ` : '')
