@@ -412,7 +412,7 @@ class Command extends Base {
         if (!this.permissions.bot.length) {
             return true;
         }
-        return this.AxonUtils.botHasPerms(msg.channel, this.permissions.bot);
+        return this.AxonUtils.hasChannelPerms(msg.channel, this.permissions.bot);
     }
 
     /**
