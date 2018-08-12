@@ -526,19 +526,14 @@ class AxonClient {
         msg.command = false;
 
         /**
-         * Get guild Conf from DB
-         * Cache in this.guildConfigs (only on first messageCreate in this guild)
-         *
-         * Mongo dependant (or local DB)
+         * Get guild Conf from cache || DB
+         * Raise error eventually
          */
-        let guildConf = this.guildConfigs.get(msg.channel.guild.id);
-        if (!guildConf) {
-            try {
-                guildConf =  await this.fetchGuildConf(msg.channel.guild.id); // retrieve DB get guildConf
-            } catch (err) {
-                throw new AxonCommandError('OnMessage', 'DB ERROR - guildConfig', `Guild: ${msg.channel.guild.id}`, err);
-            }
-            this.guildConfigs.set(msg.channel.guild.id, guildConf);
+        let guildConf;
+        try {
+            guildConf = await this.getGuildConf(msg.channel.guild.id);
+        } catch (err) {
+            return this.Logger.error(err);
         }
 
         /** Admin override */
@@ -815,6 +810,27 @@ class AxonClient {
         return guildConf.modules.find(m => m === command.module.label);
     }
 
+    /**
+     * Get guildConfig from cache || DB
+     * Cache it if not cached
+     *
+     * @param {String} gID
+     * @returns {Promise} guildConf object fetched
+     * @memberof AxonClient
+     */
+    async getGuildConf(gID) {
+        let guildConf = this.guildConfigs.get(gID);
+        if (!guildConf) {
+            try {
+                guildConf =  await this.fetchGuildConf(gID); // retrieve DB get guildConf
+            } catch (err) {
+                throw new AxonCommandError('OnMessage', 'DB ERROR - guildConfig', `Guild: ${gID}`, err);
+            }
+            this.guildConfigs.set(gID, guildConf);
+        }
+        return guildConf;
+    }
+
     //
     // ****** DATABASE ******
     // initialisation/fetch
@@ -845,7 +861,7 @@ class AxonClient {
     }
 
     /**
-     * Fetch and resolve guild Config
+     * Fetch and resolve guild Config from Database
      * Create a schema if none found or error
      *
      * @param {String} gID - The guild ID to fetch the DB
