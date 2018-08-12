@@ -212,33 +212,24 @@ class Command extends Base {
     _execute(message) {
         const { msg, args, guildConf } = message;
 
-        /** Test for Mod Only / serverMod command | serverAdmin command */
-        if (((guildConf.modOnly || this.permissions.serverMod) && !this.AxonUtils.isMod(msg.member, guildConf)) || (this.permissions.serverAdmin && !this.AxonUtils.isAdmin(msg.member))) {
-            /** Sends invalid perm message in case of invalid perm [option enabled] */
-            if (!guildConf.modOnly && this.options.invalidPermissionMessage) { // doesn't send back invalid perm if mod Only
-                return this.sendUserPerms(msg.channel);
-            }
-            return Promise.resolve();
-        }
-
         /** Test for bot permissions */
         if (!this._checkPermsBot(msg)) {
             return this.sendBotPerms(msg.channel);
+        }
+
+        /** Permissions checkers */
+        if (!this.canExecute(msg, guildConf)) {
+            /** Sends invalid perm message in case of invalid perm [option enabled] */
+            if (!guildConf.modOnly && this.options.invalidPermissionMessage) {
+                return this.sendUserPerms(msg.channel);
+            }
+            return Promise.resolve();
         }
 
         /** Test for Cooldown - Send Cooldown message */
         const cd = this._shouldCooldown(msg);
         if (typeof (cd) === 'number') {
             return this.sendCooldown(msg.channel, cd);
-        }
-
-        /** Permissions checkers */
-        if (!this.canExecute(msg)) {
-            /** Sends invalid perm message in case of invalid perm [option enabled] */
-            if (this.options.invalidPermissionMessage) {
-                return this.sendUserPerms(msg.channel);
-            }
-            return Promise.resolve();
         }
 
         if (this.options.deleteCommand) { // delete input
@@ -373,12 +364,14 @@ class Command extends Base {
      * Permission checker - Does the user has perm to exec command/not
      * Bypass - one of the perms (override) => doesn't go through others chercker
      * Needed - all perms => still go through other checkers
+     * ServerMod
      *
      * @param {Object<Message>} msg - Message Object
+     * @param {Object} guildConf - Guild Config
      * @returns {Boolean} true: user can execute command
      * @memberof Command
      */
-    canExecute(msg) {
+    canExecute(msg, guildConf) {
         /** Bypass: if one of the perm is true => Exec the command */
         if (this._checkPermsUserBypass(msg)
             || this._checkUserBypass(msg)
@@ -386,6 +379,11 @@ class Command extends Base {
             || this._checkChannelBypass(msg)
             || this._checkStaffBypass(msg)) {
             return true;
+        }
+
+        if (((guildConf.modOnly || this.permissions.serverMod) && !this.AxonUtils.isMod(msg.member, guildConf))
+            || (this.permissions.serverAdmin && !this.AxonUtils.isAdmin(msg.member))) {
+            return false;
         }
 
         /** Needed: if one of the perms is false => doesn't exec the command */

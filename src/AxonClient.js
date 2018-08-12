@@ -810,27 +810,6 @@ class AxonClient {
         return guildConf.modules.find(m => m === command.module.label);
     }
 
-    /**
-     * Get guildConfig from cache || DB
-     * Cache it if not cached
-     *
-     * @param {String} gID
-     * @returns {Promise} guildConf object fetched
-     * @memberof AxonClient
-     */
-    async getGuildConf(gID) {
-        let guildConf = this.guildConfigs.get(gID);
-        if (!guildConf) {
-            try {
-                guildConf =  await this.fetchGuildConf(gID); // retrieve DB get guildConf
-            } catch (err) {
-                throw new AxonCommandError('OnMessage', 'DB ERROR - guildConfig', `Guild: ${gID}`, err);
-            }
-            this.guildConfigs.set(gID, guildConf);
-        }
-        return guildConf;
-    }
-
     //
     // ****** DATABASE ******
     // initialisation/fetch
@@ -945,6 +924,43 @@ class AxonClient {
         return command;
     }
 
+    /**
+     * Get guildConfig from cache || DB
+     * Cache it if not cached
+     *
+     * @param {String} gID
+     * @returns {Promise} guildConf object fetched
+     * @memberof AxonClient
+     */
+    async getGuildConf(gID) {
+        let guildConf = this.guildConfigs.get(gID);
+        if (!guildConf) {
+            try {
+                guildConf =  await this.fetchGuildConf(gID); // retrieve DB get guildConf
+            } catch (err) {
+                throw new AxonCommandError('OnMessage', 'DB ERROR - guildConfig', `Guild: ${gID}`, err);
+            }
+            this.guildConfigs.set(gID, guildConf);
+        }
+        return guildConf;
+    }
+
+    /**
+     * Update guild Conf in cache + DB
+     * Uses Json Object directly. (Client cache leaned Guild schema)
+     *
+     * @param {String} gID - Guild id
+     * @param {Object} guildSchema - Guild schema Object
+     * @returns {Promise} Updated guildSchema
+     * @memberof AxonClient
+     */
+    updateGuildConf(gID, guildSchema) {
+        return this.DBprovider.saveGuildSchema(gID, guildSchema)
+            .then(() => {
+                this.guildConfigs.set(gID, guildSchema);
+            });
+    }
+
     //
     // ****** EXTERNAL ******
     //
@@ -1037,7 +1053,7 @@ class AxonClient {
     async updateStateModule(guildID, label, boolean) {
         let conf;
         try {
-            conf = this.guildConfigs.get(guildID) || this.fetchGuildConf(guildID); // get from cache or from DB if not found
+            conf = await this.getGuildConf(guildID); // get from cache or from DB if not found
         } catch (err) {
             throw err;
         }
@@ -1068,7 +1084,7 @@ class AxonClient {
     async updateStateCommand(guildID, label, boolean) {
         let conf;
         try {
-            conf = this.guildConfigs.get(guildID) || this.fetchGuildConf(guildID); // get from cache or from DB if not found
+            conf = await this.getGuildConf(guildID); // get from cache or from DB if not found
         } catch (err) {
             throw err;
         }
@@ -1099,7 +1115,7 @@ class AxonClient {
     async updateStateEvent(guildID, label, boolean) {
         let conf;
         try {
-            conf = this.guildConfigs.get(guildID) || this.fetchGuildConf(guildID); // get from cache or from DB if not found
+            conf = await this.getGuildConf(guildID); // get from cache or from DB if not found
         } catch (err) {
             throw err;
         }
