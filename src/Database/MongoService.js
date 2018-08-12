@@ -241,6 +241,26 @@ class MongoService {
     static saveSchema(schema) {
         return schema.save();
     }
+
+    /**
+     * Save Guild Schema
+     *
+     * @static
+     * @param {String} gID - Guid id
+     * @param {Object} schema - Guild Schema to save
+     * @returns {Promise} Updated SChema111
+     * @memberof MongoService
+     */
+    static saveGuildSchema(gID, schema) {
+        return Guild.findOneAndUpdate({
+            guildID : gID,
+        },
+        schema,
+        {
+            new: true,
+            upsert: true,
+        });
+    }
 }
 
 export default MongoService;
