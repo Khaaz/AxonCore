@@ -93,7 +93,7 @@ class AxonClient {
         this.initDB(axonOptions); // this.DBprovider
         /** Utility */
         this.AxonUtils = new AxonUtils(this);
-        this.Utils = new axonOptions.utils() || new Utils(); // eslint-disable-line
+        this.Utils = axonOptions.utils ? new axonOptions.utils() : new Utils(); // eslint-disable-line
         this.Resolver = axonOptions.resolver || Resolver;
 
         /**
@@ -244,7 +244,7 @@ class AxonClient {
         if (tokenConf && this.Utils.compareObject(defTokenConf, tokenConf)) {
             this._configs._tokens = tokenConf;
         } else {
-            this._configs.tokens = defTokenConf;
+            this._configs._tokens = defTokenConf;
             this.Logger.warn(new AxonError('Couldn\'t init custom token config (used default values)', 'INIT', 'Configs').stack);
         }
 
