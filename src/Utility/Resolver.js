@@ -23,7 +23,7 @@ class Resolver {
     static user(client, args) {
         // Checking if all the arguments are supplied.
         if (!args.length) {
-            throw new AxonError('All the arguments are either not given or false.', this.constructor.name, 'User');
+            throw new AxonError('All the arguments are either not given or false.', 'Resolver', 'User');
         }
         // Checking if args is an array, if it is not, converting it to an array.
         if (!Array.isArray(args)) {
@@ -58,7 +58,7 @@ class Resolver {
     static member(guild, args) {
         // Checking if all the arguments are supplied.
         if (!guild || !args.length) {
-            throw new AxonError('All the arguments are either not given or false.', this.constructor.name, 'Member');
+            throw new AxonError('All the arguments are either not given or false.', 'Resolver', 'Member');
         }
         // Checking if args is an array, if it is not, converting it to an array.
         if (!Array.isArray(args)) {
@@ -97,7 +97,7 @@ class Resolver {
     static role(guild, args) {
         // Checking if all the arguments are supplied.
         if (!guild || !args.length) {
-            throw new AxonError('All the arguments are either not given or false.', this.constructor.name, 'Role');
+            throw new AxonError('All the arguments are either not given or false.', 'Resolver', 'Role');
         }
 
         // Checking if args is an array, if it is not, converting it to an array.
@@ -132,7 +132,7 @@ class Resolver {
     static channel(guild, args) {
         // Checking if all the arguments are supplied.
         if (!guild || !args.length) {
-            throw new AxonError('All the arguments are either not given or false.', this.constructor.name, 'Channel');
+            throw new AxonError('All the arguments are either not given or false.', 'Resolver', 'Channel');
         }
 
         // Checking if args is an array, if it is not, converting it to an array.
@@ -166,7 +166,7 @@ class Resolver {
     static guild(args) {
         // Checking if all the arguments are supplied.
         if (!args.length) {
-            throw new AxonError('All the arguments are either not given or false.', this.constructor.name, 'Guild');
+            throw new AxonError('All the arguments are either not given or false.', 'Resolver', 'Guild');
         }
 
         const guilds = this._client.guilds;
