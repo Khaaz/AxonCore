@@ -2,24 +2,22 @@
 
 import { Command } from '../../../../..';
 
-import Pong from './Ping_Pong';
-
-class Ping extends Command {
+class Pung extends Command {
     constructor(module) {
         super(module);
 
-        this.label = 'ping';
-        this.aliases = ['ping', 'pang', 'pung'];
+        this.label = 'pung';
+        this.aliases = ['pung'];
 
-        this.hasSubcmd = true;
-        this.subcmds = [Pong];
+        this.isSubcmd = true;
+        this.hasSubcmd = false;
 
         this.infos = {
             owner: ['KhaaZ'],
-            name: 'ping',
+            name: 'ping pong pang pung',
             description: 'Ping the bot.',
-            usage: 'ping',
-            examples: ['ping'],
+            usage: 'ping pong pang pung',
+            examples: [],
         };
 
         this.options.argsMin = 0;
@@ -30,16 +28,15 @@ class Ping extends Command {
     async execute({ msg }) {
         const start = Date.now();
 
-        const mess = await this.sendMessage(msg.channel, 'Pong! ');
-
+        const mess = await this.sendMessage(msg.channel, 'REEEEEEEEE!');
         if (!mess) {
             return;
         }
 
         const diff = (Date.now() - start);
 
-        return this.editMessage(mess, `Pong! \`${diff}ms\``);
+        return this.editMessage(mess, `REEEEEEEEE! \`${diff}ms\``);
     }
 }
 
-export default Ping;
+export default Pung;

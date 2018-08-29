@@ -2,6 +2,8 @@
 
 import { Command } from '../../../../..';
 
+import Pang from './Ping_Pong_Pang';
+
 class Pong extends Command {
     constructor(module) {
         super(module);
@@ -10,14 +12,15 @@ class Pong extends Command {
         this.aliases = ['pong'];
 
         this.isSubcmd = true;
-        this.hasSubcmd = false;
+        this.hasSubcmd = true;
+        this.subcmds = [Pang];
 
         this.infos = {
             owner: ['KhaaZ'],
             name: 'ping pong',
-            description: 'Pong the bot.',
+            description: 'Ping the bot.',
+            usage: 'ping pong',
             examples: ['ping pong'],
-            arguments: [],
         };
 
         this.options.argsMin = 0;
