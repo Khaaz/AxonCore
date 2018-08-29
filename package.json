@@ -3,10 +3,12 @@
   "version": "0.8.2",
   "description": "AxonCore - AxonClient: Framework, Command/Event handler to interact with Eris library.",
   "author": "KhaaZ#0001",
-  "license": "ISC",
+  "link": "https://github.com/Khaazz/AxonCore",
+  "license": "MIT",
   "dependencies": {
     "eris": "git+https://github.com/Khaazz/eris.git#axoncore",
-    "esm": "^3.0.72"
+    "esm": "^3.0.72",
+    "eventemitter3": "^3.1.0"
   },
   "devDependencies": {
     "cloc": "^2.3.3",
@@ -15,7 +17,6 @@
   },
   "optionalDependencies": {
     "chalk": "^2.4.1",
-    "eventemitter3": "^3.1.0",
     "mongoose": "^5.2.7",
     "pm2": "^3.0.0",
     "signale": "^1.2.1"
