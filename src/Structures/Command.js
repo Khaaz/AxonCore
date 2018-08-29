@@ -119,11 +119,11 @@ class Command extends Base {
          * All fields are required
          */
         this.infos = {
-            owners: [], // ['Eleos'] OR ['Eleos', 'Ape']
-            name: '', // 'mail' OR 'mail all' (for subcommmands)
-            description: '', // 'A cool command that does things.' <-- With the dot!
-            examples: [], // ['suggestion Hey can we add this thanks', ...]
-            arguments: [], // [['argument name', needed?], [..., ...]] for example: [['id', true], ['name', false]]
+            owners: ['Owner'], // ['KhaaZ'] OR ['KhaaZ', 'Jack']
+            name: 'parentLabel label', // full name of the command
+            description: 'Description of the command.', // 'A cool command that does things.' <-- With the dot!
+            usage: 'label [param] (optional param)', // full usage of the command
+            examples: ['example of command usage'], // ['', ...]
         };
 
         /**
@@ -213,12 +213,12 @@ class Command extends Base {
         const { msg, args, guildConf } = message;
 
         /** Test for bot permissions */
-        if (!this._checkPermsBot(msg)) {
+        if (!this._checkPermsBot(msg.channel)) {
             return this.sendBotPerms(msg.channel);
         }
 
         /** Permissions checkers */
-        if (!this.canExecute(msg, guildConf)) {
+        if (!this.canExecute(msg.channel, msg.member, guildConf)) {
             /** Sends invalid perm message in case of invalid perm [option enabled] */
             if (!guildConf.modOnly && this.options.invalidPermissionMessage) {
                 return this.sendUserPerms(msg.channel);
@@ -238,7 +238,7 @@ class Command extends Base {
 
         /** Sends invalid usage message in case of invalid usage (not enough argument) [option enabled] */
         if (args.length < this.options.argsMin && this.options.invalidUsage && !this.options.hidden) {
-            return this.sendHelp({ msg, args })
+            return this.sendHelp({ msg, args, guildConf })
                 .then(() => {
                     this._cooldown[msg.author.id] = Date.now();
                 });
@@ -259,16 +259,16 @@ class Command extends Base {
      * @memberof Command
      */
     _executeAdmin(message) {
-        const { msg, args } = message;
+        const { msg, args, guildConf } = message;
 
         /** Check bot perms */
-        if (!this._checkPermsBot(msg)) {
+        if (!this._checkPermsBot(msg.channel)) {
             return this.sendBotPerms(msg.channel);
         }
 
         /** Sends invalid usage message in case of invalid usage (not enough argument) [option enabled] */
         if (args.length < this.options.argsMin && this.options.invalidUsage && !this.options.hidden) {
-            return this.sendHelp({ msg, args });
+            return this.sendHelp({ msg, args, guildConf });
         }
 
         if (this.options.deleteCommand) { // delete input
@@ -325,8 +325,54 @@ class Command extends Base {
      * @returns {Promise}
      * @memberof Command
      */
-    sendHelp({ msg /* args*/}) {
-        return (this.axon.sendHelp ? this.axon.sendHelp(this, msg) : this.sendMessage(msg.channel, 'help for ' + this.label));
+    sendHelp({ msg, guildConf }) {
+        const prefix = (guildConf && guildConf.prefix.length > 0) ? guildConf.prefix[0] : this.axon.params.prefix[0];
+
+        const embed = {};
+        embed.author = {
+            name: `Help for ${this.infos.name}`,
+            icon_url: this.bot.user.avatarURL,
+        };
+        embed.footer = {
+            text: 'Run with AxonCore!',
+        };
+
+        embed.color = this.Template.embed.colors.help.length > 0 ? this.Template.embed.colors.help : null;
+
+        embed.description = `**Description:** ${this.infos.description}\n`;
+
+        embed.description += `**Cooldown:** ${this.options.cooldown / 1000}s\n`;
+
+        embed.description += `**Usage:** ${prefix}${this.infos.usage}\n`;
+
+        if (this.infos.examples.length > 0) {
+            this.infos.examples.length > 1
+                ? embed.description += `\n**Examples:**\n${prefix}${this.infos.examples.join(`\n${prefix}`)}\n`
+                : embed.description += `**Example:** ${prefix}${this.infos.examples.join(`\n${prefix}`)}\n`;
+        }
+
+        embed.fields = [];
+        /** SubCommands */
+        if (this.hasSubcmd) {
+            const subcmds = this.subCommands.map(e => e.infos.usage);
+            embed.fields.push({
+                name: 'SubCommands:',
+                value: `${prefix}${subcmds.join(`\n${prefix}`)}`,
+                inline: true,
+            });
+        }
+
+        /** Aliases */
+        if (this.aliases.length > 1) {
+            const aliases = this.aliases.filter(e => e !== this.label);
+            embed.fields.push({
+                name: 'Aliases:',
+                value: aliases.join('\n'),
+                inline: true,
+            });
+        }
+
+        return (this.axon.sendHelp ? this.axon.sendHelp(this, msg) : this.sendMessage(msg.channel, { embed }));
     }
 
     //
@@ -371,27 +417,27 @@ class Command extends Base {
      * @returns {Boolean} true: user can execute command
      * @memberof Command
      */
-    canExecute(msg, guildConf) {
+    canExecute(channel, member, guildConf) {
         /** Bypass: if one of the perm is true => Exec the command */
-        if (this._checkPermsUserBypass(msg)
-            || this._checkUserBypass(msg)
-            || this._checkRoleBypass(msg)
-            || this._checkChannelBypass(msg)
-            || this._checkStaffBypass(msg)) {
+        if (this._checkPermsUserBypass(member)
+            || this._checkUserBypass(member)
+            || this._checkRoleBypass(member)
+            || this._checkChannelBypass(channel)
+            || this._checkStaffBypass(member)) {
             return true;
         }
 
-        if (((guildConf.modOnly || this.permissions.serverMod) && !this.AxonUtils.isMod(msg.member, guildConf))
-            || (this.permissions.serverAdmin && !this.AxonUtils.isAdmin(msg.member))) {
+        if (((guildConf.modOnly || this.permissions.serverMod) && !this.AxonUtils.isMod(member, guildConf))
+            || (this.permissions.serverAdmin && !this.AxonUtils.isAdmin(member))) {
             return false;
         }
 
         /** Needed: if one of the perms is false => doesn't exec the command */
-        if (!this._checkPermsUserNeeded(msg)
-            || !this._checkUserNeeded(msg)
-            || !this._checkRoleNeeded(msg)
-            || !this._checkChannelNeeded(msg)
-            || !this._checkStaffNeeded(msg)) {
+        if (!this._checkPermsUserNeeded(member)
+            || !this._checkUserNeeded(member)
+            || !this._checkRoleNeeded(member)
+            || !this._checkChannelNeeded(channel)
+            || !this._checkStaffNeeded(member)) {
             return false;
         }
 
@@ -402,32 +448,32 @@ class Command extends Base {
      * Check bot permission
      * (= permssions in config)
      *
-     * @param {Object<Message>} msg
+     * @param {Object<Channel>} channel
      * @returns {Boolean}
      * @memberof Command
      */
-    _checkPermsBot(msg) {
+    _checkPermsBot(channel) {
         if (!this.permissions.bot.length) {
             return true;
         }
-        return this.AxonUtils.hasChannelPerms(msg.channel, this.permissions.bot);
+        return this.AxonUtils.hasChannelPerms(channel, this.permissions.bot);
     }
 
     /**
      * Check user permssions [bypass]
      * (= permssions in config)
      *
-     * @param {Object<Message>} msg
+     * @param {Object<Member>} member
      * @returns {Boolean}
      * @memberof Command
      */
-    _checkPermsUserBypass(msg) {
+    _checkPermsUserBypass(member) {
         if (!this.permissions.user.bypass.length) {
             return false;
         }
-        const user = msg.member;
+
         for (const userPerm of this.permissions.user.bypass) {
-            if (user.permission.has(userPerm)) {
+            if (member.permission.has(userPerm)) {
                 return true;
             }
         }
@@ -438,17 +484,16 @@ class Command extends Base {
      * Check user permissions [needed]
      * (= permssions in config)
      *
-     * @param {Object<Message>} msg
+     * @param {Object<Member>} member
      * @returns {Boolean}
      * @memberof Command
      */
-    _checkPermsUserNeeded(msg) {
+    _checkPermsUserNeeded(member) {
         if (!this.permissions.user.needed.length) {
             return true;
         }
-        const user = msg.member;
         for (const userPerm of this.permissions.user.needed) {
-            if (!user.permission.has(userPerm)) {
+            if (!member.permission.has(userPerm)) {
                 return false;
             }
         }
@@ -459,45 +504,45 @@ class Command extends Base {
      * Check roles IDs [bypass]
      * (= permssions in config)
      *
-     * @param {Object<Message>} msg
+     * @param {Object<Member>} member
      * @returns {Boolean}
      * @memberof Command
      */
-    _checkUserBypass(msg) {
+    _checkUserBypass(member) {
         if (!this.permissions.usersID.bypass.length) {
             return false;
         }
-        return this.permissions.usersID.bypass.includes(msg.author.id);
+        return this.permissions.usersID.bypass.includes(member.id);
     }
 
     /**
      * Check user IDs [needed]
      * (= permssions in config)
      *
-     * @param {Object<Message>} msg
+     * @param {Object<Member>} member
      * @returns {Boolean}
      * @memberof Command
      */
-    _checkUserNeeded(msg) {
+    _checkUserNeeded(member) {
         if (!this.permissions.usersID.needed.length) {
             return true;
         }
-        return this.permissions.usersID.needed.includes(msg.author.id);
+        return this.permissions.usersID.needed.includes(member.id);
     }
 
     /**
      * Check roles IDs [bypass]
      * (= permssions in config)
      *
-     * @param {Object<Message>} msg
+     * @param {Object<Member>} member
      * @returns {Boolean}
      * @memberof Command
      */
-    _checkRoleBypass(msg) {
+    _checkRoleBypass(member) {
         if (!this.permissions.rolesID.bypass.length) {
             return false;
         }
-        const roles = msg.member.roles;
+        const roles = member.roles;
         for (const role of this.permissions.rolesID.bypass) {
             if (roles.find(role)) {
                 return true;
@@ -510,15 +555,15 @@ class Command extends Base {
      * Check roles IDs [needed]
      * (= permssions in config)
      *
-     * @param {Object<Message>} msg
+     * @param {Object<Member>} member
      * @returns {Boolean}
      * @memberof Command
      */
-    _checkRoleNeeded(msg) {
+    _checkRoleNeeded(member) {
         if (!this.permissions.rolesID.needed.length) {
             return true;
         }
-        const roles = msg.member.roles;
+        const roles = member.roles;
         for (const role of this.permissions.rolesID.needed) {
             if (!roles.find(role)) {
                 return false;
@@ -531,58 +576,58 @@ class Command extends Base {
      * Check channels IDs [bypass]
      * (= permssions in config)
      *
-     * @param {Object<Message>} msg
+     * @param {Object<Channel>} channel
      * @returns {Boolean}
      * @memberof Command
      */
-    _checkChannelBypass(msg) {
+    _checkChannelBypass(channel) {
         if (!this.permissions.channelsID.bypass.length) {
             return false;
         }
-        return this.permissions.channelsID.bypass.includes(msg.channel.id);
+        return this.permissions.channelsID.bypass.includes(channel.id);
     }
 
     /**
      * Check channels IDs [needed]
      * (= permssions in config)
      *
-     * @param {Object<Message>} msg
+     * @param {Object<Channelmember>} channel
      * @returns {Boolean}
      * @memberof Command
      */
-    _checkChannelNeeded(msg) {
+    _checkChannelNeeded(channel) {
         if (!this.permissions.channelsID.needed.length) {
             return true;
         }
-        return this.permissions.channelsID.needed.includes(msg.channel.id);
+        return this.permissions.channelsID.needed.includes(channel.id);
     }
 
     /**
      * Check if the user is Bot staff
      *
-     * @param {Object<Message>} msg - The message Object
+     * @param {Object<Member>} member
      * @returns {Boolean} true if Staff / false if not
      * @memberof Command
      */
-    _checkStaffBypass(msg) {
+    _checkStaffBypass(member) {
         if (!this.permissions.staff.bypass.length) {
             return false;
         }
-        return this.permissions.staff.bypass.includes(msg.author.id);
+        return this.permissions.staff.bypass.includes(member.id);
     }
 
     /**
      * Check if the user is Bot staff
      *
-     * @param {Object<Message>} msg - The message Object
+     * @param {Object<Member>} member
      * @returns {Boolean} true if Staff / false if not
      * @memberof Command
      */
-    _checkStaffNeeded(msg) {
+    _checkStaffNeeded(member) {
         if (!this.permissions.staff.needed.length) {
             return true;
         }
-        return this.permissions.staff.needed.includes(msg.author.id);
+        return this.permissions.staff.needed.includes(member.id);
     }
 
     //

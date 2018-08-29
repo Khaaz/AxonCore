@@ -2,6 +2,7 @@
 
 // Lib - Modules
 import Eris from 'eris';
+import EventEmitter from 'eventemitter3';
 
 // misc
 import logo from './Conf/logo';
@@ -42,8 +43,9 @@ import AxonCommandError from './Errors/AxonCommandError';
  * @author KhaaZ
  *
  * @class AxonClient
+ * @extends EventEmitter
  */
-class AxonClient {
+class AxonClient extends EventEmitter {
     /**
      * Creates an instance of AxonClient.
      *
@@ -80,6 +82,7 @@ class AxonClient {
      * @memberof AxonClient
      */
     constructor(token, erisOptions, axonOptions, modules) {
+        super();
         /** Cool logging */
         console.log(logo);
 
@@ -172,7 +175,7 @@ class AxonClient {
             name: packageJSON.name,
             version: packageJSON.version,
             author: packageJSON.author,
-            github: packageJSON.repository.url,
+            github: packageJSON.link,
         };
     }
 
@@ -592,18 +595,24 @@ class AxonClient {
 
             command._execute({ msg, args, guildConf })
                 .then(() => {
+                    this.emit('axonCommandSuccess', { msg, guildConf });
                     console.timeEnd('- Net');
                 })
                 .catch(err => {
                     this.Logger.error(new AxonCommandError(command.module, command, `Guild: ${msg.channel.guild.id}`, err).stack);
+                    this.emit('axonCommandError', { msg, guildConf, err });
                     console.timeEnd('- Net');
                     return;
                 });
             console.timeEnd('- Node');
         } else {
             command._execute({ msg, args, guildConf })
+                .then(() => {
+                    this.emit('axonCommandSuccess', { msg, guildConf });
+                })
                 .catch(err => {
                     this.Logger.error(new AxonCommandError(command.module, command, `Guild: ${msg.channel.guild.id}`, err).stack);
+                    this.emit('axonCommandError', { msg, guildConf, err });
                     return;
                 });
         }
@@ -648,17 +657,23 @@ class AxonClient {
 
             command._executeAdmin({ msg, args, guildConf })
                 .then(() => {
+                    this.emit('axonCommandSuccess', { msg, guildConf });
                     console.timeEnd('- Net');
                 })
                 .catch(err => {
                     this.Logger.error(new AxonCommandError(command.module, command, `Guild: ${msg.channel.guild.id}`, err).stack);
+                    this.emit('axonCommandError', { msg, guildConf, err });
                     return;
                 });
             console.timeEnd('- Node');
         } else {
             command._executeAdmin({ msg, args, guildConf })
+                .then(() => {
+                    this.emit('axonCommandSuccess', { msg, guildConf });
+                })
                 .catch(err => {
                     this.Logger.error(new AxonCommandError(command.module, command, `Guild: ${msg.channel.guild.id}`, err).stack);
+                    this.emit('axonCommandError', { msg, guildConf, err });
                     return;
                 });
         }
@@ -709,16 +724,22 @@ class AxonClient {
                 command._executeDM({ msg, args })
                     .then(() => {
                         console.timeEnd('- Net');
+                        this.emit('axonCommandSuccess', { msg, guildConf: null });
                     })
                     .catch(err => {
                         this.Logger.error(new AxonCommandError(command.module, command, `DM: ${msg.author.id}`, err).stack);
+                        this.emit('axonCommandError', { msg, guildConf: null, err });
                         return;
                     });
                 console.timeEnd('- Node');
             } else {
                 command._executeDM({ msg, args })
+                    .then(() => {
+                        this.emit('axonCommandSuccess', { msg, guildConf: null });
+                    })
                     .catch(err => {
                         this.Logger.error(new AxonCommandError(command.module, command, `DM: ${msg.author.id}`, err).stack);
+                        this.emit('axonCommandError', { msg, guildConf: null, err });
                         return;
                     });
             }
@@ -760,11 +781,54 @@ class AxonClient {
      * @return {Promise<Message>}
      * @memberof AxonClient
      */
-    sendFullHelp(msg) {
+    async sendFullHelp(msg) {
+        const guildConfig = msg.channel.guild ? await this.getGuildConf(msg.channel.guild.id) : null;
+        const prefix = (guildConfig && guildConfig.prefix.length > 0)
+            ? guildConfig.prefix[0]
+            : this.params.prefix[0];
+
+        const embed = {};
+
+        embed.author = {
+            name: `Help for ${this.client.user.username}`,
+            icon_url: this.client.user.avatarURL,
+        };
+        embed.footer = {
+            text: 'Run with AxonCore!',
+        };
+
+        embed.color = this.Template.embed.colors.help.length > 0 ? this.Template.embed.colors.help : null;
+
+        let commandList = '';
+        if (guildConfig) {
+            for (const module of this.modules.values()) {
+                const commands = module.commands.filter(c => c.canExecute(msg, guildConfig));
+                if (commands.length > 0) {
+                    commandList += `**${module.label}**\n${commands.map(c => `\`${prefix}${c.label}\` - ${c.infos.description}`).join('\n')}\n`;
+                }
+            }
+        } else {
+            for (const module of this.modules.values()) {
+                commandList += `**${module.label}**\n${module.commands.map(c => `\`${prefix}${c.label}\` - ${c.infos.description}`).join('\n')}\n`;
+            }
+        }
+
         try {
-            return this.client.createMessage(msg.channel.id, 'full help msg');
+            const chan = await this.client.getDMChannel(msg.author.id);
+
+            /** Split commandList */
+            if (commandList.length > 1800) {
+                commandList = commandList.match(/[\s\S]{1,1800}[\n\r]/g) || [];
+                for (const match of commandList) {
+                    embed.description = match;
+                    await this.client.createMessage(chan.id, { embed });
+                }
+            } else {
+                embed.description = commandList;
+                await this.client.createMessage(chan.id, { embed });
+            }
         } catch (err) {
-            console.log(err);
+            //
         }
     }
 
