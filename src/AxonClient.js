@@ -195,6 +195,10 @@ class AxonClient extends EventEmitter {
         return this._configs._tokens.webhooks;
     }
 
+    get template() {
+        return this._configs.template;
+    }
+
     //
     // ****** INSTANCE INIT METHOD (AXONCLIENT CREATION) ******
     //
@@ -797,12 +801,12 @@ class AxonClient extends EventEmitter {
             text: 'Run with AxonCore!',
         };
 
-        embed.color = this.Template.embed.colors.help.length > 0 ? this.Template.embed.colors.help : null;
+        embed.color = this.template.embed.colors.help.length > 0 ? this.template.embed.colors.help : null;
 
         let commandList = '';
         if (guildConfig) {
             for (const module of this.modules.values()) {
-                const commands = module.commands.filter(c => c.canExecute(msg, guildConfig));
+                const commands = module.commands.filter(c => c.canExecute(msg.channel, msg.member, guildConfig));
                 if (commands.length > 0) {
                     commandList += `**${module.label}**\n${commands.map(c => `\`${prefix}${c.label}\` - ${c.infos.description}`).join('\n')}\n`;
                 }
