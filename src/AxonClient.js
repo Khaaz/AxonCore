@@ -798,7 +798,7 @@ class AxonClient extends EventEmitter {
             icon_url: this.client.user.avatarURL,
         };
         embed.footer = {
-            text: 'Run with AxonCore!',
+            text: 'Runs with AxonCore!',
         };
 
         embed.color = this.template.embed.colors.help.length > 0 ? this.template.embed.colors.help : null;

@@ -334,7 +334,7 @@ class Command extends Base {
             icon_url: this.bot.user.avatarURL,
         };
         embed.footer = {
-            text: 'Run with AxonCore!',
+            text: 'Runs with AxonCore!',
         };
 
         embed.color = this.Template.embed.colors.help.length > 0 ? this.Template.embed.colors.help : null;
