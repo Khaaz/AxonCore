@@ -49,7 +49,7 @@ class AxonUtils {
      */
     triggerWebhook(type, embed, opt) {
         if (this.axon.webhooks[type].id.length > 0 && this.axon.webhooks[type].token.length) {
-            this.axon.client.executeWebhook(this.axon.webhooks[type].id, this.axon.webhooks[type].id, {
+            this.axon.client.executeWebhook(this.axon.webhooks[type].id, this.axon.webhooks[type].token, {
                 username: opt ? opt : (`${type[0].toUpperCase() + type.slice(1)} - ${this.axon.client.user ? this.axon.client.user.username : ''}`),
                 avatarURL: this.axon.client.user ? this.axon.client.user.avatarURL : null,
                 embeds: [
