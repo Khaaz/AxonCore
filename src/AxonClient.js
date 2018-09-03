@@ -367,7 +367,7 @@ class AxonClient extends EventEmitter {
                 color: 15158332,
                 timestamp: new Date(),
                 description: (err.stack && err.stack.length > 1950) ? err.message : err.stack,
-            }, `Exception - ${this.client.user.username}`);
+            }, `Exception${this.client.user ? ` - ${this.client.user.username}` : ''}`);
         });
 
         process.on('unhandledRejection', (err) => {
@@ -377,7 +377,7 @@ class AxonClient extends EventEmitter {
                 color: 15158332,
                 timestamp: new Date(),
                 description: (err.stack && err.stack.length > 1950) ? err.message : err.stack,
-            }, `Rejection - ${this.client.user.username}`);
+            }, `Rejection${this.client.user ? ` - ${this.client.user.username}` : ''}`);
         });
 
         this.client.on('error', (err) => {
@@ -397,7 +397,7 @@ class AxonClient extends EventEmitter {
                 color: 15105570,
                 timestamp: new Date(),
                 description: msg,
-            }, `Warn - ${this.client.user.username}`);
+            }, `Warn${this.client.user ? ` - ${this.client.user.username}` : ''}`);
         });
 
         this.Logger.axon('Error listeners bound!');
