@@ -544,8 +544,10 @@ class AxonClient extends EventEmitter {
         }
 
         /** Admin override */
-        if ((msg.content.startsWith(this.params.ownerPrefix) && this.AxonUtils.isBotOwner(msg.author.id)) || (msg.content.startsWith(this.params.adminPrefix) && this.AxonUtils.isBotAdmin(msg.author.id))) { // ADMIN override everything
-            return this._execAdmin(msg, guildConf);
+        if (msg.content.startsWith(this.params.ownerPrefix) && this.AxonUtils.isBotOwner(msg.author.id)) { // Owner override everything
+            return this._execAdmin(msg, guildConf, true);
+        } else if (msg.content.startsWith(this.params.adminPrefix) && this.AxonUtils.isBotAdmin(msg.author.id)) { // ADMIN override everything except owner
+            return this._execAdmin(msg, guildConf, false);
         }
 
         msg.content = msg.content.replace(/<@!/g, '<@'); // formatting mention
@@ -630,9 +632,10 @@ class AxonClient extends EventEmitter {
      *
      * @param {Object<Message>} msg - Message Object
      * @param {Oject} guildConf - guild config
+     * @param {Boolean} isOwner - the user is bot owner or not
      * @memberof AxonClient
      */
-    _execAdmin(msg, guildConf) {
+    _execAdmin(msg, guildConf, isOwner) {
         msg.prefix = this.params.adminPrefix;
 
         const args = msg.content.replace(/<@!/g, '<@').substring(msg.prefix.length).split(' ');
@@ -659,7 +662,7 @@ class AxonClient extends EventEmitter {
             console.time('- Net');
             console.time('- Node');
 
-            command._executeAdmin({ msg, args, guildConf })
+            command._executeAdmin({ msg, args, guildConf, isOwner })
                 .then(() => {
                     this.emit('axonCommandSuccess', { msg, guildConf });
                     console.timeEnd('- Net');
@@ -671,7 +674,7 @@ class AxonClient extends EventEmitter {
                 });
             console.timeEnd('- Node');
         } else {
-            command._executeAdmin({ msg, args, guildConf })
+            command._executeAdmin({ msg, args, guildConf, isOwner })
                 .then(() => {
                     this.emit('axonCommandSuccess', { msg, guildConf });
                 })

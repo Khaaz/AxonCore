@@ -259,11 +259,15 @@ class Command extends Base {
      * @memberof Command
      */
     _executeAdmin(message) {
-        const { msg, args, guildConf } = message;
+        const { msg, args, guildConf, isOwner } = message;
 
         /** Check bot perms */
         if (!this._checkPermsBot(msg.channel)) {
             return this.sendBotPerms(msg.channel);
+        }
+
+        if (!isOwner && this.permissions.staff.needed.length === this.axon.staff.owners.length) {
+            return Promise.resolve();
         }
 
         /** Sends invalid usage message in case of invalid usage (not enough argument) [option enabled] */
