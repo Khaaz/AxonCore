@@ -1,18 +1,39 @@
 'use strict';
 
-import Axon from './Models/AxonSchema';
-import Guild from './Models/GuildSchema';
-
+/**
+ * Mongo Service class
+ * Handler all interaction with MongoDB
+ * (Guild/Axon schemas for AxonClient request)
+ *
+ * @author KhaaZ
+ *
+ * @class MongoService
+ */
 class MongoService {
+    constructor(axon) {
+        this._axon = axon;
+    }
+
+    get axon() {
+        return this._axon;
+    }
+
+    init(axonOptions) {
+        this.AxonSchema = axonOptions.axonSchema || require('./Models/AxonSchema').default;
+        this.GuildSchema = axonOptions.guildSchema || require('./Models/GuildSchema').default;
+
+        this.axon.Schemas.set('axonSchema', this.AxonSchema);
+        this.axon.Schemas.set('guildSchema', this.GuildSchema);
+    }
+
     /**
      * Retrieve Axon schema from DB (unique schema)
      *
-     * @static
      * @returns {Promise<Object|null>} AxonSchema Object or null
      * @memberof MongoService
      */
-    static fetchAxon() {
-        return Axon.findOne({
+    fetchAxon() {
+        return this.AxonSchema.findOne({
             ID : '1',
         });
     }
@@ -21,13 +42,12 @@ class MongoService {
      * Retreive the Guild Schema for the specific guild
      * WARNING: LEAN (faster but no mongo methods)
      *
-     * @static
      * @param {String} gID - guild ID
      * @returns {Promise<Object|null>} GuildSchema Object or null
      * @memberof MongoService
      */
-    static fetchGuild(gID) {
-        return Guild.findOne({
+    fetchGuild(gID) {
+        return this.GuildSchema.findOne({
             guildID : gID,
         }).lean();
     }
@@ -36,13 +56,12 @@ class MongoService {
      * Retreive the Guild Schema for the specific guild
      * NOT LEAN
      *
-     * @static
      * @param {String} gID - guild ID
      * @returns {Promise<Object|null>} GuildSchema Object or null
      * @memberof MongoService
      */
-    static fetchGuildSchema(gID) {
-        return Guild.findOne({
+    fetchGuildSchema(gID) {
+        return this.GuildSchema.findOne({
             guildID : gID,
         });
     }
@@ -50,12 +69,11 @@ class MongoService {
     /**
      * Initialise the default schema for Axon with default value
      *
-     * @static
      * @returns {Promise<Object>} Axon Schema Object newly created
      * @memberof MongoService
      */
-    static initAxon() {
-        return Axon.findOneAndUpdate({
+    initAxon() {
+        return this.AxonSchema.findOneAndUpdate({
             ID : '1',
         },
         {
@@ -71,13 +89,12 @@ class MongoService {
     /**
      * Initialise the default schema for Axon with default value
      *
-     * @static
      * @param {String} gID - guild ID
      * @returns {Promise<Object>} Guild Schema Object newly created
      * @memberof MongoService
      */
-    static initGuild(gID) {
-        return Guild.findOneAndUpdate({
+    initGuild(gID) {
+        return this.GuildSchema.findOneAndUpdate({
             guildID : gID,
         },
         {
@@ -93,13 +110,12 @@ class MongoService {
     /**
      * Update the blacklisted users
      *
-     * @static
      * @param {Array<String>} blacklistedUsers - Array of blacklistedUsers
      * @returns {Promise} AxonSchema updated
      * @memberof MongoService
      */
-    static updateBlacklistUser(blacklistedUsers) {
-        return Axon.findOneAndUpdate({
+    updateBlacklistUser(blacklistedUsers) {
+        return this.AxonSchema.findOneAndUpdate({
             ID : '1',
         },
         {
@@ -116,13 +132,12 @@ class MongoService {
     /**
      * Update the blacklisted guilds
      *
-     * @static
      * @param {Array<String>} blacklistedGuilds - Array of blacklistedUsers
      * @returns {Promise} AxonSchema updated
      * @memberof MongoService
      */
-    static updateBlacklistGuild(blacklistedGuilds) {
-        return Axon.findOneAndUpdate({
+    updateBlacklistGuild(blacklistedGuilds) {
+        return this.AxonSchema.findOneAndUpdate({
             ID : '1',
         },
         {
@@ -139,14 +154,13 @@ class MongoService {
     /**
      * Update the guild prefix array for that guild
      *
-     * @static
      * @param {String} gID - guild ID
      * @param {Array<String>} prefixArr - Array of prefixes
      * @returns {Promise} GuilSchema updated
      * @memberof MongoService
      */
-    static updateGuildPrefix(gID, prefixArr) {
-        return Guild.findOneAndUpdate({
+    updateGuildPrefix(gID, prefixArr) {
+        return this.GuildSchema.findOneAndUpdate({
             guildID : gID,
         },
         {
@@ -163,13 +177,12 @@ class MongoService {
     /**
      * Update the guilds modules array for that guild
      *
-     * @static
      * @param {Array<String>} modulesArr - Array of modules label
      * @returns {Promise} GuildSchema updated
      * @memberof MongoService
      */
-    static updateModule(gID, modulesArr) {
-        return Guild.findOneAndUpdate({
+    updateModule(gID, modulesArr) {
+        return this.GuildSchema.findOneAndUpdate({
             guildID : gID,
         },
         {
@@ -186,13 +199,12 @@ class MongoService {
     /**
      * Update the guilds commands array for that guild
      *
-     * @static
      * @param {Array<String>} commandsArr - Array of commands label
      * @returns {Promise} GuildSchema updated
      * @memberof MongoService
      */
-    static updateCommand(gID, commandsArr) {
-        return Guild.findOneAndUpdate({
+    updateCommand(gID, commandsArr) {
+        return this.GuildSchema.findOneAndUpdate({
             guildID : gID,
         },
         {
@@ -209,13 +221,12 @@ class MongoService {
     /**
      * Update the guilds events array for that guild
      *
-     * @static
      * @param {Array<String>} eventsArr - Array of events label
      * @returns {Promise} GuildSchema updated
      * @memberof MongoService
      */
-    static updateEvent(gID, eventsArr) {
-        return Guild.findOneAndUpdate({
+    updateEvent(gID, eventsArr) {
+        return this.GuildSchema.findOneAndUpdate({
             guildID : gID,
         },
         {
@@ -233,32 +244,31 @@ class MongoService {
      * Update the given schema in the DB
      * with value in current schema object
      *
-     * @static
      * @param {Object} schema - the schema object to update
      * @returns {Promise} Updated Schema from the DB
      * @memberof MongoService
      */
-    static saveSchema(schema) {
+    saveSchema(schema) {
         return schema.save();
     }
 
     /**
      * Save Guild Schema
      *
-     * @static
      * @param {String} gID - Guid id
      * @param {Object} schema - Guild Schema to save
      * @returns {Promise} Updated SChema111
      * @memberof MongoService
      */
-    static saveGuildSchema(gID, schema) {
-        return Guild.findOneAndUpdate({
+    saveGuildSchema(gID, schema) {
+        return this.GuildSchema.findOneAndUpdate({
             guildID : gID,
         },
         schema,
         {
             new: true,
             upsert: true,
+            setDefaultsOnInsert: true,
         });
     }
 }

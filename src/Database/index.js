@@ -3,40 +3,45 @@
 import JsonService from './JsonService';
 
 /**
- * Logger Handler
- * Use require to dunamically load a Logger regarding dependencies
+ * Database Handler
+ * Use require to dynamically load a Database Service regarding dependencies
  *
- * @author Eleos, KhaaZ
+ * @author KhaaZ
  *
  * @class DBHandler
  */
 class DBHandler {
-    static pickDBService(config, logger) {
+    static pickDBService(axonOptions, axon) {
         let DBservice;
 
-        switch (config.db) {
+        switch (axonOptions.axonConf.db) {
             // Json Database
             case 0:
             default: {
                 DBservice = JsonService;
-                logger.info('Database: JSON DB.');
+                axon.Logger.info('Database: JSON DB.');
                 break;
             }
 
             // MongoDB Database
             case 1: {
                 try {
-                    DBservice = require('./MongoService').default;
-                    logger.info('Database: Mongo DB.');
+                    const MongoService = require('./MongoService').default;
+
+                    DBservice = new MongoService(axon);
+                    DBservice.init(axonOptions);
+
+                    axon.Logger.info('Database: Mongo DB.');
                 } catch (err) {
                     DBservice = JsonService;
-                    logger.warn('Mongo fail, Json DB');
-                    logger.info('Database: JSON DB.');
+                    axon.Logger.warn('Mongo fail, Json DB');
+                    axon.Logger.info('Database: JSON DB.');
                 }
                 break;
             }
         }
 
+        axon.Logger.axon('DB ready');
         return DBservice;
     }
 }

@@ -7,6 +7,7 @@ import tokenConf from './configs/tokenConf.json';
 import templateConf from './configs/templateConf.json';
 
 import MyUtils from './MyUtils';
+import MyGuildSchema from './MyGuildSchema';
 
 const AxonOptions = {
     axonConf,
@@ -15,8 +16,10 @@ const AxonOptions = {
 
     resolver: null,
     utils: MyUtils, // use your own Utils
+    logger: null, // custom Logger
+    db: null, // custom DB Service
     axonSchema: null,
-    guildSchema: null,
+    guildSchema: MyGuildSchema,
 };
 
 /**
