@@ -13,22 +13,44 @@ class Collection extends Map {
     /**
      * Construct a Collection
      *
-     * @arg {Class} baseObject The base class for all items
-     * @arg {Number} [limit] Max number of items to hold
+     * @arg {Class} baseObject - The base class for all items
+     * @arg {Object} iterable - Iterable to construct the Map from
      */
-    constructor(baseObject) {
-        super();
-        this.baseObject = baseObject ? baseObject : null;
+    constructor(baseObject = null, iterable) {
+        if (iterable && iterable instanceof Array) {
+            super(iterable);
+        } else if (iterable && iterable instanceof Object) {
+            super(Object.entries(iterable));
+        } else {
+            super();
+        }
+        this.baseObject = baseObject;
     }
 
     /**
      * Map to array
+     * [ value, value, value]
      *
      * @returns {Array<Class>}
      * @memberof Collection
      */
     toArray() {
-        return [...this.values];
+        return [...this.values()];
+    }
+
+    /**
+     * Map to object
+     * { key: value, key: value }
+     *
+     * @returns {Object<key:value>}
+     * @memberof Collection
+     */
+    toObject() {
+        const obj = {};
+        for (const [key, value] of this.entries()) {
+            obj[key] = value;
+        }
+        return obj;
     }
 
     /**
@@ -51,14 +73,13 @@ class Collection extends Map {
         }
 
         this.set(key, value);
-
         return value;
     }
 
     /**
      * Return the first object to make the function evaluate true
      *
-     * @arg {function} func - A function that takes an object and returns true if it matches
+     * @arg {Function} func - A function that takes an object and returns true if it matches
      * @returns {Class?} The first matching object, or undefined if no match
      */
     find(func) {
@@ -71,21 +92,23 @@ class Collection extends Map {
     }
 
     /**
-     * Get a random object from the Collection
+     * Return an array with the results of applying the given function to each element
      *
-     * @returns {Class?} The random object, or undefined if there is no match
+     * @arg {Function} func - A function that takes an object and returns something
+     * @returns {Array} An array containing the results
      */
-    random() {
-        if (!this.size) {
-            return undefined;
+    map(func) {
+        const arr = [];
+        for (const item of this.values()) {
+            arr.push(func(item));
         }
-        return Array.from(this.values())[Math.floor(Math.random() * this.size)];
+        return arr;
     }
 
     /**
      * Return all the objects that make the function evaluate true
      *
-     * @arg {function} func - A function that takes an object and returns true if it matches
+     * @arg {Function} func - A function that takes an object and returns true if it matches
      * @returns {Array<Class>} An array containing all the objects that matched
      */
     filter(func) {
@@ -99,23 +122,19 @@ class Collection extends Map {
     }
 
     /**
-     * Return an array with the results of applying the given function to each element
+	 * Reduce values by function
      *
-     * @arg {function} func - A function that takes an object and returns something
-     * @returns {Array} An array containing the results
-     */
-    map(func) {
-        const arr = [];
-        for (const item of this.values()) {
-            arr.push(func(item));
-        }
-        return arr;
+     * @arg {Function}
+     * @arg {}
+	 */
+    reduce(callbackFn, currentIndex) {
+        return this.toArray().reduce(callbackFn, currentIndex);
     }
 
     /**
      * Test if at least one element passes the test implemented by the provided function. Returns true if yes, or false if not.
      *
-     * @arg {function} func - A function that takes an object and returns true if it matches
+     * @arg {Function} func - A function that takes an object and returns true if it matches
      * @returns {Boolean} An array containing all the objects that matched
      */
     some(func) {
@@ -130,7 +149,7 @@ class Collection extends Map {
     /**
      * Test if all elements passe the test implemented by the provided function. Returns true if yes, or false if not.
      *
-     * @arg {function} func - A function that takes an object and returns true if it matches
+     * @arg {Function} func - A function that takes an object and returns true if it matches
      * @returns {Boolean} An array containing all the objects that matched
      */
     every(func) {
@@ -167,6 +186,18 @@ class Collection extends Map {
         }
         this.delete(key);
         return item;
+    }
+
+    /**
+     * Get a random object from the Collection
+     *
+     * @returns {Class?} The random object, or undefined if there is no match
+     */
+    random() {
+        if (!this.size) {
+            return undefined;
+        }
+        return Array.from(this.values())[Math.floor(Math.random() * this.size)];
     }
 
     toString() {
