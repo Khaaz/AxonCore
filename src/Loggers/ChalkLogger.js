@@ -7,7 +7,7 @@ import chalk from 'chalk';
 /**
  * Logger with time and custom method
  * Colorful logger
- * Allow clean logging without any dependency
+ * Allow clean logging with only Chalk
  *
  * @author KhaaZ
  *
@@ -19,15 +19,27 @@ class ChalkLogger extends Console {
         super(process.stdout, process.stderr); // Create default Console instance - Node v8 support
     }
 
+    /** CTX Object
+     *
+     * {
+     *  guild: gObj || id|name
+     *  cmd: label
+     *  user: userObj || id|name
+     * }
+     *
+     * replaced with id if no obj
+     */
+
     /**
      * Major - Critical fault
      * Crashing bugs, unexpected...
      *
      * @param {String} input
+     * @param {Object} opt - context object
      * @memberof DefLogger
      */
-    emerg(input) {
-        const mess = chalk.bold.magenta(this.parseTime() + ' - [ EMERG ] => ') + input;
+    emerg(input, opt) {
+        const mess = chalk.bold.magenta(this.parseTime() + ' - [ EMERG ] => ') + this.addCtx(opt) + input;
         super.error(mess);
     }
 
@@ -35,10 +47,11 @@ class ChalkLogger extends Console {
      * Major - critical error
      *
      * @param {String} input
+     * @param {Object} opt - context object
      * @memberof DefLogger
      */
-    error(input) {
-        const mess = chalk.bold.red(this.parseTime() + ' - [ ERROR ] => ') + input;
+    error(input, opt) {
+        const mess = chalk.bold.red(this.parseTime() + ' - [ ERROR ] => ') + this.addCtx(opt) + input;
         super.error(mess);
     }
 
@@ -47,10 +60,11 @@ class ChalkLogger extends Console {
      * Expected errors
      *
      * @param {String} input
+     * @param {Object} opt - context object
      * @memberof DefLogger
      */
-    warn(input) {
-        const mess = chalk.bold.yellow(this.parseTime() + ' - [ WARN  ] => ') + input;
+    warn(input, opt) {
+        const mess = chalk.bold.yellow(this.parseTime() + ' - [ WARN  ] => ') + this.addCtx(opt) + input;
         super.warn(mess);
     }
 
@@ -58,10 +72,11 @@ class ChalkLogger extends Console {
      * Eval - Debugging logs
      *
      * @param {String} input
+     * @param {Object} opt - context object
      * @memberof DefLogger
      */
-    debug(input) {
-        const mess = chalk.blue(this.parseTime() + ' - [ DEBUG ] => ') + input;
+    debug(input, opt) {
+        const mess = chalk.blue(this.parseTime() + ' - [ DEBUG ] => ') + this.addCtx(opt) + input;
         this.log(mess);
     }
 
@@ -69,10 +84,11 @@ class ChalkLogger extends Console {
      * Important informations
      *
      * @param {String} input
+     * @param {Object} opt - context object
      * @memberof DefLogger
      */
-    notice(input) {
-        const mess = chalk.bold.green(this.parseTime() + ' - [NOTICE ] => ') + input;
+    notice(input, opt) {
+        const mess = chalk.bold.green(this.parseTime() + ' - [NOTICE ] => ') + this.addCtx(opt) + input;
         this.log(mess);
     }
 
@@ -80,10 +96,11 @@ class ChalkLogger extends Console {
      * Default informations
      *
      * @param {String} input
+     * @param {Object} opt - context object
      * @memberof DefLogger
      */
-    info(input) {
-        const mess = chalk.green(this.parseTime() + ' - [ INFO  ] => ') + input;
+    info(input, opt) {
+        const mess = chalk.green(this.parseTime() + ' - [ INFO  ] => ') + this.addCtx(opt) + input;
         this.log(mess);
     }
 
@@ -92,10 +109,11 @@ class ChalkLogger extends Console {
      * Commands usage...
      *
      * @param {String} input
+     * @param {Object} opt - context object
      * @memberof DefLogger
      */
-    verbose(input) {
-        const mess = chalk.white(this.parseTime() + ' - [VERBOSE] => ') + input;
+    verbose(input, opt) {
+        const mess = chalk.white(this.parseTime() + ' - [VERBOSE] => ') + this.addCtx(opt) + input;
         this.log(mess);
     }
 
@@ -128,7 +146,7 @@ class ChalkLogger extends Console {
      * @memberof DefLogger
      */
     initModule(module) {
-        const mess = chalk.cyan(this.parseTime() + ' - [MODULE ] => ') + `[${module.label}] Initialised! Commands loaded -${module.commands.size}-`;
+        const mess = chalk.cyan(this.parseTime() + ' - [MODULE ] => ') + `Initialised! | [${module.label}] | Commands loaded -${module.commands.size}-`;
         this.log(mess);
     }
 
@@ -141,9 +159,9 @@ class ChalkLogger extends Console {
     initCommand(command) {
         let mess;
         if (command.hasSubcmd) {
-            mess = chalk.cyan(this.parseTime() + ' - [COMMAND] => ') + `*${command.label} | Initialised! SubCommands loaded -${command.subCommands.size}-`;
+            mess = chalk.cyan(this.parseTime() + ' - [COMMAND] => ') + `Initialised! | *${command.label}* | SubCommands loaded -${command.subCommands.size}-`;
         } else {
-            mess = chalk.cyan(this.parseTime() + ' - [COMMAND] => ') + `*${command.label} | Initialised!`;
+            mess = chalk.cyan(this.parseTime() + ' - [COMMAND] => ') + `Initialised! | *${command.label}*`;
         }
         this.log(mess);
     }
@@ -157,11 +175,31 @@ class ChalkLogger extends Console {
     initSubCmd(sub) {
         let mess;
         if (sub.hasSubcmd) {
-            mess = chalk.cyan(this.parseTime() + ' - [SUBCMD ] => ') + `${sub.label} | Initialised! SubCommands loaded -${sub.subCommands.size}-`;
+            mess = chalk.cyan(this.parseTime() + ' - [SUBCMD ] => ') + `Initialised! | ${sub.label} | SubCommands loaded -${sub.subCommands.size}-`;
         } else {
-            mess = chalk.cyan(this.parseTime() + ' - [SUBCMD ] => ') + `${sub.label} | Initialised!`;
+            mess = chalk.cyan(this.parseTime() + ' - [SUBCMD ] => ') + `Initialised! | ${sub.label}`;
         }
         this.log(mess);
+    }
+
+
+    addCtx(ctx = {}) {
+        let context = '';
+        if (ctx.guild) {
+            context += ctx.guild instanceof Object
+                ? `[${ctx.guild.name} - ${ctx.guild.id}] `
+                : `[Guild: ${ctx.guild}] `;
+        }
+        if (ctx.cmd) {
+            context += `-${ctx.cmd}- `;
+        }
+        if (ctx.user) {
+            context += ctx.user instanceof Object
+                ? `${ctx.user.username}#${ctx.user.discriminator} - ${ctx.user.id} `
+                : `[User: ${ctx.user}] `;
+        }
+
+        return context;
     }
 
     parseTime() {

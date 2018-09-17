@@ -17,15 +17,27 @@ class DefLogger extends Console {
         super(process.stdout, process.stderr); // Create default Console instance - Node v8 support
     }
 
+    /** CTX Object
+     *
+     * {
+     *  guild: gObj || id|name
+     *  cmd: label
+     *  user: userObj || id|name
+     * }
+     *
+     * replaced with id if no obj
+     */
+
     /**
      * Major - Critical fault
      * Crashing bugs, unexpected...
      *
      * @param {String} input
+     * @param {Object} opt - context object
      * @memberof DefLogger
      */
-    emerg(input) {
-        const mess = this.parseTime() + ' - [ EMERG ] => ' + input;
+    emerg(input, opt) {
+        const mess = this.parseTime() + ' - [ EMERG ] => ' + this.addCtx(opt) + input;
         super.error(mess);
     }
 
@@ -33,10 +45,11 @@ class DefLogger extends Console {
      * Major - critical error
      *
      * @param {String} input
+     * @param {Object} opt - context object
      * @memberof DefLogger
      */
-    error(input) {
-        const mess = this.parseTime() + ' - [ ERROR ] => ' + input;
+    error(input, opt) {
+        const mess = this.parseTime() + ' - [ ERROR ] => ' + this.addCtx(opt) + input;
         super.error(mess);
     }
 
@@ -45,10 +58,11 @@ class DefLogger extends Console {
      * Expected errors
      *
      * @param {String} input
+     * @param {Object} opt - context object
      * @memberof DefLogger
      */
-    warn(input) {
-        const mess = this.parseTime() + ' - [ WARN  ] => ' + input;
+    warn(input, opt) {
+        const mess = this.parseTime() + ' - [ WARN  ] => ' + this.addCtx(opt) + input;
         super.warn(mess);
     }
 
@@ -56,10 +70,11 @@ class DefLogger extends Console {
      * Eval - Debugging logs
      *
      * @param {String} input
+     * @param {Object} opt - context object
      * @memberof DefLogger
      */
-    debug(input) {
-        const mess = this.parseTime() + ' - [ DEBUG ] => ' + input;
+    debug(input, opt) {
+        const mess = this.parseTime() + ' - [ DEBUG ] => ' + this.addCtx(opt) + input;
         this.log(mess);
     }
 
@@ -67,10 +82,11 @@ class DefLogger extends Console {
      * Important informations
      *
      * @param {String} input
+     * @param {Object} opt - context object
      * @memberof DefLogger
      */
-    notice(input) {
-        const mess = this.parseTime() + ' - [NOTICE ] => ' + input;
+    notice(input, opt) {
+        const mess = this.parseTime() + ' - [NOTICE ] => ' + this.addCtx(opt) + input;
         this.log(mess);
     }
 
@@ -78,10 +94,11 @@ class DefLogger extends Console {
      * Default informations
      *
      * @param {String} input
+     * @param {Object} opt - context object
      * @memberof DefLogger
      */
-    info(input) {
-        const mess = this.parseTime() + ' - [ INFO  ] => ' + input;
+    info(input, opt) {
+        const mess = this.parseTime() + ' - [ INFO  ] => ' + this.addCtx(opt) + input;
         this.log(mess);
     }
 
@@ -90,10 +107,11 @@ class DefLogger extends Console {
      * Commands usage...
      *
      * @param {String} input
+     * @param {Object} opt - context object
      * @memberof DefLogger
      */
-    verbose(input) {
-        const mess = this.parseTime() + ' - [VERBOSE] => ' + input;
+    verbose(input, opt) {
+        const mess = this.parseTime() + ' - [VERBOSE] => ' + this.addCtx(opt) + input;
         this.log(mess);
     }
 
@@ -126,7 +144,7 @@ class DefLogger extends Console {
      * @memberof DefLogger
      */
     initModule(module) {
-        const mess = this.parseTime() + ' - [MODULE ] => ' + `[${module.label}] Initialised! Commands loaded -${module.commands.size}-`;
+        const mess = this.parseTime() + ' - [MODULE ] => ' + `Initialised! | [${module.label}] | Commands loaded -${module.commands.size}-`;
         this.log(mess);
     }
 
@@ -139,9 +157,9 @@ class DefLogger extends Console {
     initCommand(command) {
         let mess;
         if (command.hasSubcmd) {
-            mess = this.parseTime() + ' - [COMMAND] => ' + `*${command.label} | Initialised! SubCommands loaded -${command.subCommands.size}-`;
+            mess = this.parseTime() + ' - [COMMAND] => ' + `Initialised! | *${command.label}* | SubCommands loaded -${command.subCommands.size}-`;
         } else {
-            mess = this.parseTime() + ' - [COMMAND] => ' + `*${command.label} | Initialised!`;
+            mess = this.parseTime() + ' - [COMMAND] => ' + `Initialised! | *${command.label}*`;
         }
         this.log(mess);
     }
@@ -155,13 +173,32 @@ class DefLogger extends Console {
     initSubCmd(sub) {
         let mess;
         if (sub.hasSubcmd) {
-            mess = this.parseTime() + ' - [SUBCMD ] => ' + `${sub.label} | Initialised! SubCommands loaded -${sub.subCommands.size}-`;
+            mess = this.parseTime() + ' - [SUBCMD ] => ' + `Initialised! | ${sub.label} | SubCommands loaded -${sub.subCommands.size}-`;
         } else {
-            mess = this.parseTime() + ' - [SUBCMD ] => ' + `${sub.label} | Initialised!`;
+            mess = this.parseTime() + ' - [SUBCMD ] => ' + `Initialised! | ${sub.label}`;
         }
         this.log(mess);
     }
 
+
+    addCtx(ctx = {}) {
+        let context = '';
+        if (ctx.guild) {
+            context += ctx.guild instanceof Object
+                ? `[${ctx.guild.name} - ${ctx.guild.id}] `
+                : `[Guild: ${ctx.guild}] `;
+        }
+        if (ctx.cmd) {
+            context += `-${ctx.cmd}- `;
+        }
+        if (ctx.user) {
+            context += ctx.user instanceof Object
+                ? `${ctx.user.username}#${ctx.user.discriminator} - ${ctx.user.id} `
+                : `[User: ${ctx.user}] `;
+        }
+
+        return context;
+    }
 
     parseTime() {
         const current = new Date();

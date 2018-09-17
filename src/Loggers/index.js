@@ -2,7 +2,7 @@ import DefLogger from './DefLogger';
 
 /**
  * Logger Handler
- * Use require to dunamically load a Logger regarding dependencies
+ * Use require to dynamically load a Logger regarding dependencies
  *
  * @author Eleos, KhaaZ
  *
@@ -48,7 +48,26 @@ class LoggerHandler {
             }
         }
 
+        Logger.axon('Logger ready');
+        this.testLogger(Logger);
         return Logger;
+    }
+
+    static testLogger(Logger) {
+        /** LOGGER TESTING */
+        console.log(' ');
+        Logger.emerg('- Test EMERG -');
+        Logger.error('- Test ERROR -');
+        Logger.warn('- Test WARN -');
+        Logger.debug('- Test DEBUG -');
+        Logger.notice('- Test notice -');
+        Logger.info('- Test info -');
+        Logger.verbose('- Test verbose -');
+        Logger.axon('- Test AXON -');
+        Logger.init('- Test INIT -');
+        // Logger.module('- Test module -');
+        // Logger.command('- Test command -');
+        console.log(' ');
     }
 }
 
