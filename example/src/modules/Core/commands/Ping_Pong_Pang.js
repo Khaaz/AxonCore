@@ -26,6 +26,8 @@ class Pang extends Command {
         this.options.argsMin = 0;
         this.options.cooldown = 3000;
         this.options.guildOnly = false;
+
+        this.permissions.serverMod = true;
     }
 
     async execute({ msg }) {

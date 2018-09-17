@@ -27,6 +27,8 @@ class Pong extends Command {
         this.options.cooldown = 3000;
         this.options.guildOnly = false;
 
+        this.options.invalidPermissionMessage = true;
+
         this.permissions.user.needed = ['manageGuild'];
         this.permissions.staff.bypass = [...this.axon.staff.owners, ...this.axon.staff.admins];
     }

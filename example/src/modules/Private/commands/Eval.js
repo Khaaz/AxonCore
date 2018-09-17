@@ -15,8 +15,8 @@ class Eval extends Command {
             owner: ['AS04', 'Ape', 'KhaaZ'],
             name: 'eval',
             description: 'Eval js code.',
-            examples: ['eval you should know what goes in here'],
-            arguments: [['js code', false]],
+            usage: 'eval [js code]',
+            examples: ['eval 1 + 1'],
         };
 
         this.options.argsMin = 1;
