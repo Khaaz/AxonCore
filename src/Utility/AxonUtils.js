@@ -10,7 +10,7 @@ import Enums from './Enums';
  * All methods useful for internal uses or AxonClient specific
  *
  * @author KhaaZ
- * S
+ *
  * @class AxonUtils
  */
 class AxonUtils {
@@ -34,6 +34,14 @@ class AxonUtils {
         return this.axon.configs.template;
     }
 
+    get Logger() {
+        return this.axon.Logger;
+    }
+
+    get Utils() {
+        return this.axon.Utils;
+    }
+
     //
     // ****** MISC ******
     //
@@ -49,7 +57,7 @@ class AxonUtils {
      */
     triggerWebhook(type, embed, opt) {
         if (this.axon.webhooks[type].id.length > 0 && this.axon.webhooks[type].token.length) {
-            this.axon.client.executeWebhook(this.axon.webhooks[type].id, this.axon.webhooks[type].token, {
+            this.bot.executeWebhook(this.axon.webhooks[type].id, this.axon.webhooks[type].token, {
                 username: opt ? opt : (`${type[0].toUpperCase() + type.slice(1)} - ${this.axon.client.user ? this.axon.client.user.username : ''}`),
                 avatarURL: this.axon.client.user ? this.axon.client.user.avatarURL : null,
                 embeds: [
@@ -71,7 +79,7 @@ class AxonUtils {
      *
      * @param {Object<Channel>} channel - Channel object
      * @param {Array<String>} permissions - List of permissions to test
-     * @param {Object<User>} user - User to test | Default to bot
+     * @param {Object<User>} [user=this.bot.user] - User to test | Default to bot
      * @returns {Boolean} true if user has permissions
      * @memberof AxonUtils
      */
@@ -85,6 +93,24 @@ class AxonUtils {
     }
 
     /**
+     * List all missing perms for a user
+     *
+     * @param {Object<Member>} member
+     * @param {Array<String>} [permissions=[]] - List of permissions to test
+     * @returns {Array<String>} An array of missing permissions
+     * @memberof AxonUtils
+     */
+    missingPerms(member, permissions = []) {
+        const missing = [];
+        for (const perm of permissions) {
+            if (!member.permission.has(perm)) {
+                missing.push(perm);
+            }
+        }
+        return missing;
+    }
+
+    /**
      * Check if the member has correct perm to execute
      *
      * @param {Object<Member>} member - Member object
@@ -94,7 +120,7 @@ class AxonUtils {
      */
     hasPerms(member, permissions = []) {
         for (const perm of permissions) {
-            if (!member.permissions.has(perm)) {
+            if (!member.permission.has(perm)) {
                 return false;
             }
         }
@@ -175,11 +201,7 @@ class AxonUtils {
             }
         }
 
-        if (this.isAdmin(member)) {
-            return true;
-        }
-
-        return false;
+        return this.isAdmin(member);
     }
 
     //
@@ -189,20 +211,28 @@ class AxonUtils {
     /**
      * Send a message.
      * Check for bot permissions + message/embed length
+     * Doesn't support file
      *
      * @param {Object<Channel>} channel - The channel Object
-     * @param {Object/String} content - Message content, String or Embed Object
+     * @param {Object|String} content - Message content, String or Embed Object
+     * @param {Object}
      * @returns {Promise<Message?>}
      * @memberof Command
      */
-    sendMessage(channel, content) {
+    sendMessage(channel, content, options) {
         if (channel.guild && !this.hasChannelPerms(channel, ['sendMessages'])) { // check if bot has sendMessage perm in the channel.
+            this.Logger.verbose(`No sendMessage perms [${channel.guild.name} - ${channel.guild.name}]!`);
             return Promise.resolve();
         }
 
-        if (content instanceof Object) {
+        if (content instanceof Object && content.embed) {
             if (channel.guild && !this.hasChannelPerms(channel, ['embedLinks'])) { // check if bot has embedPermission perm in the channel.
+                this.Logger.verbose(`No embedLinks perms [${channel.guild.name} - ${channel.guild.name}]!`);
                 return Promise.resolve();
+            }
+
+            if (content.content && content.content.length > 2000) {
+                throw new Error('[MESSAGE]: content > 2000');
             }
 
             if (content.embed.length > 6000) {
@@ -230,11 +260,27 @@ class AxonUtils {
                     }
                 }
             }
-        } else if (content.length > 2000) {
+        } else if (typeof content === 'string' && content.length > 2000) {
             throw new Error('[MESSAGE]: content > 2000');
         }
 
-        return channel.createMessage(content);
+        if (typeof content !== 'object' || content === null) {
+            content = { content: '' + content };
+        }
+        content.disableEveryone = !(options && !options.disableEveryone);
+
+        return channel.createMessage(content)
+            .then(message => {
+                /** Delete the message automatically */
+                if (message && options && options.delete) {
+                    if (options.delay) {
+                        this.Utils.sleep(options.delay).then(() => message.delete().catch());
+                    } else {
+                        message.delete().catch();
+                    }
+                }
+                return message;
+            });
     }
 
     /**
@@ -242,7 +288,7 @@ class AxonUtils {
      * Check for bot permissions + message embed/length
      *
      * @param {Object<Message>} message - The message object to edit
-     * @param {Object/String} content - Object (embed) or String
+     * @param {Object|String} content - Object (embed) or String
      * @returns {Promise<Message?>}
      * @memberof Command
      */
@@ -252,7 +298,12 @@ class AxonUtils {
         }
         if (content instanceof Object) {
             if (message.channel.guild && !this.hasChannelPerms(message.channel, ['embedLinks'])) { // check if bot has embedLinks perm in the channel.
+                this.Logger.verbose(`No embedLinks perms [${message.channel.guild.name} - ${message.channel.guild.name}]!`);
                 return Promise.resolve();
+            }
+
+            if (content.content.length > 2000) {
+                throw new Error('[MESSAGE]: content > 2000');
             }
 
             if (content.embed.length > 6000) {
@@ -280,7 +331,7 @@ class AxonUtils {
                     }
                 }
             }
-        } else if (content.length > 2000) {
+        } else if (typeof content === 'string' && content.length > 2000) {
             throw new Error('[MESSAGE]: content > 2000');
         }
 
@@ -299,7 +350,7 @@ class AxonUtils {
     sendDM(user, content) {
         return this.bot.getDMChannel(user.id)
             .then(chan => this.sendMessage(chan, content))
-            .catch(err => Promise.reject('DM disabled or bot blocked\n' + err));
+            .catch(this.Logger.verbose(`DM disabled/Bot blocked [${user.username}#${user.discriminator} - ${user.id}]!`));
     }
 
     /**
@@ -312,7 +363,7 @@ class AxonUtils {
      * @memberof Command
      */
     sendError(channel, content) {
-        return this.sendMessage(channel, this.Template.emote.error + ' ' + content);
+        return this.sendMessage(channel, `${this.Template.emote.error} ${content}`);
     }
 
     /**
@@ -325,7 +376,7 @@ class AxonUtils {
      * @memberof Command
      */
     sendSuccess(channel, content) {
-        return this.sendMessage(channel, this.Template.emote.success + ' ' + content);
+        return this.sendMessage(channel, `${this.Template.emote.success} ${content}`);
     }
 
     /**
@@ -349,7 +400,7 @@ class AxonUtils {
             err.message = `Type: ${typeList[type.toLowerCase()]} | ${err.message}`;
             throw err;
         }
-        throw new Error(`Type: ${typeList[type.toLowerCase()]}`);
+        this.Logger.emerg(`Unexpected error [${msg.channel.guild.name} - ${msg.channale.guild.id}]!\n${err.stack}`);
     }
 }
 
