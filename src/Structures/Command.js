@@ -1,6 +1,7 @@
 'use strict';
 
 import Base from './Base';
+import Enum from '../Utility/Enums';
 
 /**
  * AxonCore - Command contructor
@@ -221,7 +222,7 @@ class Command extends Base {
         if (!this.canExecute(msg.channel, msg.member, guildConf)) {
             /** Sends invalid perm message in case of invalid perm [option enabled] */
             if (!guildConf.modOnly && this.options.invalidPermissionMessage) {
-                return this.sendUserPerms(msg.channel);
+                return this.sendUserPerms(msg.channel, msg.member);
             }
             return Promise.resolve();
         }
@@ -348,6 +349,21 @@ class Command extends Base {
         embed.description += `**Cooldown:** ${this.options.cooldown / 1000}s\n`;
 
         embed.description += `**Usage:** ${prefix}${this.infos.usage}\n`;
+
+        let perm;
+        if (this.permissions.serverAdmin) {
+            perm = '`Server Admin`';
+        } else if (this.permissions.serverMod) {
+            perm = '`Server Mod`';
+        } else if (this.permissions.user.needed.length > 0) {
+            perm = this.permissions.user.needed
+                .map(p => `\`${Enum.permissionsNames[p]}\``)
+                .join(', ');
+        }
+
+        if (perm) {
+            embed.description += `**Required:** ${perm}\n`;
+        }
 
         if (this.infos.examples.length > 0) {
             this.infos.examples.length > 1
@@ -647,7 +663,13 @@ class Command extends Base {
      * @memberof Command
      */
     sendBotPerms(channel) {
-        return this.sendError(channel, this.Template.message.error.permBot);
+        const member = channel.guild.members.get(this.bot.id);
+        const permissions = this.AxonUtils.missingPerms(member, this.permissions.bot);
+        return this.sendError(
+            channel,
+            `${this.Template.message.error.permBot} ${permissions.map(p => `\`${Enum.permissionsNames[p]}\``).join(', ')}.`,
+            { delete: true, delay: 9000 }
+        );
     }
 
     /**
@@ -655,16 +677,18 @@ class Command extends Base {
      * timeout // delay and auto delete message
      *
      * @param {Object<Channel>} channel - The channel Object
+     * @param {Object<Member>} member - The membe object
      * @returns {Promise<Message?>}
      * @memberof Command
      */
-    sendUserPerms(channel) {
-        return this.sendError(channel, this.Template.message.error.permSource)
-            .then((msg) => {
-                if (msg) {
-                    setTimeout(() => msg.delete(), 9000);
-                }
-            });
+    sendUserPerms(channel, member) {
+        const permissions = this.AxonUtils.missingPerms(member, this.permissions.user.needed);
+        return this.sendError(
+            channel,
+            this.Template.message.error.permSource
+            + (permissions.length > 0 ? ` ${permissions.map(p => `\`${Enum.permissionsNames[p]}\``).join(', ')}.` : '.'),
+            { delete: true, delay: 9000 }
+        );
     }
 
     /**
@@ -676,12 +700,7 @@ class Command extends Base {
      * @memberof Command
      */
     sendDestPerms(channel) {
-        return this.sendError(channel, this.Template.message.error.permDest)
-            .then((msg) => {
-                if (msg) {
-                    setTimeout(() => msg.delete(), 9000);
-                }
-            });
+        return this.sendError(channel, this.Template.message.error.permDest, { delete: true, delay: 9000 });
     }
 
     /**
@@ -693,12 +712,11 @@ class Command extends Base {
      * @memberof Command
      */
     sendCooldown(channel, time) {
-        return this.sendError(channel, this.Template.message.error.cooldown + ` - **${Math.ceil(time / 100) / 10}sec** remaining..`)
-            .then((msg) => {
-                if (msg) {
-                    setTimeout(() => msg.delete(), 5000);
-                }
-            });
+        return this.sendError(
+            channel,
+            `${this.Template.message.error.cooldown} **${Math.ceil(time / 100) / 10}sec**...`,
+            { delete: true, delay: 9000 },
+        );
     }
 }
 
