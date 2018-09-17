@@ -91,12 +91,13 @@ class AxonClient extends EventEmitter {
          * Internal cache, Major compenents
          */
         /** Logger */
-        this.initLogger(axonOptions); // this.Logger
+        this.Logger = axonOptions.logger || LoggerHandler.pickLogger(axonOptions.axonConf);
         /** DB */
-        this.initDB(axonOptions); // this.DBprovider
+        this.Schemas = new Collection();
+        this.DBprovider = axonOptions.db || DBHandler.pickDBService(axonOptions, this);
         /** Utility */
         this.AxonUtils = new AxonUtils(this);
-        this.Utils = axonOptions.utils ? new axonOptions.utils() : new Utils(); // eslint-disable-line
+        this.Utils = axonOptions.utils ? new axonOptions.utils(this) : new Utils(this); // eslint-disable-line
         this.Resolver = axonOptions.resolver || Resolver;
 
         /**
@@ -203,31 +204,6 @@ class AxonClient extends EventEmitter {
     // ****** INSTANCE INIT METHOD (AXONCLIENT CREATION) ******
     //
 
-    initLogger(axonOptions) {
-        this.Logger = axonOptions.logger || LoggerHandler.pickLogger(axonOptions.axonConf);
-        this.Logger.axon('Logger ready');
-
-        /** LOGGER TESTING */
-        console.log(' ');
-        this.Logger.emerg('- Test EMERG -');
-        this.Logger.error('- Test ERROR -');
-        this.Logger.warn('- Test WARN -');
-        this.Logger.debug('- Test DEBUG -');
-        this.Logger.notice('- Test notice -');
-        this.Logger.info('- Test info -');
-        this.Logger.verbose('- Test verbose -');
-        this.Logger.axon('- Test AXON -');
-        this.Logger.init('- Test INIT -');
-        // this.Logger.module('- Test module -');
-        // this.Logger.command('- Test command -');
-        console.log(' ');
-    }
-
-    initDB(axonOptions) {
-        this.DBprovider = axonOptions.db || DBHandler.pickDBService(axonOptions.axonConf, this.Logger);
-        this.Logger.axon('DB ready');
-    }
-
     initConfigs({ axonConf, templateConf, tokenConf }) {
         this._configs = {};
 
@@ -306,6 +282,7 @@ class AxonClient extends EventEmitter {
          * - Global events -
          */
         this.client.once('ready', this.onReady.bind(this));
+        // this.client.on('debug', console.log);
 
         this.client.on('messageCreate', this.onMessageCreate.bind(this));
     }
@@ -326,7 +303,7 @@ class AxonClient extends EventEmitter {
                 /** Additional */
                 if (this.init) { // if child class has init
                     await this.init();
-                    this.Logger.init('Personal init');
+                    this.Logger.init('Personal init!');
                 }
 
                 resolve(true);
@@ -415,7 +392,7 @@ class AxonClient extends EventEmitter {
             const newModule = new Value(this);
             this.registerModule(newModule);
         }
-        this.Logger.init(`[AxonClient] Initialised! Modules loaded -${this.modules.size}-`);
+        this.Logger.init(`Initialised! | [AxonClient] | Modules loaded -${this.modules.size}-`);
     }
 
     /**
@@ -540,7 +517,7 @@ class AxonClient extends EventEmitter {
         try {
             guildConf = await this.getGuildConf(msg.channel.guild.id);
         } catch (err) {
-            return this.Logger.error(err);
+            return this.Logger.error(err, { guild: msg.channel.guild });
         }
 
         /** Admin override */
@@ -605,7 +582,7 @@ class AxonClient extends EventEmitter {
                     console.timeEnd('- Net');
                 })
                 .catch(err => {
-                    this.Logger.error(new AxonCommandError(command.module, command, `Guild: ${msg.channel.guild.id}`, err).stack);
+                    this.Logger.error(new AxonCommandError(command.module, command, `Guild: ${msg.channel.guild.id}`, err).stack, { guild: msg.channel.guild, cmd: command.label });
                     this.emit('axonCommandError', { msg, guildConf, err });
                     console.timeEnd('- Net');
                     return;
@@ -617,7 +594,7 @@ class AxonClient extends EventEmitter {
                     this.emit('axonCommandSuccess', { msg, guildConf });
                 })
                 .catch(err => {
-                    this.Logger.error(new AxonCommandError(command.module, command, `Guild: ${msg.channel.guild.id}`, err).stack);
+                    this.Logger.error(new AxonCommandError(command.module, command, `Guild: ${msg.channel.guild.id}`, err).stack, { guild: msg.channel.guild, cmd: command.label });
                     this.emit('axonCommandError', { msg, guildConf, err });
                     return;
                 });
@@ -668,7 +645,7 @@ class AxonClient extends EventEmitter {
                     console.timeEnd('- Net');
                 })
                 .catch(err => {
-                    this.Logger.error(new AxonCommandError(command.module, command, `Guild: ${msg.channel.guild.id}`, err).stack);
+                    this.Logger.error(new AxonCommandError(command.module, command, `Guild: ${msg.channel.guild.id}`, err).stack, { guild: msg.channel.guild, cmd: command.label });
                     this.emit('axonCommandError', { msg, guildConf, err });
                     return;
                 });
@@ -679,7 +656,7 @@ class AxonClient extends EventEmitter {
                     this.emit('axonCommandSuccess', { msg, guildConf });
                 })
                 .catch(err => {
-                    this.Logger.error(new AxonCommandError(command.module, command, `Guild: ${msg.channel.guild.id}`, err).stack);
+                    this.Logger.error(new AxonCommandError(command.module, command, `Guild: ${msg.channel.guild.id}`, err).stack, { guild: msg.channel.guild, cmd: command.label });
                     this.emit('axonCommandError', { msg, guildConf, err });
                     return;
                 });
@@ -734,7 +711,7 @@ class AxonClient extends EventEmitter {
                         this.emit('axonCommandSuccess', { msg, guildConf: null });
                     })
                     .catch(err => {
-                        this.Logger.error(new AxonCommandError(command.module, command, `DM: ${msg.author.id}`, err).stack);
+                        this.Logger.error(new AxonCommandError(command.module, command, `DM: ${msg.author.id}`, err).stack, { cmd: command.label, user: msg.user });
                         this.emit('axonCommandError', { msg, guildConf: null, err });
                         return;
                     });
@@ -745,7 +722,7 @@ class AxonClient extends EventEmitter {
                         this.emit('axonCommandSuccess', { msg, guildConf: null });
                     })
                     .catch(err => {
-                        this.Logger.error(new AxonCommandError(command.module, command, `DM: ${msg.author.id}`, err).stack);
+                        this.Logger.error(new AxonCommandError(command.module, command, `DM: ${msg.author.id}`, err).stack, { cmd: command.label, user: msg.user });
                         this.emit('axonCommandError', { msg, guildConf: null, err });
                         return;
                     });
