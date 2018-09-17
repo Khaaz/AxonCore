@@ -263,7 +263,7 @@ class Module extends Base {
      * @memberof Module
      */
     checkValidPermNames(perm) {
-        if (Enum.permissionsNames.find(p => p === perm)) {
+        if (Enum.permissions.find(p => p === perm)) {
             return true;
         }
         return false;

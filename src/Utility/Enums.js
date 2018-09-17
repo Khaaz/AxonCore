@@ -1,4 +1,4 @@
-const permissionsNames = [
+const permissions = [
     'createInstantInvite',
     'kickMembers',
     'banMembers',
@@ -28,6 +28,36 @@ const permissionsNames = [
     'manageEmojis',
 ];
 
+const permissionsNames = {
+    createInstantInvite: 'create Instant Invite',
+    kickMembers: 'Kick Members',
+    banMembers: 'Ban Members',
+    administrator: 'Administrator',
+    manageChannels: 'Manage Channels',
+    manageGuild: 'Manage Guild',
+    addReactions: 'Add Reactions',
+    readMessages: 'Read Messages',
+    sendMessages: 'Send Messages',
+    sendTTSMessages: 'Send TTS Messages',
+    manageMessages: 'Manage Messages',
+    embedLinks: 'Embed Links',
+    attachFiles: 'Attach Files',
+    readMessageHistory: 'Read Message History',
+    mentionEveryone: 'Mention Everyone',
+    externalEmojis: 'External Emojis',
+    voiceConnect: 'Voice Connect',
+    voiceSpeak: 'Voice Speak',
+    voiceMuteMembers: 'Voice Mute Members',
+    voiceDeafenMembers: 'Voice Deafen Members',
+    voiceMoveMembers: 'Voice Move Members',
+    voiceUseVAD: 'Voice Use VAD',
+    changeNickname: 'Change Nickname',
+    manageNicknames: 'Manage Nicknames',
+    manageRoles: 'Manage Roles',
+    manageWebhooks: 'Manage Webhooks',
+    manageEmojis: 'Manage Emojis',
+};
+
 const adminPerms = [
     'administrator',
     'manageGuild',
@@ -48,6 +78,7 @@ const typeError = {
 };
 
 export default {
+    permissions,
     permissionsNames,
     adminPerms,
     typeWH,
