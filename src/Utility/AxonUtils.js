@@ -274,9 +274,9 @@ class AxonUtils {
                 /** Delete the message automatically */
                 if (message && options && options.delete) {
                     if (options.delay) {
-                        this.Utils.sleep(options.delay).then(() => message.delete().catch());
+                        this.Utils.sleep(options.delay).then(() => message.delete().catch(console.log));
                     } else {
-                        message.delete().catch();
+                        message.delete().catch(console.log);
                     }
                 }
                 return message;
@@ -344,12 +344,13 @@ class AxonUtils {
      *
      * @param {Object<User>} user - user object to get the DM channel
      * @param {Object|String} content - string or object (embed)
+     * @param {Object} options - options object to pass to sendMessage
      * @returns
      * @memberof Command
      */
-    sendDM(user, content) {
+    sendDM(user, content, options) {
         return this.bot.getDMChannel(user.id)
-            .then(chan => this.sendMessage(chan, content))
+            .then(chan => this.sendMessage(chan, content, options))
             .catch(this.Logger.verbose(`DM disabled/Bot blocked [${user.username}#${user.discriminator} - ${user.id}]!`));
     }
 
@@ -359,11 +360,12 @@ class AxonUtils {
      *
      * @param {Object<Channel>} channel - The channel Object
      * @param {String} content - error message content (String only)
+     * @param {Object} options - options object to pass to sendMessage
      * @returns {Promise<Message?>}
      * @memberof Command
      */
-    sendError(channel, content) {
-        return this.sendMessage(channel, `${this.Template.emote.error} ${content}`);
+    sendError(channel, content, options) {
+        return this.sendMessage(channel, `${this.Template.emote.error} ${content}`, options);
     }
 
     /**
@@ -372,11 +374,12 @@ class AxonUtils {
      *
      * @param {Object<Channel>} channel - The channel Object
      * @param {String} content - error message content (String only)
+     * @param {Object} options - options object to pass to sendMessage
      * @returns {Promise<Message?>}
      * @memberof Command
      */
-    sendSuccess(channel, content) {
-        return this.sendMessage(channel, `${this.Template.emote.success} ${content}`);
+    sendSuccess(channel, content, options) {
+        return this.sendMessage(channel, `${this.Template.emote.success} ${content}`, options);
     }
 
     /**
