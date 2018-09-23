@@ -24,8 +24,9 @@ class Pong extends Command {
         };
 
         this.options.argsMin = 0;
-        this.options.cooldown = 3000;
+        this.options.cooldown = 10000;
         this.options.guildOnly = false;
+        this.options.hidden = true;
 
         this.options.invalidPermissionMessage = true;
 

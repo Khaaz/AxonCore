@@ -136,7 +136,7 @@ class Command extends Base {
             invalidUsage: true, // trigger help command on invalid usage = args required and no args given
             invalidPermissionMessage: false, // trigger error message on invalid permission
             deleteCommand: false, // delete input after trigger
-            guildOnly: false, // command usable only in guild
+            guildOnly: true, // command usable only in guild
             hidden: false, // hide command from help command
             cooldown: 3000, // cooldown between each usage of the same command
         };
@@ -267,7 +267,9 @@ class Command extends Base {
             return this.sendBotPerms(msg.channel);
         }
 
-        if (!isOwner && this.permissions.staff.needed.length === this.axon.staff.owners.length) {
+        if (!isOwner
+            && this.permissions.staff.needed.length > 0
+            && this.permissions.staff.needed.filter(e => !this.axon.staff.owners.includes(e)).length === 0) {
             return Promise.resolve();
         }
 
@@ -374,12 +376,14 @@ class Command extends Base {
         embed.fields = [];
         /** SubCommands */
         if (this.hasSubcmd) {
-            const subcmds = this.subCommands.map(e => e.infos.usage);
-            embed.fields.push({
-                name: 'SubCommands:',
-                value: `${prefix}${subcmds.join(`\n${prefix}`)}`,
-                inline: true,
-            });
+            const subcmds = this.subCommands.filter(e => !e.options.hidden).map(e => `${prefix}${e.infos.usage}`);
+            if (subcmds.length > 0) {
+                embed.fields.push({
+                    name: 'SubCommands:',
+                    value: subcmds.join('\n'),
+                    inline: true,
+                });
+            }
         }
 
         /** Aliases */
@@ -659,12 +663,15 @@ class Command extends Base {
      * timeout // delay and auto delete message
      *
      * @param {Object<Channel>} channel - The channel Object
+     * @param {Array<String>} permissions - Optional array of permissions string
      * @returns {Promise<Message?>}
      * @memberof Command
      */
-    sendBotPerms(channel) {
-        const member = channel.guild.members.get(this.bot.id);
-        const permissions = this.AxonUtils.missingPerms(member, this.permissions.bot);
+    sendBotPerms(channel, permissions = []) {
+        if (permissions.length === 0) {
+            const member = channel.guild.members.get(this.bot.id);
+            permissions = this.AxonUtils.missingPerms(member, this.permissions.bot);
+        }
         return this.sendError(
             channel,
             `${this.Template.message.error.permBot} ${permissions.map(p => `\`${Enum.permissionsNames[p]}\``).join(', ')}.`,
@@ -714,7 +721,7 @@ class Command extends Base {
     sendCooldown(channel, time) {
         return this.sendError(
             channel,
-            `${this.Template.message.error.cooldown} **${Math.ceil(time / 100) / 10}sec**...`,
+            `${this.Template.message.error.cooldown} **${Math.ceil((this.options.cooldown - time) / 100) / 10}sec**...`,
             { delete: true, delay: 9000 },
         );
     }
