@@ -219,7 +219,7 @@ class AxonUtils {
      * @returns {Promise<Message?>}
      * @memberof Command
      */
-    sendMessage(channel, content, options) {
+    sendMessage(channel, content, options = {}) {
         if (channel.guild && !this.hasChannelPerms(channel, ['sendMessages'])) { // check if bot has sendMessage perm in the channel.
             this.Logger.verbose(`No sendMessage perms [${channel.guild.name} - ${channel.guild.name}]!`);
             return Promise.resolve();
@@ -267,12 +267,12 @@ class AxonUtils {
         if (typeof content !== 'object' || content === null) {
             content = { content: '' + content };
         }
-        content.disableEveryone = !(options && !options.disableEveryone);
+        content.disableEveryone = !!options.disableEveryone;
 
         return channel.createMessage(content)
             .then(message => {
                 /** Delete the message automatically */
-                if (message && options && options.delete) {
+                if (message && options.delete) {
                     if (options.delay) {
                         this.Utils.sleep(options.delay).then(() => message.delete().catch(console.log));
                     } else {
