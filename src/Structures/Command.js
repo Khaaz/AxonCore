@@ -238,7 +238,7 @@ class Command extends Base {
         }
 
         /** Sends invalid usage message in case of invalid usage (not enough argument) [option enabled] */
-        if (args.length < this.options.argsMin && this.options.invalidUsage && !this.options.hidden) {
+        if (args.length < this.options.argsMin && this.options.invalidUsage) {
             return this.sendHelp({ msg, args, guildConf })
                 .then(() => {
                     this._cooldown[msg.author.id] = Date.now();
@@ -669,7 +669,7 @@ class Command extends Base {
      */
     sendBotPerms(channel, permissions = []) {
         if (permissions.length === 0) {
-            const member = channel.guild.members.get(this.bot.id);
+            const member = channel.guild.members.get(this.bot.user.id);
             permissions = this.AxonUtils.missingPerms(member, this.permissions.bot);
         }
         return this.sendError(
@@ -684,12 +684,15 @@ class Command extends Base {
      * timeout // delay and auto delete message
      *
      * @param {Object<Channel>} channel - The channel Object
-     * @param {Object<Member>} member - The membe object
+     * @param {Object<Member>} member - The member object
+     * @param {Array<String>} permissions - Optional array of permissions string
      * @returns {Promise<Message?>}
      * @memberof Command
      */
-    sendUserPerms(channel, member) {
-        const permissions = this.AxonUtils.missingPerms(member, this.permissions.user.needed);
+    sendUserPerms(channel, member, permissions = []) {
+        if (permissions.length === 0) {
+            permissions = this.AxonUtils.missingPerms(member, this.permissions.user.needed);
+        }
         return this.sendError(
             channel,
             this.Template.message.error.permSource
