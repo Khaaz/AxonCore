@@ -754,7 +754,10 @@ class AxonClient extends EventEmitter {
         }
         msg.command = command;
 
-        command.sendHelp({ msg, args, guildConf });
+        command.sendHelp({ msg, args, guildConf })
+            .then(() => {
+                command._cooldown[msg.author.id] = Date.now();
+            });
     }
 
     /**
