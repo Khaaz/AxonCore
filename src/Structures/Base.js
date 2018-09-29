@@ -70,11 +70,12 @@ class Base {
      *
      * @param {Object<Channel>} channel - The channel Object
      * @param {Object/String} content - Message content, String or Embed Object
+     * @param {Object} options - Optional options (disableEveryone, delete, delay)
      * @returns {Promise<Message?>}
      * @memberof Command
      */
-    sendMessage(channel, content) {
-        return this.AxonUtils.sendMessage(channel, content);
+    sendMessage(channel, content, options) {
+        return this.AxonUtils.sendMessage(channel, content, options);
     }
 
     /**
@@ -95,11 +96,12 @@ class Base {
      *
      * @param {Object<Channel>} channel - The channel Object
      * @param {String} content - error message content (String only)
+     * @param {Object} options - Optional options (disableEveryone, delete, delay)
      * @returns {Promise<Message?>}
      * @memberof Command
      */
-    sendError(channel, content) {
-        return this.AxonUtils.sendError(channel, content);
+    sendError(channel, content, options) {
+        return this.AxonUtils.sendError(channel, content, options);
     }
 
     /**
@@ -108,11 +110,12 @@ class Base {
      *
      * @param {Object<Channel>} channel - The channel Object
      * @param {String} content - error message content (String only)
+     * @param {Object} options - Optional options (disableEveryone, delete, delay)
      * @returns {Promise<Message?>}
      * @memberof Command
      */
-    sendSuccess(channel, content) {
-        return this.AxonUtils.sendSuccess(channel, content);
+    sendSuccess(channel, content, options) {
+        return this.AxonUtils.sendSuccess(channel, content, options);
     }
 
     /**
