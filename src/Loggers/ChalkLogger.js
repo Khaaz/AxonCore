@@ -36,7 +36,7 @@ class ChalkLogger extends Console {
      *
      * @param {String} input
      * @param {Object} opt - context object
-     * @memberof DefLogger
+     * @memberof ChalkLogger
      */
     emerg(input, opt) {
         const mess = chalk.bold.magenta(this.parseTime() + ' - [ EMERG ] => ') + this.addCtx(opt) + input;
@@ -48,7 +48,7 @@ class ChalkLogger extends Console {
      *
      * @param {String} input
      * @param {Object} opt - context object
-     * @memberof DefLogger
+     * @memberof ChalkLogger
      */
     error(input, opt) {
         const mess = chalk.bold.red(this.parseTime() + ' - [ ERROR ] => ') + this.addCtx(opt) + input;
@@ -61,7 +61,7 @@ class ChalkLogger extends Console {
      *
      * @param {String} input
      * @param {Object} opt - context object
-     * @memberof DefLogger
+     * @memberof ChalkLogger
      */
     warn(input, opt) {
         const mess = chalk.bold.yellow(this.parseTime() + ' - [ WARN  ] => ') + this.addCtx(opt) + input;
@@ -73,7 +73,7 @@ class ChalkLogger extends Console {
      *
      * @param {String} input
      * @param {Object} opt - context object
-     * @memberof DefLogger
+     * @memberof ChalkLogger
      */
     debug(input, opt) {
         const mess = chalk.blue(this.parseTime() + ' - [ DEBUG ] => ') + this.addCtx(opt) + input;
@@ -85,7 +85,7 @@ class ChalkLogger extends Console {
      *
      * @param {String} input
      * @param {Object} opt - context object
-     * @memberof DefLogger
+     * @memberof ChalkLogger
      */
     notice(input, opt) {
         const mess = chalk.bold.green(this.parseTime() + ' - [NOTICE ] => ') + this.addCtx(opt) + input;
@@ -97,7 +97,7 @@ class ChalkLogger extends Console {
      *
      * @param {String} input
      * @param {Object} opt - context object
-     * @memberof DefLogger
+     * @memberof ChalkLogger
      */
     info(input, opt) {
         const mess = chalk.green(this.parseTime() + ' - [ INFO  ] => ') + this.addCtx(opt) + input;
@@ -110,7 +110,7 @@ class ChalkLogger extends Console {
      *
      * @param {String} input
      * @param {Object} opt - context object
-     * @memberof DefLogger
+     * @memberof ChalkLogger
      */
     verbose(input, opt) {
         const mess = chalk.white(this.parseTime() + ' - [VERBOSE] => ') + this.addCtx(opt) + input;
@@ -121,7 +121,7 @@ class ChalkLogger extends Console {
      * AxonClient informations
      *
      * @param {String} input
-     * @memberof DefLogger
+     * @memberof ChalkLogger
      */
     axon(input) {
         const mess = chalk.bold.cyan(this.parseTime() + ' - [ AXON  ] => ' + input);
@@ -132,7 +132,7 @@ class ChalkLogger extends Console {
      * Initialisation - Client infos
      *
      * @param {String} input
-     * @memberof DefLogger
+     * @memberof ChalkLogger
      */
     init(input) {
         const mess = chalk.cyan(this.parseTime() + ' - [ INIT  ] => ') + input;
@@ -143,7 +143,7 @@ class ChalkLogger extends Console {
      * Initialisation - Module infos
      *
      * @param {Module} module
-     * @memberof DefLogger
+     * @memberof ChalkLogger
      */
     initModule(module) {
         const mess = chalk.cyan(this.parseTime() + ' - [MODULE ] => ') + `Initialised! | [${module.label}] | Commands loaded -${module.commands.size}-`;
@@ -154,7 +154,7 @@ class ChalkLogger extends Console {
      * Initialisation - Command infos
      *
      * @param {Command} command
-     * @memberof DefLogger
+     * @memberof ChalkLogger
      */
     initCommand(command) {
         let mess;
@@ -170,7 +170,7 @@ class ChalkLogger extends Console {
      * Initialisation - SubCommand infos
      *
      * @param {Command} sub
-     * @memberof DefLogger
+     * @memberof ChalkLogger
      */
     initSubCmd(sub) {
         let mess;

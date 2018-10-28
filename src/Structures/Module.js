@@ -27,14 +27,23 @@ class Module extends Base {
      *
      * @param {Object<AxonClient>} client
      *
-     * @prop {Object<AxonClient>} _client - Ease Client reference
-     * @prop {Object<AxonClient>} bot - GETTER _client
+     * @prop {Object<AxonClient>} axon - Axon Client [GETTER: _axon]
+     * @prop {Object<Eris.Client>} bot - Eris bot Client [GETTER: _axon.client]
+     * @prop {Object} Logger - Logger Object/Methods [GETTER: axon.Logger]
+     * @prop {Object} Resolver - Resolver Object/Methods [GETTER: axon.Resolver]
+     * @prop {Object} AxonUtils - AxonUtils Object/Methods [GETTER: axon.AxonUtils]
+     * @prop {Object} Utils - Utils Object/Methods [GETTER: axon.Utils]
+     *
      * @prop {String} label - Module label (name/id)
-     * @prop {Collection<Command>} commands - Commands in the modules [key: label, value: command Obj]
-     * @prop {Collection<EventF>} events - Events in the modules [key: label, value: event Obj]
-     * @prop {Boolean} enabled - if the module is enabled | default: true (enabled)
-     * @prop {Boolean} serverBypass - if the module can't be server disabled | default: false (can be disabled)
-     * @prop {Object} info - Default infos about the module | name(string) / category(string) / description(string) / fullDesc(string
+     * @prop {Collection<Command>} commands - Collection of Commands in the modules [key: label, value: command Obj]
+     * @prop {Collection<EventF>} events - Collection of Events in the modules [key: label, value: event Obj]
+     * @prop {Collection<Object>} events - Collection of SChemas in the modules [key: label, value: schema Obj]
+     * @prop {Boolean} [enabled=true] - Module enabled
+     * @prop {Boolean} [serverBypass=false] - Module can't be server disabled
+     * @prop {Object} info - Default infos about the module
+     * - name(String)
+     * - category(String)
+     * - description(String)
      *
      * @memberof Module
      */
@@ -48,6 +57,7 @@ class Module extends Base {
          */
         this.commands = new Collection(Command);
         this.events = new Collection(EventF);
+        this.schemas = new Collection();
 
         /**
          * Default option and params
@@ -61,6 +71,7 @@ class Module extends Base {
          */
         this.infos = {
             name: 'moduleName',
+            category: 'category',
             description: 'moduleDesc',
         };
     }
@@ -231,7 +242,7 @@ class Module extends Base {
      * (valid names/ no missing etc)
      *
      * @param {Object<Command>} command - The Command Object
-     * @returns {Boolean} true if no problem / false if one invalid
+     * @returns {Boolean} True if no problem / False if one invalid
      * @memberof Module
      */
     checkAttributes(command) {
@@ -259,7 +270,7 @@ class Module extends Base {
      * Check if the permissions names are valid
      *
      * @param {String} perm - Name of a permission
-     * @returns {Boolean} true if yes / false if the name doesn't exist
+     * @returns {Boolean} True if yes / False if the name doesn't exist
      * @memberof Module
      */
     checkValidPermNames(perm) {

@@ -14,6 +14,20 @@ import Enums from './Enums';
  * @class AxonUtils
  */
 class AxonUtils {
+    /**
+     *Creates an instance of AxonUtils.
+
+     * @param {Object<AxonClient>} axon
+     *
+     * @prop {Object<AxonClient>} axon - Axon Client [GETTER: _axon]
+     * @prop {Object<Eris.Client>} bot - Eris bot Client [GETTER: _axon.client]
+     * @prop {Object} Logger - Logger Object/Methods [GETTER: axon.Logger]
+     * @prop {Object} Resolver - Resolver Object/Methods [GETTER: axon.Resolver]
+     * @prop {Object} AxonUtils - AxonUtils Object/Methods [GETTER: axon.AxonUtils]
+     * @prop {Object} Utils - Utils Object/Methods [GETTER: axon.Utils]
+     *
+     * @memberof AxonUtils
+     */
     constructor(axon) {
         this._axon = axon;
     }
@@ -51,8 +65,8 @@ class AxonUtils {
      * Works directly with axon._configs._tokens [GETTER: axon.webhooks]
      *
      * @param {String} type - Type of the webhook [status, loader, error, misc]
-     * @param {Object} embed - embed object
-     * @param {String} opt - optional string to use as bot username
+     * @param {Object} embed - Embed object
+     * @param {String} opt - Optional string to use as bot username
      * @memberof AxonUtils
      */
     triggerWebhook(type, embed, opt) {
@@ -79,8 +93,8 @@ class AxonUtils {
      *
      * @param {Object<Channel>} channel - Channel object
      * @param {Array<String>} permissions - List of permissions to test
-     * @param {Object<User>} [user=this.bot.user] - User to test | Default to bot
-     * @returns {Boolean} true if user has permissions
+     * @param {Object<User>} [user=this.bot.user] - User to test
+     * @returns {Boolean} True if user has permissions / False if not
      * @memberof AxonUtils
      */
     hasChannelPerms(channel, permissions, user = this.bot.user) {
@@ -115,7 +129,7 @@ class AxonUtils {
      *
      * @param {Object<Member>} member - Member object
      * @param {Array<String>} permissions - List of permissions to test
-     * @returns {Boolean} true if member has permissions
+     * @returns {Boolean} True if member has permissions / False if not
      * @memberof AxonUtils
      */
     hasPerms(member, permissions = []) {
@@ -169,8 +183,8 @@ class AxonUtils {
      * Check is the user is an Admin
      *
      * @param {Object<Member>} member - The member object
-     * @returns {Boolean} true if admin / false if not
-     * @memberof Command
+     * @returns {Boolean} True if admin / False if not
+     * @memberof AxonUtils
      */
     isAdmin(member) {
         for (const perm of Enums.adminPerms) {
@@ -184,10 +198,10 @@ class AxonUtils {
     /**
      * Check if the user is a mod or higher (admins are always mod)
      *
-     * @param {Object<Member>} member - the member object
-     * @param {Object} guildConf - the guild Config from the DB
-     * @returns {Boolean} true if user is a mod / false if not
-     * @memberof Command
+     * @param {Object<Member>} member - The member object
+     * @param {Object} guildConf - The guild Config from the DB
+     * @returns {Boolean} True if user is a mod / False if not
+     * @memberof AxonUtils
      */
     isMod(member, guildConf) {
         if (guildConf.modUsers.find(u => u === member.id)) {
@@ -214,10 +228,10 @@ class AxonUtils {
      * Doesn't support file
      *
      * @param {Object<Channel>} channel - The channel Object
-     * @param {Object|String} content - Message content, String or Embed Object
-     * @param {Object}
-     * @returns {Promise<Message?>}
-     * @memberof Command
+     * @param {Object/String} content - Message content, String or Embed Object
+     * @param {Object} [options={}] - Options { disableEveryone: Boolean, delete: Boolean, delay: Number }
+     * @returns {Promise<Message?>} Message Object
+     * @memberof AxonUtils
      */
     sendMessage(channel, content, options = {}) {
         if (channel.guild && !this.hasChannelPerms(channel, ['sendMessages'])) { // check if bot has sendMessage perm in the channel.
@@ -288,9 +302,9 @@ class AxonUtils {
      * Check for bot permissions + message embed/length
      *
      * @param {Object<Message>} message - The message object to edit
-     * @param {Object|String} content - Object (embed) or String
-     * @returns {Promise<Message?>}
-     * @memberof Command
+     * @param {Object/String} content - Object (embed) or String
+     * @returns {Promise<Message?>} Message Object
+     * @memberof AxonUtils
      */
     editMessage(message, content) {
         if (!message || !content) {
@@ -342,11 +356,11 @@ class AxonUtils {
      * DM targeted user if the bot is able to retrieve DM channel.
      * Reject promise if not
      *
-     * @param {Object<User>} user - user object to get the DM channel
-     * @param {Object|String} content - string or object (embed)
-     * @param {Object} options - options object to pass to sendMessage
-     * @returns
-     * @memberof Command
+     * @param {Object<User>} user - User object to get the DM channel
+     * @param {Object/String} content - String or object (embed)
+     * @param {Object} options - Options { disableEveryone: Boolean, delete: Boolean, delay: Number }
+     * @returns {Promise<Message?>} Message Object
+     * @memberof AxonUtils
      */
     sendDM(user, content, options) {
         return this.bot.getDMChannel(user.id)
@@ -359,10 +373,10 @@ class AxonUtils {
      * Check for sendMessage perms
      *
      * @param {Object<Channel>} channel - The channel Object
-     * @param {String} content - error message content (String only)
-     * @param {Object} options - options object to pass to sendMessage
-     * @returns {Promise<Message?>}
-     * @memberof Command
+     * @param {String} content - Error message content (String only)
+     * @param {Object} options - Options { disableEveryone: Boolean, delete: Boolean, delay: Number }
+     * @returns {Promise<Message?>} Message Object
+     * @memberof AxonUtils
      */
     sendError(channel, content, options) {
         return this.sendMessage(channel, `${this.Template.emote.error} ${content}`, options);
@@ -373,10 +387,10 @@ class AxonUtils {
      * Check for sendMessage perms
      *
      * @param {Object<Channel>} channel - The channel Object
-     * @param {String} content - error message content (String only)
-     * @param {Object} options - options object to pass to sendMessage
-     * @returns {Promise<Message?>}
-     * @memberof Command
+     * @param {String} content - Error message content (String only)
+     * @param {Object} options - Options { disableEveryone: Boolean, delete: Boolean, delay: Number }
+     * @returns {Promise<Message?>} Message Object
+     * @memberof AxonUtils
      */
     sendSuccess(channel, content, options) {
         return this.sendMessage(channel, `${this.Template.emote.success} ${content}`, options);
@@ -389,21 +403,21 @@ class AxonUtils {
      * @param {Object<Message>} msg - The message Object
      * @param {Object<Error>} err - The error message
      * @param {String} type - Type of error (api, db, internal)
-     * @param {String} errMsg - optional error message
-     * @returns {Promise}
-     * @memberof Command
+     * @param {String} errMsg - Optional error message
+     * @returns {Promise<Message?>} Message Object
+     * @memberof AxonUtils
      */
     error(msg, err, type, errMsg) {
         const typeList = Enums.typeError;
 
         errMsg = errMsg || this.Template.message.error.general;
-        this.sendError(msg.channel, errMsg);
 
         if (err) {
             err.message = `Type: ${typeList[type.toLowerCase()]} | ${err.message}`;
             throw err;
         }
         this.Logger.emerg(`Unexpected error [${msg.channel.guild.name} - ${msg.channale.guild.id}]!\n${err.stack}`);
+        return this.sendError(msg.channel, errMsg);
     }
 }
 

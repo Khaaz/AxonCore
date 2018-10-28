@@ -54,30 +54,40 @@ class AxonClient extends EventEmitter {
      * @param {Object} axonOptions - Axon options
      * @param {Object} modules - Object with all modules to add in the bot
      *
-     * @prop {Object} Logger - Default Logger/Chalk Logger/Signale Logger
-     * @prop {Object} DBprovider - JSON(default)/Mongoose
-     * @prop {Object} AxonUtil - Util methods Axon
-     * @prop {Object} Resolver - Resolver
-     * @prop {Object} Utils - Utils methods general
-     * @prop {Object} _configs - configs (axon, template, _tokens) [GETTER: configs]
+     *
+     * @prop {Object<Eris.Client>} client - Eris Client [GETER: _client]
+     *
      * @prop {Collection<Module>} modules - All modules in the client [key: label, value: module]
      * @prop {Collection<Command>} commands - All commands in the client [key: label, value: command]
      * @prop {Map<String>} commandAliases - All aliases in the client [key: alias, value: commandLabel]
      * @prop {Collection<EventF>} events - All events in the client [key: label, value: event]
      * @prop {Collection<Object>} models - All models in client (global models) [key: schemaLabel, value: schema]
-     * @prop {Collection<Object>} guildConfigs - Guild configs [key: guildID, value: {guild config Object}]
-     * @prop {Object} AxonClient - Object with AxonClient specifications (versions, author). Define BASE for the bot
-     * @prop {Set<String>} blacklistedUsers - Cached black listed users
-     * @prop {Set<String>} blacklistedGuilds - Cached black listed guilds
-     * @prop {Object<Eris.Client>} _client - Eris Client [GETER: client]
+     * @prop {Collection<Object>} guildConfigs - Guild configs [key: guildID, value: { guildConfig }]
+     *
+     * @prop {Object} Logger - Default Logger / Chalk Logger / Signale Logger
+     * @prop {Object} DBprovider - JSON(default) / Mongoose
+     * @prop {Object} AxonUtil - Util methods (Axon)
+     * @prop {Object} Resolver - Resolver
+     * @prop {Object} Utils - Utils methods (general)
+     *
+     * @prop {Object} configs - configs (axon, template, _tokens) [GETTER: _configs]
+     *
+     * @prop {Set<String>} blacklistedUsers - Cached blacklisted users
+     * @prop {Set<String>} blacklistedGuilds - Cached blacklisted guilds
+
      * @prop {Object} staff - Object of bot staff (user IDs) (owners, admins, ..+)
+     *
      * @prop {Object} params - Bot params
-     * - debugMode (boolean)  : enable to show commands latency
-     * - prefix (Array)       : default bot prefix
-     * - ownerPrefix (string) : owner prefix - override perms/cd
-     * - adminPrefix (string) : admins prefix - override perms/cd
-     * @prop {Object} infos - Default infos about the bot: owners/name/links etc (misc)
-     * @prop {Object} axonInfos - Infos about Client (AxonClient)
+     * @prop {Boolean} params.debugMode - Enable to show commands latency
+     * @prop {Array} params.prefix - Default bot prefix
+     * @prop {String} params.ownerPrefix - Owner prefix : override perms/cd
+     * @prop {String} params.adminPrefix - Admins prefix : override perms/cd except Owner
+     *
+     * @prop {Object} infos - General infos { name, description, version, library, owners }
+     * @prop {Object} axonInfos - AxonClient infos { name, version, author, github }
+     *
+     * @prop {Object} webhooks - All Client webhooks [GETTER: _configs._tokens.webhooks]
+     * @prop {Object} template - Template options [GETTER: _configs.template]
      *
      * @memberof AxonClient
      */
@@ -257,7 +267,7 @@ class AxonClient extends EventEmitter {
 
     /**
      * START METHOD
-     * AxonClient class already created
+     * AxonClient class is already created
      *
      * @memberof AxonClient
      */
@@ -471,15 +481,15 @@ class AxonClient extends EventEmitter {
     //
 
     /**
-     * Handler when a message is created
-     * do all test and then either:
+     * Handler when a message is created.
+     * Do all test and then either:
      *   - call execDm
      *   - call execAdmin
      *   - call execCommand
      *   - returns (do nothing)
      *
      * @async
-     * @param {Object<Message>} msg - the message object
+     * @param {Object<Message>} msg - The message object
      * @memberof AxonClient
      */
     async onMessageCreate(msg) {
@@ -608,8 +618,8 @@ class AxonClient extends EventEmitter {
      * Call command._executeAdmin
      *
      * @param {Object<Message>} msg - Message Object
-     * @param {Oject} guildConf - guild config
-     * @param {Boolean} isOwner - the user is bot owner or not
+     * @param {Oject} guildConf - Guild config
+     * @param {Boolean} isOwner - Whether the user is bot owner
      * @memberof AxonClient
      */
     _execAdmin(msg, guildConf, isOwner) {
@@ -736,7 +746,7 @@ class AxonClient extends EventEmitter {
      *
      * @param {Object<Message>} msg - The message object
      * @param {Array<String>} args - Array of argument
-     * @param {Object} guildConf - guildConfig from the DB
+     * @param {Object} guildConf - GuildConfig from the DB
      * @memberof AxonClient
      */
     _execHelp(msg, args, guildConf) {
@@ -764,8 +774,8 @@ class AxonClient extends EventEmitter {
      * Send full help in DM
      * Respecting permissions
      *
-     * @param {Object<Message>} msg
-     * @return {Promise<Message>}
+     * @param {Object<Message>} msg - The message object
+     * @return {Promise<Message>} Message Object
      * @memberof AxonClient
      */
     async sendFullHelp(msg) {
@@ -828,7 +838,7 @@ class AxonClient extends EventEmitter {
      *
      * @param {Object<Message>} msg
      * @param {Object} guildConf
-     * @returns {Boolean} true if either one of the three is ignored / false if none
+     * @returns {Boolean} True if either one of the three is ignored / False if none
      * @memberof AxonClient
      */
     _isGuildIgnored(msg, guildConf) {
@@ -842,7 +852,7 @@ class AxonClient extends EventEmitter {
      *
      * @param {Object<Command>} command - The command object
      * @param {Object} guildConf - The guild Config object
-     * @returns {Boolean} true if disabled / undefined if not
+     * @returns {Boolean} True if disabled / Undefined if not
      * @memberof AxonClient
      */
     _isCommandDisabled(command, guildConf) {
@@ -854,7 +864,7 @@ class AxonClient extends EventEmitter {
      *
      * @param {Object<Command>} command - The command object
      * @param {Object} guildConf - The guild Config object
-     * @returns {Boolean} true if disabled / undefined if not
+     * @returns {Boolean} True if disabled / Undefined if not
      * @memberof AxonClient
      */
     _isModuleDisabled(command, guildConf) {
@@ -863,7 +873,7 @@ class AxonClient extends EventEmitter {
 
     //
     // ****** DATABASE ******
-    // initialisation/fetch
+    // Initialisation/fetch
     //
 
     /**
@@ -895,7 +905,7 @@ class AxonClient extends EventEmitter {
      * Create a schema if none found or error
      *
      * @param {String} gID - The guild ID to fetch the DB
-     * @returns {Promise<Object>} - Guild schema from the DB / error
+     * @returns {Promise<Object>} Guild schema from the DB / Error
      * @memberof AxonClient
      */
     async fetchGuildConf(gID) {
@@ -925,7 +935,7 @@ class AxonClient extends EventEmitter {
      * Else it return undefined (no guild prefix used)
      *
      * @param {Object<Message>} msg - the message object
-     * @returns {String} The prefix if found / undefined if not
+     * @returns {String?} The prefix if found / Undefined if not
      * @memberof AxonClient
      */
     resolvePrefix(msg) {
@@ -942,7 +952,7 @@ class AxonClient extends EventEmitter {
      * @param {String} label - the command label/ command alias
      * @param {Array<String>} args - Array of arguments
      * @param {Object} guildConf - Guild config from DB
-     * @returns {Object} - the command object / undefined if the command doesn't exist
+     * @returns {Object?} The command object / Undefined if the command doesn't exist
      * @memberof AxonClient
      */
     resolveCommand(label, args, guildConf) {
@@ -976,18 +986,18 @@ class AxonClient extends EventEmitter {
     }
 
     /**
-     * Get guildConfig from cache || DB
-     * Cache it if not cached
+     * Get (or create) guildConfig from cache || DB
+     * Cache the guildConfig if not already cached
      *
      * @param {String} gID
-     * @returns {Promise} guildConf object fetched
+     * @returns {Promise<Object>} GuildConf fetched
      * @memberof AxonClient
      */
     async getGuildConf(gID) {
         let guildConf = this.guildConfigs.get(gID);
         if (!guildConf) {
             try {
-                guildConf =  await this.fetchGuildConf(gID); // retrieve DB get guildConf
+                guildConf =  await this.fetchGuildConf(gID); // retrieve DB, get guildConf
             } catch (err) {
                 throw new AxonCommandError('OnMessage', 'DB ERROR - guildConfig', `Guild: ${gID}`, err);
             }
@@ -1002,7 +1012,7 @@ class AxonClient extends EventEmitter {
      *
      * @param {String} gID - Guild id
      * @param {Object} guildSchema - Guild schema Object
-     * @returns {Promise} Updated guildSchema
+     * @returns {Promise<Object>} Updated guildSchema
      * @memberof AxonClient
      */
     updateGuildConf(gID, guildSchema) {
@@ -1022,7 +1032,7 @@ class AxonClient extends EventEmitter {
      *
      * @param {String} gID - The guild ID
      * @param {Array<String>} prefixArr - The array of prefix
-     * @returns {Promise<Object>} - The guild Schema from the DB / error if error
+     * @returns {Promise<Object>} The guild Schema from the DB / Error if error
      * @memberof AxonClient
      */
     registerGuildPrefix(gID, prefixArr) {
@@ -1045,11 +1055,11 @@ class AxonClient extends EventEmitter {
      *
      * @async
      * @param {String} userID - The id of the user to blacklist
-     * @param {Boolean} boolean - if add(true) or remove(false) the user to blacklist
-     * @returns {Promise<Object>} - The Axon Schema from the DB / error if error
+     * @param {Boolean} [boolean=true] - Whether to add(true) or remove(false) the user to blacklist
+     * @returns {Promise<Object>} The Axon Schema from the DB / Error
      * @memberof AxonClient
      */
-    async updateBlacklistUser(userID, boolean) {
+    async updateBlacklistUser(userID, boolean = true) {
         if (boolean) {
             !this.blacklistedUsers.has(userID) && this.blacklistedUsers.add(userID);
         } else {
@@ -1070,11 +1080,11 @@ class AxonClient extends EventEmitter {
      *
      * @async
      * @param {String} guildID - The id of the guild to blacklist
-     * @param {Boolean} boolean - if add(true) or remove(false) the guild to blacklist
-     * @returns {Promise<Object>} - The Axon Schema from the DB / error if error
+     * @param {Boolean} [boolean=true] - if add(true) or remove(false) the guild to blacklist
+     * @returns {Promise<Object>} The Axon Schema from the DB / Error
      * @memberof AxonClient
      */
-    async updateBlacklistGuild(userID, boolean) {
+    async updateBlacklistGuild(userID, boolean = true) {
         if (boolean) {
             !this.blacklistedGuilds.has(userID) && this.blacklistedGuilds.add(userID);
         } else {
@@ -1097,11 +1107,11 @@ class AxonClient extends EventEmitter {
      *
      * @param {String} guildID - The guild ID
      * @param {String} label - The module label
-     * @param {Boolean} boolean - If disable the module (false) or enable (true)
-     * @returns {Promise<Object>} return updated guildSchema / error if error
+     * @param {Boolean} [boolean=true] - If disable the module (false) or enable (true)
+     * @returns {Promise<Object>} Updated guildSchema / Error
      * @memberof AxonClient
      */
-    async updateStateModule(guildID, label, boolean) {
+    async updateGuildStateModule(guildID, label, boolean = true) {
         let conf;
         try {
             conf = await this.getGuildConf(guildID); // get from cache or from DB if not found
@@ -1128,11 +1138,11 @@ class AxonClient extends EventEmitter {
      *
      * @param {String} guildID - The guild ID
      * @param {String} label - The command label
-     * @param {Boolean} boolean - If disable the command (false) or enable (true)
-     * @returns {Promise<Object>} return updated guildSchema / error if error
+     * @param {Boolean} [boolean=true] - If disable the command (false) or enable (true)
+     * @returns {Promise<Object>} Updated guildSchema / Error
      * @memberof AxonClient
      */
-    async updateStateCommand(guildID, label, boolean) {
+    async updateGuildStateCommand(guildID, label, boolean = true) {
         let conf;
         try {
             conf = await this.getGuildConf(guildID); // get from cache or from DB if not found
@@ -1159,11 +1169,11 @@ class AxonClient extends EventEmitter {
      *
      * @param {String} guildID - The guild ID
      * @param {String} label - The event label
-     * @param {Boolean} boolean - If disable the event (false) or enable (true)
-     * @returns {Promise<Object>} return updated guildSchema / error if error
+     * @param {Boolean} [boolean=true] - If disable the event (false) or enable (true)
+     * @returns {Promise<Object>} Updated guildSchema / Error
      * @memberof AxonClient
      */
-    async updateStateEvent(guildID, label, boolean) {
+    async updateStateEvent(guildID, label, boolean = true) {
         let conf;
         try {
             conf = await this.getGuildConf(guildID); // get from cache or from DB if not found
@@ -1180,6 +1190,30 @@ class AxonClient extends EventEmitter {
         } catch (err) {
             throw err;
         }
+    }
+
+    /**
+     * Enable/Disable a module globally
+     *
+     * @param {String} module - Module name
+     * @param {Boolean} [state=true] - Whether to enable or disable
+     * @memberof AxonClient
+     */
+    updateGlobalStateModule(module, state = true) {
+        this.modules.get(module).enabled = state;
+        this.Logger.info(`Globally ${state ? 'enabled' : 'disabled'} module: ${module}.`);
+    }
+
+    /**
+     * Enable/Disable a command globally
+     *
+     * @param {String} command - Command name
+     * @param {Boolean} [state=true] - Whether to enable or disable
+     * @memberof AxonClient
+     */
+    updateGlobalStateCommand(command, state = true) {
+        this.commands.get(command).enabled = state;
+        this.Logger.info(`Globally ${state ? 'enabled' : 'disabled'} command: ${command}.`);
     }
 
     toString() {
@@ -1206,6 +1240,7 @@ class AxonClient extends EventEmitter {
         return base;
     }
 
+    // doesn't list prefixed property and undefined property when using util.inspect
     [util.inspect.custom]() {
         // http://stackoverflow.com/questions/5905492/dynamic-function-name-in-javascript
         const copy = new { [this.constructor.name]: class {} }[this.constructor.name]();

@@ -5,11 +5,13 @@ import Utils from './Utils';
 import AxonError from '../Errors/AxonError';
 
 const Util = new Utils();
+
 /**
  * Resolver class for AxonClient
  *
  * @author KhaaZ
  *
+ * @static
  * @class Resolver
  */
 class Resolver {
@@ -34,7 +36,7 @@ class Resolver {
         args.lower = args.all.toLowerCase();
         const users = client.users;
 
-        const mention = Util.userMention.exec(args[0]);
+        const mention = /<@!?([0-9]+)>$/.exec(args[0]);
 
         const user = ((mention && mention[1]) && users.get(mention[1])) // User mention
             || (Util.id.test(args[0]) && users.get(args[0])) // User ID
@@ -69,7 +71,7 @@ class Resolver {
         args.lower = args.all.toLowerCase();
         const members = guild.members;
 
-        const mention = Util.userMention.exec(args[0]);
+        const mention = /<@!?([0-9]+)>$/.exec(args[0]);
 
         const member = ((mention && mention[1]) && members.get(mention[1])) // User mention
             || (Util.id.test(args[0]) && members.get(args[0])) // User ID
@@ -109,7 +111,7 @@ class Resolver {
         args.lower = args.all.toLowerCase();
         const roles = guild.roles;
 
-        const mention = Util.roleMention.exec(args[0]);
+        const mention = /<@&([0-9]+)>$/.exec(args[0]);
 
         const role = ((mention && mention[1]) && roles.get(mention[1]))  // mention
             || (Util.id.test(args[0]) && roles.get(args[0])) // id
@@ -144,7 +146,7 @@ class Resolver {
         args.lower = args.all.toLowerCase();
         const channels = guild.channels;
 
-        const mention = Util.channelMention.exec(args[0]);
+        const mention = /<#([0-9]+)>$/.exec(args[0]);
 
         const channel = ((mention && mention[1]) && channels.get(mention[1]))
             || (Util.id.test(args[0]) && channels.get(args[0]))
@@ -160,20 +162,21 @@ class Resolver {
     /**
      * Guild resolver
      *
+     * @param {Object<Eris.Client>} client - The bot client
      * @param {Array} args - Array with guild name/ID
      * @returns {Object|null} The guild object / null if not found / error if error (incorrect args)
      */
-    static guild(args) {
+    static guild(client, args) {
         // Checking if all the arguments are supplied.
         if (!args.length) {
             throw new AxonError('All the arguments are either not given or false.', 'Resolver', 'Guild');
         }
 
-        const guilds = this._client.guilds;
+        const guilds = client.guilds;
         args.all = args.join(' ');
         args.lower = args.all.toLowerCase();
 
-        const guild = (Util.id.test(args[0]) && guilds.find(g => g.id === args[0])) // ID
+        const guild = (/^[0-9]+$/.test(args[0]) && guilds.find(g => g.id === args[0])) // ID
             || guilds.find(g => g.name === args.all) // Name
             || guilds.find(g => g.name.toLowerCase() === args.lower) // Lowercase name
             || guilds.find(g => g.name.includes(args.all)) // Includes name

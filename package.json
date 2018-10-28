@@ -13,6 +13,7 @@
   "devDependencies": {
     "cloc": "^2.3.4",
     "eslint": "^5.6.0",
+    "jsdoc-to-markdown": "^4.0.1",
     "yarn": "^1.9.4"
   },
   "optionalDependencies": {

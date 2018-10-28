@@ -13,8 +13,10 @@ class Collection extends Map {
     /**
      * Construct a Collection
      *
-     * @arg {Class} baseObject - The base class for all items
+     * @arg {Class} [baseObject=null] - The base class for all items
      * @arg {Object} iterable - Iterable to construct the Map from
+     *
+     * @prop {}
      */
     constructor(baseObject = null, iterable) {
         if (iterable && iterable instanceof Array) {
@@ -29,7 +31,7 @@ class Collection extends Map {
 
     /**
      * Map to array
-     * [ value, value, value]
+     * [ value, value, value ]
      *
      * @returns {Array<Class>}
      * @memberof Collection
@@ -124,10 +126,10 @@ class Collection extends Map {
     /**
 	 * Reduce values by function
      *
-     * @arg {Function}
-     * @arg {}
+     * @arg {Function} callbackFn - Function to execute on each element in the array
+     * @arg {Number} [currentIndex=0] - Value to use as the first argument to the first call of the callback
 	 */
-    reduce(callbackFn, currentIndex) {
+    reduce(callbackFn, currentIndex = 0) {
         return this.toArray().reduce(callbackFn, currentIndex);
     }
 

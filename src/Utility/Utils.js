@@ -15,6 +15,20 @@ const writeFile = util.promisify(fs.writeFile);
  * @class Utils
  */
 class Utils {
+    /**
+     * Creates an instance of Utils.
+     *
+     * @prop {Object<AxonClient>} axon - Axon Client [GETTER: _axon]
+     * @prop {Object<Eris.Client>} bot - Eris bot Client [GETTER: _axon.client]
+     *
+     * @prop {RegExp} userMention - Regular Expression to match a userMention
+     * @prop {RegExp} roleMention - Regular Expression to match a roleMention
+     * @prop {RegExp} channelMention - Regular Expression to match a channelMention
+     * @prop {RegExp} id - Regular Expression to match an id
+     * @prop {RegExp} hexCode - Regular Expression to match an hexCode
+     *
+     * @memberof Utils
+     */
     constructor(client) {
         this._axon = client;
 
@@ -43,7 +57,7 @@ class Utils {
      * split at 1900 char
      *
      * @param {String} content
-     * @returns {Array<String>/String} The array of content string splitted or the original String
+     * @returns {Array<String>|String} The array of content string splitted or the original String
      */
     splitMessage(content) {
         return content.match(/[\s\S]{1,1900}[\n\r]/g) || [];
@@ -64,11 +78,11 @@ class Utils {
     //
 
     /**
-     * Get roles Object from a member
+     * Get an Array of roles Object from a member
      *
      * @param {Object<Guild>} guild
      * @param {Object<Member>} member
-     * @returns {Array<Role>}
+     * @returns {Array<Role>} Array of roles object
      * @memberof Utils
      */
     getRoles(guild, member) {
@@ -83,7 +97,7 @@ class Utils {
      *
      * @param {Object<Guild>} guild
      * @param {Object<Member>} member
-     * @returns {Object<Role>}
+     * @returns {Object<Role>} Role Object
      * @memberof Utils
      */
     getHighestRole(guild, member) {
@@ -95,7 +109,7 @@ class Utils {
      * Sort a users roles from higher role to last role
      *
      * @param {Array<Role>} array - The roles to sort
-     * @returns {Array<Role>} sorted array (per position) of roles
+     * @returns {Array<Role>} Sorted array (per position) of Role Object
      */
     sortRoles(roles) {
         return roles.sort((a, b) => b.position - a.position);
@@ -170,11 +184,11 @@ class Utils {
 
     /**
      * Ensures that all property names of obj1 exists in obj2.
-     * Doesn't compare values. Exept if it is an object, then it check for property names again
+     * Doesn't compare values. Exept if it is an object, then it check for property names recursively
      *
-     * @param {Object} obj1 - Default config
-     * @param {Object} obj2 - Custom config (Config to compare with)
-     * @returns {Boolean} true: obj2 has at least all prop of obj1
+     * @param {Object} obj1 - Default config/object
+     * @param {Object} obj2 - Custom config/Object (Config/Object to compare with)
+     * @returns {Boolean} True: obj2 has at least all prop of obj1
      * @memberof Utils
      */
     compareObject(obj1, obj2) {

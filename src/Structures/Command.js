@@ -17,54 +17,63 @@ class Command extends Base {
      *
      * @param {Object<Module>} module
      *
-     * @prop {Object<AxonClient>} bot - Getter _module.bot
-     * @prop {Object<Module>} _module - The module object
-     * @prop {Object<Module>} module - GETTER _module
+     * @prop {Object<AxonClient>} axon - Axon Client [GETTER: _axon]
+     * @prop {Object<Eris.Client>} bot - Eris bot Client [GETTER: _axon.client]
+     * @prop {Object} Logger - Logger Object/Methods [GETTER: axon.Logger]
+     * @prop {Object} Resolver - Resolver Object/Methods [GETTER: axon.Resolver]
+     * @prop {Object} AxonUtils - AxonUtils Object/Methods [GETTER: axon.AxonUtils]
+     * @prop {Object} Utils - Utils Object/Methods [GETTER: axon.Utils]
+     *
+     * @prop {Object<Module>} module - Module object [GETTER: _module]
+     *
      * @prop {Object} _cooldown - Map of current cooldown (global per user) [key: userID, value: Date.now()]
-     * @prop {Object} Resolver - [GETTER] Resolver object to access reolver methods
-     * @prop {Object} Util - [GETTER] Util object to access utils methods
-     * @prop {Object} Template - [GETER] Template object to access templating property
-     * @prop {String} label - The command label (name/id)
-     * @prop {Array<String>} aliases - Array of commands aliases **including the command label
-     * @prop {Boolean} enabled - if the command is enabled | default: true (enabled)
-     * @prop {Boolean} isSubcmd - if the command is a subcommand | default: false (not a subcommand)
-     * @prop {Object<Command>} parentCommand - if isSubcommand, references to the parent Command | default to null
-     * @prop {Boolean} hasSubcmd - if the command has a subcommand | default: false (doesnt have any subcommand)
-     *      If hasSubcmd is true: import all subcommand at the begining of the file. Then use
-     *      this.subcmds = [Array of subcmd object imported at begining of the file]
-     * @prop {Array} subcmds - Array of subcommands Object imported from file directly at begining of parent command
-     * @prop {Collection<Command>} subCommands - Map of subcommands if hasSubcmd = true / else null
-     * @prop {Object<Map>} subCommandsAliases - Map of subcommands aliases if hasSubcmd = true / else null
-     * @prop {Boolean} serverBypass - if the command can't be server disabled | default: false (can be disabled)
+     *
+     * @prop {String} label - Command label (name/id)
+     * @prop {Array<String>} aliases - Array of commands aliases (including the command label)
+     * @prop {Boolean} [enabled=true] - Command enabled
+     *
+     * @prop {Boolean} [isSubcmd=false] - Command is a subcommand
+     * @prop {Object<Command>} [parentCommand=NULL] - References to the parent Command (if isSubcmd = true)
+     * @prop {Boolean} [hasSubcmd=false] - Command has a subcommand
+     *
+     * @prop {Array} subcmds - Array of subcommands Object (deleted after init)
+     * @prop {Collection<Command>} [subCommands=NULL] - Collection of subcommands
+     * @prop {Object<Map>} [subCommandsAliases=NULL] - Map of subcommands aliases
+     *
+     * @prop {Boolean} [serverBypass=false] - Command can't be server disabled
      *
      * @prop {Object} infos - Default infos about the command
-     *  - owner(Array)  // ['Eleos'] OR ['Eleos', 'Ape']
-     *  - cmdName(String) // 'mail' OR 'mail all' (for subcommmands)
-     *  - description(String) // 'A cool command that does things'
-     *  - examples(Array) // ['suggestion Hey can we add this thanks', ...]
-     *  - arguments(Array) // ['id', 'user', 'channel', ...]
-     *  - customArguments(String) // If not empty, this string will be used instead of arguments
+     * @prop {Owner} infos.owner - Command owners/authors
+     * @prop {String} infos.cmdName - Command name (full)
+     * @prop {String} infos.description - Command description
+     * @prop {String} infos.usage - Command usage
+     * @prop {Array} infos.example - Array of command examples
      *
      * @prop {Object} options - Default options for the command
-     *  - argsMin(Number)                   : 0 // min arg required
-     *  - invalidUsage(Boolean)             : true // trigger help command on invalid usage = args required and no args given
-     *  - invalidPermissionMessage(Boolean) : false // trigger error message on invalid permission
-     *  - deleteCommand(Boolean)            : false // delete command input
-     *  - guildOnly(Boolean)                : true // command usable only in guilds
-     *  - hidden(Boolean)                   : false // commands totally hidden from help commmand
-     *  - cooldown(Number)                  : 3000 // cooldown for the command
+     * @prop {Number} [options.argsMin=0] - Minimum args required
+     * @prop {Boolean} [options.invalidUsage=true] - Whether to trigger help command on invalid usage (args required and no args given)
+     * @prop {Boolean} [options.invalidPermissionMessage=false] - Whether to trigger error message on invalid permission
+     * @prop {Boolean} [options.deleteCommand=false] - Whether to delete the command input
+     * @prop {Boolean} [options.guildOnly=true] - Whether the command is usable only in guilds
+     * @prop {Boolean} [options.hidden=false] - Whether the command is totally hidden from help commmand
+     * @prop {Number} [options.cooldown=3000] - Cooldown for the command
      *
      * @prop {Object} permissions - Default permissions for the bot/users
-     *           - needed: needs to have all permissions in the Array to use the command
-     *           - bypass: having at least one of the perms in the Array allow to use the command
-     *  - bot(Array)                : [] // permissions needed by the bot to execute the command
-     *  - serverMod(Boolean)        : false // if the command is limited to serverMod+
-     *  - serverAdmin(Boolean)      : false // if the command is limited to serverAdmin+
-     *  - user(Object)              : [] // permissions needed by the user to use the command
-     *  - usersID(Object)           : [] // Array of usersIDs (global)
-     *  - rolesID(Object)           : [] // Aray of rolesIDs (global)
-     *  - channelsID(Object)        : [] // Array of channelsIDs (global)
-     *  - staff(Array)              : [] // this.bot.staff.prop | this.bot.staff.prop.concat(this.bot.staff.prop)...
+     * @prop {Array} [permissions.bot=[]] - Array or permissions needed by the bot to execute the command
+     * @prop {Boolean} [permissions.serverMod=false] - Whether to limit the command to serverMod+
+     * @prop {Boolean} [permissions.severAdmin=false] - Whether to limit the command to serverAdmin+
+     * @prop {Array} [permissions.user.needed=[]] - All permissions needed by the user to execute
+     * @prop {Array} [permissions.user.bypass=[]] - Having one of these perms allow the user to execute
+     * @prop {Array} [permissions.usersID.needed=[]] - List of user ids that have permissions to execute
+     * @prop {Array} [permissions.usersID.bypass=[]] - Having one of these id allow the user to execute
+     * @prop {Array} [permissions.rolesID.needed=[]] - List of roles ids needed to execute
+     * @prop {Array} [permissions.rolesID.bypass=[]] - Having one of these roles allow the user to execute
+     * @prop {Array} [permissions.ChannelsID.needed=[]] - List of channels ids that allow to execute
+     * @prop {Array} [permissions.channelsID.bypass=[]] - Being in one of these channels allow the user to execute
+     * @prop {Array} [permissions.staff.needed=[]] - List of bot.staff permission needed to execute
+     * @prop {Array} [permissions.staff.bypass=[]] - Having one of these bot.staff permission allow to execute
+     *
+     * @prop {Object} Template - Template object shortcut [GETTER: axon.configs.template]
      *
      * @memberof Command
      */
@@ -73,7 +82,7 @@ class Command extends Base {
 
         /**
          * [GETTER] - bot references to Axon Client
-         * [GETTER] -  (private) module references to the module the command is in
+         * [GETTER] - (private) module references to the module the command is in
          */
         this._module = module; // (module Object)
 
@@ -104,11 +113,10 @@ class Command extends Base {
         this.subcmds = []; // array of imported commands - deleted after init
 
         /**
-         * Initiated only if subcommands
-         * (here to keep track of names)
+         * Initiated if subcommands
          */
-        // this.subCommands = new Collection(Command) || {}; // create Map instance by default if there is subcmd so we can init subcmd easily
-        // this.subCommandsAliases = new Map() || {}; // create Map instance by default if there is subcmd so we can init subcmd aliases easily
+        this.subCommands = null; // default: null | Collection of Commands
+        this.subCommandsAliases = null; // default: null | Map of Command Aliases
 
         /**
          * Bypass all perms - true = prevent the command to be server disabled
@@ -206,7 +214,7 @@ class Command extends Base {
     /**
      * Execute command - checks perms according to comand options
      *
-     * @param {Object} message - msg, args, guildConf
+     * @param {Object} message - { msg, args, guildConf }
      * @returns {Promise}
      * @memberof Command
      */
@@ -255,7 +263,7 @@ class Command extends Base {
      * Execute the command with admin checkers (minimal)
      * no CD - no perms checkers
      *
-     * @param {Object} message - msg, args, guildCOnf
+     * @param {Object} message - { msg, args, guildConf }
      * @returns {Promise}
      * @memberof Command
      */
@@ -328,8 +336,8 @@ class Command extends Base {
      * Perm checks were done before
      * Call custom sendHelp (Client method if it exist instead of default one)
      *
-     * @param {Object<Message>} msg - The message object
-     * @returns {Promise}
+     * @param {Object<Message>} {msg, guildconf} - The message object
+     * @returns {Promise<Message>} Message Object
      * @memberof Command
      */
     sendHelp({ msg, guildConf }) {
@@ -406,8 +414,8 @@ class Command extends Base {
     /**
      * Check command cooldown for the user
      *
-     * @param {Object<Message>} msg - the Message object
-     * @returns {Boolean|Number} false if no cooldown, cooldown time left if there is a cooldown
+     * @param {Object<Message>} msg - The Message object
+     * @returns {Boolean|Number} False if no cooldown / Cooldown time left if there is a cooldown
      * @memberof Command
      */
     _shouldCooldown(msg) {
@@ -436,9 +444,9 @@ class Command extends Base {
      * Needed - all perms => still go through other checkers
      * ServerMod
      *
-     * @param {Object<Message>} msg - Message Object
-     * @param {Object} guildConf - Guild Config
-     * @returns {Boolean} true: user can execute command
+     * @param {Object<Message>} msg - The Message Object
+     * @param {Object} guildConf - GuildConfig
+     * @returns {Boolean} True if the user can execute command / False if not
      * @memberof Command
      */
     canExecute(channel, member, guildConf) {
@@ -615,7 +623,7 @@ class Command extends Base {
      * Check channels IDs [needed]
      * (= permssions in config)
      *
-     * @param {Object<Channelmember>} channel
+     * @param {Object<Channel>} channel
      * @returns {Boolean}
      * @memberof Command
      */
@@ -629,8 +637,8 @@ class Command extends Base {
     /**
      * Check if the user is Bot staff
      *
-     * @param {Object<Member>} member
-     * @returns {Boolean} true if Staff / false if not
+     * @param {Object<Member>} member - The Member Object
+     * @returns {Boolean} True if Staff / False if not
      * @memberof Command
      */
     _checkStaffBypass(member) {
@@ -643,8 +651,8 @@ class Command extends Base {
     /**
      * Check if the user is Bot staff
      *
-     * @param {Object<Member>} member
-     * @returns {Boolean} true if Staff / false if not
+     * @param {Object<Member>} member - The Member Object
+     * @returns {Boolean} True if Staff / False if not
      * @memberof Command
      */
     _checkStaffNeeded(member) {
@@ -663,8 +671,8 @@ class Command extends Base {
      * timeout // delay and auto delete message
      *
      * @param {Object<Channel>} channel - The channel Object
-     * @param {Array<String>} permissions - Optional array of permissions string
-     * @returns {Promise<Message?>}
+     * @param {Array<String>} [permissions=[]] - Optional array of permissions string
+     * @returns {Promise<Message?>} Message Object
      * @memberof Command
      */
     sendBotPerms(channel, permissions = []) {
@@ -685,8 +693,8 @@ class Command extends Base {
      *
      * @param {Object<Channel>} channel - The channel Object
      * @param {Object<Member>} member - The member object
-     * @param {Array<String>} permissions - Optional array of permissions string
-     * @returns {Promise<Message?>}
+     * @param {Array<String>} [permission=[]] - Optional array of permissions string
+     * @returns {Promise<Message?>} Message Object
      * @memberof Command
      */
     sendUserPerms(channel, member, permissions = []) {
@@ -706,7 +714,7 @@ class Command extends Base {
      * timeout // delay and auto delete message
      *
      * @param {Object<Channel>} channel - The channel Object
-     * @returns {Promise<Message?>}
+     * @returns {Promise<Message?>} Message Object
      * @memberof Command
      */
     sendDestPerms(channel) {
@@ -718,7 +726,7 @@ class Command extends Base {
      * timeout // delay and auto delete message
      *
      * @param {Object<Channel>} channel - The channel Object
-     * @returns {Promise<Message?>}
+     * @returns {Promise<Message?>} Message Object
      * @memberof Command
      */
     sendCooldown(channel, time) {
