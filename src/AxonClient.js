@@ -61,7 +61,7 @@ class AxonClient extends EventEmitter {
      * @prop {Collection<Command>} commands - All commands in the client [key: label, value: command]
      * @prop {Map<String>} commandAliases - All aliases in the client [key: alias, value: commandLabel]
      * @prop {Collection<EventF>} events - All events in the client [key: label, value: event]
-     * @prop {Collection<Object>} models - All models in client (global models) [key: schemaLabel, value: schema]
+     * @prop {Collection<Object>} schemas - All schemas in client (global models) [key: schemaLabel, value: schema]
      * @prop {Collection<Object>} guildConfigs - Guild configs [key: guildID, value: { guildConfig }]
      *
      * @prop {Object} Logger - Default Logger / Chalk Logger / Signale Logger
@@ -102,8 +102,9 @@ class AxonClient extends EventEmitter {
          */
         /** Logger */
         this.Logger = axonOptions.logger || LoggerHandler.pickLogger(axonOptions.axonConf);
+        /** DataModels */
+        this.schemas = new Collection(); // Schema label => Schema Object
         /** DB */
-        this.Schemas = new Collection();
         this.DBprovider = axonOptions.db || DBHandler.pickDBService(axonOptions, this);
         /** Utility */
         this.AxonUtils = new AxonUtils(this);
@@ -130,8 +131,6 @@ class AxonClient extends EventEmitter {
         this.commands = new Collection(Command); // Command Label => ref Command Object
         this.commandAliases = new Map(); // Command Alias => Command label
         this.events = new Collection(EventF); // Event Label => ref EventF function
-        /** DataModels */
-        this.models = new Collection(); // Schema label => Schema Object
         /** GuildConfigs */
         this.guildConfigs = new Collection(); // Guild ID => guildConfig
 
@@ -353,7 +352,7 @@ class AxonClient extends EventEmitter {
             this.AxonUtils.triggerWebhook('error', {
                 color: 15158332,
                 timestamp: new Date(),
-                description: (err.stack && err.stack.length > 1950) ? err.message : err.stack,
+                description: (err.stack && err.stack.length < 1950) ? err.stack : err.message,
             }, `Exception${this.client.user ? ` - ${this.client.user.username}` : ''}`);
         });
 
@@ -363,7 +362,7 @@ class AxonClient extends EventEmitter {
             this.AxonUtils.triggerWebhook('error', {
                 color: 15158332,
                 timestamp: new Date(),
-                description: (err.stack && err.stack.length > 1950) ? err.message : err.stack,
+                description: (err.stack && err.stack.length < 1950) ? err.stack : err.message,
             }, `Rejection${this.client.user ? ` - ${this.client.user.username}` : ''}`);
         });
 
@@ -373,7 +372,7 @@ class AxonClient extends EventEmitter {
             this.AxonUtils.triggerWebhook('error', {
                 color: 15158332,
                 timestamp: new Date(),
-                description: (err.stack && err.stack.length > 1950) ? err.message : err.stack,
+                description: (err.stack && err.stack.length < 1950) ? err.stack : err.message,
             });
         });
 
@@ -422,18 +421,57 @@ class AxonClient extends EventEmitter {
             if (this.commands.has(label)) {
                 throw new AxonError(`${module.label} - Command: ${label} already registered!`, 'INIT');
             }
-            this.commands.set(label, cmd); // add the command in the commands Map (references to module.commands.get(label))
+            this.commands.set(label, cmd); // Add the command in the commands Collection (references to module.commands.get(label))
 
             for (const alias of cmd.aliases) {
                 if (this.commandAliases.has(alias)) {
                     throw new AxonError(`${module.label}(Command: ${label}) - Alias: ${alias} already registered!`, 'INIT');
                 }
-                this.commandAliases.set(alias, label); // add the commands aliases in aliases Map (references to the command label)
+                this.commandAliases.set(alias, label); // Add the commands aliases in aliases Map (references to the command label)
             }
         }
-        this.modules.set(module.label, module); // add the module in modules Map (references to module object)
+
+        for (const [label, schema] of module.schemas) {  // Add the schemas in schemas Collection (references to module object)
+            if (this.schemas.has(label)) {
+                throw new AxonError(`${module.label} - Schema: ${label} already registered!`, 'INIT');
+            }
+            this.schemas.set(label, schema);
+        }
+
+        this.modules.set(module.label, module); // Add the module in modules Collection (references to module object)
 
         this.Logger.initModule(module);
+    }
+
+    /**
+     * Unregister a Module
+     * Remove the module of the client + commands + aliases + schemas
+     *
+     * @param {String} label - Label of the module to unregister
+     * @memberof AxonClient
+     */
+    unregisterModule(label) {
+        const module = this.modules.get(label);
+        // init instance module and add it to the Map
+        if (!module) {
+            throw new AxonError(`AxonClient - Module: ${module.label} not registered!`, 'INIT');
+        }
+
+        for (const [label, cmd] of module.commands) {
+            for (const alias of cmd.aliases) {
+                this.commandAliases.delete(alias); // Remove the commands aliases of aliases Map (references to the command label)
+            }
+
+            this.commands.delete(label); // Remove the command of the commands Collection (references to module.commands.get(label))
+        }
+
+        for (const [label, schema] of module.schemas) { // eslint-disable-line
+            this.schemas.delete(label); // Remove the schemas of schemas Collection (references to module object)
+        }
+
+        this.modules.delete(module.label); // Remove the module of modules Collection (references to module object)
+
+        this.Logger.info(`Module: ${module.label} unregistered!`);
     }
 
     /**
@@ -1119,7 +1157,9 @@ class AxonClient extends EventEmitter {
             throw err;
         }
 
-        boolean ? conf.modules.includes(label) && (conf.modules = conf.modules.filter(c => c !== label)) : !conf.modules.includes(label) && conf.modules.push(label);
+        boolean
+            ? conf.modules.includes(label) && (conf.modules = conf.modules.filter(c => c !== label))
+            : !conf.modules.includes(label) && conf.modules.push(label);
 
         try {
             const newConf = await this.DBprovider.updateModule(guildID, conf.modules);
@@ -1150,7 +1190,9 @@ class AxonClient extends EventEmitter {
             throw err;
         }
 
-        boolean ? conf.commands.includes(label) && (conf.commands = conf.commands.filter(c => c !== label)) : !conf.commands.includes(label) && conf.commands.push(label);
+        boolean
+            ? conf.commands.includes(label) && (conf.commands = conf.commands.filter(c => c !== label))
+            : !conf.commands.includes(label) && conf.commands.push(label);
 
         try {
             const newConf = await this.DBprovider.updateCommand(guildID, conf.commands);
@@ -1181,7 +1223,9 @@ class AxonClient extends EventEmitter {
             throw err;
         }
 
-        boolean ? conf.events.includes(label) && (conf.events = conf.events.filter(c => c !== label)) : !conf.events.includes(label) && conf.events.push(label);
+        boolean
+            ? conf.events.includes(label) && (conf.events = conf.events.filter(c => c !== label))
+            : !conf.events.includes(label) && conf.events.push(label);
 
         try {
             const newConf = await this.DBprovider.updateEvent(guildID, conf.events);

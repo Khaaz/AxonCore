@@ -1,8 +1,8 @@
 import { Utils }  from '../..';
 
 class MyUtils extends Utils {
-    constructor() {
-        super();
+    constructor(...args) {
+        super(...args);
         this.invite = /^(discord.gg\/|discordapp.com\/invite\/)([a-z0-9]+)$/gi;
     }
 

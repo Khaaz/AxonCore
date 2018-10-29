@@ -70,16 +70,20 @@ class AxonUtils {
      * @memberof AxonUtils
      */
     triggerWebhook(type, embed, opt) {
-        if (this.axon.webhooks[type].id.length > 0 && this.axon.webhooks[type].token.length) {
-            this.bot.executeWebhook(this.axon.webhooks[type].id, this.axon.webhooks[type].token, {
-                username: opt ? opt : (`${type[0].toUpperCase() + type.slice(1)} - ${this.axon.client.user ? this.axon.client.user.username : ''}`),
-                avatarURL: this.axon.client.user ? this.axon.client.user.avatarURL : null,
-                embeds: [
-                    embed,
-                ],
-            })
+        const wh = this.axon.webhooks[type];
+        if (wh && wh.id && wh.token && wh.id.length > 0 && wh.token.length) {
+            this.bot.executeWebhook(
+                wh.id,
+                wh.token,
+                {
+                    username: opt ? opt : (`${type[0].toUpperCase() + type.slice(1)} - ${this.axon.client.user ? this.axon.client.user.username : ''}`),
+                    avatarURL: this.axon.client.user ? this.axon.client.user.avatarURL : null,
+                    embeds: [
+                        embed,
+                    ],
+                })
                 .catch(err => {
-                    this.axon.Logger.error('Webhook issue' + err);
+                    this.axon.Logger.error('[TriggerWebhook] Webhook issue\n' + err);
                 });
         }
     }

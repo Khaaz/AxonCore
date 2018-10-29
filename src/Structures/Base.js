@@ -61,6 +61,40 @@ class Base {
         return this.axon.Utils;
     }
 
+    /**
+     * Get a module from AxonClient with the label
+     *
+     * @param {String} module - Module label
+     * @returns {Object<Module>|NULL}
+     * @memberof Base
+     */
+    getModule(module) {
+        return this.axon.modules.get(module) || null;
+    }
+
+    /**
+     * Get a command/subcommand from AxonClient with the full label
+     *
+     * @param {String} fullLabel - Full command (or subcommand) label
+     * @returns {Object<Command>|NULL}
+     * @memberof Base
+     */
+    getCommand(fullLabel) {
+        const splitLabel = fullLabel.split(' ');
+        let command = this.axon.commands.get(splitLabel[0].toLowerCase());
+        if (!command) {
+            return null;
+        }
+
+        splitLabel.shift();
+        for (const sub of splitLabel) {
+            if (command.hasSubcmd) {
+                command = command.subCommands.get(sub.toLowerCase());
+            }
+        }
+        return command || null;
+    }
+
     //
     // ****** METHODS ******
     //

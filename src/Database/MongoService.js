@@ -22,8 +22,8 @@ class MongoService {
         this.AxonSchema = axonOptions.axonSchema || require('./Models/AxonSchema').default;
         this.GuildSchema = axonOptions.guildSchema || require('./Models/GuildSchema').default;
 
-        this.axon.Schemas.set('axonSchema', this.AxonSchema);
-        this.axon.Schemas.set('guildSchema', this.GuildSchema);
+        this.axon.schemas.set('axonSchema', this.AxonSchema);
+        this.axon.schemas.set('guildSchema', this.GuildSchema);
     }
 
     /**

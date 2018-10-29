@@ -19,8 +19,8 @@ class Resolver {
      * User resolver
      *
      * @param {Object<Eris.Client>} client - The bot client
-     * @param {Array|String} args - Array of arguments resolved by the command.
-     * @returns {Object|null} The user object / null if not found / error if error (incorect args)
+     * @param {Array/String} args - Array of arguments resolved by the command.
+     * @returns {Object|null} The user object / Null if not found / Error
      */
     static user(client, args) {
         // Checking if all the arguments are supplied.
@@ -54,8 +54,8 @@ class Resolver {
      * Member resolver
      *
      * @param {Object<Guild>} guild - Object Guild resolved by the command.
-     * @param {Array|String} args - Array of arguments resolved by the command.
-     * @returns {Object|null} The member object / null if not found / error if error (incorect args)
+     * @param {Array/String} args - Array of arguments resolved by the command.
+     * @returns {Object|null} The member object / Null if not found / Error
      */
     static member(guild, args) {
         // Checking if all the arguments are supplied.
@@ -93,8 +93,8 @@ class Resolver {
      * Role resolver
      *
      * @param {Object<Guild>} guild - Object Guild resolved by the command.
-     * @param {Array|String} args - Array of arguments resolved by the command.
-     * @returns {Object|null} The role object / null if not found / error if error (incorect args)
+     * @param {Array/String} args - Array of arguments resolved by the command.
+     * @returns {Object|null} The role object / Null if not found / Error
      */
     static role(guild, args) {
         // Checking if all the arguments are supplied.
@@ -128,8 +128,8 @@ class Resolver {
      * Channel resolver
      *
      * @param {Object<Guild>} guild - Object Guild resolved by the command.
-     * @param {Array|String} args - Array of arguments resolved by the command.
-     * @returns {Object|null} The channel object / null if not found / error if error (incorect args)
+     * @param {Array/String} args - Array of arguments resolved by the command.
+     * @returns {Object|null} The channel object / Null if not found / Error
      */
     static channel(guild, args) {
         // Checking if all the arguments are supplied.
@@ -164,7 +164,7 @@ class Resolver {
      *
      * @param {Object<Eris.Client>} client - The bot client
      * @param {Array} args - Array with guild name/ID
-     * @returns {Object|null} The guild object / null if not found / error if error (incorrect args)
+     * @returns {Object|null} The guild object / Null if not found / Error
      */
     static guild(client, args) {
         // Checking if all the arguments are supplied.

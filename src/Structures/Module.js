@@ -15,6 +15,8 @@ import Enum from '../Utility/Enums';
 
 /**
  * AxonCore - Module constructor
+ * Register a Module with an Object of Commands, an Object of Events, an Object of Schemas
+ * Register/unregister
  *
  * @author KhaaZ
  *
@@ -91,10 +93,12 @@ class Module extends Base {
      *
      * @param {Object<Commands>} commands - Object containing all events object
      * @param {Object<EventFs>} events - Object containing all events object
+     * @param {Object<Schemas>} events - Object containing all schema object
      */
-    init(commands, events) {
+    init(commands, events, schemas) {
         commands && this.initAllCommands(commands);
         events && this.initAllEvents(events);
+        schemas && this.initAllSchemas(schemas);
     }
 
     /**
@@ -169,6 +173,33 @@ class Module extends Base {
     }
 
     /**
+     * Remove a command from a module
+     *
+     * @param {String} label - Full command label
+     * @memberof Module
+     */
+    unregisterCommand(fullLabel) {
+        const command = this.getCommand(fullLabel);
+
+        if (!command) {
+            throw new AxonError(`${this.label} - Command: ${fullLabel} not registered!`, 'INIT');
+        }
+
+        /** Unregister command */
+        if (command.isSubcmd) {
+            this.unregisterSubCommand(command.parentCommand, command);
+        } else {
+            for (const alias of command.aliases) {
+                this.axon.commandAliases.delete(alias);
+            }
+            this.commands.delete(command.label);
+            this.axon.commands.delete(command.label);
+        }
+
+        this.axon.Logger.info(`Command: ${fullLabel} unregistered!`);
+    }
+
+    /**
      * Check that the subcmd respect default check
      * Add it to the command parent.
      *
@@ -200,6 +231,32 @@ class Module extends Base {
     }
 
     /**
+     * Remove a subcommand from a command
+     *
+     * @param {Object<Command>} command - Parent command Object
+     * @param {Object<Command>} command - Subcommand Object
+     * @memberof Module
+     */
+    unregisterSubCommand(command, subCommand) {
+        for (const alias of subCommand.aliases) {
+            command.subCommandsAliases.delete(alias);
+        }
+        command.subCommands.delete(subCommand.label);
+        if (command.subCommands.size === 0) {
+            command.hasSubcmd = false;
+        }
+    }
+
+    initAllSchemas(schemas) {
+        for (const [key, value] of Object.entries(schemas)) {
+            if (this.schemas.has(key)) {
+                throw new Error(`[INIT](${this.label}) - Schemas: ${key} - You have already registered a schema in this module.`);
+            }
+            this.schemas(key, value);
+        }
+    }
+
+    /**
      * Check that the Event respect default check
      * Add it to the Module.
      *
@@ -211,7 +268,7 @@ class Module extends Base {
             throw new Error(`[INIT](${this.label}) - Event: ${event.label} - Event label may not have spaces`);
         }
         if (this.events.has(event.label)) {
-            throw new Error(`[INIT](${this.label}) - Event: ${event.label} - You have already registered a event in this module.`);
+            throw new Error(`[INIT](${this.label}) - Event: ${event.label} - You have already registered an event in this module.`);
         }
 
         // if ( !this.checkAttributes(event) ) {
