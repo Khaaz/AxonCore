@@ -17,7 +17,7 @@ import defTokenConf from './Conf/tokenConf.json';
 // Core
 import Module from './Structures/Module';
 import Command from './Structures/Command';
-import EventF from './Structures/EventF';
+import EventManager from './Structures/EventManager';
 
 // Utility
 import Collection from './Utility/Collection';
@@ -60,7 +60,7 @@ class AxonClient extends EventEmitter {
      * @prop {Collection<Module>} modules - All modules in the client [key: label, value: module]
      * @prop {Collection<Command>} commands - All commands in the client [key: label, value: command]
      * @prop {Map<String>} commandAliases - All aliases in the client [key: alias, value: commandLabel]
-     * @prop {Collection<EventF>} events - All events in the client [key: label, value: event]
+     * @prop {Collection<Event>} events - All events in the client [key: label, value: event]
      * @prop {Collection<Object>} schemas - All schemas in client (global models) [key: schemaLabel, value: schema]
      * @prop {Collection<Object>} guildConfigs - Guild configs [key: guildID, value: { guildConfig }]
      *
@@ -95,13 +95,14 @@ class AxonClient extends EventEmitter {
         super();
         /** Cool logging */
         console.log(logo);
+        console.log(' ');
 
         /**
          * Initialise Handler,
          * Internal cache, Major compenents
          */
         /** Logger */
-        this.Logger = axonOptions.logger || LoggerHandler.pickLogger(axonOptions.axonConf);
+        this.Logger = axonOptions.logger || LoggerHandler.pickLogger((axonOptions.axonConf.debugMode || defAxonConf.debugMode || false), axonOptions.axonConf);
         /** DataModels */
         this.schemas = new Collection(); // Schema label => Schema Object
         /** DB */
@@ -130,7 +131,7 @@ class AxonClient extends EventEmitter {
         /** Commands, Events */
         this.commands = new Collection(Command); // Command Label => ref Command Object
         this.commandAliases = new Map(); // Command Alias => Command label
-        this.events = new Collection(EventF); // Event Label => ref EventF function
+        this.EventManager = new EventManager(this); // Event Label => ref Event function
         /** GuildConfigs */
         this.guildConfigs = new Collection(); // Guild ID => guildConfig
 
@@ -273,7 +274,7 @@ class AxonClient extends EventEmitter {
     start() {
         this.client.connect()
             .then(() => {
-                this.Logger.axon('=== BotClient Connected! ===');
+                this.Logger.notice('=== BotClient Connected! ===');
             })
             .catch(err => {
                 this.Logger.error(err);
@@ -303,8 +304,13 @@ class AxonClient extends EventEmitter {
                 this.initListener();
 
                 /** Init modules, commands */
+                console.log(' ');
                 this.initAllModules(this._tempModules); // load modules
                 delete this._tempModules;
+                console.log(' ');
+
+                // Bind Listeners to Handlers
+                this.EventManager.bindListeners();
 
                 /** Axon init (blacklist/global cache) */
                 await this.initAxon(); // load blacklisted users - guild
@@ -323,13 +329,16 @@ class AxonClient extends EventEmitter {
     }
 
     /**
-     * Call Init Method on Ready event
+     * Call Init Method on Ready event.
+     * Bind All Handlers to the event emission.
      *
      * @memberof AxonClient
      */
     onReady() {
         this.Logger.axon('=== BotClient Ready! ===');
         this.client.ready = true;
+        // Bind Handlers to Events
+        this.EventManager.bindHandlers();
         /** Status */
         this.initStatus(); // execute default status function in Axon or override
 
@@ -440,6 +449,11 @@ class AxonClient extends EventEmitter {
 
         this.modules.set(module.label, module); // Add the module in modules Collection (references to module object)
 
+        for (const [, event] of module.events) {
+            this.EventManager.registerListener(event);
+        }
+
+
         this.Logger.initModule(module);
     }
 
@@ -496,7 +510,7 @@ class AxonClient extends EventEmitter {
             this.blacklistedGuilds.add(guild);
         }
 
-        this.Logger.axon('[INIT] Axon config initialised!');
+        this.Logger.init('[INIT] Axon config initialised!');
     }
 
     /**
@@ -600,6 +614,7 @@ class AxonClient extends EventEmitter {
             if (!command) { // command doesn't exist or not globally enabled
                 return;
             }
+
             msg.command = command;
 
             return this._execCommand(msg, args, command, guildConf);
@@ -672,7 +687,7 @@ class AxonClient extends EventEmitter {
         }
 
         /** Resolve command (and subcommand if needed) - exec command if the command was resolved */
-        const command = this.resolveCommand(label, args);
+        const command = this.resolveCommand(label, args, true);
         if (!command) { // command doesn't exist or not globally enabled
             return;
         }
@@ -828,8 +843,9 @@ class AxonClient extends EventEmitter {
             name: `Help for ${this.client.user.username}`,
             icon_url: this.client.user.avatarURL,
         };
+        embed.description = this.infos.description;
         embed.footer = {
-            text: 'Runs with AxonCore!',
+            text: 'Runs with AxonCore',
         };
 
         embed.color = this.template.embed.colors.help.length > 0 ? this.template.embed.colors.help : null;
@@ -886,18 +902,6 @@ class AxonClient extends EventEmitter {
     }
 
     /**
-     * Check if the command is server disabled
-     *
-     * @param {Object<Command>} command - The command object
-     * @param {Object} guildConf - The guild Config object
-     * @returns {Boolean} True if disabled / Undefined if not
-     * @memberof AxonClient
-     */
-    _isCommandDisabled(command, guildConf) {
-        return guildConf.commands.find(c => c === command.label);
-    }
-
-    /**
      * Check if the module is server disabled
      *
      * @param {Object<Command>} command - The command object
@@ -907,6 +911,18 @@ class AxonClient extends EventEmitter {
      */
     _isModuleDisabled(command, guildConf) {
         return guildConf.modules.find(m => m === command.module.label);
+    }
+
+    /**
+     * Check if the command is server disabled
+     *
+     * @param {Object<Command>} command - The command object
+     * @param {Object} guildConf - The guild Config object
+     * @returns {Boolean} True if disabled / Undefined if not
+     * @memberof AxonClient
+     */
+    _isCommandDisabled(command, guildConf) {
+        return guildConf.commands.find(c => c === command.label);
     }
 
     //
@@ -985,7 +1001,7 @@ class AxonClient extends EventEmitter {
     }
 
     /**
-     * Resolve the command Object
+     * Resolve the command Object. Only resolve the command if it's not globally disabled/guild disabled
      *
      * @param {String} label - the command label/ command alias
      * @param {Array<String>} args - Array of arguments
@@ -1003,7 +1019,7 @@ class AxonClient extends EventEmitter {
         }
 
         if (guildConf && ((this._isModuleDisabled(command, guildConf) && !command.module.serverBypass) || (this._isCommandDisabled(command, guildConf) && !command.serverBypass))) { // check module/command server disabled
-            return;
+            return null;
         }
 
         if (command.hasSubcmd) {
@@ -1042,6 +1058,43 @@ class AxonClient extends EventEmitter {
             this.guildConfigs.set(gID, guildConf);
         }
         return guildConf;
+    }
+
+    /**
+     * Get a module from AxonClient with the label
+     *
+     * @param {String} module - Module label
+     * @returns {Object<Module>|NULL}
+     * @memberof Base
+     */
+    getModule(module) {
+        return this.modules.get(module) || null;
+    }
+
+    /**
+     * Get a command/subcommand from AxonClient with the full label
+     *
+     * @param {String} fullLabel - Full command (or subcommand) label
+     * @returns {Object<Command>|NULL}
+     * @memberof Base
+     */
+    getCommand(fullLabel) {
+        const splitLabel = fullLabel.split(' ');
+
+        const label = this.commandAliases.get(splitLabel[0].toLowerCase());
+        let command = this.commands.get(label);
+        if (!command) {
+            return null;
+        }
+
+        splitLabel.shift();
+        for (const sub of splitLabel) {
+            if (command.hasSubcmd) {
+                const subLabel = command.subCommandsAliases.get(sub.toLowerCase());
+                command = command.subCommands.get(subLabel);
+            }
+        }
+        return command || null;
     }
 
     /**
