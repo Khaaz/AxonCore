@@ -30,17 +30,17 @@ class Command extends Base {
      *
      * @prop {String} label - Command label (name/id)
      * @prop {Array<String>} aliases - Array of commands aliases (including the command label)
-     * @prop {Boolean} [enabled=true] - Command enabled
+     * @prop {Boolean} [enabled=module.enabled] - Command enabled
      *
      * @prop {Boolean} [isSubcmd=false] - Command is a subcommand
      * @prop {Object<Command>} [parentCommand=NULL] - References to the parent Command (if isSubcmd = true)
      * @prop {Boolean} [hasSubcmd=false] - Command has a subcommand
+     * @prop {Boolean} [serverBypass=module.serverBypass] - Command can't be server disabled
      *
      * @prop {Array} subcmds - Array of subcommands Object (deleted after init)
      * @prop {Collection<Command>} [subCommands=NULL] - Collection of subcommands
      * @prop {Object<Map>} [subCommandsAliases=NULL] - Map of subcommands aliases
      *
-     * @prop {Boolean} [serverBypass=false] - Command can't be server disabled
      *
      * @prop {Object} infos - Default infos about the command
      * @prop {Owner} infos.owner - Command owners/authors
@@ -55,7 +55,7 @@ class Command extends Base {
      * @prop {Boolean} [options.invalidPermissionMessage=false] - Whether to trigger error message on invalid permission
      * @prop {Boolean} [options.deleteCommand=false] - Whether to delete the command input
      * @prop {Boolean} [options.guildOnly=true] - Whether the command is usable only in guilds
-     * @prop {Boolean} [options.hidden=false] - Whether the command is totally hidden from help commmand
+     * @prop {Boolean} [options.hidden=false] - Whether the command is hidden from help commmand ()
      * @prop {Number} [options.cooldown=3000] - Cooldown for the command
      *
      * @prop {Object} permissions - Default permissions for the bot/users
@@ -115,8 +115,8 @@ class Command extends Base {
         /**
          * Initiated if subcommands
          */
-        this.subCommands = null; // default: null | Collection of Commands
-        this.subCommandsAliases = null; // default: null | Map of Command Aliases
+        this.subCommands = null; // Collection of Commands
+        this.subCommandsAliases = null; // Map of Command Aliases
 
         /**
          * Bypass all perms - true = prevent the command to be server disabled
@@ -347,9 +347,6 @@ class Command extends Base {
         embed.author = {
             name: `Help for ${this.infos.name}`,
             icon_url: this.bot.user.avatarURL,
-        };
-        embed.footer = {
-            text: 'Runs with AxonCore!',
         };
 
         embed.color = this.Template.embed.colors.help.length > 0 ? this.Template.embed.colors.help : null;

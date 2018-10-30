@@ -6,7 +6,7 @@ export { default as AxonClient } from './src/AxonClient';
 export { default as Base } from './src/Structures/Base';
 export { default as Module } from './src/Structures/Module';
 export { default as Command } from './src/Structures/Command';
-export { default as EventF } from './src/Structures/EventF';
+export { default as Event } from './src/Structures/Event';
 
 // Utility
 export { default as Collection } from './src/Utility/Collection';

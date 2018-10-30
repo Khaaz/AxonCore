@@ -69,7 +69,7 @@ class Base {
      * @memberof Base
      */
     getModule(module) {
-        return this.axon.modules.get(module) || null;
+        return this.axon.getModules(module);
     }
 
     /**
@@ -80,19 +80,7 @@ class Base {
      * @memberof Base
      */
     getCommand(fullLabel) {
-        const splitLabel = fullLabel.split(' ');
-        let command = this.axon.commands.get(splitLabel[0].toLowerCase());
-        if (!command) {
-            return null;
-        }
-
-        splitLabel.shift();
-        for (const sub of splitLabel) {
-            if (command.hasSubcmd) {
-                command = command.subCommands.get(sub.toLowerCase());
-            }
-        }
-        return command || null;
+        return this.axon.getCommand(fullLabel);
     }
 
     //
