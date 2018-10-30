@@ -144,7 +144,7 @@ class DefLogger extends Console {
      * @memberof DefLogger
      */
     initModule(module) {
-        const mess = this.parseTime() + ' - [MODULE ] => ' + `Initialised! | [${module.label}] | Commands loaded -${module.commands.size}-`;
+        const mess = this.parseTime() + ' - [  MOD  ] => ' + `Initialised! | Commands loaded -${module.commands.size}- | [${module.label}]`;
         this.log(mess);
     }
 
@@ -157,9 +157,9 @@ class DefLogger extends Console {
     initCommand(command) {
         let mess;
         if (command.hasSubcmd) {
-            mess = this.parseTime() + ' - [COMMAND] => ' + `Initialised! | *${command.label}* | SubCommands loaded -${command.subCommands.size}-`;
+            mess = this.parseTime() + ' - [  CMD  ] => ' + `Initialised! | SubCommands loaded -${command.subCommands.size}- | *${command.label}*`;
         } else {
-            mess = this.parseTime() + ' - [COMMAND] => ' + `Initialised! | *${command.label}*`;
+            mess = this.parseTime() + ' - [  CMD  ] => ' + `Initialised! | *${command.label}*`;
         }
         this.log(mess);
     }
@@ -173,9 +173,25 @@ class DefLogger extends Console {
     initSubCmd(sub) {
         let mess;
         if (sub.hasSubcmd) {
-            mess = this.parseTime() + ' - [SUBCMD ] => ' + `Initialised! | ${sub.label} | SubCommands loaded -${sub.subCommands.size}-`;
+            mess = this.parseTime() + ' - [  SUB  ] => ' + `Initialised! | SubCommands loaded -${sub.subCommands.size}- | ${sub.label}`;
         } else {
-            mess = this.parseTime() + ' - [SUBCMD ] => ' + `Initialised! | ${sub.label}`;
+            mess = this.parseTime() + ' - [  SUB  ] => ' + `Initialised! | ${sub.label}`;
+        }
+        this.log(mess);
+    }
+
+    /**
+     * Initialisation - SubCommand infos
+     *
+     * @param {Command} sub
+     * @memberof DefLogger
+     */
+    initEvent(bind, event) {
+        let mess;
+        if (bind) {
+            mess = this.parseTime() + ' - [  EVT  ] => ' + `Bound ${event.size} event${event.size > 1 ? 's' : ''} for ${event.name}`;
+        } else {
+            mess = this.parseTime() + ' - [  EVT  ] => ' + `Registered ${event.label} for ${event.eventName}`;
         }
         this.log(mess);
     }
@@ -202,7 +218,9 @@ class DefLogger extends Console {
 
     parseTime() {
         const current = new Date();
-        const formated = format('[ %s ]', current.getHours() + 'h:' + current.getMinutes() + 'm:' + current.getSeconds() + 's');
+        const formated = format('[ %s ]', `${current.getHours() < 10 ? `0${current.getHours()}` : current.getHours()}h`
+            + `${current.getMinutes() < 10 ? `0${current.getMinutes()}` : current.getMinutes()}m`
+            + `${current.getSeconds() < 10 ? `0${current.getSeconds()}` : current.getSeconds()}s`);
         return formated;
     }
 }

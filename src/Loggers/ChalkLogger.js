@@ -88,7 +88,7 @@ class ChalkLogger extends Console {
      * @memberof ChalkLogger
      */
     notice(input, opt) {
-        const mess = chalk.bold.green(this.parseTime() + ' - [NOTICE ] => ') + this.addCtx(opt) + input;
+        const mess = chalk.bold.green(this.parseTime() + ' - [NOTICE ] => ' + this.addCtx(opt) + input);
         this.log(mess);
     }
 
@@ -146,7 +146,7 @@ class ChalkLogger extends Console {
      * @memberof ChalkLogger
      */
     initModule(module) {
-        const mess = chalk.cyan(this.parseTime() + ' - [MODULE ] => ') + `Initialised! | [${module.label}] | Commands loaded -${module.commands.size}-`;
+        const mess = chalk.cyan(this.parseTime() + ' - [  MOD  ] => ' + `Initialised! | Commands loaded -${module.commands.size}- | [${module.label}]`);
         this.log(mess);
     }
 
@@ -159,9 +159,9 @@ class ChalkLogger extends Console {
     initCommand(command) {
         let mess;
         if (command.hasSubcmd) {
-            mess = chalk.cyan(this.parseTime() + ' - [COMMAND] => ') + `Initialised! | *${command.label}* | SubCommands loaded -${command.subCommands.size}-`;
+            mess = chalk.cyan(this.parseTime() + ' - [  CMD  ] => ') + `Initialised! | SubCommands loaded -${command.subCommands.size}- | *${command.label}*`;
         } else {
-            mess = chalk.cyan(this.parseTime() + ' - [COMMAND] => ') + `Initialised! | *${command.label}*`;
+            mess = chalk.cyan(this.parseTime() + ' - [  CMD  ] => ') + `Initialised! | *${command.label}*`;
         }
         this.log(mess);
     }
@@ -175,9 +175,25 @@ class ChalkLogger extends Console {
     initSubCmd(sub) {
         let mess;
         if (sub.hasSubcmd) {
-            mess = chalk.cyan(this.parseTime() + ' - [SUBCMD ] => ') + `Initialised! | ${sub.label} | SubCommands loaded -${sub.subCommands.size}-`;
+            mess = chalk.cyan(this.parseTime() + ' - [  SUB  ] => ') + `Initialised! | SubCommands loaded -${sub.subCommands.size}- | ${sub.label}`;
         } else {
-            mess = chalk.cyan(this.parseTime() + ' - [SUBCMD ] => ') + `Initialised! | ${sub.label}`;
+            mess = chalk.cyan(this.parseTime() + ' - [  SUB  ] => ') + `Initialised! | ${sub.label}`;
+        }
+        this.log(mess);
+    }
+
+    /**
+     * Initialisation - SubCommand infos
+     *
+     * @param {Command} sub
+     * @memberof ChalkLogger
+     */
+    initEvent(bind, event) {
+        let mess;
+        if (bind) {
+            mess = chalk.cyan(this.parseTime() + ' - [  EVT  ] => ') + `Bound ${event.size} event${event.size > 1 ? 's' : ''} for ${event.name}`;
+        } else {
+            mess = chalk.cyan(this.parseTime() + ' - [  EVT  ] => ') + `Registered ${event.label} for ${event.eventName}`;
         }
         this.log(mess);
     }
@@ -204,7 +220,9 @@ class ChalkLogger extends Console {
 
     parseTime() {
         const current = new Date();
-        const formated = format('[ %s ]', current.getHours() + 'h:' + current.getMinutes() + 'm:' + current.getSeconds() + 's');
+        const formated = format('[ %s ]', `${current.getHours() < 10 ? `0${current.getHours()}` : current.getHours()}h`
+            + `${current.getMinutes() < 10 ? `0${current.getMinutes()}` : current.getMinutes()}m`
+            + `${current.getSeconds() < 10 ? `0${current.getSeconds()}` : current.getSeconds()}s`);
         return formated;
     }
 }

@@ -9,7 +9,7 @@ import DefLogger from './DefLogger';
  * @class LoggerHandler
  */
 class LoggerHandler {
-    static pickLogger(config) {
+    static pickLogger(debug, config) {
         let Logger;
 
         switch (config.logger) {
@@ -49,7 +49,7 @@ class LoggerHandler {
         }
 
         Logger.axon('Logger ready');
-        this.testLogger(Logger);
+        debug && this.testLogger(Logger);
         return Logger;
     }
 
