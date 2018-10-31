@@ -1,14 +1,36 @@
-docs
-example
-logs
-test
-template
+# Packages
+node_modules/
+package-lock.json
+yarn.lock
 
+# Log files
 .DS_Store
+logs/
 *.log
-*.tar.gz
-examples
-docgen
-node_modules
+
+# Miscellaneous
+.vscode/
+docs/
+example/
+test/
+template/
+
+# NPM ignore
+.eslintrc.json
+.gitattributes
+.gitignore
+.travis.yml
+.github/
+.git/
+test/
+tsconfig.json
+tslint.json
 CONTRIBUTING.md
-.eslintrc.yml
+CODE_OF_CONDUCT.md
+
+# Optional npm cache directory
+.npm
+.yarn
+
+# Optional eslint cache
+.eslintcache
