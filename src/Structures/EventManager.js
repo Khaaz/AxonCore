@@ -14,6 +14,14 @@ import Collection from '../Utility/Collection';
  */
 
 class EventManager extends Base {
+    /**
+     * Creates an instance of EventManager.
+     * @param {Object<AxonClient>} axon
+     * 
+     * @prop {Object} _listeners - Object that link an event name to an Array of Event Object { eventName: [Event, Event] }
+     * @prop {Collection<Object>} _Handlers - Collection of handler keyed to the event name [key: eventName, value: Handler]
+     * @memberof EventManager
+     */
     constructor(axon) {
         super(axon);
         // For each eventName => Array of Event Obj

@@ -17,16 +17,17 @@ This framework was made to be simple to setup, simple to use, but entirely custo
 This framework is built to use a DataBase in purpose to use all it functionality. It natively support MongoDB, but it is possible to use a JSON Database if necessary.
 
 ## Features:
-    + Client: separate the Eris CLient and a main client that caches Modules, guildConfigs, DB schemas...
-    + Modular: a module host his own commands and events.
-    + Command Handler: create a command easily with a lot of options and customization
-    + Event Handler: create an event easily, split events per module, allow
-    + GuildConfig: natively support guildConfig (prefix, moderators, enabled/disabled modules/comands/events)
-    + Utility: useful shortcuts and utility functions
-    + Resolver: built in Resolver that can be replaced if needed
-    + Error Handling: clean and complete error handling
-    + Logging: colorful and custom logging
-    + Customizable: Customize error messages, help commands, bot staff easily
+
+  - Client: separate the Eris CLient and a main client that caches Modules, guildConfigs, DB schemas...
+  - Modular: a module host his own commands and events.
+  - Command Handler: create a command easily with a lot of options and customization
+  - Event Handler: create an event easily, split events per module, allow
+  - GuildConfig: natively support guildConfig (prefix, moderators, enabled/disabled modules/comands/events)
+  - Utility: useful shortcuts and utility functions
+  - Resolver: built in Resolver that can be replaced if needed
+  - Error Handling: clean and complete error handling
+  - Logging: colorful and custom logging
+  - Customizable: Customize easily error messages, help command, bot staff... 
 
 ## Documentation:
 

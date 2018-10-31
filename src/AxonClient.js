@@ -1321,7 +1321,7 @@ class AxonClient extends EventEmitter {
      * ToString method.
      *
      * @returns {String}
-     * @memberof Base
+     * @memberof AxonClient
      */
     toString() {
         return this.constructor.name;
@@ -1332,7 +1332,7 @@ class AxonClient extends EventEmitter {
      * (method took from eris)
      *
      * @returns {Object} JSON-like Object
-     * @memberof Base
+     * @memberof AxonClient
      */
     toJSON() {
         const base = {};
@@ -1360,7 +1360,7 @@ class AxonClient extends EventEmitter {
      * (method took from eris)
      *
      * @returns {Object} Object to inspect
-     * @memberof Base
+     * @memberof AxonClient
      */
     [util.inspect.custom]() {
         // http://stackoverflow.com/questions/5905492/dynamic-function-name-in-javascript
