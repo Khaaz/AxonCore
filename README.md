@@ -1,5 +1,6 @@
 <div align="center">
   <p>
+    <a href="https://github.com/Khaazz/AxonCore/releases"><img src="https://img.shields.io/github/release/Khaazz/AxonCore.svg?style=for-the-badge" alt="NPM version" /></a>
     <a href="https://www.npmjs.com/package/axoncore"><img src="https://img.shields.io/npm/v/axoncore.svg?maxAge=3600" alt="NPM version" /></a>
     <a href="https://travis-ci.org/Khaazz/AxonCore"><img src="https://travis-ci.com/Khaazz/AxonCore.svg?branch=master" alt="Build status" /></a>
     <a href="https://discord.gg/QZ6B5US"><img src="https://discordapp.com/api/guilds/365236789855649814/embed.png" alt="Discord server" /></a>
