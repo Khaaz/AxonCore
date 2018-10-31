@@ -1,18 +1,15 @@
 {
     "embed": {
         "colors": {
-            "help": null,
+            "help": 32768,
             "global": 4315874,
             "error": 15844367
         }
     },
 
     "emote": {
-        "error": "<:error:426906693624922113>",
-        "success": "<:success:426906630463160330>",
-        "loading": "<a:loading:397911964988342282>",
-        "update": "<:update:373546418952077323>",
-        "info": ":information_source:"
+        "error": ":x:",
+        "success": ":white_check_mark:"
     },
 
     "message": {
