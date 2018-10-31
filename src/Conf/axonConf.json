@@ -2,8 +2,7 @@
     "general": {
         "name": "Axon",
         "description": "AxonCore - Bot client, core module (eris lib)",
-        "version": "1.0.0",
-        "library": "eris"
+        "version": "1.0.0"
     },
     
     "prefix": {
