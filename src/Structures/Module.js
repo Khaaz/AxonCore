@@ -144,10 +144,7 @@ class Module extends Base {
      */
     initAllSchemas(schemas) {
         for (const [key, value] of Object.entries(schemas)) {
-            if (this.schemas.has(key)) {
-                throw new Error(`[INIT](${this.label}) - Schemas: ${key} - You have already registered a schema in this module.`);
-            }
-            this.schemas(key, value);
+            this.registerSchema(key, value);
         }
     }
 
@@ -186,25 +183,27 @@ class Module extends Base {
      * Add it to the Module.
      *
      * @param {Object<Command>} command - Command object
+     * @returns {Boolean} True if worked / False if not
      * @memberof Module
      */
     registerCommand(command) {
         if (command.label.includes(' ')) {
             this.Logger.error(`[Module(${this.label})]Command: ${command.label} - Command label may not have spaces.`);
-            return;
+            return false;
         }
         if (this.commands.has(command.label)) {
             this.Logger.error(`[Module(${this.label})] Command: ${command.label} - You have already registered a command in this module.`);
-            return;
+            return false;
         }
 
         if (!EnsureInterface.checkCommandAttributes(this, command)) {
             this.Logger.error(`[Module(${this.label})] Command: ${command.label} - Invalid attributes format (permissions).`);
-            return;
+            return false;
         }
 
         this.commands.set(command.label, command); // add the command to the Map of commands.
-        this.axon.Logger.initCommand(command);
+        this.Logger.initCommand(command);
+        return true;
     }
 
     /**
@@ -213,16 +212,17 @@ class Module extends Base {
      *
      * @param {Object<Command>} command - Command object
      * @param {Object<Command>} subCommand - Subcommand object
+     * @returns {Boolean} True if worked / False if not
      * @memberof Module
      */
     registerSubCommand(command, subCommand) {
         if (subCommand.label.includes(' ')) {
             this.Logger.error(`[Module(${this.label})] Command: ${command.label} ${subCommand.label} - Command label may not have spaces.`);
-            return;
+            return false;
         }
         if (command.subCommands.has(subCommand.label)) {
             this.Logger.error(`[Module(${this.label})] Command: ${command.label} ${subCommand.label} - You have already registered a subCommand for this command.`);
-            return;
+            return false;
         }
 
         // assign parentCommand
@@ -230,7 +230,7 @@ class Module extends Base {
 
         if (!EnsureInterface.checkCommandAttributes(this, subCommand)) {
             this.Logger.error(`[Module(${this.label})] Command: ${command.label} ${subCommand.label} - Invalid attributes format (permissions).`);
-            return;
+            return false;
         }
 
         for (const alias of subCommand.aliases) {
@@ -242,7 +242,8 @@ class Module extends Base {
         }
 
         command.subCommands.set(subCommand.label, subCommand); // add the command to the Map of commands.
-        this.axon.Logger.initSubCmd(subCommand);
+        this.Logger.initSubCmd(subCommand);
+        return true;
     }
 
     /**
@@ -250,30 +251,51 @@ class Module extends Base {
      * Add it to the Module.
      *
      * @param {Object<Event>} event - Event object
+     * @returns {Boolean} True if worked / False if not
      * @memberof Module
      */
     registerEvent(event) {
         if (event.label.includes(' ')) {
             this.Logger.error(`[Module(${this.label})] Event: ${event.label} - Event label may not have spaces`);
+            return false;
         }
         if (this.events.has(event.label)) {
-            throw new Error(`[Module(${this.label})] Event: ${event.label} - You have already registered an event in this module.`);
+            this.Logger.error(`[Module(${this.label})] Event: ${event.label} - You have already registered an event in this module.`);
+            return false;
         }
 
         this.events.set(event.label, event); // add the event to the Collection of events.
+        return true;
     }
 
     /**
-     * Remove a command from a module
+     * Register a Schema into a module
+     *
+     * @param {String} key - The Schema name
+     * @param {Object} schema - The Schema object
+     * @returns {Boolean} True if worked / Error if not
+     * @memberof Module
+     */
+    registerSchema(key, schema) {
+        if (this.schemas.has(key)) {
+            throw new AxonError(`[Module](${this.label}) - Schemas: ${key} - You have already registered a schema in this module.`, 'INIT');
+        }
+        this.schemas(key, schema);
+        return true;
+    }
+
+    /**
+     * Remove a command from a Module and from the global cache
      *
      * @param {String} label - Full command label
+     * @returns {Boolean} True if worked / Error if not
      * @memberof Module
      */
     unregisterCommand(fullLabel) {
         const command = this.getCommand(fullLabel);
 
         if (!command) {
-            throw new AxonError(`[Module(${this.label})] Command: ${fullLabel} not registered!`, 'INIT');
+            throw new AxonError(`[Module(${this.label})] Command: ${fullLabel} not registered!`, 'UNREGISTER');
         }
 
         /** Unregister command */
@@ -287,7 +309,8 @@ class Module extends Base {
             this.axon.commands.delete(command.label);
         }
 
-        this.axon.Logger.info(`[Module(${this.label})] Command: ${fullLabel} unregistered!`);
+        this.Logger.info(`[Module(${this.label})] Command: ${fullLabel} unregistered!`);
+        return true;
     }
 
     /**
@@ -305,6 +328,41 @@ class Module extends Base {
         if (command.subCommands.size === 0) {
             command.hasSubcmd = false;
         }
+    }
+
+    /**
+     * Remove a schema from Module and global cache
+     *
+     * @param {String} label - The SChema label
+     * @returns {Boolean} True if worked / Error if not
+     * @memberof Module
+     */
+    unregisterSchema(label) {
+        if (!this.schemas.has(label)) {
+            throw new AxonError(`[Module(${this.label})] Schema: ${label} not registered!`, 'UNREGISTER');
+        }
+        this.schemas.delete(label);
+        this.axon.schemas.delete(label);
+        this.Logger.info(`[Module(${this.label})] Schema: ${label} unregistered!`);
+        return true;
+    }
+
+    /**
+     * Remove an Event from Module and Event Manager
+     *
+     * @param {String} label - The Event label
+     * @returns {Boolean} True if worked / Error if not
+     * @memberof Module
+     */
+    unregisterEvent(label) {
+        const event = this.events.get(label);
+        if (!event) {
+            throw new AxonError(`[Module(${this.label})] Event: ${label} not registered!`, 'UNREGISTER');
+        }
+        this.events.delete(event.label);
+        this.axon.EventManager.unregisterListener(event.eventName, event.label);
+        this.Logger.info(`[Module(${this.label})] Event: ${label} unregistered!`);
+        return true;
     }
 }
 

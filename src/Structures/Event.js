@@ -28,6 +28,7 @@ class Event extends Base {
      * @prop {String} eventName - The discord event name
      * @prop {String} label - The function name
      *
+     * @prop {Boolean} load - Whether to load this event on startup or not
      * @prop {Boolean} [enabled=module.enabled] - Whether the event is enabled or not
      * @prop {Boolean} [serverBypass=module.serverBypass] - Command can't be server disabled
      *
@@ -47,6 +48,7 @@ class Event extends Base {
         /** Event name (Function name) */
         this.label = 'label';
 
+        this.load = true;
         this.enabled = module.enabled;
         /** Bypass all perms - can/can't be server disabled */
         this.serverBypass = module.serverBypass;
@@ -61,7 +63,15 @@ class Event extends Base {
         return this._module;
     }
 
-    _execute(guildConf, ...args) {
+    /**
+     * Promisify the return execute return to prevent promise issue
+     *
+     * @param {Object?} guildConf - the guildConfig or undefined if not a guild event
+     * @param {Array} args - Array of the events arguments
+     * @returns {Promise}
+     * @memberof Event
+     */
+    async _execute(guildConf, ...args) {
         return this.execute(...args, guildConf);
     }
 }
