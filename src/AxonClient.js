@@ -94,8 +94,7 @@ class AxonClient extends EventEmitter {
     constructor(token, erisOptions, axonOptions, modules) {
         super();
         /** Cool logging */
-        console.log(logo);
-        console.log(' ');
+        logo();
 
         /**
          * Initialise Handler,
