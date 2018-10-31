@@ -459,7 +459,7 @@ class AxonClient extends EventEmitter {
 
     /**
      * Unregister a Module
-     * Remove the module of the client + commands + aliases + schemas
+     * Remove the module of the client + commands + aliases + events + schemas
      *
      * @param {String} label - Label of the module to unregister
      * @memberof AxonClient
@@ -481,6 +481,10 @@ class AxonClient extends EventEmitter {
 
         for (const [label, schema] of module.schemas) { // eslint-disable-line
             this.schemas.delete(label); // Remove the schemas of schemas Collection (references to module object)
+        }
+
+        for (const [, event] of module.events) {
+            this.EventManager.unregisterListener(event.eventName, event.label);
         }
 
         this.modules.delete(module.label); // Remove the module of modules Collection (references to module object)
@@ -1313,10 +1317,23 @@ class AxonClient extends EventEmitter {
         this.Logger.info(`Globally ${state ? 'enabled' : 'disabled'} command: ${command}.`);
     }
 
+    /**
+     * ToString method.
+     *
+     * @returns {String}
+     * @memberof Base
+     */
     toString() {
         return this.constructor.name;
     }
 
+    /**
+     * ToJSON method.
+     * (method took from eris)
+     *
+     * @returns {Object} JSON-like Object
+     * @memberof Base
+     */
     toJSON() {
         const base = {};
         for (const key in this) {
@@ -1337,7 +1354,14 @@ class AxonClient extends EventEmitter {
         return base;
     }
 
-    // doesn't list prefixed property and undefined property when using util.inspect
+    /**
+     * Inspect method.
+     * Doesn't list prefixed property and undefined property.
+     * (method took from eris)
+     *
+     * @returns {Object} Object to inspect
+     * @memberof Base
+     */
     [util.inspect.custom]() {
         // http://stackoverflow.com/questions/5905492/dynamic-function-name-in-javascript
         const copy = new { [this.constructor.name]: class {} }[this.constructor.name]();

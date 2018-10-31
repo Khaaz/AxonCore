@@ -69,7 +69,7 @@ class Base {
      * @memberof Base
      */
     getModule(module) {
-        return this.axon.getModules(module);
+        return this.axon.getModule(module);
     }
 
     /**
@@ -176,11 +176,23 @@ class Base {
     // ****** MISC ******
     //
 
+    /**
+     * ToString method.
+     *
+     * @returns {String}
+     * @memberof Base
+     */
     toString() {
         return this.constructor.name;
     }
 
-    /** From ERIS */
+    /**
+     * ToJSON method.
+     * (method took from eris)
+     *
+     * @returns {Object} JSON-like Object
+     * @memberof Base
+     */
     toJSON() {
         const base = {};
         for (const key in this) {
@@ -201,7 +213,14 @@ class Base {
         return base;
     }
 
-    /** From ERIS */
+    /**
+     * Inspect method
+     * Doesn't list prefixed property and undefined property.
+     * (method took from eris)
+     *
+     * @returns {Object} Object to inspect without prefixed property and undefined property
+     * @memberof Base
+     */
     [util.inspect.custom]() {
         // http://stackoverflow.com/questions/5905492/dynamic-function-name-in-javascript
         const copy = new { [this.constructor.name]: class {} }[this.constructor.name]();
