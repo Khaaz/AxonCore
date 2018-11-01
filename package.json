@@ -25,7 +25,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint .",
-    "test": "lint src",
+    "test": "eslint src *.js",
     "example": "node -r esm example/src/index.js",
     "examplepm2": "node -r esm example/scripts/start.js",
     "pm2logs": "pm2 logs --lines 100 AxonCore"

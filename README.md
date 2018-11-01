@@ -1,6 +1,6 @@
 <div align="center">
   <p>
-    <a href="https://github.com/Khaazz/AxonCore/releases"><img src="https://img.shields.io/github/release/Khaazz/AxonCore.svg?style=for-the-badge" alt="NPM version" /></a>
+    <a href="https://github.com/Khaazz/AxonCore/releases"><img src="https://img.shields.io/github/release/Khaazz/AxonCore.svg?style=flat-square" alt="Release" /></a>
     <a href="https://www.npmjs.com/package/axoncore"><img src="https://img.shields.io/npm/v/axoncore.svg?maxAge=3600" alt="NPM version" /></a>
     <a href="https://travis-ci.org/Khaazz/AxonCore"><img src="https://travis-ci.com/Khaazz/AxonCore.svg?branch=master" alt="Build status" /></a>
     <a href="https://discord.gg/QZ6B5US"><img src="https://discordapp.com/api/guilds/365236789855649814/embed.png" alt="Discord server" /></a>
@@ -19,16 +19,16 @@ This framework is built to use a DataBase in purpose to use all it functionality
 
 ## Features:
 
-  - Client: separate the Eris CLient and a main client that caches Modules, guildConfigs, DB schemas...
-  - Modular: a module host his own commands and events.
-  - Command Handler: create a command easily with a lot of options and customization
-  - Event Handler: create an event easily, split events per module, allow
-  - GuildConfig: natively support guildConfig (prefix, moderators, enabled/disabled modules/comands/events)
-  - Utility: useful shortcuts and utility functions
-  - Resolver: built in Resolver that can be replaced if needed
-  - Error Handling: clean and complete error handling
-  - Logging: colorful and custom logging
-  - Customizable: Customize easily error messages, help command, bot staff... 
+  - **Client**: separate the Eris CLient and a main client that caches Modules, guildConfigs, DB schemas...
+  - **Modular**: a module host his own commands and events.
+  - **Command** Handler: create a command easily with a lot of options and customization
+  - **Event** Handler: create an event easily, split events per module, allow
+  - **GuildConfig**: natively support guildConfig (prefix, moderators, enabled/disabled modules/comands/events)
+  - **Utility**: useful shortcuts and utility functions
+  - **Resolver**: built in Resolver that can be replaced if needed
+  - **Error** Handling: clean and complete error handling
+  - **Logging**: colorful and custom logging
+  - **Customizable**: customize easily error messages, help command, bot staff... 
 
 ## Documentation:
 
