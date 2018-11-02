@@ -10,12 +10,12 @@ logs/
 
 # Miscellaneous
 .vscode/
-docs/
+axoncore.code-workspace
 example/
-test/
-template/
+_images/
 
 # NPM ignore
+
 .eslintrc.json
 .gitattributes
 .gitignore

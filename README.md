@@ -1,4 +1,9 @@
 <div align="center">
+  <br />
+  <p>
+    <a href="https://khaaz.github.io"><img src="_image/banner.png" width="546" alt="AxonCore" /></a>
+  </p>
+  <br />
   <p>
     <a href="https://github.com/Khaazz/AxonCore/releases"><img src="https://img.shields.io/github/release/Khaazz/AxonCore.svg?style=flat-square" alt="Release" /></a>
     <a href="https://www.npmjs.com/package/axoncore"><img src="https://img.shields.io/npm/v/axoncore.svg?maxAge=3600" alt="NPM version" /></a>
@@ -12,22 +17,22 @@
 
 
 # AxonCore
-Bot framework that handles a custom Client, Commands and Events.  
-Built on top of Eris lib, it allows you to easily create a customizable bot thanks to all options it allows.  
-This framework was made to be simple to setup, simple to use, but entirely customizable yet light and efficient.  
-This framework is built to use a DataBase in purpose to use all it functionality. It natively support MongoDB, but it is possible to use a JSON Database if necessary.
+Discord Bot framework that handles a custom Client, Commands and Events.  
+Built on top of [Eris library](https://github.com/abalabahaha/eris), it allows you to easily create a customizable bot thanks to all its options.  
+This framework was made to be simple to setup, simple to use, but yet entirely customizable and efficient.  
+This framework is built to use a DataBase in purpose to benefits all its functionality. It natively supports MongoDB, but it is possible to use an alternate JSON Database if necessary.
 
 ## Features:
 
-  - **Client**: separate the Eris CLient and a main client that caches Modules, guildConfigs, DB schemas...
+  - **Client**: separate the Eris client and a main client that caches Modules, guildConfigs, DB schemas...
   - **Modular**: a module host his own commands and events.
-  - **Command** Handler: create a command easily with a lot of options and customization
-  - **Event** Handler: create an event easily, split events per module, allow
-  - **GuildConfig**: natively support guildConfig (prefix, moderators, enabled/disabled modules/comands/events)
-  - **Utility**: useful shortcuts and utility functions
-  - **Resolver**: built in Resolver that can be replaced if needed
-  - **Error** Handling: clean and complete error handling
-  - **Logging**: colorful and custom logging
+  - **Command Handler**: create a command easily with a lot of options and customization.
+  - **Event Handler**: create an event easily, split events per module, allow.
+  - **GuildConfig**: natively support guildConfig (prefix, moderators, enabled/disabled modules/comands/events).
+  - **Utility**: useful shortcuts and utility functions.
+  - **Resolver**: built-in Resolver that can be replaced if needed.
+  - **Error Handling**: clean and complete error handling.
+  - **Logging**: colorful and custom logging.
   - **Customizable**: customize easily error messages, help command, bot staff... 
 
 ## Documentation:
@@ -48,4 +53,4 @@ To know more about contributions or discuss about development you can join the d
 ### Honorable mentions
 - [Jack](https://github.com/InATrance) for support and interesting talk when starting this.
 - [Santhosh-Annamalai](https://github.com/Santhosh-Annamalai) for helping me in building documentation.
-- Contributors for paricipating and helping in this project.
+- Contributors for participating and helping in this project.
