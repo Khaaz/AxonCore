@@ -4,7 +4,6 @@ import Base from './Base';
 
 /**
  * Default Event class
- *
  * Extends Event to create an event
  *
  * @author KhaaZ
@@ -14,7 +13,7 @@ import Base from './Base';
  */
 class Event extends Base {
     /**
-     * Creates an instance of Event.
+     * Creates an Event instance.
      * @param {Object<Module>} module
      *
      * @prop {Object<AxonClient>} axon - Axon Client [GETTER: _axon]
@@ -30,7 +29,7 @@ class Event extends Base {
      *
      * @prop {Boolean} load - Whether to load this event on startup or not
      * @prop {Boolean} [enabled=module.enabled] - Whether the event is enabled or not
-     * @prop {Boolean} [serverBypass=module.serverBypass] - Command can't be server disabled
+     * @prop {Boolean} [serverBypass=module.serverBypass] - Can the event be disabled?
      *
      * @prop {Object} infos - Default infos about the event
      * @prop {Array} infos.owners - Event owners/authors

@@ -3,8 +3,7 @@
 import Enum from '../Utility/Enums';
 
 /**
- * EnsureInterface
- * Static Class to check that Object are formated correctly
+ * Static Class that makes sure objects are formatted correctly.
  *
  * @author KhaaZ
  *
@@ -12,18 +11,17 @@ import Enum from '../Utility/Enums';
  */
 class EnsureInterface {
     /**
-     * Check if the attribute of the command are valid
-     * (valid names/ no missing etc)
+     * Check if the attributes of the command are valid.
      *
-     * @param {Object<Command>} command - The Command Object
-     * @returns {Boolean} True if no problem / False if one invalid
+     * @param {Object<Command>} command - The command object
+     * @returns {Boolean} True if no problem was found, false otherwise
      * @memberof Module
      */
     static checkCommandAttributes(module, command) {
         const debug = module.axon.params.debugMode;
         if (debug) {
             if ((command.isSubcmd && !command.parentCommand) || (command.parentCommand && !command.isSubcmd)) {
-                module.Logger.warn(`Invalid SubCommand (Command.isSubcmd) [${command.label}]`);
+                module.Logger.warn(`Invalid Subcommand (Command.isSubcmd) [${command.label}]`);
                 return false;
             }
             module.Logger.verbose(`Valid Subcommand [${command.label}]`);
@@ -43,10 +41,10 @@ class EnsureInterface {
                 || command.options.guildOnly === undefined
                 || command.options.hidden === undefined
                 || command.options.cooldown === undefined) {
-                module.Logger.warn(`Missing property(ies) in Command.options [${command.label}]`);
+                module.Logger.warn(`Missing properties in Command.options [${command.label}]`);
                 return false;
             }
-            module.Logger.verbose(`Command.options valid [${command.label}]`);
+            module.Logger.verbose(`Command.options are valid [${command.label}]`);
 
             // Ensure command.permissions is valid
             if (!command.permissions.bot
@@ -84,10 +82,10 @@ class EnsureInterface {
                 || !Array.isArray(command.permissions.staff.needed)
                 || !command.permissions.staff.bypass
                 || !Array.isArray(command.permissions.staff.bypass)) {
-                module.Logger.warn(`Missing property(ies) in Command.permissions [${command.label}]`);
+                module.Logger.warn(`Missing properties in Command.permissions [${command.label}]`);
                 return false;
             }
-            module.Logger.verbose(`Command.permissions is valid [${command.label}]`);
+            module.Logger.verbose(`Command.permissions are valid [${command.label}]`);
         }
 
         for (const perm of command.permissions.bot) {

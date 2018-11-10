@@ -15,8 +15,7 @@ import EnsureInterface from './EnsureInterface';
 
 /**
  * AxonCore - Module constructor
- * Register a Module with an Object of Commands, an Object of Events, an Object of Schemas
- * Register/unregister
+ * Register a Module with an obbject of commands, an object of events and an object of schemas.
  *
  * @author KhaaZ
  *
@@ -25,7 +24,7 @@ import EnsureInterface from './EnsureInterface';
  */
 class Module extends Base {
     /**
-     * Creates an instance of Module.
+     * Creates a Module instance.
      *
      * @param {Object<AxonClient>} client
      *
@@ -37,12 +36,12 @@ class Module extends Base {
      * @prop {Object} Utils - Utils Object/Methods [GETTER: axon.Utils]
      *
      * @prop {String} label - Module label (name/id)
-     * @prop {Collection<Command>} commands - Collection of Commands in the modules [key: label, value: command Obj]
-     * @prop {Collection<Event>} events - Collection of Events in the modules [key: label, value: event Obj]
-     * @prop {Collection<Object>} events - Collection of SChemas in the modules [key: label, value: schema Obj]
-     * @prop {Boolean} [enabled=true] - Module enabled
-     * @prop {Boolean} [serverBypass=false] - Module can't be server disabled
-     * @prop {Object} info - Default infos about the module
+     * @prop {Collection<Command>} commands - Collection of commands in the module [key: label, value: command Obj]
+     * @prop {Collection<Event>} events - Collection of events in the module [key: label, value: event Obj]
+     * @prop {Collection<Object>} events - Collection of schemas in the module [key: label, value: schema Obj]
+     * @prop {Boolean} [enabled=true] - Module enabled?
+     * @prop {Boolean} [serverBypass=false] - Can the module be disabled?
+     * @prop {Object} info - Default info about the module
      * - name(String)
      * - category(String)
      * - description(String)
@@ -62,13 +61,13 @@ class Module extends Base {
         this.schemas = new Collection();
 
         /**
-         * Default option and params
+         * Default options and params
          */
         this.enabled = true; // global enable/disable
         this.serverBypass = false; // Bypass all perms - true = prevent the command to be server disabled
 
         /**
-         * Infos - help command
+         * Info for the help command
          * All fields are required
          */
         this.infos = {
@@ -89,11 +88,11 @@ class Module extends Base {
 
     /**
      * Init a module with all commands and events.
-     * (called at the end of every Module contructor with correct parameters)
+     * Called at the end of every module contructor with correct parameters.
      *
-     * @param {Object<Commands>} commands - Object containing all events object
-     * @param {Object<Events>} events - Object containing all events object
-     * @param {Object<Schemas>} events - Object containing all schema object
+     * @param {Object<Commands>} commands - Object containing all commands
+     * @param {Object<Events>} events - Object containing all events
+     * @param {Object<Schemas>} schemas - Object containing all schema
      */
     init(commands, events, schemas) {
         commands && this.initAllCommands(commands);
@@ -102,8 +101,8 @@ class Module extends Base {
     }
 
     /**
-     * Init and construct all commands from the list of commands given in param
-     * (imported as a global object from index.js file)
+     * Init and construct all commands from the given list of commands
+     * (imported as a global object from index.js)
      *
      * @param {Object<Commands>} commands - Object of commands imported from index.js (list all parents commands)
      * @memberof Module
@@ -122,8 +121,8 @@ class Module extends Base {
     }
 
     /**
-     * Init and construct all events from the list of events given in param
-     * (imported as a global object from index.js file)
+     * Init and construct all events from the given list of events
+     * (imported as a global object from index.js)
      *
      * @param {Object<Events>} events - Object of events imported from index.js (list all events)
      * @memberof Module
@@ -136,7 +135,7 @@ class Module extends Base {
     }
 
     /**
-     * Init all schemas from the list of schemas given in param into a Collection
+     * Init all schemas from the given list of schemas given into a Collection
      * (imported as a global object from index.js file)
      *
      * @param {Object<Schemas>} schemas - Object of schemas imported from index.js (list all schemas)
@@ -149,7 +148,7 @@ class Module extends Base {
     }
 
     /**
-     * Init and construct/instance all subcommand from the parent comand
+     * Init and construct/instance all subcommands of the given parent comand
      *
      * @param {Object<Command>} command - The command Object
      * @memberof Command
@@ -179,8 +178,7 @@ class Module extends Base {
     }
 
     /**
-     * Register a Command (ensure validity)
-     * Add it to the Module.
+     * Register a Command, ensure its validity and add it to the module.
      *
      * @param {Object<Command>} command - Command object
      * @returns {Boolean} True if worked / False if not
@@ -207,8 +205,7 @@ class Module extends Base {
     }
 
     /**
-     * Register a SubCommand (ensure valitidy)
-     * Add it to the command parent.
+     * Register a Subcommand, ensure its validity and add it to the module.
      *
      * @param {Object<Command>} command - Command object
      * @param {Object<Command>} subCommand - Subcommand object
@@ -247,8 +244,7 @@ class Module extends Base {
     }
 
     /**
-     * Register an Event (ensure valitidy)
-     * Add it to the Module.
+     * Register an event, ensure its validity and add it to the module.
      *
      * @param {Object<Event>} event - Event object
      * @returns {Boolean} True if worked / False if not
@@ -269,7 +265,7 @@ class Module extends Base {
     }
 
     /**
-     * Register a Schema into a module
+     * Register a Schema and add it to the module.
      *
      * @param {String} key - The Schema name
      * @param {Object} schema - The Schema object
@@ -285,10 +281,10 @@ class Module extends Base {
     }
 
     /**
-     * Remove a command from a Module and from the global cache
+     * Remove a command from the module and the global cache.
      *
      * @param {String} label - Full command label
-     * @returns {Boolean} True if worked / Error if not
+     * @returns {Boolean} True if successful / Error otherwise
      * @memberof Module
      */
     unregisterCommand(fullLabel) {
@@ -331,10 +327,10 @@ class Module extends Base {
     }
 
     /**
-     * Remove a schema from Module and global cache
+     * Remove a schema from the module and global cache
      *
-     * @param {String} label - The SChema label
-     * @returns {Boolean} True if worked / Error if not
+     * @param {String} label - The schema label
+     * @returns {Boolean} True if successful / Error otherwise
      * @memberof Module
      */
     unregisterSchema(label) {
@@ -348,10 +344,10 @@ class Module extends Base {
     }
 
     /**
-     * Remove an Event from Module and Event Manager
+     * Remove an event from the module and event manager.
      *
-     * @param {String} label - The Event label
-     * @returns {Boolean} True if worked / Error if not
+     * @param {String} label - The event label
+     * @returns {Boolean} True if successful / Error othewise
      * @memberof Module
      */
     unregisterEvent(label) {

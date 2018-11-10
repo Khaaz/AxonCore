@@ -5,9 +5,7 @@ import { format } from 'util';
 import chalk from 'chalk';
 
 /**
- * Logger with time and custom method
- * Colorful logger
- * Allow clean logging with only Chalk
+ * Logger with timestamps, custom methods and terminal colors with Chalk.
  *
  * @author KhaaZ
  *
@@ -32,7 +30,7 @@ class ChalkLogger extends Console {
 
     /**
      * Major - Critical fault
-     * Crashing bugs, unexpected...
+     * Crashing bugs, unexpected errors...
      *
      * @param {String} input
      * @param {Object} opt - context object
@@ -56,8 +54,7 @@ class ChalkLogger extends Console {
     }
 
     /**
-     * Warns - non critcal
-     * Expected errors
+     * Warnings - expected errors
      *
      * @param {String} input
      * @param {Object} opt - context object
@@ -81,7 +78,7 @@ class ChalkLogger extends Console {
     }
 
     /**
-     * Important informations
+     * Important information
      *
      * @param {String} input
      * @param {Object} opt - context object
@@ -93,7 +90,7 @@ class ChalkLogger extends Console {
     }
 
     /**
-     * Default informations
+     * Default information
      *
      * @param {String} input
      * @param {Object} opt - context object
@@ -105,8 +102,7 @@ class ChalkLogger extends Console {
     }
 
     /**
-     * Other Logging
-     * Commands usage...
+     * Other logs - executed commands, etc...
      *
      * @param {String} input
      * @param {Object} opt - context object
@@ -118,7 +114,7 @@ class ChalkLogger extends Console {
     }
 
     /**
-     * AxonClient informations
+     * AxonClient information
      *
      * @param {String} input
      * @memberof ChalkLogger
@@ -129,7 +125,7 @@ class ChalkLogger extends Console {
     }
 
     /**
-     * Initialisation - Client infos
+     * Initialisation - Client info
      *
      * @param {String} input
      * @memberof ChalkLogger
@@ -140,7 +136,7 @@ class ChalkLogger extends Console {
     }
 
     /**
-     * Initialisation - Module infos
+     * Initialisation - Module info
      *
      * @param {Module} module
      * @memberof ChalkLogger
@@ -151,7 +147,7 @@ class ChalkLogger extends Console {
     }
 
     /**
-     * Initialisation - Command infos
+     * Initialisation - Command info
      *
      * @param {Command} command
      * @memberof ChalkLogger
@@ -167,7 +163,7 @@ class ChalkLogger extends Console {
     }
 
     /**
-     * Initialisation - SubCommand infos
+     * Initialisation - SubCommand info
      *
      * @param {Command} sub
      * @memberof ChalkLogger
@@ -183,7 +179,7 @@ class ChalkLogger extends Console {
     }
 
     /**
-     * Initialisation - SubCommand infos
+     * Initialisation - SubCommand info
      *
      * @param {Command} sub
      * @memberof ChalkLogger

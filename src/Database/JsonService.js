@@ -13,11 +13,11 @@ class JsonService {
     }
 
     /**
-     * Retreive the Guild Schema for the specfici guidld
+     * Retreive the Guild Schema for the specified guild
      *
      * @static
      * @param {String} gID - guild ID
-     * @returns {Promise<Object|null>} GuildSchema Object or null
+     * @returns {Promise<Object|null>} GuildSchema or null
      * @memberof MongoService
      */
     static fetchGuild(gID) {
@@ -25,24 +25,16 @@ class JsonService {
     }
 
     /**
-     * Initialise the default schema for Axon with default value
+     * Initialise a default schema for Axon
      *
      * @static
-     * @returns {Promise<Object>} Axon Schema Object newly created
+     * @returns {Promise<Object>} Newly created Axon Schema
      * @memberof MongoService
      */
     static initAxon() {
         //
     }
 
-    /**
-     * Initialise the default schema for Axon with default value
-     *
-     * @static
-     * @param {String} gID - guild ID
-     * @returns {Promise<Object>} Guild Schema Object newly created
-     * @memberof MongoService
-     */
     static initGuild(gID) {
         //
     }
@@ -51,8 +43,8 @@ class JsonService {
      * Update the blacklisted users
      *
      * @static
-     * @param {Array<String>} blacklistedUsers - Array of blacklistedUsers
-     * @returns {Promise} AxonSchema updated
+     * @param {Array<String>} blacklistedUsers - Array of blacklisted users
+     * @returns {Promise} Updated blacklistSchema
      * @memberof MongoService
      */
     static updateBlacklistUser(blacklistedUsers) {
@@ -64,7 +56,7 @@ class JsonService {
      *
      * @static
      * @param {Array<String>} blacklistedGuilds - Array of blacklistedUsers
-     * @returns {Promise} AxonSchema updated
+     * @returns {Promise} Updated blacklistSchema
      * @memberof MongoService
      */
     static updateBlacklistGuild(blacklistedGuilds) {
@@ -72,12 +64,12 @@ class JsonService {
     }
 
     /**
-     * Update the guild prefix array for that guild
+     * Update the guild prefix array for the specified guild
      *
      * @static
      * @param {String} gID - guild ID
      * @param {Array<String>} prefixArr - Array of prefixes
-     * @returns {Promise} GuilSchema updated
+     * @returns {Promise} Updated GuildSchema
      * @memberof MongoService
      */
     static updateGuildPrefix(gID, prefixArr) {
@@ -85,11 +77,11 @@ class JsonService {
     }
 
     /**
-     * Update the guilds modules array for that guild
+     * Update the modules array for the specified guild
      *
      * @static
      * @param {Array<String>} modulesArr - Array of modules label
-     * @returns {Promise} GuildSchema updated
+     * @returns {Promise} Updated GuildSchema
      * @memberof MongoService
      */
     static updateModule(gID, modulesArr) {
@@ -97,11 +89,11 @@ class JsonService {
     }
 
     /**
-     * Update the guilds commands array for that guild
+     * Update commands array for the specified guild
      *
      * @static
      * @param {Array<String>} commandsArr - Array of commands label
-     * @returns {Promise} GuildSchema updated
+     * @returns {Promise} Updated GuildSchema
      * @memberof MongoService
      */
     static updateCommand(gID, commandsArr) {
@@ -109,11 +101,11 @@ class JsonService {
     }
 
     /**
-     * Update the guilds events array for that guild
+     * Update the events array for the specified guild
      *
      * @static
      * @param {Array<String>} eventsArr - Array of events label
-     * @returns {Promise} GuildSchema updated
+     * @returns {Promise} Updated GuildSchema
      * @memberof MongoService
      */
     static updateEvent(gID, eventsArr) {
@@ -121,8 +113,7 @@ class JsonService {
     }
 
     /**
-     * Update the given schema in the DB
-     * with value in current schema object
+     * Update the given schema in the DB with a new schema
      *
      * @static
      * @param {Object} schema - the schema object to update

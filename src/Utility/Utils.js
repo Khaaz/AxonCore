@@ -16,7 +16,7 @@ const writeFile = util.promisify(fs.writeFile);
  */
 class Utils {
     /**
-     * Creates an instance of Utils.
+     * Creates an Utils instance.
      *
      * @prop {Object<AxonClient>} axon - Axon Client [GETTER: _axon]
      * @prop {Object<Eris.Client>} bot - Eris bot Client [GETTER: _axon.client]
@@ -53,8 +53,8 @@ class Utils {
     //
 
     /**
-     * Split a content (String), according to correct linebreaks.
-     * split at 1900 char
+     * Split the given content (String), according to correct linebreaks.
+     * Split at 1900 characters.
      *
      * @param {String} content
      * @returns {Array<String>|String} The array of content string splitted or the original String
@@ -78,7 +78,7 @@ class Utils {
     //
 
     /**
-     * Get an Array of roles Object from a member
+     * Get an array of role objects from a member.
      *
      * @param {Object<Guild>} guild
      * @param {Object<Member>} member
@@ -93,7 +93,7 @@ class Utils {
     }
 
     /**
-     * Get highest role from a member
+     * Get highest role of the given member.
      *
      * @param {Object<Guild>} guild
      * @param {Object<Member>} member
@@ -106,7 +106,7 @@ class Utils {
     }
 
     /**
-     * Sort a users roles from higher role to last role
+     * Sort a users roles from highest role to lowest role.
      *
      * @param {Array<Role>} array - The roles to sort
      * @returns {Array<Role>} Sorted array (per position) of Role Object
@@ -116,7 +116,7 @@ class Utils {
     }
 
     /**
-     * Check if a role is higher than the other
+     * Check if the first role is higher than the other.
      *
      * @param {Object<Role>} role1
      * @param {Object<Role>} role2
@@ -128,7 +128,7 @@ class Utils {
     }
 
     /**
-     * Check if the higher role of member1 is higher than higher role of member2
+     * Check if the highest role of first is higher than the highest role of second
      *
      * @param {Object<Guild>} guild
      * @param {Object<Member>} first
@@ -147,7 +147,7 @@ class Utils {
     //
 
     /**
-     * Wait for a delay in ms
+     * Wait.
      *
      * @param {Number} ms
      * @returns {Promise} resolve after the delay is passed
@@ -184,7 +184,7 @@ class Utils {
 
     /**
      * Ensures that all property names of obj1 exists in obj2.
-     * Doesn't compare values. Exept if it is an object, then it check for property names recursively
+     * Doesn't compare values. Exept if it is an object, then it checks for property names recursively
      *
      * @param {Object} obj1 - Default config/object
      * @param {Object} obj2 - Custom config/Object (Config/Object to compare with)

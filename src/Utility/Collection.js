@@ -2,7 +2,7 @@
 
 /**
  * Hold a bunch of something
- * Based of Eris Collection
+ * Based on Eris.Collection
  *
  * @author KhaaZ
  *
@@ -11,7 +11,7 @@
  */
 class Collection extends Map {
     /**
-     * Construct a Collection
+     * Construct a Collection.
      *
      * @arg {Class} [baseObject=null] - The base class for all items
      * @arg {Object} iterable - Iterable to construct the Map from
