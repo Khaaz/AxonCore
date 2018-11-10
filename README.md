@@ -17,31 +17,31 @@
 
 
 # AxonCore
-Discord Bot framework that handles a custom Client, Commands and Events.  
-Built on top of [Eris library](https://github.com/abalabahaha/eris), it allows you to easily create a customizable bot thanks to all its options.  
-This framework was made to be simple to setup, simple to use, but yet entirely customizable and efficient.  
-This framework is built to use a DataBase in purpose to benefits all its functionality. It natively supports MongoDB, but it is possible to use an alternate JSON Database if necessary.
+- A Discord Bot framework that handles custom Client, Commands, and Events.  
+- Built on top of [Eris library](https://github.com/abalabahaha/eris), it allows you to easily create a customizable bot with its easy to use options.  
+- This framework will be simple to setup, simple to use, and allows high customizability and efficiency.  
+- This framework is built to use a DataBase for utilizing all of its functionality. It natively supports MongoDB, but it is possible to use an alternate JSON DataBase if necessary.
 
 ## Features:
 
-  - **Client**: separate the Eris client and a main client that caches Modules, guildConfigs, DB schemas...
-  - **Modular**: a module host his own commands and events.
-  - **Command Handler**: create a command easily with a lot of options and customization.
-  - **Event Handler**: create an event easily, split events per module, allow.
-  - **GuildConfig**: natively support guildConfig (prefix, moderators, enabled/disabled modules/comands/events).
-  - **Utility**: useful shortcuts and utility functions.
-  - **Resolver**: built-in Resolver that can be replaced if needed.
-  - **Error Handling**: clean and complete error handling.
-  - **Logging**: colorful and custom logging.
-  - **Customizable**: customize easily error messages, help command, bot staff... 
+  - **Client**: Separates the Eris client and the main client that caches Modules, guildConfigs, DB schemas, etc...
+  - **Modular**: A module that could host its own commands and events.
+  - **Command Handler**: Creates a command easily with a lot of options and customization.
+  - **Event Handler**: Listens to events sent by Discord API easily, splits / allows events per module.
+  - **GuildConfig**: Natively supports guildConfigs (prefix, moderators, enabling / disabling modules / comands / events).
+  - **Utility**: Useful shortcuts and utility functions.
+  - **Resolver**: Built-in Resolver that can be replaced if needed.
+  - **Error Handling**: Clean and feature rich error handling.
+  - **Logging**: Colorful custom logging.
+  - **Customizable**: Customize error messages easily, help command, bot staff, etc... 
 
 ## Documentation:
 
-All the documentation and instruction on how to set it up can be found [here](https://khaazz.github.io/#/).  
-We also have a discord server where we provide eventual support or discuss about development. Join us [here](https://discord.gg/QZ6B5US).
+All the documentation and instructions on how to set it up can be found [here](https://khaazz.github.io/#/).  
+We also have a discord server where we provide eventual support or discuss about development. Join [here](https://discord.gg/QZ6B5US).
 
 ## Examples
-AxonCore is beeing used in those cool projects:  
+AxonCore is being used in these cool projects:  
   - [E.A.S.E.](https://github.com/AxonTeam/Ease) Enhance A Server Easily - A all in one modular bot that you can build and selfhost.
   - [WebSPELL](https://github.com/Khaazz/webSPELL) - A custom RSS bot made for a french community.
 
