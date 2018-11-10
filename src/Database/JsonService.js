@@ -2,7 +2,7 @@
 
 class JsonService {
     /**
-     * Retrieve Axon schema from DB (unique schema)
+     * Retrieves the axon schema from the DB.
      *
      * @static
      * @returns {Promise<Object|null>} AxonSchema Object or null
@@ -13,7 +13,7 @@ class JsonService {
     }
 
     /**
-     * Retreive the Guild Schema for the specified guild
+     * Retreives the Guild Schema for the specified guild.
      *
      * @static
      * @param {String} gID - guild ID
@@ -25,7 +25,7 @@ class JsonService {
     }
 
     /**
-     * Initialise a default schema for Axon
+     * Initialises a default schema for Axon.
      *
      * @static
      * @returns {Promise<Object>} Newly created Axon Schema
@@ -40,7 +40,7 @@ class JsonService {
     }
 
     /**
-     * Update the blacklisted users
+     * Updates the blacklisted users.
      *
      * @static
      * @param {Array<String>} blacklistedUsers - Array of blacklisted users
@@ -52,7 +52,7 @@ class JsonService {
     }
 
     /**
-     * Update the blacklisted guilds
+     * Updates the blacklisted guilds.
      *
      * @static
      * @param {Array<String>} blacklistedGuilds - Array of blacklistedUsers
@@ -64,7 +64,7 @@ class JsonService {
     }
 
     /**
-     * Update the guild prefix array for the specified guild
+     * Updates the guild prefix array for the specified guild.
      *
      * @static
      * @param {String} gID - guild ID
@@ -77,7 +77,7 @@ class JsonService {
     }
 
     /**
-     * Update the modules array for the specified guild
+     * Updates the modules array for the specified guild.
      *
      * @static
      * @param {Array<String>} modulesArr - Array of modules label
@@ -89,7 +89,7 @@ class JsonService {
     }
 
     /**
-     * Update commands array for the specified guild
+     * Updates commands array for the specified guild.
      *
      * @static
      * @param {Array<String>} commandsArr - Array of commands label
@@ -101,7 +101,7 @@ class JsonService {
     }
 
     /**
-     * Update the events array for the specified guild
+     * Updates the events array for the specified guild.
      *
      * @static
      * @param {Array<String>} eventsArr - Array of events label
@@ -113,7 +113,7 @@ class JsonService {
     }
 
     /**
-     * Update the given schema in the DB with a new schema
+     * Updates the given schema in the DB with a new schema.
      *
      * @static
      * @param {Object} schema - the schema object to update

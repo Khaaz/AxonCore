@@ -492,7 +492,7 @@ class AxonClient extends EventEmitter {
     }
 
     /**
-     * Retrieve all guild schemas, initialise the client with values from DB (blacklisted users/guilds).
+     * Retrieve all guild schemas, initialise the client with values from the DB (blacklisted users/guilds).
      *
      * @async
      * @memberof AxonClient
@@ -624,7 +624,7 @@ class AxonClient extends EventEmitter {
     }
 
     /**
-     * Default execution of a command
+     * Default execution of a command.
      *
      * @param {Object<Message>} msg - Message Object
      * @param {Array<String>} args  - Array of args
@@ -664,7 +664,7 @@ class AxonClient extends EventEmitter {
     }
 
     /**
-     * Execute a command with admin overrides
+     * Executes a command with admin overrides.
      *
      * @param {Object<Message>} msg - Message Object
      * @param {Oject} guildConf - Guild config
@@ -723,7 +723,7 @@ class AxonClient extends EventEmitter {
     }
 
     /**
-     * Execute a command in DM, has no guildConfig.
+     * Executes a command in DM, has no guildConfig.
      *
      * @param {Object<Message>} msg
      * @memberof AxonClient
@@ -786,7 +786,7 @@ class AxonClient extends EventEmitter {
     }
 
     /**
-     * Execute the help command.
+     * Executes the help command.
      *
      * @param {Object<Message>} msg - The message object
      * @param {Array<String>} args - Array of argument
@@ -892,7 +892,7 @@ class AxonClient extends EventEmitter {
     }
 
     /**
-     * Check if the module iss disabled.
+     * Check if the module is disabled.
      *
      * @param {Object<Command>} command - The command object
      * @param {Object} guildConf - The guild Config object
@@ -973,7 +973,7 @@ class AxonClient extends EventEmitter {
 
     /**
      * Resolves the prefix for the guild of the message.
-     * If the message starts with one of the guild prefixes it returns the prefix, otherwise returns undefined.
+     * If the message starts with one of the guild prefixes it returns the prefix, otherwise it returns undefined.
      *
      * @param {Object<Message>} msg - the message object
      * @returns {String?} The prefix if found / Undefined if not
@@ -1105,7 +1105,7 @@ class AxonClient extends EventEmitter {
 
     /**
      * Register a guild prefix.
-     * External method that can be called to update cached prefix with prefix registered in the DB.
+     * External method that can be called to update the cached prefix with the prefix registered in the DB.
      *
      * @param {String} gID - The guild ID
      * @param {Array<String>} prefixArr - The array of prefix
@@ -1177,7 +1177,7 @@ class AxonClient extends EventEmitter {
     }
 
     /**
-     * Update the state of a module.
+     * Updates the state of a module.
      * true = disable the module, false = enable the module
      *
      * @param {String} guildID - The guild ID
@@ -1208,7 +1208,7 @@ class AxonClient extends EventEmitter {
     }
 
     /**
-     * Update the state of a command.
+     * Updates the state of a command.
      * true = disable the command, false = enable the command.
      *
      * @param {String} guildID - The guild ID
@@ -1239,7 +1239,7 @@ class AxonClient extends EventEmitter {
     }
 
     /**
-     * Update the state of an event.
+     * Updates the state of an event.
      * true = disable the event, false = enable the event.
      *
      * @param {String} guildID - The guild ID
@@ -1270,7 +1270,7 @@ class AxonClient extends EventEmitter {
     }
 
     /**
-     * Enable or disable a module globally.
+     * Enables or disables a module globally.
      *
      * @param {String} module - Module name
      * @param {Boolean} [state=true] - Whether to enable or disable
@@ -1282,7 +1282,7 @@ class AxonClient extends EventEmitter {
     }
 
     /**
-     * Enable or disable a command globally.
+     * Enables or disables a command globally.
      *
      * @param {String} command - Command name
      * @param {Boolean} [state=true] - Whether to enable or disable
