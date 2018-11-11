@@ -15,7 +15,7 @@ import EnsureInterface from './EnsureInterface';
 
 /**
  * AxonCore - Module constructor
- * Register a Module with an obbject of commands, an object of events and an object of schemas.
+ * Register a Module with an object of commands, an object of events and an object of schemas.
  *
  * @author KhaaZ
  *

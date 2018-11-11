@@ -44,7 +44,7 @@ class JsonService {
      *
      * @static
      * @param {Array<String>} blacklistedUsers - Array of blacklisted users
-     * @returns {Promise} Updated blacklistSchema
+     * @returns {Promise} Updated AxonSchema
      * @memberof MongoService
      */
     static updateBlacklistUser(blacklistedUsers) {
@@ -56,7 +56,7 @@ class JsonService {
      *
      * @static
      * @param {Array<String>} blacklistedGuilds - Array of blacklistedUsers
-     * @returns {Promise} Updated blacklistSchema
+     * @returns {Promise} Updated AxonSchema
      * @memberof MongoService
      */
     static updateBlacklistGuild(blacklistedGuilds) {

@@ -816,6 +816,7 @@ class AxonClient extends EventEmitter {
 
     /**
      * Send full help in DM.
+     * Doesn't show commands that the user can't execute.
      *
      * @param {Object<Message>} msg - The message object
      * @return {Promise<Message>} Message Object
@@ -878,7 +879,7 @@ class AxonClient extends EventEmitter {
     //
 
     /**
-     * Check if the user/role/channel is ignored.
+     * Check if the user/role/channel is ignored on the specified guild.
      *
      * @param {Object<Message>} msg
      * @param {Object} guildConf
@@ -892,7 +893,7 @@ class AxonClient extends EventEmitter {
     }
 
     /**
-     * Check if the module is disabled.
+     * Check if the module is disabled on the specified guild.
      *
      * @param {Object<Command>} command - The command object
      * @param {Object} guildConf - The guild Config object
@@ -904,7 +905,7 @@ class AxonClient extends EventEmitter {
     }
 
     /**
-     * Check if the command is disabled.
+     * Check if the command is disabled on the specified guild.
      *
      * @param {Object<Command>} command - The command object
      * @param {Object} guildConf - The guild Config object
@@ -1305,7 +1306,7 @@ class AxonClient extends EventEmitter {
 
     /**
      * ToJSON method.
-     * (method took from eris)
+     * (Taken from eris.)
      *
      * @returns {Object} JSON-like Object
      * @memberof AxonClient
