@@ -684,6 +684,7 @@ class Command extends Base {
 
     /**
      * Send an error message in case of invalid user permissions, delete it automatically after a delay.
+     * Uses the template message in config/template.
      *
      * @param {Object<Channel>} channel - The channel Object
      * @param {Object<Member>} member - The member object
@@ -704,15 +705,15 @@ class Command extends Base {
     }
 
     /**
-     * Send an error message for Destination user permissions
-     * timeout // delay and auto delete message
+     * Send an error message incase of invalid target permissions (serverMod/serverAdmin).
+     * Uses the template message in config/template.
      *
      * @param {Object<Channel>} channel - The channel Object
      * @returns {Promise<Message?>} Message Object
      * @memberof Command
      */
-    sendDestPerms(channel) {
-        return this.sendError(channel, this.Template.message.error.permDest, { delete: true, delay: 9000 });
+    sendTargetPerms(channel) {
+        return this.sendError(channel, this.Template.message.error.permTarget, { delete: true, delay: 9000 });
     }
 
     /**

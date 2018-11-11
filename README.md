@@ -1,7 +1,7 @@
 <div align="center">
   <br />
   <p>
-    <a href="https://khaaz.github.io"><img src="_image/banner.png" width="546" alt="AxonCore" /></a>
+    <a href="https://khaaz.github.io"><img src="_images/banner.png" width="546" alt="AxonCore" /></a>
   </p>
   <br />
   <p>

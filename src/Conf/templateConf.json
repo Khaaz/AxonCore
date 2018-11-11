@@ -16,7 +16,7 @@
         "error": {
             "permBot": "I don't have sufficient permissions to do that! I need:",
             "permSource": "You don't have sufficient permissions to do that! You need:",
-            "permDest": "This user is a mod/admin, I can't do that!",
+            "permTarget": "This user is a mod/admin, I can't do that!",
             "cooldown": "Please, slow down! Remaining time:",
             "general": "An unexpected error occured! Contact the bot developers."
         }
