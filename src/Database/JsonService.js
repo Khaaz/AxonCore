@@ -1,5 +1,5 @@
 'use strict';
-
+/* eslint-disable */
 class JsonService {
     /**
      * Retrieves the axon schema from the DB.
