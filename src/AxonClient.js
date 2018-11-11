@@ -1334,7 +1334,7 @@ class AxonClient extends EventEmitter {
     /**
      * Inspect method.
      * Doesn't list prefixed property and undefined property.
-     * (method shamelessly copied from eris)
+     * (Taken from eris.)
      *
      * @returns {Object} Object to inspect
      * @memberof AxonClient

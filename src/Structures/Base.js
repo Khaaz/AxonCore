@@ -183,7 +183,7 @@ class Base {
 
     /**
      * ToJSON method.
-     * (method took from eris)
+     * (Taken from eris)
      *
      * @returns {Object} JSON-like Object
      * @memberof Base
@@ -211,7 +211,7 @@ class Base {
     /**
      * Inspect method
      * Doesn't list prefixed property and undefined property.
-     * (method took from eris)
+     * (Taken from eris)
      *
      * @returns {Object} Object to inspect without prefixed property and undefined property
      * @memberof Base
