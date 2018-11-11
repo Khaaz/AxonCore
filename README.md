@@ -3,7 +3,6 @@
   <p>
     <a href="https://khaaz.github.io"><img src="_images/banner.png" width="546" alt="AxonCore" /></a>
   </p>
-  <br />
   <p>
     <a href="https://github.com/Khaazz/AxonCore/releases"><img src="https://img.shields.io/github/release/Khaazz/AxonCore.svg?style=flat-square" alt="Release" /></a>
     <a href="https://www.npmjs.com/package/axoncore"><img src="https://img.shields.io/npm/v/axoncore.svg?maxAge=3600" alt="NPM version" /></a>
