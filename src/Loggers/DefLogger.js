@@ -4,8 +4,7 @@ import { Console } from 'console';
 import { format } from 'util';
 
 /**
- * Default Logger with time and custom method
- * Allow clean logging without any dependency
+ * Default Logger with timestamps and custom methods. Doesn't use any dependencies.
  *
  * @author KhaaZ
  *
@@ -30,7 +29,7 @@ class DefLogger extends Console {
 
     /**
      * Major - Critical fault
-     * Crashing bugs, unexpected...
+     * Crashing bugs, unexpected errors...
      *
      * @param {String} input
      * @param {Object} opt - context object
@@ -54,8 +53,7 @@ class DefLogger extends Console {
     }
 
     /**
-     * Warns - non critcal
-     * Expected errors
+     * Warns - expected errors
      *
      * @param {String} input
      * @param {Object} opt - context object
@@ -79,7 +77,7 @@ class DefLogger extends Console {
     }
 
     /**
-     * Important informations
+     * Important information
      *
      * @param {String} input
      * @param {Object} opt - context object
@@ -91,7 +89,7 @@ class DefLogger extends Console {
     }
 
     /**
-     * Default informations
+     * Default information
      *
      * @param {String} input
      * @param {Object} opt - context object
@@ -103,8 +101,7 @@ class DefLogger extends Console {
     }
 
     /**
-     * Other Logging
-     * Commands usage...
+     * Other Logging - executed commands, etc...
      *
      * @param {String} input
      * @param {Object} opt - context object
@@ -116,7 +113,7 @@ class DefLogger extends Console {
     }
 
     /**
-     * AxonClient informations
+     * AxonClient information
      *
      * @param {String} input
      * @memberof DefLogger
@@ -127,7 +124,7 @@ class DefLogger extends Console {
     }
 
     /**
-     * Initialisation - Client infos
+     * Initialisation - Client info
      *
      * @param {String} input
      * @memberof DefLogger
@@ -138,7 +135,7 @@ class DefLogger extends Console {
     }
 
     /**
-     * Initialisation - Module infos
+     * Initialisation - Module info
      *
      * @param {Module} module
      * @memberof DefLogger
@@ -149,7 +146,7 @@ class DefLogger extends Console {
     }
 
     /**
-     * Initialisation - Command infos
+     * Initialisation - Command info
      *
      * @param {Command} command
      * @memberof DefLogger
@@ -165,7 +162,7 @@ class DefLogger extends Console {
     }
 
     /**
-     * Initialisation - SubCommand infos
+     * Initialisation - SubCommand info
      *
      * @param {Command} sub
      * @memberof DefLogger
@@ -181,7 +178,7 @@ class DefLogger extends Console {
     }
 
     /**
-     * Initialisation - SubCommand infos
+     * Initialisation - SubCommand info
      *
      * @param {Command} sub
      * @memberof DefLogger

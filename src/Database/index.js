@@ -4,7 +4,7 @@ import JsonService from './JsonService';
 
 /**
  * Database Handler
- * Use require to dynamically load a Database Service regarding dependencies
+ * Use require to dynamically load a Database Service depending on installed dependencies.
  *
  * @author KhaaZ
  *
@@ -19,7 +19,7 @@ class DBHandler {
             case 0:
             default: {
                 DBservice = JsonService;
-                axon.Logger.info('Database: JSON DB.');
+                axon.Logger.info('Selected Database: JSON DB.');
                 break;
             }
 
@@ -31,17 +31,17 @@ class DBHandler {
                     DBservice = new MongoService(axon);
                     DBservice.init(axonOptions);
 
-                    axon.Logger.info('Database: Mongo DB.');
+                    axon.Logger.info('Selected Database: MongoDB.');
                 } catch (err) {
                     DBservice = JsonService;
-                    axon.Logger.warn('Mongo fail, Json DB');
-                    axon.Logger.info('Database: JSON DB.');
+                    axon.Logger.warn('MongoDB wasn\'t found, using JSON DB instead.');
+                    axon.Logger.info('Selected Database: JSON DB.');
                 }
                 break;
             }
         }
 
-        axon.Logger.axon('DB ready');
+        axon.Logger.axon('DB ready.');
         return DBservice;
     }
 }

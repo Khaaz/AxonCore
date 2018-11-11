@@ -37,6 +37,13 @@ const options = {
     },
 };
 
+/**
+ * A different Logger that uses Signale to format console output. See DefLogger for documentation.
+ * https://github.com/klauscfhq/signale
+ *
+ * @class SignaleLogger
+ * @extends {Signale}
+ */
 class SignaleLogger extends Signale {
     constructor(options) {
         super(options);

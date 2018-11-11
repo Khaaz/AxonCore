@@ -1,9 +1,7 @@
 'use strict';
 
 /**
- * Mongo Service class
- * Handler all interaction with MongoDB
- * (Guild/Axon schemas for AxonClient request)
+ * Mongo Service class, handles all interactions with MongoDB.
  *
  * @author KhaaZ
  *
@@ -27,9 +25,9 @@ class MongoService {
     }
 
     /**
-     * Retrieve Axon schema from DB (unique schema)
+     * Retrieves the Axon schema from the DB.
      *
-     * @returns {Promise<Object|null>} AxonSchema Object or null
+     * @returns {Promise<Object|null>} AxonSchema or null
      * @memberof MongoService
      */
     fetchAxon() {
@@ -39,11 +37,11 @@ class MongoService {
     }
 
     /**
-     * Retreive the Guild Schema for the specific guild
+     * Retreives the Guild Schema for the specified guild.
      * WARNING: LEAN (faster but no mongo methods)
      *
      * @param {String} gID - guild ID
-     * @returns {Promise<Object|null>} GuildSchema Object or null
+     * @returns {Promise<Object|null>} GuildSchema or null
      * @memberof MongoService
      */
     fetchGuild(gID) {
@@ -53,11 +51,11 @@ class MongoService {
     }
 
     /**
-     * Retreive the Guild Schema for the specific guild
+     * Retreives the Guild Schema for the specified guild.
      * NOT LEAN
      *
      * @param {String} gID - guild ID
-     * @returns {Promise<Object|null>} GuildSchema Object or null
+     * @returns {Promise<Object|null>} GuildSchema or null
      * @memberof MongoService
      */
     fetchGuildSchema(gID) {
@@ -67,9 +65,9 @@ class MongoService {
     }
 
     /**
-     * Initialise the default schema for Axon with default value
+     * Initialises a default schema for Axon.
      *
-     * @returns {Promise<Object>} Axon Schema Object newly created
+     * @returns {Promise<Object>} Newly created Axon Schema
      * @memberof MongoService
      */
     initAxon() {
@@ -87,7 +85,7 @@ class MongoService {
     }
 
     /**
-     * Initialise the default schema for Axon with default value
+     * Initialises a default schema for the specified guild.
      *
      * @param {String} gID - guild ID
      * @returns {Promise<Object>} Guild Schema Object newly created
@@ -108,10 +106,10 @@ class MongoService {
     }
 
     /**
-     * Update the blacklisted users
+     * Updates the blacklisted users.
      *
      * @param {Array<String>} blacklistedUsers - Array of blacklistedUsers
-     * @returns {Promise} AxonSchema updated
+     * @returns {Promise} Updated AxonSchema
      * @memberof MongoService
      */
     updateBlacklistUser(blacklistedUsers) {
@@ -133,7 +131,7 @@ class MongoService {
      * Update the blacklisted guilds
      *
      * @param {Array<String>} blacklistedGuilds - Array of blacklistedUsers
-     * @returns {Promise} AxonSchema updated
+     * @returns {Promise} Updated AxonSchema
      * @memberof MongoService
      */
     updateBlacklistGuild(blacklistedGuilds) {
@@ -152,11 +150,11 @@ class MongoService {
     }
 
     /**
-     * Update the guild prefix array for that guild
+     * Updates the prefix array for the specified guild.
      *
      * @param {String} gID - guild ID
      * @param {Array<String>} prefixArr - Array of prefixes
-     * @returns {Promise} GuilSchema updated
+     * @returns {Promise} Updated GuildSchema
      * @memberof MongoService
      */
     updateGuildPrefix(gID, prefixArr) {
@@ -175,10 +173,10 @@ class MongoService {
     }
 
     /**
-     * Update the guilds modules array for that guild
+     * Updates the modules array for the specified guild.
      *
      * @param {Array<String>} modulesArr - Array of modules label
-     * @returns {Promise} GuildSchema updated
+     * @returns {Promise} Updated GuildSchema
      * @memberof MongoService
      */
     updateModule(gID, modulesArr) {
@@ -197,10 +195,10 @@ class MongoService {
     }
 
     /**
-     * Update the guilds commands array for that guild
+     * Updates the commands array for the specified guild.
      *
      * @param {Array<String>} commandsArr - Array of commands label
-     * @returns {Promise} GuildSchema updated
+     * @returns {Promise} Updated GuildSchema
      * @memberof MongoService
      */
     updateCommand(gID, commandsArr) {
@@ -219,10 +217,10 @@ class MongoService {
     }
 
     /**
-     * Update the guilds events array for that guild
+     * Updates the events array for the specified guild.
      *
      * @param {Array<String>} eventsArr - Array of events label
-     * @returns {Promise} GuildSchema updated
+     * @returns {Promise} Updated GuildSchema
      * @memberof MongoService
      */
     updateEvent(gID, eventsArr) {
@@ -241,8 +239,7 @@ class MongoService {
     }
 
     /**
-     * Update the given schema in the DB
-     * with value in current schema object
+     * Updates the given schema in the DB with a new schema.
      *
      * @param {Object} schema - the schema object to update
      * @returns {Promise} Updated Schema from the DB
@@ -253,11 +250,11 @@ class MongoService {
     }
 
     /**
-     * Save Guild Schema
+     * Saves the guild schema.
      *
      * @param {String} gID - Guid id
      * @param {Object} schema - Guild Schema to save
-     * @returns {Promise} Updated SChema111
+     * @returns {Promise} Updated Guild Schema
      * @memberof MongoService
      */
     saveGuildSchema(gID, schema) {

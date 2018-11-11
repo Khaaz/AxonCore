@@ -13,7 +13,7 @@ import Enum from '../Utility/Enums';
  */
 class Command extends Base {
     /**
-     * Creates an instance of Command.
+     * Creates a Command instance.
      *
      * @param {Object<Module>} module
      *
@@ -30,48 +30,48 @@ class Command extends Base {
      *
      * @prop {String} label - Command label (name/id)
      * @prop {Array<String>} aliases - Array of commands aliases (including the command label)
-     * @prop {Boolean} [enabled=module.enabled] - Command enabled
+     * @prop {Boolean} [enabled=module.enabled] - Is the command enabled?
      *
      * @prop {Boolean} [isSubcmd=false] - Command is a subcommand
-     * @prop {Object<Command>} [parentCommand=NULL] - References to the parent Command (if isSubcmd = true)
-     * @prop {Boolean} [hasSubcmd=false] - Command has a subcommand
-     * @prop {Boolean} [serverBypass=module.serverBypass] - Command can't be server disabled
+     * @prop {Object<Command>} [parentCommand=NULL] - Reference to the parent command (if isSubcmd = true)
+     * @prop {Boolean} [hasSubcmd=false] - Does the command have subcommands?
+     * @prop {Boolean} [serverBypass=module.serverBypass] - Can the command be disabled?
      *
-     * @prop {Array} subcmds - Array of subcommands Object (deleted after init)
+     * @prop {Array} subcmds - Array of subcommand objects (deleted after init)
      * @prop {Collection<Command>} [subCommands=NULL] - Collection of subcommands
-     * @prop {Object<Map>} [subCommandsAliases=NULL] - Map of subcommands aliases
+     * @prop {Object<Map>} [subCommandsAliases=NULL] - Map of subcommand aliases
      *
      *
-     * @prop {Object} infos - Default infos about the command
-     * @prop {Owner} infos.owner - Command owners/authors
-     * @prop {String} infos.cmdName - Command name (full)
+     * @prop {Object} infos - Default info about the command
+     * @prop {Owner} infos.owner - Command authors
+     * @prop {String} infos.cmdName - Full command name
      * @prop {String} infos.description - Command description
      * @prop {String} infos.usage - Command usage
      * @prop {Array} infos.example - Array of command examples
      *
      * @prop {Object} options - Default options for the command
-     * @prop {Number} [options.argsMin=0] - Minimum args required
-     * @prop {Boolean} [options.invalidUsage=true] - Whether to trigger help command on invalid usage (args required and no args given)
-     * @prop {Boolean} [options.invalidPermissionMessage=false] - Whether to trigger error message on invalid permission
+     * @prop {Number} [options.argsMin=0] - Minimum number of args required
+     * @prop {Boolean} [options.invalidUsage=true] - Whether to trigger the help command on invalid usage (args required or no args given)
+     * @prop {Boolean} [options.invalidPermissionMessage=false] - Whether to trigger an error message on invalid permission
      * @prop {Boolean} [options.deleteCommand=false] - Whether to delete the command input
-     * @prop {Boolean} [options.guildOnly=true] - Whether the command is usable only in guilds
-     * @prop {Boolean} [options.hidden=false] - Whether the command is hidden from help commmand ()
+     * @prop {Boolean} [options.guildOnly=true] - Whether the command can only be used in guilds
+     * @prop {Boolean} [options.hidden=false] - Whether the command should be listed in the help commmand
      * @prop {Number} [options.cooldown=3000] - Cooldown for the command
      *
-     * @prop {Object} permissions - Default permissions for the bot/users
+     * @prop {Object} permissions - Needed permissions of the bot/users
      * @prop {Array} [permissions.bot=[]] - Array or permissions needed by the bot to execute the command
      * @prop {Boolean} [permissions.serverMod=false] - Whether to limit the command to serverMod+
      * @prop {Boolean} [permissions.severAdmin=false] - Whether to limit the command to serverAdmin+
-     * @prop {Array} [permissions.user.needed=[]] - All permissions needed by the user to execute
-     * @prop {Array} [permissions.user.bypass=[]] - Having one of these perms allow the user to execute
-     * @prop {Array} [permissions.usersID.needed=[]] - List of user ids that have permissions to execute
-     * @prop {Array} [permissions.usersID.bypass=[]] - Having one of these id allow the user to execute
-     * @prop {Array} [permissions.rolesID.needed=[]] - List of roles ids needed to execute
-     * @prop {Array} [permissions.rolesID.bypass=[]] - Having one of these roles allow the user to execute
-     * @prop {Array} [permissions.ChannelsID.needed=[]] - List of channels ids that allow to execute
-     * @prop {Array} [permissions.channelsID.bypass=[]] - Being in one of these channels allow the user to execute
-     * @prop {Array} [permissions.staff.needed=[]] - List of bot.staff permission needed to execute
-     * @prop {Array} [permissions.staff.bypass=[]] - Having one of these bot.staff permission allow to execute
+     * @prop {Array} [permissions.user.needed=[]] - All permissions needed by the user
+     * @prop {Array} [permissions.user.bypass=[]] - Having one of these perms allows the user to use the command
+     * @prop {Array} [permissions.usersID.needed=[]] - List of user ids that have permission to use the command (they need the other permissions too)
+     * @prop {Array} [permissions.usersID.bypass=[]] - List of user ids that are allowed to use the command, regardless of other permissions
+     * @prop {Array} [permissions.rolesID.needed=[]] - List of role ids needed
+     * @prop {Array} [permissions.rolesID.bypass=[]] - Having one of these roles allows the user to use the command, regardless of other permissions
+     * @prop {Array} [permissions.ChannelsID.needed=[]] - List of channel ids where the command is allowed
+     * @prop {Array} [permissions.channelsID.bypass=[]] - Being in one of these channels allow the user to use the command, regardless of other permissions
+     * @prop {Array} [permissions.staff.needed=[]] - List of bot.staff permissions needed to use the command (they need the other permissions too)
+     * @prop {Array} [permissions.staff.bypass=[]] - Having one of these bot.staff permission allow to use the command, regardless of other permissions
      *
      * @prop {Object} Template - Template object shortcut [GETTER: axon.configs.template]
      *
@@ -93,68 +93,69 @@ class Command extends Base {
         this._cooldown = {};
 
         /**
-         * ShortCut - Reusable class
+         * Shortcut - Reusable class
          * Resolver [GETTER] / Util [GETTER] / Template [GETTER]
          */
 
         // Command main options
         this.label = 'label';
-        this.aliases = []; // includes label/main name of the command
-        this.enabled = module.enabled; // default to module state
+        this.aliases = []; // Includes label/main name of the command
+        this.enabled = module.enabled; // Default to module state
 
         /**
-         * Subcommands related
+         * Subcommand related
          * Default values
          */
         this.isSubcmd = false;
-        this.parentCommand = null; // reference parent command
+        this.parentCommand = null; // Reference to the parent command
         this.hasSubcmd = false;
         // temp var used to init subcommands
-        this.subcmds = []; // array of imported commands - deleted after init
+        this.subcmds = []; // Array of imported commands - deleted after init
 
         /**
-         * Initiated if subcommands
+         * Initiated if there are subcommands
          */
-        this.subCommands = null; // Collection of Commands
-        this.subCommandsAliases = null; // Map of Command Aliases
+        this.subCommands = null; // Collection of subcommands
+        this.subCommandsAliases = null; // Map of subcommand aliases
 
         /**
-         * Bypass all perms - true = prevent the command to be server disabled
+         * Bypass all perms - true = prevent the command to be disabled
          */
-        this.serverBypass = module.serverBypass; // default to module state
+        this.serverBypass = module.serverBypass; // Default to module state
 
         /**
-         * Infos - Help commands
+         * Info for the help command
          * All fields are required
          */
         this.infos = {
-            owners: ['Owner'], // ['KhaaZ'] OR ['KhaaZ', 'Jack']
-            name: 'parentLabel label', // full name of the command
+            owners: ['Owner'], // ['KhaaZ'] or ['KhaaZ', 'Jack']
+            name: 'parentLabel label', // Full name of the command
             description: 'Description of the command.', // 'A cool command that does things.' <-- With the dot!
-            usage: 'label [param] (optional param)', // full usage of the command
+            usage: 'label [param] (optional param)', // Full usage of the command
             examples: ['example of command usage'], // ['', ...]
         };
 
         /**
-         * Commands options
+         * Command options
          * Default values
          */
         this.options = {
-            argsMin: 0, // min arg required
-            invalidUsage: true, // trigger help command on invalid usage = args required and no args given
-            invalidPermissionMessage: false, // trigger error message on invalid permission
-            deleteCommand: false, // delete input after trigger
-            guildOnly: true, // command usable only in guild
-            hidden: false, // hide command from help command
-            cooldown: 3000, // cooldown between each usage of the same command
+            argsMin: 0, // Min args required
+            invalidUsage: true, // Trigger the help command on invalid usage = args required or no args given
+            invalidPermissionMessage: false, // Trigger an error message on invalid permission
+            deleteCommand: false, // Delete input after trigger
+            guildOnly: true, // Command only usable in guild
+            hidden: false, // Don't list the command in the help command
+            cooldown: 3000, // Cooldown between each usage of the same command
         };
 
+        // Not gonna touch this ~Eleos
         /**
          * Handle permissions
          * bot perms
          * user perms
          *
-         * Optional posible override for:
+         * Optional possible overrides for:
          *  - users ID
          *  - roles ID
          *  - channels Id
@@ -212,7 +213,7 @@ class Command extends Base {
     //
 
     /**
-     * Execute command - checks perms according to comand options
+     * Execute a command - checks perms according to command options
      *
      * @param {Object} message - { msg, args, guildConf }
      * @returns {Promise}
@@ -260,8 +261,7 @@ class Command extends Base {
     }
 
     /**
-     * Execute the command with admin checkers (minimal)
-     * no CD - no perms checkers
+     * Execute a command with disabled cooldown and permission checks. (Bot Owner/Staff only)
      *
      * @param {Object} message - { msg, args, guildConf }
      * @returns {Promise}
@@ -294,7 +294,7 @@ class Command extends Base {
     }
 
     /**
-     * Execute the command in DM - pass some checkers
+     * Execute the command in DMs - pass some checkers.
      *
      * @param {Object<Message>} message
      * @returns {Promise}
@@ -332,9 +332,8 @@ class Command extends Base {
     }
 
     /**
-     * Send Help message in the current channel
-     * Perm checks were done before
-     * Call custom sendHelp (Client method if it exist instead of default one)
+     * Send help message in the current channel with perm checks done before.
+     * Call a custom sendHelp method if it exists, use the default one if it doesn't.
      *
      * @param {Object<Message>} {msg, guildconf} - The message object
      * @returns {Promise<Message>} Message Object
@@ -409,7 +408,7 @@ class Command extends Base {
     //
 
     /**
-     * Check command cooldown for the user
+     * Checks the command cooldown of the user
      *
      * @param {Object<Message>} msg - The Message object
      * @returns {Boolean|Number} False if no cooldown / Cooldown time left if there is a cooldown
@@ -418,27 +417,27 @@ class Command extends Base {
     _shouldCooldown(msg) {
         const cooldown = this._cooldown[msg.author.id];
 
-        // no cooldown registered yet
+        // No cooldown registered yet
         if (!cooldown) {
             return false; // doesn't cooldown
         }
 
-        // time spent since last uses <= cooldown chose for that command
+        // Time spent since last uses <= cooldown chose for that command
         const curCD = Date.now() - cooldown;
         if (curCD <= this.options.cooldown) {
-            return curCD; // return time left (does cooldown)
+            return curCD; // Return time left (does cooldown)
         }
 
-        // delete current time for this user.
+        // Delete current time for this user.
         delete this._cooldown[msg.author.id];
 
-        return false; // doesn't cooldown
+        return false; // Doesn't cooldown
     }
 
     /**
-     * Permission checker - Does the user has perm to exec command/not
-     * Bypass - one of the perms (override) => doesn't go through others chercker
-     * Needed - all perms => still go through other checkers
+     * Permission checker - Does the user have permission to use the command or not?
+     * Bypass - Only needs of of these permissions, doesn't check for other permissions
+     * Needed - Needs all specified permissions => Goes through other checkers
      * ServerMod
      *
      * @param {Object<Message>} msg - The Message Object
@@ -447,7 +446,7 @@ class Command extends Base {
      * @memberof Command
      */
     canExecute(channel, member, guildConf) {
-        /** Bypass: if one of the perm is true => Exec the command */
+        // Bypass: if one of the perm is true => Exec the command
         if (this._checkPermsUserBypass(member)
             || this._checkUserBypass(member)
             || this._checkRoleBypass(member)
@@ -461,7 +460,7 @@ class Command extends Base {
             return false;
         }
 
-        /** Needed: if one of the perms is false => doesn't exec the command */
+        // Needed: if one of the perms is false => doesn't exec the command
         if (!this._checkPermsUserNeeded(member)
             || !this._checkUserNeeded(member)
             || !this._checkRoleNeeded(member)
@@ -475,7 +474,7 @@ class Command extends Base {
 
     /**
      * Check bot permission
-     * (= permssions in config)
+     * (= permissions in config)
      *
      * @param {Object<Channel>} channel
      * @returns {Boolean}
@@ -489,8 +488,8 @@ class Command extends Base {
     }
 
     /**
-     * Check user permssions [bypass]
-     * (= permssions in config)
+     * Check user permissions [bypass]
+     * (= permissions in config)
      *
      * @param {Object<Member>} member
      * @returns {Boolean}
@@ -511,7 +510,7 @@ class Command extends Base {
 
     /**
      * Check user permissions [needed]
-     * (= permssions in config)
+     * (= permissions in config)
      *
      * @param {Object<Member>} member
      * @returns {Boolean}
@@ -531,7 +530,7 @@ class Command extends Base {
 
     /**
      * Check roles IDs [bypass]
-     * (= permssions in config)
+     * (= permissions in config)
      *
      * @param {Object<Member>} member
      * @returns {Boolean}
@@ -546,7 +545,7 @@ class Command extends Base {
 
     /**
      * Check user IDs [needed]
-     * (= permssions in config)
+     * (= permissions in config)
      *
      * @param {Object<Member>} member
      * @returns {Boolean}
@@ -561,7 +560,7 @@ class Command extends Base {
 
     /**
      * Check roles IDs [bypass]
-     * (= permssions in config)
+     * (= permissions in config)
      *
      * @param {Object<Member>} member
      * @returns {Boolean}
@@ -582,7 +581,7 @@ class Command extends Base {
 
     /**
      * Check roles IDs [needed]
-     * (= permssions in config)
+     * (= permissions in config)
      *
      * @param {Object<Member>} member
      * @returns {Boolean}
@@ -603,7 +602,7 @@ class Command extends Base {
 
     /**
      * Check channels IDs [bypass]
-     * (= permssions in config)
+     * (= permissions in config)
      *
      * @param {Object<Channel>} channel
      * @returns {Boolean}
@@ -618,7 +617,7 @@ class Command extends Base {
 
     /**
      * Check channels IDs [needed]
-     * (= permssions in config)
+     * (= permissions in config)
      *
      * @param {Object<Channel>} channel
      * @returns {Boolean}
@@ -632,7 +631,7 @@ class Command extends Base {
     }
 
     /**
-     * Check if the user is Bot staff
+     * Check if the user is bot staff
      *
      * @param {Object<Member>} member - The Member Object
      * @returns {Boolean} True if Staff / False if not
@@ -646,7 +645,7 @@ class Command extends Base {
     }
 
     /**
-     * Check if the user is Bot staff
+     * Check if the user is bot staff
      *
      * @param {Object<Member>} member - The Member Object
      * @returns {Boolean} True if Staff / False if not
@@ -664,8 +663,7 @@ class Command extends Base {
     //
 
     /**
-     * Send an error message for invalid Bot permissions
-     * timeout // delay and auto delete message
+     * Send an error message in case of invalid bot permissions, delete it automatically after a delay.
      *
      * @param {Object<Channel>} channel - The channel Object
      * @param {Array<String>} [permissions=[]] - Optional array of permissions string
@@ -685,8 +683,7 @@ class Command extends Base {
     }
 
     /**
-     * Send an error message for Source user permissions
-     * timeout // delay and auto delete message
+     * Send an error message in case of invalid user permissions, delete it automatically after a delay.
      *
      * @param {Object<Channel>} channel - The channel Object
      * @param {Object<Member>} member - The member object
@@ -719,8 +716,7 @@ class Command extends Base {
     }
 
     /**
-     * Send an error message for invalid cooldown
-     * timeout // delay and auto delete message
+     * Send an error message in case of invalid cooldown, delete it automatically after a delay.
      *
      * @param {Object<Channel>} channel - The channel Object
      * @returns {Promise<Message?>} Message Object

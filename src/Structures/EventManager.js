@@ -15,10 +15,10 @@ import Collection from '../Utility/Collection';
 
 class EventManager extends Base {
     /**
-     * Creates an instance of EventManager.
+     * Creates an EventManager instance.
      * @param {Object<AxonClient>} axon
-     * 
-     * @prop {Object} _listeners - Object that link an event name to an Array of Event Object { eventName: [Event, Event] }
+     *
+     * @prop {Object} _listeners - Object that links an event name to an array of event objects { eventName: [Event, Event] }
      * @prop {Collection<Object>} _Handlers - Collection of handler keyed to the event name [key: eventName, value: Handler]
      * @memberof EventManager
      */
@@ -31,8 +31,8 @@ class EventManager extends Base {
     }
 
     /**
-     * Bind all Listeners to an Handler.
-     * Create and register an Handler for each events.
+     * Bind all listeners to a handler.
+     * Create and register a handler for each event.
      * If the bot is ready, also call bindHandlers()
      *
      * @memberof EventManager
@@ -53,7 +53,7 @@ class EventManager extends Base {
     }
 
     /**
-     * Bind every Handler to the correct Event emission
+     * Bind every handler to the correct event emitter
      *
      * @memberof EventManager
      */
@@ -66,8 +66,8 @@ class EventManager extends Base {
     }
 
     /**
-     * Register a listener for this event.
-     * Add the Event object in the array of Event object for each events.
+     * Register a listener for the given event.
+     * Add the event object in the array of event objects for each event.
      *
      * @param {Object<Event>} event - Event Object
      * @memberof EventManager
@@ -86,9 +86,9 @@ class EventManager extends Base {
     }
 
     /**
-     * Register an Handler.
-     * Remove the current event listening if the handler already exists.
-     * Create a new Handler from the array of listeners for this event.
+     * Register a handler.
+     * Remove the current event listener if the handler already exists.
+     * Create a new handler from the array of listeners for the given event.
      *
      * @param {String} event - The Event name
      * @returns {Object} The new Handler created
@@ -111,7 +111,7 @@ class EventManager extends Base {
 
     /**
      * Register an event.
-     * Recreate an handler and bind an handler to the event emission.
+     * Recreate a handler and bind it to the event emitter.
      *
      * @param {String} event - The Event name to register
      * @returns {Object} The Handler Object
@@ -124,8 +124,8 @@ class EventManager extends Base {
     }
 
     /**
-     * Create one Handler function from all listeners.
-     * Check if the module/event is globally disabled
+     * Create a handler function from all listeners.
+     * Checks if the module/event is globally disabled.
      *
      * @param {Array} events - All listeners for this event
      * @param {Array} args - All arguments possibly passed to an event
@@ -153,10 +153,10 @@ class EventManager extends Base {
     }
 
     /**
-     * Root Function for all events.
-     * Try to resolve guild Object and guildConfig.
-     * If needed, test if the user is a bot and stop the event, test if the guild is blacklisted and stop the event.
-     * Test if the event is disabled in that guild or not.
+     * Root function for all events.
+     * Try to resolve the guild object and guildConfig.
+     * If needed, test if the user is a bot or the guild is blacklisted and stop the event.
+     * Check if the event is disabled in the given guild or not.
      *
      * @param {Array} args - All arguments possibly passed to an event
      * @returns {Promise<GuildConf?>}
@@ -204,7 +204,7 @@ class EventManager extends Base {
     }
 
     /**
-     * Check if the event is server disabled
+     * Check if the event is disabled on the given guild
      *
      * @param {Object} guildConf - The guild Config object
      * @returns {Boolean} True if disabled / Undefined if not
@@ -216,7 +216,7 @@ class EventManager extends Base {
 
     /**
      * Unregister a listener.
-     * Recreate the handler and re listen to the updated handler
+     * Recreate the handler and listen to the updated handler
      *
      * @param {String} event - Name of the event
      * @param {String} label - Name of the listener
@@ -244,7 +244,7 @@ class EventManager extends Base {
     }
 
     /**
-     * Unregister an Handler. Unregister the event and delete the handler
+     * Unregister a handler. Unregister the event and delete the handler.
      *
      * @param {String} event - Name of the event
      * @returns {Boolean} True if worked / False if event doesn't exist
@@ -260,8 +260,8 @@ class EventManager extends Base {
     }
 
     /**
-     * Unregister one event without deleting the handler.
-     * Just stop listening to the event emission
+     * Unregister the given event without deleting the handler.
+     * Just stop listening to the event emitter.
      *
      * @param {String} event - Name of the event
      * @returns {Boolean} True if worked / False if event doesn't exist

@@ -3,12 +3,7 @@
 import util from 'util';
 
 /**
- * Base Class with default methods used by all Commands / Modules / Events
- * toString
- * toJson
- * inspect
- *
- * Based of Eris.Base
+ * Base Class with default methods used by all Commands / Modules / Events. (Based on Eris.Base)
  *
  * @author KhaaZ
  *

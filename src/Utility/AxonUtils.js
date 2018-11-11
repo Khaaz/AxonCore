@@ -15,8 +15,8 @@ import Enums from './Enums';
  */
 class AxonUtils {
     /**
-     *Creates an instance of AxonUtils.
-
+     * Creates an AxonUtils instance.
+     *
      * @param {Object<AxonClient>} axon
      *
      * @prop {Object<AxonClient>} axon - Axon Client [GETTER: _axon]
@@ -61,8 +61,8 @@ class AxonUtils {
     //
 
     /**
-     * Triger an Axon Webhook
-     * Works directly with axon._configs._tokens [GETTER: axon.webhooks]
+     * Triger an Axon Webhook.
+     * Works directly with axon._configs._tokens. [GETTER: axon.webhooks]
      *
      * @param {String} type - Type of the webhook [status, loader, error, misc]
      * @param {Object} embed - Embed object
@@ -93,7 +93,7 @@ class AxonUtils {
     //
 
     /**
-     * Check if the user has correct perm in targeted channel
+     * Check if the given user has correct permissions in targeted channel.
      *
      * @param {Object<Channel>} channel - Channel object
      * @param {Array<String>} permissions - List of permissions to test
@@ -111,7 +111,7 @@ class AxonUtils {
     }
 
     /**
-     * List all missing perms for a user
+     * List all missing permissions of the given user.
      *
      * @param {Object<Member>} member
      * @param {Array<String>} [permissions=[]] - List of permissions to test
@@ -146,7 +146,7 @@ class AxonUtils {
     }
 
     /**
-     * Check if the user is bot owner
+     * Check if the user is a bot owner.
      *
      * @param {String} uID - the user ID
      * @returns {Boolean}
@@ -157,7 +157,7 @@ class AxonUtils {
     }
 
     /**
-     * Check if the user is bot admin
+     * Check if the user is a bot admin.
      *
      * @param {String} uID - the user ID
      * @returns {Boolean}
@@ -168,7 +168,7 @@ class AxonUtils {
     }
 
     /**
-     * Check if the user is bot staff
+     * Check if the user is part of the bot staff.
      *
      * @param {String} uID - the user ID
      * @returns {Boolean}
@@ -184,7 +184,7 @@ class AxonUtils {
     }
 
     /**
-     * Check is the user is an Admin
+     * Check is the user is an admin.
      *
      * @param {Object<Member>} member - The member object
      * @returns {Boolean} True if admin / False if not
@@ -200,7 +200,7 @@ class AxonUtils {
     }
 
     /**
-     * Check if the user is a mod or higher (admins are always mod)
+     * Check if the user is a moderator or higher. Admins are also moderators.
      *
      * @param {Object<Member>} member - The member object
      * @param {Object} guildConf - The guild Config from the DB
@@ -228,8 +228,8 @@ class AxonUtils {
 
     /**
      * Send a message.
-     * Check for bot permissions + message/embed length
-     * Doesn't support file
+     * Checks for bot permissions + message/embed length.
+     * Doesn't support file uploads.
      *
      * @param {Object<Channel>} channel - The channel Object
      * @param {Object/String} content - Message content, String or Embed Object
@@ -302,8 +302,8 @@ class AxonUtils {
     }
 
     /**
-     * Edit a message
-     * Check for bot permissions + message embed/length
+     * Edit a message.
+     * Checks for bot permissions + message embed/length.
      *
      * @param {Object<Message>} message - The message object to edit
      * @param {Object/String} content - Object (embed) or String
@@ -357,7 +357,7 @@ class AxonUtils {
     }
 
     /**
-     * DM targeted user if the bot is able to retrieve DM channel.
+     * Message the targeted user if the bot is able to retrieve their DM channel.
      * Reject promise if not
      *
      * @param {Object<User>} user - User object to get the DM channel
@@ -373,8 +373,8 @@ class AxonUtils {
     }
 
     /**
-     * Send an error message. Add the error emote to the content
-     * Check for sendMessage perms
+     * Send an error message. Adds an error emote to the content.
+     * Checks for sendMessage permission.
      *
      * @param {Object<Channel>} channel - The channel Object
      * @param {String} content - Error message content (String only)
@@ -387,8 +387,8 @@ class AxonUtils {
     }
 
     /**
-     * Send a success message. Add the success emote to the content
-     * Check for sendMessage perms
+     * Send a success message. Adds a success emote to the content.
+     * Checks for sendMessage perms.
      *
      * @param {Object<Channel>} channel - The channel Object
      * @param {String} content - Error message content (String only)
@@ -401,8 +401,8 @@ class AxonUtils {
     }
 
     /**
-     * Handle errors (send error message/log)
-     * Call sendError
+     * Handles errors and sends an error message/log.
+     * Calls sendError().
      *
      * @param {Object<Message>} msg - The message Object
      * @param {Object<Error>} err - The error message

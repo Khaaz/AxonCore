@@ -2,7 +2,7 @@ import DefLogger from './DefLogger';
 
 /**
  * Logger Handler
- * Use require to dynamically load a Logger regarding dependencies
+ * Use require to dynamically load a Logger depending on installed dependencies.
  *
  * @author Eleos, KhaaZ
  *
@@ -17,7 +17,7 @@ class LoggerHandler {
             case 0:
             default: {
                 Logger = DefLogger;
-                Logger.info('Logger: Default Logger.');
+                Logger.info('Selected Logger: Default Logger.');
                 break;
             }
 
@@ -25,7 +25,7 @@ class LoggerHandler {
             case 1: {
                 try {
                     Logger = require('./ChalkLogger').default;
-                    Logger.info('Logger: Chalk Logger.');
+                    Logger.info('Selected Logger: Chalk Logger.');
                 } catch (err) {
                     Logger = DefLogger;
                     Logger.warn('The specified logger is missing dependencies, the default logger will be used instead.');
@@ -38,11 +38,11 @@ class LoggerHandler {
             case 2: {
                 try {
                     Logger = require('./SignaleLogger').default;
-                    Logger.info('Logger: Signale Logger.');
+                    Logger.info('Selected Logger: Signale Logger.');
                 } catch (err) {
                     Logger = DefLogger;
                     Logger.warn('The specified logger is missing dependencies, the default logger will be used instead.');
-                    Logger.info('Logger: Default Logger.');
+                    Logger.info('Selected Logger: Default Logger.');
                 }
                 break;
             }

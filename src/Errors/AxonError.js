@@ -1,9 +1,7 @@
 'use strict';
 
 /**
- * Custom error with correct formatting and argument
- * Better error tracking
- * - Error thrown on a Client error (general error)
+ * Custom error with better formatting, arguments and error tracking. Used for errors thrown by the client. (general error)
  *
  * @author KhaaZ
  *
