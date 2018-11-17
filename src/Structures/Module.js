@@ -108,6 +108,10 @@ class Module extends Base {
      * @memberof Module
      */
     initAllCommands(commands) {
+        if (commands.default) {
+            this.Logger.error(`[Module(${this.label})] Commands: No commands found.`);
+            return;
+        }
         for (const [, Value] of Object.entries(commands)) {
             const newCmd = new Value(this);
             if (newCmd.hasSubcmd) {
@@ -128,6 +132,10 @@ class Module extends Base {
      * @memberof Module
      */
     initAllEvents(events) {
+        if (events.default) {
+            this.Logger.error(`[Module(${this.label})] Events: No events found.`);
+            return;
+        }
         for (const [, Value] of Object.entries(events)) {
             const newEvent = new Value(this);
             this.registerEvent(newEvent);
@@ -276,7 +284,7 @@ class Module extends Base {
         if (this.schemas.has(key)) {
             throw new AxonError(`[Module](${this.label}) - Schemas: ${key} - You have already registered a schema in this module.`, 'INIT');
         }
-        this.schemas(key, schema);
+        this.schemas.set(key, schema);
         return true;
     }
 

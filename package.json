@@ -26,6 +26,7 @@
     "signale": "^1.3.0"
   },
   "main": "./index.js",
+  "types": "./index.d.ts",
   "scripts": {
     "lint": "eslint .",
     "test": "eslint src *.js",
