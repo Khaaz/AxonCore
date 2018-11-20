@@ -534,11 +534,10 @@ class AxonClient extends EventEmitter {
      * Set the bot status.
      * Default method. Overridden by initStatus in child.
      *
-     * @returns {Promise}
      * @memberof AxonClient
      */
     initStatus() {
-        return this.client.editStatus(null, {
+        this.client.editStatus(null, {
             name: `AxonCore | ${this.params.prefix[0]}help`,
             type: 0,
         });
