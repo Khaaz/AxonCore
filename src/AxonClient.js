@@ -117,7 +117,7 @@ class AxonClient extends EventEmitter {
          * - template
          * - _tokens
          */
-        this.initConfigs(axonOptions); // this._configs [GETTER - this.configs]
+        this._initConfigs(axonOptions); // this._configs [GETTER - this.configs]
 
         /**
          * Initialise CORE
@@ -150,7 +150,7 @@ class AxonClient extends EventEmitter {
          * - owners
          * - admins
          */
-        this.initOwners(axonOptions); // this.staff
+        this._initStaff(axonOptions); // this.staff
 
         /**
          * Bot settings
@@ -213,7 +213,7 @@ class AxonClient extends EventEmitter {
     // ****** INSTANCE INIT METHOD (AXONCLIENT CREATION) ******
     //
 
-    initConfigs({ axonConf, templateConf, tokenConf }) {
+    _initConfigs({ axonConf, templateConf, tokenConf }) {
         this._configs = {};
 
         /** Axon Config */
@@ -243,21 +243,26 @@ class AxonClient extends EventEmitter {
         this.Logger.init('Configs initialised!');
     }
 
-    initOwners({ axonConf: config }) {
+    _initStaff({ axonConf }) {
         this.staff = {};
 
-        this.staff.owners = config.staff.owners.map(o => o.id);
-        if (config.staff.admins) {
-            this.staff.admins = config.staff.admins.map(o => o.id);
+        for (const staff of Object.keys(axonConf.staff)) {
+            this.staff[staff] = axonConf.staff[staff].map(o => o.id);
         }
-
-        this.Logger.init('Owners engaged!');
+        this.Logger.init('Bot-Staff engaged!');
 
         /** Init Bot Staff (custom) */
-        if (this.initStaff) {
-            this.initStaff();
-            this.Logger.init('Staff engaged!');
-        }
+        this.initStaff();
+    }
+
+    /**
+     * Initialise Custom Bot Staff.
+     * This method need to be overridden in child.
+     *
+     * @memberof AxonClient
+     */
+    initStaff() {
+        // Not implemented
     }
 
     //
@@ -290,21 +295,21 @@ class AxonClient extends EventEmitter {
         /**
          * - Global events -
          */
-        this.client.once('ready', this.onReady.bind(this));
+        this.client.once('ready', this._onReady.bind(this));
         // this.client.on('debug', console.log);
 
-        this.client.on('messageCreate', this.onMessageCreate.bind(this));
+        this.client.on('messageCreate', this._onMessageCreate.bind(this));
     }
 
     _init() {
         return new Promise(async(resolve, reject) => {
             try {
                 /** Init Error listeners */
-                this.initListener();
+                this.initErrorListeners();
 
                 /** Init modules, commands */
                 console.log(' ');
-                this.initAllModules(this._tempModules); // load modules
+                this._initAllModules(this._tempModules); // load modules
                 delete this._tempModules;
                 console.log(' ');
 
@@ -315,10 +320,7 @@ class AxonClient extends EventEmitter {
                 await this.initAxon(); // load blacklisted users - guild
 
                 /** Additional */
-                if (this.init) { // if child class has init
-                    await this.init();
-                    this.Logger.init('Personal init!');
-                }
+                await this.init();
 
                 resolve(true);
             } catch (err) {
@@ -328,18 +330,30 @@ class AxonClient extends EventEmitter {
     }
 
     /**
+     * Custom init method.
+     * This method need to be overridden in child.
+     *
+     * @returns {Promise}
+     * @memberof AxonClient
+     */
+    init() {
+        return Promise.resolve;
+    }
+
+    /**
      * Call Init Method on Ready event.
      * Bind All Handlers to the event emitter.
      *
      * @memberof AxonClient
      */
-    onReady() {
+    _onReady() {
         this.Logger.axon('=== BotClient Ready! ===');
         this.client.ready = true;
         // Bind Handlers to Events
         this.EventManager.bindHandlers();
         /** Status */
-        this.initStatus(); // execute default status function in Axon or override
+        this.initStatus() // execute default status function in Axon or override
+            .then(() => this.Logger.axon('Status setup!'));
 
         this.AxonUtils.triggerWebhook('status', {
             color: 2067276,
@@ -350,10 +364,11 @@ class AxonClient extends EventEmitter {
 
     /**
      * Initialize error listeners and webhooks.
+     * This method can be overriden in child.
      *
      * @memberof AxonClient
      */
-    initListener() {
+    initErrorListeners() {
         process.on('uncaughtException', (err) => {
             this.Logger.emerg(err.stack);
 
@@ -404,7 +419,7 @@ class AxonClient extends EventEmitter {
      * @param {Object} modules - Object of Modules file
      * @memberof AxonClient
      */
-    initAllModules(modules) {
+    _initAllModules(modules) {
         for (const [, Value] of Object.entries(modules)) {
             const newModule = new Value(this);
             this.registerModule(newModule);
@@ -519,15 +534,14 @@ class AxonClient extends EventEmitter {
      * Set the bot status.
      * Default method. Overridden by initStatus in child.
      *
+     * @returns {Promise}
      * @memberof AxonClient
      */
     initStatus() {
-        this.client.editStatus(null, {
+        return this.client.editStatus(null, {
             name: `AxonCore | ${this.params.prefix[0]}help`,
             type: 0,
         });
-
-        this.Logger.axon('Status setup!');
     }
 
     //
@@ -546,7 +560,7 @@ class AxonClient extends EventEmitter {
      * @param {Object<Message>} msg - The message object
      * @memberof AxonClient
      */
-    async onMessageCreate(msg) {
+    async _onMessageCreate(msg) {
         if (!this.client.ready) {
             return;
         }
@@ -683,7 +697,7 @@ class AxonClient extends EventEmitter {
         }
 
         /** Resolve command (and subcommand if needed) - exec command if the command was resolved */
-        const command = this.resolveCommand(label, args, true);
+        const command = this.resolveCommand(label, args); // doesn't pass guildConf so it doesn't check for server disabled
         if (!command) { // command doesn't exist or not globally enabled
             return;
         }
@@ -817,6 +831,7 @@ class AxonClient extends EventEmitter {
     /**
      * Send full help in DM.
      * Doesn't show commands that the user can't execute.
+     * This method can be overridden in child.
      *
      * @param {Object<Message>} msg - The message object
      * @return {Promise<Message>} Message Object
@@ -993,11 +1008,11 @@ class AxonClient extends EventEmitter {
      *
      * @param {String} label - the command label/ command alias
      * @param {Array<String>} args - Array of arguments
-     * @param {Object} guildConf - Guild config from DB
-     * @returns {Object?} The command object / Undefined if the command doesn't exist
+     * @param {Object} [guildConf=false] - Guild config from DB
+     * @returns {Object?} The command object or undefined if the command doesn't exist or is not enabled
      * @memberof AxonClient
      */
-    resolveCommand(label, args, guildConf) {
+    resolveCommand(label, args, guildConf = false) {
         label = this.commandAliases.get(label);
 
         let command = this.commands.get(label);
@@ -1006,8 +1021,13 @@ class AxonClient extends EventEmitter {
             return undefined;
         }
 
-        if (guildConf && ((this._isModuleDisabled(command, guildConf) && !command.module.serverBypass) || (this._isCommandDisabled(command, guildConf) && !command.serverBypass))) { // check module/command server disabled
-            return null;
+        if (guildConf
+            && (
+                (this._isModuleDisabled(command, guildConf) && !command.module.serverBypass) // check module/command server disabled
+                || (this._isCommandDisabled(command, guildConf) && !command.serverBypass)
+            )
+        ) {
+            return undefined;
         }
 
         if (command.hasSubcmd) {

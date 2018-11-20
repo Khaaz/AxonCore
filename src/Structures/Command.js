@@ -340,6 +340,11 @@ class Command extends Base {
      * @memberof Command
      */
     sendHelp({ msg, guildConf }) {
+        // If a sendHelp method exists in the client, uses it instead.
+        if (this.axon.sendHelp) {
+            return this.axon.sendHelp(this, msg);
+        }
+
         const prefix = (guildConf && guildConf.prefix.length > 0) ? guildConf.prefix[0] : this.axon.params.prefix[0];
 
         const embed = {};
@@ -400,7 +405,7 @@ class Command extends Base {
             });
         }
 
-        return (this.axon.sendHelp ? this.axon.sendHelp(this, msg) : this.sendMessage(msg.channel, { embed }));
+        return this.sendMessage(msg.channel, { embed });
     }
 
     //

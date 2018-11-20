@@ -45,7 +45,7 @@ class Client extends AxonClient {
         // called after ready event
         // overrides default editStatus
         // used to setup custom status
-        this.client.editStatus(null, {
+        return this.client.editStatus(null, {
             name: `AxonCore | ${this.params.prefix[0]}help`,
             type: 0,
         });
