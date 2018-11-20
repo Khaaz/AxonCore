@@ -1,7 +1,15 @@
 language: node_js
 node_js:
-  - 8
-  - 9
-  - 10
+- 8
+- 9
+- 10
 install: yarn
 cache: yarn
+deploy:
+  provider: npm
+  email: khaaz.dev@gmail.com
+  on:
+    tags: true
+  api_key:
+    secure: oR/1+eZCK1oKAUCFfmLOxJY/RWvzP9S01oCTW0RMtGe/8P5vslmvRZ5MvXEln90uwLqYeu6cQp6fOg4tpjHgwP+NCT0UkgSPo2Xttk4FUNPtbv7gqCF920CkcmAcqB7GNmOCRxYXqgbPzpx8YsIDjAoLoQqFDEfX3kBEQkPIRH/inlJDUvjzTKUz1p7UzeIhIRz204bLJ3EsONPwT9WQqVJbCyqke1Y431S2Cy8r4HLpTbscpvfgt6MlEy0dlGrDw4Uw93sQoXtPBgekwfM+vYd9Zt0alp3nHlIHEaU9JbdIN/1wvotd8QBDg3/vKfDSQ9rcPqT4XJWIDUTFFv60pvjJKQAEa8sLl0Bd4aH/A5LMOINs2XkMXG9A/igXydcvyaK8+eewNq/44Qx4HEl7HVcT/rEtabkOBIa+pKNEgpJHC2taDI22aDKlViSkKfVv347N8uKvkZOL/2LYAa/1WIbFCwwq53+HePuqNnOc6yM593U1ZX8VYK6x9M57CWsYstiiQXTmcOHTcSHSEeOd+Ft3H9tx+wYAkXvkG939CMX0wPAV38dyA61bJHeQ2Koontn/5eirMwlNj27xXBuW05ZlDyaKvIqRYV3ipgMoxveH6+hcVpTJd9toxFX+RhzCoBruU8IknjhYavOV7QFmIL/OPzZRvGmmF5aaofLWCaU=
+  tag: next
