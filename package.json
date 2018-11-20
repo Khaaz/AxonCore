@@ -1,6 +1,6 @@
 {
   "name": "axoncore",
-  "version": "0.9.7",
+  "version": "0.9.8",
   "description": "AxonCore - Bot framework on top of Eris. Client, Command and Event handler.",
   "author": "KhaaZ#0001",
   "link": "https://github.com/Khaazz/AxonCore",
