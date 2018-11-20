@@ -352,8 +352,8 @@ class AxonClient extends EventEmitter {
         // Bind Handlers to Events
         this.EventManager.bindHandlers();
         /** Status */
-        this.initStatus() // execute default status function in Axon or override
-            .then(() => this.Logger.axon('Status setup!'));
+        this.initStatus(); // execute default status function in Axon or override
+        this.Logger.axon('Status setup!');
 
         this.AxonUtils.triggerWebhook('status', {
             color: 2067276,
