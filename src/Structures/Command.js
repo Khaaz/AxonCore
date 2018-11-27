@@ -90,7 +90,7 @@ class Command extends Base {
          * Handle Cooldown
          * User ID => Cooldown
          */
-        this._cooldown = {};
+        this._cooldown = new Map();
 
         /**
          * Shortcut - Reusable class
@@ -237,9 +237,13 @@ class Command extends Base {
         }
 
         /** Test for Cooldown - Send Cooldown message */
-        const cd = this._shouldCooldown(msg);
-        if (typeof (cd) === 'number') {
-            return this.sendCooldown(msg.channel, cd);
+        const [cd, cooldown] = this._shouldCooldown(msg);
+        if (cd) {
+            if (cooldown.post) {
+                cooldown.post = false;
+                return this.sendCooldown(msg.channel, cd);
+            }
+            return Promise.resolve();
         }
 
         if (this.options.deleteCommand) { // delete input
@@ -250,13 +254,13 @@ class Command extends Base {
         if (args.length < this.options.argsMin && this.options.invalidUsage) {
             return this.sendHelp({ msg, args, guildConf })
                 .then(() => {
-                    this._cooldown[msg.author.id] = Date.now();
+                    this._cooldown.set(msg.author.id, { time: Date.now(), post: true });
                 });
         }
 
         return msg.command.execute(message)
             .then(() => {
-                this._cooldown[msg.author.id] = Date.now();
+                this._cooldown.set(msg.author.id, { time: Date.now(), post: true });
             });
     }
 
@@ -308,8 +312,9 @@ class Command extends Base {
         }
 
         /** Test for Cooldown - Send Cooldown message */
-        const cd = this._shouldCooldown(msg);
-        if (typeof (cd) === 'number') {
+        const [cd, cooldown] = this._shouldCooldown(msg);
+        if (cd && cooldown.post) {
+            cooldown.post = false;
             return this.sendCooldown(msg.channel, cd);
         }
 
@@ -317,7 +322,7 @@ class Command extends Base {
         if (args.length < this.options.argsMin && this.options.invalidUsage && !this.options.hidden) {
             return this.sendHelp({ msg, args })
                 .then(() => {
-                    this._cooldown[msg.author.id] = Date.now();
+                    this._cooldown.set(msg.author.id, { time: Date.now(), post: true });
                 });
         }
 
@@ -327,7 +332,7 @@ class Command extends Base {
 
         return msg.command.execute(message)
             .then(() => {
-                this._cooldown[msg.author.id] = Date.now();
+                this._cooldown.set(msg.author.id, { time: Date.now(), post: true });
             });
     }
 
@@ -420,23 +425,23 @@ class Command extends Base {
      * @memberof Command
      */
     _shouldCooldown(msg) {
-        const cooldown = this._cooldown[msg.author.id];
+        const cooldown = this._cooldown.get(msg.author.id);
 
         // No cooldown registered yet
         if (!cooldown) {
-            return false; // doesn't cooldown
+            return []; // doesn't cooldown
         }
 
         // Time spent since last uses <= cooldown chose for that command
-        const curCD = Date.now() - cooldown;
+        const curCD = Date.now() - cooldown.time;
         if (curCD <= this.options.cooldown) {
-            return curCD; // Return time left (does cooldown)
+            return [curCD, cooldown]; // Return time left (does cooldown)
         }
 
         // Delete current time for this user.
-        delete this._cooldown[msg.author.id];
+        this._cooldown.delete(msg.author.id);
 
-        return false; // Doesn't cooldown
+        return []; // Doesn't cooldown
     }
 
     /**
