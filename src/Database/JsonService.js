@@ -1,5 +1,5 @@
 'use strict';
-import db from './JSON/functions';
+import db from './functions';
 import { resolve } from 'url';
 class JsonService {
     /**
