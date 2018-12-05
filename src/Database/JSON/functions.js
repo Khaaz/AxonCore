@@ -4,7 +4,7 @@ import fs from 'fs';
 const schematic = require('./AxonSchem.json');
 async function fetchDatabase () {
         var guilds = {};
-        await fs.readdir('./database', (err, files) => {
+        await fs.readdir('./database/guilds', (err, files) => {
             if(err) return undefined;
             let guildFiles = files.filter(file => file.split(".").pop() == "json");
             var i = 0;
