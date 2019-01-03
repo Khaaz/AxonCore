@@ -446,8 +446,8 @@ class AxonClient extends EventEmitter {
             }
             this.commands.set(label, cmd); // Add the command in the commands Collection (references to module.commands.get(label))
 
-            if(!cmd.aliases) { // If there is no aliases for the command
-                this.commandAliases.set(label, label) // Set the aliases as the label of the command.
+            if (!cmd.aliases) { // If there is no aliases for the command
+                this.commandAliases.set(label, label); // Set the aliases as the label of the command.
             }
 
             for (const alias of cmd.aliases) {
