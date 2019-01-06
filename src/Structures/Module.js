@@ -207,6 +207,15 @@ class Module extends Base {
             return false;
         }
 
+        // No aliases, or aliases does not include the label.
+        if (!command.aliases) {
+            command.aliases = [command.label];
+        } else if (Array.isArray(command.aliases) && !command.aliases.includes(command.label)) {
+            command.aliases.push(command.label);
+        } else if (!Array.isArray(command.aliases) && command.aliases !== command.label) {
+            command.aliases = [command.aliases, command.label];
+        }
+
         this.commands.set(command.label, command); // add the command to the Map of commands.
         this.Logger.initCommand(command);
         return true;
@@ -236,6 +245,15 @@ class Module extends Base {
         if (!EnsureInterface.checkCommandAttributes(this, subCommand)) {
             this.Logger.error(`[Module(${this.label})] Command: ${command.label} ${subCommand.label} - Invalid attributes format (permissions).`);
             return false;
+        }
+
+        // No aliases, or aliases does not include the label.
+        if (!subCommand.aliases) {
+            subCommand.aliases = [subCommand.label];
+        } else if (Array.isArray(subCommand.aliases) && !subCommand.aliases.includes(subCommand.label)) {
+            subCommand.aliases.push(subCommand.label);
+        } else if (!Array.isArray(subCommand.aliases) && subCommand.aliases !== subCommand.label) {
+            subCommand.aliases = [subCommand.aliases, subCommand.label];
         }
 
         for (const alias of subCommand.aliases) {
