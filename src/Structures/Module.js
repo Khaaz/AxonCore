@@ -207,6 +207,14 @@ class Module extends Base {
             return false;
         }
 
+        if (!command.aliases) {
+            command.aliases = command.label;
+        } else if (command.aliases && Array.isArray(command.aliases) && !command.aliases.includes(command.label)) {
+            command.aliases.push(command.label);
+        } else if (command.aliases && !Array.isArray(command.aliases) && command.aliases !== command.label) {
+            command.aliases = [command.aliases, command.label];
+        }
+
         this.commands.set(command.label, command); // add the command to the Map of commands.
         this.Logger.initCommand(command);
         return true;
@@ -238,10 +246,19 @@ class Module extends Base {
             return false;
         }
 
+        if (!subCommand.aliases) { // If there is no aliases for the command
+            command.subCommandsAliases.set(subCommand.label, subCommand.label); // Set the aliases as the label of the command.
+        } else if (subCommand.alias && !Array.isArray(subCommand.aliases) && subCommand.aliases !== subCommand.label) {
+            command.subCommandsAliases.set(subCommand.label, subCommand.label);
+        }
+
         for (const alias of subCommand.aliases) {
             if (command.subCommandsAliases.has(alias)) {
                 this.Logger.warn(`[Module(${this.label})] Command: ${command.label} ${subCommand.label} - Alias: ${alias} already registered!.`);
                 break;
+            }
+            if (subCommand.aliases.includes(subCommand.label)) {
+                command.subCommandsAliases.set(subCommand.label, subCommand.label);
             }
             command.subCommandsAliases.set(alias, subCommand.label); // add the commands aliases in aliases Map (references to the command label)
         }
