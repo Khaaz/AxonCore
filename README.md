@@ -34,6 +34,18 @@
   - **Logging**: Colorful custom logging.
   - **Customizable**: Customize error messages easily, help command, bot staff, etc... 
 
+## Notes:
+
+This framework supports a custom logger. You can take full benefits of this by installing [Chalk](https://www.npmjs.com/package/chalk) or [Signale](https://www.npmjs.com/package/signale) and choosing to use it in the config file.  
+[PM2](https://www.npmjs.com/package/pm2) is also recommended.  
+This framework is designed to work with [Moongose](https://www.npmjs.com/package/mongoose) which you can install and use directly without any modification (just by selecting it in the config file).  
+In the future more database clients could be added.  
+
+[Eris](https://www.npmjs.com/package/eris) is necessary to use this framework. However you can use any fork. [KhaaZ's fork](https://github.com/Khaazz/eris) is recommended as it only remove selfbot property from `Eris.Client` and prefix token as `_token`.  
+
+[ESM](https://www.npmjs.com/package/esm) is necessary to run this framework. It allows to take full benefits of ES6 modules by making possible to use it.  
+See [here](https://www.npmjs.com/package/esm#getting-started) on how to use ESM.  
+
 ## Documentation:
 
 All the documentation and instructions on how to set it up can be found [here](https://khaazz.github.io/#/).  
