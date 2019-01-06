@@ -261,9 +261,6 @@ class Module extends Base {
                 this.Logger.warn(`[Module(${this.label})] Command: ${command.label} ${subCommand.label} - Alias: ${alias} already registered!.`);
                 break;
             }
-            if (subCommand.aliases.includes(subCommand.label)) {
-                command.subCommandsAliases.set(subCommand.label, subCommand.label);
-            }
             command.subCommandsAliases.set(alias, subCommand.label); // add the commands aliases in aliases Map (references to the command label)
         }
 
