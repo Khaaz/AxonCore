@@ -207,11 +207,12 @@ class Module extends Base {
             return false;
         }
 
+        // No aliases, or aliases does not include the label.
         if (!command.aliases) {
-            command.aliases = command.label;
-        } else if (command.aliases && Array.isArray(command.aliases) && !command.aliases.includes(command.label)) {
+            command.aliases = [command.label];
+        } else if (Array.isArray(command.aliases) && !command.aliases.includes(command.label)) {
             command.aliases.push(command.label);
-        } else if (command.aliases && !Array.isArray(command.aliases) && command.aliases !== command.label) {
+        } else if (!Array.isArray(command.aliases) && command.aliases !== command.label) {
             command.aliases = [command.aliases, command.label];
         }
 
@@ -246,10 +247,13 @@ class Module extends Base {
             return false;
         }
 
-        if (!subCommand.aliases) { // If there is no aliases for the command
-            command.subCommandsAliases.set(subCommand.label, subCommand.label); // Set the aliases as the label of the command.
-        } else if (subCommand.alias && !Array.isArray(subCommand.aliases) && subCommand.aliases !== subCommand.label) {
-            command.subCommandsAliases.set(subCommand.label, subCommand.label);
+        // No aliases, or aliases does not include the label.
+        if (!subCommand.aliases) {
+            subCommand.aliases = [subCommand.label];
+        } else if (Array.isArray(subCommand.aliases) && !subCommand.aliases.includes(subCommand.label)) {
+            subCommand.aliases.push(subCommand.label);
+        } else if (!Array.isArray(subCommand.aliases) && subCommand.aliases !== subCommand.label) {
+            subCommand.aliases = [subCommand.aliases, subCommand.label];
         }
 
         for (const alias of subCommand.aliases) {
