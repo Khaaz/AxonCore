@@ -112,7 +112,7 @@ class Module extends Base {
             this.Logger.error(`[Module(${this.label})] Commands: No commands found.`);
             return;
         }
-        for (const [, Value] of Object.entries(commands)) {
+        for (const Value of Object.values(commands)) {
             const newCmd = new Value(this);
             if (newCmd.hasSubcmd) {
                 newCmd.subCommands = new Collection(Command);
@@ -136,7 +136,7 @@ class Module extends Base {
             this.Logger.error(`[Module(${this.label})] Events: No events found.`);
             return;
         }
-        for (const [, Value] of Object.entries(events)) {
+        for (const Value of Object.values(events)) {
             const newEvent = new Value(this);
             this.registerEvent(newEvent);
         }
@@ -167,7 +167,7 @@ class Module extends Base {
             return;
         }
 
-        for (const [, Value] of Object.entries(command.subcmds)) {
+        for (const Value of Object.values(command.subcmds)) {
             const newSubcmd = new Value(this);
             if (!newSubcmd.isSubcmd) {
                 this.Logger.error(`[Module(${this.label})] Command: ${command.label} ${newSubcmd.label} - Couldn't init subcommand: Not a subcommand.`);

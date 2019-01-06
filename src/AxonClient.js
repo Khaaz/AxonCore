@@ -420,7 +420,7 @@ class AxonClient extends EventEmitter {
      * @memberof AxonClient
      */
     _initAllModules(modules) {
-        for (const [, Value] of Object.entries(modules)) {
+        for (const Value of Object.values(modules)) {
             const newModule = new Value(this);
             this.registerModule(newModule);
         }
@@ -463,7 +463,7 @@ class AxonClient extends EventEmitter {
 
         this.modules.set(module.label, module); // Add the module in modules Collection (references to module object)
 
-        for (const [, event] of module.events) {
+        for (const event of module.events.values()) {
             this.EventManager.registerListener(event);
         }
 
@@ -493,11 +493,11 @@ class AxonClient extends EventEmitter {
             this.commands.delete(label); // Remove the command of the commands Collection (references to module.commands.get(label))
         }
 
-        for (const [label, schema] of module.schemas) { // eslint-disable-line
+        for (const label of module.schemas.keys()) {
             this.schemas.delete(label); // Remove the schemas of schemas Collection (references to module object)
         }
 
-        for (const [, event] of module.events) {
+        for (const event of module.events.values()) {
             this.EventManager.unregisterListener(event.eventName, event.label);
         }
 
