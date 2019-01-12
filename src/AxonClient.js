@@ -50,9 +50,9 @@ class AxonClient extends EventEmitter {
      * Creates an AxonClient instance.
      *
      * @param {String} token
-     * @param {Object} options - Eris options
-     * @param {Object} axonOptions - Axon options
-     * @param {Object} modules - Object with all modules to add in the bot
+     * @param {Object} [erisOptions={}] - Eris options
+     * @param {Object} [axonOptions={}] - Axon options
+     * @param {Object} [modules={}] - Object with all modules to add in the bot
      *
      *
      * @prop {Object<Eris.Client>} client - Eris Client [GETER: _client]
@@ -91,7 +91,7 @@ class AxonClient extends EventEmitter {
      *
      * @memberof AxonClient
      */
-    constructor(token, erisOptions, axonOptions, modules) {
+    constructor(token, erisOptions = {}, axonOptions = {}, modules = {}) {
         super();
         /** Cool logging */
         axonOptions.logo ? axonOptions.logo() : logo();
@@ -101,11 +101,13 @@ class AxonClient extends EventEmitter {
          * Internal cache, Major compenents
          */
         /** Logger */
-        this.Logger = axonOptions.logger || LoggerHandler.pickLogger((axonOptions.axonConf.debugMode || defAxonConf.debugMode || false), axonOptions.axonConf);
+        this.Logger = axonOptions.logger || axonOptions.axonConf
+            ? LoggerHandler.pickLogger((axonOptions.axonConf.debugMode || defAxonConf.debugMode || false), axonOptions.axonConf)
+            : LoggerHandler.pickLogger(false, 0);
+
         /** DataModels */
         this.schemas = new Collection(); // Schema label => Schema Object
-        /** DB */
-        this.DBprovider = axonOptions.db || DBHandler.pickDBService(axonOptions, this);
+
         /** Utility */
         this.AxonUtils = new AxonUtils(this);
         this.Utils = axonOptions.utils ? new axonOptions.utils(this) : new Utils(this); // eslint-disable-line
@@ -118,6 +120,9 @@ class AxonClient extends EventEmitter {
          * - _tokens
          */
         this._initConfigs(axonOptions); // this._configs [GETTER - this.configs]
+
+        /** DB */
+        this.DBprovider = axonOptions.db || DBHandler.pickDBService(axonOptions, this);
 
         /**
          * Initialise CORE
@@ -150,19 +155,19 @@ class AxonClient extends EventEmitter {
          * - owners
          * - admins
          */
-        this._initStaff(axonOptions); // this.staff
+        this._initStaff(this.axonConf); // this.staff
 
         /**
          * Bot settings
          * Prefixes - debug - misc
          */
         this.params = {
-            debugMode: axonOptions.axonConf.debugMode || defAxonConf.debugMode || false,
+            debugMode: this.axonConf.debugMode || false,
             prefix: [
-                axonOptions.axonConf.prefix.general || defAxonConf.prefix.general,
+                this.axonConf.prefix.general,
             ],
-            ownerPrefix: axonOptions.axonConf.prefix.owner || defAxonConf.prefix.owner, // meant to be same prefix on all AxonClient instance (global override)
-            adminPrefix: axonOptions.axonConf.prefix.admin || defAxonConf.prefix.admin, // meant to be different prefix on all AxonClient instance (global override)
+            ownerPrefix: this.axonConf.prefix.owner, // meant to be same prefix on all AxonClient instance (global override)
+            adminPrefix: this.axonConf.prefix.admin, // meant to be different prefix on all AxonClient instance (global override)
         };
 
         /**
@@ -171,11 +176,11 @@ class AxonClient extends EventEmitter {
 
         /** Bot informations */
         this.infos = {
-            name: axonOptions.axonConf.general.name || defAxonConf.general.name,
-            description: axonOptions.axonConf.general.description || defAxonConf.general.description,
-            version: axonOptions.axonConf.general.version || defAxonConf.general.version,
-            library: axonOptions.axonConf.general.library || defAxonConf.general.library,
-            owners: Object.values(this._configs.axon.staff.owners).map(o => o.name),
+            name: this.axonConf.general.name,
+            description: this.axonConf.general.description,
+            version: this.axonConf.general.version,
+            library: this.axonConf.general.library,
+            owners: Object.values(this.axonConf.staff.owners).map(o => o.name),
         };
         /** Init infos */
         this.configs.axon.links && (this.infos.links = this.configs.axon.links);
@@ -205,6 +210,10 @@ class AxonClient extends EventEmitter {
         return this._configs._tokens.webhooks;
     }
 
+    get axonConf() {
+        return this._configs.axon;
+    }
+
     get template() {
         return this._configs.template;
     }
@@ -221,7 +230,7 @@ class AxonClient extends EventEmitter {
             this._configs.axon = axonConf;
         } else {
             this._configs.axon = defAxonConf;
-            this.Logger.warn(new AxonError('Couldn\'t init custom axon config (used default values)', 'INIT', 'Configs').stack);
+            this.Logger.error(new AxonError('Couldn\'t init custom axon config (used default values)', 'INIT', 'Configs').stack);
         }
 
         /** Template Config */
@@ -243,7 +252,7 @@ class AxonClient extends EventEmitter {
         this.Logger.init('Configs initialised!');
     }
 
-    _initStaff({ axonConf }) {
+    _initStaff(axonConf) {
         this.staff = {};
 
         for (const staff of Object.keys(axonConf.staff)) {
@@ -337,7 +346,7 @@ class AxonClient extends EventEmitter {
      * @memberof AxonClient
      */
     init() {
-        return Promise.resolve;
+        return Promise.resolve();
     }
 
     /**
@@ -420,6 +429,10 @@ class AxonClient extends EventEmitter {
      * @memberof AxonClient
      */
     _initAllModules(modules) {
+        if (Object.keys(module).length === 0) {
+            this.Logger.warn('No modules given.');
+        }
+
         for (const Value of Object.values(modules)) {
             const newModule = new Value(this);
             this.registerModule(newModule);

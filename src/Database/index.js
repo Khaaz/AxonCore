@@ -14,7 +14,9 @@ class DBHandler {
     static pickDBService(axonOptions, axon) {
         let DBservice;
 
-        switch (axonOptions.axonConf.db) {
+        const db = axonOptions.axonConf ? axonOptions.axonConf.db : 0;
+
+        switch (db) {
             // Json Database
             case 0:
             default: {

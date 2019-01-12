@@ -6,22 +6,22 @@
     },
     
     "prefix": {
-        "general": "e!",
+        "general": "a!",
         "owner": "!!",
-        "admin": "e."
+        "admin": "a."
     },
     
     "staff": {
         "owners": [ 
             {
-                "name": "",
-                "id": ""
+                "name": "Khaaz",
+                "id": "179908288337412096"
             }
         ],
         "admins": [ 
             {
-                "name": "",
-                "id": ""
+                "name": "Khaaz",
+                "id": "179908288337412096"
             }
         ]
     },
