@@ -101,11 +101,6 @@ astral-regex@^1.0.0:
   resolved "https://registry.yarnpkg.com/astral-regex/-/astral-regex-1.0.0.tgz#6c8c3fb827dd43ee3918f27b82782ab7658a6fd9"
   integrity sha512-+Ryf6g3BKoRc7jfp7ad8tM4TtMiaWvbF/1/sQcZPkkS7ag3D5nMBCe2UfOTONtAkaG0tO0ij3C5Lwmf1EiyjHg==
 
-async-limiter@~1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/async-limiter/-/async-limiter-1.0.0.tgz#78faed8c3d074ab81f22b4e985d79e8738f720f8"
-  integrity sha512-jp/uFnooOiO+L211eZOoSyzpOITMXx1rBITauYykG3BRYPu8h0UcxsPNB04RR5vo4Tyz3+ay17tR6JVf9qzYWg==
-
 async@^2.5.0:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/async/-/async-2.6.1.tgz#b245a23ca71930044ec53fa46aa00a3e87c6a610"
@@ -341,16 +336,6 @@ doctrine@^2.1.0:
   integrity sha512-35mSku4ZXK0vfCuHEDAwt55dg2jNajHZ1odvF+8SSr82EsZY4QmXfuWso8oEd8zRhVObSN18aM0CjSdoBX7zIw==
   dependencies:
     esutils "^2.0.2"
-
-eris@^0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/eris/-/eris-0.9.0.tgz#a2796839f7768cd40645c2c6b1bf0c86ba3147f3"
-  integrity sha512-U3/fv/wF2nA7Pc003v2cMXfTXvz8OySZYE21Zpx3ipm5sKbHWjcwDGdNXbp2Nb7fUip/IIjA/5540YDcqyQSvQ==
-  dependencies:
-    ws "^6.0.0"
-  optionalDependencies:
-    opusscript "^0.0.4"
-    tweetnacl "^1.0.0"
 
 escape-string-regexp@^1.0.5, escape-string-regexp@~1.0.5:
   version "1.0.5"
@@ -928,11 +913,6 @@ optionator@^0.8.2:
     type-check "~0.3.2"
     wordwrap "~1.0.0"
 
-opusscript@^0.0.4:
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/opusscript/-/opusscript-0.0.4.tgz#c718edcfdcd2a1f55fadb266dd07268d4a46afde"
-  integrity sha512-bEPZFE2lhUJYQD5yfTFO4RhbRZ937x6hRwBC1YoGacT35bwDVwKFP1+amU8NYfZL/v4EU7ZTU3INTqzYAnuP7Q==
-
 os-tmpdir@~1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/os-tmpdir/-/os-tmpdir-1.0.2.tgz#bbe67406c79aa85c5cfec766fe5734555dfa1274"
@@ -1269,11 +1249,6 @@ tslib@^1.9.0:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.9.3.tgz#d7e4dd79245d85428c4d7e4822a79917954ca286"
   integrity sha512-4krF8scpejhaOgqzBEcGM7yDIEfi0/8+8zDRZhNZZ2kjmHJ4hv3zCbQWxoJGz1iw5U0Jl0nma13xzHXcncMavQ==
 
-tweetnacl@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/tweetnacl/-/tweetnacl-1.0.0.tgz#713d8b818da42068740bf68386d0479e66fc8a7b"
-  integrity sha1-cT2LgY2kIGh0C/aDhtBHnmb8ins=
-
 type-check@~0.3.2:
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/type-check/-/type-check-0.3.2.tgz#5884cab512cf1d355e3fb784f30804b2b520db72"
@@ -1369,13 +1344,6 @@ write@^0.2.1:
   integrity sha1-X8A4KOJkzqP+kUVUdvejxWbLB1c=
   dependencies:
     mkdirp "^0.5.1"
-
-ws@^6.0.0:
-  version "6.1.2"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-6.1.2.tgz#3cc7462e98792f0ac679424148903ded3b9c3ad8"
-  integrity sha512-rfUqzvz0WxmSXtJpPMX2EeASXabOrSMk1ruMOV3JBTBjo4ac2lDjGGsbQSyxj8Odhw5fBib8ZKEjDNvgouNKYw==
-  dependencies:
-    async-limiter "~1.0.0"
 
 xmlcreate@^1.0.1:
   version "1.0.2"
