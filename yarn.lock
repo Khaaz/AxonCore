@@ -359,9 +359,9 @@ doctrine@^2.1.0:
   dependencies:
     esutils "^2.0.2"
 
-"eris@github:khaazz/eris.git#axoncore":
+"eris@git+https://www.github.com/khaazz/eris.git#axoncore":
   version "0.9.0"
-  resolved "https://codeload.github.com/khaazz/eris/tar.gz/c5d5906c6900bbcf48fdb7b30cf0d00608472024"
+  resolved "git+https://www.github.com/khaazz/eris.git#c5d5906c6900bbcf48fdb7b30cf0d00608472024"
   dependencies:
     ws "^6.0.0"
   optionalDependencies:

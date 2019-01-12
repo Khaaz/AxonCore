@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "chalk": "^2.4.2",
-    "eris": "github:khaazz/eris.git#axoncore",
+    "eris": "git+https://www.github.com/khaazz/eris.git#axoncore",
     "eslint": "^5.6.0",
     "jsdoc-to-markdown": "^4.0.1",
     "mongoose": "^5.4.3",
