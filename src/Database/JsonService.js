@@ -1,5 +1,6 @@
 'use strict';
 /* eslint-disable */
+import Manager from './JSON/Manager';
 class JsonService {
     /**
      * Retrieves the axon schema from the DB.
@@ -9,7 +10,7 @@ class JsonService {
      * @memberof MongoService
      */
     static fetchAxon() {
-        //
+        return Manager.fetchAxonSchema();
     }
 
     /**
@@ -21,7 +22,7 @@ class JsonService {
      * @memberof MongoService
      */
     static fetchGuild(gID) {
-        //
+        return Manager.fetchGuild(gID);
     }
 
     /**
@@ -32,11 +33,17 @@ class JsonService {
      * @memberof MongoService
      */
     static initAxon() {
-        //
+        return Manager.fetchDefault();
     }
 
+    /**
+     * @static
+     * @param {String} gID - Guild ID
+     * @returns {Promsie<Object>} Newly created guild
+     */
+
     static initGuild(gID) {
-        //
+        return Manager.createGuild(gID);
     }
 
     /**
@@ -48,7 +55,7 @@ class JsonService {
      * @memberof MongoService
      */
     static updateBlacklistUser(blacklistedUsers) {
-        //
+        return Manager.updateUserBlacklist(blacklistedUsers);
     }
 
     /**
@@ -60,7 +67,7 @@ class JsonService {
      * @memberof MongoService
      */
     static updateBlacklistGuild(blacklistedGuilds) {
-        //
+        return Manager.updateGuildBlacklist(blacklistedGuilds);
     }
 
     /**
@@ -73,7 +80,7 @@ class JsonService {
      * @memberof MongoService
      */
     static updateGuildPrefix(gID, prefixArr) {
-        //
+        return Manager.updateGuildKey(gID, "prefix", prefixArr);
     }
 
     /**
@@ -85,7 +92,7 @@ class JsonService {
      * @memberof MongoService
      */
     static updateModule(gID, modulesArr) {
-        //
+        return Manager.updateGuildKey(gID, "modules", modulesArr);
     }
 
     /**
@@ -97,7 +104,7 @@ class JsonService {
      * @memberof MongoService
      */
     static updateCommand(gID, commandsArr) {
-        //
+        return Manager.updateGuildKey(gID, "commands", commandsArr);
     }
 
     /**
@@ -109,7 +116,7 @@ class JsonService {
      * @memberof MongoService
      */
     static updateEvent(gID, eventsArr) {
-        //
+        return Manager.updateGuildKey(gID, "events", eventsArr);
     }
 
     /**
@@ -121,7 +128,7 @@ class JsonService {
      * @memberof MongoService
      */
     static saveSchema(schema) {
-        //
+        return Manager.updateSchema(schema);
     }
 }
 
