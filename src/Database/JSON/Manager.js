@@ -10,14 +10,6 @@
 
 import fs from 'fs';
 
-String.prototype.toJSON = function () {
-    let string = new String(this);
-    string = JSON.stringify(string);
-    try {
-        return JSON.parse(string);
-    } catch (e) {return string};
-}
-
 class Manager {
     constructor() {
         this.AxonDefault = this.readFile('./AxonSchemaDefault.json').toJSON();
@@ -33,8 +25,8 @@ class Manager {
     }
 
     async fetchGuild(id) {
-        var database = this.readDatabase(1);
-        var guildIds = [];
+        let database = this.readDatabase(1);
+        let guildIds = [];
         
         await database.forEach(g => {
             return guildIds.push(g.id); //Object entries was too large, using old method instead :)
@@ -52,9 +44,9 @@ class Manager {
     }
 
     async updateGuildKey(id, key, value) {
-        var database = this.readDatabase(4);
+        let database = this.readDatabase(4);
         if(!database[id]) return null;
-        var guild = database[id];
+        let guild = database[id];
         guild[key] = value;
         await this.updateGuild(id, guild);
         return this.updateGuildSchema();
@@ -66,27 +58,27 @@ class Manager {
     };
 
     async updateUserBlacklist(arr) {
-        var cache = arr;
+        let cache = arr;
         arr = JSON.stringify(arr);
         await fs.writeFileSync(`./Database/Blacklists/users.json`, arr, (err) => {if (err) return null;});
         return await this.updateAxonSchem(arr, "bannedUsers");
     }
 
     async updateGuildBlacklist(arr) {
-        var cache = arr;
+        let cache = arr;
         arr = JSON.stringify(arr);
         await fs.writeFileSync(`./Database/Blacklists/guilds.json`, arr, (err) => {if (err) return null;});
         return await this.updateAxonSchem(arr, "bannedGuilds");
     }
 
     async updateAxonSchem(arr, key) {
-        var cache = this.Axon;
+        let cache = this.Axon;
         cache[key] = arr;
         await fs.writeFileSync('./AxonSchema.json', cache, (err) => {if (err) return null;});
         return await this.updateAxonSchema();
     }
     async updateGuildSchema() {
-        var guildDatabase = readDatabase(1);
+        let guildDatabase = readDatabase(1);
         await fs.writeFileSync('./GuildSchema.json', guildDatabase, (err) => {if (err) return null;});
         this.GuildSchema = readFile('./GuildSchema.json').toJSON();
         return this.GuildSchema;
@@ -113,16 +105,21 @@ class Manager {
         if(dir.search('.json') == -1) return null;
         if(!fs.existsSync(dir)) return null;
         else {
-            var read = fs.readFileSync(dir).toString();
+            let read = fs.readFileSync(dir).toString();
             return read;
         }
     }
-
+    toJSON(string) {
+        string = JSON.stringify(string);
+        try {
+            return JSON.parse(string);
+        } catch (e) {return string};
+    }
     readDatabase(type) {
         if(type == 1) {
             //Guilds (Array)
-            var database = [];
-            fs.readdir('./Database/Guilds', async (err, files) => {
+            let database = [];
+            util.promisfy(fs.readdir('./Database/Guilds', async (err, files) => {
                 if (err) console.error(err);
                 let guilds = files.filter(f => f.split(".").pop()  === "json");
 
@@ -138,26 +135,26 @@ class Manager {
                         return;
                     };
                 }
-            });
+            }));
             return database;
         }
         if(type == 2) {
             //Blacklisted users.
-            var database = this.readFile('./Database/Blacklists/users.json');
+            let database = this.readFile('./Database/Blacklists/users.json');
             if(this.isCorrupt(database)) {
                 this.updateUserBlacklist([]);
             } else return JSON.parse(database);
         }
         if(type == 3) {
             //Blacklisted guilds.
-            var database = this.readFile('./Database/Blacklists/guilds.json');
+            let database = this.readFile('./Database/Blacklists/guilds.json');
             if(this.isCorrupt(database)) {
                 this.updateUserBlacklist([]);
             } else return JSON.parse(database);
         }
         if(type == 4) {
             //Guilds (Object)
-            var database = [];
+            let database = [];
             fs.readdir('./Database/Guilds', async (err, files) => {
                 if (err) console.error(err);
                 let guilds = files.filter(f => f.split(".").pop()  === "json");
@@ -179,4 +176,4 @@ class Manager {
         }
     }
 }
-export default Manager;
+export default new Manager();
