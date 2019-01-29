@@ -90,17 +90,17 @@ class Prompt {
             }
             this._actualOptions.invalidMessage = this._actualOptions.invalidMessage || (this._actualOptions.allowed && `Invalid usage. You can say: \`\`\`\n${this._actualOptions.allowed.join(', ')}\`\`\``); // Default invalid message
             // Incase it detects invalid usage, it ends the function
-            this._promptEmitter.on('ended', (msg) => resolve(this._onEnded(msg)));
+            this._promptEmitter.once('ended', (msg) => resolve(this._onEnded(msg)));
 
             // When the event timedOut is sent.
-            this._promptEmitter.on('timedOut', () => {
+            this._promptEmitter.once('timedOut', () => {
                 this._onTimeout();
                 reject('Prompt timed out');
             });
 
             // When the prompt ends as "invalid"
 
-            this._promptEmitter.on('invalidEnd', () => reject(this._onInvalidEnd()));
+            this._promptEmitter.once('invalidEnd', () => reject(this._onInvalidEnd()));
             // Bind the events
             this._client.on('messageCreate', this._onMsgCreate.bind(this)); // Bind the event
             setTimeout(() => {
