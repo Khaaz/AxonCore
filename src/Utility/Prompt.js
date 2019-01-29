@@ -71,7 +71,7 @@ class Prompt {
             const allowedWords = [];
             this._actualOptions = options || {};
             for (const value in this._dOptions) {
-                if (!options[value]) {
+                if (!options || !options[value]) {
                     this._actualOptions[value] = this._dOptions[value];
                 }
             }
@@ -93,7 +93,10 @@ class Prompt {
             this._promptEmitter.on('ended', (msg) => resolve(this._onEnded(msg)));
 
             // When the event timedOut is sent.
-            this._promptEmitter.on('timedOut', () => reject(this._onTimeout()));
+            this._promptEmitter.on('timedOut', () => {
+                this._onTimeout();
+                reject('Prompt timed out');
+            });
 
             // When the prompt ends as "invalid"
 
@@ -114,42 +117,21 @@ class Prompt {
      *
      * @param {Object} msg The message object to check against.
      */
-    async _checker(msg) {
+    _checker(msg) {
         if (!this._actualOptions || !this._actualOptions.allowed) { // Options does not have allowed
-            return this._promptEmitter.emit('ended', msg);// End the prompt successfully.
-        } else if (this._actualOptions.allowed) { // If options allowed, and they include (because its a array) the message content
+            return true;// End the prompt successfully.
+        }
+        if (this._actualOptions.allowed) { // If options allowed, and they include (because its a array) the message content
             if (this._actualOptions.allowedWildcard === true && this._actualOptions.allowed) {
                 for (const allowed of this._actualOptions.allowed) {
-                    if (this._actualOptions.caseInsensitive === true && msg.content.includes(allowed)) {
-                        return this._promptEmitter.emit('ended', msg);
-                    } else if (msg.content.includes(allowed)) {
-                        return this._promptEmitter.emit('ended', msg);
+                    if ((this._actualOptions.caseInsensitive === true && msg.content.toLowerCase().includes(allowed)) || msg.content.includes(allowed)) {
+                        return true;
                     }
                 }
-            } else if (this._actualOptions.allowedWildcard === true && !this._actualOptions.allowed) {
-                throw new Error('Invalid Usage of Prompt. options.allowedWildcard requires options.allowed');
-            } else if (this._actualOptions.caseInsensitive && this._actualOptions.allowed.includes(msg.content.toLowerCase())) {
-                return this._promptEmitter.emit('ended', msg);// End the prompt successfully.
-            } else if (this._actualOptions.allowed.includes(msg.content)) {
-                return this._promptEmitter.emit('ended', msg); // End the prompt successfully.
+            } else if ((this._actualOptions.caseInsensitive && this._actualOptions.allowed.includes(msg.content.toLowerCase())) || this._actualOptions.allowed.includes(msg.content)) {
+                return true;// End the prompt successfully.
             } else {
-                if (!this._actualOptions || !this._actualOptions.allowed) { // If no options, or they do not include allowed.
-                    return; // Stop the event.
-                }
-                if (this._actualOptions.resendWhenInvalid) { // If the prompt is to resend when it is invalid
-                    this._mess.delete(); // Delete the prompt
-                    this._mess = await this._axon.AxonUtils.sendMessage(msg.channel, this._prompt); // resend the prompt
-                    return; // Stop the event right here.
-                }
-                if (this._actualOptions.invalidMessageDelete) { // If the user wants it deleted after a certain amount of time
-                    const message = await this._axon.AxonUtils.sendMessage(msg.channel, this._actualOptions.invalidMessage); // Create the invalid message
-                    await Utils.sleep(this._actualOptions.invalidMessageDelete); // Pause for the time the user wants the message to stay up
-                    message.delete(); // Delete the message
-                    return this._promptEmitter.emit('invalidEnd'); // End the prompt as "invalid"
-                } else {
-                    this._axon.AxonUtils.sendMessage(msg.channel, this._actualOptions.invalidMessage); // Create the invalid message
-                    return this._promptEmitter.emit('invalidEnd'); // End the prompt as "invalid"
-                }
+                return false;
             }
         }
     }
@@ -160,7 +142,6 @@ class Prompt {
         }
         this._client.off('messageCreate', this._onMsgCreate);
         this._ended = true; // Set ended to true
-        return 'Invalid usage found. Prompt ended.'; // Throw a error
     }
 
     _onEnded(msg) {
@@ -198,7 +179,31 @@ class Prompt {
             return; // Stop
         }
         if (msg.author.id === this._userID && msg.channel.id === this._channel.id) { // If the author id and channel ids match
-            this._checker(msg);
+            const checked = this._checker(msg);
+            if (checked === true) {
+                this._promptEmitter.emit('ended', msg);
+            } else if (checked === false) {
+                this._promptEmitter.emit('invalidEnd');
+                /* eslint-disable */
+            } else {
+                if (!this._actualOptions || !this._actualOptions.allowed) { // If no options, or they do not include allowed.
+                    return; // Stop the event.
+                }
+                if (this._actualOptions.resendWhenInvalid) { // If the prompt is to resend when it is invalid
+                    this._mess.delete(); // Delete the prompt
+                    this._mess = await this._axon.AxonUtils.sendMessage(msg.channel, this._prompt); // resend the prompt
+                    return; // Stop the event right here.
+                }
+                if (this._actualOptions.invalidMessageDelete) { // If the user wants it deleted after a certain amount of time
+                    const message = await this._axon.AxonUtils.sendMessage(msg.channel, this._actualOptions.invalidMessage); // Create the invalid message
+                    await Utils.sleep(this._actualOptions.invalidMessageDelete); // Pause for the time the user wants the message to stay up
+                    message.delete(); // Delete the message
+                    return this._promptEmitter.emit('invalidEnd'); // End the prompt as "invalid"
+                } else {
+                    this._axon.AxonUtils.sendMessage(msg.channel, this._actualOptions.invalidMessage); // Create the invalid message
+                    return this._promptEmitter.emit('invalidEnd'); // End the prompt as "invalid"
+                }
+            } /* eslint-enable */
         }
     }
 }
