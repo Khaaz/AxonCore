@@ -1,4 +1,4 @@
-import { Command, Prompt, Resolver } from '../../../../..';
+import { Command, Prompt  } from '../../../../..';
 
 class Wave extends Command {
     constructor(module) {
@@ -18,6 +18,7 @@ class Wave extends Command {
     }
     async execute({ msg, args }) {
         const Util = this.Utils;
+        const Resolver = this.Resolver;
         if (!args[0]) {
             const prompt = new Prompt(this.axon, msg.author.id, msg.channel, {
                 timeout: 10000,
@@ -39,17 +40,17 @@ class Wave extends Command {
                 const username = (user.guild && user.nick) || (user.guild && `${user.username}#${user.discriminator}`) || `${user.username}#${user.discriminator}`;
                 return this.sendMessage(msg.channel, `*Waves to ${username}*`);
             } catch (err) {
-                if (err === 'Prompt timed out' || err === 'Invalid usage found. Prompt ended.') {
+                if (err.message === 'Prompt timed out' || err.message === 'Invalid usage found. Prompt ended.') {
                     return;
                 }
-                return this.sendMessage(msg.channel, `Error: \`\`\`js\n${err}\`\`\``);
+                return this.sendError(msg.channel, err);
             }
         } else {
             try {
                 let user = Resolver.member(msg.channel.guild, args.join(' ')) || Resolver.user(this.axon.client, args.join(' '));
                 if (!user) {
                     if (Util.id.test(args[0])) {
-                        user = await this.axon.client.getRESTUser(args[0]);
+                        user = await this.bot.getRESTUser(args[0]);
                     } else {
                         return this.sendMessage(msg.channel, 'I can\'t wave to someone who does not exist.');
                     }
@@ -62,7 +63,7 @@ class Wave extends Command {
                         return this.sendMessage(msg.channel, 'I can\'t wave to someone who does not exist.');
                     }
                 }
-                return this.sendMessage(msg.channel, `Error: \`\`\`js\n${err}\`\`\``);
+                return this.sendError(msg.channel, `Error: \`\`\`js\n${err.message}\`\`\``);
             }
         }
     }
