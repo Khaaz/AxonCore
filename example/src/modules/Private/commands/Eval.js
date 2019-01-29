@@ -2,8 +2,7 @@
 
 import { inspect } from 'util';
 
-/* eslint-disable */
-import { Command, Prompt } from '../../../../..'; /* eslint-enable */
+import { Command, Prompt } from '../../../../..';
 
 class Eval extends Command {
     constructor(module) {
