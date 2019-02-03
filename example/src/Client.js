@@ -1,6 +1,6 @@
 'use strict';
 
-import AxonClient from '../..';
+import { AxonClient, Resolver } from '../..';
 
 import * as modules from './modules/index';
 
@@ -18,6 +18,10 @@ class Client extends AxonClient {
 
         this.param = 1; // personal stuff
         this._param = 2; // personal hidden stuff
+    }
+
+    get Resolver() {
+        return Resolver;
     }
 
     initStaff() {

@@ -17,21 +17,19 @@ class Wave extends Command {
         this.options.cooldown = 15000;
     }
     async execute({ msg, args }) {
-        const Util = this.Utils;
-        const Resolver = this.Resolver;
         if (!args[0]) {
             const prompt = new Prompt(this.axon, msg.author.id, msg.channel, {
-                timeout: 10000,
+                timeoutTime: 10000,
             });
             try {
                 const returnedMes = await prompt.run('Who would you like to me to wave to?', {
-                    deleteTimeoutMess: 10000,
-                    timeoutMess: 'Well, I guess you don\'t want to wave at anyone then.',
+                    deleteTimeoutMsg: 10000,
+                    timeoutMessage: 'Well, I guess you don\'t want to wave at anyone then.',
                 });
                 console.log(returnedMes.content);
-                let user = Resolver.member(msg.channel.guild, returnedMes.content) || Resolver.user(this.axon.client, returnedMes.content);
+                let user = this.Resolver.member(msg.channel.guild, returnedMes.content) || this.Resolver.user(this.axon.client, returnedMes.content);
                 if (!user) {
-                    if (Util.id.test(returnedMes.content)) {
+                    if (this.Utils.id.test(returnedMes.content)) {
                         user = await this.axon.client.getRESTUser(returnedMes.content);
                     } else {
                         return this.sendMessage(msg.channel, 'I can\'t wave to someone who does not exist.');
@@ -47,9 +45,9 @@ class Wave extends Command {
             }
         } else {
             try {
-                let user = Resolver.member(msg.channel.guild, args.join(' ')) || Resolver.user(this.axon.client, args.join(' '));
+                let user = this.Resolver.member(msg.channel.guild, args.join(' ')) || this.Resolver.user(this.axon.client, args.join(' '));
                 if (!user) {
-                    if (Util.id.test(args[0])) {
+                    if (this.Utils.id.test(args[0])) {
                         user = await this.bot.getRESTUser(args[0]);
                     } else {
                         return this.sendMessage(msg.channel, 'I can\'t wave to someone who does not exist.');
