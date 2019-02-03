@@ -29,6 +29,7 @@ import util from 'util';
 
 // Database
 import DBHandler from './Database/index';
+import DBService from './Database/DBService';
 
 // Loggers
 import LoggerHandler from './Loggers/index';
@@ -133,7 +134,11 @@ class AxonClient extends EventEmitter {
         this._initConfigs(axonOptions); // this._configs [GETTER - this.configs]
 
         /** DB */
-        this.DBprovider = axonOptions.db || DBHandler.pickDBService(axonOptions, this);
+        if (axonOptions.db && axonOptions.db instanceof DBService) {
+            this.DBprovider = axonOptions.db;
+        } else {
+            this.DBprovider = DBHandler.pickDBService(axonOptions, this);
+        }
 
         /**
          * Initialise CORE
