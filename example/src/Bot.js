@@ -14,7 +14,6 @@ const AxonOptions = {
     templateConf,
     tokenConf,
 
-    resolver: null,
     utils: MyUtils, // use your own Utils
     logger: null, // custom Logger
     db: null, // custom DB Service
@@ -34,7 +33,7 @@ const Bot = new Client(
         defaultImageFormat: 'png',
         defaultImageSize: 512,
         disableEveryone: true,
-        getAllUsers: true,
+        getAllUsers: false,
         messageLimit: 100,
         restMode: true,
     },

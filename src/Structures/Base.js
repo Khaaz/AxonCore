@@ -44,6 +44,7 @@ class Base {
         return this.axon.Logger;
     }
 
+    // backward compatiblity - if axon has a Resolver property - resolve it.
     get Resolver() {
         return this.axon.Resolver;
     }

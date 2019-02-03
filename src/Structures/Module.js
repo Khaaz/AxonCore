@@ -31,7 +31,6 @@ class Module extends Base {
      * @prop {Object<AxonClient>} axon - Axon Client [GETTER: _axon]
      * @prop {Object<Eris.Client>} bot - Eris bot Client [GETTER: _axon.client]
      * @prop {Object} Logger - Logger Object/Methods [GETTER: axon.Logger]
-     * @prop {Object} Resolver - Resolver Object/Methods [GETTER: axon.Resolver]
      * @prop {Object} AxonUtils - AxonUtils Object/Methods [GETTER: axon.AxonUtils]
      * @prop {Object} Utils - Utils Object/Methods [GETTER: axon.Utils]
      *
