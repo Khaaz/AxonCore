@@ -15,10 +15,7 @@ export { default as Utils } from './src/Utility/Utils';
 export { default as Resolver } from './src/Utility/Resolver';
 export { default as Enums } from './src/Utility/Enums';
 export { default as Prompt } from './src/Utility/Prompt';
-<<<<<<< HEAD
 export { default as MessageCollector } from './src/Utility/MessageCollector';
-=======
->>>>>>> 1d3f20bb33061182203c0048506def359c947159
 
 // Errors
 export { default as AxonError } from './src/Errors/AxonError';
