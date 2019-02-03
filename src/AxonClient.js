@@ -14,15 +14,15 @@ import defAxonConf from './Conf/axonConf.json';
 import defTemplateConf from './Conf/templateConf.json';
 import defTokenConf from './Conf/tokenConf.json';
 
-// Core
+// Core - Structures
 import Module from './Structures/Module';
 import Command from './Structures/Command';
 import EventManager from './Structures/EventManager';
+import MessageHandler from './Structures/MessageHandler';
 
 // Utility
 import Collection from './Utility/Collection';
 import AxonUtils from './Utility/AxonUtils';
-import Resolver from './Utility/Resolver';
 import Utils from './Utility/Utils';
 
 import util from 'util';
@@ -52,6 +52,14 @@ class AxonClient extends EventEmitter {
      * @param {String} token
      * @param {Object} [erisOptions={}] - Eris options
      * @param {Object} [axonOptions={}] - Axon options
+     * @param {Object} [axonOptions.axonConf] - General Axon config
+     * @param {Object} [axonOptions.templateConf] - Template config
+     * @param {Object} [axonOptions.tokenConf] - Token config
+     * @param {Object<Utils>} [axonOptions.utils] - Utils class, needs to be an instance of AxonCore.Utils
+     * @param {Object} [axonOptions.logger] - Custom logger
+     * @param {Object} [axonOptions.db] - DB Service. Needs to be an instance of DB Service
+     * @param {Object} [axonOptions.axonSchema] - Custom AxonSchema
+     * @param {Object} [axonOptions.guildSchema] - Custom GuildSchema
      * @param {Object} [modules={}] - Object with all modules to add in the bot
      *
      *
@@ -67,7 +75,6 @@ class AxonClient extends EventEmitter {
      * @prop {Object} Logger - Default Logger / Chalk Logger / Signale Logger
      * @prop {Object} DBprovider - JSON(default) / Mongoose
      * @prop {Object} AxonUtil - Util methods (Axon)
-     * @prop {Object} Resolver - Resolver
      * @prop {Object} Utils - Utils methods (general)
      *
      * @prop {Object} configs - configs (axon, template, _tokens) [GETTER: _configs]
@@ -110,8 +117,12 @@ class AxonClient extends EventEmitter {
 
         /** Utility */
         this.AxonUtils = new AxonUtils(this);
-        this.Utils = axonOptions.utils ? new axonOptions.utils(this) : new Utils(this); // eslint-disable-line
-        this.Resolver = axonOptions.resolver || Resolver;
+
+        if (axonOptions.utils && axonOptions.utils instanceof Utils) {
+            this.Utils = new axonOptions.utils(this); // eslint-disable-line
+        } else {
+            this.Utils = new Utils(this);
+        }
 
         /**
          * Initialise Configs
@@ -130,7 +141,7 @@ class AxonClient extends EventEmitter {
          */
 
         /** Modules */
-        this._tempModules = modules; // deleted after modules are initialised
+        this._tempModules = modules || {}; // deleted after modules are initialised
         this.modules = new Collection(Module); // Module Label => Module Object
         /** Commands, Events */
         this.commands = new Collection(Command); // Command Label => ref Command Object
@@ -307,7 +318,8 @@ class AxonClient extends EventEmitter {
         this.client.once('ready', this._onReady.bind(this));
         // this.client.on('debug', console.log);
 
-        this.client.on('messageCreate', this._onMessageCreate.bind(this));
+        const messageHandler = new MessageHandler(this);
+        this.client.on('messageCreate', messageHandler._onMessageCreate.bind(messageHandler));
     }
 
     _init() {
@@ -326,7 +338,7 @@ class AxonClient extends EventEmitter {
                 this.EventManager.bindListeners();
 
                 /** Axon init (blacklist/global cache) */
-                await this.initAxon(); // load blacklisted users - guild
+                await this._initAxon(); // load blacklisted users - guild
 
                 /** Additional */
                 await this.init();
@@ -429,7 +441,7 @@ class AxonClient extends EventEmitter {
      * @memberof AxonClient
      */
     _initAllModules(modules) {
-        if (Object.keys(module).length === 0) {
+        if (Object.keys(modules).length === 0) {
             this.Logger.warn('No modules given.');
         }
 
@@ -525,7 +537,7 @@ class AxonClient extends EventEmitter {
      * @async
      * @memberof AxonClient
      */
-    async initAxon() {
+    async _initAxon() {
         let axonSchema;
         try {
             axonSchema = await this.fetchAxonConf();
@@ -561,95 +573,6 @@ class AxonClient extends EventEmitter {
     //
 
     /**
-     * Handler when a message is created.
-     * Do all test and then either:
-     *   - call execDm
-     *   - call execAdmin
-     *   - call execCommand
-     *   - return (do nothing)
-     *
-     * @async
-     * @param {Object<Message>} msg - The message object
-     * @memberof AxonClient
-     */
-    async _onMessageCreate(msg) {
-        if (!this.client.ready) {
-            return;
-        }
-
-        /** msg.author error + ignore self + ignore bots */
-        if (!msg.author || msg.author.bot) {
-            return;
-        }
-
-        /** ignore cached blacklisted users */
-        if (this.blacklistedUsers.has(msg.author.id)) {
-            return;
-        }
-
-        /** execDM if not in a guild */
-        if (!msg.channel.guild) {
-            return this._execDM(msg);
-        }
-
-        /** ignore cached blacklisted guilds */
-        if (this.blacklistedGuilds.has(msg.channel.guild.id)) {
-            return;
-        }
-
-        msg.command = false;
-
-        /**
-         * Get guild Conf from cache or DB
-         * Raise error eventually
-         */
-        let guildConf;
-        try {
-            guildConf = await this.getGuildConf(msg.channel.guild.id);
-        } catch (err) {
-            return this.Logger.error(err, { guild: msg.channel.guild });
-        }
-
-        /** Admin override */
-        if (msg.content.startsWith(this.params.ownerPrefix) && this.AxonUtils.isBotOwner(msg.author.id)) { // Owner override everything
-            return this._execAdmin(msg, guildConf, true);
-        } else if (msg.content.startsWith(this.params.adminPrefix) && this.AxonUtils.isBotAdmin(msg.author.id)) { // ADMIN override everything except owner
-            return this._execAdmin(msg, guildConf, false);
-        }
-
-        msg.content = msg.content.replace(/<@!/g, '<@'); // formatting mention
-
-        /** Resolve prefix and proceed to command */
-        const prefix = this.resolvePrefix(msg);
-        if (prefix) {
-            msg.prefix = prefix;
-
-            /** Check if the user/role/channel is ignored in the guild */
-            if (this._isGuildIgnored(msg, guildConf)) {
-                return;
-            }
-
-            const args = msg.content.substring(msg.prefix.length).split(' ');
-            const label = args.shift().toLowerCase();
-
-            /** Call Help if first arg = 'help' */
-            if (label === 'help') { // send Help message
-                return this._execHelp(msg, args, guildConf);
-            }
-
-            /** Resolve command (and subcommand if needed) - exec command if the command was resolved */
-            const command = this.resolveCommand(label, args, guildConf);
-            if (!command) { // command doesn't exist or not globally enabled
-                return;
-            }
-
-            msg.command = command;
-
-            return this._execCommand(msg, args, command, guildConf);
-        }
-    }
-
-    /**
      * Default execution of a command.
      *
      * @param {Object<Message>} msg - Message Object
@@ -659,8 +582,9 @@ class AxonClient extends EventEmitter {
      * @memberof AxonClient
      */
     _execCommand(msg, args, command, guildConf) {
+        const context = guildConf  ? 'Guild' : 'DM';
         if (this.params.debugMode) {
-            this.Logger.verbose(`Execution of ${command.label}`);
+            this.Logger.verbose(`${context} execution of ${command.label}`);
             console.time('- Net');
             console.time('- Node');
 
@@ -670,7 +594,7 @@ class AxonClient extends EventEmitter {
                     console.timeEnd('- Net');
                 })
                 .catch(err => {
-                    this.Logger.error(new AxonCommandError(command.module, command, `Guild: ${msg.channel.guild.id}`, err).stack, { guild: msg.channel.guild, cmd: command.label });
+                    this.Logger.error(new AxonCommandError(command.module, command, `${context}: ${msg.channel.guild.id}`, err).stack, { guild: msg.channel.guild, cmd: command.label });
                     this.emit('axonCommandError', { msg, guildConf, err });
                     console.timeEnd('- Net');
                     return;
@@ -682,7 +606,7 @@ class AxonClient extends EventEmitter {
                     this.emit('axonCommandSuccess', { msg, guildConf });
                 })
                 .catch(err => {
-                    this.Logger.error(new AxonCommandError(command.module, command, `Guild: ${msg.channel.guild.id}`, err).stack, { guild: msg.channel.guild, cmd: command.label });
+                    this.Logger.error(new AxonCommandError(command.module, command, `${context}: ${msg.channel.guild.id}`, err).stack, { guild: msg.channel.guild, cmd: command.label });
                     this.emit('axonCommandError', { msg, guildConf, err });
                     return;
                 });
@@ -690,35 +614,16 @@ class AxonClient extends EventEmitter {
     }
 
     /**
-     * Executes a command with admin overrides.
+     * Admin execution of a command.
      *
      * @param {Object<Message>} msg - Message Object
-     * @param {Oject} guildConf - Guild config
-     * @param {Boolean} isOwner - Whether the user is bot owner
+     * @param {Array<String>} args  - Array of args
+     * @param {Object<Command>} command  - Command object resolved
+     * @param {Object} guildConf - Guild Config from the DB
+     * @param {Boolean} isOwner - Whether the user is an owner or not
      * @memberof AxonClient
      */
-    _execAdmin(msg, guildConf, isOwner) {
-        msg.prefix = this.params.adminPrefix;
-
-        const args = msg.content.replace(/<@!/g, '<@').substring(msg.prefix.length).split(' ');
-        const label = args.shift().toLowerCase();
-
-        /** Call Help if first arg = 'help' */
-        if (label === 'help') { // send Help message
-            return this._execHelp(msg, args, guildConf);
-        }
-
-        /** Resolve command (and subcommand if needed) - exec command if the command was resolved */
-        const command = this.resolveCommand(label, args); // doesn't pass guildConf so it doesn't check for server disabled
-        if (!command) { // command doesn't exist or not globally enabled
-            return;
-        }
-        msg.command = command;
-
-        /**
-         * Execution with/without debugMode
-         * Logging/Error handling
-         */
+    _execAdminCommand(msg, args, command, guildConf, isOwner) {
         if (this.params.debugMode) {
             this.Logger.verbose(`Admin Execution of ${command.label}`);
             console.time('- Net');
@@ -749,69 +654,6 @@ class AxonClient extends EventEmitter {
     }
 
     /**
-     * Executes a command in DM, has no guildConfig.
-     *
-     * @param {Object<Message>} msg
-     * @memberof AxonClient
-     */
-    _execDM(msg) {
-        msg.content = msg.content.replace(/<@!/g, '<@'); // formatting mention
-
-        /** Resolve prefix (can only be default bot prefix) */
-        const prefix = this.resolvePrefix(msg);
-        if (prefix) {
-            msg.prefix = prefix;
-
-            const args = msg.content.substring(msg.prefix.length).split(' ');
-            const label = args.shift().toLowerCase();
-
-            /** Call Help if first arg = 'help' */
-            if (label === 'help') { // send Help message
-                return this._execHelp(msg, args);
-            }
-
-            /** Resolve command (and subcommand if needed) - exec command if the command was resolved */
-            const command = this.resolveCommand(label, args);
-            if (!command) { // command doesn't exist or not globally enabled
-                return;
-            }
-            msg.command = command;
-
-            /**
-             * Execution with/without debugMode
-             * Logging/Error handling
-             */
-            if (this.params.debugMode) {
-                this.Logger.verbose(`DM Execution of ${command.label}`);
-                console.time('- Net');
-                console.time('- Node');
-
-                command._executeDM({ msg, args })
-                    .then(() => {
-                        console.timeEnd('- Net');
-                        this.emit('axonCommandSuccess', { msg, guildConf: null });
-                    })
-                    .catch(err => {
-                        this.Logger.error(new AxonCommandError(command.module, command, `DM: ${msg.author.id}`, err).stack, { cmd: command.label, user: msg.user });
-                        this.emit('axonCommandError', { msg, guildConf: null, err });
-                        return;
-                    });
-                console.timeEnd('- Node');
-            } else {
-                command._executeDM({ msg, args })
-                    .then(() => {
-                        this.emit('axonCommandSuccess', { msg, guildConf: null });
-                    })
-                    .catch(err => {
-                        this.Logger.error(new AxonCommandError(command.module, command, `DM: ${msg.author.id}`, err).stack, { cmd: command.label, user: msg.user });
-                        this.emit('axonCommandError', { msg, guildConf: null, err });
-                        return;
-                    });
-            }
-        }
-    }
-
-    /**
      * Executes the help command.
      *
      * @param {Object<Message>} msg - The message object
@@ -834,10 +676,7 @@ class AxonClient extends EventEmitter {
         }
         msg.command = command;
 
-        command.sendHelp({ msg, args, guildConf })
-            .then(() => {
-                command._cooldown[msg.author.id] = Date.now();
-            });
+        command.sendHelp({ msg, args, guildConf });
     }
 
     /**
@@ -913,7 +752,7 @@ class AxonClient extends EventEmitter {
      * @returns {Boolean} True if either one of the three is ignored / False if none
      * @memberof AxonClient
      */
-    _isGuildIgnored(msg, guildConf) {
+    isGuildIgnored(msg, guildConf) {
         return guildConf.ignoredUsers.find(u => u === msg.author.id) // User is ignored
             || guildConf.ignoredRoles.find(r => msg.member.roles && msg.member.roles.includes(r)) // Role is ignored
             || guildConf.ignoredChannels.find(c => c === msg.channel.id); // Channel is ignored
@@ -927,7 +766,7 @@ class AxonClient extends EventEmitter {
      * @returns {Boolean} True if disabled / Undefined if not
      * @memberof AxonClient
      */
-    _isModuleDisabled(command, guildConf) {
+    isModuleDisabled(command, guildConf) {
         return guildConf.modules.find(m => m === command.module.label);
     }
 
@@ -939,7 +778,7 @@ class AxonClient extends EventEmitter {
      * @returns {Boolean} True if disabled / Undefined if not
      * @memberof AxonClient
      */
-    _isCommandDisabled(command, guildConf) {
+    isCommandDisabled(command, guildConf) {
         return guildConf.commands.find(c => c === command.label);
     }
 
@@ -1035,8 +874,8 @@ class AxonClient extends EventEmitter {
 
         if (guildConf
             && (
-                (this._isModuleDisabled(command, guildConf) && !command.module.serverBypass) // check module/command server disabled
-                || (this._isCommandDisabled(command, guildConf) && !command.serverBypass)
+                (this.isModuleDisabled(command, guildConf) && !command.module.serverBypass) // check module/command server disabled
+                || (this.isCommandDisabled(command, guildConf) && !command.serverBypass)
             )
         ) {
             return undefined;
@@ -1159,172 +998,9 @@ class AxonClient extends EventEmitter {
             });
     }
 
-    /**
-     * Add/Remove a blacklisted user.
-     * External method that can be called to add a user to the blacklist.
-     *
-     * @async
-     * @param {String} userID - The id of the user to blacklist
-     * @param {Boolean} [boolean=true] - Whether to add(true) or remove(false) the user to blacklist
-     * @returns {Promise<Object>} The Axon Schema from the DB / Error
-     * @memberof AxonClient
-     */
-    async updateBlacklistUser(userID, boolean = true) {
-        if (boolean) {
-            !this.blacklistedUsers.has(userID) && this.blacklistedUsers.add(userID);
-        } else {
-            this.blacklistedUsers.has(userID) && this.blacklistedUsers.delete(userID);
-        }
-        const blacklist = Array.from(this.blacklistedUsers);
-        try {
-            const axon = await this.DBprovider.updateBlacklistUser(blacklist);
-            return axon;
-        } catch (err) {
-            throw err;
-        }
-    }
-
-    /**
-     * Add/Remove a blacklisted guild.
-     * External method that can be called to add a guild to the blacklist
-     *
-     * @async
-     * @param {String} guildID - The id of the guild to blacklist
-     * @param {Boolean} [boolean=true] - if add(true) or remove(false) the guild to blacklist
-     * @returns {Promise<Object>} The Axon Schema from the DB / Error
-     * @memberof AxonClient
-     */
-    async updateBlacklistGuild(userID, boolean = true) {
-        if (boolean) {
-            !this.blacklistedGuilds.has(userID) && this.blacklistedGuilds.add(userID);
-        } else {
-            this.blacklistedGuilds.has(userID) && this.blacklistedGuilds.delete(userID);
-        }
-        const blacklist = Array.from(this.blacklistedUsers);
-        try {
-            const axon = await this.DBprovider.updateBlacklistGuild(blacklist);
-            return axon;
-        } catch (err) {
-            throw err;
-        }
-    }
-
-    /**
-     * Updates the state of a module.
-     * true = disable the module, false = enable the module
-     *
-     * @param {String} guildID - The guild ID
-     * @param {String} label - The module label
-     * @param {Boolean} [boolean=true] - If disable the module (false) or enable (true)
-     * @returns {Promise<Object>} Updated guildSchema / Error
-     * @memberof AxonClient
-     */
-    async updateGuildStateModule(guildID, label, boolean = true) {
-        let conf;
-        try {
-            conf = await this.getGuildConf(guildID); // get from cache or from DB if not found
-        } catch (err) {
-            throw err;
-        }
-
-        boolean
-            ? conf.modules.includes(label) && (conf.modules = conf.modules.filter(c => c !== label))
-            : !conf.modules.includes(label) && conf.modules.push(label);
-
-        try {
-            const newConf = await this.DBprovider.updateModule(guildID, conf.modules);
-            this.guildConfigs.set(guildID, newConf);
-            return newConf;
-        } catch (err) {
-            throw err;
-        }
-    }
-
-    /**
-     * Updates the state of a command.
-     * true = disable the command, false = enable the command.
-     *
-     * @param {String} guildID - The guild ID
-     * @param {String} label - The command label
-     * @param {Boolean} [boolean=true] - If disable the command (false) or enable (true)
-     * @returns {Promise<Object>} Updated guildSchema / Error
-     * @memberof AxonClient
-     */
-    async updateGuildStateCommand(guildID, label, boolean = true) {
-        let conf;
-        try {
-            conf = await this.getGuildConf(guildID); // get from cache or from DB if not found
-        } catch (err) {
-            throw err;
-        }
-
-        boolean
-            ? conf.commands.includes(label) && (conf.commands = conf.commands.filter(c => c !== label))
-            : !conf.commands.includes(label) && conf.commands.push(label);
-
-        try {
-            const newConf = await this.DBprovider.updateCommand(guildID, conf.commands);
-            this.guildConfigs.set(guildID, newConf);
-            return newConf;
-        } catch (err) {
-            throw err;
-        }
-    }
-
-    /**
-     * Updates the state of an event.
-     * true = disable the event, false = enable the event.
-     *
-     * @param {String} guildID - The guild ID
-     * @param {String} label - The event label
-     * @param {Boolean} [boolean=true] - If disable the event (false) or enable (true)
-     * @returns {Promise<Object>} Updated guildSchema / Error
-     * @memberof AxonClient
-     */
-    async updateStateEvent(guildID, label, boolean = true) {
-        let conf;
-        try {
-            conf = await this.getGuildConf(guildID); // get from cache or from DB if not found
-        } catch (err) {
-            throw err;
-        }
-
-        boolean
-            ? conf.events.includes(label) && (conf.events = conf.events.filter(c => c !== label))
-            : !conf.events.includes(label) && conf.events.push(label);
-
-        try {
-            const newConf = await this.DBprovider.updateEvent(guildID, conf.events);
-            this.guildConfigs.set(guildID, newConf);
-            return newConf;
-        } catch (err) {
-            throw err;
-        }
-    }
-
-    /**
-     * Enables or disables a module globally.
-     *
-     * @param {String} module - Module name
-     * @param {Boolean} [state=true] - Whether to enable or disable
-     * @memberof AxonClient
-     */
-    updateGlobalStateModule(module, state = true) {
-        this.modules.get(module).enabled = state;
-        this.Logger.info(`Globally ${state ? 'enabled' : 'disabled'} module: ${module}.`);
-    }
-
-    /**
-     * Enables or disables a command globally.
-     *
-     * @param {String} command - Command name
-     * @param {Boolean} [state=true] - Whether to enable or disable
-     * @memberof AxonClient
-     */
-    updateGlobalStateCommand(command, state = true) {
-        this.commands.get(command).enabled = state;
-        this.Logger.info(`Globally ${state ? 'enabled' : 'disabled'} command: ${command}.`);
-    }
+    //
+    // ****** GENERAL METHODS ******
+    //
 
     /**
      * ToString method.
