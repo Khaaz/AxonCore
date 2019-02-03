@@ -40,6 +40,27 @@ class Utils {
         this.hexCode = /^#?([0-9A-Fa-f]{6})$/;
     }
 
+    // Static getters
+    static get userMention() {
+        return this.userMention;
+    }
+
+    static get roleMention() {
+        return this.roleMention;
+    }
+
+    static get channelMention() {
+        return this.channelMention;
+    }
+
+    static get id() {
+        return this.id;
+    }
+
+    static get hexCode() {
+        return this.hexCode;
+    }
+
     get axon() {
         return this._axon;
     }
@@ -74,7 +95,7 @@ class Utils {
     }
 
     //
-    // ****** ROLES METHODS ******
+    // ****** ROLES ******
     //
 
     /**
@@ -142,6 +163,61 @@ class Utils {
         return this.isRoleHigher(role1, role2);
     }
 
+    // ****** PERMISSIONS ******
+
+    /**
+     * Check if the member has correct perm to execute
+     *
+     * @param {Object<Member>} member - Member object
+     * @param {Array<String>} permissions - List of permissions to test
+     * @returns {Boolean} True if member has permissions / False if not
+     * @memberof AxonUtils
+     */
+    hasPerms(member, permissions = []) {
+        for (const perm of permissions) {
+            if (!member.permission.has(perm)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Check if the given user has correct permissions in targeted channel.
+     *
+     * @param {Object<Channel>} channel - Channel object
+     * @param {Array<String>} permissions - List of permissions to test
+     * @param {Object<User>} [user=this.bot.user] - User to test
+     * @returns {Boolean} True if user has permissions / False if not
+     * @memberof AxonUtils
+     */
+    hasChannelPerms(channel, permissions, user = this.bot.user) {
+        for (const perm of permissions) {
+            if (!channel.permissionsOf(user.id).has(perm)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * List all missing permissions of the given user.
+     *
+     * @param {Object<Member>} member
+     * @param {Array<String>} [permissions=[]] - List of permissions to test
+     * @returns {Array<String>} An array of missing permissions
+     * @memberof AxonUtils
+     */
+    missingPerms(member, permissions = []) {
+        const missing = [];
+        for (const perm of permissions) {
+            if (!member.permission.has(perm)) {
+                missing.push(perm);
+            }
+        }
+        return missing;
+    }
+
     //
     // ****** GENERAL ******
     //
@@ -157,29 +233,25 @@ class Utils {
         return new Promise((res) => setTimeout(() => res(), ms));
     }
 
-    /** read file */
-    async readJson(path) {
-        try {
-            const txt = await readFile(path);
-            const conf = JSON.parse(txt);
-            if (!conf) {
-                throw new Error('Path incorrect');
-            }
-            return conf;
-        } catch (err) {
-            return Promise.reject(err);
-        }
+    /**
+     * Promisified readFile method
+     *
+     * @param {String} path
+     * @returns {Promise<String>} content
+     */
+    readFile(path) {
+        return readFile(path);
     }
 
-    /** write file */
-    async writeJson(path, obj) {
-        try {
-            const txt = JSON.stringify(obj);
-            const res = await writeFile(path, txt);
-            return res;
-        } catch (err) {
-            return err;
-        }
+    /**
+     * Promisified writeFile method
+     *
+     * @param {String} path
+     * @param {String} content
+     * @returns {Promise}
+     */
+    writeFile(path, content) {
+        return writeFile(path, content);
     }
 
     /**
