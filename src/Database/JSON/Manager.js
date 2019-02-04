@@ -1,179 +1,226 @@
 'use strict';
 
-/**
- * @author Olybear9
- * 
- * @description Manager for JSON Database.
- * 
- * @class Manager
- */
+import axonDefault from './AxonDefault.json';
+import guildDefault from './GuildDefault.json';
 
 import fs from 'fs';
+import util from 'util';
+const readFile = util.promisify(fs.readFile);
+const writeFile = util.promisify(fs.writeFile);
 
+/**
+ * Manager class for handling Json database
+ *
+ * @author KhaaZ, Olybear
+ *
+ * @class Manager
+ */
 class Manager {
     constructor() {
-        this.AxonDefault = this.readFile('./AxonSchemaDefault.json').toJSON();
-        this.Axon = this.readFile('./AxonSchema.json').toJSON();
-        this.GuildDefault = this.readFile('./GuildSchemaDefault.json').toJSON();
-        this.GuildSchema = this.readFile('./GuildSchema.json').toJSON(); // Last cache of Guild database
-    }
-    async fetchDefault() {
-        return await this.AxonDefault;
-    }
-    async fetchAxonSchema() {
-        return await this.Axon;
+        // default schemas values
+        this._axonDefault = axonDefault;
+        this._guildDefault = guildDefault;
+
+        this._basePath = __dirname + '/Database/';
+        this._axonPath = __dirname + '/Database/axon.json';
     }
 
-    async fetchGuild(id) {
-        let database = this.readDatabase(1);
-        let guildIds = [];
-        
-        await database.forEach(g => {
-            return guildIds.push(g.id); //Object entries was too large, using old method instead :)
-        });
-
-        if(!guildIds.includes(id)) return null;
-        else {
-            return await database[guildIds.indexOf(id)];
-        }
+    get axonDefault() {
+        return this._axonDefault;
     }
 
-    async updateAxonSchema() {
-        this.Axon = this.readFile('./AxonSchema.json').toJSON();
-        return this.Axon;
+    get guildDefault() {
+        return this._guildDefault;
     }
 
-    async updateGuildKey(id, key, value) {
-        let database = this.readDatabase(4);
-        if(!database[id]) return null;
-        let guild = database[id];
-        guild[key] = value;
-        await this.updateGuild(id, guild);
-        return this.updateGuildSchema();
-    }
-    
-    async createGuild(id) {
-        await this.updateGuild(id, this.GuildDefault);
-        return await this.updateGuildSchema();
-    };
-
-    async updateUserBlacklist(arr) {
-        let cache = arr;
-        arr = JSON.stringify(arr);
-        await fs.writeFileSync(`./Database/Blacklists/users.json`, arr, (err) => {if (err) return null;});
-        return await this.updateAxonSchem(arr, "bannedUsers");
-    }
-
-    async updateGuildBlacklist(arr) {
-        let cache = arr;
-        arr = JSON.stringify(arr);
-        await fs.writeFileSync(`./Database/Blacklists/guilds.json`, arr, (err) => {if (err) return null;});
-        return await this.updateAxonSchem(arr, "bannedGuilds");
-    }
-
-    async updateAxonSchem(arr, key) {
-        let cache = this.Axon;
-        cache[key] = arr;
-        await fs.writeFileSync('./AxonSchema.json', cache, (err) => {if (err) return null;});
-        return await this.updateAxonSchema();
-    }
-    async updateGuildSchema() {
-        let guildDatabase = readDatabase(1);
-        await fs.writeFileSync('./GuildSchema.json', guildDatabase, (err) => {if (err) return null;});
-        this.GuildSchema = readFile('./GuildSchema.json').toJSON();
-        return this.GuildSchema;
-    }
-
-    updateGuild(id, obj) {
-        obj = JSON.stringify(obj);
-        fs.writeFileSync(`./Database/Guilds/${id}.json`, obj, (err) => {if (err) return null;});
-        return obj;
-    }
-
-    isCorrupt(string) {
-        let conversion = JSON.stringify(string);
-        try {
-            JSON.parse(conversion);
-            return false;
-        } catch (e) {
-            return true;
-        }
-    }
-
-    readFile(dir) {
-        if(!dir) return null;
-        if(dir.search('.json') == -1) return null;
-        if(!fs.existsSync(dir)) return null;
-        else {
-            let read = fs.readFileSync(dir).toString();
-            return read;
-        }
-    }
     toJSON(string) {
-        string = JSON.stringify(string);
+        if (!string) {
+            return null;
+        }
         try {
             return JSON.parse(string);
-        } catch (e) {return string};
+        } catch (e) {
+            return string;
+        }
     }
-    readDatabase(type) {
-        if(type == 1) {
-            //Guilds (Array)
-            let database = [];
-            util.promisfy(fs.readdir('./Database/Guilds', async (err, files) => {
-                if (err) console.error(err);
-                let guilds = files.filter(f => f.split(".").pop()  === "json");
 
-                for(let i = 0; i < guilds.length; i++) {
-                    let g = guilds[g].replace(".json", "");
-                    let guild = readFile(`./Database/Guilds/${g}.json`);
-                    if(this.isCorrupt(guild)) {
-                        updateGuild(g, this.GuildDefault);
-                        database.push(this.GuildDefault);
-                        return;
-                    } else {
-                        database.push(guild.toJSON());
-                        return;
-                    };
-                }
-            }));
-            return database;
+    toString(json) {
+        if (!json) {
+            return null;
         }
-        if(type == 2) {
-            //Blacklisted users.
-            let database = this.readFile('./Database/Blacklists/users.json');
-            if(this.isCorrupt(database)) {
-                this.updateUserBlacklist([]);
-            } else return JSON.parse(database);
+        try {
+            return JSON.stringify(json, null, '\t');
+        } catch (e) {
+            return json;
         }
-        if(type == 3) {
-            //Blacklisted guilds.
-            let database = this.readFile('./Database/Blacklists/guilds.json');
-            if(this.isCorrupt(database)) {
-                this.updateUserBlacklist([]);
-            } else return JSON.parse(database);
-        }
-        if(type == 4) {
-            //Guilds (Object)
-            let database = [];
-            fs.readdir('./Database/Guilds', async (err, files) => {
-                if (err) console.error(err);
-                let guilds = files.filter(f => f.split(".").pop()  === "json");
+    }
 
-                for(let i = 0; i < guilds.length; i++) {
-                    let g = guilds[g].replace(".json", "");
-                    let guild = readFile(`./Database/Guilds/${g}.json`);
-                    if(this.isCorrupt(guild)) {
-                        updateGuild(g, this.GuildDefault);
-                        database[g] = this.GuildDefault;
-                        return;
-                    } else {
-                        database[g] = guild.toJSON();
-                        return;
-                    };
-                }
-            });
-            return database;
+    _buildPath(gID) {
+        return this._basePath + gID + '.json';
+    }
+
+    /**
+     * Read a file and return the string of the file content or null
+     *
+     * @param {String} path
+     * @returns {Promise<String|null>}
+     */
+    async readFile(path) {
+        if (!path) return null;
+        try {
+            return await readFile(path);
+        } catch (err) {
+            return null;
         }
+    }
+
+    /**
+     * Read a file and return the string of the file content or null
+     *
+     * @param {String} path
+     * @returns {Promise<String|null>}
+     */
+    async writeFile(path, content = '{}') {
+        if (!path) return null;
+        if (path.search('.json') === -1) return null;
+
+        try {
+            await writeFile(path, content, 'utf8');
+            return true;
+        } catch (err) {
+            return false;
+        }
+    }
+
+    //
+    //
+    //
+
+    /**
+     * Create a file and schema for Axon global file.
+     * @returns {Promise<Object>} The newly created Schema || null
+     */
+    async createAxonSchema() {
+        const res = await this.writeFile(this._axonPath, this.toString(this.axonDefault));
+        if (res) {
+            return this.axonDefault;
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Create a file and schema for the given guild.
+     *
+     * @param {String} gID
+     * @returns {Promise<Object>} The newly created Schema || null
+     */
+    async createGuildSchema(gID) {
+        const guildSchema = Object.assign({}, this.guildDefault);
+        guildDefault.guildID = gID;
+        guildDefault.createdAt = new Date();
+        const res = await this.writeFile(this._buildPath(gID), this.toString(guildSchema));
+        if (res) {
+            return this.guildDefault;
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Fetch the axon schema
+     *
+     * @returns {Promise<Object>} AxonSchema || null
+     */
+    async fetchAxonSchema() {
+        const res = await this.readFile(this._axonPath);
+        if (res) {
+            return this.toJSON(res);
+        } else {
+            return res;
+        }
+    }
+
+    /**
+     * Fetch the guild schema for the given guild
+     *
+     * @param {String} gID
+     * @returns {Promise<Object>} GuildSchema || null
+     */
+    async fetchGuildSchema(gID) {
+        const res = await this.readFile(this._buildPath(gID));
+        if (res) {
+            return this.toJSON(res);
+        } else {
+            return res;
+        }
+    }
+
+    /**
+     * Write the updated schema in the file (for thegiven guild).
+     *
+     * @param {String} gID
+     * @param {Object} schema
+     * @returns {Promise<Object>} GuildSchema || null
+     */
+    async writeGuildSchema(gID, schema) {
+        const res = await this.writeFile(this._buildPath(gID), this.toString(schema));
+        if (res) {
+            return schema;
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Write the updated schema in the file.
+     *
+     * @param {Object} schema
+     * @returns {Promise<Object>} AxonSchema || null
+     */
+    async writeAxonSchema(schema) {
+        const res = await this.writeFile(this._axonDefault, this.toString(schema));
+        if (res) {
+            return schema;
+        } else {
+            return null;
+        }
+    }
+
+    //
+    //
+    //
+
+    /**
+     * Update the schema with the given value for the given guild
+     *
+     * @param {String} gID
+     * @param {String} key
+     * @param {Object} value - The value to update for the given key (can be anything)
+     * @returns {Promise<Object>} GuildSchema || null
+     */
+    async updateGuildKey(gID, key, value) {
+        const guildSchema = await this.fetchGuildSchema(gID);
+
+        guildSchema[key] = value;
+
+        return this.writeGuildSchema(gID, guildSchema);
+    }
+
+    /**
+     * Update the schema with the given value
+     *
+     * @param {String} key
+     * @param {Object} value - The value to update for the given key (can be anything)
+     * @returns {Promise<Object>} AxonSchema || null
+     */
+    async updateAxonKey(key, value) {
+        const axonSchema = await this.fetchAxonSchema();
+
+        axonSchema[key] = value;
+
+        return this.writeAxonSchema(axonSchema);
     }
 }
+
 export default new Manager();
