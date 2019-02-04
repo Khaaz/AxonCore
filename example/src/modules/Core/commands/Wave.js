@@ -26,7 +26,6 @@ class Wave extends Command {
                     deleteTimeoutMsg: 10000,
                     timeoutMessage: 'Well, I guess you don\'t want to wave at anyone then.',
                 });
-                console.log(returnedMes.content);
                 let user = this.Resolver.member(msg.channel.guild, returnedMes.content) || this.Resolver.user(this.axon.client, returnedMes.content);
                 if (!user) {
                     if (this.Utils.id.test(returnedMes.content)) {
@@ -41,6 +40,7 @@ class Wave extends Command {
                 if (err.message === 'Prompt timed out' || err.message === 'Invalid usage found. Prompt ended.') {
                     return;
                 }
+                console.log(err);
                 return this.sendError(msg.channel, err);
             }
         } else {

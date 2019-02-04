@@ -5,6 +5,12 @@ import util from 'util';
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
 
+const USER_MENTION = /<@!?([0-9]+)>$/;
+const ROLE_MENTION = /<@&([0-9]+)>$/;
+const CHANNEL_MENTION = /<#([0-9]+)>$/;
+const ID = /^[0-9]+$/;
+const HEX_CODE = /^#?([0-9A-Fa-f]{6})$/;
+
 /**
  * General Utility Class for AxonCore
  *
@@ -32,33 +38,33 @@ class Utils {
     constructor(client) {
         this._axon = client;
 
-        this.userMention = /<@!?([0-9]+)>$/;
-        this.roleMention = /<@&([0-9]+)>$/;
-        this.channelMention = /<#([0-9]+)>$/;
-        this.id = /^[0-9]+$/;
+        this.userMention = USER_MENTION;
+        this.roleMention = ROLE_MENTION;
+        this.channelMention = CHANNEL_MENTION;
+        this.id = ID;
 
-        this.hexCode = /^#?([0-9A-Fa-f]{6})$/;
+        this.hexCode = HEX_CODE;
     }
 
     // Static getters
     static get userMention() {
-        return this.userMention;
+        return USER_MENTION;
     }
 
     static get roleMention() {
-        return this.roleMention;
+        return ROLE_MENTION;
     }
 
     static get channelMention() {
-        return this.channelMention;
+        return CHANNEL_MENTION;
     }
 
     static get id() {
-        return this.id;
+        return ID;
     }
 
     static get hexCode() {
-        return this.hexCode;
+        return HEX_CODE;
     }
 
     get axon() {
