@@ -248,8 +248,16 @@ class MongoService extends DBService {
      * @returns {Promise} Updated Schema from the DB
      * @memberof MongoService
      */
-    saveSchema(schema) {
-        return schema.save();
+    saveAxonSchema(schema) {
+        return this.AxonSchema.findOneAndUpdate({
+            ID : '1',
+        },
+        schema,
+        {
+            new: true,
+            upsert: true,
+            setDefaultsOnInsert: true,
+        });
     }
 
     /**

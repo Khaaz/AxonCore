@@ -133,7 +133,7 @@ class DBService {
      * @returns {Promise} Updated Schema from the DB
      * @memberof DBService
      */
-    saveSchema(schema) {
+    saveAxonSchema(schema) {
         throw new Error('Not implemented Exception');
     }
 

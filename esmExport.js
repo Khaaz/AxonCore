@@ -10,11 +10,13 @@ export { default as Event } from './src/Structures/Event';
 
 // Utility
 export { default as Collection } from './src/Utility/Collection';
-export { default as AxonUtils } from './src/Utility/AxonUtils';
 export { default as Utils } from './src/Utility/Utils';
 export { default as Resolver } from './src/Utility/Resolver';
 export { default as Enums } from './src/Utility/Enums';
 export { default as Prompt } from './src/Utility/Prompt';
+
+// Database
+export { default as DBService } from './src/Database/DBService';
 
 // Errors
 export { default as AxonError } from './src/Errors/AxonError';
