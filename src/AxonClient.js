@@ -1,7 +1,6 @@
 'use strict';
 
 // Lib - Modules
-import Eris from 'eris';
 import EventEmitter from 'eventemitter3';
 
 // misc
@@ -50,8 +49,7 @@ class AxonClient extends EventEmitter {
     /**
      * Creates an AxonClient instance.
      *
-     * @param {String} token
-     * @param {Object} [erisOptions={}] - Eris options
+     * @param {Object<Eris.Client>} ErisClient - Eris Client instance
      * @param {Object} [axonOptions={}] - Axon options
      * @param {Object} [axonOptions.axonConf] - General Axon config
      * @param {Object} [axonOptions.templateConf] - Template config
@@ -99,7 +97,7 @@ class AxonClient extends EventEmitter {
      *
      * @memberof AxonClient
      */
-    constructor(token, erisOptions = {}, axonOptions = {}, modules = {}) {
+    constructor(ErisClient, axonOptions = {}, modules = {}) {
         super();
         /** Cool logging */
         axonOptions.logo ? axonOptions.logo() : logo();
@@ -164,7 +162,7 @@ class AxonClient extends EventEmitter {
         /**
          * Initialise Eris Client
          */
-        this._client = new Eris.Client(token, erisOptions); // [GETTER - this.client]
+        this._client = ErisClient; // [GETTER - this.client]
 
         /**
          * Initialise Bot Staff

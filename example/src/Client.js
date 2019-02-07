@@ -13,8 +13,8 @@ import * as modules from './modules/index';
  * @extends {AxonCore.AxonClient}
  */
 class Client extends AxonClient {
-    constructor(token, options, AxonOptions) {
-        super(token, options, AxonOptions, modules);
+    constructor(client, AxonOptions) {
+        super(client, AxonOptions, modules);
 
         this.param = 1; // personal stuff
         this._param = 2; // personal hidden stuff
@@ -63,11 +63,13 @@ class Client extends AxonClient {
         // custom method used anywhere with this.axon.customMethod()
     }
 
+    // disabled
     $sendFullHelp(msg) {
         // override sendFullHelp method
         return this.AxonUtils.sendMessage(msg.channel, 'Full Help override');
     }
 
+    // disabled
     $sendHelp(command, msg) {
         // override sendHelp method
         return this.AxonUtils.sendMessage(msg.channel, `Help override for ${command.label}`);
