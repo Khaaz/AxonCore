@@ -338,7 +338,7 @@ class Command extends Base {
             embed.description += `**Required:** ${perm}\n`;
         }
 
-        if (this.infos.examples.length > 0) {
+        if (this.infos.examples && this.infos.examples.length > 0) {
             this.infos.examples.length > 1
                 ? embed.description += `\n**Examples:**\n${prefix}${this.infos.examples.join(`\n${prefix}`)}\n`
                 : embed.description += `**Example:** ${prefix}${this.infos.examples.join(`\n${prefix}`)}\n`;
