@@ -21,7 +21,7 @@ class MessageCollector extends EventEmitter {
      * @param {Number} [options.count=100] The amount of messages to collect before automatically ending
      * @param {Boolean} [options.ignoreBots=true] Whether or not to ignore bots
      * @param {String} [options.uID] The user id to listen for (listens to all messages if not specified)
-     * @param {Boolean} [options.caseInsensitive=false] Whether or not to return messages with content lowercased. Default: content unchanged
+     * @param {Boolean} [options.caseSensitive=false] Whether or not to return messages with content lowercased. Default: content unchanged
      *
      * @example
      * const collector = new MessageCollector(this.axon, { count: 10, ignoreBots: false });
@@ -30,10 +30,10 @@ class MessageCollector extends EventEmitter {
         super(client, options);
         this._options = {
             timeout: options.timeout || 60000,
-            count: options.count || 100, /* eslint-disable */
+            count: options.count || 100,
             ignoreBots: options.ignoreBots === undefined ? true : !!options.ignoreBots, // Ignore bots by default
-            caseSensitive: options.caseSensitive === undefined ? true : !!options.caseInsensitive, // Be case sensitive by default
-        }; /* eslint-enabled */
+            caseSensitive: options.caseSensitive === undefined ? true : !!options.caseSensitive, // Be case sensitive by default
+        };
         this._axon = client;
 
         this._actualOptions = {};
@@ -80,7 +80,7 @@ class MessageCollector extends EventEmitter {
                     this._actualOptions[value] = this._options[value];
                 }
             }
-            console.log(this._actualOptions);
+
             // Bind events
             this.client.on('messageCreate', this.boundMsgEvent);
             this.client.on('messageUpdate', this.boundEditEvent);
@@ -116,7 +116,6 @@ class MessageCollector extends EventEmitter {
     }
 
     _onMsgDelete(msg) {
-        console.log('Recieved message delete event');
         if (this.messages.has(msg.id)) {
             this.messages.remove(msg.id);
             this.emit('delete', msg);
