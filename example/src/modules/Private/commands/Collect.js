@@ -10,15 +10,19 @@ class Collect extends Command {
             owner: 'Null',
             name: 'collect',
             description: 'Collect some messages and return',
+            usage: 'collect',
         };
         this.options.cooldown = null;
+
+        this._boundCollectEvent = this._onCollectEvent.bind(this);
     }
+
     async execute({ msg }) {
         this._collector = new MessageCollector(this.axon);
         this._message = await this.sendMessage(msg.channel, 'Awaiting messages');
         this._aID = msg.author.id;
-        this.boundCollectEvent = this._onCollectEvent.bind(this);
-        this._collector.on('collect', this.boundCollectEvent);
+
+        this._collector.on('collect', this._boundCollectEvent);
 
         try {
             const msgs = await this._collector.run(msg.channel, {
@@ -26,7 +30,7 @@ class Collect extends Command {
                 ignoreBots: false,
             });
             const finale = msgs.map(m => `ID: ${m.id} (${m.author.username}#${m.author.discriminator}) => Content: ${m.content}`); // Code block\code line mardown breaks this
-            this._collector.off('collect', this.boundCollectEvent);
+            this._collector.off('collect', this._boundCollectEvent);
             return this.sendMessage(msg.channel, `\`\`\`js\n${finale.join(',\n')}\`\`\``);
         } catch (err) {
             return this.sendMessage(msg.channel, err);
