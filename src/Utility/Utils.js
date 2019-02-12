@@ -5,6 +5,12 @@ import util from 'util';
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
 
+const USER_MENTION = /<@!?([0-9]+)>$/;
+const ROLE_MENTION = /<@&([0-9]+)>$/;
+const CHANNEL_MENTION = /<#([0-9]+)>$/;
+const ID = /^[0-9]+$/;
+const HEX_CODE = /^#?([0-9A-Fa-f]{6})$/;
+
 /**
  * General Utility Class for AxonCore
  *
@@ -32,12 +38,33 @@ class Utils {
     constructor(client) {
         this._axon = client;
 
-        this.userMention = /<@!?([0-9]+)>$/;
-        this.roleMention = /<@&([0-9]+)>$/;
-        this.channelMention = /<#([0-9]+)>$/;
-        this.id = /^[0-9]+$/;
+        this.userMention = USER_MENTION;
+        this.roleMention = ROLE_MENTION;
+        this.channelMention = CHANNEL_MENTION;
+        this.id = ID;
 
-        this.hexCode = /^#?([0-9A-Fa-f]{6})$/;
+        this.hexCode = HEX_CODE;
+    }
+
+    // Static getters
+    static get userMention() {
+        return USER_MENTION;
+    }
+
+    static get roleMention() {
+        return ROLE_MENTION;
+    }
+
+    static get channelMention() {
+        return CHANNEL_MENTION;
+    }
+
+    static get id() {
+        return ID;
+    }
+
+    static get hexCode() {
+        return HEX_CODE;
     }
 
     get axon() {
@@ -74,7 +101,7 @@ class Utils {
     }
 
     //
-    // ****** ROLES METHODS ******
+    // ****** ROLES ******
     //
 
     /**
@@ -142,6 +169,61 @@ class Utils {
         return this.isRoleHigher(role1, role2);
     }
 
+    // ****** PERMISSIONS ******
+
+    /**
+     * Check if the member has correct perm to execute
+     *
+     * @param {Object<Member>} member - Member object
+     * @param {Array<String>} permissions - List of permissions to test
+     * @returns {Boolean} True if member has permissions / False if not
+     * @memberof AxonUtils
+     */
+    hasPerms(member, permissions = []) {
+        for (const perm of permissions) {
+            if (!member.permission.has(perm)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Check if the given user has correct permissions in targeted channel.
+     *
+     * @param {Object<Channel>} channel - Channel object
+     * @param {Array<String>} permissions - List of permissions to test
+     * @param {Object<User>} [user=this.bot.user] - User to test
+     * @returns {Boolean} True if user has permissions / False if not
+     * @memberof AxonUtils
+     */
+    hasChannelPerms(channel, permissions, user = this.bot.user) {
+        for (const perm of permissions) {
+            if (!channel.permissionsOf(user.id).has(perm)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * List all missing permissions of the given user.
+     *
+     * @param {Object<Member>} member
+     * @param {Array<String>} [permissions=[]] - List of permissions to test
+     * @returns {Array<String>} An array of missing permissions
+     * @memberof AxonUtils
+     */
+    missingPerms(member, permissions = []) {
+        const missing = [];
+        for (const perm of permissions) {
+            if (!member.permission.has(perm)) {
+                missing.push(perm);
+            }
+        }
+        return missing;
+    }
+
     //
     // ****** GENERAL ******
     //
@@ -157,29 +239,25 @@ class Utils {
         return new Promise((res) => setTimeout(() => res(), ms));
     }
 
-    /** read file */
-    async readJson(path) {
-        try {
-            const txt = await readFile(path);
-            const conf = JSON.parse(txt);
-            if (!conf) {
-                throw new Error('Path incorrect');
-            }
-            return conf;
-        } catch (err) {
-            return Promise.reject(err);
-        }
+    /**
+     * Promisified readFile method
+     *
+     * @param {String} path
+     * @returns {Promise<String>} content
+     */
+    readFile(path) {
+        return readFile(path);
     }
 
-    /** write file */
-    async writeJson(path, obj) {
-        try {
-            const txt = JSON.stringify(obj);
-            const res = await writeFile(path, txt);
-            return res;
-        } catch (err) {
-            return err;
-        }
+    /**
+     * Promisified writeFile method
+     *
+     * @param {String} path
+     * @param {String} content
+     * @returns {Promise}
+     */
+    writeFile(path, content) {
+        return writeFile(path, content);
     }
 
     /**

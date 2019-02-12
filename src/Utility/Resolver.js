@@ -4,8 +4,6 @@ import Utils from './Utils';
 // Error
 import AxonError from '../Errors/AxonError';
 
-const Util = new Utils();
-
 /**
  * Resolver class for AxonClient
  *
@@ -36,10 +34,10 @@ class Resolver {
         args.lower = args.all.toLowerCase();
         const users = client.users;
 
-        const mention = /<@!?([0-9]+)>$/.exec(args[0]);
+        const mention = Utils.userMention.exec(args[0]);
 
         const user = ((mention && mention[1]) && users.get(mention[1])) // User mention
-            || (Util.id.test(args[0]) && users.get(args[0])) // User ID
+            || (Utils.id.test(args[0]) && users.get(args[0])) // User ID
             || (args.all.indexOf('#') > -1 && users.find(u => `${u.username}#${u.discriminator}` === args.all)) // Username + discrim
             || users.find(u => u.username === args.all) // Username
             || users.find(u => u.username.toLowerCase() === args.lower) // Username lowercase
@@ -71,10 +69,10 @@ class Resolver {
         args.lower = args.all.toLowerCase();
         const members = guild.members;
 
-        const mention = /<@!?([0-9]+)>$/.exec(args[0]);
+        const mention = Utils.userMention.exec(args[0]);
 
         const member = ((mention && mention[1]) && members.get(mention[1])) // User mention
-            || (Util.id.test(args[0]) && members.get(args[0])) // User ID
+            || (Utils.id.test(args[0]) && members.get(args[0])) // User ID
             || (args.all.indexOf('#') > -1 && members.find(m => `${m.username}#${m.discriminator}` === args.all)) // Username + discrim
             || members.find(m => m.username === args.all) // Username
             || members.find(m => m.nick === args.all) // nickname
@@ -111,10 +109,10 @@ class Resolver {
         args.lower = args.all.toLowerCase();
         const roles = guild.roles;
 
-        const mention = /<@&([0-9]+)>$/.exec(args[0]);
+        const mention = Utils.roleMention.exec(args[0]);
 
         const role = ((mention && mention[1]) && roles.get(mention[1]))  // mention
-            || (Util.id.test(args[0]) && roles.get(args[0])) // id
+            || (Utils.id.test(args[0]) && roles.get(args[0])) // id
             || roles.find(m => m.name === args.all) // name
             || roles.find(m => m.name.toLowerCase() === args.lower) // name lower
             || roles.find(m => m.name.includes(args.all)) // name includes
@@ -146,10 +144,10 @@ class Resolver {
         args.lower = args.all.toLowerCase();
         const channels = guild.channels;
 
-        const mention = /<#([0-9]+)>$/.exec(args[0]);
+        const mention = Utils.channelMention.exec(args[0]);
 
         const channel = ((mention && mention[1]) && channels.get(mention[1]))
-            || (Util.id.test(args[0]) && channels.get(args[0]))
+            || (Utils.id.test(args[0]) && channels.get(args[0]))
             || channels.find(c => c.name === args.all) // name
             || channels.find(c => c.name.toLowerCase() === args.lower) // name lower
             || channels.find(c => c.name.includes(args.all)) // name includes
@@ -176,7 +174,7 @@ class Resolver {
         args.all = args.join(' ');
         args.lower = args.all.toLowerCase();
 
-        const guild = (/^[0-9]+$/.test(args[0]) && guilds.find(g => g.id === args[0])) // ID
+        const guild = (Utils.id.test(args[0]) && guilds.find(g => g.id === args[0])) // ID
             || guilds.find(g => g.name === args.all) // Name
             || guilds.find(g => g.name.toLowerCase() === args.lower) // Lowercase name
             || guilds.find(g => g.name.includes(args.all)) // Includes name

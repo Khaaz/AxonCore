@@ -22,7 +22,6 @@ class AxonUtils {
      * @prop {Object<AxonClient>} axon - Axon Client [GETTER: _axon]
      * @prop {Object<Eris.Client>} bot - Eris bot Client [GETTER: _axon.client]
      * @prop {Object} Logger - Logger Object/Methods [GETTER: axon.Logger]
-     * @prop {Object} Resolver - Resolver Object/Methods [GETTER: axon.Resolver]
      * @prop {Object} AxonUtils - AxonUtils Object/Methods [GETTER: axon.AxonUtils]
      * @prop {Object} Utils - Utils Object/Methods [GETTER: axon.Utils]
      *
@@ -89,61 +88,8 @@ class AxonUtils {
     }
 
     //
-    // ****** PERMISSIONS ******
+    // ****** BOT STAFF ******
     //
-
-    /**
-     * Check if the given user has correct permissions in targeted channel.
-     *
-     * @param {Object<Channel>} channel - Channel object
-     * @param {Array<String>} permissions - List of permissions to test
-     * @param {Object<User>} [user=this.bot.user] - User to test
-     * @returns {Boolean} True if user has permissions / False if not
-     * @memberof AxonUtils
-     */
-    hasChannelPerms(channel, permissions, user = this.bot.user) {
-        for (const perm of permissions) {
-            if (!channel.permissionsOf(user.id).has(perm)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /**
-     * List all missing permissions of the given user.
-     *
-     * @param {Object<Member>} member
-     * @param {Array<String>} [permissions=[]] - List of permissions to test
-     * @returns {Array<String>} An array of missing permissions
-     * @memberof AxonUtils
-     */
-    missingPerms(member, permissions = []) {
-        const missing = [];
-        for (const perm of permissions) {
-            if (!member.permission.has(perm)) {
-                missing.push(perm);
-            }
-        }
-        return missing;
-    }
-
-    /**
-     * Check if the member has correct perm to execute
-     *
-     * @param {Object<Member>} member - Member object
-     * @param {Array<String>} permissions - List of permissions to test
-     * @returns {Boolean} True if member has permissions / False if not
-     * @memberof AxonUtils
-     */
-    hasPerms(member, permissions = []) {
-        for (const perm of permissions) {
-            if (!member.permission.has(perm)) {
-                return false;
-            }
-        }
-        return true;
-    }
 
     /**
      * Check if the user is a bot owner.
@@ -232,19 +178,22 @@ class AxonUtils {
      * Doesn't support file uploads.
      *
      * @param {Object<Channel>} channel - The channel Object
-     * @param {Object/String} content - Message content, String or Embed Object
+     * @param {Object|String} content - Message content: String or Embed Object
      * @param {Object} [options={}] - Options { disableEveryone: Boolean, delete: Boolean, delay: Number }
+     * @param {Object} [options.disableEveryone=true] - Whether to allow mentioning everyone or not
+     * @param {Object} [options.delete=false] - Whether to deletethe message or not
+     * @param {Object} [options.delay=null] - delay after which the message will be deleted
      * @returns {Promise<Message?>} Message Object
      * @memberof AxonUtils
      */
     sendMessage(channel, content, options = {}) {
-        if (channel.guild && !this.hasChannelPerms(channel, ['sendMessages'])) { // check if bot has sendMessage perm in the channel.
+        if (channel.guild && !this.Utils.hasChannelPerms(channel, ['sendMessages'])) { // check if bot has sendMessage perm in the channel.
             this.Logger.verbose(`No sendMessage perms [${channel.guild.name} - ${channel.guild.name}]!`);
             return Promise.resolve();
         }
 
         if (content instanceof Object && content.embed) {
-            if (channel.guild && !this.hasChannelPerms(channel, ['embedLinks'])) { // check if bot has embedPermission perm in the channel.
+            if (channel.guild && !this.Utils.hasChannelPerms(channel, ['embedLinks'])) { // check if bot has embedPermission perm in the channel.
                 this.Logger.verbose(`No embedLinks perms [${channel.guild.name} - ${channel.guild.name}]!`);
                 return Promise.resolve();
             }
@@ -315,7 +264,7 @@ class AxonUtils {
             return Promise.resolve();
         }
         if (content instanceof Object) {
-            if (message.channel.guild && !this.hasChannelPerms(message.channel, ['embedLinks'])) { // check if bot has embedLinks perm in the channel.
+            if (message.channel.guild && !this.Utils.hasChannelPerms(message.channel, ['embedLinks'])) { // check if bot has embedLinks perm in the channel.
                 this.Logger.verbose(`No embedLinks perms [${message.channel.guild.name} - ${message.channel.guild.name}]!`);
                 return Promise.resolve();
             }
@@ -422,6 +371,177 @@ class AxonUtils {
         }
         this.Logger.emerg(`Unexpected error [${msg.channel.guild.name} - ${msg.channale.guild.id}]!\n${err.stack}`);
         return this.sendError(msg.channel, errMsg);
+    }
+
+    //
+    // ****** GENERAL CLIENT METHODS ******
+    //
+
+    /**
+     * Add/Remove a blacklisted user.
+     * External method that can be called to add a user to the blacklist.
+     *
+     * @async
+     * @param {String} userID - The id of the user to blacklist
+     * @param {Boolean} [boolean=true] - Whether to add(true) or remove(false) the user to blacklist
+     * @returns {Promise<Object>} The Axon Schema from the DB / Error
+     * @memberof AxonClient
+     */
+    async updateBlacklistUser(userID, boolean = true) {
+        if (boolean) {
+            !this.axon.blacklistedUsers.has(userID) && this.axon.blacklistedUsers.add(userID);
+        } else {
+            this.axon.blacklistedUsers.has(userID) && this.axon.blacklistedUsers.delete(userID);
+        }
+        const blacklist = Array.from(this.axon.blacklistedUsers);
+        try {
+            const axon = await this.axon.DBprovider.updateBlacklistUser(blacklist);
+            return axon;
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    /**
+     * Add/Remove a blacklisted guild.
+     * External method that can be called to add a guild to the blacklist
+     *
+     * @async
+     * @param {String} guildID - The id of the guild to blacklist
+     * @param {Boolean} [boolean=true] - if add(true) or remove(false) the guild to blacklist
+     * @returns {Promise<Object>} The Axon Schema from the DB / Error
+     * @memberof AxonClient
+     */
+    async updateBlacklistGuild(userID, boolean = true) {
+        if (boolean) {
+            !this.axon.blacklistedGuilds.has(userID) && this.axon.blacklistedGuilds.add(userID);
+        } else {
+            this.axon.blacklistedGuilds.has(userID) && this.axon.blacklistedGuilds.delete(userID);
+        }
+        const blacklist = Array.from(this.axon.blacklistedUsers);
+        try {
+            const axon = await this.axon.DBprovider.updateBlacklistGuild(blacklist);
+            return axon;
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    /**
+     * Updates the state of a module.
+     * true = disable the module, false = enable the module
+     *
+     * @param {String} guildID - The guild ID
+     * @param {String} label - The module label
+     * @param {Boolean} [boolean=true] - If disable the module (false) or enable (true)
+     * @returns {Promise<Object>} Updated guildSchema / Error
+     * @memberof AxonClient
+     */
+    async updateGuildStateModule(guildID, label, boolean = true) {
+        let conf;
+        try {
+            conf = await this.axon.getGuildConf(guildID); // get from cache or from DB if not found
+        } catch (err) {
+            throw err;
+        }
+
+        boolean
+            ? conf.modules.includes(label) && (conf.modules = conf.modules.filter(c => c !== label))
+            : !conf.modules.includes(label) && conf.modules.push(label);
+
+        try {
+            const newConf = await this.axon.DBprovider.updateModule(guildID, conf.modules);
+            this.axon.guildConfigs.set(guildID, newConf);
+            return newConf;
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    /**
+     * Updates the state of a command.
+     * true = disable the command, false = enable the command.
+     *
+     * @param {String} guildID - The guild ID
+     * @param {String} label - The command label
+     * @param {Boolean} [boolean=true] - If disable the command (false) or enable (true)
+     * @returns {Promise<Object>} Updated guildSchema / Error
+     * @memberof AxonClient
+     */
+    async updateGuildStateCommand(guildID, label, boolean = true) {
+        let conf;
+        try {
+            conf = await this.axon.getGuildConf(guildID); // get from cache or from DB if not found
+        } catch (err) {
+            throw err;
+        }
+
+        boolean
+            ? conf.commands.includes(label) && (conf.commands = conf.commands.filter(c => c !== label))
+            : !conf.commands.includes(label) && conf.commands.push(label);
+
+        try {
+            const newConf = await this.axon.DBprovider.updateCommand(guildID, conf.commands);
+            this.axon.guildConfigs.set(guildID, newConf);
+            return newConf;
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    /**
+     * Updates the state of an event.
+     * true = disable the event, false = enable the event.
+     *
+     * @param {String} guildID - The guild ID
+     * @param {String} label - The event label
+     * @param {Boolean} [boolean=true] - If disable the event (false) or enable (true)
+     * @returns {Promise<Object>} Updated guildSchema / Error
+     * @memberof AxonClient
+     */
+    async updateGuildStateEvent(guildID, label, boolean = true) {
+        let conf;
+        try {
+            conf = await this.axon.getGuildConf(guildID); // get from cache or from DB if not found
+        } catch (err) {
+            throw err;
+        }
+
+        boolean
+            ? conf.events.includes(label) && (conf.events = conf.events.filter(c => c !== label))
+            : !conf.events.includes(label) && conf.events.push(label);
+
+        try {
+            const newConf = await this.axon.DBprovider.updateEvent(guildID, conf.events);
+            this.axon.guildConfigs.set(guildID, newConf);
+            return newConf;
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    /**
+     * Enables or disables a module globally.
+     *
+     * @param {String} module - Module name
+     * @param {Boolean} [state=true] - Whether to enable or disable
+     * @memberof AxonClient
+     */
+    updateGlobalStateModule(module, state = true) {
+        this.axon.modules.get(module).enabled = state;
+        this.Logger.info(`Globally ${state ? 'enabled' : 'disabled'} module: ${module}.`);
+    }
+
+    /**
+     * Enables or disables a command globally.
+     *
+     * @param {String} command - Command name
+     * @param {Boolean} [state=true] - Whether to enable or disable
+     * @memberof AxonClient
+     */
+    updateGlobalStateCommand(command, state = true) {
+        this.axon.commands.get(command).enabled = state;
+        this.Logger.info(`Globally ${state ? 'enabled' : 'disabled'} command: ${command}.`);
     }
 }
 

@@ -20,7 +20,6 @@ class Command extends Base {
      * @prop {Object<AxonClient>} axon - Axon Client [GETTER: _axon]
      * @prop {Object<Eris.Client>} bot - Eris bot Client [GETTER: _axon.client]
      * @prop {Object} Logger - Logger Object/Methods [GETTER: axon.Logger]
-     * @prop {Object} Resolver - Resolver Object/Methods [GETTER: axon.Resolver]
      * @prop {Object} AxonUtils - AxonUtils Object/Methods [GETTER: axon.AxonUtils]
      * @prop {Object} Utils - Utils Object/Methods [GETTER: axon.Utils]
      *
@@ -80,10 +79,6 @@ class Command extends Base {
     constructor(module) {
         super(module.axon);
 
-        /**
-         * [GETTER] - bot references to Axon Client
-         * [GETTER] - (private) module references to the module the command is in
-         */
         this._module = module; // (module Object)
 
         /**
@@ -91,11 +86,6 @@ class Command extends Base {
          * User ID => Cooldown
          */
         this._cooldown = new Map();
-
-        /**
-         * Shortcut - Reusable class
-         * Resolver [GETTER] / Util [GETTER] / Template [GETTER]
-         */
 
         // Command main options
         this.label = 'label';
@@ -222,18 +212,24 @@ class Command extends Base {
     _execute(message) {
         const { msg, args, guildConf } = message;
 
-        /** Test for bot permissions */
-        if (!this._checkPermsBot(msg.channel)) {
-            return this.sendBotPerms(msg.channel);
-        }
-
-        /** Permissions checkers */
-        if (!this.canExecute(msg.channel, msg.member, guildConf)) {
-            /** Sends invalid perm message in case of invalid perm [option enabled] */
-            if (!guildConf.modOnly && this.options.invalidPermissionMessage) {
-                return this.sendUserPerms(msg.channel, msg.member);
+        if (!guildConf) { // DM EXECUTION
+            if (this.options.guildOnly) { // guild only
+                return Promise.resolve();
             }
-            return Promise.resolve();
+        } else { // REGULAR EXECUTION
+            /** Test for bot permissions */
+            if (!this._checkPermsBot(msg.channel)) {
+                return this.sendBotPerms(msg.channel);
+            }
+
+            /** Permissions checkers */
+            if (!this.canExecute(msg.channel, msg.member, guildConf)) {
+                /** Sends invalid perm message in case of invalid perm [option enabled] */
+                if (!guildConf.modOnly && this.options.invalidPermissionMessage) {
+                    return this.sendUserPerms(msg.channel, msg.member);
+                }
+                return Promise.resolve();
+            }
         }
 
         /** Test for Cooldown - Send Cooldown message */
@@ -251,7 +247,7 @@ class Command extends Base {
         }
 
         /** Sends invalid usage message in case of invalid usage (not enough argument) [option enabled] */
-        if (args.length < this.options.argsMin && this.options.invalidUsage) {
+        if (args.length < this.options.argsMin && this.options.invalidUsage && !this.options.hidden) {
             return this.sendHelp({ msg, args, guildConf })
                 .then(() => {
                     this._cooldown.set(msg.author.id, { time: Date.now(), post: true });
@@ -295,45 +291,6 @@ class Command extends Base {
         }
 
         return msg.command.execute(message);
-    }
-
-    /**
-     * Execute the command in DMs - pass some checkers.
-     *
-     * @param {Object<Message>} message
-     * @returns {Promise}
-     * @memberof Command
-     */
-    _executeDM(message) {
-        const { msg, args } = message;
-
-        if (this.options.guildOnly) { // guild only
-            return Promise.resolve();
-        }
-
-        /** Test for Cooldown - Send Cooldown message */
-        const [cd, cooldown] = this._shouldCooldown(msg);
-        if (cd && cooldown.post) {
-            cooldown.post = false;
-            return this.sendCooldown(msg.channel, cd);
-        }
-
-        /** Sends invalid usage message in case of invalid usage (not enough argument) [option enabled] */
-        if (args.length < this.options.argsMin && this.options.invalidUsage && !this.options.hidden) {
-            return this.sendHelp({ msg, args })
-                .then(() => {
-                    this._cooldown.set(msg.author.id, { time: Date.now(), post: true });
-                });
-        }
-
-        if (this.options.deleteCommand) {
-            msg.delete();
-        }
-
-        return msg.command.execute(message)
-            .then(() => {
-                this._cooldown.set(msg.author.id, { time: Date.now(), post: true });
-            });
     }
 
     /**
@@ -381,7 +338,7 @@ class Command extends Base {
             embed.description += `**Required:** ${perm}\n`;
         }
 
-        if (this.infos.examples.length > 0) {
+        if (this.infos.examples && this.infos.examples.length > 0) {
             this.infos.examples.length > 1
                 ? embed.description += `\n**Examples:**\n${prefix}${this.infos.examples.join(`\n${prefix}`)}\n`
                 : embed.description += `**Example:** ${prefix}${this.infos.examples.join(`\n${prefix}`)}\n`;
@@ -494,7 +451,7 @@ class Command extends Base {
         if (!this.permissions.bot.length) {
             return true;
         }
-        return this.AxonUtils.hasChannelPerms(channel, this.permissions.bot);
+        return this.Utils.hasChannelPerms(channel, this.permissions.bot);
     }
 
     /**
@@ -683,7 +640,7 @@ class Command extends Base {
     sendBotPerms(channel, permissions = []) {
         if (permissions.length === 0) {
             const member = channel.guild.members.get(this.bot.user.id);
-            permissions = this.AxonUtils.missingPerms(member, this.permissions.bot);
+            permissions = this.Utils.missingPerms(member, this.permissions.bot);
         }
         return this.sendError(
             channel,
@@ -704,7 +661,7 @@ class Command extends Base {
      */
     sendUserPerms(channel, member, permissions = []) {
         if (permissions.length === 0) {
-            permissions = this.AxonUtils.missingPerms(member, this.permissions.user.needed);
+            permissions = this.Utils.missingPerms(member, this.permissions.user.needed);
         }
         return this.sendError(
             channel,

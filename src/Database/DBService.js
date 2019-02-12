@@ -1,24 +1,30 @@
 'use strict';
 
-import DBService from './DBService';
-
-import Manager from './JSON/Manager';
+/* eslint-disable */
 
 /**
- * @author Olybear, KhaaZ
- *
- * @class JsonService
- * @extends DBService
+ * Abstract class for all DB services
+ * 
+ * @author KhaaZ
+ * 
+ * @class DBService
  */
-class JsonService extends DBService {
+class DBService {
+
+    constructor() {
+        if (this.constructor == 'DBService') {
+            throw new Error('Can\'t instantiate an abstract class');    
+        }
+    }
+
     /**
      * Retrieves the axon schema from the DB.
      *
      * @returns {Promise<Object|null>} AxonSchema Object or null
-     * @memberof MongoService
+     * @memberof DBService
      */
     fetchAxon() {
-        return Manager.fetchAxonSchema();
+        throw new Error('Not implemented Exception');
     }
 
     /**
@@ -26,31 +32,31 @@ class JsonService extends DBService {
      *
      * @param {String} gID - guild ID
      * @returns {Promise<Object|null>} GuildSchema or null
-     * @memberof MongoService
+     * @memberof DBService
      */
     fetchGuild(gID) {
-        return Manager.fetchGuildSchema(gID);
+        throw new Error('Not implemented Exception');
     }
 
     /**
      * Initialises a default schema for Axon.
      *
      * @returns {Promise<Object>} Newly created Axon Schema
-     * @memberof MongoService
+     * @memberof DBService
      */
     initAxon() {
-        return Manager.createAxonSchema();
+        throw new Error('Not implemented Exception');
     }
 
     /**
      * Init Guild Schema with default values
-     *
+     * 
      * @param {String} gID - Guild ID
      * @returns {Promsie<Object>} Newly created guild
      */
 
     initGuild(gID) {
-        return Manager.createGuildSchema(gID);
+        throw new Error('Not implemented Exception');
     }
 
     /**
@@ -58,10 +64,10 @@ class JsonService extends DBService {
      *
      * @param {Array<String>} blacklistedUsers - Array of blacklisted users
      * @returns {Promise} Updated AxonSchema
-     * @memberof MongoService
+     * @memberof DBService
      */
     updateBlacklistUser(blacklistedUsers) {
-        return Manager.updateAxonKey('bannedUsers', blacklistedUsers);
+        throw new Error('Not implemented Exception');
     }
 
     /**
@@ -69,10 +75,10 @@ class JsonService extends DBService {
      *
      * @param {Array<String>} blacklistedGuilds - Array of blacklistedUsers
      * @returns {Promise} Updated AxonSchema
-     * @memberof MongoService
+     * @memberof DBService
      */
     updateBlacklistGuild(blacklistedGuilds) {
-        return Manager.updateAxonKey('bannedGuilds', blacklistedGuilds);
+        throw new Error('Not implemented Exception');
     }
 
     /**
@@ -81,10 +87,10 @@ class JsonService extends DBService {
      * @param {String} gID - guild ID
      * @param {Array<String>} prefixArr - Array of prefixes
      * @returns {Promise} Updated GuildSchema
-     * @memberof MongoService
+     * @memberof DBService
      */
     updateGuildPrefix(gID, prefixArr) {
-        return Manager.updateGuildKey(gID, 'prefix', prefixArr);
+        throw new Error('Not implemented Exception');
     }
 
     /**
@@ -92,10 +98,10 @@ class JsonService extends DBService {
      *
      * @param {Array<String>} modulesArr - Array of modules label
      * @returns {Promise} Updated GuildSchema
-     * @memberof MongoService
+     * @memberof DBService
      */
     updateModule(gID, modulesArr) {
-        return Manager.updateGuildKey(gID, 'modules', modulesArr);
+        throw new Error('Not implemented Exception');
     }
 
     /**
@@ -103,10 +109,10 @@ class JsonService extends DBService {
      *
      * @param {Array<String>} commandsArr - Array of commands label
      * @returns {Promise} Updated GuildSchema
-     * @memberof MongoService
+     * @memberof DBService
      */
     updateCommand(gID, commandsArr) {
-        return Manager.updateGuildKey(gID, 'commands', commandsArr);
+        throw new Error('Not implemented Exception');
     }
 
     /**
@@ -114,10 +120,10 @@ class JsonService extends DBService {
      *
      * @param {Array<String>} eventsArr - Array of events label
      * @returns {Promise} Updated GuildSchema
-     * @memberof MongoService
+     * @memberof DBService
      */
     updateEvent(gID, eventsArr) {
-        return Manager.updateGuildKey(gID, 'events', eventsArr);
+        throw new Error('Not implemented Exception');
     }
 
     /**
@@ -125,23 +131,23 @@ class JsonService extends DBService {
      *
      * @param {Object} schema - the schema object to update
      * @returns {Promise} Updated Schema from the DB
-     * @memberof MongoService
+     * @memberof DBService
      */
     saveAxonSchema(schema) {
-        return Manager.writeAxonSchema(schema);
+        throw new Error('Not implemented Exception');
     }
 
     /**
-     * Saves the guild schema.
+     * Updates the given guild in the DB with a new schema object.
      *
      * @param {String} gID - Guid id
-     * @param {Object} schema - Guild Schema to save
-     * @returns {Promise} Updated Guild Schema
-     * @memberof MongoService
+     * @param {Object} schema - the schema object to update
+     * @returns {Promise} Updated Schema from the DB
+     * @memberof DBService
      */
     saveGuildSchema(gID, schema) {
-        return Manager.writeGuildSchema(gID, schema);
+        throw new Error('Not implemented Exception');
     }
 }
 
-export default JsonService;
+export default DBService;

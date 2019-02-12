@@ -1,14 +1,18 @@
 'use strict';
 
+import DBService from './DBService';
+
 /**
  * Mongo Service class, handles all interactions with MongoDB.
  *
  * @author KhaaZ
  *
  * @class MongoService
+ * @extends DBService
  */
-class MongoService {
+class MongoService extends DBService {
     constructor(axon) {
+        super();
         this._axon = axon;
     }
 
@@ -19,7 +23,6 @@ class MongoService {
     init(axonOptions) {
         this.AxonSchema = axonOptions.axonSchema || require('./Models/AxonSchema').default;
         this.GuildSchema = axonOptions.guildSchema || require('./Models/GuildSchema').default;
-
         this.axon.schemas.set('axonSchema', this.AxonSchema);
         this.axon.schemas.set('guildSchema', this.GuildSchema);
     }
@@ -245,8 +248,16 @@ class MongoService {
      * @returns {Promise} Updated Schema from the DB
      * @memberof MongoService
      */
-    saveSchema(schema) {
-        return schema.save();
+    saveAxonSchema(schema) {
+        return this.AxonSchema.findOneAndUpdate({
+            ID : '1',
+        },
+        schema,
+        {
+            new: true,
+            upsert: true,
+            setDefaultsOnInsert: true,
+        });
     }
 
     /**

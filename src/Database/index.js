@@ -20,7 +20,7 @@ class DBHandler {
             // Json Database
             case 0:
             default: {
-                DBservice = JsonService;
+                DBservice = new JsonService();
                 axon.Logger.info('Selected Database: JSON DB.');
                 break;
             }
@@ -35,7 +35,7 @@ class DBHandler {
 
                     axon.Logger.info('Selected Database: MongoDB.');
                 } catch (err) {
-                    DBservice = JsonService;
+                    DBservice = new JsonService();
                     axon.Logger.warn('MongoDB wasn\'t found, using JSON DB instead.');
                     axon.Logger.info('Selected Database: JSON DB.');
                 }

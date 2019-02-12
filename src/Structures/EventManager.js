@@ -136,7 +136,14 @@ class EventManager extends Base {
             .then(gConf => {
                 for (const event of events) {
                     if (!event.load || !event.module.enabled || !event.enabled) { // globally disabled
-                        return;
+                        continue;
+                    }
+                    // Ignore guild disabled Module/Event
+                    if (gConf) {
+                        if ((this.axon.isModuleDisabled(event.module, gConf) && !this.module.serverBypass)
+                            || (this._isEventDisabled(event.label, gConf) && !this.serverBypass)) {
+                            continue;
+                        }
                     }
                     event._execute(gConf, ...args)
                         .then(() => {
@@ -191,14 +198,6 @@ class EventManager extends Base {
                     reject();
                 }
             }
-
-            // Ignore guild disabled Module/Event
-            if (guildConf) {
-                if ((this.axon._isModuleDisabled(this.module, guildConf) && !this.module.serverBypass)
-                || (this._isEventDisabled(guildConf) && !this.serverBypass)) { // check module/command server disabled
-                    reject();
-                }
-            }
             resolve(guildConf);
         });
     }
@@ -206,12 +205,13 @@ class EventManager extends Base {
     /**
      * Check if the event is disabled on the given guild
      *
+     * @param {String} label - The event label
      * @param {Object} guildConf - The guild Config object
      * @returns {Boolean} True if disabled / Undefined if not
      * @memberof Event
      */
-    _isEventDisabled(guildConf) {
-        return guildConf.events.find(e => e === this.label);
+    _isEventDisabled(label, guildConf) {
+        return guildConf.events.find(e => e === label);
     }
 
     /**
