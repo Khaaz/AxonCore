@@ -7,10 +7,11 @@ import { EventEmitter } from 'eventemitter3';
 import Collection from './Collection';
 
 /**
+ * Collect bunch of message object according to choosen options
+ *
  * @author VoidNulll
  *
  * @class MessageCollector
- *
  */
 class MessageCollector extends EventEmitter {
     /**

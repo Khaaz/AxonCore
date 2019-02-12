@@ -1,6 +1,13 @@
 'use strict';
 import AxonError from '../Errors/AxonError';
 
+/**
+ * Embed class to create Embed without without using raw json format
+ *
+ * @author DutchVanDerLinde
+ *
+ * @class Embed
+ */
 class Embed {
     /**
  * A rich embed to be sent with a message with a fluent interface for creation.

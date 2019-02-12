@@ -2,6 +2,8 @@
 import { EventEmitter } from 'eventemitter3';
 
 /**
+ * Create a Prompt, waiting for specific input before resolving with the message Object
+ *
  * @author VoidNulll
  *
  * @class Prompt
