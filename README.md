@@ -36,15 +36,18 @@
 
 ## Notes:
 
-This framework supports a custom logger. You can take full benefits of this by installing [Chalk](https://www.npmjs.com/package/chalk) or [Signale](https://www.npmjs.com/package/signale) and choosing to use it in the config file.  
-[PM2](https://www.npmjs.com/package/pm2) is also recommended.  
+This framework supports a custom logger. You can take full benefits of this by installing [Chalk](https://www.npmjs.com/package/chalk) or [Signale](https://www.npmjs.com/package/signale) and choosing the one you want to use in the config file.  
+[PM2](https://www.npmjs.com/package/pm2) is also recommended as a process manager solution.  
 This framework is designed to work with [Moongose](https://www.npmjs.com/package/mongoose) which you can install and use directly without any modification (just by selecting it in the config file).  
-In the future more database clients could be added.  
+If you don't want to use MongoDB, you can use the default version which is a JSON Database.
+In the future more database clients could be added. In the meantime you are able to use whatever Database you want by simply extending AxonCore.DBService, adaptating as you want and passing the Class as an option in the constructor.   
 
 [Eris](https://www.npmjs.com/package/eris) is necessary to use this framework. However you can use any fork. [KhaaZ's fork](https://github.com/Khaazz/eris) is recommended as it only remove selfbot property from `Eris.Client` and prefix token as `_token`.  
+You need to pass an instance of Eris Client when you contruct the AxonClient. Therefore you can use any Eris version you wish.   
 
-[ESM](https://www.npmjs.com/package/esm) is necessary to run this framework. It allows to take full benefits of ES6 modules by making possible to use it.  
+[ESM](https://www.npmjs.com/package/esm) is used to run this framework. It allows to take full benefits of ES6 modules by making possible to use it.  
 See [here](https://www.npmjs.com/package/esm#getting-started) on how to use ESM.  
+However you don't need ESM to use this framework as you can simply use require and it will be fully compatible.  
 
 ## Documentation:
 
