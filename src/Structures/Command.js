@@ -42,7 +42,7 @@ class Command extends Base {
      *
      *
      * @prop {Object} infos - Default info about the command
-     * @prop {Owner} infos.owner - Command authors
+     * @prop {Array} infos.owners - Command authors
      * @prop {String} infos.cmdName - Full command name
      * @prop {String} infos.description - Command description
      * @prop {String} infos.usage - Command usage
@@ -198,6 +198,16 @@ class Command extends Base {
         return this.axon.configs.template;
     }
 
+    get fullLabel() {
+        let cmd = this; // eslint-disable-line
+        const fullLabel = [this.label];
+        while (cmd.parentCommand) {
+            fullLabel.push(cmd.parentCommand.label);
+            cmd = cmd.parentCommand;
+        }
+        return fullLabel.reverse.join(' ');
+    }
+
     //
     // ****** MAIN - EXECUTE ******
     //
@@ -311,7 +321,7 @@ class Command extends Base {
 
         const embed = {};
         embed.author = {
-            name: `Help for ${this.infos.name}`,
+            name: `Help for ${this.infos.name || this.fullLabel}`,
             icon_url: this.bot.user.avatarURL,
         };
 
@@ -321,7 +331,7 @@ class Command extends Base {
 
         embed.description += `**Cooldown:** ${this.options.cooldown / 1000}s\n`;
 
-        embed.description += `**Usage:** ${prefix}${this.infos.usage}\n`;
+        embed.description += `**Usage:** ${prefix}${this.infos.usage || this.fullLabel}\n`;
 
         let perm;
         if (this.permissions.serverAdmin) {
