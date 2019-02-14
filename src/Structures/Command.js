@@ -181,8 +181,7 @@ class Command extends Base {
                 needed: [], // optional
                 bypass: [], // optional -- bypass everything
             }, // [this.bot.staff.owner, this.bot.staff.admins] Owner - admins - contribs - regs | bypass no matter what
-
-            // custom: function();
+            custom: () => true, // function that take the message object as parameter and return a boolean
         };
     }
 
@@ -233,7 +232,7 @@ class Command extends Base {
             }
 
             /** Permissions checkers */
-            if (!this.canExecute(msg.channel, msg.member, guildConf)) {
+            if (!this.canExecute(msg, guildConf)) {
                 /** Sends invalid perm message in case of invalid perm [option enabled] */
                 if (!guildConf.modOnly && this.options.invalidPermissionMessage) {
                     return this.sendUserPerms(msg.channel, msg.member);
@@ -422,7 +421,8 @@ class Command extends Base {
      * @returns {Boolean} True if the user can execute command / False if not
      * @memberof Command
      */
-    canExecute(channel, member, guildConf) {
+    canExecute(msg, guildConf) {
+        const { member, channel } = msg;
         // Bypass: if one of the perm is true => Exec the command
         if (this._checkPermsUserBypass(member)
             || this._checkUserBypass(member)
@@ -444,6 +444,11 @@ class Command extends Base {
             || !this._checkChannelNeeded(channel)
             || !this._checkStaffNeeded(member)) {
             return false;
+        }
+
+        // custom is a function that returns a boolean
+        if (this.permissions.custom) {
+            return this.permissions.custom(msg);
         }
 
         return true;

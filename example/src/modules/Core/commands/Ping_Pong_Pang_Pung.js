@@ -13,7 +13,7 @@ class Pung extends Command {
         this.hasSubcmd = false;
 
         this.infos = {
-            owner: ['KhaaZ'],
+            owners: ['KhaaZ'],
             name: 'ping pong pang pung',
             description: 'Ping the bot.',
             usage: 'ping pong pang pung',
@@ -23,6 +23,8 @@ class Pung extends Command {
         this.options.argsMin = 0;
         this.options.cooldown = 3000;
         this.options.guildOnly = false;
+
+        this.permissions.custom = (msg) => msg.channel.guild.id !== '365236789855649814'; // Ease guild id
     }
 
     async execute({ msg }) {
