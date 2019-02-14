@@ -7,7 +7,7 @@ class Collect extends Command {
         super(module);
         this.label = 'collect';
         this.infos = {
-            owner: 'Null',
+            owners: ['Null'],
             name: 'collect',
             description: 'Collect some messages and return',
             usage: 'collect',

@@ -6,7 +6,7 @@ class Wave extends Command {
         this.label = 'wave';
 
         this.infos = {
-            owner: ['Null'],
+            owners: ['Null'],
             name: 'wave',
             description: 'Wave at someone',
             usage: 'wave (user)',
