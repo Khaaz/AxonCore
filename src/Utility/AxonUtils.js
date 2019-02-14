@@ -182,7 +182,7 @@ class AxonUtils {
      * @param {Object} [options={}] - Options { disableEveryone: Boolean, delete: Boolean, delay: Number }
      * @param {Object} [options.disableEveryone=true] - Whether to allow mentioning everyone or not
      * @param {Object} [options.delete=false] - Whether to deletethe message or not
-     * @param {Object} [options.delay=null] - delay after which the message will be deleted
+     * @param {Object} [options.delay=null] - Delay after which the message will be deleted
      * @returns {Promise<Message?>} Message Object
      * @memberof AxonUtils
      */
@@ -311,7 +311,10 @@ class AxonUtils {
      *
      * @param {Object<User>} user - User object to get the DM channel
      * @param {Object/String} content - String or object (embed)
-     * @param {Object} options - Options { disableEveryone: Boolean, delete: Boolean, delay: Number }
+     * @param {Object} [options={}] - Options { disableEveryone: Boolean, delete: Boolean, delay: Number }
+     * @param {Object} [options.disableEveryone=true] - Whether to allow mentioning everyone or not
+     * @param {Object} [options.delete=false] - Whether to deletethe message or not
+     * @param {Object} [options.delay=null] - Delay after which the message will be deleted
      * @returns {Promise<Message?>} Message Object
      * @memberof AxonUtils
      */
@@ -327,7 +330,10 @@ class AxonUtils {
      *
      * @param {Object<Channel>} channel - The channel Object
      * @param {String} content - Error message content (String only)
-     * @param {Object} options - Options { disableEveryone: Boolean, delete: Boolean, delay: Number }
+     * @param {Object} [options={}] - Options { disableEveryone: Boolean, delete: Boolean, delay: Number }
+     * @param {Object} [options.disableEveryone=true] - Whether to allow mentioning everyone or not
+     * @param {Object} [options.delete=false] - Whether to deletethe message or not
+     * @param {Object} [options.delay=null] - Delay after which the message will be deleted
      * @returns {Promise<Message?>} Message Object
      * @memberof AxonUtils
      */
@@ -341,7 +347,10 @@ class AxonUtils {
      *
      * @param {Object<Channel>} channel - The channel Object
      * @param {String} content - Error message content (String only)
-     * @param {Object} options - Options { disableEveryone: Boolean, delete: Boolean, delay: Number }
+     * @param {Object} [options={}] - Options { disableEveryone: Boolean, delete: Boolean, delay: Number }
+     * @param {Object} [options.disableEveryone=true] - Whether to allow mentioning everyone or not
+     * @param {Object} [options.delete=false] - Whether to deletethe message or not
+     * @param {Object} [options.delay=null] - Delay after which the message will be deleted
      * @returns {Promise<Message?>} Message Object
      * @memberof AxonUtils
      */
