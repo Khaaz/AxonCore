@@ -43,7 +43,7 @@ class AxonUtils {
         return this.axon.client;
     }
 
-    get Template() {
+    get template() {
         return this.axon.configs.template;
     }
 
@@ -338,7 +338,7 @@ class AxonUtils {
      * @memberof AxonUtils
      */
     sendError(channel, content, options) {
-        return this.sendMessage(channel, `${this.Template.emote.error} ${content}`, options);
+        return this.sendMessage(channel, `${this.template.emote.error} ${content}`, options);
     }
 
     /**
@@ -355,7 +355,7 @@ class AxonUtils {
      * @memberof AxonUtils
      */
     sendSuccess(channel, content, options) {
-        return this.sendMessage(channel, `${this.Template.emote.success} ${content}`, options);
+        return this.sendMessage(channel, `${this.template.emote.success} ${content}`, options);
     }
 
     /**
@@ -372,7 +372,7 @@ class AxonUtils {
     error(msg, err, type, errMsg) {
         const typeList = Enums.typeError;
 
-        errMsg = errMsg || this.Template.message.error.general;
+        errMsg = errMsg || this.template.message.error.general;
 
         if (err) {
             err.message = `Type: ${typeList[type.toLowerCase()]} | ${err.message}`;
