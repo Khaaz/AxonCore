@@ -67,9 +67,11 @@ class AxonClient extends EventEmitter {
      * @prop {Collection<Module>} modules - All modules in the client [key: label, value: module]
      * @prop {Collection<Command>} commands - All commands in the client [key: label, value: command]
      * @prop {Map<String>} commandAliases - All aliases in the client [key: alias, value: commandLabel]
-     * @prop {Collection<Event>} events - All events in the client [key: label, value: event]
+     * @prop {Collection<Event>} events - All Eris events listned by the client [key: label, value: event]
      * @prop {Collection<Object>} schemas - All schemas in client (global models) [key: schemaLabel, value: schema]
      * @prop {Collection<Object>} guildConfigs - Guild configs [key: guildID, value: { guildConfig }]
+     *
+     * @prop {Object<EventManager>} eventManager - The EventManager instance that handle all AxonCore events
      *
      * @prop {Object} Logger - Default Logger / Chalk Logger / Signale Logger
      * @prop {Object} DBprovider - JSON(default) / Mongoose
@@ -149,7 +151,7 @@ class AxonClient extends EventEmitter {
         /** Commands, Events */
         this.commands = new Collection(Command); // Command Label => ref Command Object
         this.commandAliases = new Map(); // Command Alias => Command label
-        this.EventManager = new EventManager(this); // Event Label => ref Event function
+        this.eventManager = new EventManager(this); // Event Label => ref Event function
         /** GuildConfigs */
         this.guildConfigs = new Collection(); // Guild ID => guildConfig
 
@@ -218,6 +220,14 @@ class AxonClient extends EventEmitter {
 
     get client() {
         return this._client;
+    }
+
+    get events() {
+        return this.eventManager.events;
+    }
+
+    getListeners(eventName) {
+        return this.eventManager.getListeners(eventName);
     }
 
     get webhooks() {
@@ -338,7 +348,7 @@ class AxonClient extends EventEmitter {
                 console.log(' ');
 
                 // Bind Listeners to Handlers
-                this.EventManager.bindListeners();
+                this.eventManager.bindListeners();
 
                 /** Axon init (blacklist/global cache) */
                 await this._initAxon(); // load blacklisted users - guild
@@ -374,7 +384,7 @@ class AxonClient extends EventEmitter {
         this.Logger.axon('=== BotClient Ready! ===');
         this.client.ready = true;
         // Bind Handlers to Events
-        this.EventManager.bindHandlers();
+        this.eventManager.bindHandlers();
         /** Status */
         this.initStatus(); // execute default status function in Axon or override
         this.Logger.axon('Status setup!');
@@ -492,7 +502,7 @@ class AxonClient extends EventEmitter {
         this.modules.set(module.label, module); // Add the module in modules Collection (references to module object)
 
         for (const event of module.events.values()) {
-            this.EventManager.registerListener(event);
+            this.eventManager.registerListener(event);
         }
 
 
@@ -526,7 +536,7 @@ class AxonClient extends EventEmitter {
         }
 
         for (const event of module.events.values()) {
-            this.EventManager.unregisterListener(event.eventName, event.label);
+            this.eventManager.unregisterListener(event.eventName, event.label);
         }
 
         this.modules.delete(module.label); // Remove the module of modules Collection (references to module object)

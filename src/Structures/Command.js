@@ -205,7 +205,7 @@ class Command extends Base {
             fullLabel.push(cmd.parentCommand.label);
             cmd = cmd.parentCommand;
         }
-        return fullLabel.reverse.join(' ');
+        return fullLabel.reverse().join(' ');
     }
 
     //
