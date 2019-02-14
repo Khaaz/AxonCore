@@ -87,7 +87,7 @@ class MessageHandler {
             msg.prefix = prefix;
 
             /** Check if the user/role/channel is ignored in the guild */
-            if (this.axon.isGuildIgnored(msg, guildConf)) {
+            if (this.axon.AxonUtils.isIgnored(msg, guildConf)) {
                 return;
             }
 

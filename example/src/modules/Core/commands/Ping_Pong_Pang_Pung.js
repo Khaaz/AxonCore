@@ -24,7 +24,7 @@ class Pung extends Command {
         this.options.cooldown = 3000;
         this.options.guildOnly = false;
 
-        this.permissions.custom = (msg) => msg.channel.guild.id !== '365236789855649814'; // Ease guild id
+        this.permissions.custom = (msg) => msg.channel.guild.id === '365236789855649814'; // Ease guild id
     }
 
     async execute({ msg }) {

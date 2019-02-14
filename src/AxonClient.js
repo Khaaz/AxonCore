@@ -754,48 +754,6 @@ class AxonClient extends EventEmitter {
     }
 
     //
-    // ****** CHECKERS ******
-    //
-
-    /**
-     * Check if the user/role/channel is ignored on the specified guild.
-     *
-     * @param {Object<Message>} msg
-     * @param {Object} guildConf
-     * @returns {Boolean} True if either one of the three is ignored / False if none
-     * @memberof AxonClient
-     */
-    isGuildIgnored(msg, guildConf) {
-        return guildConf.ignoredUsers.find(u => u === msg.author.id) // User is ignored
-            || guildConf.ignoredRoles.find(r => msg.member.roles && msg.member.roles.includes(r)) // Role is ignored
-            || guildConf.ignoredChannels.find(c => c === msg.channel.id); // Channel is ignored
-    }
-
-    /**
-     * Check if the module is disabled on the specified guild.
-     *
-     * @param {Object<Command>} command - The command object
-     * @param {Object} guildConf - The guild Config object
-     * @returns {Boolean} True if disabled / Undefined if not
-     * @memberof AxonClient
-     */
-    isModuleDisabled(command, guildConf) {
-        return guildConf.modules.find(m => m === command.module.label);
-    }
-
-    /**
-     * Check if the command is disabled on the specified guild.
-     *
-     * @param {Object<Command>} command - The command object
-     * @param {Object} guildConf - The guild Config object
-     * @returns {Boolean} True if disabled / Undefined if not
-     * @memberof AxonClient
-     */
-    isCommandDisabled(command, guildConf) {
-        return guildConf.commands.find(c => c === command.label);
-    }
-
-    //
     // ****** DATABASE ******
     // Initialisation/fetch
     //
@@ -887,8 +845,8 @@ class AxonClient extends EventEmitter {
 
         if (guildConf
             && (
-                (this.isModuleDisabled(command, guildConf) && !command.module.serverBypass) // check module/command server disabled
-                || (this.isCommandDisabled(command, guildConf) && !command.serverBypass)
+                (this.AxonUtils.isModuleDisabled(command, guildConf) && !command.module.serverBypass) // check module/command server disabled
+                || (this.AxonUtils.isCommandDisabled(command, guildConf) && !command.serverBypass)
             )
         ) {
             return undefined;

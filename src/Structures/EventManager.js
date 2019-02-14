@@ -155,7 +155,7 @@ class EventManager extends Base {
                     }
                     // Ignore guild disabled Module/Event
                     if (gConf) {
-                        if ((this.axon.isModuleDisabled(event.module, gConf) && !this.module.serverBypass)
+                        if ((this.AxonUtils.isModuleDisabled(event.module, gConf) && !this.module.serverBypass)
                             || (this._isEventDisabled(event.label, gConf) && !this.serverBypass)) {
                             continue;
                         }
