@@ -30,6 +30,21 @@ class EventManager extends Base {
         this._handlers = new Collection();
     }
 
+    get events() {
+        return this._handlers;
+    }
+
+    /**
+     * Get all functions bound to the event passed in parameters.
+     *
+     * @param {String} eventName - The Eris event name
+     * @returns {Array} Array of the functions bound to the event
+     * @memberof EventManager
+     */
+    getListeners(eventName) {
+        return this._listeners[eventName];
+    }
+
     /**
      * Bind all listeners to a handler.
      * Create and register a handler for each event.
