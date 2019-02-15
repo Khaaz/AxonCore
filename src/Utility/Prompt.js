@@ -29,13 +29,18 @@ class Prompt {
      * @param {Number} [defaultOptions.deleteTimeoutMsg=false] The time to wait in milliseconds before deleting the timeout message
      * @param {Boolean} [defaultOptions.resendWhenInvalid=false] Whether or not to resend when the prompt got a invalid returned message, does not send invalid message
      *
+     * @prop {String} userID - The user ID that is bound to the current prompt
+     * @prop {Object<Channel>} channel - The channel where the prompt is running
+     * @prop {Boolean} timedOut - Whether the Prompt timed out
+     * @prop {Boolean} ended - Whether the prompt ended
+     *
      * @example
      * let prompt = new Prompt(this.axon, msg.author.id, msg.channel, { timeoutMessage: 'Be quicker next time' });
      */
     constructor(client, uID, channel, defaultOptions = {}) {
         this._axon = client;
-        this._userID = uID;
-        this._channel = channel;
+        this.userID = uID;
+        this.channel = channel;
 
         this._prompt = '';
 
@@ -57,10 +62,10 @@ class Prompt {
         this._actualOptions = {};
 
         this._emitter = new EventEmitter();
-        this._timedOut = false;
-        this._ended = false;
+        this.timedOut = false;
+        this.ended = false;
 
-        this.boundEvent = this._onMsgCreate.bind(this);
+        this._boundEvent = this._onMsgCreate.bind(this);
     }
 
     get axon() {
@@ -97,13 +102,13 @@ class Prompt {
      * @returns {Promise} The message object, or a reject error if timedout or message was invalid
      */
     run(prompt, options = {}) {
-        this._ended = false;
-        this._timedOut = false;
+        this.ended = false;
+        this.timedOut = false;
 
         this._prompt = prompt;
 
         return new Promise(async(resolve, reject) => {
-            this._message = await this.axon.AxonUtils.sendMessage(this._channel, this._prompt);
+            this._message = await this.axon.AxonUtils.sendMessage(this.channel, this._prompt);
 
             // Prepare options
             this._actualOptions = options;
@@ -128,7 +133,7 @@ class Prompt {
             this._emitter.once('invalidEnd', () => reject(this._onInvalidEnd())); // When the prompt ends as "invalid"
 
             // listen to the even, start the prompt
-            this.client.on('messageCreate', this.boundEvent); // Bind the event
+            this.client.on('messageCreate', this._boundEvent); // Bind the event
 
             this._startTimeout();
         });
@@ -136,7 +141,7 @@ class Prompt {
 
     _startTimeout() {
         setTimeout(() => {
-            if (this._ended === true) {
+            if (this.ended === true) {
                 return;
             }
             return this._emitter.emit('timedOut'); // Send the "timedOut" event
@@ -176,21 +181,21 @@ class Prompt {
     }
 
     _onInvalidEnd() {
-        this._ended = true;
+        this.ended = true;
         if (this._actualOptions.deletePrompt) {
             this._deletePrompt();
         }
-        this.client.off('messageCreate', this.boundEvent);
+        this.client.off('messageCreate', this._boundEvent);
         return 'INVALID';
     }
 
     _onEnded(msg) {
-        this._ended = true;
+        this.ended = true;
 
         if (this._actualOptions.deletePrompt) {
             this._deletePrompt();
         }
-        this.client.off('messageCreate', this.boundEvent);
+        this.client.off('messageCreate', this._boundEvent);
 
         if (!this._actualOptions.caseSensitive) {
             msg.content = msg.content.toLowerCase();
@@ -199,7 +204,7 @@ class Prompt {
     }
 
     async _onTimeout() {
-        this._timedOut = true;
+        this.timedOut = true;
         if (this._actualOptions.sendTimeout) {
             const msg = await this.axon.AxonUtils.sendMessage(this._message.channel, this._actualOptions.timeoutMessage); // Create the timeout message
             if (this._actualOptions.deleteTimeoutMsg) {
@@ -207,7 +212,7 @@ class Prompt {
                 msg.delete(); // Delete the timeout message
             }
         }
-        this.client.off('messageCreate', this.boundEvent);
+        this.client.off('messageCreate', this._boundEvent);
     }
 
     /**
@@ -217,10 +222,10 @@ class Prompt {
      * @param {Object} msg The message object
      */
     async _onMsgCreate(msg) {
-        if (this._ended || this._timedOut) { // If the prompt ended or timed out
+        if (this.ended || this.timedOut) { // If the prompt ended or timed out
             return;
         }
-        if (msg.author.id !== this._userID || msg.channel.id !== this._channel.id) { // only listen to the userId in the channelID
+        if (msg.author.id !== this.userID || msg.channel.id !== this.channel.id) { // only listen to the userId in the channelID
             return;
         }
         const checked = this._checker(msg);

@@ -40,10 +40,10 @@ class MessageCollector extends EventEmitter {
 
         this._actualOptions = {};
 
-        this.boundMsgEvent = this._onMsgCreate.bind(this);
-        this.boundDelEvent = this._onMsgDelete.bind(this);
-        this.boundEditEvent = this._onMsgEdit.bind(this);
-        this.boundCollectEvent = this._onCollectEvent.bind(this);
+        this._boundMsgEvent = this._onMsgCreate.bind(this);
+        this._boundDelEvent = this._onMsgDelete.bind(this);
+        this._boundEditEvent = this._onMsgEdit.bind(this);
+        this._boundCollectEvent = this._onCollectEvent.bind(this);
 
         this.messages = new Collection();
     }
@@ -84,11 +84,11 @@ class MessageCollector extends EventEmitter {
             }
 
             // Bind events
-            this.client.on('messageCreate', this.boundMsgEvent);
-            this.client.on('messageUpdate', this.boundEditEvent);
-            this.client.on('messageDelete', this.boundDelEvent);
+            this.client.on('messageCreate', this._boundMsgEvent);
+            this.client.on('messageUpdate', this._boundEditEvent);
+            this.client.on('messageDelete', this._boundDelEvent);
 
-            this.on('collect', this.boundCollectEvent);
+            this.on('collect', this._boundCollectEvent);
 
             this.once('end', () => {
                 this._onEnd();
@@ -105,10 +105,10 @@ class MessageCollector extends EventEmitter {
     }
 
     _onEnd() {
-        this.client.off('messageCreate', this.boundMsgEvent); // Stop listening to the eris message events
-        this.client.off('messageUpdate', this.boundEditEvent);
-        this.client.off('messageDelete', this.boundDelEvent);
-        this.off('collect', this.boundCollectEvent); // Stop listening to the collect event in this class
+        this.client.off('messageCreate', this._boundMsgEvent); // Stop listening to the eris message events
+        this.client.off('messageUpdate', this._boundEditEvent);
+        this.client.off('messageDelete', this._boundDelEvent);
+        this.off('collect', this._boundCollectEvent); // Stop listening to the collect event in this class
     }
 
     _startTimeout() {
