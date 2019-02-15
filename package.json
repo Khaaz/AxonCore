@@ -1,7 +1,7 @@
 {
   "name": "axoncore",
-  "version": "0.9.9",
-  "description": "AxonCore - Bot framework on top of Eris. Client, Command and Event handler.",
+  "version": "1.0.0",
+  "description": "Bot framework on top of Eris. Fully featured Client, Command and Event handler.",
   "author": "KhaaZ#0001",
   "link": "https://github.com/Khaazz/AxonCore",
   "license": "MIT",
@@ -45,6 +45,8 @@
     "bot",
     "discord",
     "framework",
-    "eris"
+    "eris",
+    "core",
+    "handler"
   ]
 }

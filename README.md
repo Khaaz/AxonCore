@@ -1,7 +1,7 @@
 <div align="center">
   <br />
   <p>
-    <a href="https://khaazz.github.io"><img src="_images/banner.png" width="546" alt="AxonCore" /></a>
+    <a href="https://khaazz.github.io/AxonCore"><img src="_images/banner.png" width="546" alt="AxonCore" /></a>
   </p>
   <p>
     <a href="https://github.com/Khaazz/AxonCore/releases"><img src="https://img.shields.io/github/release/Khaazz/AxonCore.svg?style=flat-square" alt="Release" /></a>
