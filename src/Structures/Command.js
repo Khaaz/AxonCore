@@ -270,6 +270,20 @@ class Command extends Base {
     }
 
     /**
+     * Execute method to override in all commands child.
+     *
+     * @param {Object} object - An Object with all arguments to use execute
+     * @param {Object} [object.message] - The message Object
+     * @param {Array<String>} [object.args] - The Array of arguments
+     * @param {Object} [object.guildConf] - The guildConfig if it exists
+     * @returns {Promise}
+     * @memberof Command
+     */
+    async execute(object) { // eslint-disable-line
+        throw new Error('Not implemented Exception!');
+    }
+
+    /**
      * Execute a command with disabled cooldown and permission checks. (Bot Owner/Staff only)
      *
      * @param {Object} message - { msg, args, guildConf }
