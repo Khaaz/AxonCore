@@ -37,7 +37,7 @@ class ChalkLogger extends Console {
      * @memberof ChalkLogger
      */
     emerg(input, opt) {
-        const mess = chalk.bold.magenta(this.parseTime() + ' - [ EMERG ] => ') + this.addCtx(opt) + input;
+        const mess = chalk.bold.magenta(this._parseTime() + ' - [ EMERG ] => ') + this._addCtx(opt) + input;
         super.error(mess);
     }
 
@@ -49,7 +49,7 @@ class ChalkLogger extends Console {
      * @memberof ChalkLogger
      */
     error(input, opt) {
-        const mess = chalk.bold.red(this.parseTime() + ' - [ ERROR ] => ') + this.addCtx(opt) + input;
+        const mess = chalk.bold.red(this._parseTime() + ' - [ ERROR ] => ') + this._addCtx(opt) + input;
         super.error(mess);
     }
 
@@ -61,7 +61,7 @@ class ChalkLogger extends Console {
      * @memberof ChalkLogger
      */
     warn(input, opt) {
-        const mess = chalk.bold.yellow(this.parseTime() + ' - [ WARN  ] => ') + this.addCtx(opt) + input;
+        const mess = chalk.bold.yellow(this._parseTime() + ' - [ WARN  ] => ') + this._addCtx(opt) + input;
         super.warn(mess);
     }
 
@@ -73,7 +73,7 @@ class ChalkLogger extends Console {
      * @memberof ChalkLogger
      */
     debug(input, opt) {
-        const mess = chalk.blue(this.parseTime() + ' - [ DEBUG ] => ') + this.addCtx(opt) + input;
+        const mess = chalk.blue(this._parseTime() + ' - [ DEBUG ] => ') + this._addCtx(opt) + input;
         this.log(mess);
     }
 
@@ -85,7 +85,7 @@ class ChalkLogger extends Console {
      * @memberof ChalkLogger
      */
     notice(input, opt) {
-        const mess = chalk.bold.green(this.parseTime() + ' - [NOTICE ] => ' + this.addCtx(opt) + input);
+        const mess = chalk.bold.green(this._parseTime() + ' - [NOTICE ] => ' + this._addCtx(opt) + input);
         this.log(mess);
     }
 
@@ -97,7 +97,7 @@ class ChalkLogger extends Console {
      * @memberof ChalkLogger
      */
     info(input, opt) {
-        const mess = chalk.green(this.parseTime() + ' - [ INFO  ] => ') + this.addCtx(opt) + input;
+        const mess = chalk.green(this._parseTime() + ' - [ INFO  ] => ') + this._addCtx(opt) + input;
         this.log(mess);
     }
 
@@ -109,7 +109,7 @@ class ChalkLogger extends Console {
      * @memberof ChalkLogger
      */
     verbose(input, opt) {
-        const mess = chalk.white(this.parseTime() + ' - [VERBOSE] => ') + this.addCtx(opt) + input;
+        const mess = chalk.white(this._parseTime() + ' - [VERBOSE] => ') + this._addCtx(opt) + input;
         this.log(mess);
     }
 
@@ -120,7 +120,7 @@ class ChalkLogger extends Console {
      * @memberof ChalkLogger
      */
     axon(input) {
-        const mess = chalk.bold.cyan(this.parseTime() + ' - [ AXON  ] => ' + input);
+        const mess = chalk.bold.cyan(this._parseTime() + ' - [ AXON  ] => ' + input);
         this.log(mess);
     }
 
@@ -131,7 +131,7 @@ class ChalkLogger extends Console {
      * @memberof ChalkLogger
      */
     init(input) {
-        const mess = chalk.cyan(this.parseTime() + ' - [ INIT  ] => ') + input;
+        const mess = chalk.cyan(this._parseTime() + ' - [ INIT  ] => ') + input;
         this.log(mess);
     }
 
@@ -141,8 +141,8 @@ class ChalkLogger extends Console {
      * @param {Module} module
      * @memberof ChalkLogger
      */
-    initModule(module) {
-        const mess = chalk.cyan(this.parseTime() + ' - [  MOD  ] => ' + `Initialised! | Commands loaded -${module.commands.size}- | [${module.label}]`);
+    _initModule(module) {
+        const mess = chalk.cyan(this._parseTime() + ' - [  MOD  ] => ' + `Initialised! | Commands loaded -${module.commands.size}- | [${module.label}]`);
         this.log(mess);
     }
 
@@ -152,12 +152,12 @@ class ChalkLogger extends Console {
      * @param {Command} command
      * @memberof ChalkLogger
      */
-    initCommand(command) {
+    _initCommand(command) {
         let mess;
         if (command.hasSubcmd) {
-            mess = chalk.cyan(this.parseTime() + ' - [  CMD  ] => ') + `Initialised! | SubCommands loaded -${command.subCommands.size}- | *${command.label}*`;
+            mess = chalk.cyan(this._parseTime() + ' - [  CMD  ] => ') + `Initialised! | SubCommands loaded -${command.subCommands.size}- | *${command.label}*`;
         } else {
-            mess = chalk.cyan(this.parseTime() + ' - [  CMD  ] => ') + `Initialised! | *${command.label}*`;
+            mess = chalk.cyan(this._parseTime() + ' - [  CMD  ] => ') + `Initialised! | *${command.label}*`;
         }
         this.log(mess);
     }
@@ -168,12 +168,12 @@ class ChalkLogger extends Console {
      * @param {Command} sub
      * @memberof ChalkLogger
      */
-    initSubCmd(sub) {
+    _initSubCmd(sub) {
         let mess;
         if (sub.hasSubcmd) {
-            mess = chalk.cyan(this.parseTime() + ' - [  SUB  ] => ') + `Initialised! | SubCommands loaded -${sub.subCommands.size}- | ${sub.label}`;
+            mess = chalk.cyan(this._parseTime() + ' - [  SUB  ] => ') + `Initialised! | SubCommands loaded -${sub.subCommands.size}- | ${sub.label}`;
         } else {
-            mess = chalk.cyan(this.parseTime() + ' - [  SUB  ] => ') + `Initialised! | ${sub.label}`;
+            mess = chalk.cyan(this._parseTime() + ' - [  SUB  ] => ') + `Initialised! | ${sub.label}`;
         }
         this.log(mess);
     }
@@ -184,18 +184,18 @@ class ChalkLogger extends Console {
      * @param {Command} sub
      * @memberof ChalkLogger
      */
-    initEvent(bind, event) {
+    _initEvent(bind, event) {
         let mess;
         if (bind) {
-            mess = chalk.cyan(this.parseTime() + ' - [  EVT  ] => ') + `Bound ${event.size} event${event.size > 1 ? 's' : ''} for ${event.name}`;
+            mess = chalk.cyan(this._parseTime() + ' - [  EVT  ] => ') + `Bound ${event.size} event${event.size > 1 ? 's' : ''} for ${event.name}`;
         } else {
-            mess = chalk.cyan(this.parseTime() + ' - [  EVT  ] => ') + `Registered ${event.label} for ${event.eventName}`;
+            mess = chalk.cyan(this._parseTime() + ' - [  EVT  ] => ') + `Registered ${event.label} for ${event.eventName}`;
         }
         this.log(mess);
     }
 
 
-    addCtx(ctx = {}) {
+    _addCtx(ctx = {}) {
         let context = '';
         if (ctx.guild) {
             context += ctx.guild instanceof Object
@@ -214,7 +214,7 @@ class ChalkLogger extends Console {
         return context;
     }
 
-    parseTime() {
+    _parseTime() {
         const current = new Date();
         const formated = format('[ %s ]', `${current.getHours() < 10 ? `0${current.getHours()}` : current.getHours()}h`
             + `${current.getMinutes() < 10 ? `0${current.getMinutes()}` : current.getMinutes()}m`

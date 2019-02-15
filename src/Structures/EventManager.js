@@ -76,7 +76,7 @@ class EventManager extends Base {
         // bind handler to event emission
         for (const [event, handler] of this._handlers) {
             this.bot.on(event, handler.run);
-            this.Logger.initEvent(true, handler);
+            this.Logger._initEvent(true, handler);
         }
     }
 
@@ -96,7 +96,7 @@ class EventManager extends Base {
         }
         // Add Listener
         this._listeners[event.eventName].push(event);
-        this.Logger.initEvent(false, event);
+        this.Logger._initEvent(false, event);
         return this._listeners[event.eventName];
     }
 

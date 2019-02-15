@@ -506,7 +506,7 @@ class AxonClient extends EventEmitter {
         }
 
 
-        this.Logger.initModule(module);
+        this.Logger._initModule(module);
     }
 
     /**

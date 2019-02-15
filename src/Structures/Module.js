@@ -216,7 +216,7 @@ class Module extends Base {
         }
 
         this.commands.set(command.label, command); // add the command to the Map of commands.
-        this.Logger.initCommand(command);
+        this.Logger._initCommand(command);
         return true;
     }
 
@@ -264,7 +264,7 @@ class Module extends Base {
         }
 
         command.subCommands.set(subCommand.label, subCommand); // add the command to the Map of commands.
-        this.Logger.initSubCmd(subCommand);
+        this.Logger._initSubCmd(subCommand);
         return true;
     }
 
