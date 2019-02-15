@@ -12,23 +12,24 @@ import Collection from './Collection';
  * @author VoidNulll
  *
  * @class MessageCollector
+ * @extends EventEmitter
  */
 class MessageCollector extends EventEmitter {
     /**
-     * @param {Object} client The axon client object
+     * @param {Object<AxonClient>} client - The axon client object
      *
-     * @param {Object} [options] The default options for the message collector instance
-     * @param {Number} [options.timeout=60000] The time before the collector times out in milliseconds
-     * @param {Number} [options.count=100] The amount of messages to collect before automatically ending
-     * @param {Boolean} [options.ignoreBots=true] Whether or not to ignore bots
-     * @param {String} [options.uID] The user id to listen for (listens to all messages if not specified)
-     * @param {Boolean} [options.caseSensitive=false] Whether or not to return messages with content lowercased. Default: content unchanged
+     * @param {Object} [options] - The default options for the message collector instance
+     * @param {Number} [options.timeout=60000] - The time before the collector times out in milliseconds
+     * @param {Number} [options.count=100] - The amount of messages to collect before automatically ending
+     * @param {Boolean} [options.ignoreBots=true] - Whether or not to ignore bots
+     * @param {String} [options.uID] - The user id to listen for (listens to all messages if not specified)
+     * @param {Boolean} [options.caseSensitive=false] - Whether or not to return messages with content lowercased. Default: content unchanged
      *
      * @example
      * const collector = new MessageCollector(this.axon, { count: 10, ignoreBots: false });
      */
     constructor(client, options = {}) {
-        super(client, options);
+        super();
         this._options = {
             timeout: options.timeout || 60000,
             count: options.count || 100,
@@ -58,7 +59,7 @@ class MessageCollector extends EventEmitter {
     /**
      * Runs the message collector
      *
-     * @param {Object} channel The channel object to listen to
+     * @param {Object<Channel>} channel The channel object to listen to
      *
      * @param {Object} [options] The options for the message collector
      * @param {Number} [options.timeout=60000] The time before the collector times out in milliseconds
