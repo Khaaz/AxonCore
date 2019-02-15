@@ -14,7 +14,7 @@ import AxonError from '../Errors/AxonError';
  */
 class Resolver {
     /**
-     * User resolver
+     * Resolve a user within all the users the bot has.
      *
      * @param {Object<Eris.Client>} client - The bot client
      * @param {Array/String} args - Array of arguments resolved by the command.
@@ -48,8 +48,7 @@ class Resolver {
         return user; // Return the user object.
     }
 
-    /**
-     * Member resolver
+    /** Resolve a member within a guild.
      *
      * @param {Object<Guild>} guild - Object Guild resolved by the command.
      * @param {Array/String} args - Array of arguments resolved by the command.
@@ -88,7 +87,7 @@ class Resolver {
     }
 
     /**
-     * Role resolver
+     * Resolve a role within a guild.
      *
      * @param {Object<Guild>} guild - Object Guild resolved by the command.
      * @param {Array/String} args - Array of arguments resolved by the command.
@@ -123,7 +122,7 @@ class Resolver {
     }
 
     /**
-     * Channel resolver
+     * Resolve a channel within a guild.
      *
      * @param {Object<Guild>} guild - Object Guild resolved by the command.
      * @param {Array/String} args - Array of arguments resolved by the command.
@@ -158,7 +157,7 @@ class Resolver {
     }
 
     /**
-     * Guild resolver
+     * Resolve a guild within all guilds the bot is in.
      *
      * @param {Object<Eris.Client>} client - The bot client
      * @param {Array} args - Array with guild name/ID
