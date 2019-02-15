@@ -10,69 +10,65 @@ import AxonError from '../Errors/AxonError';
  */
 class Embed {
     /**
- * A rich embed to be sent with a message with a fluent interface for creation.
- * @param {Object} [data] Data to set in the rich embed
- */
+     * An embed to be sent with a message with a fluent interface for creation.
+     *
+     * @param {Object} [data] Data to set in the rich embed
+     * @param {String} [data.title]
+     * @param {String} [data.url]
+     * @param {String} [data.description]
+     * @param {String} [data.color]
+     *
+     * @param {Object} [data.author]
+     * @param {String} [data.author.name]
+     * @param {String} [data.author.url]
+     * @param {String} [data.author.icon_url]
+     *
+     * @param {Object} [data.thumbnail]
+     * @param {String} [data.thumbnail.url]
+     *
+     * @param {Array} [data.fields] - { name: "string", value: "string", inline: boolean }
+     *
+     * @param {Object} [data.image]
+     * @param {String} [data.image.url]
+     *
+     * @param {Object} [data.footer]
+     * @param {String} [data.footer.text]
+     * @param {String} [data.footer.icon_url]
+     *
+     * @param {String} [data.timetamp]
+     * @param {Object} [data.file]
+     *
+     * @prop {String} title
+     * @prop {String} url
+     * @prop {String} description
+     * @prop {String} color
+     * @prop {Object} author
+     * @prop {String} [author.name]
+     * @prop {String} [author.url]
+     * @prop {String} [author.icon_url]
+     * @prop {Object} thumbnail
+     * @prop {String} [thumbnail.url]
+     * @prop {Array} fields - { name: "string", value: "string", inline: boolean }
+     * @prop {Object} image
+     * @prop {String} [image.url]
+     * @prop {Object} footer
+     * @prop {String} [footer.text]
+     * @prop {String} [footer.icon_url]
+     * @prop {String} timetamp
+     * @prop {Object} file
+     */
     constructor(data = {}) {
-        /**
-       * @type {string}
-       */
         this.title = data.title;
-
-        /**
-       * @type {string}
-       */
-        this.description = data.description;
-
-        /**
-       * @type {string}
-       */
         this.url = data.url;
-
-        /**
-       * @type {number}
-       */
+        this.description = data.description;
         this.color = data.color;
-
-        /**
-       * @type {Object}
-       */
         this.author = data.author;
-
-        /**
-       * @type {Date}
-       */
-        this.timestamp = data.timestamp;
-
-        /**
-       * @type {Object[]}
-       */
-        this.fields = data.fields || [];
-
-        /**
-       * @type {Object}
-       */
         this.thumbnail = data.thumbnail;
-
-        /**
-       * @type {Object}
-       */
+        this.fields = data.fields || [];
         this.image = data.image;
-
-        /**
-       * @type {Object}
-       */
         this.footer = data.footer;
-
-        /**
-       * @type {string}
-       */
+        this.timestamp = data.timestamp;
         this.file = data.file;
-
-        /**
-       * @type {Array<string>}
-       */
-        this.files = [];
     }
 
     _resolveString(data) {
@@ -86,8 +82,9 @@ class Embed {
     }
 
     /**
-     * @description Sets the title of this embed.
-     * @param {string} title The title
+     * Sets the title of this embed.
+     *
+     * @param {String} title - The title
      * @returns {Embed} This embed
      * @example Embed.setTitle('My New Embed');
      */
@@ -101,8 +98,9 @@ class Embed {
     }
 
     /**
-     * @description Sets the description of this embed.
-     * @param {string} description The description
+     * Sets the description of this embed.
+     *
+     * @param {String} description -The description
      * @returns {Embed} This embed
      * @example Embed.setDescription('Hi, this is my description!!!');
      */
@@ -117,7 +115,7 @@ class Embed {
 
     /**
      * @description Sets the URL of this embed.
-     * @param {string} url The URL
+     * @param {String} url The URL
      * @returns {Embed} This embed
      */
     setURL(url) {
@@ -126,8 +124,9 @@ class Embed {
     }
 
     /**
-     * @description Sets the color of this embed.
-     * @param {number} color The color of the embed
+     * Sets the color of this embed.
+     *
+     * @param {Number} color - The color of the embed
      * @returns {Embed} This embed
      * @example Embed.setColor(0xFFFFF);
      */
@@ -137,10 +136,11 @@ class Embed {
     }
 
     /**
-     * @description Sets the author of this embed.
-     * @param {string} name The name of the author
-     * @param {string} [icon] The icon URL of the author
-     * @param {string} [url] The URL of the author
+     * Sets the author of this embed.
+     *
+     * @param {String} name - The name of the author
+     * @param {String} icon - The icon URL of the author
+     * @param {String} url - The URL of the author
      * @returns {Embed} This embed
      * @example Embed.setAuthor('KhaaZ', 'khaaz.png');
      */
@@ -151,7 +151,8 @@ class Embed {
 
     /**
      * Sets the timestamp of this embed.
-     * @param {Date} [timestamp=new Date()] The timestamp
+     *
+     * @param {Date} [timestamp=new Date()] - The timestamp
      * @returns {Embed} This embed
      */
     setTimestamp(timestamp = new Date()) {
@@ -160,10 +161,11 @@ class Embed {
     }
 
     /**
-     * @description Adds a field to the embed (max 25).
-     * @param {string} name The name of the field
-     * @param {string} value The value of the field
-     * @param {boolean} [inline=false] Set the field to display inline
+     * Adds a field to the embed (max 25).
+     *
+     * @param {String} name - The name of the field
+     * @param {String} value - The value of the field
+     * @param {Boolean} [inline=false] - Set the field to display inline
      * @returns {Embed} This embed
      * @example Embed.addField('My Field', 'This is a new field!', true);
      */
@@ -190,8 +192,9 @@ class Embed {
     }
 
     /**
-     * @description Set the thumbnail of this embed.
-     * @param {string} url The URL of the thumbnail
+     * Set the thumbnail of this embed.
+     *
+     * @param {String} url - The URL of the thumbnail
      * @returns {Embed} This embed
      */
     setThumbnail(url) {
@@ -200,8 +203,9 @@ class Embed {
     }
 
     /**
-     * @description Sets the image of this embed
-     * @param {string} url The URL of the image
+     * Sets the image of this embed
+     *
+     * @param {String} url - The URL of the image
      * @returns {Embed} This embed
      * @example Embed.setImage('myImageUrl.png');
      */
@@ -211,9 +215,10 @@ class Embed {
     }
 
     /**
-     * @description Sets the footer of this embed.
-     * @param {string} text The text of the footer
-     * @param {string} [icon] The icon URL of the footer
+     * Sets the footer of this embed.
+     *
+     * @param {String} text - The text of the footer
+     * @param {String} [icon] - The icon URL of the footer
      * @returns {Embed} This embed
      * @example Embed.setFooter('My Footer', 'footer.png');
      */

@@ -19,7 +19,7 @@ class EventManager extends Base {
      * @param {Object<AxonClient>} axon
      *
      * @prop {Object} _listeners - Object that links an event name to an array of event objects { eventName: [Event, Event] }
-     * @prop {Collection<Object>} _Handlers - Collection of handler keyed to the event name [key: eventName, value: Handler]
+     * @prop {Collection<Object>} _handlers - Collection of handler keyed to the event name [key: eventName, value: Handler]
      * @memberof EventManager
      */
     constructor(axon) {
