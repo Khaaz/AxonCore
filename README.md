@@ -51,7 +51,7 @@ However you don't need ESM to use this framework as you can simply use require a
 
 ## Documentation:
 
-All the documentation and instructions on how to set it up can be found [here](https://khaazz.github.io/#/).  
+All the documentation and instructions on how to set it up can be found [here](https://khaazz.github.io/here/).  
 We also have a discord server where we provide eventual support or discuss about development. Join [here](https://discord.gg/QZ6B5US).
 
 ## Examples
