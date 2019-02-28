@@ -71,7 +71,7 @@ class AxonClient extends EventEmitter {
      * @prop {Collection<Object>} schemas - All schemas in client (global models) [key: schemaLabel, value: schema]
      * @prop {Collection<Object>} guildConfigs - Guild configs [key: guildID, value: { guildConfig }]
      *
-     * @prop {Object<EventManager>} eventManager - The EventManager instance that handle all AxonCore events
+     * @prop {Object<EventManager>} EventManager - The EventManager instance that handle all AxonCore events
      *
      * @prop {Object} Logger - Default Logger / Chalk Logger / Signale Logger
      * @prop {Object} DBprovider - JSON(default) / Mongoose
@@ -152,7 +152,7 @@ class AxonClient extends EventEmitter {
         /** Commands, Events */
         this.commands = new Collection(Command); // Command Label => ref Command Object
         this.commandAliases = new Map(); // Command Alias => Command label
-        this.eventManager = new EventManager(this); // Event Label => ref Event function
+        this.EventManager = new EventManager(this); // Event Label => ref Event function
         /** GuildConfigs */
         this.guildConfigs = new Collection(); // Guild ID => guildConfig
 
@@ -224,11 +224,11 @@ class AxonClient extends EventEmitter {
     }
 
     get events() {
-        return this.eventManager.events;
+        return this.EventManager.events;
     }
 
     getListeners(eventName) {
-        return this.eventManager.getListeners(eventName);
+        return this.EventManager.getListeners(eventName);
     }
 
     get webhooks() {
@@ -347,7 +347,7 @@ class AxonClient extends EventEmitter {
                 console.log(' ');
 
                 // Bind Listeners to Handlers
-                this.eventManager.bindListeners();
+                this.EventManager.bindListeners();
 
                 /** Axon init (blacklist/global cache) */
                 await this._initAxon(); // load blacklisted users - guild
@@ -383,7 +383,7 @@ class AxonClient extends EventEmitter {
         this.Logger.axon('=== BotClient Ready! ===');
         this.client.ready = true;
         // Bind Handlers to Events
-        this.eventManager.bindHandlers();
+        this.EventManager.bindHandlers();
         /** Status */
         this.initStatus(); // execute default status function in Axon or override
         this.Logger.axon('Status setup!');
@@ -501,7 +501,7 @@ class AxonClient extends EventEmitter {
         this.modules.set(module.label, module); // Add the module in modules Collection (references to module object)
 
         for (const event of module.events.values()) {
-            this.eventManager.registerListener(event);
+            this.EventManager.registerListener(event);
         }
 
 
@@ -535,7 +535,7 @@ class AxonClient extends EventEmitter {
         }
 
         for (const event of module.events.values()) {
-            this.eventManager.unregisterListener(event.eventName, event.label);
+            this.EventManager.unregisterListener(event.eventName, event.label);
         }
 
         this.modules.delete(module.label); // Remove the module of modules Collection (references to module object)
