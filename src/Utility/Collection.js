@@ -127,10 +127,16 @@ class Collection extends Map {
 	 * Reduce values by function
      *
      * @arg {Function} callbackFn - Function to execute on each element in the array
-     * @arg {Number} [currentIndex=0] - Value to use as the first argument to the first call of the callback
+     * @arg {Number} [initialValue=0] - Value to use as the first argument to the first call of the callback
 	 */
-    reduce(callbackFn, currentIndex = 0) {
-        return this.toArray().reduce(callbackFn, currentIndex);
+    reduce(func, initialValue = 0) {
+        const iter = this.values();
+        let val;
+        let result = initialValue === undefined ? iter.next().value : initialValue;
+        while ((val = iter.next().value) !== undefined) {
+            result = func(result, val);
+        }
+        return result;
     }
 
     /**
