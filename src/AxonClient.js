@@ -131,6 +131,7 @@ class AxonClient extends EventEmitter {
          * - template
          * - _tokens
          */
+        this._configs = {};
         this._initConfigs(axonOptions); // this._configs [GETTER - this.configs]
 
         /** DB */
@@ -247,8 +248,6 @@ class AxonClient extends EventEmitter {
     //
 
     _initConfigs({ axonConf, templateConf, tokenConf }) {
-        this._configs = {};
-
         /** Axon Config */
         if (axonConf && this.Utils.compareObject(defAxonConf, axonConf)) {
             this._configs.axon = axonConf;

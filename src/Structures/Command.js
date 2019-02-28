@@ -72,7 +72,7 @@ class Command extends Base {
      * @prop {Array} [permissions.staff.needed=[]] - List of bot.staff permissions needed to use the command (they need the other permissions too)
      * @prop {Array} [permissions.staff.bypass=[]] - Having one of these bot.staff permission allow to use the command, regardless of other permissions
      *
-     * @prop {Object} Template - Template object shortcut [GETTER: axon.configs.template]
+     * @prop {Object} template - Template object shortcut [GETTER: axon.configs.template]
      *
      * @memberof Command
      */
@@ -193,7 +193,7 @@ class Command extends Base {
         return this._module;
     }
 
-    get Template() {
+    get template() {
         return this.axon.configs.template;
     }
 
@@ -338,7 +338,7 @@ class Command extends Base {
             icon_url: this.bot.user.avatarURL,
         };
 
-        embed.color = this.Template.embed.colors.help.length > 0 ? this.Template.embed.colors.help : null;
+        embed.color = this.template.embed.colors.help.length > 0 ? this.template.embed.colors.help : null;
 
         embed.description = `**Description:** ${this.infos.description}\n`;
 
@@ -673,7 +673,7 @@ class Command extends Base {
         }
         return this.sendError(
             channel,
-            `${this.Template.message.error.permBot} ${permissions.map(p => `\`${Enum.permissionsNames[p]}\``).join(', ')}.`,
+            `${this.template.message.error.permBot} ${permissions.map(p => `\`${Enum.permissionsNames[p]}\``).join(', ')}.`,
             { delete: true, delay: 9000 }
         );
     }
@@ -694,7 +694,7 @@ class Command extends Base {
         }
         return this.sendError(
             channel,
-            this.Template.message.error.permSource
+            this.template.message.error.permSource
             + (permissions.length > 0 ? ` ${permissions.map(p => `\`${Enum.permissionsNames[p]}\``).join(', ')}.` : '.'),
             { delete: true, delay: 9000 }
         );
@@ -709,7 +709,7 @@ class Command extends Base {
      * @memberof Command
      */
     sendTargetPerms(channel) {
-        return this.sendError(channel, this.Template.message.error.permTarget, { delete: true, delay: 9000 });
+        return this.sendError(channel, this.template.message.error.permTarget, { delete: true, delay: 9000 });
     }
 
     /**
@@ -722,7 +722,7 @@ class Command extends Base {
     sendCooldown(channel, time) {
         return this.sendError(
             channel,
-            `${this.Template.message.error.cooldown} **${Math.ceil((this.options.cooldown - time) / 100) / 10}sec**...`,
+            `${this.template.message.error.cooldown} **${Math.ceil((this.options.cooldown - time) / 100) / 10}sec**...`,
             { delete: true, delay: 9000 },
         );
     }
