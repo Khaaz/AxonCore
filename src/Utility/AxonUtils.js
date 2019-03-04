@@ -1,4 +1,4 @@
-'use strict';
+
 
 import Enums from './Enums';
 
@@ -77,13 +77,11 @@ class AxonUtils {
                 {
                     username: opt ? opt : (`${type[0].toUpperCase() + type.slice(1)} - ${this.axon.client.user ? this.axon.client.user.username : ''}`),
                     avatarURL: this.axon.client.user ? this.axon.client.user.avatarURL : null,
-                    embeds: [
-                        embed,
-                    ],
-                })
+                    embeds: [embed],
+                } )
                 .catch(err => {
-                    this.axon.Logger.error('[TriggerWebhook] Webhook issue\n' + err);
-                });
+                    this.axon.Logger.error(`[TriggerWebhook] Webhook issue\n${err}`);
+                } );
         }
     }
 
@@ -101,7 +99,7 @@ class AxonUtils {
      */
     isIgnored(msg, guildConf) {
         return guildConf.ignoredUsers.find(u => u === msg.author.id) // User is ignored
-            || guildConf.ignoredRoles.find(r => msg.member.roles && msg.member.roles.includes(r)) // Role is ignored
+            || guildConf.ignoredRoles.find(r => msg.member.roles && msg.member.roles.includes(r) ) // Role is ignored
             || guildConf.ignoredChannels.find(c => c === msg.channel.id); // Channel is ignored
     }
 
@@ -164,7 +162,7 @@ class AxonUtils {
      */
     isBotStaff(uID) {
         for (const rank in this.axon.staff) {
-            if (rank.find(u => u === uID)) {
+            if (rank.find(u => u === uID) ) {
                 return true;
             }
         }
@@ -180,7 +178,7 @@ class AxonUtils {
      */
     isAdmin(member) {
         for (const perm of Enums.adminPerms) {
-            if (member.permission.has(perm)) {
+            if (member.permission.has(perm) ) {
                 return true;
             }
         }
@@ -196,13 +194,13 @@ class AxonUtils {
      * @memberof AxonUtils
      */
     isMod(member, guildConf) {
-        if (guildConf.modUsers.find(u => u === member.id)) {
+        if (guildConf.modUsers.find(u => u === member.id) ) {
             return true;
         }
 
         const roles = member.roles;
         for (const role of guildConf.modRoles) {
-            if (roles.find(r => r === role)) {
+            if (roles.find(r => r === role) ) {
                 return true;
             }
         }
@@ -228,14 +226,14 @@ class AxonUtils {
      * @returns {Promise<Message?>} Message Object
      * @memberof AxonUtils
      */
-    sendMessage(channel, content, options = {}) {
-        if (channel.guild && !this.Utils.hasChannelPerms(channel, ['sendMessages'])) { // check if bot has sendMessage perm in the channel.
+    sendMessage(channel, content, options = {} ) {
+        if (channel.guild && !this.Utils.hasChannelPerms(channel, ['sendMessages'] ) ) { // check if bot has sendMessage perm in the channel.
             this.Logger.verbose(`No sendMessage perms [${channel.guild.name} - ${channel.guild.name}]!`);
             return Promise.resolve();
         }
 
         if (content instanceof Object && content.embed) {
-            if (channel.guild && !this.Utils.hasChannelPerms(channel, ['embedLinks'])) { // check if bot has embedPermission perm in the channel.
+            if (channel.guild && !this.Utils.hasChannelPerms(channel, ['embedLinks'] ) ) { // check if bot has embedPermission perm in the channel.
                 this.Logger.verbose(`No embedLinks perms [${channel.guild.name} - ${channel.guild.name}]!`);
                 return Promise.resolve();
             }
@@ -274,7 +272,7 @@ class AxonUtils {
         }
 
         if (typeof content !== 'object' || content === null) {
-            content = { content: '' + content };
+            content = { content: `${content}` };
         }
         content.disableEveryone = !!options.disableEveryone;
 
@@ -283,13 +281,13 @@ class AxonUtils {
                 /** Delete the message automatically */
                 if (message && options.delete) {
                     if (options.delay) {
-                        this.Utils.sleep(options.delay).then(() => message.delete().catch(console.log));
+                        this.Utils.sleep(options.delay).then( () => message.delete().catch(console.log) );
                     } else {
                         message.delete().catch(console.log);
                     }
                 }
                 return message;
-            });
+            } );
     }
 
     /**
@@ -306,7 +304,7 @@ class AxonUtils {
             return Promise.resolve();
         }
         if (content instanceof Object) {
-            if (message.channel.guild && !this.Utils.hasChannelPerms(message.channel, ['embedLinks'])) { // check if bot has embedLinks perm in the channel.
+            if (message.channel.guild && !this.Utils.hasChannelPerms(message.channel, ['embedLinks'] ) ) { // check if bot has embedLinks perm in the channel.
                 this.Logger.verbose(`No embedLinks perms [${message.channel.guild.name} - ${message.channel.guild.name}]!`);
                 return Promise.resolve();
             }
@@ -362,8 +360,8 @@ class AxonUtils {
      */
     sendDM(user, content, options) {
         return this.bot.getDMChannel(user.id)
-            .then(chan => this.sendMessage(chan, content, options))
-            .catch(this.Logger.verbose(`DM disabled/Bot blocked [${user.username}#${user.discriminator} - ${user.id}]!`));
+            .then(chan => this.sendMessage(chan, content, options) )
+            .catch(this.Logger.verbose(`DM disabled/Bot blocked [${user.username}#${user.discriminator} - ${user.id}]!`) );
     }
 
     /**
@@ -497,7 +495,7 @@ class AxonUtils {
         }
 
         boolean
-            ? conf.modules.includes(label) && (conf.modules = conf.modules.filter(c => c !== label))
+            ? conf.modules.includes(label) && (conf.modules = conf.modules.filter(c => c !== label) )
             : !conf.modules.includes(label) && conf.modules.push(label);
 
         try {
@@ -528,7 +526,7 @@ class AxonUtils {
         }
 
         boolean
-            ? conf.commands.includes(label) && (conf.commands = conf.commands.filter(c => c !== label))
+            ? conf.commands.includes(label) && (conf.commands = conf.commands.filter(c => c !== label) )
             : !conf.commands.includes(label) && conf.commands.push(label);
 
         try {
@@ -559,7 +557,7 @@ class AxonUtils {
         }
 
         boolean
-            ? conf.events.includes(label) && (conf.events = conf.events.filter(c => c !== label))
+            ? conf.events.includes(label) && (conf.events = conf.events.filter(c => c !== label) )
             : !conf.events.includes(label) && conf.events.push(label);
 
         try {

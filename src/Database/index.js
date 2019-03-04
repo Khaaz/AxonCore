@@ -1,5 +1,3 @@
-'use strict';
-
 import JsonService from './JsonService';
 
 /**

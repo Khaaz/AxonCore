@@ -1,5 +1,3 @@
-'use strict';
-
 import DBService from './DBService';
 
 import Manager from './JSON/Manager';

@@ -1,4 +1,4 @@
-'use strict';
+
 
 import fs from 'fs';
 import util from 'util';
@@ -116,7 +116,7 @@ class Utils {
         if (!member) {
             member = guild.members.get(this.axon.client.id);
         }
-        return member.roles.map(r => guild.roles.get(r));
+        return member.roles.map(r => guild.roles.get(r) );
     }
 
     /**
@@ -139,7 +139,7 @@ class Utils {
      * @returns {Array<Role>} Sorted array (per position) of Role Object
      */
     sortRoles(roles) {
-        return roles.sort((a, b) => b.position - a.position);
+        return roles.sort( (a, b) => b.position - a.position);
     }
 
     /**
@@ -179,9 +179,9 @@ class Utils {
      * @returns {Boolean} True if member has permissions / False if not
      * @memberof AxonUtils
      */
-    hasPerms(member, permissions = []) {
+    hasPerms(member, permissions = [] ) {
         for (const perm of permissions) {
-            if (!member.permission.has(perm)) {
+            if (!member.permission.has(perm) ) {
                 return false;
             }
         }
@@ -199,7 +199,7 @@ class Utils {
      */
     hasChannelPerms(channel, permissions, user = this.bot.user) {
         for (const perm of permissions) {
-            if (!channel.permissionsOf(user.id).has(perm)) {
+            if (!channel.permissionsOf(user.id).has(perm) ) {
                 return false;
             }
         }
@@ -214,10 +214,10 @@ class Utils {
      * @returns {Array<String>} An array of missing permissions
      * @memberof AxonUtils
      */
-    missingPerms(member, permissions = []) {
+    missingPerms(member, permissions = [] ) {
         const missing = [];
         for (const perm of permissions) {
-            if (!member.permission.has(perm)) {
+            if (!member.permission.has(perm) ) {
                 missing.push(perm);
             }
         }
@@ -236,7 +236,7 @@ class Utils {
      * @memberof AxonUtils
      */
     sleep(ms) {
-        return new Promise((res) => setTimeout(() => res(), ms));
+        return new Promise( (res) => setTimeout( () => res(), ms) );
     }
 
     /**
@@ -274,8 +274,8 @@ class Utils {
             if (obj2[key] === undefined) {
                 return false;
             }
-            if (typeof obj1[key] === 'object' && !(obj1[key] instanceof Array)) {
-                if (!this.compareObject(obj1[key], obj2[key])) {
+            if (typeof obj1[key] === 'object' && !(obj1[key] instanceof Array) ) {
+                if (!this.compareObject(obj1[key], obj2[key] ) ) {
                     return false;
                 }
             }

@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Message Handler class
  * Handles message event
@@ -45,17 +43,18 @@ class MessageHandler {
         }
 
         /** ignore cached blacklisted users */
-        if (this.axon.blacklistedUsers.has(msg.author.id)) {
+        if (this.axon.blacklistedUsers.has(msg.author.id) ) {
             return;
         }
 
         /** execDM if not in a guild */
         if (!msg.channel.guild) {
-            return this._onDM(msg);
+            this._onDM(msg);
+            return;
         }
 
         /** ignore cached blacklisted guilds */
-        if (this.axon.blacklistedGuilds.has(msg.channel.guild.id)) {
+        if (this.axon.blacklistedGuilds.has(msg.channel.guild.id) ) {
             return;
         }
 
@@ -69,14 +68,17 @@ class MessageHandler {
         try {
             guildConf = await this.axon.getGuildConf(msg.channel.guild.id);
         } catch (err) {
-            return this.axon.Logger.error(err, { guild: msg.channel.guild });
+            this.axon.Logger.error(err, { guild: msg.channel.guild } );
+            return;
         }
 
         /** Admin override */
-        if (msg.content.startsWith(this.axon.params.ownerPrefix) && this.axon.AxonUtils.isBotOwner(msg.author.id)) { // Owner override everything
-            return this._onAdmin(msg, guildConf, true);
-        } else if (msg.content.startsWith(this.axon.params.adminPrefix) && this.axon.AxonUtils.isBotAdmin(msg.author.id)) { // ADMIN override everything except owner
-            return this._onAdmin(msg, guildConf, false);
+        if (msg.content.startsWith(this.axon.params.ownerPrefix) && this.axon.AxonUtils.isBotOwner(msg.author.id) ) { // Owner override everything
+            this._onAdmin(msg, guildConf, true);
+            return;
+        } if (msg.content.startsWith(this.axon.params.adminPrefix) && this.axon.AxonUtils.isBotAdmin(msg.author.id) ) { // ADMIN override everything except owner
+            this._onAdmin(msg, guildConf, false);
+            return;
         }
 
         msg.content = msg.content.replace(/<@!/g, '<@'); // formatting mention
@@ -87,7 +89,7 @@ class MessageHandler {
             msg.prefix = prefix;
 
             /** Check if the user/role/channel is ignored in the guild */
-            if (this.axon.AxonUtils.isIgnored(msg, guildConf)) {
+            if (this.axon.AxonUtils.isIgnored(msg, guildConf) ) {
                 return;
             }
 
@@ -96,7 +98,8 @@ class MessageHandler {
 
             /** Call Help if first arg = 'help' */
             if (label === 'help') { // send Help message
-                return this.axon._execHelp(msg, args, guildConf);
+                this.axon._execHelp(msg, args, guildConf);
+                return;
             }
 
             /** Resolve command (and subcommand if needed) - exec command if the command was resolved */
@@ -107,7 +110,8 @@ class MessageHandler {
 
             msg.command = command;
 
-            return this.axon._execCommand(msg, args, command, guildConf);
+            this.axon._execCommand(msg, args, command, guildConf);
+            return;
         }
     }
 
@@ -133,7 +137,7 @@ class MessageHandler {
         /** Resolve command (and subcommand if needed) - exec command if the command was resolved */
         const command = this.axon.resolveCommand(label, args); // doesn't pass guildConf so it doesn't check for server disabled
         if (!command) { // command doesn't exist or not globally enabled
-            return;
+            return Promise.resolve();
         }
         msg.command = command;
 
@@ -159,7 +163,8 @@ class MessageHandler {
 
             /** Call Help if first arg = 'help' */
             if (label === 'help') { // send Help message
-                return this.axon._execHelp(msg, args);
+                this.axon._execHelp(msg, args);
+                return;
             }
 
             /** Resolve command (and subcommand if needed) - exec command if the command was resolved */
@@ -169,7 +174,7 @@ class MessageHandler {
             }
             msg.command = command;
 
-            return this.axon._execCommand(msg, args, command, null);
+            this.axon._execCommand(msg, args, command, null);
         }
     }
 }

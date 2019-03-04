@@ -1,5 +1,3 @@
-'use strict';
-
 import Enum from '../Utility/Enums';
 
 /**
@@ -20,13 +18,13 @@ class EnsureInterface {
     static checkCommandAttributes(module, command) {
         const debug = module.axon.params.debugMode;
         if (debug) {
-            if ((command.isSubcmd && !command.parentCommand) || (command.parentCommand && !command.isSubcmd)) {
+            if ( (command.isSubcmd && !command.parentCommand) || (command.parentCommand && !command.isSubcmd) ) {
                 module.Logger.warn(`Invalid Subcommand (Command.isSubcmd) [${command.label}]`);
                 return false;
             }
             module.Logger.verbose(`Valid Subcommand [${command.label}]`);
 
-            if (command.hasSubcmd && (!command.subCommands || !command.subCommandsAliases)) {
+            if (command.hasSubcmd && (!command.subCommands || !command.subCommandsAliases) ) {
                 module.Logger.warn(`Invalid Parent Command (Command.subCommands) [${command.label}]`);
                 return false;
             }
@@ -81,7 +79,7 @@ class EnsureInterface {
                 || !command.permissions.staff.needed
                 || !Array.isArray(command.permissions.staff.needed)
                 || !command.permissions.staff.bypass
-                || !Array.isArray(command.permissions.staff.bypass)) {
+                || !Array.isArray(command.permissions.staff.bypass) ) {
                 module.Logger.warn(`Missing properties in Command.permissions [${command.label}]`);
                 return false;
             }
@@ -89,7 +87,7 @@ class EnsureInterface {
         }
 
         for (const perm of command.permissions.bot) {
-            if (!this.checkValidPermNames(perm)) {
+            if (!this.checkValidPermNames(perm) ) {
                 debug && module.Logger.warn(`Invalid permissions name (${perm}) in Command.permissions.bot [${command.label}]`);
                 return false;
             }
@@ -97,7 +95,7 @@ class EnsureInterface {
         debug && module.Logger.verbose(`Correct permissions name in Command.permissions [${command.label}]`);
 
         for (const perm of command.permissions.user.needed) {
-            if (!this.checkValidPermNames(perm)) {
+            if (!this.checkValidPermNames(perm) ) {
                 debug && module.Logger.warn(`Invalid permissions name (${perm}) in Command.permissions.user.needed [${command.label}]`);
                 return false;
             }
@@ -105,7 +103,7 @@ class EnsureInterface {
         debug && module.Logger.verbose(`Correct permissions name in Command.permissions.user.needed [${command.label}]`);
 
         for (const perm of command.permissions.user.bypass) {
-            if (!this.checkValidPermNames(perm)) {
+            if (!this.checkValidPermNames(perm) ) {
                 debug && module.Logger.warn(`Invalid permissions name (${perm}) in Command.permissions.user.bypass [${command.label}]`);
                 return false;
             }
@@ -123,7 +121,7 @@ class EnsureInterface {
      * @memberof Module
      */
     static checkValidPermNames(perm) {
-        if (Enum.permissions.find(p => p === perm)) {
+        if (Enum.permissions.find(p => p === perm) ) {
             return true;
         }
         return false;

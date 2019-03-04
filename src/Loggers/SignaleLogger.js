@@ -2,7 +2,7 @@
 import { Signale } from 'signale';
 import figures from 'figures';
 
-const options = {
+const logOptions = {
     types: {
         verbose: {
             badge: figures.info,
@@ -48,9 +48,9 @@ class SignaleLogger extends Signale {
     constructor(options) {
         super(options);
 
-        this.config({
+        this.config( {
             displayTimestamp: true,
-        });
+        } );
     }
 
     // Renames
@@ -88,4 +88,4 @@ class SignaleLogger extends Signale {
     }
 }
 
-export default new SignaleLogger(options);
+export default new SignaleLogger(logOptions);

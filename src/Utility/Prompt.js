@@ -37,7 +37,7 @@ class Prompt {
      * @example
      * let prompt = new Prompt(this.axon, msg.author.id, msg.channel, { timeoutMessage: 'Be quicker next time' });
      */
-    constructor(client, uID, channel, defaultOptions = {}) {
+    constructor(client, uID, channel, defaultOptions = {} ) {
         this._axon = client;
         this.userID = uID;
         this.channel = channel;
@@ -101,7 +101,7 @@ class Prompt {
      *
      * @returns {Promise} The message object, or a reject error if timedout or message was invalid
      */
-    run(prompt, options = {}) {
+    run(prompt, options = {} ) {
         this.ended = false;
         this.timedOut = false;
 
@@ -119,38 +119,39 @@ class Prompt {
             }
 
             if (!this._actualOptions.caseSensitive) {
-                this._actualOptions.allowed = this._actualOptions.allowed.map(a => a.toLowerCase());
+                this._actualOptions.allowed = this._actualOptions.allowed.map(a => a.toLowerCase() );
             }
 
             this._actualOptions.invalidMessage = this._actualOptions.invalidMessage || `Invalid usage. You can say: \`\`\`\n${this._actualOptions.allowed.join(', ')}\`\`\``; // Default invalid message
 
             // listeners
-            this._emitter.once('ended', (msg) => resolve(this._onEnded(msg))); // Incase it detects invalid usage, it ends the function
+            this._emitter.once('ended', (msg) => resolve(this._onEnded(msg) ) ); // Incase it detects invalid usage, it ends the function
             this._emitter.once('timedOut', () => { // When the event timedOut is sent.
                 this._onTimeout();
                 reject('TIMEOUT');
-            });
-            this._emitter.once('invalidEnd', () => reject(this._onInvalidEnd())); // When the prompt ends as "invalid"
+            } );
+            this._emitter.once('invalidEnd', () => reject(this._onInvalidEnd() ) ); // When the prompt ends as "invalid"
 
             // listen to the even, start the prompt
             this.client.on('messageCreate', this._boundEvent); // Bind the event
 
             this._startTimeout();
-        });
+        } );
     }
 
     _startTimeout() {
-        setTimeout(() => {
+        setTimeout( () => {
             if (this.ended === true) {
                 return;
             }
-            return this._emitter.emit('timedOut'); // Send the "timedOut" event
+            this._emitter.emit('timedOut');
+            return; // Send the "timedOut" event
         }, this._actualOptions.timeoutTime);
     }
 
     _deletePrompt() {
         this._message.delete()
-            .catch(() => { /* */ });
+            .catch( () => { /* */ } );
     }
 
     /**
@@ -166,18 +167,18 @@ class Prompt {
         if (this._actualOptions.wildcard) {
             for (const allowed of this._actualOptions.allowed) {
                 if (
-                    (!this._actualOptions.caseSensitive && msg.content.toLowerCase().includes(allowed))
+                    (!this._actualOptions.caseSensitive && msg.content.toLowerCase().includes(allowed) )
                     || msg.content.includes(allowed)
                 ) {
                     return true;
                 }
             }
-        } else if ((this._actualOptions.caseInsensitive && this._actualOptions.allowed.includes(msg.content.toLowerCase()))
-                || this._actualOptions.allowed.includes(msg.content)) {
+        } else if ( (this._actualOptions.caseInsensitive && this._actualOptions.allowed.includes(msg.content.toLowerCase() ) )
+                || this._actualOptions.allowed.includes(msg.content) ) {
             return true;
-        } else {
-            return false;
         }
+        
+        return false;
     }
 
     _onInvalidEnd() {

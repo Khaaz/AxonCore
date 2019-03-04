@@ -1,5 +1,3 @@
-'use strict';
-
 import Base from './Base';
 import Enum from '../Utility/Enums';
 
@@ -219,7 +217,9 @@ class Command extends Base {
      * @memberof Command
      */
     _execute(message) {
-        const { msg, args, guildConf } = message;
+        const {
+            msg, args, guildConf,
+        } = message;
 
         if (!guildConf) { // DM EXECUTION
             if (this.options.guildOnly) { // guild only
@@ -227,12 +227,12 @@ class Command extends Base {
             }
         } else { // REGULAR EXECUTION
             /** Test for bot permissions */
-            if (!this._checkPermsBot(msg.channel)) {
+            if (!this._checkPermsBot(msg.channel) ) {
                 return this.sendBotPerms(msg.channel);
             }
 
             /** Permissions checkers */
-            if (!this.canExecute(msg, guildConf)) {
+            if (!this.canExecute(msg, guildConf) ) {
                 /** Sends invalid perm message in case of invalid perm [option enabled] */
                 if (!guildConf.modOnly && this.options.invalidPermissionMessage) {
                     return this.sendUserPerms(msg.channel, msg.member);
@@ -257,16 +257,18 @@ class Command extends Base {
 
         /** Sends invalid usage message in case of invalid usage (not enough argument) [option enabled] */
         if (args.length < this.options.argsMin && this.options.invalidUsage && !this.options.hidden) {
-            return this.sendHelp({ msg, args, guildConf })
-                .then(() => {
-                    this._cooldown.set(msg.author.id, { time: Date.now(), post: true });
-                });
+            return this.sendHelp( {
+                msg, args, guildConf,
+            } )
+                .then( () => {
+                    this._cooldown.set(msg.author.id, { time: Date.now(), post: true } );
+                } );
         }
 
         return msg.command.execute(message)
-            .then(() => {
-                this._cooldown.set(msg.author.id, { time: Date.now(), post: true });
-            });
+            .then( () => {
+                this._cooldown.set(msg.author.id, { time: Date.now(), post: true } );
+            } );
     }
 
     /**
@@ -291,22 +293,26 @@ class Command extends Base {
      * @memberof Command
      */
     _executeAdmin(message) {
-        const { msg, args, guildConf, isOwner } = message;
+        const {
+            msg, args, guildConf, isOwner,
+        } = message;
 
         /** Check bot perms */
-        if (!this._checkPermsBot(msg.channel)) {
+        if (!this._checkPermsBot(msg.channel) ) {
             return this.sendBotPerms(msg.channel);
         }
 
         if (!isOwner
             && this.permissions.staff.needed.length > 0
-            && this.permissions.staff.needed.filter(e => !this.axon.staff.owners.includes(e)).length === 0) {
+            && this.permissions.staff.needed.filter(e => !this.axon.staff.owners.includes(e) ).length === 0) {
             return Promise.resolve();
         }
 
         /** Sends invalid usage message in case of invalid usage (not enough argument) [option enabled] */
         if (args.length < this.options.argsMin && this.options.invalidUsage && !this.options.hidden) {
-            return this.sendHelp({ msg, args, guildConf });
+            return this.sendHelp( {
+                msg, args, guildConf,
+            } );
         }
 
         if (this.options.deleteCommand) { // delete input
@@ -324,7 +330,7 @@ class Command extends Base {
      * @returns {Promise<Message>} Message Object
      * @memberof Command
      */
-    sendHelp({ msg, guildConf }) {
+    sendHelp( { msg, guildConf } ) {
         // If a sendHelp method exists in the client, uses it instead.
         if (this.axon.sendHelp) {
             return this.axon.sendHelp(this, msg);
@@ -372,25 +378,25 @@ class Command extends Base {
         if (this.hasSubcmd) {
             const subcmds = this.subCommands.filter(e => !e.options.hidden).map(e => `${prefix}${e.infos.usage}`);
             if (subcmds.length > 0) {
-                embed.fields.push({
+                embed.fields.push( {
                     name: 'SubCommands:',
                     value: subcmds.join('\n'),
                     inline: true,
-                });
+                } );
             }
         }
 
         /** Aliases */
         if (this.aliases.length > 1) {
             const aliases = this.aliases.filter(e => e !== this.label);
-            embed.fields.push({
+            embed.fields.push( {
                 name: 'Aliases:',
                 value: aliases.join('\n'),
                 inline: true,
-            });
+            } );
         }
 
-        return this.sendMessage(msg.channel, { embed });
+        return this.sendMessage(msg.channel, { embed } );
     }
 
     //
@@ -442,12 +448,12 @@ class Command extends Base {
             || this._checkUserBypass(member)
             || this._checkRoleBypass(member)
             || this._checkChannelBypass(channel)
-            || this._checkStaffBypass(member)) {
+            || this._checkStaffBypass(member) ) {
             return true;
         }
 
-        if (((guildConf.modOnly || this.permissions.serverMod) && !this.AxonUtils.isMod(member, guildConf))
-            || (this.permissions.serverAdmin && !this.AxonUtils.isAdmin(member))) {
+        if ( ( (guildConf.modOnly || this.permissions.serverMod) && !this.AxonUtils.isMod(member, guildConf) )
+            || (this.permissions.serverAdmin && !this.AxonUtils.isAdmin(member) ) ) {
             return false;
         }
 
@@ -456,7 +462,7 @@ class Command extends Base {
             || !this._checkUserNeeded(member)
             || !this._checkRoleNeeded(member)
             || !this._checkChannelNeeded(channel)
-            || !this._checkStaffNeeded(member)) {
+            || !this._checkStaffNeeded(member) ) {
             return false;
         }
 
@@ -497,7 +503,7 @@ class Command extends Base {
         }
 
         for (const userPerm of this.permissions.user.bypass) {
-            if (member.permission.has(userPerm)) {
+            if (member.permission.has(userPerm) ) {
                 return true;
             }
         }
@@ -517,7 +523,7 @@ class Command extends Base {
             return true;
         }
         for (const userPerm of this.permissions.user.needed) {
-            if (!member.permission.has(userPerm)) {
+            if (!member.permission.has(userPerm) ) {
                 return false;
             }
         }
@@ -568,7 +574,7 @@ class Command extends Base {
         }
         const roles = member.roles;
         for (const role of this.permissions.rolesID.bypass) {
-            if (roles.find(role)) {
+            if (roles.find(role) ) {
                 return true;
             }
         }
@@ -589,7 +595,7 @@ class Command extends Base {
         }
         const roles = member.roles;
         for (const role of this.permissions.rolesID.needed) {
-            if (!roles.find(role)) {
+            if (!roles.find(role) ) {
                 return false;
             }
         }
@@ -666,7 +672,7 @@ class Command extends Base {
      * @returns {Promise<Message?>} Message Object
      * @memberof Command
      */
-    sendBotPerms(channel, permissions = []) {
+    sendBotPerms(channel, permissions = [] ) {
         if (permissions.length === 0) {
             const member = channel.guild.members.get(this.bot.user.id);
             permissions = this.Utils.missingPerms(member, this.permissions.bot);
@@ -688,7 +694,7 @@ class Command extends Base {
      * @returns {Promise<Message?>} Message Object
      * @memberof Command
      */
-    sendUserPerms(channel, member, permissions = []) {
+    sendUserPerms(channel, member, permissions = [] ) {
         if (permissions.length === 0) {
             permissions = this.Utils.missingPerms(member, this.permissions.user.needed);
         }
@@ -709,7 +715,7 @@ class Command extends Base {
      * @memberof Command
      */
     sendTargetPerms(channel) {
-        return this.sendError(channel, this.template.message.error.permTarget, { delete: true, delay: 9000 });
+        return this.sendError(channel, this.template.message.error.permTarget, { delete: true, delay: 9000 } );
     }
 
     /**
@@ -722,7 +728,7 @@ class Command extends Base {
     sendCooldown(channel, time) {
         return this.sendError(
             channel,
-            `${this.template.message.error.cooldown} **${Math.ceil((this.options.cooldown - time) / 100) / 10}sec**...`,
+            `${this.template.message.error.cooldown} **${Math.ceil( (this.options.cooldown - time) / 100) / 10}sec**...`,
             { delete: true, delay: 9000 },
         );
     }

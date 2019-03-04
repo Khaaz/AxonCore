@@ -1,4 +1,4 @@
-'use strict';
+
 import AxonError from '../Errors/AxonError';
 
 /**
@@ -57,7 +57,7 @@ class Embed {
      * @prop {String} timetamp
      * @prop {Object} file
      */
-    constructor(data = {}) {
+    constructor(data = {} ) {
         this.title = data.title;
         this.url = data.url;
         this.description = data.description;
@@ -145,7 +145,9 @@ class Embed {
      * @example Embed.setAuthor('KhaaZ', 'khaaz.png');
      */
     setAuthor(name, icon, url) {
-        this.author = { name: this._resolveString(name), icon_url: icon, url };
+        this.author = {
+            name: this._resolveString(name), icon_url: icon, url,
+        };
         return this;
     }
 
@@ -155,7 +157,7 @@ class Embed {
      * @param {Date} [timestamp=new Date()] - The timestamp
      * @returns {Embed} This embed
      */
-    setTimestamp(timestamp = new Date()) {
+    setTimestamp(timestamp = new Date() ) {
         this.timestamp = timestamp;
         return this;
     }
@@ -177,17 +179,19 @@ class Embed {
         if (name.length > 256) {
             throw new AxonError('Embed field names may not exceed 256 characters.');
         }
-        if (!/\S/.test(name)) {
+        if (!/\S/.test(name) ) {
             throw new TypeError('Cannot read property \'embed.fields.name\' of undefined');
         }
         value = this._resolveString(value);
         if (value.length > 1024) {
             throw new AxonError('Embed field values may not exceed 1024 characters.');
         }
-        if (!/\S/.test(value)) {
+        if (!/\S/.test(value) ) {
             throw new AxonError('Cannot read property \'embed.fields.value\' of undefined');
         }
-        this.fields.push({ name, value, inline });
+        this.fields.push( {
+            name, value, inline,
+        } );
         return this;
     }
 

@@ -1,4 +1,4 @@
-'use strict';
+
 
 // Core
 import Base from './Base';
@@ -111,7 +111,7 @@ class Module extends Base {
             this.Logger.error(`[Module(${this.label})] Commands: No commands found.`);
             return;
         }
-        for (const Value of Object.values(commands)) {
+        for (const Value of Object.values(commands) ) {
             const newCmd = new Value(this);
             if (newCmd.hasSubcmd) {
                 newCmd.subCommands = new Collection(Command);
@@ -135,7 +135,7 @@ class Module extends Base {
             this.Logger.error(`[Module(${this.label})] Events: No events found.`);
             return;
         }
-        for (const Value of Object.values(events)) {
+        for (const Value of Object.values(events) ) {
             const newEvent = new Value(this);
             this.registerEvent(newEvent);
         }
@@ -149,7 +149,7 @@ class Module extends Base {
      * @memberof Module
      */
     initAllSchemas(schemas) {
-        for (const [key, value] of Object.entries(schemas)) {
+        for (const [key, value] of Object.entries(schemas) ) {
             this.registerSchema(key, value);
         }
     }
@@ -166,7 +166,7 @@ class Module extends Base {
             return;
         }
 
-        for (const Value of Object.values(command.subcmds)) {
+        for (const Value of Object.values(command.subcmds) ) {
             const newSubcmd = new Value(this);
             if (!newSubcmd.isSubcmd) {
                 this.Logger.error(`[Module(${this.label})] Command: ${command.label} ${newSubcmd.label} - Couldn't init subcommand: Not a subcommand.`);
@@ -192,16 +192,16 @@ class Module extends Base {
      * @memberof Module
      */
     registerCommand(command) {
-        if (command.label.includes(' ')) {
+        if (command.label.includes(' ') ) {
             this.Logger.error(`[Module(${this.label})]Command: ${command.label} - Command label may not have spaces.`);
             return false;
         }
-        if (this.commands.has(command.label)) {
+        if (this.commands.has(command.label) ) {
             this.Logger.error(`[Module(${this.label})] Command: ${command.label} - You have already registered a command in this module.`);
             return false;
         }
 
-        if (!EnsureInterface.checkCommandAttributes(this, command)) {
+        if (!EnsureInterface.checkCommandAttributes(this, command) ) {
             this.Logger.error(`[Module(${this.label})] Command: ${command.label} - Invalid attributes format (permissions).`);
             return false;
         }
@@ -209,7 +209,7 @@ class Module extends Base {
         // No aliases, or aliases does not include the label.
         if (!command.aliases) {
             command.aliases = [command.label];
-        } else if (Array.isArray(command.aliases) && !command.aliases.includes(command.label)) {
+        } else if (Array.isArray(command.aliases) && !command.aliases.includes(command.label) ) {
             command.aliases.push(command.label);
         } else if (!Array.isArray(command.aliases) && command.aliases !== command.label) {
             command.aliases = [command.aliases, command.label];
@@ -229,11 +229,11 @@ class Module extends Base {
      * @memberof Module
      */
     registerSubCommand(command, subCommand) {
-        if (subCommand.label.includes(' ')) {
+        if (subCommand.label.includes(' ') ) {
             this.Logger.error(`[Module(${this.label})] Command: ${command.label} ${subCommand.label} - Command label may not have spaces.`);
             return false;
         }
-        if (command.subCommands.has(subCommand.label)) {
+        if (command.subCommands.has(subCommand.label) ) {
             this.Logger.error(`[Module(${this.label})] Command: ${command.label} ${subCommand.label} - You have already registered a subCommand for this command.`);
             return false;
         }
@@ -241,7 +241,7 @@ class Module extends Base {
         // assign parentCommand
         subCommand.parentCommand = command;
 
-        if (!EnsureInterface.checkCommandAttributes(this, subCommand)) {
+        if (!EnsureInterface.checkCommandAttributes(this, subCommand) ) {
             this.Logger.error(`[Module(${this.label})] Command: ${command.label} ${subCommand.label} - Invalid attributes format (permissions).`);
             return false;
         }
@@ -249,14 +249,14 @@ class Module extends Base {
         // No aliases, or aliases does not include the label.
         if (!subCommand.aliases) {
             subCommand.aliases = [subCommand.label];
-        } else if (Array.isArray(subCommand.aliases) && !subCommand.aliases.includes(subCommand.label)) {
+        } else if (Array.isArray(subCommand.aliases) && !subCommand.aliases.includes(subCommand.label) ) {
             subCommand.aliases.push(subCommand.label);
         } else if (!Array.isArray(subCommand.aliases) && subCommand.aliases !== subCommand.label) {
             subCommand.aliases = [subCommand.aliases, subCommand.label];
         }
 
         for (const alias of subCommand.aliases) {
-            if (command.subCommandsAliases.has(alias)) {
+            if (command.subCommandsAliases.has(alias) ) {
                 this.Logger.warn(`[Module(${this.label})] Command: ${command.label} ${subCommand.label} - Alias: ${alias} already registered!.`);
                 break;
             }
@@ -276,11 +276,11 @@ class Module extends Base {
      * @memberof Module
      */
     registerEvent(event) {
-        if (event.label.includes(' ')) {
+        if (event.label.includes(' ') ) {
             this.Logger.error(`[Module(${this.label})] Event: ${event.label} - Event label may not have spaces`);
             return false;
         }
-        if (this.events.has(event.label)) {
+        if (this.events.has(event.label) ) {
             this.Logger.error(`[Module(${this.label})] Event: ${event.label} - You have already registered an event in this module.`);
             return false;
         }
@@ -298,7 +298,7 @@ class Module extends Base {
      * @memberof Module
      */
     registerSchema(key, schema) {
-        if (this.schemas.has(key)) {
+        if (this.schemas.has(key) ) {
             throw new AxonError(`[Module](${this.label}) - Schemas: ${key} - You have already registered a schema in this module.`, 'INIT');
         }
         this.schemas.set(key, schema);
@@ -359,7 +359,7 @@ class Module extends Base {
      * @memberof Module
      */
     unregisterSchema(label) {
-        if (!this.schemas.has(label)) {
+        if (!this.schemas.has(label) ) {
             throw new AxonError(`[Module(${this.label})] Schema: ${label} not registered!`, 'UNREGISTER');
         }
         this.schemas.delete(label);

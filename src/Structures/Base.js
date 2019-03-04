@@ -1,5 +1,3 @@
-'use strict';
-
 import util from 'util';
 
 /**
@@ -204,13 +202,13 @@ class Base {
     toJSON() {
         const base = {};
         for (const key in this) {
-            if (!base.hasOwnProperty(key) && this.hasOwnProperty(key) && !key.startsWith('_')) {
-                if (!this[key]) {
+            if (!base.hasOwnProperty(key) && this.hasOwnProperty(key) && !key.startsWith('_') ) {
+                if (!this[key] ) {
                     base[key] = this[key];
                 } else if (this[key] instanceof Set) {
-                    base[key] = Array.from(this[key]);
+                    base[key] = Array.from(this[key] );
                 } else if (this[key] instanceof Map) {
-                    base[key] = Array.from(this[key].values());
+                    base[key] = Array.from(this[key].values() );
                 } else if (typeof this[key].toJSON === 'function') {
                     base[key] = this[key].toJSON();
                 } else {
@@ -221,6 +219,7 @@ class Base {
         return base;
     }
 
+    /* eslint max-classes-per-file: ["warn", 2]*/
     /**
      * Inspect method
      * Doesn't list prefixed property and undefined property.

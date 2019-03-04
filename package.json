@@ -9,6 +9,7 @@
     "node": ">=8.0.0"
   },
   "dependencies": {
+    "@axonteam/eslint-config-axonteam": "^2.0.3",
     "esm": "^3.0.84",
     "eventemitter3": "^3.1.0"
   },

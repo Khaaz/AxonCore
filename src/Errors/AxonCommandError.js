@@ -1,4 +1,4 @@
-'use strict';
+
 
 /**
  * Custom error with better formatting, arguments and error tracking. Used for errors thrown by commands.
@@ -28,18 +28,18 @@ class AxonCommandError extends Error {
         Object.defineProperty(this, 'short', {
             value: short,
             writable: false,
-        });
+        } );
 
         Object.defineProperty(this, 'message', {
-            value: short + ' | ' + (err.message ? err.message : ''),
+            value: `${short} | ${err.message ? err.message : ''}`,
             writable: false,
-        });
+        } );
 
         if (err.stack) {
             Object.defineProperty(this, 'stack', {
-                value: this.message + '\n' + err.stack,
+                value: `${this.message}\n${err.stack}`,
                 writable: false,
-            });
+            } );
         }
     }
 

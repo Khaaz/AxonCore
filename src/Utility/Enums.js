@@ -58,10 +58,7 @@ const permissionsNames = {
     manageEmojis: 'Manage Emojis',
 };
 
-const adminPerms = [
-    'administrator',
-    'manageGuild',
-];
+const adminPerms = ['administrator', 'manageGuild'];
 
 const typeWH = {
     status: 'Status',

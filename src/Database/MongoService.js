@@ -1,5 +1,3 @@
-'use strict';
-
 import DBService from './DBService';
 
 /**
@@ -34,9 +32,9 @@ class MongoService extends DBService {
      * @memberof MongoService
      */
     fetchAxon() {
-        return this.AxonSchema.findOne({
-            ID : '1',
-        });
+        return this.AxonSchema.findOne( {
+            ID: '1',
+        } );
     }
 
     /**
@@ -48,9 +46,9 @@ class MongoService extends DBService {
      * @memberof MongoService
      */
     fetchGuild(gID) {
-        return this.GuildSchema.findOne({
-            guildID : gID,
-        }).lean();
+        return this.GuildSchema.findOne( {
+            guildID: gID,
+        } ).lean();
     }
 
     /**
@@ -62,9 +60,9 @@ class MongoService extends DBService {
      * @memberof MongoService
      */
     fetchGuildSchema(gID) {
-        return this.GuildSchema.findOne({
-            guildID : gID,
-        });
+        return this.GuildSchema.findOne( {
+            guildID: gID,
+        } );
     }
 
     /**
@@ -74,8 +72,8 @@ class MongoService extends DBService {
      * @memberof MongoService
      */
     initAxon() {
-        return this.AxonSchema.findOneAndUpdate({
-            ID : '1',
+        return this.AxonSchema.findOneAndUpdate( {
+            ID: '1',
         },
         {
             ID: '1',
@@ -84,7 +82,7 @@ class MongoService extends DBService {
             new: true,
             upsert: true,
             setDefaultsOnInsert: true,
-        });
+        } );
     }
 
     /**
@@ -95,17 +93,17 @@ class MongoService extends DBService {
      * @memberof MongoService
      */
     initGuild(gID) {
-        return this.GuildSchema.findOneAndUpdate({
-            guildID : gID,
+        return this.GuildSchema.findOneAndUpdate( {
+            guildID: gID,
         },
         {
-            guildID : gID,
+            guildID: gID,
         },
         {
             new: true,
             upsert: true,
             setDefaultsOnInsert: true,
-        });
+        } );
     }
 
     /**
@@ -116,8 +114,8 @@ class MongoService extends DBService {
      * @memberof MongoService
      */
     updateBlacklistUser(blacklistedUsers) {
-        return this.AxonSchema.findOneAndUpdate({
-            ID : '1',
+        return this.AxonSchema.findOneAndUpdate( {
+            ID: '1',
         },
         {
             $set: {
@@ -127,7 +125,7 @@ class MongoService extends DBService {
         {
             new: true,
             upsert: true,
-        });
+        } );
     }
 
     /**
@@ -138,8 +136,8 @@ class MongoService extends DBService {
      * @memberof MongoService
      */
     updateBlacklistGuild(blacklistedGuilds) {
-        return this.AxonSchema.findOneAndUpdate({
-            ID : '1',
+        return this.AxonSchema.findOneAndUpdate( {
+            ID: '1',
         },
         {
             $set: {
@@ -149,7 +147,7 @@ class MongoService extends DBService {
         {
             new: true,
             upsert: true,
-        });
+        } );
     }
 
     /**
@@ -161,8 +159,8 @@ class MongoService extends DBService {
      * @memberof MongoService
      */
     updateGuildPrefix(gID, prefixArr) {
-        return this.GuildSchema.findOneAndUpdate({
-            guildID : gID,
+        return this.GuildSchema.findOneAndUpdate( {
+            guildID: gID,
         },
         {
             $set: {
@@ -172,7 +170,7 @@ class MongoService extends DBService {
         {
             new: true,
             upsert: true,
-        });
+        } );
     }
 
     /**
@@ -183,8 +181,8 @@ class MongoService extends DBService {
      * @memberof MongoService
      */
     updateModule(gID, modulesArr) {
-        return this.GuildSchema.findOneAndUpdate({
-            guildID : gID,
+        return this.GuildSchema.findOneAndUpdate( {
+            guildID: gID,
         },
         {
             $set: {
@@ -194,7 +192,7 @@ class MongoService extends DBService {
         {
             new: true,
             upsert: true,
-        });
+        } );
     }
 
     /**
@@ -205,8 +203,8 @@ class MongoService extends DBService {
      * @memberof MongoService
      */
     updateCommand(gID, commandsArr) {
-        return this.GuildSchema.findOneAndUpdate({
-            guildID : gID,
+        return this.GuildSchema.findOneAndUpdate( {
+            guildID: gID,
         },
         {
             $set: {
@@ -216,7 +214,7 @@ class MongoService extends DBService {
         {
             new: true,
             upsert: true,
-        });
+        } );
     }
 
     /**
@@ -227,8 +225,8 @@ class MongoService extends DBService {
      * @memberof MongoService
      */
     updateEvent(gID, eventsArr) {
-        return this.GuildSchema.findOneAndUpdate({
-            guildID : gID,
+        return this.GuildSchema.findOneAndUpdate( {
+            guildID: gID,
         },
         {
             $set: {
@@ -238,7 +236,7 @@ class MongoService extends DBService {
         {
             new: true,
             upsert: true,
-        });
+        } );
     }
 
     /**
@@ -249,15 +247,15 @@ class MongoService extends DBService {
      * @memberof MongoService
      */
     saveAxonSchema(schema) {
-        return this.AxonSchema.findOneAndUpdate({
-            ID : '1',
+        return this.AxonSchema.findOneAndUpdate( {
+            ID: '1',
         },
         schema,
         {
             new: true,
             upsert: true,
             setDefaultsOnInsert: true,
-        });
+        } );
     }
 
     /**
@@ -269,15 +267,15 @@ class MongoService extends DBService {
      * @memberof MongoService
      */
     saveGuildSchema(gID, schema) {
-        return this.GuildSchema.findOneAndUpdate({
-            guildID : gID,
+        return this.GuildSchema.findOneAndUpdate( {
+            guildID: gID,
         },
         schema,
         {
             new: true,
             upsert: true,
             setDefaultsOnInsert: true,
-        });
+        } );
     }
 }
 

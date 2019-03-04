@@ -1,4 +1,4 @@
-'use strict';
+
 
 import axonDefault from './AxonDefault.json';
 import guildDefault from './GuildDefault.json';
@@ -21,8 +21,8 @@ class Manager {
         this._axonDefault = axonDefault;
         this._guildDefault = guildDefault;
 
-        this._basePath = __dirname + '/Database/';
-        this._axonPath = __dirname + '/Database/axon.json';
+        this._basePath = `${__dirname}/Database/`;
+        this._axonPath = `${__dirname}/Database/axon.json`;
     }
 
     get axonDefault() {
@@ -56,7 +56,7 @@ class Manager {
     }
 
     _buildPath(gID) {
-        return this._basePath + gID + '.json';
+        return `${this._basePath + gID}.json`;
     }
 
     /**
@@ -82,7 +82,9 @@ class Manager {
      */
     async writeFile(path, content = '{}') {
         if (!path) return null;
-        if (path.search('.json') === -1) return null;
+        if (path.search('.json') === -1) {
+            return null;
+        }
 
         try {
             await writeFile(path, content, 'utf8');
@@ -101,12 +103,11 @@ class Manager {
      * @returns {Promise<Object>} The newly created Schema || null
      */
     async createAxonSchema() {
-        const res = await this.writeFile(this._axonPath, this.toString(this.axonDefault));
+        const res = await this.writeFile(this._axonPath, this.toString(this.axonDefault) );
         if (res) {
             return this.axonDefault;
-        } else {
-            return null;
         }
+        return null;
     }
 
     /**
@@ -116,15 +117,14 @@ class Manager {
      * @returns {Promise<Object>} The newly created Schema || null
      */
     async createGuildSchema(gID) {
-        const guildSchema = Object.assign({}, this.guildDefault);
+        const guildSchema = Object.assign( {}, this.guildDefault);
         guildDefault.guildID = gID;
         guildDefault.createdAt = new Date();
-        const res = await this.writeFile(this._buildPath(gID), this.toString(guildSchema));
+        const res = await this.writeFile(this._buildPath(gID), this.toString(guildSchema) );
         if (res) {
             return this.guildDefault;
-        } else {
-            return null;
         }
+        return null;
     }
 
     /**
@@ -136,9 +136,8 @@ class Manager {
         const res = await this.readFile(this._axonPath);
         if (res) {
             return this.toJSON(res);
-        } else {
-            return res;
         }
+        return res;
     }
 
     /**
@@ -148,12 +147,11 @@ class Manager {
      * @returns {Promise<Object>} GuildSchema || null
      */
     async fetchGuildSchema(gID) {
-        const res = await this.readFile(this._buildPath(gID));
+        const res = await this.readFile(this._buildPath(gID) );
         if (res) {
             return this.toJSON(res);
-        } else {
-            return res;
         }
+        return res;
     }
 
     /**
@@ -164,12 +162,11 @@ class Manager {
      * @returns {Promise<Object>} GuildSchema || null
      */
     async writeGuildSchema(gID, schema) {
-        const res = await this.writeFile(this._buildPath(gID), this.toString(schema));
+        const res = await this.writeFile(this._buildPath(gID), this.toString(schema) );
         if (res) {
             return schema;
-        } else {
-            return null;
         }
+        return null;
     }
 
     /**
@@ -179,12 +176,11 @@ class Manager {
      * @returns {Promise<Object>} AxonSchema || null
      */
     async writeAxonSchema(schema) {
-        const res = await this.writeFile(this._axonDefault, this.toString(schema));
+        const res = await this.writeFile(this._axonDefault, this.toString(schema) );
         if (res) {
             return schema;
-        } else {
-            return null;
         }
+        return null;
     }
 
     //

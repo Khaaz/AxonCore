@@ -1,4 +1,4 @@
-'use strict';
+
 
 /**
  * Hold a bunch of something
@@ -22,7 +22,7 @@ class Collection extends Map {
         if (iterable && iterable instanceof Array) {
             super(iterable);
         } else if (iterable && iterable instanceof Object) {
-            super(Object.entries(iterable));
+            super(Object.entries(iterable) );
         } else {
             super();
         }
@@ -49,7 +49,7 @@ class Collection extends Map {
      */
     toObject() {
         const obj = {};
-        for (const [key, value] of this.entries()) {
+        for (const [key, value] of this.entries() ) {
             obj[key] = value;
         }
         return obj;
@@ -70,7 +70,7 @@ class Collection extends Map {
         if (existing && !replace) {
             return existing;
         }
-        if (this.baseObject && !(value instanceof this.baseObject)) {
+        if (this.baseObject && !(value instanceof this.baseObject) ) {
             return null;
         }
 
@@ -82,15 +82,15 @@ class Collection extends Map {
      * Return the first object to make the function evaluate true
      *
      * @arg {Function} func - A function that takes an object and returns true if it matches
-     * @returns {Class?} The first matching object, or undefined if no match
+     * @returns {Class?} The first matching object, or null if no match
      */
     find(func) {
-        for (const item of this.values()) {
-            if (func(item)) {
+        for (const item of this.values() ) {
+            if (func(item) ) {
                 return item;
             }
         }
-        return undefined;
+        return null;
     }
 
     /**
@@ -101,8 +101,8 @@ class Collection extends Map {
      */
     map(func) {
         const arr = [];
-        for (const item of this.values()) {
-            arr.push(func(item));
+        for (const item of this.values() ) {
+            arr.push(func(item) );
         }
         return arr;
     }
@@ -115,8 +115,8 @@ class Collection extends Map {
      */
     filter(func) {
         const arr = [];
-        for (const item of this.values()) {
-            if (func(item)) {
+        for (const item of this.values() ) {
+            if (func(item) ) {
                 arr.push(item);
             }
         }
@@ -133,7 +133,7 @@ class Collection extends Map {
         const iter = this.values();
         let val;
         let result = initialValue === undefined ? iter.next().value : initialValue;
-        while ((val = iter.next().value) !== undefined) {
+        while ( (val = iter.next().value) !== undefined) {
             result = func(result, val);
         }
         return result;
@@ -146,8 +146,8 @@ class Collection extends Map {
      * @returns {Boolean} An array containing all the objects that matched
      */
     some(func) {
-        for (const item of this.values()) {
-            if (func(item)) {
+        for (const item of this.values() ) {
+            if (func(item) ) {
                 return true;
             }
         }
@@ -161,8 +161,8 @@ class Collection extends Map {
      * @returns {Boolean} An array containing all the objects that matched
      */
     every(func) {
-        for (const item of this.values()) {
-            if (!func(item)) {
+        for (const item of this.values() ) {
+            if (!func(item) ) {
                 return false;
             }
         }
@@ -199,13 +199,13 @@ class Collection extends Map {
     /**
      * Get a random object from the Collection
      *
-     * @returns {Class?} The random object, or undefined if there is no match
+     * @returns {Class?} The random object, or null if there is no match
      */
     random() {
         if (!this.size) {
-            return undefined;
+            return null;
         }
-        return Array.from(this.values())[Math.floor(Math.random() * this.size)];
+        return Array.from(this.values() )[Math.floor(Math.random() * this.size)];
     }
 
     toString() {

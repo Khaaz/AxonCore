@@ -1,5 +1,3 @@
-'use strict';
-
 import Base from './Base';
 
 import Collection from '../Utility/Collection';
@@ -56,7 +54,7 @@ class EventManager extends Base {
         // Create handler for each event
         for (const event in this._listeners) {
             /** Doesn't register the handler if all listeners shouldn't be loaded */
-            if (this._listeners[event].every(e => !e.load)) {
+            if (this._listeners[event].every(e => !e.load) ) {
                 break;
             }
             this.registerHandler(event);
@@ -118,7 +116,7 @@ class EventManager extends Base {
         handler = {};
         handler.name = event;
         handler.size = this._listeners[event].length;
-        handler.run = this.createHandler.bind(this, this._listeners[event]);
+        handler.run = this.createHandler.bind(this, this._listeners[event] );
         this._handlers.set(event, handler);
 
         return handler;
@@ -155,22 +153,22 @@ class EventManager extends Base {
                     }
                     // Ignore guild disabled Module/Event
                     if (gConf) {
-                        if ((this.AxonUtils.isModuleDisabled(event.module, gConf) && !this.module.serverBypass)
-                            || (this._isEventDisabled(event.label, gConf) && !this.serverBypass)) {
+                        if ( (this.AxonUtils.isModuleDisabled(event.module, gConf) && !this.module.serverBypass)
+                            || (this._isEventDisabled(event.label, gConf) && !this.serverBypass) ) {
                             continue;
                         }
                     }
                     event._execute(gConf, ...args)
-                        .then(() => {
+                        .then( () => {
                             if (this.axon.params.debugMode) {
                                 this.Logger.verbose(`[EVENT](${event.eventName}) - ${event.label}`);
                             }
-                        })
+                        } )
                         .catch(err => {
                             this.Logger.error(`[EVENT](${event.eventName}) - ${event.label}\n${err}`);
-                        });
+                        } );
                 }
-            })
+            } )
             .catch(null);
     }
 
@@ -188,7 +186,7 @@ class EventManager extends Base {
         return new Promise(async(resolve, reject) => {
             // Tries to resolve a guild
             let guild = undefined;
-            if (args[0]) {
+            if (args[0] ) {
                 if (args[0].guild) { // member or channel
                     if (args[0].user && args[0].user.bot) { // member | check not a bot
                         return;
@@ -209,12 +207,12 @@ class EventManager extends Base {
 
             // Ignore blacklisted guilds
             if (guild) {
-                if (this.axon.blacklistedGuilds.has(guild.id)) {
+                if (this.axon.blacklistedGuilds.has(guild.id) ) {
                     reject();
                 }
             }
             resolve(guildConf);
-        });
+        } );
     }
 
     /**
@@ -239,7 +237,7 @@ class EventManager extends Base {
      * @memberof EventManager
      */
     unregisterListener(event, label) {
-        if (!this._listeners[event]) {
+        if (!this._listeners[event] ) {
             return false;
         }
         const index = this._listeners[event].findIndex(e => e.label === label);

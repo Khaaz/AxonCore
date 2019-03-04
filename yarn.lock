@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@axonteam/eslint-config-axonteam@^2.0.3":
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/@axonteam/eslint-config-axonteam/-/eslint-config-axonteam-2.0.3.tgz#30a38b4bb35f2c7cbc23f1259c37b48c6bcf29ae"
+  integrity sha512-E6OY7KHTuxpOL/YqU5yZu0EVhK/dhf3NuQ26GwYhF7Ds40XSH36kZto25ZFpue53r8JYhz/uBdqVXv3n4/mFsA==
+
 "@babel/code-frame@^7.0.0":
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.0.0.tgz#06e2ab19bdb535385559aabb5ba59729482800f8"
