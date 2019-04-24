@@ -568,7 +568,7 @@ class Command extends Base {
         }
         const roles = member.roles;
         for (const role of this.permissions.rolesID.bypass) {
-            if (roles.find(role)) {
+            if (roles.includes(role)) {
                 return true;
             }
         }
@@ -589,7 +589,7 @@ class Command extends Base {
         }
         const roles = member.roles;
         for (const role of this.permissions.rolesID.needed) {
-            if (!roles.find(role)) {
+            if (!roles.includes(role)) {
                 return false;
             }
         }
