@@ -114,15 +114,18 @@ class Manager {
      * Create a file and schema for the given guild.
      *
      * @param {String} gID
+     * @param {Array} prefixes
      * @returns {Promise<Object>} The newly created Schema || null
      */
-    async createGuildSchema(gID) {
+    async createGuildSchema(prefixes, gID) {
         const guildSchema = Object.assign( {}, this.guildDefault);
-        guildDefault.guildID = gID;
-        guildDefault.createdAt = new Date();
+        guildSchema.guildID = gID;
+        guildSchema.createdAt = new Date();
+        guildSchema.updatedAt = new Date();
+        guildSchema.prefix = prefixes;
         const res = await this.writeFile(this._buildPath(gID), this.toString(guildSchema) );
         if (res) {
-            return this.guildDefault;
+            return guildSchema;
         }
         return null;
     }
@@ -199,7 +202,8 @@ class Manager {
         const guildSchema = await this.fetchGuildSchema(gID);
 
         guildSchema[key] = value;
-
+        guildSchema.updatedAt = new Date();
+        
         return this.writeGuildSchema(gID, guildSchema);
     }
 

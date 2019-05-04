@@ -810,12 +810,12 @@ class AxonClient extends EventEmitter {
         try {
             let guildConf = await this.DBprovider.fetchGuild(gID);
             if (!guildConf) {
-                guildConf = await this.DBprovider.initGuild(gID);
+                guildConf = await this.DBprovider.initGuild(this, gID);
             }
             return guildConf;
         } catch (err) {
             try {
-                const newGuildConf = await this.DBprovider.initGuild(gID);
+                const newGuildConf = await this.DBprovider.initGuild(this, gID);
                 return newGuildConf;
             } catch (e) {
                 throw e;

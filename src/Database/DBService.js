@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+
 /**
  * Abstract class for all DB services
  *
@@ -48,10 +49,11 @@ class DBService {
      * Init Guild Schema with default values
      *
      * @param {String} gID - Guild ID
-     * @returns {Promsie<Object>} Newly created guild
+     * @param {Object<AxonClient>} axonClient
+     * @returns {Promise<Object|null>} Newly created guild
+     * @memberof DBService
      */
-
-    initGuild(gID) {
+    initGuild(axonClient, gID) {
         throw new Error('Not implemented Exception');
     }
 
@@ -59,7 +61,7 @@ class DBService {
      * Updates the blacklisted users.
      *
      * @param {Array<String>} blacklistedUsers - Array of blacklisted users
-     * @returns {Promise} Updated AxonSchema
+     * @returns {Promise<Object|null>} Updated AxonSchema
      * @memberof DBService
      */
     updateBlacklistUser(blacklistedUsers) {
@@ -70,7 +72,7 @@ class DBService {
      * Updates the blacklisted guilds.
      *
      * @param {Array<String>} blacklistedGuilds - Array of blacklistedUsers
-     * @returns {Promise} Updated AxonSchema
+     * @returns {Promise<Object|null>} Updated AxonSchema
      * @memberof DBService
      */
     updateBlacklistGuild(blacklistedGuilds) {
@@ -82,7 +84,7 @@ class DBService {
      *
      * @param {String} gID - guild ID
      * @param {Array<String>} prefixArr - Array of prefixes
-     * @returns {Promise} Updated GuildSchema
+     * @returns {Promise<Object|null>} Updated GuildSchema
      * @memberof DBService
      */
     updateGuildPrefix(gID, prefixArr) {
@@ -93,7 +95,7 @@ class DBService {
      * Updates the modules array for the specified guild.
      *
      * @param {Array<String>} modulesArr - Array of modules label
-     * @returns {Promise} Updated GuildSchema
+     * @returns {Promise<Object|null>} Updated GuildSchema
      * @memberof DBService
      */
     updateModule(gID, modulesArr) {
@@ -104,7 +106,7 @@ class DBService {
      * Updates commands array for the specified guild.
      *
      * @param {Array<String>} commandsArr - Array of commands label
-     * @returns {Promise} Updated GuildSchema
+     * @returns {Promise<Object|null>} Updated GuildSchema
      * @memberof DBService
      */
     updateCommand(gID, commandsArr) {
@@ -115,7 +117,7 @@ class DBService {
      * Updates the events array for the specified guild.
      *
      * @param {Array<String>} eventsArr - Array of events label
-     * @returns {Promise} Updated GuildSchema
+     * @returns {Promise<Object|null>} Updated GuildSchema
      * @memberof DBService
      */
     updateEvent(gID, eventsArr) {
@@ -126,7 +128,7 @@ class DBService {
      * Updates the given schema in the DB with a new schema.
      *
      * @param {Object} schema - the schema object to update
-     * @returns {Promise} Updated Schema from the DB
+     * @returns {Promise<Object|null>} Updated Schema from the DB
      * @memberof DBService
      */
     saveAxonSchema(schema) {
@@ -138,7 +140,7 @@ class DBService {
      *
      * @param {String} gID - Guid id
      * @param {Object} schema - the schema object to update
-     * @returns {Promise} Updated Schema from the DB
+     * @returns {Promise<Object|null>} Updated Schema from the DB
      * @memberof DBService
      */
     saveGuildSchema(gID, schema) {
