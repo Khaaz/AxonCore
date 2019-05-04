@@ -204,6 +204,10 @@ class Module extends Base {
             return false;
         }
 
+        if (!command.options.cooldown) {
+            command.options.cooldown = 0;
+        }
+
         // No aliases, or aliases does not include the label.
         if (!command.aliases) {
             command.aliases = [command.label];
@@ -244,6 +248,10 @@ class Module extends Base {
             return false;
         }
 
+        if (!command.options.cooldown) {
+            command.options.cooldown = 0;
+        }
+        
         // No aliases, or aliases does not include the label.
         if (!subCommand.aliases) {
             subCommand.aliases = [subCommand.label];
