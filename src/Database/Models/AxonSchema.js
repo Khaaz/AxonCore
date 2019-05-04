@@ -1,9 +1,6 @@
-'use strict';
+import { Schema, model } from 'mongoose';
 
-import mongoose from 'mongoose';
-const Schema = mongoose.Schema;
-
-const axonSchema = new Schema({
+const axonSchema = new Schema( {
     /** Index */
     ID: { type: String, required: true, index: true }, // ID
     prefix: { type: String, default: 'e!' },
@@ -32,6 +29,6 @@ const axonSchema = new Schema({
 }, {
     strict: false,
     minimize: false,
-});
+} );
 
-export default mongoose.model('Axon', axonSchema);
+export default model('Axon', axonSchema);

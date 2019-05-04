@@ -1,20 +1,18 @@
-//
 const pm2 = require('pm2');
-//
 
 // Start process
 console.log('>> Starting AxonCore');
-pm2.connect((err) => {
+pm2.connect( (err) => {
     if (err) {
         console.error(err);
         process.exit(2);
     }
-    pm2.start({
+    pm2.start( {
         script: 'index.js',
         args: ['--color'],
         name: 'AxonCore',
-        exec_mode : 'fork',
-        max_memory_restart : '1G',
+        exec_mode: 'fork',
+        max_memory_restart: '1G',
         cwd: 'example/src',
         error: '../logs/error.err',
         output: '../../logs/output.log',
@@ -22,9 +20,9 @@ pm2.connect((err) => {
         node_args: '-r esm',
         autorestart: true,
         wait_ready: true,
-    }, (err) => {
+    }, (e) => {
         pm2.disconnect();
-        if (err) throw err;
-    });
-});
+        if (e) throw e;
+    } );
+} );
 //

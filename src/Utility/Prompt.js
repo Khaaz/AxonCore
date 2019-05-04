@@ -1,4 +1,3 @@
-// Event emitter for local event emitting.
 import { EventEmitter } from 'eventemitter3';
 
 /**

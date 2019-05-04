@@ -1,5 +1,3 @@
-
-
 import Enums from './Enums';
 
 /**
@@ -198,7 +196,7 @@ class AxonUtils {
             return true;
         }
 
-        const roles = member.roles;
+        const { roles } = member;
         for (const role of guildConf.modRoles) {
             if (roles.find(r => r === role) ) {
                 return true;

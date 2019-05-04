@@ -1,5 +1,3 @@
-'use string';
-
 import { Console } from 'console';
 import { format } from 'util';
 import chalk from 'chalk';

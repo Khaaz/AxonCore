@@ -1,5 +1,3 @@
-'use strict';
-
 import { Command } from '../../../../..';
 
 import Pong from './Ping_Pong';
@@ -9,7 +7,11 @@ class Ping extends Command {
         super(module);
 
         this.label = 'ping';
-        this.aliases = ['ping', 'pang', 'pung'];
+        this.aliases = [
+            'ping',
+            'pang',
+            'pung',
+        ];
 
         this.hasSubcmd = true;
         this.subcmds = [Pong];
@@ -27,13 +29,13 @@ class Ping extends Command {
         this.options.guildOnly = false;
     }
 
-    async execute({ msg }) {
+    async execute( { msg } ) {
         const start = Date.now();
 
         const mess = await this.sendMessage(msg.channel, 'Pong! ');
 
         if (!mess) {
-            return;
+            return null;
         }
 
         const diff = (Date.now() - start);

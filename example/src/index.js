@@ -1,5 +1,3 @@
-'use strict';
-
 import Bot from './Bot';
 import customConf from './configs/customConf.json';
 
@@ -9,15 +7,15 @@ if (customConf.db === 1) {
         mongoose.connect('mongodb://localhost/AxonCoreDB', {
             useCreateIndex: true,
             autoReconnect: true,
-        })
-            .then(() => {
+        } )
+            .then( () => {
                 Bot.Logger.notice('Connected to AxonCore DataBase.');
-            })
+            } )
             .catch(err => {
-                Bot.Logger.emerg('Could NOT connect to AxonCore DataBase.\n' + err.stack);
-            });
+                Bot.Logger.emerg(`Could NOT connect to AxonCore DataBase.\n${err.stack}`);
+            } );
     } catch (e) {
-        Bot.Logger.emerg('Could NOT connect to AxonCore DataBase.\n' + e.stack);
+        Bot.Logger.emerg(`Could NOT connect to AxonCore DataBase.\n${e.stack}`);
     }
 }
 

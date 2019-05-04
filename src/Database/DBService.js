@@ -1,17 +1,15 @@
-/* eslint-disable */
-
+/* eslint-disable no-unused-vars */
 /**
  * Abstract class for all DB services
- * 
+ *
  * @author KhaaZ
- * 
+ *
  * @class DBService
  */
 class DBService {
-
     constructor() {
-        if (this.constructor == 'DBService') {
-            throw new Error('Can\'t instantiate an abstract class');    
+        if (this.constructor === 'DBService') {
+            throw new Error('Can\'t instantiate an abstract class');
         }
     }
 
@@ -48,7 +46,7 @@ class DBService {
 
     /**
      * Init Guild Schema with default values
-     * 
+     *
      * @param {String} gID - Guild ID
      * @returns {Promsie<Object>} Newly created guild
      */

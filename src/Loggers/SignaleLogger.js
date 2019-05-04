@@ -1,4 +1,3 @@
-'use string';
 import { Signale } from 'signale';
 import figures from 'figures';
 

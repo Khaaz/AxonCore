@@ -1,5 +1,3 @@
-'use strict';
-
 import { Command } from '../../../../..';
 
 class Pung extends Command {
@@ -27,12 +25,12 @@ class Pung extends Command {
         this.permissions.custom = (msg) => msg.channel.guild.id === '365236789855649814'; // Ease guild id
     }
 
-    async execute({ msg }) {
+    async execute( { msg } ) {
         const start = Date.now();
 
         const mess = await this.sendMessage(msg.channel, 'REEEEEEEEE!');
         if (!mess) {
-            return;
+            return null;
         }
 
         const diff = (Date.now() - start);

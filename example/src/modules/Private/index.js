@@ -1,5 +1,3 @@
-'use strict';
-
 import { Module } from '../../../..';
 
 import * as commands from './commands/index';

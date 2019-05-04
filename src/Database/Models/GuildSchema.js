@@ -1,9 +1,6 @@
-'use strict';
+import { Schema, model } from 'mongoose';
 
-import mongoose from 'mongoose';
-const Schema = mongoose.Schema;
-
-const guildSchema = new Schema({
+const guildSchema = new Schema( {
     /** Index */
     guildID: { type: String, required: true, index: true }, // GUILD ID
 
@@ -29,7 +26,7 @@ const guildSchema = new Schema({
      */
     ignoredUsers: { type: Array, default: [] }, // ids
     ignoredRoles: { type: Array, default: [] }, // ids
-    ignoredChannels: { type: Array, default: [] },  // ids
+    ignoredChannels: { type: Array, default: [] }, // ids
 
     /**
      * Moderation
@@ -45,6 +42,6 @@ const guildSchema = new Schema({
 }, {
     autoIndex: true,
     minimize: false,
-});
+} );
 
-export default mongoose.model('Guild', guildSchema);
+export default model('Guild', guildSchema);

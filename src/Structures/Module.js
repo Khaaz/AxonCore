@@ -1,5 +1,3 @@
-
-
 // Core
 import Base from './Base';
 

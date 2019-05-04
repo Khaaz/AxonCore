@@ -1,5 +1,3 @@
-
-
 import Utils from './Utils';
 // Error
 import AxonError from '../Errors/AxonError';
@@ -32,7 +30,7 @@ class Resolver {
 
         args.all = args.join(' ');
         args.lower = args.all.toLowerCase();
-        const users = client.users;
+        const { users } = client;
 
         const mention = Utils.userMention.exec(args[0] );
 
@@ -66,7 +64,7 @@ class Resolver {
 
         args.all = args.join(' ');
         args.lower = args.all.toLowerCase();
-        const members = guild.members;
+        const { members } = guild;
 
         const mention = Utils.userMention.exec(args[0] );
 
@@ -106,7 +104,7 @@ class Resolver {
 
         args.all = args.join(' ');
         args.lower = args.all.toLowerCase();
-        const roles = guild.roles;
+        const { roles } = guild;
 
         const mention = Utils.roleMention.exec(args[0] );
 
@@ -141,7 +139,7 @@ class Resolver {
 
         args.all = args.join(' ');
         args.lower = args.all.toLowerCase();
-        const channels = guild.channels;
+        const { channels } = guild;
 
         const mention = Utils.channelMention.exec(args[0] );
 
@@ -169,7 +167,7 @@ class Resolver {
             throw new AxonError('All the arguments are either not given or false.', 'Resolver', 'Guild');
         }
 
-        const guilds = client.guilds;
+        const { guilds } = client;
         args.all = args.join(' ');
         args.lower = args.all.toLowerCase();
 

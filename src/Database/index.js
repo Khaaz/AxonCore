@@ -12,6 +12,7 @@ class DBHandler {
     static pickDBService(axonOptions, axon) {
         let DBservice;
 
+        // eslint-disable-next-line no-shadow
         const db = axonOptions.axonConf ? axonOptions.axonConf.db : 0;
 
         switch (db) {

@@ -1,5 +1,3 @@
-'use strict';
-
 import { Command, MessageCollector } from '../../../../..';
 
 class Collect extends Command {
@@ -17,7 +15,7 @@ class Collect extends Command {
         this._boundCollectEvent = this._onCollectEvent.bind(this);
     }
 
-    async execute({ msg }) {
+    async execute( { msg } ) {
         this._collector = new MessageCollector(this.axon);
         this._message = await this.sendMessage(msg.channel, 'Awaiting messages');
         this._aID = msg.author.id;
@@ -28,7 +26,7 @@ class Collect extends Command {
             const msgs = await this._collector.run(msg.channel, {
                 count: 10,
                 ignoreBots: false,
-            });
+            } );
             const finale = msgs.map(m => `ID: ${m.id} (${m.author.username}#${m.author.discriminator}) => Content: ${m.content}`); // Code block\code line mardown breaks this
             this._collector.off('collect', this._boundCollectEvent);
             return this.sendMessage(msg.channel, `\`\`\`js\n${finale.join(',\n')}\`\`\``);
@@ -44,17 +42,18 @@ class Collect extends Command {
         if (message.content.toLowerCase() === 'end' && message.author.id === this._aID) {
             this._collector.delete(message.id);
             this._collector.end();
-        } else if (message.content.toLowerCase().startsWith('delete')) {
+        } else if (message.content.toLowerCase().startsWith('delete') ) {
             const strings = message.content.split(' ');
             this._collector.delete(message.id);
             try {
-                const msgs = this._collector.delete(strings[1]);
+                const msgs = this._collector.delete(strings[1] );
                 const finale = msgs.map(m => `ID: ${m.id} (${m.author.username}#${m.author.discriminator}) => Content: ${m.content}`);
                 return this.sendMessage(message.channel, `\`\`\`js\n${finale.join(',\n')}\`\`\``);
             } catch (err) {
                 return this.sendMessage(message.channel, `Error: \`\`\`${err.message}\`\`\``);
             }
         }
+        return null;
     }
 }
 

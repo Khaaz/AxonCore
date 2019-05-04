@@ -1,6 +1,3 @@
-
-
-// For emitting events
 import { EventEmitter } from 'eventemitter3';
 
 // For collection

@@ -1,5 +1,3 @@
-
-
 /**
  * Hold a bunch of something
  * Based on Eris.Collection

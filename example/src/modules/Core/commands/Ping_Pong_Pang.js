@@ -1,5 +1,3 @@
-'use strict';
-
 import { Command } from '../../../../..';
 
 import Pung from './Ping_Pong_Pang_Pung';
@@ -20,7 +18,11 @@ class Pang extends Command {
             name: 'ping pong pang',
             description: 'Ping the bot.',
             usage: 'ping pong pang',
-            examples: ['ping pong pang', 'ping pong pang but different', 'an other ping pong pang'],
+            examples: [
+                'ping pong pang',
+                'ping pong pang but different',
+                'an other ping pong pang',
+            ],
         };
 
         this.options.argsMin = 0;
@@ -30,12 +32,12 @@ class Pang extends Command {
         this.permissions.serverMod = true;
     }
 
-    async execute({ msg }) {
+    async execute( { msg } ) {
         const start = Date.now();
 
         const mess = await this.sendMessage(msg.channel, 'pang pang!');
         if (!mess) {
-            return;
+            return null;
         }
 
         const diff = (Date.now() - start);

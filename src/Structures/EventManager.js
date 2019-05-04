@@ -185,17 +185,19 @@ class EventManager extends Base {
     _rootHandler(...args) {
         return new Promise(async(resolve, reject) => {
             // Tries to resolve a guild
-            let guild = undefined;
+            let guild = null;
             if (args[0] ) {
                 if (args[0].guild) { // member or channel
                     if (args[0].user && args[0].user.bot) { // member | check not a bot
                         return;
                     }
+                    // eslint-disable-next-line prefer-destructuring
                     guild = args[0].guild;
                 } else if (args[0].channel) { // message
                     if (args[0].author && args[0].author.bot) { // message | check not a bot
                         return;
                     }
+                    // eslint-disable-next-line prefer-destructuring
                     guild = args[0].channel.guild;
                 } else if (args[0].ownerID) { // guild
                     guild = args[0];
@@ -203,7 +205,7 @@ class EventManager extends Base {
             }
 
             // Tries to resolve guildConf if there is a guild
-            const guildConf = guild ? await this.axon.getGuildConf(guild.id) : undefined;
+            const guildConf = guild ? await this.axon.getGuildConf(guild.id) : null;
 
             // Ignore blacklisted guilds
             if (guild) {

@@ -1,4 +1,4 @@
-import { Utils }  from '../..';
+import { Utils } from '../..';
 
 class MyUtils extends Utils {
     constructor(...args) {

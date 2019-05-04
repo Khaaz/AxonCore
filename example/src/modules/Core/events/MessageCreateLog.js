@@ -1,5 +1,3 @@
-'use strict';
-
 import { Event } from '../../../../..';
 
 class MessageCreateLog extends Event {

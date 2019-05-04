@@ -1,4 +1,3 @@
-'use strict';
 import Eris from 'eris';
 import Client from './Client';
 
@@ -26,7 +25,7 @@ const AxonOptions = {
  *
  * new Client(token, erisOptions, AxonOptions) => Modules imported in Client
  */
-const  client = new Eris.Client(
+const client = new Eris.Client(
     tokenConf.bot.token,
     {
         autoreconnect: true,

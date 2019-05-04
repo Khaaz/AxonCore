@@ -1,5 +1,3 @@
-'use strict';
-
 import { AxonClient, Resolver } from '../..';
 
 import * as modules from './modules/index';
@@ -35,14 +33,14 @@ class Client extends AxonClient {
         // used to init all other stuff (personal / custom)
 
         // this should return a Promise ideally
-        return new Promise((resolve, reject) => {
+        return new Promise( (resolve, reject) => {
             try {
                 this.customInitMethod();
                 resolve(true);
             } catch (err) {
                 reject(err);
             }
-        });
+        } );
     }
 
     initStatus() {
@@ -52,7 +50,7 @@ class Client extends AxonClient {
         this.client.editStatus(null, {
             name: `AxonCore | ${this.params.prefix[0]}help`,
             type: 0,
-        });
+        } );
     }
 
     customInitMethod() {

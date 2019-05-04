@@ -1,4 +1,3 @@
-
 import AxonError from '../Errors/AxonError';
 
 /**

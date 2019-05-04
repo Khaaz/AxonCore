@@ -1,9 +1,9 @@
-'use strict';
+import nodeUtil from 'util';
 
-import { inspect } from 'util';
-
-/* eslint-disable */
-import { Command, Enums, Collection, Resolver, Embed, Prompt , MessageCollector } from '../../../../..'; /* eslint-enable */
+import {
+    // eslint-disable-next-line no-unused-vars
+    Command, Enums, Collection, Resolver, Embed, Prompt, MessageCollector,
+} from '../../../../..';
 
 class Eval extends Command {
     constructor(module) {
@@ -13,7 +13,11 @@ class Eval extends Command {
         this.aliases = ['eval', 'e'];
 
         this.infos = {
-            owners: ['AS04', 'Ape', 'KhaaZ'],
+            owners: [
+                'AS04',
+                'Ape',
+                'KhaaZ',
+            ],
             name: 'eval',
             description: 'Eval js code.',
             usage: 'eval [js code]',
@@ -27,7 +31,7 @@ class Eval extends Command {
         this.permissions.staff.bypass = this.axon.staff.owners;
     }
 
-    async execute({ msg, args, /* eslint-disable */guildConf/* eslint-enable */ }) {
+    async execute( { msg, args, /* eslint-disable */guildConf/* eslint-enable */ } ) {
         /* eslint-disable */
             const Util = this.Util;
             const template = this.template
@@ -39,10 +43,11 @@ class Eval extends Command {
 
         let evaled;
         try {
-            evaled = await eval(args.join(' '));
+            // eslint-disable-next-line no-eval
+            evaled = await eval(args.join(' ') );
 
             if (typeof evaled === 'object') {
-                evaled = inspect(evaled, { depth: 0, showHidden: true });
+                evaled = nodeUtil.inspect(evaled, { depth: 0, showHidden: true } );
             } else {
                 evaled = String(evaled);
             }
@@ -57,7 +62,7 @@ class Eval extends Command {
         const fullLen = evaled.length;
 
         if (fullLen === 0) {
-            return;
+            return null;
         }
 
         if (fullLen > 2000) {
@@ -67,13 +72,12 @@ class Eval extends Command {
                 this.sendMessage(msg.channel, `\`\`\`js\n${evaled[0]}\`\`\``);
                 this.sendMessage(msg.channel, `\`\`\`js\n${evaled[1]}\`\`\``);
                 this.sendMessage(msg.channel, `\`\`\`js\n${evaled[2]}\`\`\``);
-                return;
-            } else {
-                return evaled.forEach((message) => {
-                    this.sendMessage(msg.channel, `\`\`\`js\n${message}\`\`\``);
-                    return;
-                });
+                return null;
             }
+            return evaled.forEach( (message) => {
+                this.sendMessage(msg.channel, `\`\`\`js\n${message}\`\`\``);
+                return;
+            } );
         }
         return this.sendMessage(msg.channel, `\`\`\`js\n${evaled}\`\`\``);
     }

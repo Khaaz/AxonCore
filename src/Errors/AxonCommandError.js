@@ -1,5 +1,3 @@
-
-
 /**
  * Custom error with better formatting, arguments and error tracking. Used for errors thrown by commands.
  *
