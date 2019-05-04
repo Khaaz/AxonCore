@@ -119,7 +119,7 @@ class AxonClient extends EventEmitter {
         /** Utility */
         this.AxonUtils = new AxonUtils(this);
 
-        if (axonOptions.utils && axonOptions.utils instanceof Utils) {
+        if (axonOptions.utils && axonOptions.utils.prototype instanceof Utils) {
             this.Utils = new axonOptions.utils(this); // eslint-disable-line
         } else {
             this.Utils = new Utils(this);
@@ -135,7 +135,7 @@ class AxonClient extends EventEmitter {
         this._initConfigs(axonOptions); // this._configs [GETTER - this.configs]
 
         /** DB */
-        if (axonOptions.db && axonOptions.db instanceof DBService) {
+        if (axonOptions.db && axonOptions.db.prototype instanceof DBService) {
             this.DBprovider = axonOptions.db;
         } else {
             this.DBprovider = DBHandler.pickDBService(axonOptions, this);
@@ -522,16 +522,16 @@ class AxonClient extends EventEmitter {
             throw new AxonError(`AxonClient - Module: ${module.label} not registered!`, 'INIT');
         }
 
-        for (const [label, cmd] of module.commands) {
+        for (const [l, cmd] of module.commands) {
             for (const alias of cmd.aliases) {
                 this.commandAliases.delete(alias); // Remove the commands aliases of aliases Map (references to the command label)
             }
 
-            this.commands.delete(label); // Remove the command of the commands Collection (references to module.commands.get(label))
+            this.commands.delete(l); // Remove the command of the commands Collection (references to module.commands.get(label))
         }
 
-        for (const label of module.schemas.keys() ) {
-            this.schemas.delete(label); // Remove the schemas of schemas Collection (references to module object)
+        for (const l of module.schemas.keys() ) {
+            this.schemas.delete(l); // Remove the schemas of schemas Collection (references to module object)
         }
 
         for (const event of module.events.values() ) {
