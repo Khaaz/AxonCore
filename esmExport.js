@@ -1,6 +1,6 @@
-export { default } from './src/AxonClient';
-
-export { default as AxonClient } from './src/AxonClient';
+import AxonClient from './src/AxonClient';
+export default AxonClient;
+export { AxonClient };
 
 // Structure
 export { default as Base } from './src/Structures/Base';
