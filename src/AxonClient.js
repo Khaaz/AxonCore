@@ -736,9 +736,9 @@ class AxonClient extends EventEmitter {
             text: 'Runs with AxonCore',
         };
 
-        // eslint-disable-next-line no-nested-ternary
-        embed.color = isNaN(this.template.embed.colors.help)
-            ? this.template.embed.colors.help.length > 0 ? parseInt(this.template.embed.colors.help, 10) : null
+      
+        embed.color = typeof this.template.embed.colors.help === 'string'
+            ? parseInt(this.template.embed.colors.help, 16) || null
             : this.template.embed.colors.help;
 
         let commandList = '';
