@@ -137,7 +137,6 @@ class MessageHandler {
         /** Resolve command (and subcommand if needed) - exec command if the command was resolved */
         const command = this.axon.resolveCommand(label, args); // doesn't pass guildConf so it doesn't check for server disabled
         if (!command) { // command doesn't exist or not globally enabled
-            console.log('Command not found!')
             return Promise.resolve();
         }
         msg.command = command;
