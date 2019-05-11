@@ -73,10 +73,10 @@ class MessageHandler {
         }
 
         /** Admin override */
-        if (msg.content.startsWith(this.axon.params.ownerPrefix) && this.axon.AxonUtils.isBotOwner(msg.author.id) ) { // Owner override everything
+        if (msg.content.startsWith(this.axon.params.ownerPrefix) && !!this.axon.AxonUtils.isBotOwner(msg.author.id) ) { // Owner override everything
             this._onAdmin(msg, guildConf, true);
             return;
-        } if (msg.content.startsWith(this.axon.params.adminPrefix) && this.axon.AxonUtils.isBotAdmin(msg.author.id) ) { // ADMIN override everything except owner
+        } if (msg.content.startsWith(this.axon.params.adminPrefix) && !!this.axon.AxonUtils.isBotAdmin(msg.author.id) ) { // ADMIN override everything except owner
             this._onAdmin(msg, guildConf, false);
             return;
         }
@@ -124,7 +124,7 @@ class MessageHandler {
      * @memberof AxonClient
      */
     _onAdmin(msg, guildConf, isOwner) {
-        msg.prefix = this.axon.params.adminPrefix;
+        msg.prefix = !isOwner ? this.axon.params.adminPrefix : this.axon.params.ownerPrefix;
 
         const args = msg.content.replace(/<@!/g, '<@').substring(msg.prefix.length).split(' ');
         const label = args.shift().toLowerCase();
@@ -137,6 +137,7 @@ class MessageHandler {
         /** Resolve command (and subcommand if needed) - exec command if the command was resolved */
         const command = this.axon.resolveCommand(label, args); // doesn't pass guildConf so it doesn't check for server disabled
         if (!command) { // command doesn't exist or not globally enabled
+            console.log('Command not found!')
             return Promise.resolve();
         }
         msg.command = command;
