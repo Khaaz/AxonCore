@@ -150,11 +150,11 @@ class Utils {
      */
     isRoleHigher(role1, role2) {
         if (!role1) {
-            return false;   
+            return false;
         }
         
         if (role1 && !role2) {
-            return true;   
+            return true;
         }
         
         return role1.position > role2.position;
