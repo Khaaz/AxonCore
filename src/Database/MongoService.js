@@ -143,7 +143,7 @@ class MongoService extends DBService {
         },
         {
             $set: {
-                bannedUsers: blacklistedGuilds,
+                bannedGuilds: blacklistedGuilds,
             },
         },
         {
