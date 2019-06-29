@@ -117,5 +117,5 @@ export default {
     adminPerms,
     typeWH,
     typeError,
-    nums,
+    permissionNumbers,
 };

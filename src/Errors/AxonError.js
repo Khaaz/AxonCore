@@ -10,10 +10,10 @@ class AxonError extends Error {
     /**
      * Creates an instance of AxonError.
      *
-     * @param {String} message - custom message
-     * @param {Object<Module>} module (optional)
-     * @param {Object<Command>} command (optional)
-     * @param {Object} err - error object (optional)
+     * @param {String} message - custom error message
+     * @param {Object<Module>} [module] Module in which the error originated from
+     * @param {Object<Command>} [command] Command from which the error originated from
+     * @param {Object} [err] - error object
      * @memberof AxonError
      */
     constructor(message, module, command, err) {
