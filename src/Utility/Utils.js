@@ -1,5 +1,7 @@
 import fs from 'fs';
 import util from 'util';
+import AxonError from '../Errors/AxonError';
+import { permissionNumbers } from './Enums';
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
 
@@ -152,11 +154,11 @@ class Utils {
         if (!role1) {
             return false;
         }
-        
+
         if (role1 && !role2) {
             return true;
         }
-        
+
         return role1.position > role2.position;
     }
 
@@ -228,6 +230,36 @@ class Utils {
             }
         }
         return missing;
+    }
+
+    /**
+     * Calculate permissions using a object of perms
+     *
+     * @param {Object} data The permissions to calculate for
+     *
+     *  @returns {Object} Object containing the perms denied & allowed
+     */
+    calculatePerms(data) {
+        let allow = 0;
+        let deny = 0;
+        for (const key of Object.keys(data) ) {
+            if (!permissionNumbers[key] ) throw new AxonError(`Key ${key} not found!`, 'Enums');
+            if (data[key] === true) {
+                allow = Math.round(allow + permissionNumbers[key] );
+            } else if (data[key] === false) {
+                deny = Math.round(deny + permissionNumbers[key] );
+            }
+            if (key === 'all') {
+                if (data[key] === true) {
+                    allow = permissionNumbers[key];
+                    break;
+                } else if (data[key] === false) {
+                    deny = permissionNumbers[key];
+                    break;
+                }
+            }
+        }
+        return { allow, deny };
     }
 
     //
