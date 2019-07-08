@@ -51,7 +51,7 @@ declare module "axoncore" {
         public initAllCommands(commands: Command[]): void;
         public initSubCommands(subCommands: Command): void;
         public initAllEvents(events: Event[]): void;
-        public initAllScehams(schemas: object): void;
+        public initAllSchemas(schemas: object): void;
 
         // Register - External available
         public registerCommand(command: Command): boolean;
@@ -71,7 +71,7 @@ declare module "axoncore" {
         public fetchAxon(): Promise<object> | null;
         public fetchGuild(gID: string): Promise<object> | null;
         public initAxon(): Promise<object>;
-        public initaGuild(axonClient: AxonClient, gID: string): Promise<object> | null;
+        public initGuild(axonClient: AxonClient, gID: string): Promise<object> | null;
         public updateBlacklistUser(blacklistedUsers: string[]): Promise<object> | null;
         public updateBlacklistGuild(blacklistedUsers: string[]): Promise<object> | null;
         public updateGuildPrefix(gID: string, prefixArr: string[]): Promise<object> | null;
