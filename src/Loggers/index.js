@@ -1,4 +1,4 @@
-import DefLogger from './DefLogger';
+import DefaultLogger from './Logger';
 
 /**
  * Logger Handler
@@ -9,14 +9,14 @@ import DefLogger from './DefLogger';
  * @class LoggerHandler
  */
 class LoggerHandler {
-    static pickLogger(debug, config) {
+    static pickLogger(axonConfig) {
         let Logger;
 
-        switch (config.logger) {
+        switch (axonConfig.logger) {
             // Default Logger
             case 0:
             default: {
-                Logger = DefLogger;
+                Logger = DefaultLogger;
                 Logger.info('Selected Logger: Default Logger.');
                 break;
             }
@@ -27,7 +27,7 @@ class LoggerHandler {
                     Logger = require('./ChalkLogger').default;
                     Logger.info('Selected Logger: Chalk Logger.');
                 } catch (err) {
-                    Logger = DefLogger;
+                    Logger = DefaultLogger;
                     Logger.warn('The specified logger is missing dependencies, the default logger will be used instead.');
                     Logger.info('Logger: Default Logger.');
                 }
@@ -35,12 +35,27 @@ class LoggerHandler {
             }
 
             // Signale Logger
+            /** @TODO incompatibility with full logging */
             case 2: {
                 try {
                     Logger = require('./SignaleLogger').default;
                     Logger.info('Selected Logger: Signale Logger.');
                 } catch (err) {
-                    Logger = DefLogger;
+                    Logger = DefaultLogger;
+                    Logger.warn('The specified logger is missing dependencies, the default logger will be used instead.');
+                    Logger.info('Selected Logger: Default Logger.');
+                }
+                break;
+            }
+
+            // Winston Logger
+            /** @TODO incompatibility with full logging */
+            case 3: {
+                try {
+                    Logger = require('./WinstonLogger').default;
+                    Logger.info('Selected Logger: Winston Logger.');
+                } catch (err) {
+                    Logger = DefaultLogger;
                     Logger.warn('The specified logger is missing dependencies, the default logger will be used instead.');
                     Logger.info('Selected Logger: Default Logger.');
                 }
@@ -48,8 +63,17 @@ class LoggerHandler {
             }
         }
 
+        
+        try {
+            axonConfig.debug && this.testLogger(Logger);
+        } catch (err) {
+            /** Fallback to DefLogger */
+            Logger = DefaultLogger;
+            Logger.warn('Logger error, fallback to default Logger.');
+            Logger.info('Selected Logger: Default Logger.');
+        }
+
         Logger.axon('Logger ready');
-        debug && this.testLogger(Logger);
         return Logger;
     }
 
@@ -65,8 +89,6 @@ class LoggerHandler {
         Logger.verbose('- Test verbose -');
         Logger.axon('- Test AXON -');
         Logger.init('- Test INIT -');
-        // Logger.module('- Test module -');
-        // Logger.command('- Test command -');
         console.log(' ');
     }
 }
