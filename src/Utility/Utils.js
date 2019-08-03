@@ -1,9 +1,11 @@
 import fs from 'fs';
 import util from 'util';
 import AxonError from '../Errors/AxonError';
-import { permissionNumbers } from './Enums';
+import Enums from './Enums';
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
+
+const { permissionNumbers } = Enums;
 
 const USER_MENTION = /<@!?([0-9]+)>$/;
 const ROLE_MENTION = /<@&([0-9]+)>$/;
