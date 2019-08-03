@@ -1,4 +1,4 @@
-const permissions = [
+export const PERMISSIONS = [
     'createInstantInvite',
     'kickMembers',
     'banMembers',
@@ -28,8 +28,8 @@ const permissions = [
     'manageEmojis',
 ];
 
-const permissionsNames = {
-    createInstantInvite: 'create Instant Invite',
+export const PERMISSIONS_NAMES = {
+    createInstantInvite: 'Create Instant Invite',
     kickMembers: 'Kick Members',
     banMembers: 'Ban Members',
     administrator: 'Administrator',
@@ -58,23 +58,7 @@ const permissionsNames = {
     manageEmojis: 'Manage Emojis',
 };
 
-const adminPerms = ['administrator', 'manageGuild'];
-
-const typeWH = {
-    status: 'Status',
-    loader: 'Loader',
-    error: 'Error',
-    misc: 'Misc',
-};
-
-const typeError = {
-    api: 'DAPI error - failed to retrieve from Discord',
-    db: 'DB error - failed to retrieve from the DB',
-    internal: 'Internal error - AxonClient/internal methods',
-    unexpected: 'Unexpected error',
-};
-
-const permissionNumbers = {
+export const PERMISSIONS_NUMBERS = {
     createInstantInvite: 1,
     kickMembers: 2,
     banMembers: 4,
@@ -110,12 +94,56 @@ const permissionNumbers = {
     allVoice: 871366929,
 };
 
+export const EMBED_LIMITS = {
+    LIMIT_CONTENT: 2000,
+    LIMIT_TOTAL_EMBED: 6000,
+    LIMIT_TITLE: 256,
+    LIMIT_DESCRIPTION: 2048,
+    NUMBER_FIELDS: 25,
+    LIMIT_FIELD_NAME: 256,
+    LIMIT_FIELD_VALUE: 1024,
+    LIMIT_FOOTER_TEXT: 2048,
+    LIMIT_AUTHOR_NAME: 256,
+};
+
+export const CHANNEL_TYPES = {
+    GUILD_TEXT: 0,
+    DM: 1,
+    GUILD_VOICE: 2,
+    GROUP_DM: 3,
+    GUILD_CATEGORY: 4,
+    GUILD_NEWS: 5,
+    GUILD_STORE: 6,
+};
+
+export const MESSAGE_TYPES = {
+    DEFAULT: 0,
+    RECIPIENT_ADD: 1,
+    RECIPIENT_REMOVE: 2,
+    CALL: 3,
+    CHANNEL_NAME_CHANGE: 4,
+    CHANNEL_ICON_CHANGE: 5,
+    CHANNEL_PINNED_MESSAGE: 6,
+    GUILD_MEMBER_JOIN: 7,
+    USER_PREMIUM_GUILD_SUBSCRIPTION: 8,
+    USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_1: 9,
+    USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_2: 10,
+    USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_3: 11,
+};
+
+export const CLIENT_STATUS_TYPES = {
+    PLAYING: 0,
+    STREAMING: 1,
+    LISTENING: 2,
+    WATCHING: 3,
+};
 
 export default {
-    permissions,
-    permissionsNames,
-    adminPerms,
-    typeWH,
-    typeError,
-    permissionNumbers,
+    PERMISSIONS,
+    PERMISSIONS_NAMES,
+    PERMISSIONS_NUMBERS,
+    EMBED_LIMITS,
+    CHANNEL_TYPES,
+    MESSAGE_TYPES,
+    CLIENT_STATUS_TYPES,
 };
