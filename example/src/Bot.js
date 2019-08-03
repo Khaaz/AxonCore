@@ -1,24 +1,29 @@
 import Eris from 'eris';
+import { AxonOptions } from '../..';
+
 import Client from './Client';
 
-import axonConf from './configs/customConf.json';
-import tokenConf from './configs/tokenConf.json';
-import templateConf from './configs/templateConf.json';
+
+import botConfig from './configs/customConfig.json';
+import tokenConfig from './configs/tokenConfig.json';
+import templateConfig from './configs/templateConfig.json';
+
 
 import MyUtils from './MyUtils';
-import MyGuildSchema from './MyGuildSchema';
 
-const AxonOptions = {
-    axonConf,
-    templateConf,
-    tokenConf,
+const axonOptions = new AxonOptions( {
+    botConfig,
+    templateConfig,
+    tokenConfig,
 
     utils: MyUtils, // use your own Utils
     logger: null, // custom Logger
-    db: null, // custom DB Service
-    axonSchema: null,
-    guildSchema: MyGuildSchema,
-};
+    DBProvider: null, // custom DB Service
+    DBLocation: `${__dirname}/Database/`,
+
+    axonConfig: null,
+    guildConfig: null,
+} );
 
 /**
  * new AxonClient(token, erisOptions, AxonOptions, modules)
@@ -26,7 +31,7 @@ const AxonOptions = {
  * new Client(token, erisOptions, AxonOptions) => Modules imported in Client
  */
 const client = new Eris.Client(
-    tokenConf.bot.token,
+    tokenConfig.bot.token,
     {
         autoreconnect: true,
         defaultImageFormat: 'png',
@@ -40,7 +45,7 @@ const client = new Eris.Client(
 
 const Bot = new Client(
     client,
-    AxonOptions
+    axonOptions
 );
 
 export default Bot;

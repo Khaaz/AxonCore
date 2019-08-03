@@ -1,13 +1,13 @@
-import { Event } from '../../../../..';
+import { Listener } from '../../../../..';
 
-class MessageCreateMod extends Event {
+class MessageCreateLog extends Listener {
     constructor(...args) {
         super(...args);
 
         /** Event Name (Discord name) */
         this.eventName = 'messageCreate';
         /** Event name (Function name) */
-        this.label = 'messageCreateMod';
+        this.label = 'messageCreateLog';
 
         this.enabled = true;
 
@@ -17,10 +17,10 @@ class MessageCreateMod extends Event {
         };
     }
 
-    execute(message, guildConf) { // eslint-disable-line
-        console.log(`Prefix: ${guildConf.prefix}`);
+    execute(message, guildConfig) { // eslint-disable-line
+        console.log(`Msg ${message.channel.guild.id}`);
         return Promise.resolve();
     }
 }
 
-export default MessageCreateMod;
+export default MessageCreateLog;

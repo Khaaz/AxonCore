@@ -1,4 +1,4 @@
-import { Command } from '../../../../..';
+import { Command, CommandOptions, CommandPermissions, CommandResponse } from '../../../../..';
 
 import Pang from './Ping_Pong_Pang';
 
@@ -21,15 +21,22 @@ class Pong extends Command {
             examples: ['ping pong'],
         };
 
-        this.options.argsMin = 0;
-        this.options.cooldown = 10000;
-        this.options.guildOnly = false;
-        this.options.hidden = true;
+        this.options = new CommandOptions(this, {
+            argsMin: 0,
+            cooldown: 10000,
+            guildOnly: false,
+            hidden: true,
+            invalidPermissionMessage: true,
+        } );
 
-        this.options.invalidPermissionMessage = true;
-
-        this.permissions.user.needed = ['manageGuild'];
-        this.permissions.staff.bypass = [...this.axon.staff.owners, ...this.axon.staff.admins];
+        this.permissions = new CommandPermissions(this, {
+            user: {
+                needed: ['manageGuild'],
+            },
+            staff: {
+                bypass: [...this.axon.staff.owners, ...this.axon.staff.admins],
+            },
+        } );
     }
 
     async execute( { msg } ) {
@@ -37,12 +44,13 @@ class Pong extends Command {
 
         const mess = await this.sendMessage(msg.channel, 'BADABOUM!');
         if (!mess) {
-            return null;
+            return new CommandResponse( { success: false } );
         }
 
         const diff = (Date.now() - start);
 
-        return this.editMessage(mess, `BADABOUM! \`${diff}ms\``);
+        this.editMessage(mess, `BADABOUM! \`${diff}ms\``);
+        return new CommandResponse( { success: true } );
     }
 }
 

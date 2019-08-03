@@ -1,7 +1,7 @@
 import { Module } from '../../../..';
 
 import * as commands from './commands/index';
-import * as events from './events/index';
+import * as listeners from './listeners/index';
 
 class Core extends Module {
     constructor(...args) {
@@ -17,7 +17,7 @@ class Core extends Module {
             description: 'The main module with most basic commands.',
         };
 
-        this.init(commands, events);
+        this.init(commands, listeners);
     }
 }
 

@@ -41,5 +41,5 @@
     "debugMode": false,
 
     "logger": 1,
-    "db": 0
+    "db": 1
 }

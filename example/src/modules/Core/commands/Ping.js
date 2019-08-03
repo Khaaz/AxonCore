@@ -1,4 +1,4 @@
-import { Command } from '../../../../..';
+import { Command, CommandOptions, CommandResponse } from '../../../../..';
 
 import Pong from './Ping_Pong';
 
@@ -24,23 +24,24 @@ class Ping extends Command {
             examples: ['ping'],
         };
 
-        this.options.argsMin = 0;
-        this.options.cooldown = 3000;
-        this.options.guildOnly = false;
+        this.options = new CommandOptions(this, {
+            argsMin: 0,
+            guildOnly: false,
+        } );
     }
 
     async execute( { msg } ) {
         const start = Date.now();
 
         const mess = await this.sendMessage(msg.channel, 'Pong! ');
-
         if (!mess) {
-            return null;
+            return new CommandResponse( { success: false } );
         }
 
         const diff = (Date.now() - start);
+        this.editMessage(mess, `Pong! \`${diff}ms\``);
 
-        return this.editMessage(mess, `Pong! \`${diff}ms\``);
+        return new CommandResponse( { success: true } );
     }
 }
 

@@ -27,10 +27,10 @@ class Wave extends Command {
                     deleteTimeoutMsg: 10000,
                     timeoutMessage: 'Well, I guess you don\'t want to wave at anyone then.',
                 } );
-                let user = this.Resolver.member(msg.channel.guild, returnedMes.content) || this.Resolver.user(this.axon.client, returnedMes.content);
+                let user = this.Resolver.member(msg.channel.guild, returnedMes.content) || this.Resolver.user(this.axon.botClient, returnedMes.content);
                 if (!user) {
-                    if (this.Utils.id.test(returnedMes.content) ) {
-                        user = await this.axon.client.getRESTUser(returnedMes.content);
+                    if (this.utils.id.test(returnedMes.content) ) {
+                        user = await this.axon.botClient.getRESTUser(returnedMes.content);
                     } else {
                         return this.sendMessage(msg.channel, 'I can\'t wave to someone who does not exist.');
                     }
@@ -46,9 +46,9 @@ class Wave extends Command {
             }
         } else {
             try {
-                let user = this.Resolver.member(msg.channel.guild, args.join(' ') ) || this.Resolver.user(this.axon.client, args.join(' ') );
+                let user = this.Resolver.member(msg.channel.guild, args.join(' ') ) || this.Resolver.user(this.axon.botClient, args.join(' ') );
                 if (!user) {
-                    if (this.Utils.id.test(args[0] ) ) {
+                    if (this.utils.id.test(args[0] ) ) {
                         user = await this.bot.getRESTUser(args[0] );
                     } else {
                         return this.sendMessage(msg.channel, 'I can\'t wave to someone who does not exist.');

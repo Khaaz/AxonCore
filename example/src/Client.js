@@ -11,8 +11,8 @@ import * as modules from './modules/index';
  * @extends {AxonCore.AxonClient}
  */
 class Client extends AxonClient {
-    constructor(client, AxonOptions) {
-        super(client, AxonOptions, modules);
+    constructor(client, axonOptions) {
+        super(client, axonOptions, modules);
 
         this.param = 1; // personal stuff
         this._param = 2; // personal hidden stuff
@@ -22,55 +22,38 @@ class Client extends AxonClient {
         return Resolver;
     }
 
-    initStaff() {
-        // Called after initOwners has run
-        // setup bot staff as per your convenience. Can be anything
+    onInit() {
         this.staff.contributor = [];
     }
 
-    init() {
-        // Called after AxonClient init has run (_init)
-        // used to init all other stuff (personal / custom)
+    onStart() {
+        return Promise.resolve(true);
+    }
 
-        // this should return a Promise ideally
-        return new Promise( (resolve, reject) => {
-            try {
-                this.customInitMethod();
-                resolve(true);
-            } catch (err) {
-                reject(err);
-            }
-        } );
+    onReady() {
+        return Promise.resolve(true);
     }
 
     initStatus() {
         // called after ready event
         // overrides default editStatus
         // used to setup custom status
-        this.client.editStatus(null, {
-            name: `AxonCore | ${this.params.prefix[0]}help`,
+        this.botClient.editStatus(null, {
+            name: `AxonCore | ${this.settings.prefixes[0]}help`,
             type: 0,
         } );
-    }
-
-    customInitMethod() {
-        // custom init method that init stuff
-    }
-
-    customMethod() {
-        // custom method used anywhere with this.axon.customMethod()
     }
 
     // disabled
     $sendFullHelp(msg) {
         // override sendFullHelp method
-        return this.AxonUtils.sendMessage(msg.channel, 'Full Help override');
+        return this.axonUtils.sendMessage(msg.channel, 'Full Help override');
     }
 
     // disabled
     $sendHelp(command, msg) {
         // override sendHelp method
-        return this.AxonUtils.sendMessage(msg.channel, `Help override for ${command.label}`);
+        return this.axonUtils.sendMessage(msg.channel, `Help override for ${command.label}`);
     }
 }
 

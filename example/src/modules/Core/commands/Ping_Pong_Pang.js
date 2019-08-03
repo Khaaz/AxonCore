@@ -1,4 +1,4 @@
-import { Command } from '../../../../..';
+import { Command, CommandOptions, CommandPermissions, CommandResponse } from '../../../../..';
 
 import Pung from './Ping_Pong_Pang_Pung';
 
@@ -25,11 +25,13 @@ class Pang extends Command {
             ],
         };
 
-        this.options.argsMin = 0;
-        this.options.cooldown = 3000;
-        this.options.guildOnly = false;
-
-        this.permissions.serverMod = true;
+        this.options = new CommandOptions(this, {
+            guildOnly: false,
+        } );
+        
+        this.permissions = new CommandPermissions(this, {
+            serverMod: true,
+        } );
     }
 
     async execute( { msg } ) {
@@ -37,12 +39,13 @@ class Pang extends Command {
 
         const mess = await this.sendMessage(msg.channel, 'pang pang!');
         if (!mess) {
-            return null;
+            return new CommandResponse( { success: false } );
         }
 
         const diff = (Date.now() - start);
 
-        return this.editMessage(mess, `pang pang! \`${diff}ms\``);
+        this.editMessage(mess, `pang pang! \`${diff}ms\``);
+        return new CommandResponse( { success: true } );
     }
 }
 

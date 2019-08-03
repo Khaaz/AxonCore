@@ -1,5 +1,5 @@
 import Bot from './Bot';
-import customConf from './configs/customConf.json';
+import customConf from './configs/customConfig.json';
 
 if (customConf.db === 1) {
     try {
@@ -9,16 +9,16 @@ if (customConf.db === 1) {
             autoReconnect: true,
         } )
             .then( () => {
-                Bot.Logger.notice('Connected to AxonCore DataBase.');
+                Bot.logger.notice('Connected to AxonCore DataBase.');
             } )
             .catch(err => {
-                Bot.Logger.emerg(`Could NOT connect to AxonCore DataBase.\n${err.stack}`);
+                Bot.logger.emerg(`Could NOT connect to AxonCore DataBase.\n${err.stack}`);
             } );
     } catch (e) {
-        Bot.Logger.emerg(`Could NOT connect to AxonCore DataBase.\n${e.stack}`);
+        Bot.logger.emerg(`Could NOT connect to AxonCore DataBase.\n${e.stack}`);
     }
 }
 
 Bot.start();
 
-Bot.Logger.notice('=== ONLINE ===');
+Bot.logger.notice('=== ONLINE ===');

@@ -1,6 +1,6 @@
-import { Event } from '../../../../..';
+import { Listener } from '../../../../..';
 
-class GuildDelete extends Event {
+class GuildDelete extends Listener {
     constructor(...args) {
         super(...args);
 
@@ -17,7 +17,7 @@ class GuildDelete extends Event {
         };
     }
 
-    execute(guild, guildConf) { // eslint-disable-line
+    execute(guild, guildConfig) { // eslint-disable-line
         console.log(`Guild Deleted: ${guild.name} [${guild.id}]`);
         return Promise.resolve();
     }

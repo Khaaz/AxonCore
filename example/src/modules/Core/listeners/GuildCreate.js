@@ -1,6 +1,6 @@
-import { Event } from '../../../../..';
+import { Listener } from '../../../../..';
 
-class GuildCreate extends Event {
+class GuildCreate extends Listener {
     constructor(...args) {
         super(...args);
 
@@ -17,7 +17,7 @@ class GuildCreate extends Event {
         };
     }
 
-    execute(guild, guildConf) { // eslint-disable-line 
+    execute(guild, guildConfig) { // eslint-disable-line 
         console.log(`Guild Created: ${guild.name} [${guild.id}]`);
         return Promise.resolve();
     }

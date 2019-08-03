@@ -1,4 +1,4 @@
-import { Command } from '../../../../..';
+import { Command, CommandPermissions, CommandResponse } from '../../../../..';
 
 class Pung extends Command {
     constructor(module) {
@@ -18,11 +18,9 @@ class Pung extends Command {
             examples: [],
         };
 
-        this.options.argsMin = 0;
-        this.options.cooldown = 3000;
-        this.options.guildOnly = false;
-
-        this.permissions.custom = (msg) => msg.channel.guild.id === '365236789855649814'; // Ease guild id
+        this.permissions = new CommandPermissions(this, {
+            custom: (msg) => msg.channel.guild.id === '365236789855649814', // Ease guild id
+        } );
     }
 
     async execute( { msg } ) {
@@ -30,12 +28,13 @@ class Pung extends Command {
 
         const mess = await this.sendMessage(msg.channel, 'REEEEEEEEE!');
         if (!mess) {
-            return null;
+            return new CommandResponse( { success: false } );
         }
 
         const diff = (Date.now() - start);
 
-        return this.editMessage(mess, `REEEEEEEEE! \`${diff}ms\``);
+        this.editMessage(mess, `REEEEEEEEE! \`${diff}ms\``);
+        return new CommandResponse( { success: true } );
     }
 }
 
