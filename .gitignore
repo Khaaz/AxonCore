@@ -1,6 +1,9 @@
 # configs file
-example/src/configs/tokenConf.json
+example/src/configs/tokenConfig.json
+
+# json db
 src/Database/JSON/Database/*.json
+example/src/Database/*.json
 
 # Logs
 logs

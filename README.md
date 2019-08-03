@@ -38,7 +38,7 @@
 
 This framework supports a custom logger. You can take full benefits of this by installing [Chalk](https://www.npmjs.com/package/chalk) or [Signale](https://www.npmjs.com/package/signale) and choosing the one you want to use in the config file.  
 [PM2](https://www.npmjs.com/package/pm2) is also recommended as a process manager solution.  
-This framework is designed to work with [Moongose](https://www.npmjs.com/package/mongoose) which you can install and use directly without any modification (just by selecting it in the config file).  
+This framework is designed to work with [Mongoose](https://www.npmjs.com/package/mongoose) which you can install and use directly without any modification (just by selecting it in the config file).  
 If you don't want to use MongoDB, you can use the default version which is a JSON Database.
 In the future more database clients could be added. In the meantime you are able to use whatever Database you want by simply extending AxonCore.DBService, adaptating as you want and passing the Class as an option in the constructor.   
 
