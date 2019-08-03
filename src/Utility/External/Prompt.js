@@ -72,7 +72,7 @@ class Prompt {
     }
 
     get client() {
-        return this._axon.client;
+        return this._axon.botClient;
     }
 
     /**
@@ -107,7 +107,7 @@ class Prompt {
         this._prompt = prompt;
 
         return new Promise(async(resolve, reject) => {
-            this._message = await this.axon.AxonUtils.sendMessage(this.channel, this._prompt);
+            this._message = await this.axon.axonUtils.sendMessage(this.channel, this._prompt);
 
             // Prepare options
             this._actualOptions = options;
@@ -206,9 +206,9 @@ class Prompt {
     async _onTimeout() {
         this.timedOut = true;
         if (this._actualOptions.sendTimeout) {
-            const msg = await this.axon.AxonUtils.sendMessage(this._message.channel, this._actualOptions.timeoutMessage); // Create the timeout message
+            const msg = await this.axon.axonUtils.sendMessage(this._message.channel, this._actualOptions.timeoutMessage); // Create the timeout message
             if (this._actualOptions.deleteTimeoutMsg) {
-                await this.axon.Utils.sleep(this._actualOptions.deleteTimeoutMsg);
+                await this.axon.utils.sleep(this._actualOptions.deleteTimeoutMsg);
                 msg.delete(); // Delete the timeout message
             }
         }
@@ -233,15 +233,15 @@ class Prompt {
             this._emitter.emit('ended', msg);
         } else {
             if (this._actualOptions.sendInvalid) { // If you a message is to be sent on invalid
-                const message = await this._axon.AxonUtils.sendMessage(msg.channel, this._actualOptions.invalidMessage); // Create the invalid message
+                const message = await this._axon.axonUtils.sendMessage(msg.channel, this._actualOptions.invalidMessage); // Create the invalid message
                 if (this._actualOptions.deleteInvalidMessage) {
-                    await this.axon.Utils.sleep(this._actualOptions.deleteInvalidMessage);
+                    await this.axon.utils.sleep(this._actualOptions.deleteInvalidMessage);
                     message.delete(); // Delete the invalid message
                 }
             }
             if (this._actualOptions.resendWhenInvalid) { // If the prompt is to resend when it is invalid
                 this._deletePrompt();
-                this._message = await this.axon.AxonUtils.sendMessage(msg.channel, this._prompt); // resend the prompt
+                this._message = await this.axon.axonUtils.sendMessage(msg.channel, this._prompt); // resend the prompt
             } else {
                 this._emitter.emit('invalidEnd');
             }

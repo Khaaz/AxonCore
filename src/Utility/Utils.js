@@ -1,7 +1,10 @@
 import fs from 'fs';
 import util from 'util';
+
 import AxonError from '../Errors/AxonError';
-import { permissionNumbers } from './Enums';
+
+import { PERMISSIONS_NUMBERS } from './Constants/DiscordEnums';
+
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
 
@@ -13,25 +16,26 @@ const HEX_CODE = /^#?([0-9A-Fa-f]{6})$/;
 
 /**
  * General Utility Class for AxonCore
- *
  * All methods useful and usable everywhere
  *
  * @author KhaaZ
  *
  * @class Utils
+ *
+ * @prop {Object<AxonClient>} axon - Axon Client [GETTER: _axon]
+ * @prop {Object<Eris.Client>} bot - Eris bot Client [GETTER: _axon.botClient]
+ *
+ * @prop {RegExp} userMention - Regular Expression to match a userMention
+ * @prop {RegExp} roleMention - Regular Expression to match a roleMention
+ * @prop {RegExp} channelMention - Regular Expression to match a channelMention
+ * @prop {RegExp} id - Regular Expression to match an id
+ * @prop {RegExp} hexCode - Regular Expression to match an hexCode
  */
 class Utils {
     /**
-     * Creates an Utils instance.
+     * Creates an instance of Utils.
      *
-     * @prop {Object<AxonClient>} axon - Axon Client [GETTER: _axon]
-     * @prop {Object<Eris.Client>} bot - Eris bot Client [GETTER: _axon.client]
-     *
-     * @prop {RegExp} userMention - Regular Expression to match a userMention
-     * @prop {RegExp} roleMention - Regular Expression to match a roleMention
-     * @prop {RegExp} channelMention - Regular Expression to match a channelMention
-     * @prop {RegExp} id - Regular Expression to match an id
-     * @prop {RegExp} hexCode - Regular Expression to match an hexCode
+     * @param {Object<AxonClient>} client
      *
      * @memberof Utils
      */
@@ -72,12 +76,10 @@ class Utils {
     }
 
     get bot() {
-        return this._axon.client;
+        return this._axon.botClient;
     }
 
-    //
-    // ****** CLIENT ******
-    //
+    // **** CLIENT **** //
 
     /**
      * Split the given content (String), according to correct linebreaks.
@@ -85,6 +87,8 @@ class Utils {
      *
      * @param {String} content
      * @returns {Array<String>|String} The array of content string splitted or the original String
+     *
+     * @memberof Utils
      */
     splitMessage(content) {
         return content.match(/[\s\S]{1,1900}[\n\r]/g) || [];
@@ -95,14 +99,15 @@ class Utils {
      *
      * @param {Object} msg - Message object given at the command.
      * @returns {String} The prefix as string.
+     *
+     * @memberof Utils
      */
-    getPrefix(msg) {
-        return (msg.channel.guild && this.axon.guildConfigs.get(msg.channel.guild.id).prefix)[0] || this.axon.params.prefix[0];
+    async getPrefix(msg) {
+        const guildConfig = msg.channel.guild ? await this.axon.guildConfigs.getOrFetch(msg.channel.guild.id) : null;
+        return guildConfig ? guildConfig.getPrefixes()[0] : this.axon.settings.prefixes[0];
     }
 
-    //
-    // ****** ROLES ******
-    //
+    // **** ROLES **** //
 
     /**
      * Get an array of role objects from a member.
@@ -110,11 +115,12 @@ class Utils {
      * @param {Object<Guild>} guild
      * @param {Object<Member>} member
      * @returns {Array<Role>} Array of roles object
+     *
      * @memberof Utils
      */
     getRoles(guild, member) {
         if (!member) {
-            member = guild.members.get(this.axon.client.id);
+            member = guild.members.get(this.axon.botClient.user.id);
         }
         return member.roles.map(r => guild.roles.get(r) );
     }
@@ -125,6 +131,7 @@ class Utils {
      * @param {Object<Guild>} guild
      * @param {Object<Member>} member
      * @returns {Object<Role>} Role Object
+     *
      * @memberof Utils
      */
     getHighestRole(guild, member) {
@@ -137,6 +144,8 @@ class Utils {
      *
      * @param {Array<Role>} array - The roles to sort
      * @returns {Array<Role>} Sorted array (per position) of Role Object
+     *
+     * @memberof Utils
      */
     sortRoles(roles) {
         return roles.sort( (a, b) => b.position - a.position);
@@ -148,6 +157,7 @@ class Utils {
      * @param {Object<Role>} role1
      * @param {Object<Role>} role2
      * @returns {Boolean}
+     *
      * @memberof Utils
      */
     isRoleHigher(role1, role2) {
@@ -169,6 +179,7 @@ class Utils {
      * @param {Object<Member>} first
      * @param {Object<Member>} second
      * @returns {Boolean}
+     *
      * @memberof Utils
      */
     isHigherRole(guild, first, second) {
@@ -177,15 +188,16 @@ class Utils {
         return this.isRoleHigher(role1, role2);
     }
 
-    // ****** PERMISSIONS ******
+    // **** PERMISSIONS **** //
 
     /**
-     * Check if the member has correct perm to execute
+     * Check if the member has correct permissions to execute
      *
      * @param {Object<Member>} member - Member object
      * @param {Array<String>} permissions - List of permissions to test
-     * @returns {Boolean} True if member has permissions / False if not
-     * @memberof AxonUtils
+     * @returns {Boolean} hether the member has permissions or not
+     *
+     * @memberof Utils
      */
     hasPerms(member, permissions = [] ) {
         for (const perm of permissions) {
@@ -197,13 +209,14 @@ class Utils {
     }
 
     /**
-     * Check if the given user has correct permissions in targeted channel.
+     * Check if the given user has correct permissions to execute in the specific channel.
      *
      * @param {Object<Channel>} channel - Channel object
      * @param {Array<String>} permissions - List of permissions to test
      * @param {Object<User>} [user=this.bot.user] - User to test
-     * @returns {Boolean} True if user has permissions / False if not
-     * @memberof AxonUtils
+     * @returns {Boolean} Whether the member has permissions or not
+     *
+     * @memberof Utils
      */
     hasChannelPerms(channel, permissions, user = this.bot.user) {
         for (const perm of permissions) {
@@ -220,7 +233,8 @@ class Utils {
      * @param {Object<Member>} member
      * @param {Array<String>} [permissions=[]] - List of permissions to test
      * @returns {Array<String>} An array of missing permissions
-     * @memberof AxonUtils
+     *
+     * @memberof Utils
      */
     missingPerms(member, permissions = [] ) {
         const missing = [];
@@ -235,26 +249,29 @@ class Utils {
     /**
      * Calculate permissions using a object of perms
      *
-     * @param {Object} data The permissions to calculate for
+     * @param {Object} data - The permissions to calculate for
+     * @returns {Object} Object containing the perms denied & allowed
      *
-     *  @returns {Object} Object containing the perms denied & allowed
+     * @memberof Utils
      */
     calculatePerms(data) {
         let allow = 0;
         let deny = 0;
         for (const key of Object.keys(data) ) {
-            if (!permissionNumbers[key] ) throw new AxonError(`Key ${key} not found!`, 'Enums');
+            if (!PERMISSIONS_NUMBERS[key] ) {
+                throw new AxonError(`Key ${key} not found!`, 'Utils');
+            }
             if (data[key] === true) {
-                allow = Math.round(allow + permissionNumbers[key] );
+                allow = Math.round(allow + PERMISSIONS_NUMBERS[key] );
             } else if (data[key] === false) {
-                deny = Math.round(deny + permissionNumbers[key] );
+                deny = Math.round(deny + PERMISSIONS_NUMBERS[key] );
             }
             if (key === 'all') {
                 if (data[key] === true) {
-                    allow = permissionNumbers[key];
+                    allow = PERMISSIONS_NUMBERS[key];
                     break;
                 } else if (data[key] === false) {
-                    deny = permissionNumbers[key];
+                    deny = PERMISSIONS_NUMBERS[key];
                     break;
                 }
             }
@@ -262,16 +279,14 @@ class Utils {
         return { allow, deny };
     }
 
-    //
-    // ****** GENERAL ******
-    //
+    // **** GENERAL **** //
 
     /**
-     * Wait.
+     * Wait for a specified amount of miliseconds..
      *
      * @param {Number} ms
      * @returns {Promise} resolve after the delay is passed
-     * @memberof AxonUtils
+     * @memberof Utils
      */
     sleep(ms) {
         return new Promise( (res) => setTimeout( () => res(), ms) );
@@ -282,8 +297,10 @@ class Utils {
      *
      * @param {String} path
      * @returns {Promise<String>} content
+     *
+     * @memberof Utils
      */
-    readFile(path) {
+    readFileAsync(path) {
         return readFile(path);
     }
 
@@ -293,21 +310,24 @@ class Utils {
      * @param {String} path
      * @param {String} content
      * @returns {Promise}
+     *
+     * @memberof Utils
      */
-    writeFile(path, content) {
+    writeFileAsync(path, content) {
         return writeFile(path, content);
     }
 
     /**
      * Ensures that all property names of obj1 exists in obj2.
-     * Doesn't compare values. Exept if it is an object, then it checks for property names recursively
+     * Doesn't compare values. Exept if it is an object, then it checks for property names recursively.
      *
      * @param {Object} obj1 - Default config/object
      * @param {Object} obj2 - Custom config/Object (Config/Object to compare with)
      * @returns {Boolean} True: obj2 has at least all prop of obj1
+     *
      * @memberof Utils
      */
-    compareObject(obj1, obj2) {
+    static compareObject(obj1, obj2) {
         for (const key in obj1) {
             if (obj2[key] === undefined) {
                 return false;

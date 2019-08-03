@@ -1,4 +1,4 @@
-import AxonError from '../Errors/AxonError';
+import AxonError from '../../Errors/AxonError';
 
 /**
  * Embed class to create Embed without without using raw json format

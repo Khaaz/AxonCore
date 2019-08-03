@@ -1,7 +1,7 @@
 import { EventEmitter } from 'eventemitter3';
 
 // For collection
-import Collection from './Collection';
+import Collection from '../Collection';
 
 /**
  * Collect bunch of message object according to choosen options
@@ -50,7 +50,7 @@ class MessageCollector extends EventEmitter {
     }
 
     get client() {
-        return this._axon.client;
+        return this._axon.botClient;
     }
 
     /**
@@ -127,7 +127,7 @@ class MessageCollector extends EventEmitter {
         }
         if (this.messages.has(oldMsg.id) ) {
             this.emit('edit', oldMsg, msg);
-            await this.axon.Utils.sleep(500);
+            await this.axon.utils.sleep(500);
             this.messages.update(msg.id, msg);
         }
     }
@@ -173,7 +173,7 @@ class MessageCollector extends EventEmitter {
      * collector.delete('542164538347225118')
      */
     delete(mID) {
-        if (!this.axon.Utils.id.test(mID) ) {
+        if (!this.axon.utils.id.test(mID) ) {
             throw new Error(`Value ${mID} is NOT a ID`);
         }
         if (!this.messages.has(mID) ) { // If messages does not contain the message id
