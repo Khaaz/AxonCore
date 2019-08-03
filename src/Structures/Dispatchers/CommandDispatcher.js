@@ -1,0 +1,229 @@
+import Dispatcher from './Dispatcher';
+
+/**
+ * Class responsible to call the correct command and correct execution flow when needed.
+ * Dispatch to the correct command on message create event.
+ * Handles prefix resolving and command resolving.
+ *
+ * @author KhaaZ
+ *
+ * @class Dispatcher
+ * @extends Dispatcher
+ */
+class CommandDispatcher extends Dispatcher {
+    /**
+     * Creates an instance of CommandDispatcher.
+     *
+     * @param {Obbject<AxonClient>} axon
+     *
+     * @memberof Dispatcher
+     */
+    // eslint-disable-next-line no-useless-constructor
+    constructor(axon) {
+        super(axon);
+    }
+
+    /**
+     * Dispatches the messageCreate event to:
+     * - end of execution if:
+     *      - no prefix
+     *      - no command
+     *      - no permissions
+     * - command execution with different execution flow:
+     *      - Owner execution
+     *      - Admin execution
+     *      - Regular execution
+     *      - DM execution
+     *
+     * @param {Object<Message>} msg - Message Object from Eris
+     * @returns {Promise}
+     *
+     * @memberof CommandDispatcher
+     */
+    async dispatch(msg) {
+        const { isAdmin, isOwner } = this.getExecutionType(msg);
+
+        /** ignore cached blacklisted users */
+        if (!isAdmin && this._axon.axonConfig.isBlacklistedUser(msg.author.id) ) {
+            return;
+        }
+
+        let guildConfig = null;
+        
+        /** GUILD execution only */
+        if (msg.channel.guild) {
+            /** ignore cached blacklisted guilds */
+            if (!isAdmin && this._axon.axonConfig.isBlacklistedGuild(msg.channel.guild.id) ) {
+                return;
+            }
+
+            /**
+             * Get guild Conf from cache or DB
+             * Raise error eventually
+             */
+            try {
+                guildConfig = await this._axon.guildConfigs.getOrFetch(msg.channel.guild.id);
+            } catch (err) {
+                this._axon.logger.error(err.stack, { guild: msg.channel.guild } );
+                return;
+            }
+        }
+        
+        const prefix = this.resolvePrefix(msg, guildConfig, isAdmin, isOwner);
+        if (!prefix) {
+            return;
+        }
+        msg.prefix = prefix;
+
+        msg.content = msg.content.replace(this.mentionFormater, '<@'); // formatting mention
+
+        /** IN GUILD | NOT ADMIN | Check if the user/role/channel is ignored in the guild */
+        if (guildConfig && !isAdmin && guildConfig.isIgnored(msg) ) {
+            return;
+        }
+
+        const args = msg.content.substring(prefix.length).split(' ');
+        let label = args.shift().toLowerCase();
+
+        /** Call Help if first arg = 'help' */
+        const onHelp = label === 'help';
+        if (onHelp) {
+            /** If no additional args: send FullHelp */
+            if (args.length === 0) {
+                this._axon._execHelp(msg, args, null, guildConfig, { isAdmin, isOwner } );
+                return;
+            }
+            /** Otherwise resolve the command we want to send the help for */
+            label = args.shift();
+        }
+
+        /** Resolve command (and subcommand if needed) */
+        const command = this.resolveCommand(label, args, guildConfig);
+        if (!command) { // command doesn't exist or not globally enabled
+            return;
+        }
+        msg.command = command;
+
+        /** Send help for the resolved command */
+        if (onHelp) {
+            this._axon._execHelp(msg, args, command, guildConfig, { isAdmin, isOwner } );
+            return;
+        }
+
+        /** Execute the command */
+        this._axon._execCommand(msg, args, command, guildConfig, { isAdmin, isOwner } );
+        return;
+    }
+
+    // **** UTILITIES **** //
+
+    /**
+     * Give the execution type: Owner or Admin execution.
+     * It uses the global admin and owner prefixes and checks for the BotStaff rank of the caller.
+     *
+     * @param {Object<Message>} msg
+     * @returns {Object} { isAdmin: Boolean, isOwner: Boolean }
+     *
+     * @memberof CommandDispatcher
+     */
+    getExecutionType(msg) {
+        let isAdmin = false;
+        let isOwner = false;
+
+        if (msg.content.startsWith(this._axon.settings.ownerPrefix) && !!this._axon.axonUtils.isBotOwner(msg.author.id) ) { // Owner prefix + user is owner
+            isOwner = true;
+            isAdmin = true;
+        } if (msg.content.startsWith(this._axon.settings.adminPrefix) && !!this._axon.axonUtils.isBotAdmin(msg.author.id) ) { // admin prefix + user is admin+ (admin/owner)
+            isAdmin = true;
+        }
+        
+        return { isAdmin, isOwner };
+    }
+
+    /**
+     * Resolves the prefix for the guild of the message.
+     * Will resolve the owner or admin prefix if it's an owner or admin execution.
+     * It will otherwise regularly resolve the prefix for this particular guild.
+     *
+     * @param {Object<Message>} msg - The message object
+     * @param {Object<GuildConfig>} guildConfig - The guildConfig Object
+     * @param {Boolean} [isAdmin=false] - The guildConfig Object
+     * @param {Boolean} [isOwner=false] - The guildConfig Object
+     * @returns {String?} The prefix if found / Undefined if not
+     *
+     * @memberof CommandDispatcher
+     */
+    resolvePrefix(msg, guildConfig, isAdmin = false, isOwner = false) {
+        return (isOwner && this._axon.settings.ownerPrefix)
+            || (isAdmin && this._axon.settings.adminPrefix)
+            || this.resolveGuildPrefix(msg, guildConfig);
+    }
+
+    /**
+     * Resolves the prefix for the guild of the message.
+     * If the message starts with one of the guild prefixes it returns the prefix, otherwise it returns undefined.
+     * Global prefixes will only take over if no prefix are specified in this guild.
+     *
+     * @param {Object<Message>} msg - The message object
+     * @param {Object<GuildConfig>} guildConfig - The guildConfig Object
+     * @returns {String?} The prefix if found / Undefined if not
+     *
+     * @memberof CommandDispatcher
+     */
+    resolveGuildPrefix(msg, guildConfig) {
+        const prefixes = (msg.channel.guild && guildConfig && guildConfig.getPrefixes().length)
+            ? guildConfig.getPrefixes() // guild prefixes
+            : this._axon.settings.prefixes; // default prefixes
+        
+        return (msg.content.startsWith(`${this._axon.botClient.user.mention} `) && `${this._axon.botClient.user.mention} `) // prefix = bot mention
+            || prefixes.find(prefix => msg.content.startsWith(prefix) );
+    }
+
+    /**
+     * Resolves the command Object. Only resolves the command if it's not globally disabled.
+     * Don't resolve the command if the command is guild disabled.
+     *
+     * @param {String} label - The command label/ command alias
+     * @param {Array<String>} args - Array of arguments
+     * @param {Object<GuildConfig>} [guildConfig=null] - GuildConfig
+     * @returns {Object|null} The command object or null if the command doesn't exist or is not enabled
+     *
+     * @memberof CommandDispatcher
+     */
+    resolveCommand(label, args, guildConfig = null) {
+        label = this._axon.commandAliases.get(label);
+
+        let command = this._axon.commands.get(label);
+
+        if (!command || !command.module.enabled || !command.enabled) {
+            return null;
+        }
+
+        if (guildConfig
+            && (
+                (guildConfig.isModuleDisabled(command.module) && !command.module.serverBypass) // module server-disabled
+                || (guildConfig.isCommandDisabled(command) && !command.serverBypass) // command server-disabled
+            )
+        ) {
+            return null;
+        }
+
+        if (command.hasSubcmd) {
+            while (command.hasSubcmd) {
+                const subLabel = args[0] ? command.subCommandsAliases.get(args[0].toLowerCase() ) : null;
+                if (subLabel) {
+                    args.shift();
+                    command = command.subCommands.get(subLabel.toLowerCase() );
+                    if (!command || !command.module.enabled || !command.enabled) {
+                        return null;
+                    }
+                } else {
+                    break;
+                }
+            }
+        }
+        return command;
+    }
+}
+
+export default CommandDispatcher;
