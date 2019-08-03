@@ -1,9 +1,9 @@
 {
     "guildID": "",
-    "prefix": ["a!"],
+    "prefixes": ["a!"],
     "modules": [],
     "commands": [],
-    "events": [],
+    "eventListeners": [],
     "createdAt": "",
     "updatedAt": "",
     "ignoredUsers": [],
