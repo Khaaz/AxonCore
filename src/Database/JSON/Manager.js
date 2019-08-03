@@ -1,5 +1,3 @@
-
-
 import axonDefault from './AxonDefault.json';
 import guildDefault from './GuildDefault.json';
 
@@ -11,7 +9,6 @@ const writeFileAsync = util.promisify(fs.writeFile);
 /**
  * Manager class for handling Json database
  * @TODO Add a mutex / queue system per document/guild to reduce possibility of corruption
- * @TODO ADD SUPPORT FOR CREATING FOLDERS IF NOT EXISTING
  *
  * @author KhaaZ, Olybear
  *
@@ -29,6 +26,12 @@ class Manager {
         // default schemas values
         this._axonDefault = axonDefault;
         this._guildDefault = guildDefault;
+
+        if (!fs.existsSync(basePath) ) {
+            console.log('The DB directory doesn\'t exist. Creating...');
+            fs.mkdirSync(basePath, { recursive: true } );
+            console.log('DB directory created');
+        }
 
         this._basePath = basePath || `${__dirname}/Database/`;
         this._axonPath = `${basePath}axon.json` || `${__dirname}/Database/axon.json`;
