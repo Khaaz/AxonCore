@@ -1,6 +1,8 @@
 import axonDefault from './AxonDefault.json';
 import guildDefault from './GuildDefault.json';
 
+import AsyncQueue from '../../Utility/External/AsyncQueue';
+
 import fs from 'fs';
 import util from 'util';
 const readFileAsync = util.promisify(fs.readFile);
@@ -35,6 +37,9 @@ class Manager {
 
         this._basePath = basePath || `${__dirname}/Database/`;
         this._axonPath = `${basePath}axon.json` || `${__dirname}/Database/axon.json`;
+
+        this.axonExecutor = new AsyncQueue();
+        this.guildExecutors = {};
     }
 
     get axonDefault() {
@@ -43,6 +48,15 @@ class Manager {
 
     get guildDefault() {
         return this._guildDefault;
+    }
+
+    getExecutor(guildID) {
+        const executor = this.guildExecutors[guildID] || new AsyncQueue();
+
+        if (!executor) {
+            this.guildExecutors[guildID] = executor;
+        }
+        return executor;
     }
 
     // **** CORE **** //
@@ -204,13 +218,15 @@ class Manager {
      *
      * @memberof Manager
      */
-    async updateGuildKey(gID, key, value) {
-        const guildSchema = await this.fetchGuildSchema(gID);
+    updateGuildKey(gID, key, value) {
+        return this.getExecutor(gID).add(async() => {
+            const guildSchema = await this.fetchGuildSchema(gID);
 
-        guildSchema[key] = value;
-        guildSchema.updatedAt = new Date();
-        
-        return this.writeGuildSchema(gID, guildSchema);
+            guildSchema[key] = value;
+            guildSchema.updatedAt = new Date();
+            
+            return this.writeGuildSchema(gID, guildSchema);
+        }, true);
     }
 
     /**
@@ -222,14 +238,18 @@ class Manager {
      *
      * @memberof Manager
      */
-    async updateAxonKey(key, value) {
-        const axonSchema = await this.fetchAxonSchema();
+    updateAxonKey(key, value) {
+        return this.axonExecutor.add(async() => {
+            const axonSchema = await this.fetchAxonSchema();
 
-        axonSchema[key] = value;
-        axonSchema.updatedAt = new Date();
+            axonSchema[key] = value;
+            axonSchema.updatedAt = new Date();
 
-        return this.writeAxonSchema(axonSchema);
+            return this.writeAxonSchema(axonSchema);
+        }, true);
     }
+
+    // **** OVERWRITER **** //
 
     /**
      * Write the updated schema in the file.

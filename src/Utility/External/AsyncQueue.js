@@ -6,13 +6,15 @@ import Queue from './Queue';
  *
  * The queue can be auto executed on add or the execution can be delayed.
  *
- * @class AutoQueue
+ * @author KhaaZ
+ *
+ * @class AsyncQueue
  */
 class AsyncQueue extends Queue {
     /**
      * Execute the queue.
      *
-     * @memberof AutoQueue
+     * @memberof AsyncQueue
      */
     async exec() {
         if (this._functions.length > 0) {
@@ -42,7 +44,8 @@ class AsyncQueue extends Queue {
      * @param {Boolean} [toExec=true] - Whether to auto exec the queue on add or not.
      * @param {*} args - All arguments the function needs
      * @returns {Promise}
-     * @memberof AutoQueue
+     *
+     * @memberof AsyncQueue
      */
     add(func, toExec = true, ...args) {
         const promise = new Promise( (resolve, reject) => {
