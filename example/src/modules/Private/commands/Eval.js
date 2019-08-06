@@ -1,8 +1,21 @@
+/* eslint-disable no-unused-vars */
 import nodeUtil from 'util';
 
 import {
-    // eslint-disable-next-line no-unused-vars
-    Command, CommandPermissions, CommandOptions, CommandResponse, AxonEnums, DiscordEnums, Collection, Resolver, Embed, Prompt, MessageCollector,
+    Command,
+    CommandPermissions,
+    CommandOptions,
+    CommandResponse,
+    AxonEnums,
+    DiscordEnums,
+    Collection,
+    Resolver,
+    Embed,
+    Prompt,
+    MessageCollector,
+    Queue,
+    AutoQueue,
+    AsyncQueue,
 } from '../../../../..';
 
 class Eval extends Command {
@@ -37,15 +50,14 @@ class Eval extends Command {
         } );
     }
 
-    async execute( { msg, args, /* eslint-disable */guildConfig/* eslint-enable */ } ) {
-        /* eslint-disable */
-            const Util = this.Util;
-            const template = this.template
-            const axon = this.axon;
-            const member = msg.member;
-            const guild = msg.channel.guild;
-            const channel = msg.channel;
-            /* eslint-enable */
+    async execute( { msg, args, guildConfig } ) {
+        const { utils } = this;
+        const { template } = this;
+        const { axon } = this;
+        const { member } = msg;
+        const { guild } = msg.channel;
+        const { channel } = msg;
+            
 
         let evaled;
         try {

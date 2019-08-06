@@ -28,6 +28,10 @@ export { default as Embed } from './src/Utility/External/Embed';
 export { default as Prompt } from './src/Utility/External/Prompt';
 export { default as MessageCollector } from './src/Utility/External/MessageCollector';
 
+export { default as Queue } from './src/Utility/External/Queue';
+export { default as AutoQueue } from './src/Utility/External/AutoQueue';
+export { default as AsyncQueue } from './src/Utility/External/AsyncQueue';
+
 // Constants
 export { default as AxonEnums } from './src/Utility/Constants/AxonEnums';
 export { default as DiscordEnums } from './src/Utility/Constants/DiscordEnums';
