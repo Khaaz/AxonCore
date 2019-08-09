@@ -5,6 +5,14 @@ class ErisClient extends Client {
         return this.lib.botClient;
     }
 
+    getAvatar() {
+        return this.getUser() ? this.getUser().avatarURL : null;
+    }
+
+    getMember(guild) {
+        return guild.members.get(this.client.user.id);
+    }
+
     // **** METHODS **** //
 
     connect() {
@@ -13,6 +21,10 @@ class ErisClient extends Client {
 
     setPresence(status, game) {
         return this.client.editStatus(status, game);
+    }
+
+    triggerWebhook(id, token, data) {
+        return this.client.executeWebhook(id, token, data);
     }
 }
 

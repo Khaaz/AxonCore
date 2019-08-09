@@ -267,9 +267,9 @@ class AxonClient extends EventEmitter {
             this.logger.error(err.stack);
         }
 
-        this.botClient.once('ready', this._onReady.bind(this) );
+        this.botClient.once(this.library.enums.EVENTS.READY, this._onReady.bind(this) );
         // this.botClient.on('debug', console.log);
-        this.botClient.on('messageCreate', this._onMessageCreate.bind(this) );
+        this.botClient.on(this.library.enums.EVENTS.MESSSAGE_CREATE, this._onMessageCreate.bind(this) );
     }
     
     // **** LifeCycle methods **** //
@@ -343,7 +343,7 @@ class AxonClient extends EventEmitter {
                 color: 15158332,
                 timestamp: new Date(),
                 description: (err.stack && err.stack.length < EMBED_LIMITS.LIMIT_DESCRIPTION) ? err.stack : err.message,
-            }, `Exception${this.botClient.user ? ` - ${this.botClient.user.username}` : ''}`);
+            }, `Exception${this.library.client.getUser() ? ` - ${this.library.client.getUsername()}` : ''}`);
         } );
 
         process.on('unhandledRejection', (err) => {
@@ -353,7 +353,7 @@ class AxonClient extends EventEmitter {
                 color: 15158332,
                 timestamp: new Date(),
                 description: (err.stack && err.stack.length < EMBED_LIMITS.LIMIT_DESCRIPTION) ? err.stack : err.message,
-            }, `Rejection${this.botClient.user ? ` - ${this.botClient.user.username}` : ''}`);
+            }, `Rejection${this.library.client.getUser() ? ` - ${this.library.client.getUsername()}` : ''}`);
         } );
 
         this.botClient.on('error', (err) => {
@@ -373,7 +373,7 @@ class AxonClient extends EventEmitter {
                 color: 15105570,
                 timestamp: new Date(),
                 description: msg,
-            }, `Warn${this.botClient.user ? ` - ${this.botClient.user.username}` : ''}`);
+            }, `Warn${this.library.client.getUser() ? ` - ${this.library.client.getUsername()}` : ''}`);
         } );
 
         this.logger.axon('Error listeners bound!');

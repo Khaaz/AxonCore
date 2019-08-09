@@ -125,7 +125,7 @@ class Utils {
      */
     getRoles(guild, member) {
         if (!member) {
-            member = this.library.guild.getMember(guild, this.library.client.getID() );
+            member = this.library.client.getMember(guild);
         }
         return this.library.member.getRolesObject(member);
     }

@@ -21,7 +21,7 @@ class Client {
     }
 
     getUsername() {
-        return this.client.user.username;
+        return this.getUser() ? this.getUser().username : null;
     }
 
     getMention() {
@@ -29,7 +29,15 @@ class Client {
     }
 
     getAvatar() {
-        return this.client.user.avatarURL;
+        throw new NoAbstractInstanceException();
+    }
+
+    getUser() {
+        return this.client.user;
+    }
+
+    getMember(guild) {
+        throw new NotImplementedException();
     }
 
     // **** METHODS **** //
@@ -55,6 +63,20 @@ class Client {
      * @memberof Client
      */
     setPresence(status, game) {
+        throw new NotImplementedException();
+    }
+
+    /**
+     * Execute a webhook and send a message
+     *
+     * @param {String} id
+     * @param {String} token
+     * @param {Object} data
+     * @returns {Promise}
+     *
+     * @memberof Client
+     */
+    triggerWebhook(id, token, data) {
         throw new NotImplementedException();
     }
 }

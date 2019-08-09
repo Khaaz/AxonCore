@@ -68,12 +68,12 @@ class AxonUtils {
     triggerWebhook(type, embed, opt) {
         const wh = this.axon.webhooks[type];
         if (wh && wh.id && wh.token && wh.id.length > 0 && wh.token.length) {
-            this.bot.executeWebhook(
+            this.library.client.triggerWebhook(
                 wh.id,
                 wh.token,
                 {
-                    username: opt ? opt : (`${type[0].toUpperCase() + type.slice(1)} - ${this.axon.botClient.user ? this.axon.botClient.user.username : ''}`),
-                    avatarURL: this.axon.botClient.user ? this.axon.botClient.user.avatarURL : null,
+                    username: opt ? opt : (`${type[0].toUpperCase() + type.slice(1)} - ${this.library.client.getUsername() || ''}`),
+                    avatarURL: this.library.client.getAvatar(),
                     embeds: [embed],
                 } )
                 .catch(err => {
