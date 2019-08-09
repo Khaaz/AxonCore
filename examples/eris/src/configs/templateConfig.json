@@ -1,0 +1,27 @@
+{
+    "embed": {
+        "colors": {
+            "help": "ffffff",
+            "global": 4315874,
+            "error": 15844367
+        }
+    },
+
+    "emote": {
+        "error": "<:error:426906693624922113>",
+        "success": "<:success:426906630463160330>",
+        "loading": "<a:loading:397911964988342282>",
+        "update": "<:update:373546418952077323>",
+        "info": ":information_source:"
+    },
+
+    "message": {
+        "error": {
+            "permBot": "I don't have sufficient permissions to do that! I need:",
+            "permSource": "You don't have sufficient permissions to do that! You need:",
+            "permTarget": "This user is a mod/admin, I can't do that!",
+            "cooldown": "Please, slow down! Remaining time:",
+            "general": "An unexpected error occured! Contact the bot developers."
+        }
+    }
+}
