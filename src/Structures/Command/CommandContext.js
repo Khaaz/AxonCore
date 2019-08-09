@@ -1,4 +1,4 @@
-import { COMMAND_EXECUTION_TYPES } from '../../Utility/Constants/AxonEnums';
+import { COMMAND_EXECUTION_TYPES, COMMAND_EXECUTION_STATE } from '../../Utility/Constants/AxonEnums';
 
 /**
  * CommandContext object that encapsulates entirely the command execution data.
@@ -21,10 +21,7 @@ import { COMMAND_EXECUTION_TYPES } from '../../Utility/Constants/AxonEnums';
  * STATUS
  * @prop {Boolean} [executed=true] - Whether the command was actually executed or not
  * @prop {Boolean} [data.helpExecution=false]
- * @prop {Boolean} [onCooldown=false] - If the command didn't execute because of cooldown
- * @prop {Boolean} [invalidUsage=false] - If the command didn't execute because of invalidUsage
- * @prop {Boolean} [invalidBotPermissions=false] - If the command didn't execute because of invalid bot permissions
- * @prop {Boolean} [invalidUserPermissions=false] - If the command didn't execute because of invalid user permissions
+ * @prop {Number<COMMAND_EXECUTION_STATE>} executionState - The state of execution (no error, cooldown, invalid usage, invalid permission)
  * @prop {Number<COMMAND_EXECUTION_TYPES>} executionType - The type of execution (Owner, Admin, Regular)
  * @prop {Boolean} [success=true] - Whether the command was successfully executed or not
  * @prop {Object|String} [error=null] - Optional error object in case of bad command execution
@@ -47,12 +44,9 @@ class CommandContext {
      * @param {Object} [data={}]
      * @param {Boolean} [data.executed=true]
      * @param {Boolean} [data.helpExecution=false]
-     * @param {Number<COMMAND_EXECUTION_TYPES>} [data.executionType={}]
+     * @param {Number<COMMAND_EXECUTION_STATE>} [data.executionState=0] - no error, cooldown, invalid usage, invalid permissions...
+     * @param {Number<COMMAND_EXECUTION_TYPES>} [data.executionType={}] - Regular, admin,owner execution
      * @param {Boolean} [data.dm=false]
-     * @param {Boolean} [data.onCooldown=false] - If the command didn't execute because of cooldown
-     * @param {Boolean} [data.invalidUsage=false] - If the command didn't execute because of invalidUsage
-     * @param {Boolean} [data.invalidBotPermissions=false] - If the command didn't execute because of invalid bot permissions
-     * @param {Boolean} [data.invalidUserPermissions=false] - If the command didn't execute because of invalid user permissions
      *
      * @memberof CommandContext
      */
@@ -64,11 +58,7 @@ class CommandContext {
         /** Status */
         this.executed = data.executed !== undefined ? data.executed : true;
         this.helpExecution = (this.executed && data.helpExecution) || false;
-        this.onCooldown = (!this.executed && data.onCooldown) || false;
-        this.invalidUsage = (!this.executed && data.invalidUsage) || false;
-        this.invalidBotPermissions = (!this.executed && data.invalidBotPermissions) || false;
-        this.invalidUserPermissions = (!this.executed && data.invalidUserPermissions) || false;
-
+        this.executionState = (!data.executed && data.executionState !== undefined) ? data.executionState : COMMAND_EXECUTION_STATE.NO_ERROR;
         this.executionType = data.executionType !== undefined ? data.executionType : COMMAND_EXECUTION_TYPES.REGULAR;
         
         /** Execution context */

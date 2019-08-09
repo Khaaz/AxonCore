@@ -9,6 +9,8 @@ import CommandResponse from './CommandResponse';
 import AxonError from '../../Errors/AxonError';
 import AxonCommandError from '../../Errors/AxonCommandError';
 
+import { COMMAND_EXECUTION_STATE } from '../../Utility/Constants/AxonEnums';
+
 /**
  * AxonCore - Command contructor
  *
@@ -155,7 +157,7 @@ class Command extends Base {
                 return new CommandContext(this, msg, {
                     executed: false,
                     executionType: CommandContext.getExecutionType(isAdmin, isOwner),
-                    invalidBotPermissions: true,
+                    executionState: COMMAND_EXECUTION_STATE.INVALID_PERMISSIONS_BOT,
                 } ).resolveAsync();
             }
 
@@ -168,7 +170,7 @@ class Command extends Base {
                 return new CommandContext(this, msg, {
                     executed: false,
                     executionType: CommandContext.getExecutionType(isAdmin, isOwner),
-                    invalidUserPermissions: true,
+                    executionState: COMMAND_EXECUTION_STATE.INVALID_PERMISSIONS_USER,
                 } ).resolveAsync();
             }
         }
@@ -180,7 +182,7 @@ class Command extends Base {
                 return new CommandContext(this, msg, {
                     executed: false,
                     executionType: CommandContext.getExecutionType(isAdmin, isOwner),
-                    invalidUserPermissions: true,
+                    executionState: COMMAND_EXECUTION_STATE.INVALID_PERMISSIONS_USER,
                 } ).resolveAsync();
             }
         } else {
@@ -193,7 +195,7 @@ class Command extends Base {
                 return new CommandContext(this, msg, {
                     executed: false,
                     executionType: CommandContext.getExecutionType(isAdmin, isOwner),
-                    onCooldown: true,
+                    executionState: COMMAND_EXECUTION_STATE.COOLDOWN,
                 } ).resolveAsync();
             }
         }
@@ -208,7 +210,7 @@ class Command extends Base {
                     return new CommandContext(this, msg, {
                         executed: false,
                         executionType: CommandContext.getExecutionType(isAdmin, isOwner),
-                        invalidUsage: true,
+                        executionState: COMMAND_EXECUTION_STATE.INVALID_USAGE,
                     } ).resolveAsync();
                 } );
         }
@@ -300,7 +302,7 @@ class Command extends Base {
         const embed = {};
         embed.author = {
             name: `Help for ${this.infos.name || this.fullLabel}`,
-            icon_url: this.bot.user.avatarURL,
+            icon_url: this.library.client.getAvatar(),
         };
 
         embed.color = typeof this.template.embed.colors.help === 'string'
