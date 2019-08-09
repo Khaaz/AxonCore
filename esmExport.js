@@ -35,6 +35,8 @@ export { default as AsyncQueue } from './src/Utility/External/AsyncQueue';
 // Constants
 export { default as AxonEnums } from './src/Utility/Constants/AxonEnums';
 export { default as DiscordEnums } from './src/Utility/Constants/DiscordEnums';
+export { default as ErisEnums } from './src/Libraries/eris/lib/ErisEnums';
+export { default as DjsEnums } from './src/Libraries/discordjs/lib/DjsEnums';
 
 // Database
 export { default as DBProvider } from './src/Database/DBProvider';
