@@ -1,4 +1,4 @@
-import { Command, Prompt } from '../../../../..';
+import { Command, Prompt } from '../../../../../..';
 
 class Wave extends Command {
     constructor(module) {

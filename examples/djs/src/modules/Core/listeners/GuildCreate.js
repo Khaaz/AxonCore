@@ -1,4 +1,4 @@
-import { Listener } from '../../../../..';
+import { Listener } from '../../../../../..';
 
 class GuildCreate extends Listener {
     constructor(...args) {

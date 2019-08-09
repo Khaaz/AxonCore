@@ -1,4 +1,4 @@
-import { Listener } from '../../../../..';
+import { Listener } from '../../../../../..';
 
 class MessageCreateMod extends Listener {
     constructor(...args) {

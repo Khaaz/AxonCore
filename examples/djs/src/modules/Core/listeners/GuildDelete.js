@@ -1,4 +1,4 @@
-import { Listener } from '../../../../..';
+import { Listener } from '../../../../../..';
 
 class GuildDelete extends Listener {
     constructor(...args) {

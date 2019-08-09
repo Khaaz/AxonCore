@@ -1,4 +1,4 @@
-import { AxonClient, Resolver } from '../..';
+import { AxonClient, Resolver } from '../../..';
 
 import * as modules from './modules/index';
 

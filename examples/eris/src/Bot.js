@@ -1,5 +1,5 @@
 import Eris from 'eris';
-import { AxonOptions } from '../..';
+import { AxonOptions } from '../../..';
 
 import Client from './Client';
 

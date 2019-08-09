@@ -16,7 +16,7 @@ import {
     Queue,
     AutoQueue,
     AsyncQueue,
-} from '../../../../..';
+} from '../../../../../..';
 
 class Eval extends Command {
     constructor(module) {
