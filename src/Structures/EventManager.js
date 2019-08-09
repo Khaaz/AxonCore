@@ -1,9 +1,7 @@
 import Base from './Base';
 
 import Collection from '../Utility/Collection';
-import Handler from '../Handlers/Handler';
-
-import * as HANDLERS from '../Handlers/eris/index';
+import Handler from './Handler';
 
 /**
  * Event Manager class
@@ -29,6 +27,12 @@ class EventManager extends Base {
         this._listeners = {};
         // For each eventName => One Function
         this._handlers = new Collection(Handler);
+
+        // this.HANDLERS = this.axon.libInterface.HANDLERS;
+    }
+
+    get HANDLERS() {
+        return this.axon.library.HANDLERS;
     }
 
     // **** GETTERS **** //
@@ -127,7 +131,7 @@ class EventManager extends Base {
             /** Remove the current event if any registered */
             this.bot.off(event, handler._handle);
         }
-        handler = new HANDLERS[event](this.axon, event, this._listeners[event] );
+        handler = new this.HANDLERS[event](this.axon, event, this._listeners[event] );
 
         this._handlers.set(event, handler);
 
@@ -209,7 +213,7 @@ class EventManager extends Base {
         if (!handler) {
             return false;
         }
-        this.bot.off(event, handler.run);
+        this.bot.off(event, handler._handle);
         this.logger.info(`Event: ${event} unregistered!`);
         return true;
     }

@@ -25,6 +25,7 @@ class AxonOptions {
      * @param {Object} [data.botConfig=null] - General Axon config
      * @param {Object} [data.templateConfig=null] - Tempalte config
      * @param {Object} [data.tokenConfig=null] - Token config
+     * @param {String} [data.token=null] - The discord js token to automatically connect the bot client
      * @param {Function} [data.logo=null] - Custom function that will log a logo
      * @param {Object<Utils>} [data.utils=null] - Custom utils. Needs to be an instance of AxonCore.Utils
      * @param {Object} [data.logger=null] - Custom logger
@@ -39,6 +40,8 @@ class AxonOptions {
         this.botConfig = data.botConfig || null;
         this.templateConfig = data.templateConfig || null;
         this.tokenConfig = data.tokenConfig || null;
+
+        this._token = data.token || null; // DJS token to login
 
         this.logo = data.logo || null;
 

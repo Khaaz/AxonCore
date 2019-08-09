@@ -72,15 +72,18 @@ class CommandContext {
         this.executionType = data.executionType !== undefined ? data.executionType : COMMAND_EXECUTION_TYPES.REGULAR;
         
         /** Execution context */
-        this.dm = !triggerMessage.channel.guild;
-        this.guildID = (triggerMessage.channel.guild && triggerMessage.channel.guild.id) || null;
-        this.guildName = (triggerMessage.channel.guild && triggerMessage.channel.guild.name) || null;
-        
-        this.channelID = (triggerMessage.channel && triggerMessage.channel.id) || null;
-        this.channelName = (triggerMessage.channel && triggerMessage.channel.id) || null;
+        const lib = command.library;
 
-        this.callerID = (triggerMessage.author && triggerMessage.author.id) || null;
-        this.callerName = (triggerMessage.author && `${triggerMessage.author.username}#${triggerMessage.author.discriminator}`) || null;
+        this.dm = !lib.message.getGuild(triggerMessage);
+        this.guildID = lib.message.getGuildID(triggerMessage);
+        this.guildName = lib.message.getGuildName(triggerMessage);
+        
+        this.channelID = lib.message.getChannelID(triggerMessage);
+        this.channelName = lib.message.getChannelName(triggerMessage);
+
+        const author = lib.message.getAuthor(triggerMessage) || null;
+        this.callerID = author && lib.user.getID(author);
+        this.callerName = author && lib.user.getTag(author);
 
         this.calledAt = new Date();
     }

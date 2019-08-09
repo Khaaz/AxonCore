@@ -17,6 +17,8 @@ import Collection from './Utility/Collection';
 import AxonUtils from './Utility/AxonUtils';
 import Utils from './Utility/Utils';
 
+import LibraryHandler from './Libraries/index';
+
 import LoggerHandler from './Loggers/index';
 import DBHandler from './Database/index';
 import DBProvider from './Database/DBProvider'; // default DBProvider
@@ -69,7 +71,7 @@ class AxonClient extends EventEmitter {
     /**
      * Creates an AxonClient instance.
      *
-     * @param {Object<Eris.Client>} ErisClient - Eris Client instance
+     * @param {Object<Client>} BotClient - Eris or Discordjs Client instance
      * @param {Object<axonOptions>} [axonOptions={}] - Axon options
      * @param {Object} [axonOptions.botConfig=null] - General Axon config
      * @param {Object} [axonOptions.templateConfig=null] - Template config
@@ -86,7 +88,7 @@ class AxonClient extends EventEmitter {
      *
      * @memberof AxonClient
      */
-    constructor(ErisClient, axonOptions = {}, modules = {} ) {
+    constructor(BotClient, axonOptions = {}, modules = {} ) {
         super();
         axonOptions.logo ? axonOptions.logo() : logo();
 
@@ -112,9 +114,11 @@ class AxonClient extends EventEmitter {
         }
 
         /**
-         * Initialise Eris Client
+         * Initialise Bot Client and LibraryInterface
          */
-        this._botClient = ErisClient;
+        this._botClient = BotClient;
+        this.library = LibraryHandler.pickLibrary(this, axonOptions);
+
         /** Structures */
         this.modules = new Collection(Module); // Module Label => Module Object
         this.commands = new Collection(Command); // Command Label => Command Object
@@ -243,7 +247,7 @@ class AxonClient extends EventEmitter {
     async start() {
         await this.onStart();
         
-        this.botClient.connect()
+        this.library.client.connect()
             .then( () => {
                 this.logger.notice('=== BotClient Connected! ===');
             } )
@@ -294,7 +298,7 @@ class AxonClient extends EventEmitter {
             return;
         }
         /** msg.author error + ignore self + ignore bots */
-        if (!msg.author || msg.author.bot) {
+        if (!this.library.message.getAuthor(msg) || this.library.user.isBot(msg.author) ) {
             return;
         }
 
@@ -382,7 +386,7 @@ class AxonClient extends EventEmitter {
      * @memberof AxonClient
      */
     initStatus() {
-        this.botClient.editStatus(null, {
+        this.library.client.setPresence(null, {
             name: `AxonCore | ${this.settings.prefixes[0]}help`,
             type: 0,
         } );
@@ -405,9 +409,15 @@ class AxonClient extends EventEmitter {
                 this.settings.debugMode && console.timeEnd('- Net');
             } )
             .catch(err => {
-                this.logger.emerg(err.stack);
                 this.emit('commandFailure', { msg, guildConfig, err } );
                 this.settings.debugMode && console.timeEnd('- Net');
+
+                this.logger.emerg(err.stack);
+                this.axonUtils.triggerWebhook('AxonCommandError', {
+                    color: 15158332,
+                    timestamp: new Date(),
+                    description: (err.stack && err.stack.length < EMBED_LIMITS.LIMIT_DESCRIPTION) ? err.stack : err.message,
+                } );
             } );
 
         if (this.settings.debugMode) {
@@ -435,9 +445,15 @@ class AxonClient extends EventEmitter {
                 this.settings.debugMode && console.timeEnd('- Net');
             } )
             .catch(err => {
-                this.logger.emerg(err.stack);
                 this.emit('commandFailure', { msg, guildConfig, err } );
                 this.settings.debugMode && console.timeEnd('- Net');
+
+                this.logger.emerg(err.stack);
+                this.axonUtils.triggerWebhook('AxonCommandError', {
+                    color: 15158332,
+                    timestamp: new Date(),
+                    description: (err.stack && err.stack.length < EMBED_LIMITS.LIMIT_DESCRIPTION) ? err.stack : err.message,
+                } );
             } );
 
         if (this.settings.debugMode) {
@@ -454,8 +470,14 @@ class AxonClient extends EventEmitter {
                 this.emit('eventSuccess', { event: listener.eventName, listener, guildConfig } );
             } )
             .catch(err => {
-                this.logger.error(`[EVENT](${listener.eventName}) - ${listener.label}\n${err}`);
                 this.emit('eventFailure', { event: listener.eventName, listener, guildConfig, err } );
+
+                this.logger.error(`[EVENT](${listener.eventName}) - ${listener.label}\n${err}`);
+                this.axonUtils.triggerWebhook('AxonEventError', {
+                    color: 15158332,
+                    timestamp: new Date(),
+                    description: (err.stack && err.stack.length < EMBED_LIMITS.LIMIT_DESCRIPTION) ? err.stack : err.message,
+                } );
             } );
     }
 
@@ -478,8 +500,8 @@ class AxonClient extends EventEmitter {
         const embed = {};
 
         embed.author = {
-            name: `Help for ${this.botClient.user.username}`,
-            icon_url: this.botClient.user.avatarURL,
+            name: `Help for ${this.library.client.getUsername()}`,
+            icon_url: this.library.client.getAvatar(),
         };
         embed.description = this.infos.description;
         embed.footer = {
@@ -505,7 +527,7 @@ class AxonClient extends EventEmitter {
         }
 
         try {
-            const chan = await this.botClient.getDMChannel(msg.author.id);
+            const chan = await this.library.user.getDM(this.library.message.getAuthor(msg) );
 
             /** Split commandList */
             // eslint-disable-next-line no-magic-numbers
@@ -513,14 +535,14 @@ class AxonClient extends EventEmitter {
                 commandList = commandList.match(/[\s\S]{1,1800}[\n\r]/g) || [];
                 for (const match of commandList) {
                     embed.description = match;
-                    await this.botClient.createMessage(chan.id, { embed } );
+                    await this.library.channel.sendMessage(chan, { embed } );
                 }
             } else {
                 embed.description = commandList;
-                await this.botClient.createMessage(chan.id, { embed } );
+                await this.library.channel.sendMessage(chan, { embed } );
             }
         } catch (err) {
-            //
+            this.logger.verbose(err);
         }
     }
 

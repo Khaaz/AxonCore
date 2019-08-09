@@ -14,13 +14,18 @@ class CommandDispatcher extends Dispatcher {
     /**
      * Creates an instance of CommandDispatcher.
      *
-     * @param {Obbject<AxonClient>} axon
+     * @param {Object<AxonClient>} axon
      *
      * @memberof Dispatcher
      */
-    // eslint-disable-next-line no-useless-constructor
     constructor(axon) {
         super(axon);
+
+        this.mentionFormater = /<@!/g;
+    }
+
+    get library() {
+        return this._axon.library;
     }
 
     /**
@@ -43,17 +48,22 @@ class CommandDispatcher extends Dispatcher {
     async dispatch(msg) {
         const { isAdmin, isOwner } = this.getExecutionType(msg);
 
+        /** Extract necessary attribute from lib structures */
+        const author = this.library.message.getAuthor(msg);
+        const guild = this.library.message.getGuild(msg);
+
+
         /** ignore cached blacklisted users */
-        if (!isAdmin && this._axon.axonConfig.isBlacklistedUser(msg.author.id) ) {
+        if (!isAdmin && this._axon.axonConfig.isBlacklistedUser(this.library.user.getID(author) ) ) {
             return;
         }
 
         let guildConfig = null;
         
         /** GUILD execution only */
-        if (msg.channel.guild) {
+        if (guild) {
             /** ignore cached blacklisted guilds */
-            if (!isAdmin && this._axon.axonConfig.isBlacklistedGuild(msg.channel.guild.id) ) {
+            if (!isAdmin && this._axon.axonConfig.isBlacklistedGuild(this.library.guild.getID(guild) ) ) {
                 return;
             }
 
@@ -62,9 +72,9 @@ class CommandDispatcher extends Dispatcher {
              * Raise error eventually
              */
             try {
-                guildConfig = await this._axon.guildConfigs.getOrFetch(msg.channel.guild.id);
+                guildConfig = await this._axon.guildConfigs.getOrFetch(this.library.guild.getID(guild) );
             } catch (err) {
-                this._axon.logger.error(err.stack, { guild: msg.channel.guild } );
+                this._axon.logger.error(err.stack, { guild } );
                 return;
             }
         }
@@ -73,9 +83,14 @@ class CommandDispatcher extends Dispatcher {
         if (!prefix) {
             return;
         }
-        msg.prefix = prefix;
+        /* msg.prefix doesn't exist. Adding it as reference */
+        msg.prefix = prefix; // eslint-disable-line require-atomic-updates
 
-        msg.content = msg.content.replace(this.mentionFormater, '<@'); // formatting mention
+        /* Formatting mention to replace <!@ mention to <@ mentions (uniformise mentions) */
+        const content = this.library.message
+            .getContent(msg)
+            .replace(this.mentionFormater, '<@');
+        this.library.message.setContent(msg, content);
 
         /** IN GUILD | NOT ADMIN | Check if the user/role/channel is ignored in the guild */
         if (guildConfig && !isAdmin && guildConfig.isIgnored(msg) ) {
@@ -102,7 +117,8 @@ class CommandDispatcher extends Dispatcher {
         if (!command) { // command doesn't exist or not globally enabled
             return;
         }
-        msg.command = command;
+        /* msg.command doesn't exist. Adding it as reference */
+        msg.command = command; // eslint-disable-line require-atomic-updates
 
         /** Send help for the resolved command */
         if (onHelp) {
@@ -127,13 +143,16 @@ class CommandDispatcher extends Dispatcher {
      * @memberof CommandDispatcher
      */
     getExecutionType(msg) {
+        const content = this.library.message.getContent(msg);
+        const authorID = this.library.message.getAuthorID(msg);
+
         let isAdmin = false;
         let isOwner = false;
 
-        if (msg.content.startsWith(this._axon.settings.ownerPrefix) && !!this._axon.axonUtils.isBotOwner(msg.author.id) ) { // Owner prefix + user is owner
+        if (content.startsWith(this._axon.settings.ownerPrefix) && !!this._axon.axonUtils.isBotOwner(authorID) ) { // Owner prefix + user is owner
             isOwner = true;
             isAdmin = true;
-        } if (msg.content.startsWith(this._axon.settings.adminPrefix) && !!this._axon.axonUtils.isBotAdmin(msg.author.id) ) { // admin prefix + user is admin+ (admin/owner)
+        } if (content.startsWith(this._axon.settings.adminPrefix) && !!this._axon.axonUtils.isBotAdmin(authorID) ) { // admin prefix + user is admin+ (admin/owner)
             isAdmin = true;
         }
         
@@ -171,12 +190,15 @@ class CommandDispatcher extends Dispatcher {
      * @memberof CommandDispatcher
      */
     resolveGuildPrefix(msg, guildConfig) {
-        const prefixes = (msg.channel.guild && guildConfig && guildConfig.getPrefixes().length)
+        const prefixes = (this.library.message.getGuild(msg) && guildConfig && guildConfig.getPrefixes().length)
             ? guildConfig.getPrefixes() // guild prefixes
             : this._axon.settings.prefixes; // default prefixes
         
-        return (msg.content.startsWith(`${this._axon.botClient.user.mention} `) && `${this._axon.botClient.user.mention} `) // prefix = bot mention
-            || prefixes.find(prefix => msg.content.startsWith(prefix) );
+        const content = this.library.message.getContent(msg);
+        const clientMention = this.library.client.getMention();
+
+        return (content.startsWith(`${clientMention} `) && `${clientMention} `) // prefix = bot mention
+            || prefixes.find(prefix => content.startsWith(prefix) );
     }
 
     /**

@@ -1,3 +1,8 @@
+/**
+ * All CONSTANTS used in AxonCore or related to AxonCore behavior / functioning
+ * Type andEnums definition
+ */
+
 export const HTTP_CODE = {
     CONTINUE: 100,
 
@@ -96,11 +101,9 @@ export const HTTP_MESSAGES = {
     511: 'Network Authentication Required',
 };
 
-export const AXON_PERMISSIONS_LEVELS = {
-    OWNER: 0,
-    ADMINISTRATOR: 1, // administrator
-    MANAGER: 2, // manageGuild
-    MODERATOR: 3,
+export const LIBRARY_TYPES = {
+    ERIS: 0,
+    DISCORDJS: 1,
 };
 
 export const LOGGER_TYPES = {
@@ -113,6 +116,13 @@ export const LOGGER_TYPES = {
 export const DB_TYPES = {
     JSON: 0,
     MONGO: 1,
+};
+
+export const AXON_PERMISSIONS_LEVELS = {
+    OWNER: 0,
+    ADMINISTRATOR: 1, // administrator
+    MANAGER: 2, // manageGuild
+    MODERATOR: 3,
 };
 
 export const COMMAND_EXECUTION_TYPES = {
@@ -138,8 +148,10 @@ export const TYPE_ERRORS = {
 export default {
     HTTP_CODE,
     HTTP_MESSAGES,
-    AXON_PERMISSIONS_LEVELS,
+    LIBRARY_TYPES,
+    LOGGER_TYPES,
     DB_TYPES,
+    AXON_PERMISSIONS_LEVELS,
     COMMAND_EXECUTION_TYPES,
     WEBHOOK_TYPES,
     TYPE_ERRORS,

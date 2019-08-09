@@ -79,9 +79,9 @@ class GuildConfig {
      * @memberof GuildConfig
      */
     isIgnored(msg) {
-        return this.isUserIgnored(msg.author.id)
-            || this.isRoleIgnored(msg.member)
-            || this.isUserIgnored(msg.channel.id);
+        return this.isUserIgnored(this._axon.library.message.getAuthorID(msg) )
+            || this.isRoleIgnored(this._axon.library.message.getMember(msg) )
+            || this.isChannelIgnored(this._axon.library.message.getChannelID(msg) );
     }
 
     /**
@@ -105,10 +105,11 @@ class GuildConfig {
      * @memberof GuildConfig
      */
     isRoleIgnored(member) {
-        if (!member.roles || !(member.roles instanceof Array) ) {
+        const roles = this._axon.library.member.getRoles(member);
+        if (!roles || !(roles instanceof Array) ) {
             return false;
         }
-        return !!this.ignoredRoles.find(r => member.roles.includes(r) ); // Role is ignored
+        return !!this.ignoredRoles.find(r => roles.includes(r) ); // Role is ignored
     }
 
     /**

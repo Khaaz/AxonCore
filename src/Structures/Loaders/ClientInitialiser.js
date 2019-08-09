@@ -31,7 +31,7 @@ class ClientInitialiser {
             configs.bot = botConfig;
         } else {
             configs.bot = defaultBotConfig;
-            DefaultLogger.error('Couldn\'t init custom axon config: Invalid format. Uused default values instead.');
+            DefaultLogger.error('Couldn\'t init custom axon config: Invalid format. Used default values instead.');
         }
 
         /** Template Config */
@@ -39,7 +39,7 @@ class ClientInitialiser {
             configs.template = templateConfig;
         } else {
             configs.template = defaultTemplateConfig;
-            DefaultLogger.warn('Couldn\'t init custom template config: Invalid format. Uused default values instead.');
+            DefaultLogger.warn('Couldn\'t init custom template config: Invalid format. Used default values instead.');
         }
 
         /** Token Config */
@@ -47,7 +47,7 @@ class ClientInitialiser {
             configs._tokens = tokenConfig;
         } else {
             configs._tokens = defaultTokenConfig;
-            DefaultLogger.warn('Couldn\'t init custom token config: Invalid format. Uused default values instead.');
+            DefaultLogger.warn('Couldn\'t init custom token config: Invalid format. Used default values instead.');
         }
 
         DefaultLogger.init('Configs initialised!');
@@ -96,7 +96,9 @@ class ClientInitialiser {
             axonConf = await axon.DBProvider.initAxon();
         }
         
-        axon.axonConfig = axonConf;
+        // eslint-disable-next-line require-atomic-updates
+        axon.axonConfig = axonConf; // We have to do it here and not return the value because we need to unwap the promise and actually assign the value.
+        
         axon.logger.init('[INIT] Axon config initialised!');
     }
 }
