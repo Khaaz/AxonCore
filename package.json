@@ -1,7 +1,7 @@
 {
   "name": "axoncore",
-  "version": "1.1.1",
-  "description": "Bot framework on top of Eris. Fully featured Client, Command and Event handler.",
+  "version": "2.0.0",
+  "description": "Universal Bot Framework for Eris and Discordjs. Fully featured Client, Command and Event handler with built in DB.",
   "author": "KhaaZ#0001",
   "link": "https://github.com/Khaazz/AxonCore",
   "license": "MIT",
@@ -19,7 +19,8 @@
     "@axonteam/eslint-config": "^2.1.1",
     "@types/node": "^12.6.2",
     "chalk": "^2.4.2",
-    "eris": "git+https://www.github.com/khaazz/eris.git#axoncore",
+    "discord.js": "^11.5.1",
+    "eris": "^0.10.1",
     "eslint": "^6.1.0",
     "jsdoc-to-markdown": "^4.0.1",
     "mongoose": "^5.6.8",
@@ -49,7 +50,11 @@
     "discord",
     "framework",
     "eris",
+    "discord.js",
+    "discordjs",
     "core",
-    "handler"
+    "handler",
+    "commandHandler",
+    "commandFramework"
   ]
 }

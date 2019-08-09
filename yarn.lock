@@ -345,6 +345,17 @@ delayed-stream@~1.0.0:
   resolved "https://registry.yarnpkg.com/delayed-stream/-/delayed-stream-1.0.0.tgz#df3ae199acadfb7d440aaae0b29e2272b24ec619"
   integrity sha1-3zrhmayt+31ECqrgsp4icrJOxhk=
 
+discord.js@^11.5.1:
+  version "11.5.1"
+  resolved "https://registry.yarnpkg.com/discord.js/-/discord.js-11.5.1.tgz#910fb9f6410328581093e044cafb661783a4d9e8"
+  integrity sha512-tGhV5xaZXE3Z+4uXJb3hYM6gQ1NmnSxp9PClcsSAYFVRzH6AJH74040mO3afPDMWEAlj8XsoPXXTJHTxesqcGw==
+  dependencies:
+    long "^4.0.0"
+    prism-media "^0.0.3"
+    snekfetch "^3.6.4"
+    tweetnacl "^1.0.0"
+    ws "^6.0.0"
+
 dmd@^3.0.10:
   version "3.0.13"
   resolved "https://registry.yarnpkg.com/dmd/-/dmd-3.0.13.tgz#73294e8fae1a7a1a1c849d86b027adf04fbd5662"
@@ -375,9 +386,10 @@ emoji-regex@^7.0.1:
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-7.0.3.tgz#933a04052860c85e83c122479c4748a8e4c72156"
   integrity sha512-CwBLREIQ7LvYFB0WyRvwhq5N5qPhc6PMjD6bYggFlI5YyDgl+0vxq5VHbMOFqLg7hfWzmu8T5Z1QofhmTIhItA==
 
-"eris@git+https://www.github.com/khaazz/eris.git#axoncore":
+eris@^0.10.1:
   version "0.10.1"
-  resolved "git+https://www.github.com/khaazz/eris.git#896e3e99d0e29a5bbec2ed6f30555095ecd85350"
+  resolved "https://registry.yarnpkg.com/eris/-/eris-0.10.1.tgz#1ecc13ff06d45edb86c344b70ec2dd2e7ef270df"
+  integrity sha512-POWCQ91xmG75U5V3i2bAvh/hco+HkgF+YJzerTcULe++AgKutA4l1adxqUrJ13Nxah/O+olkkQCufO+gQoawtA==
   dependencies:
     ws "^6.0.0"
   optionalDependencies:
@@ -866,6 +878,11 @@ lodash@^4.17.12, lodash@^4.17.14:
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
   integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
 
+long@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/long/-/long-4.0.0.tgz#9a7b71cfb7d361a194ea555241c92f7468d5bf28"
+  integrity sha512-XsP+KhQif4bjX1kbuSiySJFNAehNxgLb6hPRGJ9QsUr8ajHkuXGdrHmFUTUUXhDwVX2R5bY4JNZEwbUiMhV+MA==
+
 marked@^0.3.16, marked@~0.3.6:
   version "0.3.19"
   resolved "https://registry.yarnpkg.com/marked/-/marked-0.3.19.tgz#5d47f709c4c9fc3c216b6d46127280f40b39d790"
@@ -1102,6 +1119,11 @@ prelude-ls@~1.1.2:
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.1.2.tgz#21932a549f5e52ffd9a827f570e04be62a97da54"
   integrity sha1-IZMqVJ9eUv/ZqCf1cOBL5iqX2lQ=
 
+prism-media@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/prism-media/-/prism-media-0.0.3.tgz#8842d4fae804f099d3b48a9a38e3c2bab6f4855b"
+  integrity sha512-c9KkNifSMU/iXT8FFTaBwBMr+rdVcN+H/uNv1o+CuFeTThNZNTOrQ+RgXA1yL/DeLk098duAeRPP3QNPNbhxYQ==
+
 progress@^2.0.0:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/progress/-/progress-2.0.3.tgz#7e8cf8d8f5b8f239c1bc68beb4eb78567d572ef8"
@@ -1276,6 +1298,11 @@ sliced@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/sliced/-/sliced-1.0.1.tgz#0b3a662b5d04c3177b1926bea82b03f837a2ef41"
   integrity sha1-CzpmK10Ewxd7GSa+qCsD+Dei70E=
+
+snekfetch@^3.6.4:
+  version "3.6.4"
+  resolved "https://registry.yarnpkg.com/snekfetch/-/snekfetch-3.6.4.tgz#d13e80a616d892f3d38daae4289f4d258a645120"
+  integrity sha512-NjxjITIj04Ffqid5lqr7XdgwM7X61c/Dns073Ly170bPQHLm6jkmelye/eglS++1nfTWktpP6Y2bFXjdPlQqdw==
 
 sort-array@^2.0.0:
   version "2.0.0"
