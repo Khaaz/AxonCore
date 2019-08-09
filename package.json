@@ -33,9 +33,10 @@
   "scripts": {
     "lint": "eslint .",
     "test": "eslint src *.js",
-    "example": "node -r esm example/src/index.js",
-    "examplepm2": "node example/scripts/start.js",
-    "pm2logs": "pm2 logs --lines 100 AxonCore"
+    "start:eris": "node -r esm examples/eris/src/index.js",
+    "start:djs": "node -r esm examples/eris/src/index.js",
+    "pm2start:eris": "node examples/eris/scripts/start.js",
+    "pm2start:djs": "node examples/djs/scripts/start.js"
   },
   "repository": {
     "type": "git",
