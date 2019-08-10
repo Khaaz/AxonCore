@@ -1,4 +1,4 @@
-import { Command, MessageCollector } from '../../../../../..';
+import { Command, MessageCollector } from '../../../../../../';
 
 class Collect extends Command {
     constructor(module) {

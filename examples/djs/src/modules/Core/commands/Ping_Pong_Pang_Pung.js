@@ -1,4 +1,4 @@
-import { Command, CommandPermissions, CommandResponse } from '../../../../../..';
+import { Command, CommandPermissions, CommandResponse } from '../../../../../../';
 
 class Pung extends Command {
     constructor(module) {

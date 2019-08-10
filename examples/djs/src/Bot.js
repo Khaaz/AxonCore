@@ -1,20 +1,21 @@
-import Eris from 'eris';
+import Discordjs from 'discord.js';
+
 import { AxonOptions } from '../../..';
 
 import Client from './Client';
-
 
 import botConfig from './configs/customConfig.json';
 import tokenConfig from './configs/tokenConfig.json';
 import templateConfig from './configs/templateConfig.json';
 
-
 import MyUtils from './MyUtils';
+
 
 const axonOptions = new AxonOptions( {
     botConfig,
     templateConfig,
     tokenConfig,
+    token: tokenConfig.bot.token,
 
     utils: MyUtils, // use your own Utils
     logger: null, // custom Logger
@@ -30,16 +31,13 @@ const axonOptions = new AxonOptions( {
  *
  * new Client(token, erisOptions, AxonOptions) => Modules imported in Client
  */
-const client = new Eris.Client(
-    tokenConfig.bot.token,
+const client = new Discordjs.Client(
+    
     {
-        autoreconnect: true,
-        defaultImageFormat: 'png',
-        defaultImageSize: 512,
         disableEveryone: true,
-        getAllUsers: false,
-        messageLimit: 100,
-        restMode: true,
+        fetchAllMembers: false,
+        messageCacheMaxSize: 100,
+        disabledEvents: ['TYPING_START'],
     }
 );
 

@@ -23,7 +23,7 @@ class Client extends AxonClient {
     }
 
     onInit() {
-        this.staff.contributor = [];
+        this.staff.contributors = [];
     }
 
     onStart() {
@@ -38,9 +38,12 @@ class Client extends AxonClient {
         // called after ready event
         // overrides default editStatus
         // used to setup custom status
-        this.botClient.editStatus(null, {
-            name: `AxonCore | ${this.settings.prefixes[0]}help`,
-            type: 0,
+        this.botClient.user.setPresence( {
+            status: 'online',
+            activity: {
+                name: `AxonCore | ${this.settings.prefixes[0]}help`,
+                type: 0,
+            },
         } );
     }
 

@@ -40,7 +40,7 @@
 
     "debugMode": false,
 
-    "library": 0,
+    "library": 1,
     "logger": 1,
     "db": 0
 }

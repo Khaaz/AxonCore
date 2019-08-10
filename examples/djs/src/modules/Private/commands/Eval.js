@@ -16,7 +16,7 @@ import {
     Queue,
     AutoQueue,
     AsyncQueue,
-} from '../../../../../..';
+} from '../../../../../../';
 
 class Eval extends Command {
     constructor(module) {
@@ -75,7 +75,7 @@ class Eval extends Command {
         }
 
         /** Just for security. */
-        evaled = evaled.replace(this.bot._token, 'Khaaz Baguette');
+        evaled = evaled.replace(this.bot.token, 'Khaaz Baguette');
 
         const fullLen = evaled.length;
 

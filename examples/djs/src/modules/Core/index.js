@@ -1,4 +1,4 @@
-import { Module } from '../../../..';
+import { Module } from '../../../../../';
 
 import * as commands from './commands/index';
 import * as listeners from './listeners/index';

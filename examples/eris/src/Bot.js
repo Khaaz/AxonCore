@@ -40,6 +40,9 @@ const client = new Eris.Client(
         getAllUsers: false,
         messageLimit: 100,
         restMode: true,
+        disableEvents: {
+            TYPING_START: true,
+        },
     }
 );
 

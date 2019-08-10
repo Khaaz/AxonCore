@@ -23,7 +23,7 @@ class Client extends AxonClient {
     }
 
     onInit() {
-        this.staff.contributor = [];
+        this.staff.contributors = [];
     }
 
     onStart() {
