@@ -15,6 +15,8 @@ class DjsInterface extends LibraryInterface {
     constructor(axonClient, token) {
         super(axonClient);
 
+        this.type = 1;
+        
         this.client = new DjsClient(this, token);
         this.user = new DjsUser(this);
         this.member = new DjsMember(this);

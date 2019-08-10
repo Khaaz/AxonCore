@@ -15,6 +15,8 @@ class ErisInterface extends LibraryInterface {
     constructor(axonClient) {
         super(axonClient);
 
+        this.type = 0;
+
         this.client = new ErisClient(this);
         this.user = new ErisUser(this);
         this.member = new ErisMember(this);
