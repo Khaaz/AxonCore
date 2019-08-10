@@ -34,7 +34,7 @@
     "lint": "eslint .",
     "test": "eslint src *.js",
     "start:eris": "node -r esm examples/eris/src/index.js",
-    "start:djs": "node -r esm examples/eris/src/index.js",
+    "start:djs": "node -r esm examples/djs/src/index.js",
     "pm2start:eris": "node examples/eris/scripts/start.js",
     "pm2start:djs": "node examples/djs/scripts/start.js"
   },
