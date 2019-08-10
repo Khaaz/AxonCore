@@ -267,7 +267,6 @@ class AxonClient extends EventEmitter {
             this.logger.error(err.stack);
         }
 
-        console.log(this.library.enums.EVENTS.READY);
         this.botClient.once(this.library.enums.EVENTS.READY, this._onReady.bind(this) );
         // this.botClient.on('debug', console.log);
         this.botClient.on(this.library.enums.EVENTS.MESSAGE_CREATE, this._onMessageCreate.bind(this) );
@@ -387,7 +386,7 @@ class AxonClient extends EventEmitter {
      * @memberof AxonClient
      */
     initStatus() {
-        this.library.client.setPresence(null, {
+        this.library.client.setPresence('online', {
             name: `AxonCore | ${this.settings.prefixes[0]}help`,
             type: 0,
         } );

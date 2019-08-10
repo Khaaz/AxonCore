@@ -30,7 +30,7 @@ class DjsClient extends Client {
     }
 
     setPresence(status, game) {
-        return this.client.setPresence( {
+        return this.client.user.setPresence( {
             status,
             activity: game,
         } );
