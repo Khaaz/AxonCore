@@ -267,9 +267,10 @@ class AxonClient extends EventEmitter {
             this.logger.error(err.stack);
         }
 
+        console.log(this.library.enums.EVENTS.READY);
         this.botClient.once(this.library.enums.EVENTS.READY, this._onReady.bind(this) );
         // this.botClient.on('debug', console.log);
-        this.botClient.on(this.library.enums.EVENTS.MESSSAGE_CREATE, this._onMessageCreate.bind(this) );
+        this.botClient.on(this.library.enums.EVENTS.MESSAGE_CREATE, this._onMessageCreate.bind(this) );
     }
     
     // **** LifeCycle methods **** //
