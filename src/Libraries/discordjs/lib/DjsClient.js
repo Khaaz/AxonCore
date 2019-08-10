@@ -37,6 +37,15 @@ class DjsClient extends Client {
     }
 
     triggerWebhook(id, token, data) {
+        this.client.api.webhooks(id, token).post( {
+            data,
+            query: { wait: true },
+            auth: false,
+        } );
+    }
+
+    /** @TODO remove custom request when sure the above works */
+    _triggerWebhook(id, token, data) {
         return this._request(`${this.baseWebhookURL}${id}/${token}`, {
             method: 'POST',
             headers: {
