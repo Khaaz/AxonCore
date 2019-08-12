@@ -22,7 +22,7 @@ class GuildConfigsCache {
     constructor(axonClient) {
         this._axon = axonClient;
 
-        this.guildConfigs = new Collection(GuildConfig);
+        this.guildConfigs = new Collection( { base: GuildConfig } );
     }
 
     /**

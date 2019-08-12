@@ -120,8 +120,8 @@ class AxonClient extends EventEmitter {
         this.library = LibraryHandler.pickLibrary(this, axonOptions);
 
         /** Structures */
-        this.modules = new Collection(Module); // Module Label => Module Object
-        this.commands = new Collection(Command); // Command Label => Command Object
+        this.modules = new Collection( { base: Module } ); // Module Label => Module Object
+        this.commands = new Collection( { base: Command } ); // Command Label => Command Object
         this.commandAliases = new Map(); // Command Alias => Command label
         this.eventManager = new EventManager(this); // Event Label => Event function
         /** GuildConfigs */

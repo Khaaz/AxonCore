@@ -26,7 +26,7 @@ class EventManager extends Base {
         // For each eventName => Array of Event Obj
         this._listeners = {};
         // For each eventName => One Function
-        this._handlers = new Collection(Handler);
+        this._handlers = new Collection( { base: Handler } );
 
         // this.HANDLERS = this.axon.libInterface.HANDLERS;
     }
