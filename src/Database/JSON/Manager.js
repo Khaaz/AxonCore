@@ -51,11 +51,13 @@ class Manager {
     }
 
     getExecutor(guildID) {
-        const executor = this.guildExecutors[guildID] || new AsyncQueue();
+        let executor = this.guildExecutors[guildID];
 
         if (!executor) {
+            executor = new AsyncQueue();
             this.guildExecutors[guildID] = executor;
         }
+        
         return executor;
     }
 
