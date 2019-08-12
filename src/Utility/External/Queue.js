@@ -41,7 +41,7 @@ class Queue {
                 if (this.stopOnError) {
                     throw err;
                 }
-                console.log(func);
+                console.log(err);
             }
 
             this.exec();
