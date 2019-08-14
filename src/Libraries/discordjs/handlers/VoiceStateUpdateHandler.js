@@ -1,8 +1,8 @@
 import Handler from '../../../Structures/Handler';
 
 class VoiceStateUpdateHandler extends Handler {
-    handle(member) {
-        return member.guild ? member.guild.id : null;
+    handle(voiceState) {
+        return voiceState.guild ? voiceState.guild.id : null;
     }
 }
 

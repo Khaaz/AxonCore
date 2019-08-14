@@ -1,9 +1,9 @@
 import Handler from '../../../Structures/Handler';
 
-class UnknownHandler extends Handler {
+class ShardResumedHandler extends Handler {
     handle() {
         return null;
     }
 }
 
-export default UnknownHandler;
+export default ShardResumedHandler;

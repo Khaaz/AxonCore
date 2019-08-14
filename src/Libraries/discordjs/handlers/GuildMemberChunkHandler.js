@@ -1,8 +1,8 @@
 import Handler from '../../../Structures/Handler';
 
 class GuildMemberChunkHandler extends Handler {
-    handle(guild) {
-        return guild.id;
+    handle(members) {
+        return members[0] ? members[0].guild.id : null;
     }
 }
 

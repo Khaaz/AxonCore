@@ -1,9 +1,9 @@
 import Handler from '../../../Structures/Handler';
 
-class ShardPreReadyHandler extends Handler {
+class ShardReconnectingHandler extends Handler {
     handle() {
         return null;
     }
 }
 
-export default ShardPreReadyHandler;
+export default ShardReconnectingHandler;
