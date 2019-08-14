@@ -19,8 +19,6 @@ export { default as guildRoleUpdate } from './GuildRoleUpdateHandler';
 export { default as guildUnavailable } from './GuildUnavailableHandler';
 export { default as guildUpdate } from './GuildUpdateHandler';
 
-export { default as unavailableGuildCreate } from './UnavailableGuildCreateHandler';
-
 export { default as messageCreate } from './MessageCreateHandler';
 export { default as messageDeleteBulk } from './MessageDeleteBulkHandler';
 export { default as messageDelete } from './MessageDeleteHandler';
@@ -29,6 +27,8 @@ export { default as messageReactionRemoveAll } from './MessageReactionRemoveAllH
 export { default as messageReactionRemove } from './MessageReactionRemoveHandler';
 export { default as messageUpdate } from './MessageUpdateHandler';
 
+export { default as presenceUpdate } from './PresenceUpdateHandler';
+
 export { default as shardDisconnect } from './ShardDisconnectHandler';
 export { default as shardPreReady } from './ShardPreReadyHandler';
 export { default as shardReady } from './ShardReadyHandler';
@@ -36,11 +36,11 @@ export { default as shardResume } from './ShardResumeHandler';
 
 export { default as typingStart } from './TypingStartHandler';
 
+export { default as unavailableGuildCreate } from './UnavailableGuildCreateHandler';
+
 export { default as unknown } from './UnknownHandler';
 
 export { default as userUpdate } from './UserUpdateHandler';
-
-export { default as presenceUpdate } from './PresenceUpdateHandler';
 
 export { default as voiceChannelJoin } from './VoiceChannelJoinHandler';
 export { default as voiceChannelLeave } from './VoiceChannelLeaveHandler';
