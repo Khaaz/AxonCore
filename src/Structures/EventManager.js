@@ -126,12 +126,19 @@ class EventManager extends Base {
      * @memberof EventManager
      */
     registerHandler(event) {
+        const HandlerClass = this.HANDLERS[event];
+        if (!HandlerClass) {
+            this.logger.error(`EventManager: Event ${event} is not a valid event name!`);
+            return null;
+        }
+
         let handler = this._handlers.get(event);
         if (handler) {
             /** Remove the current event if any registered */
             this.bot.off(event, handler._handle);
         }
-        handler = new this.HANDLERS[event](this.axon, event, this._listeners[event] );
+
+        handler = new HandlerClass(this.axon, event, this._listeners[event] );
 
         this._handlers.set(event, handler);
 
@@ -180,7 +187,7 @@ class EventManager extends Base {
             return false;
         }
         this.registerEvent(event);
-        this.logger.info(`Event: Listener ${label} for ${event} unregistered!`);
+        this.logger.info(`EventManager: Listener ${label} for ${event} unregistered!`);
         return true;
     }
 
@@ -214,7 +221,7 @@ class EventManager extends Base {
             return false;
         }
         this.bot.off(event, handler._handle);
-        this.logger.info(`Event: ${event} unregistered!`);
+        this.logger.info(`EventManager: ${event} unregistered!`);
         return true;
     }
 }
