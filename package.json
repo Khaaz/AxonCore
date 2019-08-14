@@ -19,7 +19,7 @@
     "@axonteam/eslint-config": "^2.2.0",
     "@types/node": "^12.6.2",
     "chalk": "^2.4.2",
-    "discord.js": "^11.5.1",
+    "discord.js": "discordjs/discord.js",
     "eris": "^0.10.1",
     "eslint": "^6.1.0",
     "jsdoc-to-markdown": "^4.0.1",
