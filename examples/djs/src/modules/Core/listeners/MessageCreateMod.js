@@ -5,7 +5,7 @@ class MessageCreateMod extends Listener {
         super(...args);
 
         /** Event Name (Discord name) */
-        this.eventName = 'messageCreate';
+        this.eventName = 'message';
         /** Event name (Function name) */
         this.label = 'messageCreateMod';
 

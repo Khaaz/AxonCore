@@ -31,7 +31,7 @@ class Pong extends Command {
 
         this.permissions = new CommandPermissions(this, {
             user: {
-                needed: ['manageGuild'],
+                needed: ['MANAGE_GUILD'],
             },
             staff: {
                 bypass: [...this.axon.staff.owners, ...this.axon.staff.admins],
