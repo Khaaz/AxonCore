@@ -52,7 +52,7 @@ export const EVENTS = {
     RAW_WS: 'rawWS',
 };
 
-export const DISCORD_ERIS_PERMISSIONS = {
+export const DISCORD_LIB_PERMISSIONS = {
     CREATE_INSTANT_INVITE: 'createInstantInvite',
     KICK_MEMBERS: 'kickMembers',
     BAN_MEMBERS: 'banMembers',
@@ -153,7 +153,7 @@ export const PERMISSIONS_NAMES = {
 
 export default {
     EVENTS,
-    DISCORD_ERIS_PERMISSIONS,
+    DISCORD_LIB_PERMISSIONS,
     PERMISSIONS,
     PERMISSIONS_NAMES,
 };
