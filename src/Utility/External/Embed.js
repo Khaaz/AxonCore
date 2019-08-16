@@ -1,4 +1,5 @@
 import AxonError from '../../Errors/AxonError';
+import { EMBED_LIMITS } from '../Constants/DiscordEnums';
 
 /**
  * Embed class to create Embed without without using raw json format
@@ -6,6 +7,25 @@ import AxonError from '../../Errors/AxonError';
  * @author DutchVanDerLinde
  *
  * @class Embed
+ *
+ * @prop {String} title
+ * @prop {String} url
+ * @prop {String} description
+ * @prop {String} color
+ * @prop {Object} author
+ * @prop {String} [author.name]
+ * @prop {String} [author.url]
+ * @prop {String} [author.icon_url]
+ * @prop {Object} thumbnail
+ * @prop {String} [thumbnail.url]
+ * @prop {Array<Object>} fields - { name: "string", value: "string", inline: boolean }
+ * @prop {Object} image
+ * @prop {String} [image.url]
+ * @prop {Object} footer
+ * @prop {String} [footer.text]
+ * @prop {String} [footer.icon_url]
+ * @prop {String} timetamp
+ * @prop {Object} file
  */
 class Embed {
     /**
@@ -16,45 +36,22 @@ class Embed {
      * @param {String} [data.url]
      * @param {String} [data.description]
      * @param {String} [data.color]
-     *
      * @param {Object} [data.author]
      * @param {String} [data.author.name]
      * @param {String} [data.author.url]
      * @param {String} [data.author.icon_url]
-     *
      * @param {Object} [data.thumbnail]
      * @param {String} [data.thumbnail.url]
-     *
-     * @param {Array} [data.fields] - { name: "string", value: "string", inline: boolean }
-     *
+     * @param {Array<Object>} [data.fields] - { name: "string", value: "string", inline: boolean }
      * @param {Object} [data.image]
      * @param {String} [data.image.url]
-     *
      * @param {Object} [data.footer]
      * @param {String} [data.footer.text]
      * @param {String} [data.footer.icon_url]
-     *
      * @param {String} [data.timetamp]
      * @param {Object} [data.file]
      *
-     * @prop {String} title
-     * @prop {String} url
-     * @prop {String} description
-     * @prop {String} color
-     * @prop {Object} author
-     * @prop {String} [author.name]
-     * @prop {String} [author.url]
-     * @prop {String} [author.icon_url]
-     * @prop {Object} thumbnail
-     * @prop {String} [thumbnail.url]
-     * @prop {Array} fields - { name: "string", value: "string", inline: boolean }
-     * @prop {Object} image
-     * @prop {String} [image.url]
-     * @prop {Object} footer
-     * @prop {String} [footer.text]
-     * @prop {String} [footer.icon_url]
-     * @prop {String} timetamp
-     * @prop {Object} file
+     * @memberof Embed
      */
     constructor(data = {} ) {
         this.title = data.title;
@@ -86,10 +83,12 @@ class Embed {
      * @param {String} title - The title
      * @returns {Embed} This embed
      * @example Embed.setTitle('My New Embed');
+     *
+     * @memberof Embed
      */
     setTitle(title) {
         title = this._resolveString(title);
-        if (title.length > 256) {
+        if (title.length > EMBED_LIMITS.LIMIT_TITLE) {
             throw new AxonError('Embed titles may not exceed 256 characters.');
         }
         this.title = title;
@@ -102,10 +101,12 @@ class Embed {
      * @param {String} description -The description
      * @returns {Embed} This embed
      * @example Embed.setDescription('Hi, this is my description!!!');
+     *
+     * @memberof Embed
      */
     setDescription(description) {
         description = this._resolveString(description);
-        if (description.length > 2048) {
+        if (description.length > EMBED_LIMITS.LIMIT_DESCRIPTION) {
             throw new AxonError('Embed descriptions may not exceed 2048 characters.');
         }
         this.description = description;
@@ -116,6 +117,8 @@ class Embed {
      * @description Sets the URL of this embed.
      * @param {String} url The URL
      * @returns {Embed} This embed
+     *
+     * @memberof Embed
      */
     setURL(url) {
         this.url = url;
@@ -128,6 +131,8 @@ class Embed {
      * @param {Number} color - The color of the embed
      * @returns {Embed} This embed
      * @example Embed.setColor(0xFFFFF);
+     *
+     * @memberof Embed
      */
     setColor(color) {
         this.color = color;
@@ -142,10 +147,16 @@ class Embed {
      * @param {String} url - The URL of the author
      * @returns {Embed} This embed
      * @example Embed.setAuthor('KhaaZ', 'khaaz.png');
+     *
+     * @memberof Embed
      */
     setAuthor(name, icon, url) {
+        const authorName = this._resolveString(name);
+        if (authorName.length > EMBED_LIMITS.LIMIT_AUTHOR_NAME) {
+            throw new AxonError('Embed footer text may not exceed 2048 characters.');
+        }
         this.author = {
-            name: this._resolveString(name), icon_url: icon, url,
+            name: authorName, icon_url: icon, url,
         };
         return this;
     }
@@ -155,6 +166,8 @@ class Embed {
      *
      * @param {Date} [timestamp=new Date()] - The timestamp
      * @returns {Embed} This embed
+     *
+     * @memberof Embed
      */
     setTimestamp(timestamp = new Date() ) {
         this.timestamp = timestamp;
@@ -169,20 +182,22 @@ class Embed {
      * @param {Boolean} [inline=false] - Set the field to display inline
      * @returns {Embed} This embed
      * @example Embed.addField('My Field', 'This is a new field!', true);
+     *
+     * @memberof Embed
      */
     addField(name, value, inline = false) {
-        if (this.fields.length >= 25) {
+        if (this.fields.length >= EMBED_LIMITS.NUMBER_FIELDS) {
             throw new AxonError('Embeds may not exceed 25 fields.');
         }
         name = this._resolveString(name);
-        if (name.length > 256) {
+        if (name.length > EMBED_LIMITS.LIMIT_FIELD_NAME) {
             throw new AxonError('Embed field names may not exceed 256 characters.');
         }
         if (!/\S/.test(name) ) {
             throw new TypeError('Cannot read property \'embed.fields.name\' of undefined');
         }
         value = this._resolveString(value);
-        if (value.length > 1024) {
+        if (value.length > EMBED_LIMITS.LIMIT_FIELD_VALUE) {
             throw new AxonError('Embed field values may not exceed 1024 characters.');
         }
         if (!/\S/.test(value) ) {
@@ -199,6 +214,8 @@ class Embed {
      *
      * @param {String} url - The URL of the thumbnail
      * @returns {Embed} This embed
+     *
+     * @memberof Embed
      */
     setThumbnail(url) {
         this.thumbnail = { url };
@@ -211,6 +228,8 @@ class Embed {
      * @param {String} url - The URL of the image
      * @returns {Embed} This embed
      * @example Embed.setImage('myImageUrl.png');
+     *
+     * @memberof Embed
      */
     setImage(url) {
         this.image = { url };
@@ -224,10 +243,12 @@ class Embed {
      * @param {String} [icon] - The icon URL of the footer
      * @returns {Embed} This embed
      * @example Embed.setFooter('My Footer', 'footer.png');
+     *
+     * @memberof Embed
      */
     setFooter(text, icon) {
         text = this._resolveString(text);
-        if (text.length > 2048) {
+        if (text.length > EMBED_LIMITS.LIMIT_FOOTER_TEXT) {
             throw new AxonError('Embed footer text may not exceed 2048 characters.');
         }
         this.footer = { text, icon_url: icon };
@@ -235,11 +256,14 @@ class Embed {
     }
 
     /**
-     * @description Sets the file to upload alongside the embed. This file can be accessed via `attachment://fileName.extension` when
-     * setting an embed image or author/footer icons. Only one file may be attached.
-     * @param {string} file Local path or URL to the file to attach,
-     * or valid FileOptions for a file to attach
+     * Sets the file to upload alongside the embed.
+     * This file can be accessed via `attachment://fileName.extension` when setting an embed image or author/footer icons.
+     * Only one file may be attached.
+     *
+     * @param {string} file Local path or URL to the file to attach, or valid FileOptions for a file to attach
      * @returns {Embed} This embed
+     *
+     * @memberof Embed
      */
     attachFile(file) {
         this.file = file;

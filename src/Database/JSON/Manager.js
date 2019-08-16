@@ -98,7 +98,9 @@ class Manager {
      * @memberof Manager
      */
     async readFile(path) {
-        if (!path) return null;
+        if (!path) {
+            return null;
+        }
         try {
             return await readFileAsync(path);
         } catch (err) {
@@ -115,7 +117,9 @@ class Manager {
      * @memberof Manager
      */
     async writeFile(path, content = '{}') {
-        if (!path) return null;
+        if (!path) {
+            return null;
+        }
         if (path.search('.json') === -1) {
             return null;
         }

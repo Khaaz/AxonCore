@@ -10,7 +10,7 @@ pm2.connect( (err) => {
     pm2.start( {
         script: 'index.js',
         args: ['--color'],
-        name: 'AxonCore',
+        name: 'AxonCore.eris',
         exec_mode: 'fork',
         max_memory_restart: '1G',
         cwd: 'example/src',
@@ -22,7 +22,9 @@ pm2.connect( (err) => {
         wait_ready: true,
     }, (e) => {
         pm2.disconnect();
-        if (e) throw e;
+        if (e) {
+            throw e;
+        }
     } );
 } );
 //
