@@ -48,13 +48,15 @@ class Client extends AxonClient {
     }
 
     // disabled
-    $sendFullHelp(msg) {
+    // eslint-disable-next-line no-unused-vars
+    $sendFullHelp(msg, guildConfig) {
         // override sendFullHelp method
         return this.axonUtils.sendMessage(msg.channel, 'Full Help override');
     }
 
     // disabled
-    $sendHelp(command, msg) {
+    // eslint-disable-next-line no-unused-vars
+    $sendHelp(command, { msg, guildConfig, isAdmin, isOwner } ) {
         // override sendHelp method
         return this.axonUtils.sendMessage(msg.channel, `Help override for ${command.label}`);
     }
