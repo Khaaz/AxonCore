@@ -75,8 +75,10 @@ class Eval extends Command {
         }
 
         /** Just for security. */
-        evaled = evaled.replace(this.bot._token, 'Khaaz Baguette');
-
+        evaled = this.bot._token
+            ? evaled.replace(this.bot._token, 'Khaaz Baguette')
+            : evaled.replace(this.bot.token, 'Khaaz Baguette');
+        
         const fullLen = evaled.length;
 
         if (fullLen === 0) {
