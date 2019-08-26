@@ -401,11 +401,11 @@ class Command extends Base {
      * @returns {Promise<Message?>} Message Object
      * @memberof Command
      */
-    sendUserPerms(channel, msg, deleteTimeout = 9000 ) {
+    sendUserPerms(channel, member, deleteTimeout = 9000 ) {
         const options = deleteTimeout === null ? { delete: false } : { delete: true, delay: deleteTimeout }
         return this.sendError(
             channel,
-            this.options.displayPermissionMessage(msg),
+            this.options.displayPermissionMessage(channel, member),
             options
         );
     }
