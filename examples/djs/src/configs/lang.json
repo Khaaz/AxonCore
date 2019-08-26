@@ -1,0 +1,16 @@
+{
+    "english": {
+        "ERR_BOT_PERM": "I don't have sufficient permissions to do that! I need: {{permissions}}",
+        "ERR_CALLER_PERM": "You don't have sufficient permissions to do that! You need: {{permissions}}",
+        "ERR_DESTINATION_PERM": "This user is a mod/admin, I can't do that!",
+        "ERR_COOLDOWN": "Please, slow down! Remaining time: **{{cooldown}}** sec...",
+        "ERR_GENERAL": "An unexpected error occured! Contact the bot developers."
+    },
+    "french": {
+        "ERR_BOT_PERM": "Je n'ai pas les permissions pour faire cela ! J'ai besoin de: {{permissions}}",
+        "ERR_CALLER_PERM": "Vous n'avez pas les permissions pour faire cela ! Vous avez besoin de: {{permissions}}",
+        "ERR_DESTINATION_PERM": "Cet utilisateur est un mod/admin, je ne peux pas faire ca !",
+        "ERR_COOLDOWN": "S'il vous plait, ralentissez ! Temps restant: **{{cooldown}}** sec...",
+        "ERR_GENERAL": "An unexpected error occured! Contact the bot developers."
+    }
+}

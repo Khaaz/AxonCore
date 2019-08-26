@@ -6,14 +6,14 @@ import Client from './Client';
 
 import botConfig from './configs/customConfig.json';
 import tokenConfig from './configs/tokenConfig.json';
-import templateConfig from './configs/templateConfig.json';
+import lang from './configs/lang.json';
 
 import MyUtils from './MyUtils';
 
 
 const axonOptions = new AxonOptions( {
     botConfig,
-    templateConfig,
+    lang,
     tokenConfig,
     token: tokenConfig.bot.token,
 
