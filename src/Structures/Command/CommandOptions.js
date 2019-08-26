@@ -33,7 +33,7 @@ class CommandOptions {
         let isModule = false;
         if (!(command instanceof Command) ) {
             if (!(command instanceof Module) ) {
-                throw new AxonError('First argument needs to be the Command.', 'CommandPermissions');
+                throw new AxonError('First argument needs to be the Command.', 'CommandOptions');
             } else {
                 isModule = true;
             }
