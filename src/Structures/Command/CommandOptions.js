@@ -51,10 +51,10 @@ class CommandOptions {
         }
 
         this.argsMin = base.argsMin || 0;
-        this.invalidUsageMessage = base.invalidUsageMessage ? base.invalidUsageMessage : true;
+        this.invalidUsageMessage = base.invalidUsageMessage !== false;
         this.invalidPermissionMessage = !!base.invalidPermissionMessage;
         this.deleteCommand = !!base.deleteCommand;
-        this.guildOnly = base.guildOnly !== undefined ? base.guildOnly : true;
+        this.guildOnly = base.guildOnly !== false;
         this.hidden = !!base.hidden;
         this.cooldown = (base.cooldown === 0 || base.cooldown === null) ? 0 : 3000; // eslint-disable-line no-magic-numbers
     }
