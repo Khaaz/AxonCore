@@ -26,8 +26,19 @@
         ]
     },
 
-    "debugMode": false,
+    "template": {
+        "embeds": {
+            "help": 32768
+        },
+        "emotes": {
+            "error": ":x:",
+            "success": ":white_check_mark:"
+        }
+    },
+    
+    "lang": "english",
 
+    "debugMode": false,
     "library": 0,
     "logger": 0,
     "db": 0

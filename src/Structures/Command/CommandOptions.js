@@ -56,7 +56,7 @@ class CommandOptions {
         this.deleteCommand = !!base.deleteCommand;
         this.guildOnly = base.guildOnly !== false;
         this.hidden = !!base.hidden;
-        this.cooldown = (base.cooldown === 0 || base.cooldown === null) ? 0 : 3000; // eslint-disable-line no-magic-numbers
+        this.cooldown = (base.cooldown === 0 || base.cooldown === null) ? 0 : (base.cooldown || 3000); // eslint-disable-line no-magic-numbers
     }
 
     /**

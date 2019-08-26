@@ -37,7 +37,7 @@ class AxonUtils {
     }
 
     get template() {
-        return this.axon.configs.template;
+        return this.axon.template;
     }
 
     get logger() {

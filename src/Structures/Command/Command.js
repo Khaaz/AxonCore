@@ -108,7 +108,7 @@ class Command extends Base {
     }
 
     get template() {
-        return this.axon.configs.template;
+        return this.axon.template;
     }
 
     get library() {
@@ -248,7 +248,7 @@ class Command extends Base {
         return this.execute( { msg, args, guildConfig } )
             /** Successful and failed execution + catched errors (this.error()) */
             .then( (response) => {
-                !isAdmin && this._cooldown.shouldSetCooldown(response) && this._cooldown.setCooldown(this.library.message.getAuthorID(msg) );
+                this._cooldown.shouldSetCooldown(response) && this._cooldown.setCooldown(this.library.message.getAuthorID(msg) );
                 
                 return context.addResponseData(response);
             } )
@@ -305,9 +305,9 @@ class Command extends Base {
             icon_url: this.library.client.getAvatar(),
         };
 
-        embed.color = typeof this.template.embed.colors.help === 'string'
-            ? parseInt(this.template.embed.colors.help, 16) || null
-            : this.template.embed.colors.help;
+        embed.color = typeof this.template.embeds.help === 'string'
+            ? parseInt(this.template.embeds.help, 16) || null
+            : this.template.embeds.help;
 
         embed.description = `**Description:** ${this.infos.description}\n`;
 
@@ -386,7 +386,10 @@ class Command extends Base {
         }
         return this.sendError(
             channel,
-            `${this.template.message.error.permBot} ${permissions.map(p => `\`${this.library.enums.PERMISSIONS_NAMES[p]}\``).join(', ')}.`,
+            // eslint-disable-next-line new-cap
+            this.l.ERR_BOT_PERM( {
+                permissions: permissions.map(p => `\`${this.library.enums.PERMISSIONS_NAMES[p]}\``).join(', '),
+            } ),
             { delete: true, delay: 9000 }
         );
     }
@@ -407,8 +410,12 @@ class Command extends Base {
         }
         return this.sendError(
             channel,
-            this.template.message.error.permSource
-            + (permissions.length > 0 ? ` ${permissions.map(p => `\`${this.library.enums.PERMISSIONS_NAMES[p]}\``).join(', ')}.` : '.'),
+            // eslint-disable-next-line new-cap
+            this.l.ERR_CALLER_PERM( {
+                permissions: (permissions.length > 0
+                    ? ` ${permissions.map(p => `\`${this.library.enums.PERMISSIONS_NAMES[p]}\``).join(', ')}.`
+                    : '.'),
+            } ),
             { delete: true, delay: 9000 }
         );
     }
@@ -422,7 +429,8 @@ class Command extends Base {
      * @memberof Command
      */
     sendTargetPerms(channel) {
-        return this.sendError(channel, this.template.message.error.permTarget, { delete: true, delay: 9000 } );
+        // eslint-disable-next-line new-cap
+        return this.sendError(channel, this.l.ERR_DESTINATION_PERM(), { delete: true, delay: 9000 } );
     }
 
     /**
@@ -435,7 +443,8 @@ class Command extends Base {
     sendCooldown(channel, time) {
         return this.sendError(
             channel,
-            `${this.template.message.error.cooldown} **${Math.ceil( (this.options.cooldown - time) / 100) / 10}sec**...`,
+            // eslint-disable-next-line new-cap
+            this.l.ERR_COOLDOWN( { cooldown: Math.ceil( (this.options.cooldown - time) / 100) / 10 } ),
             { delete: true, delay: 9000 },
         );
     }

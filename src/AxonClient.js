@@ -27,6 +27,7 @@ import DBProvider from './Database/DBProvider'; // default DBProvider
 import logo from './Configs/logo';
 import packageJSON from '../package.json';
 import { EMBED_LIMITS } from './Utility/Constants/DiscordEnums';
+import MessageManager from './Structures/Langs/MessageManager';
 
 
 /**
@@ -52,7 +53,6 @@ import { EMBED_LIMITS } from './Utility/Constants/DiscordEnums';
  * @prop {Object} DBProvider - JSON(default) / Mongoose
  * @prop {Object} configs - configs (axon, template, _tokens) [GETTER: _configs]
  * @prop {Object} [configs.bot] - configs (bot, template, _tokens) [GETTER: _configs]
- * @prop {Object} [configs.template] - configs (axon, template, _tokens) [GETTER: _configs]
  * @prop {Object} [configs._tokens] - configs (axon, template, _tokens) [GETTER: _configs]
  * @prop {Object} staff - BotStaff (owners, admins, +...)
  * @prop {Array<String>} [staff.owners] - Array of user IDs with BotOwner permissions
@@ -74,7 +74,7 @@ class AxonClient extends EventEmitter {
      * @param {Object<Client>} BotClient - Eris or Discordjs Client instance
      * @param {Object<axonOptions>} [axonOptions={}] - Axon options
      * @param {Object} [axonOptions.botConfig=null] - General Axon config
-     * @param {Object} [axonOptions.templateConfig=null] - Template config
+     * @param {Object} [axonOptions.lang=null] - Message templates / translations
      * @param {Object} [axonOptions.tokenConfig=null] - Token config
      * @param {Function} [axonOptions.logo=null] - Custom function that will log a logo
      * @param {Object<Utils>} [axonOptions.utils] - Utils class, needs to be an instance of AxonCore.Utils
@@ -130,6 +130,8 @@ class AxonClient extends EventEmitter {
         /** Core Logic */
         this.moduleLoader = new ModuleLoader(this);
         this.dispatcher = new CommandDispatcher(this);
+
+        this.messageManager = new MessageManager(this, axonOptions.lang);
         
         /** General */
         this.staff = ClientInitialiser.initStaff(axonOptions.botConfig, this.logger);
@@ -190,7 +192,11 @@ class AxonClient extends EventEmitter {
     }
 
     get template() {
-        return this.configs.template;
+        return this.configs.bot.template;
+    }
+
+    get l() {
+        return this.messageManager;
     }
 
     /**
@@ -202,7 +208,7 @@ class AxonClient extends EventEmitter {
      * @memberof AxonClient
      */
     getModule(module) {
-        return this.modules.get(module) || null;
+        return this.modules.find(m => m.toLowerCase() === module.toLowerCase() ) || null;
     }
 
     /**
@@ -508,9 +514,9 @@ class AxonClient extends EventEmitter {
             text: 'Runs with AxonCore',
         };
 
-        embed.color = typeof this.template.embed.colors.help === 'string'
-            ? parseInt(this.template.embed.colors.help, 16) || null
-            : this.template.embed.colors.help;
+        embed.color = typeof this.template.embeds.help === 'string'
+            ? parseInt(this.template.embeds.help, 16) || null
+            : this.template.embeds.help;
 
         let commandList = '';
         if (guildConfig) {

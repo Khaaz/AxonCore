@@ -56,6 +56,10 @@ class Base {
         return this.axon.utils;
     }
 
+    get l() {
+        return this.axon.l;
+    }
+
     /**
      * Get a module from AxonClient with the label
      *
@@ -148,9 +152,9 @@ class Base {
      * @memberof Base
      */
     async sendSuccess(channel, content, options = {} ) {
-        const triggerCooldown = options.triggerCooldown !== undefined ? options.triggerCooldown : true;
+        const triggerCooldown = options.triggerCooldown !== false;
         if (typeof content === 'string') {
-            await this.sendMessage(channel, `${this.template.emote.success} ${content}`, options);
+            await this.sendMessage(channel, `${this.template.emotes.success} ${content}`, options);
         } else {
             await this.sendMessage(channel, content, options);
         }
@@ -177,7 +181,7 @@ class Base {
     async sendError(channel, content, options = {} ) {
         const triggerCooldown = !!options.triggerCooldown;
         if (typeof content === 'string') {
-            await this.sendMessage(channel, `${this.template.emote.error} ${content}`, options);
+            await this.sendMessage(channel, `${this.template.emotes.error} ${content}`, options);
         } else {
             await this.sendMessage(channel, content, options);
         }
@@ -197,7 +201,8 @@ class Base {
      * @memberof Base
      */
     error(msg, err, type, errMsg) {
-        errMsg = errMsg || this.template.message.error.general;
+        // eslint-disable-next-line new-cap
+        errMsg = errMsg || this.l.ERR_GENERAL();
 
         if (err) {
             err.message = `Type: ${TYPE_ERRORS[type.toLowerCase()]} | ${err.message}`;

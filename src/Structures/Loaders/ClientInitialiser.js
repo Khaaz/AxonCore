@@ -1,5 +1,4 @@
 import defaultBotConfig from '../../Configs/botConfig.json';
-import defaultTemplateConfig from '../../Configs/templateConfig.json';
 import defaultTokenConfig from '../../Configs/tokenConfig.json';
 
 import Utils from '../../Utility/Utils';
@@ -19,11 +18,11 @@ class ClientInitialiser {
      * Ensure config validity by comparing to the default one. Make sure the config has all required fields.
      *
      * @static
-     * @param {Object} { axonConfig, templateConfig, tokenConfig }
+     * @param {Object} { axonConfig, tokenConfig }
      * @returns {Object} The newly created configs object
      * @memberof ClientInitialiser
      */
-    static initConfigs( { botConfig, templateConfig, tokenConfig } ) {
+    static initConfigs( { botConfig, tokenConfig } ) {
         const configs = {};
 
         /** Axon Config */
@@ -32,14 +31,6 @@ class ClientInitialiser {
         } else {
             configs.bot = defaultBotConfig;
             DefaultLogger.error('Couldn\'t init custom axon config: Invalid format. Used default values instead.');
-        }
-
-        /** Template Config */
-        if (templateConfig && Utils.compareObject(defaultTemplateConfig, templateConfig) ) {
-            configs.template = templateConfig;
-        } else {
-            configs.template = defaultTemplateConfig;
-            DefaultLogger.warn('Couldn\'t init custom template config: Invalid format. Used default values instead.');
         }
 
         /** Token Config */
