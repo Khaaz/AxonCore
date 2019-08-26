@@ -136,14 +136,8 @@ class CommandOptions {
      * 
      * @returns {String}
      */
-    displayPermissionMessage(msg) {
-        if (this.invalidPermissionMessage === null) {
-            return `${this._command.template.message.error.permSource} {{permissions}}`
-        }
-        if (typeof this.invalidPermissionMessage === 'string') {
-            return this.invalidPermissionMessage
-        }
-        return this.invalidPermissionMessage(msg)
+    displayPermissionMessage(channel, member) {
+        return this.invalidPermissionMessage(channel, member)
     }
 }
 
