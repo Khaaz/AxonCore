@@ -88,7 +88,7 @@ class CommandContext {
      * @memberof CommandContext
      */
     addResponseData(commandResponse = {} ) {
-        this.success = commandResponse.success !== undefined ? commandResponse.success : true;
+        this.success = commandResponse.success !== false;
         this.error = (!this.success && commandResponse.error)
             ? commandResponse.error
             : null;
