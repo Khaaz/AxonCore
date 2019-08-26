@@ -3,9 +3,6 @@ import DBService from './DBProvider';
 import AxonConfig from '../Structures/DataStructure/AxonConfig';
 import GuildConfig from '../Structures/DataStructure/GuildConfig';
 
-import AxonSchema from './Mongo/AxonSchema';
-import GuildSchema from './Mongo/GuildSchema';
-
 /**
  * DB interface to interact with a MongoDB Database.
  *
@@ -26,8 +23,11 @@ class MongoProvider extends DBService {
      * @memberof MongoProvider
      */
     init(axonOptions = null) { // eslint-disable-line no-unused-vars
-        this.AxonSchema = AxonSchema;
-        this.GuildSchema = GuildSchema;
+        // We use require to require the schema at runtime.
+        // This will prevent the MingoProvider to DIRECTLY dependingon mongoose and preventing to make it break the global export
+        // This will also only create the model at runtime, allowing to override the model if the MongoProvider is extended
+        this.AxonSchema = require('./Mongo/AxonSchema').default;
+        this.GuildSchema = require('./Mongo/GuildSchema').default;
     }
 
     // **** INIT **** //

@@ -127,7 +127,7 @@ class CommandLoader extends Loader {
      */
     registerCommand(command) {
         if (command.hasSubcmd) {
-            command.subCommands = new Collection(Command);
+            command.subCommands = new Collection( { base: Command } );
             command.subCommandsAliases = new Map();
             this.loadSubCommands(command);
         }
@@ -147,7 +147,7 @@ class CommandLoader extends Loader {
      */
     registerSubCommand(command, parent) {
         if (command.hasSubcmd) {
-            command.subCommands = new Collection(Command);
+            command.subCommands = new Collection( { base: Command } );
             command.subCommandsAliases = new Map();
             this.loadSubCommands(command);
         }

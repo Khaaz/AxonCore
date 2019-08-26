@@ -1,9 +1,7 @@
 import Base from './Base';
 
 import Collection from '../Utility/Collection';
-import Handler from '../Handlers/Handler';
-
-import * as HANDLERS from '../Handlers/eris/index';
+import Handler from './Handler';
 
 /**
  * Event Manager class
@@ -28,7 +26,13 @@ class EventManager extends Base {
         // For each eventName => Array of Event Obj
         this._listeners = {};
         // For each eventName => One Function
-        this._handlers = new Collection(Handler);
+        this._handlers = new Collection( { base: Handler } );
+
+        // this.HANDLERS = this.axon.libInterface.HANDLERS;
+    }
+
+    get HANDLERS() {
+        return this.axon.library.HANDLERS;
     }
 
     // **** GETTERS **** //
@@ -122,12 +126,19 @@ class EventManager extends Base {
      * @memberof EventManager
      */
     registerHandler(event) {
+        const HandlerClass = this.HANDLERS[event];
+        if (!HandlerClass) {
+            this.logger.error(`EventManager: Event ${event} is not a valid event name!`);
+            return null;
+        }
+
         let handler = this._handlers.get(event);
         if (handler) {
             /** Remove the current event if any registered */
             this.bot.off(event, handler._handle);
         }
-        handler = new HANDLERS[event](this.axon, event, this._listeners[event] );
+
+        handler = new HandlerClass(this.axon, event, this._listeners[event] );
 
         this._handlers.set(event, handler);
 
@@ -176,7 +187,7 @@ class EventManager extends Base {
             return false;
         }
         this.registerEvent(event);
-        this.logger.info(`Event: Listener ${label} for ${event} unregistered!`);
+        this.logger.info(`EventManager: Listener ${label} for ${event} unregistered!`);
         return true;
     }
 
@@ -209,8 +220,8 @@ class EventManager extends Base {
         if (!handler) {
             return false;
         }
-        this.bot.off(event, handler.run);
-        this.logger.info(`Event: ${event} unregistered!`);
+        this.bot.off(event, handler._handle);
+        this.logger.info(`EventManager: ${event} unregistered!`);
         return true;
     }
 }

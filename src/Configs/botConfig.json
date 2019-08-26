@@ -28,6 +28,7 @@
 
     "debugMode": false,
 
+    "library": 0,
     "logger": 0,
     "db": 0
 }

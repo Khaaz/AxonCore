@@ -79,6 +79,10 @@ class Utils {
         return this._axon.botClient;
     }
 
+    get library() {
+        return this._axon.library;
+    }
+
     // **** CLIENT **** //
 
     /**
@@ -103,7 +107,8 @@ class Utils {
      * @memberof Utils
      */
     async getPrefix(msg) {
-        const guildConfig = msg.channel.guild ? await this.axon.guildConfigs.getOrFetch(msg.channel.guild.id) : null;
+        const guildID = this.library.message.getGuildID(msg);
+        const guildConfig = guildID ? await this.axon.guildConfigs.getOrFetch(guildID) : null;
         return guildConfig ? guildConfig.getPrefixes()[0] : this.axon.settings.prefixes[0];
     }
 
@@ -120,9 +125,9 @@ class Utils {
      */
     getRoles(guild, member) {
         if (!member) {
-            member = guild.members.get(this.axon.botClient.user.id);
+            member = this.library.client.getMember(guild);
         }
-        return member.roles.map(r => guild.roles.get(r) );
+        return this.library.member.getRolesObject(member);
     }
 
     /**
@@ -201,7 +206,7 @@ class Utils {
      */
     hasPerms(member, permissions = [] ) {
         for (const perm of permissions) {
-            if (!member.permission.has(perm) ) {
+            if (!this.library.member.hasPermission(member, perm) ) {
                 return false;
             }
         }
@@ -220,7 +225,7 @@ class Utils {
      */
     hasChannelPerms(channel, permissions, user = this.bot.user) {
         for (const perm of permissions) {
-            if (!channel.permissionsOf(user.id).has(perm) ) {
+            if (!this.library.channel.hasPermission(channel, user, perm) ) {
                 return false;
             }
         }
@@ -239,7 +244,7 @@ class Utils {
     missingPerms(member, permissions = [] ) {
         const missing = [];
         for (const perm of permissions) {
-            if (!member.permission.has(perm) ) {
+            if (!this.library.member.hasPermission(member, perm) ) {
                 missing.push(perm);
             }
         }
@@ -343,3 +348,5 @@ class Utils {
 }
 
 export default Utils;
+
+// message.member.roles.map(roles => roles).slice(1).sort((a, b) => b.position - a.position).join(", ");

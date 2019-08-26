@@ -1,3 +1,8 @@
+/**
+ * All CONSTANTS used in AxonCore or related to AxonCore behavior / functioning
+ * Type andEnums definition
+ */
+
 export const HTTP_CODE = {
     CONTINUE: 100,
 
@@ -96,11 +101,9 @@ export const HTTP_MESSAGES = {
     511: 'Network Authentication Required',
 };
 
-export const AXON_PERMISSIONS_LEVELS = {
-    OWNER: 0,
-    ADMINISTRATOR: 1, // administrator
-    MANAGER: 2, // manageGuild
-    MODERATOR: 3,
+export const LIBRARY_TYPES = {
+    ERIS: 0,
+    DISCORDJS: 1,
 };
 
 export const LOGGER_TYPES = {
@@ -115,10 +118,27 @@ export const DB_TYPES = {
     MONGO: 1,
 };
 
+export const AXON_PERMISSIONS_LEVELS = {
+    OWNER: 0,
+    ADMINISTRATOR: 1, // administrator
+    MANAGER: 2, // manageGuild
+    MODERATOR: 3,
+};
+export const PERMISSION_ADMIN = 'ADMINISTRATOR';
+export const PERMISSION_MANAGER = 'MANAGE_GUILD';
+
 export const COMMAND_EXECUTION_TYPES = {
     REGULAR: 0,
     ADMIN: 1,
     OWNER: 2,
+};
+
+export const COMMAND_EXECUTION_STATE = {
+    NO_ERROR: 0,
+    COOLDOWN: 1,
+    INVALID_USAGE: 2,
+    INVALID_PERMISSIONS_BOT: 3,
+    INVALID_PERMISSIONS_USER: 4,
 };
 
 export const WEBHOOK_TYPES = {
@@ -138,9 +158,14 @@ export const TYPE_ERRORS = {
 export default {
     HTTP_CODE,
     HTTP_MESSAGES,
-    AXON_PERMISSIONS_LEVELS,
+    LIBRARY_TYPES,
+    LOGGER_TYPES,
     DB_TYPES,
+    AXON_PERMISSIONS_LEVELS,
+    PERMISSION_ADMIN,
+    PERMISSION_MANAGER,
     COMMAND_EXECUTION_TYPES,
+    COMMAND_EXECUTION_STATE,
     WEBHOOK_TYPES,
     TYPE_ERRORS,
 };

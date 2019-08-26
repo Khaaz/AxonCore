@@ -106,6 +106,10 @@ class CommandPermissions {
         return this._command.axonUtils;
     }
 
+    get library() {
+        return this.axon.library;
+    }
+
     /**
      * Permission checker - Does the user have permission to use the command or not?
      * Bypass - Only needs of of these permissions, doesn't check for other permissions
@@ -119,7 +123,9 @@ class CommandPermissions {
      * @memberof Command
      */
     canExecute(msg, guildConf) {
-        const { member, channel } = msg;
+        const member = this.library.message.getMember(msg);
+        const channel = this.library.message.getChannel(msg);
+        
         // Bypass: if one of the perm is true => Exec the command
         if (this._checkPermsUserBypass(member)
             || this._checkUserBypass(member)
@@ -132,7 +138,7 @@ class CommandPermissions {
         if ( ( (guildConf.modOnly || this.serverMod) && !this.axonUtils.isServerMod(member, guildConf) )
             || (this.serverManager && !this.axonUtils.isServerManager(member) )
             || (this.serverAdmin && !this.axonUtils.isServerAdmin(member) )
-            || (this.serverOwner && !this.axonUtils.isServerOwner(member, msg.channel.guild) )
+            || (this.serverOwner && !this.axonUtils.isServerOwner(member, this.library.channel.getGuild(channel) ) )
         ) {
             return false;
         }
@@ -398,7 +404,7 @@ class CommandPermissions {
         }
 
         for (const userPerm of this.user.bypass) {
-            if (member.permission.has(userPerm) ) {
+            if (this.library.member.hasPermission(member, userPerm) ) {
                 return true;
             }
         }
@@ -418,7 +424,7 @@ class CommandPermissions {
             return true;
         }
         for (const userPerm of this.user.needed) {
-            if (!member.permission.has(userPerm) ) {
+            if (!this.library.member.hasPermission(member, userPerm) ) {
                 return false;
             }
         }
@@ -437,7 +443,7 @@ class CommandPermissions {
         if (!this.userIDs.bypass.length) {
             return false;
         }
-        return this.userIDs.bypass.includes(member.id);
+        return this.userIDs.bypass.includes(this.library.member.getID(member) );
     }
 
     /**
@@ -452,7 +458,7 @@ class CommandPermissions {
         if (!this.userIDs.needed.length) {
             return true;
         }
-        return this.userIDs.needed.includes(member.id);
+        return this.userIDs.needed.includes(this.library.member.getID(member) );
     }
 
     /**
@@ -467,7 +473,7 @@ class CommandPermissions {
         if (!this.roleIDs.bypass.length) {
             return false;
         }
-        const { roles } = member;
+        const roles = this.library.member.getRoles(member);
         for (const role of this.roleIDs.bypass) {
             if (roles.includes(role) ) {
                 return true;
@@ -488,7 +494,7 @@ class CommandPermissions {
         if (!this.roleIDs.needed.length) {
             return true;
         }
-        const { roles } = member;
+        const roles = this.library.member.getRoles(member);
         for (const role of this.roleIDs.needed) {
             if (!roles.includes(role) ) {
                 return false;
@@ -509,7 +515,7 @@ class CommandPermissions {
         if (!this.channelIDs.bypass.length) {
             return false;
         }
-        return this.channelIDs.bypass.includes(channel.id);
+        return this.channelIDs.bypass.includes(this.library.channel.getID(channel) );
     }
 
     /**
@@ -524,7 +530,7 @@ class CommandPermissions {
         if (!this.channelIDs.needed.length) {
             return true;
         }
-        return this.channelIDs.needed.includes(channel.id);
+        return this.channelIDs.needed.includes(this.library.channel.getID(channel) );
     }
 
     /**
@@ -539,7 +545,7 @@ class CommandPermissions {
         if (!this.staff.bypass.length) {
             return false;
         }
-        return this.staff.bypass.includes(member.id);
+        return this.staff.bypass.includes(this.library.member.getID(member) );
     }
 
     /**
@@ -554,7 +560,7 @@ class CommandPermissions {
         if (!this.staff.needed.length) {
             return true;
         }
-        return this.staff.needed.includes(member.id);
+        return this.staff.needed.includes(this.library.member.getID(member) );
     }
 }
 

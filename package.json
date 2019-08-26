@@ -1,7 +1,7 @@
 {
   "name": "axoncore",
-  "version": "1.1.1",
-  "description": "Bot framework on top of Eris. Fully featured Client, Command and Event handler.",
+  "version": "2.0.0",
+  "description": "Universal Bot Framework for Eris and Discordjs. Fully featured Client, Command and Event handler with built in DB.",
   "author": "KhaaZ#0001",
   "link": "https://github.com/Khaazz/AxonCore",
   "license": "MIT",
@@ -16,10 +16,11 @@
     "eris": "^0.10.1"
   },
   "devDependencies": {
-    "@axonteam/eslint-config": "^2.1.1",
+    "@axonteam/eslint-config": "^2.2.0",
     "@types/node": "^12.6.2",
     "chalk": "^2.4.2",
-    "eris": "git+https://www.github.com/khaazz/eris.git#axoncore",
+    "discord.js": "discordjs/discord.js",
+    "eris": "^0.10.1",
     "eslint": "^6.1.0",
     "jsdoc-to-markdown": "^4.0.1",
     "mongoose": "^5.6.8",
@@ -32,9 +33,10 @@
   "scripts": {
     "lint": "eslint .",
     "test": "eslint src *.js",
-    "example": "node -r esm example/src/index.js",
-    "examplepm2": "node example/scripts/start.js",
-    "pm2logs": "pm2 logs --lines 100 AxonCore"
+    "start:eris": "node -r esm examples/eris/src/index.js",
+    "start:djs": "node -r esm examples/djs/src/index.js",
+    "pm2start:eris": "node examples/eris/scripts/start.js",
+    "pm2start:djs": "node examples/djs/scripts/start.js"
   },
   "repository": {
     "type": "git",
@@ -49,7 +51,11 @@
     "discord",
     "framework",
     "eris",
+    "discord.js",
+    "discordjs",
     "core",
-    "handler"
+    "handler",
+    "commandHandler",
+    "commandFramework"
   ]
 }

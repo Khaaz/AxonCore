@@ -25,13 +25,13 @@ class CommandCooldown {
     /**
      * Checks the command cooldown of the user
      *
-     * @param {Object<Message>} msg - The Message object
+     * @param {String} userID - The userID
      * @returns {Array[Number,Boolean]} Empty array if no cooldowns / Array with the time left and whether we shouldsend a cooldown message or not
      *
      * @memberof CommandCooldown
      */
-    shouldCooldown(msg) {
-        const cooldown = this._cooldowns.get(msg.author.id);
+    shouldCooldown(userID) {
+        const cooldown = this._cooldowns.get(userID);
 
         // No cooldown registered yet
         if (!cooldown) {
@@ -45,7 +45,7 @@ class CommandCooldown {
         }
 
         // Delete current time for this user.
-        this._cooldowns.delete(msg.author.id);
+        this._cooldowns.delete(userID);
 
         return []; // Doesn't cooldown
     }

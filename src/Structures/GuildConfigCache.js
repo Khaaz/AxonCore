@@ -22,7 +22,7 @@ class GuildConfigsCache {
     constructor(axonClient) {
         this._axon = axonClient;
 
-        this.guildConfigs = new Collection(GuildConfig);
+        this.guildConfigs = new Collection( { base: GuildConfig } );
     }
 
     /**
@@ -86,12 +86,8 @@ class GuildConfigsCache {
             }
             return guildConfig;
         } catch (err) {
-            try {
-                const newGuildConfig = await this._axon.DBProvider.initGuild(gID);
-                return newGuildConfig;
-            } catch (e) {
-                throw e;
-            }
+            const newGuildConfig = await this._axon.DBProvider.initGuild(gID);
+            return newGuildConfig;
         }
     }
 }

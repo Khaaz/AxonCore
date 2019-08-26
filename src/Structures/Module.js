@@ -52,8 +52,8 @@ class Module extends Base {
         /**
          * Containments - all commands and events within this module
          */
-        this.commands = new Collection(Command);
-        this.listeners = new Collection(Listener);
+        this.commands = new Collection( { base: Command } );
+        this.listeners = new Collection( { base: Listener } );
 
         /**
          * Default options and params

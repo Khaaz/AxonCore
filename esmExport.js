@@ -27,14 +27,18 @@ export { default as Resolver } from './src/Utility/Resolver';
 export { default as Embed } from './src/Utility/External/Embed';
 export { default as Prompt } from './src/Utility/External/Prompt';
 export { default as MessageCollector } from './src/Utility/External/MessageCollector';
+export { default as ReactionCollector } from './src/Utility/External/ReactionCollector';
 
 export { default as Queue } from './src/Utility/External/Queue';
 export { default as AutoQueue } from './src/Utility/External/AutoQueue';
 export { default as AsyncQueue } from './src/Utility/External/AsyncQueue';
+export { default as LRUCache } from './src/Utility/External/LRUCache';
 
 // Constants
 export { default as AxonEnums } from './src/Utility/Constants/AxonEnums';
 export { default as DiscordEnums } from './src/Utility/Constants/DiscordEnums';
+export { default as ErisEnums } from './src/Libraries/eris/lib/ErisEnums';
+export { default as DjsEnums } from './src/Libraries/discordjs/lib/DjsEnums';
 
 // Database
 export { default as DBProvider } from './src/Database/DBProvider';

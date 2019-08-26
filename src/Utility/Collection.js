@@ -13,12 +13,13 @@ class Collection extends Map {
     /**
      * Creates an instance of Collection.
      *
-     * @param {Class} [baseObject=null]
-     * @param {Object} iterable
+     * @param {Object} data
+     * @param {Class} [data.base=null]
+     * @param {Object} [data.iterable]
      *
      * @memberof Collection
      */
-    constructor(baseObject = null, iterable) {
+    constructor( { base: baseObject = null, iterable } ) {
         if (iterable && iterable instanceof Array) {
             super(iterable);
         } else if (iterable && iterable instanceof Object) {
@@ -65,8 +66,9 @@ class Collection extends Map {
      * @param {String} value - The ID of the object
      * @param {Object} key - The object data
      * @param {Boolean} replace - Whether to replace an existing object with the same ID
-     *
      * @returns {Class} The existing or newly created object
+     *
+     * @memberof Collection
      */
     add(key, value, replace) {
         const existing = this.get(key);
@@ -85,8 +87,9 @@ class Collection extends Map {
      * Return the first object to make the function evaluate true
      *
      * @param {Function} func - A function that takes an object and returns true if it matches
-     *
      * @returns {Class} The first matching object, or null if no match
+     *
+     * @memberof Collection
      */
     find(func) {
         for (const item of this.values() ) {
@@ -101,8 +104,9 @@ class Collection extends Map {
      * Return an array with the results of applying the given function to each element
      *
      * @param {Function} func - A function that takes an object and returns something
-     *
      * @returns {Array} An array containing the results
+     *
+     * @memberof Collection
      */
     map(func) {
         const arr = [];
@@ -116,8 +120,9 @@ class Collection extends Map {
      * Return all the objects that make the function evaluate true
      *
      * @param {Function} func - A function that takes an object and returns true if it matches
-     *
      * @returns {Array<Class>} An array containing all the objects that matched
+     *
+     * @memberof Collection
      */
     filter(func) {
         const arr = [];
@@ -135,6 +140,8 @@ class Collection extends Map {
      * @param {Function} callbackFn - Function to execute on each element in the array
      * @param {Number} [initialValue=0] - Value to use as the first argument to the first call of the callback
      * @returns accumulator
+     *
+     * @memberof Collection
 	 */
     reduce(func, initialValue = 0) {
         const iter = this.values();
@@ -150,8 +157,9 @@ class Collection extends Map {
      * Test if at least one element passes the test implemented by the provided function. Returns true if yes, or false if not.
      *
      * @param {Function} func - A function that takes an object and returns true if it matches
-     *
      * @returns {Boolean} An array containing all the objects that matched
+     *
+     * @memberof Collection
      */
     some(func) {
         for (const item of this.values() ) {
@@ -166,8 +174,9 @@ class Collection extends Map {
      * Test if all elements passe the test implemented by the provided function. Returns true if yes, or false if not.
      *
      * @param {Function} func - A function that takes an object and returns true if it matches
-     *
      * @returns {Boolean} An array containing all the objects that matched
+     *
+     * @memberof Collection
      */
     every(func) {
         for (const item of this.values() ) {
@@ -184,8 +193,9 @@ class Collection extends Map {
      * @param {String} key - The ID of the object
      * @param {Object} value - The updated object data
      * @param {Boolean} replace - Whether to replace an existing object with the same ID
-     *
      * @returns {Class} The updated object
+     *
+     * @memberof Collection
      */
     update(key, value) {
         return this.add(key, value, true);
@@ -195,8 +205,9 @@ class Collection extends Map {
     * Remove an object
     *
     * @param {String} key - The ID of the object
-    *
     * @returns {Class} The removed object, or null if nothing was removed
+    *
+    * @memberof Collection
     */
     remove(key) {
         const item = this.get(key);
@@ -211,6 +222,8 @@ class Collection extends Map {
      * Get a random object from the Collection
      *
      * @returns {Class?} The random object, or null if there is no match
+     *
+     * @memberof Collection
      */
     random() {
         if (!this.size) {

@@ -48,6 +48,10 @@ class AxonUtils {
         return this.axon.utils;
     }
 
+    get library() {
+        return this.axon.library;
+    }
+
     //
     // ****** MISC ******
     //
@@ -64,12 +68,12 @@ class AxonUtils {
     triggerWebhook(type, embed, opt) {
         const wh = this.axon.webhooks[type];
         if (wh && wh.id && wh.token && wh.id.length > 0 && wh.token.length) {
-            this.bot.executeWebhook(
+            this.library.client.triggerWebhook(
                 wh.id,
                 wh.token,
                 {
-                    username: opt ? opt : (`${type[0].toUpperCase() + type.slice(1)} - ${this.axon.botClient.user ? this.axon.botClient.user.username : ''}`),
-                    avatarURL: this.axon.botClient.user ? this.axon.botClient.user.avatarURL : null,
+                    username: opt ? opt : (`${type[0].toUpperCase() + type.slice(1)} - ${this.library.client.getUsername() || ''}`),
+                    avatarURL: this.library.client.getAvatar(),
                     embeds: [embed],
                 } )
                 .catch(err => {
@@ -138,7 +142,7 @@ class AxonUtils {
             return true;
         }
 
-        const { roles } = member;
+        const roles = this.library.member.getRoles(member);
         for (const role of roles) {
             if (guildConfig.isModRole(role) ) {
                 return true;
@@ -158,7 +162,7 @@ class AxonUtils {
      * @memberof AxonUtils
      */
     isServerManager(member) {
-        return member.permission.has('manageGuild');
+        return this.library.member.hasPermission(member, this.library.enums.DISCORD_LIB_PERMISSIONS.MANAGE_GUILD);
     }
 
     /**
@@ -171,7 +175,7 @@ class AxonUtils {
      * @memberof AxonUtils
      */
     isServerAdmin(member) {
-        return member.permission.has('administrator');
+        return this.library.member.hasPermission(member, this.library.enums.DISCORD_LIB_PERMISSIONS.ADMINISTRATOR);
     }
 
     /**
@@ -183,7 +187,7 @@ class AxonUtils {
      * @memberof AxonUtils
      */
     isServerOwner(member, guild) {
-        return guild.ownerID === member.id;
+        return this.library.guild.getOwnerID(guild) === this.library.member.getID(member);
     }
 
     // **** MESSAGES METHODS **** //
@@ -202,7 +206,7 @@ class AxonUtils {
      * @memberof AxonUtils
      */
     sendDM(user, content, options) {
-        return this.bot.getDMChannel(user.id)
+        this.library.user.getDM(user)
             .then(chan => this.sendMessage(chan, content, options) )
             .catch(err => {
                 this.logger.verbose(`DM disabled/Bot blocked [${user.username}#${user.discriminator} - ${user.id}]!`);
@@ -226,14 +230,15 @@ class AxonUtils {
      * @memberof AxonUtils
      */
     sendMessage(channel, content, options = {} ) {
-        if (channel.guild && !this.utils.hasChannelPerms(channel, ['sendMessages'] ) ) { // check if bot has sendMessage perm in the channel.
-            this.logger.verbose(`No sendMessage perms [${channel.guild.name} - ${channel.guild.name}]!`);
+        const guild = this.library.channel.getGuild(channel);
+        if (guild && !this.utils.hasChannelPerms(channel, [this.library.enums.DISCORD_LIB_PERMISSIONS.SEND_MESSAGES] ) ) { // check if bot has sendMessage perm in the channel.
+            this.logger.verbose(`No sendMessage perms [${this.library.channel.getGuildName(channel)} - ${this.library.channel.getName(channel)}]!`);
             return Promise.resolve(false);
         }
 
-        if (channel.guild && content.embed && !this.utils.hasChannelPerms(channel, ['embedLinks'] ) ) { // check if bot has embedPermission perm in the channel.
+        if (guild && content.embed && !this.utils.hasChannelPerms(channel, [this.library.enums.DISCORD_LIB_PERMISSIONS.EMBED_LINKS] ) ) { // check if bot has embedPermission perm in the channel.
             /** @TODO message for missing embed perm? - checked at command permissions level? */
-            this.logger.verbose(`No embedLinks perms [${channel.guild.name} - ${channel.guild.name}]!`);
+            this.logger.verbose(`No embedLinks perms [${this.library.channel.getGuildName(channel)} - ${this.library.channel.getName(channel)}]!`);
             return Promise.resolve(false);
         }
 
@@ -246,14 +251,14 @@ class AxonUtils {
         }
         content.disableEveryone = !!options.disableEveryone;
 
-        return channel.createMessage(content)
+        return this.library.channel.sendMessage(channel, content)
             .then(message => {
                 /** Delete the message automatically */
                 if (message && options.delete) {
                     if (options.delay) {
-                        this.utils.sleep(options.delay).then( () => message.delete().catch(this.logger.warn) );
+                        this.utils.sleep(options.delay).then( () => this.library.message.delete(message).catch(this.logger.warn) );
                     } else {
-                        message.delete().catch(this.logger.warn);
+                        this.library.message.delete(message).catch(this.logger.warn);
                     }
                 }
                 return message;
@@ -275,13 +280,14 @@ class AxonUtils {
             return Promise.resolve(false);
         }
 
-        if (message.channel.guild && content.embed && !this.utils.hasChannelPerms(message.channel, ['embedLinks'] ) ) { // check if bot has embedPermission perm in the channel.
+        const channel = this.library.message.getChannel(message);
+        if (this.library.message.getGuild(message) && content.embed && !this.utils.hasChannelPerms(channel, [this.library.enums.DISCORD_LIB_PERMISSIONS.EMBED_LINKS] ) ) { // check if bot has embedPermission perm in the channel.
             /** @TODO message for missing embed perm? - checked at command permissions level? */
-            this.logger.verbose(`No embedLinks perms [${message.channel.guild.name} - ${message.channel.guild.name}]!`);
+            this.logger.verbose(`No embedLinks perms [${this.library.channel.getGuildName(channel)} - ${this.library.channel.getName(channel)}]!`);
             return Promise.resolve(false);
         }
 
-        return message.edit(content);
+        return this.library.message.edit(message, content);
     }
 
     // **** CLIENT METHODS **** //

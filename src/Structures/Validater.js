@@ -1,4 +1,4 @@
-import { PERMISSIONS, EMBED_LIMITS } from '../Utility/Constants/DiscordEnums';
+import { EMBED_LIMITS } from '../Utility/Constants/DiscordEnums';
 
 import CommandPermissions from './Command/CommandPermissions';
 import CommandOptions from './Command/CommandOptions';
@@ -14,6 +14,7 @@ import AxonError from '../Errors/AxonError';
  */
 class Validater {
     static validModule(module) {
+        const PERMS = module.axon.library.enums.PERMISSIONS;
         const debug = module.axon.settings.debugMode;
 
         if (!(module.options instanceof CommandOptions) ) {
@@ -32,7 +33,7 @@ class Validater {
 
         /** Validate Eris permissions */
         for (const perm of module.permissions.bot) {
-            if (!this.checkValidPermissionName(perm) ) {
+            if (!this.checkValidPermissionName(PERMS, perm) ) {
                 debug && module.logger.warn(`Invalid permissions name (${perm}) in Module.permissions.bot [${module.label}]`);
                 return false;
             }
@@ -40,7 +41,7 @@ class Validater {
         debug && module.logger.verbose(`Correct permissions name in Module.permissions [${module.label}]`);
 
         for (const perm of module.permissions.user.needed) {
-            if (!this.checkValidPermissionName(perm) ) {
+            if (!this.checkValidPermissionName(PERMS, perm) ) {
                 debug && module.logger.warn(`Invalid permissions name (${perm}) in Module.permissions.user.needed [${module.label}]`);
                 return false;
             }
@@ -48,7 +49,7 @@ class Validater {
         debug && module.logger.verbose(`Correct permissions name in Module.permissions.user.needed [${module.label}]`);
 
         for (const perm of module.permissions.user.bypass) {
-            if (!this.checkValidPermissionName(perm) ) {
+            if (!this.checkValidPermissionName(PERMS, perm) ) {
                 debug && module.logger.warn(`Invalid permissions name (${perm}) in Module.permissions.user.bypass [${module.label}]`);
                 return false;
             }
@@ -69,6 +70,7 @@ class Validater {
      * @memberof Validater
      */
     static validCommand(command) {
+        const PERMS = command.axon.library.enums.PERMISSIONS;
         const debug = command.axon.settings.debugMode;
 
         /** Correct: No aliases, or aliases does not include the label. */
@@ -107,7 +109,7 @@ class Validater {
 
         /** Validate Eris permissions */
         for (const perm of command.permissions.bot) {
-            if (!this.checkValidPermissionName(perm) ) {
+            if (!this.checkValidPermissionName(PERMS, perm) ) {
                 command.logger.warn(`Invalid permissions name (${perm}) in Command.permissions.bot [${command.fullLabel}]`);
                 return false;
             }
@@ -115,7 +117,7 @@ class Validater {
         debug && command.logger.verbose(`Correct permissions name in Command.permissions [${command.fullLabel}]`);
 
         for (const perm of command.permissions.user.needed) {
-            if (!this.checkValidPermissionName(perm) ) {
+            if (!this.checkValidPermissionName(PERMS, perm) ) {
                 command.logger.warn(`Invalid permissions name (${perm}) in Command.permissions.user.needed [${command.fullLabel}]`);
                 return false;
             }
@@ -123,7 +125,7 @@ class Validater {
         debug && command.logger.verbose(`Correct permissions name in Command.permissions.user.needed [${command.fullLabel}]`);
 
         for (const perm of command.permissions.user.bypass) {
-            if (!this.checkValidPermissionName(perm) ) {
+            if (!this.checkValidPermissionName(PERMS, perm) ) {
                 command.logger.warn(`Invalid permissions name (${perm}) in Command.permissions.user.bypass [${command.fullLabel}]`);
                 return false;
             }
@@ -135,11 +137,12 @@ class Validater {
     /**
      * Check if the permissions names are valid
      *
+     * @param {Array<String>} PERMISSIONS - Array of library permissions
      * @param {String} perm - Name of a permission
      * @returns {Boolean} True if yes / False if the name doesn't exist
      * @memberof Module
      */
-    static checkValidPermissionName(perm) {
+    static checkValidPermissionName(PERMISSIONS, perm) {
         if (PERMISSIONS.includes(perm) ) {
             return true;
         }

@@ -1,5 +1,4 @@
 import Base from '../Base';
-import { PERMISSIONS_NAMES } from '../../Utility/Constants/DiscordEnums';
 
 import CommandPermissions from './CommandPermissions';
 import CommandOptions from './CommandOptions';
@@ -9,6 +8,8 @@ import CommandResponse from './CommandResponse';
 
 import AxonError from '../../Errors/AxonError';
 import AxonCommandError from '../../Errors/AxonCommandError';
+
+import { COMMAND_EXECUTION_STATE } from '../../Utility/Constants/AxonEnums';
 
 /**
  * AxonCore - Command contructor
@@ -110,6 +111,10 @@ class Command extends Base {
         return this.axon.configs.template;
     }
 
+    get library() {
+        return this.axon.library;
+    }
+
     get fullLabel() {
         let cmd = this; // eslint-disable-line
         const fullLabel = [this.label];
@@ -135,6 +140,9 @@ class Command extends Base {
             msg, args, guildConfig, isAdmin, isOwner,
         } = params;
 
+        const userID = this.library.message.getAuthorID(msg);
+        const channel = this.library.message.getChannel(msg);
+
         if (!guildConfig) { // DM EXECUTION
             if (this.options.isGuildOnly() ) { // guild only
                 return new CommandContext(this, msg, {
@@ -144,12 +152,12 @@ class Command extends Base {
             }
         } else { // REGULAR EXECUTION
             /** Permissions checkers */
-            if (!this.permissions._checkPermsBot(msg.channel) ) {
-                this.sendBotPerms(msg.channel);
+            if (!this.permissions._checkPermsBot(channel) ) {
+                this.sendBotPerms(channel);
                 return new CommandContext(this, msg, {
                     executed: false,
                     executionType: CommandContext.getExecutionType(isAdmin, isOwner),
-                    invalidBotPermissions: true,
+                    executionState: COMMAND_EXECUTION_STATE.INVALID_PERMISSIONS_BOT,
                 } ).resolveAsync();
             }
 
@@ -157,37 +165,37 @@ class Command extends Base {
             if (!isAdmin && !this.permissions.canExecute(msg, guildConfig) ) {
                 /** Sends invalid perm message in case of invalid perm [option enabled] */
                 if (this.options.shouldSendInvalidPermissionMessage(guildConfig) ) {
-                    this.sendUserPerms(msg.channel, msg.member);
+                    this.sendUserPerms(channel, this.library.message.getMember(msg) );
                 }
                 return new CommandContext(this, msg, {
                     executed: false,
                     executionType: CommandContext.getExecutionType(isAdmin, isOwner),
-                    invalidUserPermissions: true,
+                    executionState: COMMAND_EXECUTION_STATE.INVALID_PERMISSIONS_USER,
                 } ).resolveAsync();
             }
         }
 
         if (isAdmin) {
-            if (!isOwner && !this.axonUtils.isBotOwner(msg.author.id)
+            if (!isOwner && !this.axonUtils.isBotOwner(userID)
                 && this.permissions.staff.needed.length > 0
                 && this.permissions.staff.needed.filter(e => !this.axon.staff.owners.includes(e) ).length === 0) { // ONLY FOR OWNER
                 return new CommandContext(this, msg, {
                     executed: false,
                     executionType: CommandContext.getExecutionType(isAdmin, isOwner),
-                    invalidUserPermissions: true,
+                    executionState: COMMAND_EXECUTION_STATE.INVALID_PERMISSIONS_USER,
                 } ).resolveAsync();
             }
         } else {
             /** Test for Cooldown - Send Cooldown message */
-            const [timeLeft, shouldSendCDMessage] = this._cooldown.shouldCooldown(msg);
+            const [timeLeft, shouldSendCDMessage] = this._cooldown.shouldCooldown(userID);
             if (timeLeft) {
                 if (shouldSendCDMessage) {
-                    this.sendCooldown(msg.channel, timeLeft);
+                    this.sendCooldown(channel, timeLeft);
                 }
                 return new CommandContext(this, msg, {
                     executed: false,
                     executionType: CommandContext.getExecutionType(isAdmin, isOwner),
-                    onCooldown: true,
+                    executionState: COMMAND_EXECUTION_STATE.COOLDOWN,
                 } ).resolveAsync();
             }
         }
@@ -198,17 +206,17 @@ class Command extends Base {
                 msg, args, guildConfig, isAdmin, isOwner,
             } )
                 .then( () => {
-                    isAdmin && this._cooldown.shouldSetCooldown() && this._cooldown.setCooldown(msg.author.id);
+                    isAdmin && this._cooldown.shouldSetCooldown() && this._cooldown.setCooldown(userID);
                     return new CommandContext(this, msg, {
                         executed: false,
                         executionType: CommandContext.getExecutionType(isAdmin, isOwner),
-                        invalidUsage: true,
+                        executionState: COMMAND_EXECUTION_STATE.INVALID_USAGE,
                     } ).resolveAsync();
                 } );
         }
 
         if (this.options.shouldDeleteCommand() ) { // delete input
-            msg.delete().catch(this.logger.warn);
+            this.library.message.delete(msg).catch(this.logger.warn);
         }
 
         return this._execute(params);
@@ -240,13 +248,13 @@ class Command extends Base {
         return this.execute( { msg, args, guildConfig } )
             /** Successful and failed execution + catched errors (this.error()) */
             .then( (response) => {
-                !isAdmin && this._cooldown.shouldSetCooldown(response) && this._cooldown.setCooldown(msg.author.id);
+                !isAdmin && this._cooldown.shouldSetCooldown(response) && this._cooldown.setCooldown(this.library.message.getAuthorID(msg) );
                 
                 return context.addResponseData(response);
             } )
             /** UNEXPECTED ERRORS ONLY (non catched) */
             .catch(err => {
-                !isAdmin && this._cooldown.shouldSetCooldown() && this._cooldown.setCooldown(msg.author.id);
+                !isAdmin && this._cooldown.shouldSetCooldown() && this._cooldown.setCooldown(this.library.message.getAuthorID(msg) );
 
                 context.addResponseData(new CommandResponse( { success: false, triggerCooldown: true, error: err } ) );
                 throw new AxonCommandError(context, err);
@@ -289,12 +297,12 @@ class Command extends Base {
             return this.axon.sendHelp(this, { msg, guildConfig, isAdmin, isOwner } );
         }
 
-        const prefix = (guildConfig && guildConfig.getPrefixes().length > 0) ? guildConfig.getPrefixes()[0] : this.axon.settings.prefix[0];
+        const prefix = (guildConfig && guildConfig.getPrefixes().length > 0) ? guildConfig.getPrefixes()[0] : this.axon.settings.prefixes[0];
 
         const embed = {};
         embed.author = {
             name: `Help for ${this.infos.name || this.fullLabel}`,
-            icon_url: this.bot.user.avatarURL,
+            icon_url: this.library.client.getAvatar(),
         };
 
         embed.color = typeof this.template.embed.colors.help === 'string'
@@ -318,7 +326,7 @@ class Command extends Base {
             perm = '`Server Mod`';
         } else if (this.permissions.user.needed.length > 0) {
             perm = this.permissions.user.needed
-                .map(p => `\`${PERMISSIONS_NAMES[p]}\``)
+                .map(p => `\`${this.library.enums.PERMISSIONS_NAMES[p]}\``)
                 .join(', ');
         }
 
@@ -373,12 +381,12 @@ class Command extends Base {
      */
     sendBotPerms(channel, permissions = [] ) {
         if (permissions.length === 0) {
-            const member = channel.guild.members.get(this.bot.user.id);
+            const member = this.library.client.getMember(this.library.channel.getGuild(channel) );
             permissions = this.utils.missingPerms(member, this.permissions.bot);
         }
         return this.sendError(
             channel,
-            `${this.template.message.error.permBot} ${permissions.map(p => `\`${PERMISSIONS_NAMES[p]}\``).join(', ')}.`,
+            `${this.template.message.error.permBot} ${permissions.map(p => `\`${this.library.enums.PERMISSIONS_NAMES[p]}\``).join(', ')}.`,
             { delete: true, delay: 9000 }
         );
     }
@@ -400,7 +408,7 @@ class Command extends Base {
         return this.sendError(
             channel,
             this.template.message.error.permSource
-            + (permissions.length > 0 ? ` ${permissions.map(p => `\`${PERMISSIONS_NAMES[p]}\``).join(', ')}.` : '.'),
+            + (permissions.length > 0 ? ` ${permissions.map(p => `\`${this.library.enums.PERMISSIONS_NAMES[p]}\``).join(', ')}.` : '.'),
             { delete: true, delay: 9000 }
         );
     }
