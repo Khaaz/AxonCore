@@ -165,7 +165,7 @@ class Command extends Base {
             if (!isAdmin && !this.permissions.canExecute(msg, guildConfig) ) {
                 /** Sends invalid perm message in case of invalid perm [option enabled] */
                 if (this.options.shouldSendInvalidPermissionMessage(guildConfig) ) {
-                    this.sendUserPerms(channel, this.library.message.getMember(msg) );
+                    this.sendUserPerms(channel, msg, this.options.invalidPermissionMessageTimeout );
                 }
                 return new CommandContext(this, msg, {
                     executed: false,
@@ -395,21 +395,18 @@ class Command extends Base {
      * Send an error message in case of invalid user permissions, delete it automatically after a delay.
      * Uses the template message in config/template.
      *
-     * @param {Object<Channel>} channel - The channel Object
-     * @param {Object<Member>} member - The member object
-     * @param {Array<String>} [permission=[]] - Optional array of permissions string
+     * @param {Object<Channel>} channel - The channel object
+     * @param {Object<Message>} msg - The message object
+     * @param {Number} [deleteTimeout] - The permission message deletion timeout, if `null` the the message will not delete
      * @returns {Promise<Message?>} Message Object
      * @memberof Command
      */
-    sendUserPerms(channel, member, permissions = [] ) {
-        if (permissions.length === 0) {
-            permissions = this.utils.missingPerms(member, this.permissions.user.needed);
-        }
+    sendUserPerms(channel, msg, deleteTimeout = 9000 ) {
+        const options = deleteTimeout === null ? { delete: false } : { delete: true, delay: deleteTimeout }
         return this.sendError(
             channel,
-            this.template.message.error.permSource
-            + (permissions.length > 0 ? ` ${permissions.map(p => `\`${this.library.enums.PERMISSIONS_NAMES[p]}\``).join(', ')}.` : '.'),
-            { delete: true, delay: 9000 }
+            this.options.displayPermissionMessage(msg),
+            options
         );
     }
 
