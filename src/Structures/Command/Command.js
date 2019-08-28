@@ -165,7 +165,7 @@ class Command extends Base {
             if (!isAdmin && !this.permissions.canExecute(msg, guildConfig) ) {
                 /** Sends invalid perm message in case of invalid perm [option enabled] */
                 if (this.options.shouldSendInvalidPermissionMessage(guildConfig) ) {
-                    this.sendUserPerms(channel, msg, this.options.invalidPermissionMessageTimeout );
+                    this.sendUserPerms(channel, this.library.message.getMember(msg), this.options.invalidPermissionMessageTimeout );
                 }
                 return new CommandContext(this, msg, {
                     executed: false,
@@ -396,7 +396,7 @@ class Command extends Base {
      * Uses the template message in config/template.
      *
      * @param {Object<Channel>} channel - The channel object
-     * @param {Object<Message>} msg - The message object
+     * @param {Object<Member>} member - The member object
      * @param {Number} [deleteTimeout] - The permission message deletion timeout, if `null` the the message will not delete
      * @returns {Promise<Message?>} Message Object
      * @memberof Command
