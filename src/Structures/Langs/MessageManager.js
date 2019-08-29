@@ -20,6 +20,14 @@ class MessageManager {
         return this.translation._messages;
     }
 
+    getMessages(lang) {
+        return this.translation.getMessages(lang);
+    }
+
+    getMessage(message, lang) {
+        return this.translation.getMessage(message, lang);
+    }
+
     get(message, args, lang) {
         return this.parser.parse(this.translation.getMessage(message, lang), args);
     }
