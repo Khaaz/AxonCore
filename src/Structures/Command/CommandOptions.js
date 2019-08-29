@@ -138,8 +138,8 @@ class CommandOptions {
      * @returns {String}
      */
     getInvalidPermissionMessage(channel, member) {
-        const permMessage = this.invalidPermissionMessage(channel, member); // Just so the below ternary operator is clean
-        return permMessage === null ? permMessage : this.template.message.error.permSource
+        const permMessage = this.invalidPermissionMessage; // Just so the below ternary operator is clean
+        return permMessage ? permMessage(channel, member) : this.template.message.error.permSource
     }
 }
 
