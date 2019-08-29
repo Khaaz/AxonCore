@@ -13,7 +13,9 @@ import AxonError from '../../Errors/AxonError';
  *
  * @prop {Number} [argsMin=0] - Minimum arguments required to execute the command
  * @prop {Boolean} [invalidUsageMessage=true] - Whether to trigger the help command on invalid usage (not enough arguments)
- * @prop {Boolean} [invalidPermissionMessage=false] - Whether to trigger an error message on invalid permission (bot / user / custom etc)
+ * @prop {Boolean} [sendPermissionMessage=false] - Whether to trigger an error message on invalid permission (bot / user / custom etc)
+ * @prop {Function | String} [invalidPermissionMessage=null] - What the invalid permission message should be
+ * @prop {Number} [invalidPermissionMessageTimeout=9000] - What the invalid permission message deletion timeout should be
  * @prop {Boolean} [deleteCommand=false] - Whether to delete the command input after trigger
  * @prop {Boolean} [guildOnly=true] - Whether to allow executing this command outside of guilds
  * @prop {Boolean} [hidden=false] - Whether to hide this command from help command (general / subcommands)
@@ -50,13 +52,31 @@ class CommandOptions {
             base = override;
         }
 
+        if (!base.invalidPermissionMessage) {
+            this.invalidPermissionMessage = null;
+        } else if (typeof base.invalidPermissionMessage === 'string') {
+            // eslint-disable-next-line no-unused-vars
+            this.invalidPermissionMessage = (channel, member) => base.invalidPermissionMessage;
+        } else {
+            this.invalidPermissionMessage = base.invalidPermissionMessage;
+        }
+
         this.argsMin = base.argsMin || 0;
         this.invalidUsageMessage = base.invalidUsageMessage !== false;
+
+        // invalid permissions
         this.invalidPermissionMessage = !!base.invalidPermissionMessage;
+        this.sendPermissionMessage = !!base.sendPermissionMessage;
+        this.invalidPermissionMessageTimeout = base.invalidPermissionMessageTimeout !== undefined ? base.invalidPermissionMessageTimeout : 9000; // eslint-disable-line no-magic-numbers
+        
         this.deleteCommand = !!base.deleteCommand;
         this.guildOnly = base.guildOnly !== false;
         this.hidden = !!base.hidden;
         this.cooldown = (base.cooldown === 0 || base.cooldown === null) ? 0 : (base.cooldown || 3000); // eslint-disable-line no-magic-numbers
+    }
+
+    get l() {
+        return this._command.l;
     }
 
     /**
@@ -102,7 +122,7 @@ class CommandOptions {
      * @memberof CommandOptions
      */
     shouldSendInvalidPermissionMessage(guildConfig) {
-        return (!guildConfig.isModOnly() && this.invalidPermissionMessage);
+        return (!guildConfig.isModOnly() && this.sendPermissionMessage);
     }
 
     /**
@@ -114,6 +134,31 @@ class CommandOptions {
      */
     shouldDeleteCommand() {
         return this.deleteCommand;
+    }
+
+    /**
+     * Get the invalid permission message
+     *
+     * @param {Channel} channel - The guild channel
+     * @param {Member} member - The guild member
+     *
+     * @returns {String}
+     */
+    getInvalidPermissionMessage(channel, member) {
+        const message = this.invalidPermissionMessage
+            ? this.invalidPermissionMessage(channel, member)
+            : this.l.getMessage('ERR_CALLER_PERM');
+
+        return this.l.parser.parse(message, { permissions: this.getMissingPermissions(channel, member) } );
+    }
+
+    getMissingPermissions(channel, member) {
+        const permissions = this._command.utils.missingPerms(member, this._command.permissions.user.needed);
+
+        // + custom serverMod / serverAdmin / serverOwner | delegate to CommandPermissions?
+        return (permissions.length > 0
+            ? ` ${permissions.map(p => `\`${this._command.library.enums.PERMISSIONS_NAMES[p]}\``).join(', ')}.`
+            : '.');
     }
 }
 
