@@ -405,7 +405,7 @@ class Command extends Base {
         const options = deleteTimeout === null ? { delete: false } : { delete: true, delay: deleteTimeout }
         return this.sendError(
             channel,
-            this.options.displayPermissionMessage(channel, member),
+            this.options.getInvalidPermissionMessage(channel, member),
             options
         );
     }

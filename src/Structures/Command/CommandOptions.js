@@ -130,14 +130,16 @@ class CommandOptions {
     }
 
     /**
-     * Display the invalid permission message
+     * Get the invalid permission message
      * 
-     * @param {Message} msg 
+     * @param {Channel} channel - The guild channel
+     * @param {Member} member - The guild member
      * 
      * @returns {String}
      */
-    displayPermissionMessage(channel, member) {
-        return this.invalidPermissionMessage(channel, member)
+    getInvalidPermissionMessage(channel, member) {
+        const permMessage = this.invalidPermissionMessage(channel, member); // Just so the below ternary operator is clean
+        return permMessage === null ? permMessage : this.template.message.error.permSource
     }
 }
 
