@@ -144,21 +144,12 @@ class CommandOptions {
      *
      * @returns {String}
      */
-    getInvalidPermissionMessage(channel, member) {
+    getInvalidPermissionMessage(channel, member, permission) {
         const message = this.invalidPermissionMessage
             ? this.invalidPermissionMessage(channel, member)
             : this.l.getMessage('ERR_CALLER_PERM');
 
-        return this.l.parser.parse(message, { permissions: this.getMissingPermissions(channel, member) } );
-    }
-
-    getMissingPermissions(channel, member) {
-        const permissions = this._command.utils.missingPerms(member, this._command.permissions.user.needed);
-
-        // + custom serverMod / serverAdmin / serverOwner | delegate to CommandPermissions?
-        return (permissions.length > 0
-            ? ` ${permissions.map(p => `\`${this._command.library.enums.PERMISSIONS_NAMES[p]}\``).join(', ')}.`
-            : '.');
+        return this.l.parser.parse(message, { permissions: permission || 'Custom' } );
     }
 }
 

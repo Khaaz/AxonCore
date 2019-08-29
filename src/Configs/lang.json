@@ -1,7 +1,7 @@
 {
     "english": {
-        "ERR_BOT_PERM": "I don't have sufficient permissions to do that! I need: {{permissions}}",
-        "ERR_CALLER_PERM": "You don't have sufficient permissions to do that! You need: {{permissions}}",
+        "ERR_BOT_PERM": "I don't have sufficient permissions to do that! I need: **{{permissions}}**",
+        "ERR_CALLER_PERM": "You don't have sufficient permissions to do that! You need: **{{permissions}}**",
         "ERR_DESTINATION_PERM": "This user is a mod/admin, I can't do that!",
         "ERR_COOLDOWN": "Please, slow down! Remaining time: **{{cooldown}}** sec...",
         "ERR_GENERAL": "An unexpected error occured! Contact the bot developers."

@@ -162,16 +162,19 @@ class Command extends Base {
             }
 
             /** Permissions checkers */
-            if (!isAdmin && !this.permissions.canExecute(msg, guildConfig) ) {
+            if (!isAdmin) {
+                const canExecute = this.permissions.canExecute(msg, guildConfig);
+                if (!canExecute[0] ) {
                 /** Sends invalid perm message in case of invalid perm [option enabled] */
-                if (this.options.shouldSendInvalidPermissionMessage(guildConfig) ) {
-                    this.sendUserPerms(channel, this.library.message.getMember(msg), this.options.invalidPermissionMessageTimeout);
+                    if (this.options.shouldSendInvalidPermissionMessage(guildConfig) ) {
+                        this.sendUserPerms(channel, this.library.message.getMember(msg), this.options.invalidPermissionMessageTimeout, canExecute[1] );
+                    }
+                    return new CommandContext(this, msg, {
+                        executed: false,
+                        executionType: CommandContext.getExecutionType(isAdmin, isOwner),
+                        executionState: COMMAND_EXECUTION_STATE.INVALID_PERMISSIONS_USER,
+                    } ).resolveAsync();
                 }
-                return new CommandContext(this, msg, {
-                    executed: false,
-                    executionType: CommandContext.getExecutionType(isAdmin, isOwner),
-                    executionState: COMMAND_EXECUTION_STATE.INVALID_PERMISSIONS_USER,
-                } ).resolveAsync();
             }
         }
 
@@ -405,11 +408,11 @@ class Command extends Base {
      * @memberof Command
      */
     // eslint-disable-next-line no-magic-numbers
-    sendUserPerms(channel, member, deleteTimeout = 9000) {
+    sendUserPerms(channel, member, deleteTimeout = 9000, missingPermission = null) {
         const options = deleteTimeout === null ? { delete: false } : { delete: true, delay: deleteTimeout };
         return this.sendError(
             channel,
-            this.options.getInvalidPermissionMessage(channel, member),
+            this.options.getInvalidPermissionMessage(channel, member, missingPermission),
             options
         );
     }

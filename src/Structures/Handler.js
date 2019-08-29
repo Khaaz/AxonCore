@@ -59,7 +59,7 @@ class Handler {
     }
 
     /**
-     * Takesthe event parameters as arguments and returns the guild ID if possible or null.
+     * Takes the event parameters as arguments and returns the guild ID if possible or null.
      *
      * @param {Object} args - All parameters for this event
      * @returns {String|null} The guild ID
