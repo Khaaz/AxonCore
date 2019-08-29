@@ -75,6 +75,13 @@ class CommandOptions {
         this.cooldown = (base.cooldown === 0 || base.cooldown === null) ? 0 : (base.cooldown || 3000); // eslint-disable-line no-magic-numbers
     }
 
+    /**
+     * Returns the MessageManager instance
+     *
+     * @readonly
+     * @type {Object<MessageManager>}
+     * @memberof CommandOptions
+     */
     get l() {
         return this._command.l;
     }

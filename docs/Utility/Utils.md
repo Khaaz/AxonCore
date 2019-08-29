@@ -19,6 +19,9 @@
 * [Utils](#Utils)
     * [new Utils()](#new_Utils_new)
     * _instance_
+        * [.axon](#Utils+axon) : <code>Object.&lt;AxonClient&gt;</code>
+        * [.bot](#Utils+bot) : <code>Object.&lt;BotClient&gt;</code>
+        * [.library](#Utils+library) : <code>Object.&lt;LibraryInterface&gt;</code>
         * [.splitMessage(content)](#Utils+splitMessage) ⇒ <code>Array.&lt;String&gt;</code> \| <code>String</code>
         * [.getPrefix(msg)](#Utils+getPrefix) ⇒ <code>String</code>
         * [.getRoles(guild, member)](#Utils+getRoles) ⇒ <code>Array.&lt;Role&gt;</code>
@@ -36,6 +39,11 @@
     * _static_
         * [.Utils](#Utils.Utils)
             * [new Utils(client)](#new_Utils.Utils_new)
+        * [.userMention](#Utils.userMention) : <code>RegExp</code>
+        * [.roleMention](#Utils.roleMention) : <code>RegExp</code>
+        * [.channelMention](#Utils.channelMention) : <code>RegExp</code>
+        * [.id](#Utils.id) : <code>RegExp</code>
+        * [.hexCode](#Utils.hexCode) : <code>RegExp</code>
         * [.compareObject(obj1, obj2)](#Utils.compareObject) ⇒ <code>Boolean</code>
 
 <a name="new_Utils_new"></a>
@@ -44,6 +52,27 @@
 General Utility Class for AxonCore
 All methods useful and usable everywhere
 
+<a name="Utils+axon"></a>
+
+### utils.axon : <code>Object.&lt;AxonClient&gt;</code>
+Returns the AxonClient instance
+
+**Kind**: instance property of [<code>Utils</code>](#Utils)  
+**Read only**: true  
+<a name="Utils+bot"></a>
+
+### utils.bot : <code>Object.&lt;BotClient&gt;</code>
+Returns the BotClient instance
+
+**Kind**: instance property of [<code>Utils</code>](#Utils)  
+**Read only**: true  
+<a name="Utils+library"></a>
+
+### utils.library : <code>Object.&lt;LibraryInterface&gt;</code>
+Returns the LibraryInterface instance
+
+**Kind**: instance property of [<code>Utils</code>](#Utils)  
+**Read only**: true  
 <a name="Utils+splitMessage"></a>
 
 ### utils.splitMessage(content) ⇒ <code>Array.&lt;String&gt;</code> \| <code>String</code>
@@ -234,6 +263,41 @@ Creates an instance of Utils.
 | --- | --- |
 | client | <code>Object.&lt;AxonClient&gt;</code> | 
 
+<a name="Utils.userMention"></a>
+
+### Utils.userMention : <code>RegExp</code>
+Returns the UserMention regex
+
+**Kind**: static property of [<code>Utils</code>](#Utils)  
+**Read only**: true  
+<a name="Utils.roleMention"></a>
+
+### Utils.roleMention : <code>RegExp</code>
+Returns the RoleMention regex
+
+**Kind**: static property of [<code>Utils</code>](#Utils)  
+**Read only**: true  
+<a name="Utils.channelMention"></a>
+
+### Utils.channelMention : <code>RegExp</code>
+Returns the ChannelMention regex
+
+**Kind**: static property of [<code>Utils</code>](#Utils)  
+**Read only**: true  
+<a name="Utils.id"></a>
+
+### Utils.id : <code>RegExp</code>
+Returns the ID regex
+
+**Kind**: static property of [<code>Utils</code>](#Utils)  
+**Read only**: true  
+<a name="Utils.hexCode"></a>
+
+### Utils.hexCode : <code>RegExp</code>
+Return the HexCode regex
+
+**Kind**: static property of [<code>Utils</code>](#Utils)  
+**Read only**: true  
 <a name="Utils.compareObject"></a>
 
 ### Utils.compareObject(obj1, obj2) ⇒ <code>Boolean</code>

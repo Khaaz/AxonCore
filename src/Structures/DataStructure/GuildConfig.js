@@ -39,7 +39,7 @@ class GuildConfig {
         this.createdAt = values.createdAt || new Date();
         this.updatedAt = values.updatedAt || new Date();
 
-        /** Disabled modules / commands / events */
+        /* Disabled modules / commands / events */
         this.modules = values.modules || [];
         this.commands = values.commands || [];
         this.listeners = values.listeners || [];
@@ -55,7 +55,7 @@ class GuildConfig {
 
     //
     // **** CHECKER - used IN the framework **** //
-    /** Can be overriden/changed but need to exists / keep the same name */
+    /* Can be overriden/changed but need to exists / keep the same name */
     //
 
     /**
@@ -202,7 +202,7 @@ class GuildConfig {
 
     //
     // **** UPDATER - never used directly IN the framework **** //
-    /** Easily overridable. Can be changed as will (even methods name etc) */
+    /* Easily overridable. Can be changed as will (even methods name etc) */
     //
 
     /**

@@ -30,7 +30,7 @@
   "scripts": {
     "lint": "eslint .",
     "test": "eslint src *.js",
-    "docgen": "node ./scripts/gendoc.js",
+    "docgen": "node ./scripts/gendoc.js && cp README.md ./docs/README.md",
     "start:eris": "node -r esm examples/eris/src/index.js",
     "start:djs": "node -r esm examples/djs/src/index.js",
     "pm2start:eris": "node examples/eris/scripts/start.js",

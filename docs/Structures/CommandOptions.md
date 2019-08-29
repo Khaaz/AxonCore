@@ -21,6 +21,7 @@
 * [CommandOptions](#CommandOptions)
     * [new CommandOptions()](#new_CommandOptions_new)
     * _instance_
+        * [.l](#CommandOptions+l) : <code>Object.&lt;MessageManager&gt;</code>
         * [.isGuildOnly()](#CommandOptions+isGuildOnly) ⇒ <code>Boolean</code>
         * [.isHidden()](#CommandOptions+isHidden) ⇒ <code>Boolean</code>
         * [.shouldSendInvalidUsageMessage(args)](#CommandOptions+shouldSendInvalidUsageMessage) ⇒ <code>Boolean</code>
@@ -37,6 +38,13 @@
 CommandOptions.
 Holds options for a command and all necessary checkers.
 
+<a name="CommandOptions+l"></a>
+
+### commandOptions.l : <code>Object.&lt;MessageManager&gt;</code>
+Returns the MessageManager instance
+
+**Kind**: instance property of [<code>CommandOptions</code>](#CommandOptions)  
+**Read only**: true  
 <a name="CommandOptions+isGuildOnly"></a>
 
 ### commandOptions.isGuildOnly() ⇒ <code>Boolean</code>

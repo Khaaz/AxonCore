@@ -3,6 +3,13 @@
 ## GuildConfigsCache
 **Kind**: global class  
 **Author**: KhaaZ  
+**Properties**
+
+| Name | Type |
+| --- | --- |
+| _axon | <code>Object.&lt;AxonClient&gt;</code> | 
+| guildConfigs | <code>Collection.&lt;GuildConfig&gt;</code> | 
+
 
 * [GuildConfigsCache](#GuildConfigsCache)
     * [new GuildConfigsCache()](#new_GuildConfigsCache_new)

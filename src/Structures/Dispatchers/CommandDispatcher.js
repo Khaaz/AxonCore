@@ -24,6 +24,13 @@ class CommandDispatcher extends Dispatcher {
         this.mentionFormater = /<@!/g;
     }
 
+    /**
+     * Returns the LibraryInterface instance
+     *
+     * @readonly
+     * @type {Object<LibraryInterface>}
+     * @memberof CommandDispatcher
+     */
     get library() {
         return this._axon.library;
     }
@@ -48,26 +55,26 @@ class CommandDispatcher extends Dispatcher {
     async dispatch(msg) {
         const { isAdmin, isOwner } = this.getExecutionType(msg);
 
-        /** Extract necessary attribute from lib structures */
+        /* Extract necessary attribute from lib structures */
         const author = this.library.message.getAuthor(msg);
         const guild = this.library.message.getGuild(msg);
 
 
-        /** ignore cached blacklisted users */
+        /* ignore cached blacklisted users */
         if (!isAdmin && this._axon.axonConfig.isBlacklistedUser(this.library.user.getID(author) ) ) {
             return;
         }
 
         let guildConfig = null;
         
-        /** GUILD execution only */
+        /* GUILD execution only */
         if (guild) {
-            /** ignore cached blacklisted guilds */
+            /* ignore cached blacklisted guilds */
             if (!isAdmin && this._axon.axonConfig.isBlacklistedGuild(this.library.guild.getID(guild) ) ) {
                 return;
             }
 
-            /**
+            /*
              * Get guild Conf from cache or DB
              * Raise error eventually
              */
@@ -92,7 +99,7 @@ class CommandDispatcher extends Dispatcher {
             .replace(this.mentionFormater, '<@');
         this.library.message.setContent(msg, content);
 
-        /** IN GUILD | NOT ADMIN | Check if the user/role/channel is ignored in the guild */
+        /* IN GUILD | NOT ADMIN | Check if the user/role/channel is ignored in the guild */
         if (guildConfig && !isAdmin && guildConfig.isIgnored(msg) ) {
             return;
         }
@@ -100,19 +107,19 @@ class CommandDispatcher extends Dispatcher {
         const args = msg.content.substring(prefix.length).split(' ');
         let label = args.shift().toLowerCase();
 
-        /** Call Help if first arg = 'help' */
+        /* Call Help if first arg = 'help' */
         const onHelp = label === 'help';
         if (onHelp) {
-            /** If no additional args: send FullHelp */
+            /* If no additional args: send FullHelp */
             if (args.length === 0) {
                 this._axon._execHelp(msg, args, null, guildConfig, { isAdmin, isOwner } );
                 return;
             }
-            /** Otherwise resolve the command we want to send the help for */
+            /* Otherwise resolve the command we want to send the help for */
             label = args.shift();
         }
 
-        /** Resolve command (and subcommand if needed) */
+        /* Resolve command (and subcommand if needed) */
         const command = this.resolveCommand(label, args, guildConfig);
         if (!command) { // command doesn't exist or not globally enabled
             return;
@@ -120,13 +127,13 @@ class CommandDispatcher extends Dispatcher {
         /* msg.command doesn't exist. Adding it as reference */
         msg.command = command; // eslint-disable-line require-atomic-updates
 
-        /** Send help for the resolved command */
+        /* Send help for the resolved command */
         if (onHelp) {
             this._axon._execHelp(msg, args, command, guildConfig, { isAdmin, isOwner } );
             return;
         }
 
-        /** Execute the command */
+        /* Execute the command */
         this._axon._execCommand(msg, args, command, guildConfig, { isAdmin, isOwner } );
         return;
     }

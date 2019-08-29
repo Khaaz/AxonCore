@@ -8,7 +8,7 @@
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| module | <code>Object.&lt;Module&gt;</code> |  | Module object [GETTER: _module] |
+| _module | <code>Object.&lt;Module&gt;</code> |  | Module object |
 | _cooldown | <code>Object.&lt;CommandCooldown&gt;</code> |  | Cooldown Object for the command (manage all command cooldowns) |
 | label | <code>String</code> |  | Command label (name/id) |
 | [aliases] | <code>Array.&lt;String&gt;</code> | <code>[]</code> | Array of commands aliases (including the command label) |
@@ -28,17 +28,16 @@
 | [infos.example] | <code>Array</code> |  | Array of command examples |
 | options | <code>Object.&lt;CommandOptions&gt;</code> |  | Options Object for the command (manage all command options) |
 | permissions | <code>Object.&lt;CommandPermissions&gt;</code> |  | Permissions Object for the command (manage all command permissions) |
-| template | <code>Object</code> |  | Template object shortcut [GETTER: axon.configs.template] |
 | fullLabel | <code>Object</code> |  | Get the full label of the command (whole command label through thecommands tree) |
 
 
 * [Command](#Command) ⇐ <code>Base</code>
     * [new Command()](#new_Command_new)
     * _instance_
-        * [.isSubcmd](#Command+isSubcmd)
-        * [.subCommands](#Command+subCommands)
-        * [.serverBypass](#Command+serverBypass)
-        * [.infos](#Command+infos)
+        * [.module](#Command+module) : <code>Object.&lt;Module&gt;</code>
+        * [.template](#Command+template) : <code>Object</code>
+        * [.library](#Command+library) : <code>Object.&lt;LibraryInterface&gt;</code>
+        * [.fullLabel](#Command+fullLabel) : <code>String</code>
         * [._process(params)](#Command+_process) ⇒ <code>Promise.&lt;CommandContext&gt;</code>
         * [._execute({)](#Command+_execute) ⇒ <code>CommandContext</code>
         * [.execute(object)](#Command+execute) ⇒ <code>Promise.&lt;CommandResponse&gt;</code>
@@ -56,30 +55,34 @@
 ### new Command()
 AxonCore - Command contructor
 
-<a name="Command+isSubcmd"></a>
+<a name="Command+module"></a>
 
-### command.isSubcmd
-Subcommands
-
-**Kind**: instance property of [<code>Command</code>](#Command)  
-<a name="Command+subCommands"></a>
-
-### command.subCommands
-Initiated if there are subcommands
+### command.module : <code>Object.&lt;Module&gt;</code>
+Returns the parent module instance
 
 **Kind**: instance property of [<code>Command</code>](#Command)  
-<a name="Command+serverBypass"></a>
+**Read only**: true  
+<a name="Command+template"></a>
 
-### command.serverBypass
-Bypass all perms - true = prevent the command to be disabled
-
-**Kind**: instance property of [<code>Command</code>](#Command)  
-<a name="Command+infos"></a>
-
-### command.infos
-Command infos (help command)
+### command.template : <code>Object</code>
+Returns the template object
 
 **Kind**: instance property of [<code>Command</code>](#Command)  
+**Read only**: true  
+<a name="Command+library"></a>
+
+### command.library : <code>Object.&lt;LibraryInterface&gt;</code>
+Returns the library Interface instance
+
+**Kind**: instance property of [<code>Command</code>](#Command)  
+**Read only**: true  
+<a name="Command+fullLabel"></a>
+
+### command.fullLabel : <code>String</code>
+Returns the ful label for this command (label + all parent labels)
+
+**Kind**: instance property of [<code>Command</code>](#Command)  
+**Read only**: true  
 <a name="Command+_process"></a>
 
 ### command.\_process(params) ⇒ <code>Promise.&lt;CommandContext&gt;</code>
@@ -108,7 +111,8 @@ Create the CommandContext and returns it.
 <a name="Command+execute"></a>
 
 ### command.execute(object) ⇒ <code>Promise.&lt;CommandResponse&gt;</code>
-Execute method to override in all commands child.
+Override this method in all Command child.
+Main method - command logic being executed when the command is actually ran.
 
 **Kind**: instance method of [<code>Command</code>](#Command)  
 **Returns**: <code>Promise.&lt;CommandResponse&gt;</code> - Returns a CommandResponse that will be used to create the CommandContext  

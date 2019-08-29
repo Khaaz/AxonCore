@@ -29,6 +29,13 @@ class TranslationManager {
         }
     }
 
+    /**
+     * Returns all messages (all langs)
+     *
+     * @readonly
+     * @type {Object}
+     * @memberof TranslationManager
+     */
     get messages() {
         return this._manager.messages;
     }

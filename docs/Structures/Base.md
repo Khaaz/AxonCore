@@ -7,17 +7,19 @@
 
 | Name | Type | Description |
 | --- | --- | --- |
-| axon | <code>Object.&lt;AxonClient&gt;</code> | Axon Client [GETTER: _axon] |
-| bot | <code>Object.&lt;Eris.Client&gt;</code> | Eris bot Client [GETTER: _axon.botClient] |
-| logger | <code>Object</code> | Logger Object/Methods [GETTER: axon.logger] |
-| Resolver | <code>Object</code> | Resolver Object/Methods [GETTER: axon.Resolver] |
-| axonUtils | <code>Object</code> | AxonUtils Object/Methods [GETTER: axon.axonUtils] |
-| utils | <code>Object</code> | Utils Object/Methods [GETTER: axon.utils] |
+| _axon | <code>Object.&lt;AxonClient&gt;</code> | AxonClient |
 
 
 * [Base](#Base)
     * [new Base()](#new_Base_new)
     * _instance_
+        * [.axon](#Base+axon) : <code>Object.&lt;AxonClient&gt;</code>
+        * [.bot](#Base+bot) : <code>Object.&lt;Client&gt;</code>
+        * [.logger](#Base+logger) : <code>Object.&lt;Logger&gt;</code>
+        * ~~[.Resolver](#Base+Resolver) : <code>Object.&lt;Resolver&gt;</code>~~
+        * [.axonUtils](#Base+axonUtils) : <code>Object.&lt;AxonUtils&gt;</code>
+        * [.utils](#Base+utils) : <code>Object.&lt;Utils&gt;</code>
+        * [.l](#Base+l) : <code>Object.&lt;MessageManager&gt;</code>
         * [.getModule(module)](#Base+getModule) ⇒ <code>Object.&lt;Module&gt;</code> \| <code>NULL</code>
         * [.getCommand(fullLabel)](#Base+getCommand) ⇒ <code>Object.&lt;Command&gt;</code> \| <code>NULL</code>
         * [.sendDM(user, content, [options])](#Base+sendDM) ⇒ <code>Promise.&lt;?Message&gt;</code>
@@ -37,6 +39,57 @@
 ### new Base()
 Base Class with default properties and utility methods used by all Commands / Modules / Events.
 
+<a name="Base+axon"></a>
+
+### base.axon : <code>Object.&lt;AxonClient&gt;</code>
+Returns the AxonClient instance
+
+**Kind**: instance property of [<code>Base</code>](#Base)  
+**Read only**: true  
+<a name="Base+bot"></a>
+
+### base.bot : <code>Object.&lt;Client&gt;</code>
+Returns the bot client instance
+
+**Kind**: instance property of [<code>Base</code>](#Base)  
+**Read only**: true  
+<a name="Base+logger"></a>
+
+### base.logger : <code>Object.&lt;Logger&gt;</code>
+Returns the Logger instance
+
+**Kind**: instance property of [<code>Base</code>](#Base)  
+**Read only**: true  
+<a name="Base+Resolver"></a>
+
+### ~~base.Resolver : <code>Object.&lt;Resolver&gt;</code>~~
+***Deprecated***
+
+Returns the Resolver class
+
+**Kind**: instance property of [<code>Base</code>](#Base)  
+**Read only**: true  
+<a name="Base+axonUtils"></a>
+
+### base.axonUtils : <code>Object.&lt;AxonUtils&gt;</code>
+Returns the AxonUtils instance
+
+**Kind**: instance property of [<code>Base</code>](#Base)  
+**Read only**: true  
+<a name="Base+utils"></a>
+
+### base.utils : <code>Object.&lt;Utils&gt;</code>
+Returns the Utils instance
+
+**Kind**: instance property of [<code>Base</code>](#Base)  
+**Read only**: true  
+<a name="Base+l"></a>
+
+### base.l : <code>Object.&lt;MessageManager&gt;</code>
+Returns the MessageManager instance
+
+**Kind**: instance property of [<code>Base</code>](#Base)  
+**Read only**: true  
 <a name="Base+getModule"></a>
 
 ### base.getModule(module) ⇒ <code>Object.&lt;Module&gt;</code> \| <code>NULL</code>

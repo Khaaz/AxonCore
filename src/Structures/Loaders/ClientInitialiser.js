@@ -25,7 +25,7 @@ class ClientInitialiser {
     static initConfigs( { botConfig, tokenConfig } ) {
         const configs = {};
 
-        /** Axon Config */
+        /* Axon Config */
         if (botConfig && Utils.compareObject(defaultBotConfig, botConfig) ) {
             configs.bot = botConfig;
         } else {
@@ -33,7 +33,7 @@ class ClientInitialiser {
             DefaultLogger.error('Couldn\'t init custom axon config: Invalid format. Used default values instead.');
         }
 
-        /** Token Config */
+        /* Token Config */
         if (tokenConfig && Utils.compareObject(defaultTokenConfig, tokenConfig) ) {
             configs._tokens = tokenConfig;
         } else {

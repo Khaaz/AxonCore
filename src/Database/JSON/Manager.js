@@ -42,10 +42,22 @@ class Manager {
         this.guildExecutors = {};
     }
 
+    /**
+     * Returns default data structure for axon
+     *
+     * @readonly
+     * @memberof Manager
+     */
     get axonDefault() {
         return this._axonDefault;
     }
 
+    /**
+     * Returns default data structure for guild
+     *
+     * @readonly
+     * @memberof Manager
+     */
     get guildDefault() {
         return this._guildDefault;
     }

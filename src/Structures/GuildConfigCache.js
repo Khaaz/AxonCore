@@ -10,6 +10,9 @@ import AxonError from '../Errors/AxonError';
  * @author KhaaZ
  *
  * @class GuildConfigsCache
+ *
+ * @prop {Object<AxonClient>} _axon
+ * @prop {Collection<GuildConfig>} guildConfigs
  */
 class GuildConfigsCache {
     /**

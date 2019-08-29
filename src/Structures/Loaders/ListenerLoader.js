@@ -17,10 +17,24 @@ class ListenerLoader extends Loader {
         super(module);
     }
 
+    /**
+     * Returns the Module instance
+     *
+     * @readonly
+     * @type {Object<Module>}
+     * @memberof ListenerLoader
+     */
     get module() {
         return this.loadIn;
     }
 
+    /**
+     * Returns the Logger instance
+     *
+     * @readonly
+     * @type {Object<Logger>}
+     * @memberof ListenerLoader
+     */
     get logger() {
         return this.module.logger;
     }

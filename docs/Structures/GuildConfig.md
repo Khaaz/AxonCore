@@ -25,7 +25,6 @@
 * [GuildConfig](#GuildConfig)
     * [new GuildConfig()](#new_GuildConfig_new)
     * _instance_
-        * [.modules](#GuildConfig+modules)
         * [.getPrefixes()](#GuildConfig+getPrefixes) ⇒ <code>Array.&lt;String&gt;</code>
         * [.isIgnored(msg)](#GuildConfig+isIgnored) ⇒ <code>Boolean</code>
         * [.isUserIgnored(userID)](#GuildConfig+isUserIgnored) ⇒ <code>Boolean</code>
@@ -55,12 +54,6 @@ Default GuildConfig data structure used in AxonCore.
 This class can be extended and changed as you want.
 All methods flagged with "is used internally" can be overriden but need to keep the same name.
 
-<a name="GuildConfig+modules"></a>
-
-### guildConfig.modules
-Disabled modules / commands / events
-
-**Kind**: instance property of [<code>GuildConfig</code>](#GuildConfig)  
 <a name="GuildConfig+getPrefixes"></a>
 
 ### guildConfig.getPrefixes() ⇒ <code>Array.&lt;String&gt;</code>

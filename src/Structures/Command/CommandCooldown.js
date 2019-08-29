@@ -22,6 +22,13 @@ class CommandCooldown {
         this._cooldowns = new Map();
     }
 
+    /**
+     * Returns the cooldown for this command
+     *
+     * @readonly
+     * @type {Number}
+     * @memberof CommandCooldown
+     */
     get cooldown() {
         return this._command.options.cooldown;
     }

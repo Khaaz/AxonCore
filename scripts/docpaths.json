@@ -76,6 +76,10 @@
         "output": "Structures/EventManager.md"
     },
     {
+        "input": "Structures/Handler.js",
+        "output": "Structures/Handler.md"
+    },
+    {
         "input": "Structures/GuildConfigCache.js",
         "output": "Structures/GuildConfigCache.md"
     },
@@ -106,6 +110,18 @@
     {
         "input": "Structures/Langs/MessageParser.js",
         "output": "Structures/MessageParser.md"
+    },
+    {
+        "input": "Structures/Loaders/ModuleLoader.js",
+        "output": "Structures/ModuleLoader.md"
+    },
+    {
+        "input": "Structures/Loaders/CommandLoader.js",
+        "output": "Structures/CommandLoader.md"
+    },
+    {
+        "input": "Structures/Loaders/ListenerLoader.js",
+        "output": "Structures/ListenerLoader.md"
     },
     {
         "input": "Utility/AxonUtils.js",

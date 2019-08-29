@@ -16,6 +16,12 @@
 * [AxonUtils](#AxonUtils)
     * [new AxonUtils()](#new_AxonUtils_new)
     * _instance_
+        * [.axon](#AxonUtils+axon) : <code>Object.&lt;AxonClient&gt;</code>
+        * [.bot](#AxonUtils+bot) : <code>Object.&lt;BotClient&gt;</code>
+        * [.template](#AxonUtils+template) : <code>Object</code>
+        * [.logger](#AxonUtils+logger) : <code>Object.&lt;Logger&gt;</code>
+        * [.utils](#AxonUtils+utils) : <code>Object.&lt;Utils&gt;</code>
+        * [.library](#AxonUtils+library) : <code>Object.&lt;LibraryInterface&gt;</code>
         * [.triggerWebhook(type, embed, opt)](#AxonUtils+triggerWebhook)
         * [.isBotOwner(uID)](#AxonUtils+isBotOwner) ⇒ <code>Boolean</code>
         * [.isBotAdmin(uID)](#AxonUtils+isBotAdmin) ⇒ <code>Boolean</code>
@@ -38,6 +44,48 @@ AxonCore Utility Class.
 
 AxonCore specific methods + internal uses
 
+<a name="AxonUtils+axon"></a>
+
+### axonUtils.axon : <code>Object.&lt;AxonClient&gt;</code>
+Returns the AxonClient instance
+
+**Kind**: instance property of [<code>AxonUtils</code>](#AxonUtils)  
+**Read only**: true  
+<a name="AxonUtils+bot"></a>
+
+### axonUtils.bot : <code>Object.&lt;BotClient&gt;</code>
+Returns the BotClient instance
+
+**Kind**: instance property of [<code>AxonUtils</code>](#AxonUtils)  
+**Read only**: true  
+<a name="AxonUtils+template"></a>
+
+### axonUtils.template : <code>Object</code>
+Returns the template object
+
+**Kind**: instance property of [<code>AxonUtils</code>](#AxonUtils)  
+**Read only**: true  
+<a name="AxonUtils+logger"></a>
+
+### axonUtils.logger : <code>Object.&lt;Logger&gt;</code>
+Returns the Logger instance
+
+**Kind**: instance property of [<code>AxonUtils</code>](#AxonUtils)  
+**Read only**: true  
+<a name="AxonUtils+utils"></a>
+
+### axonUtils.utils : <code>Object.&lt;Utils&gt;</code>
+Returns the Utils instance
+
+**Kind**: instance property of [<code>AxonUtils</code>](#AxonUtils)  
+**Read only**: true  
+<a name="AxonUtils+library"></a>
+
+### axonUtils.library : <code>Object.&lt;LibraryInterface&gt;</code>
+Returns the LibraryInterface instance
+
+**Kind**: instance property of [<code>AxonUtils</code>](#AxonUtils)  
+**Read only**: true  
 <a name="AxonUtils+triggerWebhook"></a>
 
 ### axonUtils.triggerWebhook(type, embed, opt)

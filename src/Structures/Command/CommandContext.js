@@ -55,13 +55,13 @@ class CommandContext {
         this.commandLabel = command.fullLabel;
         this.moduleLabel = command.module.label;
 
-        /** Status */
+        /* Status */
         this.executed = data.executed !== false;
         this.helpExecution = (this.executed && data.helpExecution) || false;
         this.executionState = (!data.executed && data.executionState !== undefined) ? data.executionState : COMMAND_EXECUTION_STATE.NO_ERROR;
         this.executionType = data.executionType !== undefined ? data.executionType : COMMAND_EXECUTION_TYPES.REGULAR;
         
-        /** Execution context */
+        /* Execution context */
         const lib = command.library;
 
         this.dm = !lib.message.getGuild(triggerMessage);

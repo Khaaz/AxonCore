@@ -26,11 +26,6 @@
 * [Module](#Module) ⇐ <code>Base</code>
     * [new Module()](#new_Module_new)
     * _instance_
-        * [.commands](#Module+commands)
-        * [.enabled](#Module+enabled)
-        * [.infos](#Module+infos)
-        * [.permissions](#Module+permissions)
-        * [.commandLoader](#Module+commandLoader)
         * [.init([commands], [listeners])](#Module+init)
     * _static_
         * [.Module](#Module.Module)
@@ -43,37 +38,6 @@ AxonCore Module.
 A Module holds commands and listeners.
 It also has default CommandOptions and CommandPermissions that can potentially be used as base when creating a Command.
 
-<a name="Module+commands"></a>
-
-### module.commands
-Containments - all commands and events within this module
-
-**Kind**: instance property of [<code>Module</code>](#Module)  
-<a name="Module+enabled"></a>
-
-### module.enabled
-Default options and params
-
-**Kind**: instance property of [<code>Module</code>](#Module)  
-<a name="Module+infos"></a>
-
-### module.infos
-Info for the help command
-All fields are required
-
-**Kind**: instance property of [<code>Module</code>](#Module)  
-<a name="Module+permissions"></a>
-
-### module.permissions
-Default CommandPermissions at the module level
-
-**Kind**: instance property of [<code>Module</code>](#Module)  
-<a name="Module+commandLoader"></a>
-
-### module.commandLoader
-Loaders
-
-**Kind**: instance property of [<code>Module</code>](#Module)  
 <a name="Module+init"></a>
 
 ### module.init([commands], [listeners])

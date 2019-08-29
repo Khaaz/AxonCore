@@ -11,12 +11,7 @@ import { TYPE_ERRORS } from '../Utility/Constants/AxonEnums';
  *
  * @class Base
  *
- * @prop {Object<AxonClient>} axon - Axon Client [GETTER: _axon]
- * @prop {Object<Eris.Client>} bot - Eris bot Client [GETTER: _axon.botClient]
- * @prop {Object} logger - Logger Object/Methods [GETTER: axon.logger]
- * @prop {Object} Resolver - Resolver Object/Methods [GETTER: axon.Resolver]
- * @prop {Object} axonUtils - AxonUtils Object/Methods [GETTER: axon.axonUtils]
- * @prop {Object} utils - Utils Object/Methods [GETTER: axon.utils]
+ * @prop {Object<AxonClient>} _axon - AxonClient
  */
 class Base {
     /**
@@ -32,30 +27,80 @@ class Base {
 
     // **** GETTER **** //
 
+    /**
+     * Returns the AxonClient instance
+     *
+     * @readonly
+     * @type {Object<AxonClient>}
+     * @memberof Base
+     */
     get axon() {
         return this._axon;
     }
 
+    /**
+     * Returns the bot client instance
+     *
+     * @readonly
+     * @type {Object<Client>}
+     * @memberof Base
+     */
     get bot() {
         return this.axon.botClient;
     }
 
+    /**
+     * Returns the Logger instance
+     *
+     * @readonly
+     * @type {Object<Logger>}
+     * @memberof Base
+     */
     get logger() {
         return this.axon.logger;
     }
 
+    /**
+     * Returns the Resolver class
+     *
+     * @deprecated
+     * @readonly
+     * @type {Object<Resolver>}
+     * @memberof Base
+     */
     get Resolver() { // used as a shortcut only if a Resolver exists as AxonClient property
         return this.axon.Resolver;
     }
 
+    /**
+     * Returns the AxonUtils instance
+     *
+     * @readonly
+     * @type {Object<AxonUtils>}
+     * @memberof Base
+     */
     get axonUtils() {
         return this.axon.axonUtils;
     }
 
+    /**
+     * Returns the Utils instance
+     *
+     * @readonly
+     * @type {Object<Utils>}
+     * @memberof Base
+     */
     get utils() {
         return this.axon.utils;
     }
 
+    /**
+     * Returns the MessageManager instance
+     *
+     * @readonly
+     * @type {Object<MessageManager>}
+     * @memberof Base
+     */
     get l() {
         return this.axon.l;
     }

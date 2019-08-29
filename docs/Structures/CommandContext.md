@@ -29,7 +29,6 @@
 * [CommandContext](#CommandContext)
     * [new CommandContext()](#new_CommandContext_new)
     * _instance_
-        * [.executed](#CommandContext+executed)
         * [.addResponseData(commandResponse)](#CommandContext+addResponseData) ⇒ [<code>CommandContext</code>](#CommandContext)
     * _static_
         * [.CommandContext](#CommandContext.CommandContext)
@@ -49,12 +48,6 @@ If the command was executed, it has the success flag. If it's true,it means the 
 Success being false can be the result of a regular stop ofthe execution flow (bad input for example, usage of this.sendError) or of catched error(usage of this.error).
 The last possiblity is un cacthed errors.
 
-<a name="CommandContext+executed"></a>
-
-### commandContext.executed
-Status
-
-**Kind**: instance property of [<code>CommandContext</code>](#CommandContext)  
 <a name="CommandContext+addResponseData"></a>
 
 ### commandContext.addResponseData(commandResponse) ⇒ [<code>CommandContext</code>](#CommandContext)

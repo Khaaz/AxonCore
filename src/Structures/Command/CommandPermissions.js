@@ -94,18 +94,46 @@ class CommandPermissions {
         this.custom = base.custom || ( () => true);
     }
 
+    /**
+     * Returns the AxonClient instance
+     *
+     * @readonly
+     * @type {Object<AxonClient>}
+     * @memberof CommandPermissions
+     */
     get axon() {
         return this._command.axon;
     }
 
+    /**
+     *
+     *
+     * @readonly
+     * @type {Object<Utils>}
+     * @memberof CommandPermissions
+     */
     get utils() {
         return this._command.utils;
     }
 
+    /**
+     * Returns the AxonUtils instance
+     *
+     * @readonly
+     * @type {Object<AxonUtils>}
+     * @memberof CommandPermissions
+     */
     get axonUtils() {
         return this._command.axonUtils;
     }
 
+    /**
+     * Returns the LibraryInterface instance
+     *
+     * @readonly
+     * @type {Object<LibraryInterface>}
+     * @memberof CommandPermissions
+     */
     get library() {
         return this.axon.library;
     }

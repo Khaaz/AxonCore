@@ -14,6 +14,7 @@
 * [TranslationManager](#TranslationManager)
     * [new TranslationManager()](#new_TranslationManager_new)
     * _instance_
+        * [.messages](#TranslationManager+messages) : <code>Object</code>
         * [.getMessages(lang)](#TranslationManager+getMessages) ⇒ <code>Object</code>
         * [.getMessage(message, lang)](#TranslationManager+getMessage) ⇒ <code>String</code>
     * _static_
@@ -26,6 +27,13 @@
 Class dedicated to manage translations.
 Holds all translations and get the message for the default lang or the specified lang.
 
+<a name="TranslationManager+messages"></a>
+
+### translationManager.messages : <code>Object</code>
+Returns all messages (all langs)
+
+**Kind**: instance property of [<code>TranslationManager</code>](#TranslationManager)  
+**Read only**: true  
 <a name="TranslationManager+getMessages"></a>
 
 ### translationManager.getMessages(lang) ⇒ <code>Object</code>

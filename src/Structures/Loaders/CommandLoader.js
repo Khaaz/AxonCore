@@ -19,10 +19,24 @@ class CommandLoader extends Loader {
         super(module);
     }
 
+    /**
+     * Returns the Module instance
+     *
+     * @readonly
+     * @type {Object<Module>}
+     * @memberof CommandLoader
+     */
     get module() {
         return this.loadIn;
     }
 
+    /**
+     * Returns the Logger instance
+     *
+     * @readonly
+     * @type {Object<Logger>}
+     * @memberof CommandLoader
+     */
     get logger() {
         return this.module.logger;
     }
@@ -100,7 +114,7 @@ class CommandLoader extends Loader {
      * @memberof Command
      */
     loadSubCommands(parentCommand) {
-        /** No subCommands */
+        /* No subCommands */
         if (!parentCommand.subCommands || !parentCommand.subcmds.length) {
             this.logger.error(`[Module(${this.module.label})] Command: ${parentCommand.fullLabel} - Couldn't init subcommands.`);
             return;
@@ -183,7 +197,7 @@ class CommandLoader extends Loader {
             throw new AxonError(`Command: ${fullLabel} not registered!`, 'UNREGISTER-Command', this.module.label);
         }
 
-        /** Unregister command */
+        /* Unregister command */
         if (command.isSubcmd) {
             this.unregisterSubCommand(command.parentCommand, command);
         } else {

@@ -39,9 +39,10 @@ class MessageManager {
     }
 
     /**
-     * All messages (all langs)
+     * Returns all messages (all langs)
      *
      * @readonly
+     * @type {Object}
      * @memberof MessageManager
      */
     get messages() {

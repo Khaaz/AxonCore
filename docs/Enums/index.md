@@ -1,0 +1,1 @@
+All enums type

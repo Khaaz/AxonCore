@@ -8,23 +8,23 @@ import Base from './Base';
  *
  * @class Listener
  * @extends {Base}
+ *
+ * @prop {Object<Module>} _module - Module instance
+ * @prop {String} eventName - The discord event name
+ * @prop {String} label - The listener name
+ *
+ * @prop {Boolean} load - Whether to load this event on startup or not
+ * @prop {Boolean} [enabled=module.enabled] - Whether the event is enabled or not
+ * @prop {Boolean} [serverBypass=module.serverBypass] - Can the event be disabled?
+ *
+ * @prop {Object} infos - Default infos about the event
+ * @prop {Array} infos.owners - Listener owners/authors
+ * @prop {String} infos.description - Listener description
  */
 class Listener extends Base {
     /**
      * Creates an Listener instance.
      * @param {Object<Module>} module
-     *
-     * @prop {Object<Module>} module - Module object [GETTER: _module]
-     * @prop {String} eventName - The discord event name
-     * @prop {String} label - The listener name
-     *
-     * @prop {Boolean} load - Whether to load this event on startup or not
-     * @prop {Boolean} [enabled=module.enabled] - Whether the event is enabled or not
-     * @prop {Boolean} [serverBypass=module.serverBypass] - Can the event be disabled?
-     *
-     * @prop {Object} infos - Default infos about the event
-     * @prop {Array} infos.owners - Listener owners/authors
-     * @prop {String} infos.description - Listener description
      *
      * @memberof Listener
      */
@@ -33,14 +33,14 @@ class Listener extends Base {
 
         this._module = module;
 
-        /** Listener Name (Discord name) */
+        /* Event Name (Discord name) */
         this.eventName = 'event';
-        /** Listener name (Function name) */
+        /* Listener name (Function name) */
         this.label = 'label';
 
         this.load = true;
         this.enabled = module.enabled;
-        /** Bypass all perms - can/can't be server disabled */
+        /* Bypass all perms - can/can't be server disabled */
         this.serverBypass = module.serverBypass;
 
         this.infos = {
@@ -49,6 +49,13 @@ class Listener extends Base {
         };
     }
 
+    /**
+     * Returns the parent Module instance
+     *
+     * @readonly
+     * @type {Object<Module>}
+     * @memberof Listener
+     */
     get module() {
         return this._module;
     }

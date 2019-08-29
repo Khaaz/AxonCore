@@ -16,7 +16,7 @@
 * [MessageManager](#MessageManager)
     * [new MessageManager()](#new_MessageManager_new)
     * _instance_
-        * [.messages](#MessageManager+messages)
+        * [.messages](#MessageManager+messages) : <code>Object</code>
         * [.getMessages(lang)](#MessageManager+getMessages) ⇒ <code>Object</code>
         * [.getMessage(message, lang)](#MessageManager+getMessage) ⇒ <code>String</code>
         * [.get(message, args, lang)](#MessageManager+get) ⇒ <code>String</code>
@@ -32,8 +32,8 @@ Used as an interface to get the message in the correct lang and parse arguments 
 
 <a name="MessageManager+messages"></a>
 
-### messageManager.messages
-All messages (all langs)
+### messageManager.messages : <code>Object</code>
+Returns all messages (all langs)
 
 **Kind**: instance property of [<code>MessageManager</code>](#MessageManager)  
 **Read only**: true  

@@ -4,10 +4,19 @@
 **Kind**: global class  
 **Extends**: <code>Base</code>  
 **Author**: KhaaZ  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| _listeners | <code>Object</code> | Object that links an event name to an array of event objects { eventName: [Event, Event] } |
+| _handlers | <code>Collection.&lt;Object&gt;</code> | Collection of handler keyed to the event name [key: eventName, value: Handler] |
+
 
 * [EventManager](#EventManager) ⇐ <code>Base</code>
     * [new EventManager()](#new_EventManager_new)
     * _instance_
+        * [.HANDLERS](#EventManager+HANDLERS) : <code>Object</code>
+        * [.events](#EventManager+events) : <code>Collection.&lt;Object&gt;</code>
         * [.getListeners(eventName)](#EventManager+getListeners) ⇒ <code>Array</code>
         * [.bindListeners()](#EventManager+bindListeners)
         * [.bindHandlers()](#EventManager+bindHandlers)
@@ -26,6 +35,20 @@
 ### new EventManager()
 Event Manager class
 
+<a name="EventManager+HANDLERS"></a>
+
+### eventManager.HANDLERS : <code>Object</code>
+Returns all Handlers base
+
+**Kind**: instance property of [<code>EventManager</code>](#EventManager)  
+**Read only**: true  
+<a name="EventManager+events"></a>
+
+### eventManager.events : <code>Collection.&lt;Object&gt;</code>
+Returns Collection of every handlers for every discord event
+
+**Kind**: instance property of [<code>EventManager</code>](#EventManager)  
+**Read only**: true  
 <a name="EventManager+getListeners"></a>
 
 ### eventManager.getListeners(eventName) ⇒ <code>Array</code>
@@ -136,13 +159,6 @@ Just stop listening to the event emitter.
 
 ### EventManager.EventManager
 **Kind**: static class of [<code>EventManager</code>](#EventManager)  
-**Properties**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| _listeners | <code>Object</code> | Object that links an event name to an array of event objects { eventName: [Event, Event] } |
-| _handlers | <code>Collection.&lt;Object&gt;</code> | Collection of handler keyed to the event name [key: eventName, value: Handler] |
-
 <a name="new_EventManager.EventManager_new"></a>
 
 #### new EventManager(axon)

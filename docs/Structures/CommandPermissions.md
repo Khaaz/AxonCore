@@ -28,6 +28,10 @@
 * [CommandPermissions](#CommandPermissions)
     * [new CommandPermissions()](#new_CommandPermissions_new)
     * _instance_
+        * [.axon](#CommandPermissions+axon) : <code>Object.&lt;AxonClient&gt;</code>
+        * [.utils](#CommandPermissions+utils) : <code>Object.&lt;Utils&gt;</code>
+        * [.axonUtils](#CommandPermissions+axonUtils) : <code>Object.&lt;AxonUtils&gt;</code>
+        * [.library](#CommandPermissions+library) : <code>Object.&lt;LibraryInterface&gt;</code>
         * [.setBot([array], [toAdd])](#CommandPermissions+setBot) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
         * [.setServerMod([boolean])](#CommandPermissions+setServerMod) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
         * [.setServerManager([boolean])](#CommandPermissions+setServerManager) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
@@ -62,6 +66,32 @@ Holds permissions for a command and all necessary checkers.
 needed => needed to have **ALL** <NEEDED> permissions to execute the command
 bypass => needed to have **ONE** <BYPASS> permission to execute the command
 
+<a name="CommandPermissions+axon"></a>
+
+### commandPermissions.axon : <code>Object.&lt;AxonClient&gt;</code>
+Returns the AxonClient instance
+
+**Kind**: instance property of [<code>CommandPermissions</code>](#CommandPermissions)  
+**Read only**: true  
+<a name="CommandPermissions+utils"></a>
+
+### commandPermissions.utils : <code>Object.&lt;Utils&gt;</code>
+**Kind**: instance property of [<code>CommandPermissions</code>](#CommandPermissions)  
+**Read only**: true  
+<a name="CommandPermissions+axonUtils"></a>
+
+### commandPermissions.axonUtils : <code>Object.&lt;AxonUtils&gt;</code>
+Returns the AxonUtils instance
+
+**Kind**: instance property of [<code>CommandPermissions</code>](#CommandPermissions)  
+**Read only**: true  
+<a name="CommandPermissions+library"></a>
+
+### commandPermissions.library : <code>Object.&lt;LibraryInterface&gt;</code>
+Returns the LibraryInterface instance
+
+**Kind**: instance property of [<code>CommandPermissions</code>](#CommandPermissions)  
+**Read only**: true  
 <a name="CommandPermissions+setBot"></a>
 
 ### commandPermissions.setBot([array], [toAdd]) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
