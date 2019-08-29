@@ -52,13 +52,13 @@ class CommandOptions {
             base = override;
         }
 
-        if (!base.invalidPermissionMessage) {
-            this.invalidPermissionMessage = null;
-        } else if (typeof base.invalidPermissionMessage === 'string') {
+        if (typeof base.invalidPermissionMessage === 'string') {
             // eslint-disable-next-line no-unused-vars
             this.invalidPermissionMessage = (channel, member) => base.invalidPermissionMessage;
-        } else {
+        } else if (typeof base.invalidPermissionMessage === 'function') {
             this.invalidPermissionMessage = base.invalidPermissionMessage;
+        } else {
+            this.invalidPermissionMessage = null;
         }
 
         this.argsMin = base.argsMin || 0;
