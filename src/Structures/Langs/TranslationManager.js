@@ -1,17 +1,36 @@
 import defaultLang from '../../Configs/lang.json';
 
+/**
+ * Class dedicated to manage translations.
+ * Holds all translations and get the message for the default lang or the specified lang.
+ *
+ * @autho KhaaZ
+ *
+ * @class TranslationManager
+ *
+ * @prop {Object<MessageManager>} _manager
+ * @prop {String} [lang='english'] - The default lang
+ */
 class TranslationManager {
-    constructor(axonClient, messages) {
-        this._axon = axonClient;
+    /**
+     * Creates an instance of TranslationManager.
+     *
+     * @param {Object<MessageManager>} manager
+     * @memberof TranslationManager
+     */
+    constructor(manager) {
+        this._manager = manager;
 
-        this.lang = axonClient.configs.bot.lang || 'english';
+        this.lang = manager._axon.configs.bot.lang || 'english';
         
-        if (!messages[this.lang] ) {
+        if (!manager._messages[this.lang] ) {
             this.lang = 'english';
-            this._messages = defaultLang;
-        } else {
-            this._messages = messages;
+            manager._messages = defaultLang;
         }
+    }
+
+    get messages() {
+        return this._manager.messages;
     }
 
     /**
@@ -22,7 +41,7 @@ class TranslationManager {
      * @memberof TranslationManager
      */
     getMessages(lang) {
-        return this._messages[lang || this.lang];
+        return this.messages[lang || this.lang];
     }
 
     /**
