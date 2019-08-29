@@ -1,21 +1,26 @@
 <a name="Resolver"></a>
 
-## Resolver
+## .Resolver
 **Kind**: static class  
 **Author**: KhaaZ  
 
-[Resolver](#Resolver)
-- _static_
-    - [user(client, args)](#user) ⇒ <code>Object</code> \| <code>null</code>
-    - [member(guild, args)](#member) ⇒ <code>Object</code> \| <code>null</code>
-    - [role(guild, args)](#role) ⇒ <code>Object</code> \| <code>null</code>
-    - [channel(guild, args)](#channel) ⇒ <code>Object</code> \| <code>null</code>
-    - [guild(client, args)](#guild) ⇒ <code>Object</code> \| <code>null</code>
+* [.Resolver](#Resolver)
+    * [new Resolver()](#new_Resolver_new)
+    * [.user(client, args)](#Resolver.user) ⇒ <code>Object</code> \| <code>null</code>
+    * [.member(guild, args)](#Resolver.member) ⇒ <code>Object</code> \| <code>null</code>
+    * [.role(guild, args)](#Resolver.role) ⇒ <code>Object</code> \| <code>null</code>
+    * [.channel(guild, args)](#Resolver.channel) ⇒ <code>Object</code> \| <code>null</code>
+    * [.guild(client, args)](#Resolver.guild) ⇒ <code>Object</code> \| <code>null</code>
 
-<a id="user"></a>
+<a name="new_Resolver_new"></a>
 
-### user(client, args) ⇒ <code>Object</code> \| <code>null</code>
-Resolve a user within all the users the bot has.  
+### new Resolver()
+Static Resolver class for AxonCore
+
+<a name="Resolver.user"></a>
+
+### Resolver.user(client, args) ⇒ <code>Object</code> \| <code>null</code>
+Resolve a user within all the users the bot has.
 
 **Kind**: static method of [<code>Resolver</code>](#Resolver)  
 **Returns**: <code>Object</code> \| <code>null</code> - The user object / Null if not found / Error  
@@ -23,12 +28,12 @@ Resolve a user within all the users the bot has.
 | Param | Type | Description |
 | --- | --- | --- |
 | client | <code>Object.&lt;Eris.Client&gt;</code> | The bot client |
-| args | <code>Array/String</code> | Array of arguments resolved by the command. |
+| args | <code>Array</code> \| <code>String</code> | Array of arguments resolved by the command. |
 
-<a id="member"></a>
+<a name="Resolver.member"></a>
 
-### member(guild, args) ⇒ <code>Object</code> \| <code>null</code>
-Resolve a member within a guild.  
+### Resolver.member(guild, args) ⇒ <code>Object</code> \| <code>null</code>
+Resolve a member within a guild.
 
 **Kind**: static method of [<code>Resolver</code>](#Resolver)  
 **Returns**: <code>Object</code> \| <code>null</code> - The member object / Null if not found / Error  
@@ -36,12 +41,12 @@ Resolve a member within a guild.
 | Param | Type | Description |
 | --- | --- | --- |
 | guild | <code>Object.&lt;Guild&gt;</code> | Object Guild resolved by the command. |
-| args | <code>Array/String</code> | Array of arguments resolved by the command. |
+| args | <code>Array</code> \| <code>String</code> | Array of arguments resolved by the command. |
 
-<a id="role"></a>
+<a name="Resolver.role"></a>
 
-### role(guild, args) ⇒ <code>Object</code> \| <code>null</code>
-Resolve a role within a guild.  
+### Resolver.role(guild, args) ⇒ <code>Object</code> \| <code>null</code>
+Resolve a role within a guild.
 
 **Kind**: static method of [<code>Resolver</code>](#Resolver)  
 **Returns**: <code>Object</code> \| <code>null</code> - The role object / Null if not found / Error  
@@ -49,12 +54,12 @@ Resolve a role within a guild.
 | Param | Type | Description |
 | --- | --- | --- |
 | guild | <code>Object.&lt;Guild&gt;</code> | Object Guild resolved by the command. |
-| args | <code>Array/String</code> | Array of arguments resolved by the command. |
+| args | <code>Array</code> \| <code>String</code> | Array of arguments resolved by the command. |
 
-<a id="channel"></a>
+<a name="Resolver.channel"></a>
 
-### channel(guild, args) ⇒ <code>Object</code> \| <code>null</code>
-Resolve a channel within a guild.  
+### Resolver.channel(guild, args) ⇒ <code>Object</code> \| <code>null</code>
+Resolve a channel within a guild.
 
 **Kind**: static method of [<code>Resolver</code>](#Resolver)  
 **Returns**: <code>Object</code> \| <code>null</code> - The channel object / Null if not found / Error  
@@ -62,12 +67,12 @@ Resolve a channel within a guild.
 | Param | Type | Description |
 | --- | --- | --- |
 | guild | <code>Object.&lt;Guild&gt;</code> | Object Guild resolved by the command. |
-| args | <code>Array/String</code> | Array of arguments resolved by the command. |
+| args | <code>Array</code> \| <code>String</code> | Array of arguments resolved by the command. |
 
-<a id="guild"></a>
+<a name="Resolver.guild"></a>
 
-### guild(client, args) ⇒ <code>Object</code> \| <code>null</code>
-Resolve a guild within all guilds the bot is in.  
+### Resolver.guild(client, args) ⇒ <code>Object</code> \| <code>null</code>
+Resolve a guild within all guilds the bot is in.
 
 **Kind**: static method of [<code>Resolver</code>](#Resolver)  
 **Returns**: <code>Object</code> \| <code>null</code> - The guild object / Null if not found / Error  

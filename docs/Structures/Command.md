@@ -1,165 +1,144 @@
-<a id="command"></a>
+<a name="Command"></a>
 
 ## Command ⇐ <code>Base</code>
 **Kind**: global class  
 **Extends**: <code>Base</code>  
 **Author**: KhaaZ  
-
-[Command](#Command) ⇐ <code>Base</code>
-- _static_
-    - [.Command](#Command)
-        - [new Command(module)](#Command_new)
-- _instance_
-    - [options](#options)
-    - [permissions](#permissions)
-    - [execute(object)](#execute) ⇒ <code>Promise</code>
-    - [sendHelp({msg,)](#sendHelp) ⇒ <code>Promise.&lt;Message&gt;</code>
-    - [canExecute(msg, guildConf)](#canExecute) ⇒ <code>Boolean</code>
-    - [sendBotPerms(channel, [permissions])](#sendBotPerms) ⇒ <code>Promise.&lt;?Message&gt;</code>
-    - [sendUserPerms(channel, member, [permission])](#sendUserPerms) ⇒ <code>Promise.&lt;?Message&gt;</code>
-    - [sendTargetPerms(channel)](#sendTargetPerms) ⇒ <code>Promise.&lt;?Message&gt;</code>
-    - [sendCooldown(channel)](#sendCooldown) ⇒ <code>Promise.&lt;?Message&gt;</code>
-    
-<a id="command"></a>
-
-### Command.Command
-**Kind**: static class of [<code>Command</code>](#Command)  
 **Properties**
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| axon | <code>Object.&lt;AxonClient&gt;</code> |  | Axon Client [GETTER: _axon] |
-| bot | <code>Object.&lt;Eris.Client&gt;</code> |  | Eris bot Client [GETTER: _axon.client] |
-| Logger | <code>Object</code> |  | Logger Object/Methods [GETTER: axon.Logger] |
-| AxonUtils | <code>Object</code> |  | AxonUtils Object/Methods [GETTER: axon.AxonUtils] |
-| Utils | <code>Object</code> |  | Utils Object/Methods [GETTER: axon.Utils] |
 | module | <code>Object.&lt;Module&gt;</code> |  | Module object [GETTER: _module] |
-| _cooldown | <code>Object</code> |  | Map of current cooldown (global per user) [key: userID, value: Date.now()] |
+| _cooldown | <code>Object.&lt;CommandCooldown&gt;</code> |  | Cooldown Object for the command (manage all command cooldowns) |
 | label | <code>String</code> |  | Command label (name/id) |
-| aliases | <code>Array.&lt;String&gt;</code> |  | Array of commands aliases (including the command label) |
+| [aliases] | <code>Array.&lt;String&gt;</code> | <code>[]</code> | Array of commands aliases (including the command label) |
 | [enabled] | <code>Boolean</code> | <code>module.enabled</code> | Is the command enabled? |
-| [isSubcmd] | <code>Boolean</code> | <code>false</code> | Command is a subcommand |
-| [parentCommand] | [<code>Object.&lt;Command&gt;</code>](#Command) | <code>NULL</code> | Reference to the parent command (if isSubcmd = true) |
-| [hasSubcmd] | <code>Boolean</code> | <code>false</code> | Does the command have subcommands? |
 | [serverBypass] | <code>Boolean</code> | <code>module.serverBypass</code> | Can the command be disabled? |
+| [isSubcmd] | <code>Boolean</code> | <code>false</code> | Command is a subcommand |
+| [parentCommand] | [<code>Object.&lt;Command&gt;</code>](#Command) | <code></code> | Reference to the parent command (if isSubcmd = true) |
+| [hasSubcmd] | <code>Boolean</code> | <code>false</code> | Does the command have subcommands? |
 | subcmds | <code>Array</code> |  | Array of subcommand objects (deleted after init) |
-| [subCommands] | [<code>Collection.&lt;Command&gt;</code>](#Command) | <code>NULL</code> | Collection of subcommands |
-| [subCommandsAliases] | <code>Object.&lt;Map&gt;</code> | <code>NULL</code> | Map of subcommand aliases |
+| [subCommands] | [<code>Collection.&lt;Command&gt;</code>](#Command) | <code></code> | Collection of subcommands |
+| [subCommandsAliases] | <code>Object.&lt;Map&gt;</code> | <code></code> | Map of subcommand aliases |
 | infos | <code>Object</code> |  | Default info about the command |
-| infos.owners | <code>Array</code> |  | Command authors |
-| infos.cmdName | <code>String</code> |  | Full command name |
-| infos.description | <code>String</code> |  | Command description |
-| infos.usage | <code>String</code> |  | Command usage |
-| infos.example | <code>Array</code> |  | Array of command examples |
-| options | <code>Object</code> |  | Default options for the command |
-| [options.argsMin] | <code>Number</code> | <code>0</code> | Minimum number of args required |
-| [options.invalidUsage] | <code>Boolean</code> | <code>true</code> | Whether to trigger the help command on invalid usage (args required or no args given) |
-| [options.invalidPermissionMessage] | <code>Boolean</code> | <code>false</code> | Whether to trigger an error message on invalid permission |
-| [options.deleteCommand] | <code>Boolean</code> | <code>false</code> | Whether to delete the command input |
-| [options.guildOnly] | <code>Boolean</code> | <code>true</code> | Whether the command can only be used in guilds |
-| [options.hidden] | <code>Boolean</code> | <code>false</code> | Whether the command should be listed in the help commmand |
-| [options.cooldown] | <code>Number</code> | <code>3000</code> | Cooldown for the command |
-| permissions | <code>Object</code> |  | Needed permissions of the bot/users |
-| [permissions.bot] | <code>Array</code> | <code>[]</code> | Array or permissions needed by the bot to execute the command |
-| [permissions.serverMod] | <code>Boolean</code> | <code>false</code> | Whether to limit the command to serverMod+ |
-| [permissions.severAdmin] | <code>Boolean</code> | <code>false</code> | Whether to limit the command to serverAdmin+ |
-| [permissions.user.needed] | <code>Array</code> | <code>[]</code> | All permissions needed by the user |
-| [permissions.user.bypass] | <code>Array</code> | <code>[]</code> | Having one of these perms allows the user to use the command |
-| [permissions.usersID.needed] | <code>Array</code> | <code>[]</code> | List of user ids that have permission to use the command (they need the other permissions too) |
-| [permissions.usersID.bypass] | <code>Array</code> | <code>[]</code> | List of user ids that are allowed to use the command, regardless of other permissions |
-| [permissions.rolesID.needed] | <code>Array</code> | <code>[]</code> | List of role ids needed |
-| [permissions.rolesID.bypass] | <code>Array</code> | <code>[]</code> | Having one of these roles allows the user to use the command, regardless of other permissions |
-| [permissions.ChannelsID.needed] | <code>Array</code> | <code>[]</code> | List of channel ids where the command is allowed |
-| [permissions.channelsID.bypass] | <code>Array</code> | <code>[]</code> | Being in one of these channels allow the user to use the command, regardless of other permissions |
-| [permissions.staff.needed] | <code>Array</code> | <code>[]</code> | List of bot.staff permissions needed to use the command (they need the other permissions too) |
-| [permissions.staff.bypass] | <code>Array</code> | <code>[]</code> | Having one of these bot.staff permission allow to use the command, regardless of other permissions |
+| [infos.owners] | <code>Array</code> |  | Command authors |
+| [infos.cmdName] | <code>String</code> |  | Full command name |
+| [infos.description] | <code>String</code> |  | Command description |
+| [infos.usage] | <code>String</code> |  | Command usage |
+| [infos.example] | <code>Array</code> |  | Array of command examples |
+| options | <code>Object.&lt;CommandOptions&gt;</code> |  | Options Object for the command (manage all command options) |
+| permissions | <code>Object.&lt;CommandPermissions&gt;</code> |  | Permissions Object for the command (manage all command permissions) |
 | template | <code>Object</code> |  | Template object shortcut [GETTER: axon.configs.template] |
+| fullLabel | <code>Object</code> |  | Get the full label of the command (whole command label through thecommands tree) |
 
-<a id="command_new"></a>
 
-#### new Command(module)
-Creates an Instance of Command.
+* [Command](#Command) ⇐ <code>Base</code>
+    * [new Command()](#new_Command_new)
+    * _instance_
+        * [.isSubcmd](#Command+isSubcmd)
+        * [.subCommands](#Command+subCommands)
+        * [.serverBypass](#Command+serverBypass)
+        * [.infos](#Command+infos)
+        * [._process(params)](#Command+_process) ⇒ <code>Promise.&lt;CommandContext&gt;</code>
+        * [._execute({)](#Command+_execute) ⇒ <code>CommandContext</code>
+        * [.execute(object)](#Command+execute) ⇒ <code>Promise.&lt;CommandResponse&gt;</code>
+        * [.sendHelp({)](#Command+sendHelp) ⇒ <code>Promise.&lt;CommandContext&gt;</code>
+        * [.sendBotPerms(channel, [permissions])](#Command+sendBotPerms) ⇒ <code>Promise.&lt;?Message&gt;</code>
+        * [.sendUserPerms(channel, member, [deleteTimeout])](#Command+sendUserPerms) ⇒ <code>Promise.&lt;?Message&gt;</code>
+        * [.sendTargetPerms(channel)](#Command+sendTargetPerms) ⇒ <code>Promise.&lt;?Message&gt;</code>
+        * [.sendCooldown(channel)](#Command+sendCooldown) ⇒ <code>Promise.&lt;?Message&gt;</code>
+    * _static_
+        * [.Command](#Command.Command)
+            * [new Command(module)](#new_Command.Command_new)
 
-| Param | Type |
-| --- | --- |
-| module | <code>Object.&lt;Module&gt;</code> | 
+<a name="new_Command_new"></a>
 
-<a id="options"></a>
+### new Command()
+AxonCore - Command contructor
 
-### options
-Command options has default values.
+<a name="Command+isSubcmd"></a>
 
-**Kind**: Instance property of [<code>Command</code>](#Command)  
+### command.isSubcmd
+Subcommands
 
-<a name="permissions"></a>
+**Kind**: instance property of [<code>Command</code>](#Command)  
+<a name="Command+subCommands"></a>
 
-### permissions
-Handles permissions of both the bot and the user
+### command.subCommands
+Initiated if there are subcommands
 
-Optional posible override for:
- - Users ID
- - Roles ID
- - Channels ID
+**Kind**: instance property of [<code>Command</code>](#Command)  
+<a name="Command+serverBypass"></a>
 
-Bot Staff override
+### command.serverBypass
+Bypass all perms - true = prevent the command to be disabled
 
-Custom function for special permission case
+**Kind**: instance property of [<code>Command</code>](#Command)  
+<a name="Command+infos"></a>
 
-Needed => Need to have all <NEEDED> permissions to execute the command
-Bypass => Need to have one <BYPASS> permissions to execute the command (override needed as well)
+### command.infos
+Command infos (help command)
 
-**Kind**: Instance property of [<code>Command</code>](#Command)  
+**Kind**: instance property of [<code>Command</code>](#Command)  
+<a name="Command+_process"></a>
 
-<a id="execute"></a>
+### command.\_process(params) ⇒ <code>Promise.&lt;CommandContext&gt;</code>
+Process the command, and executes it if it can (permissions, options etc..).
 
-### execute(object) ⇒ <code>Promise</code>
-Execute method to override in all commands child.  
-Execute this method when the command is called.  
+**Kind**: instance method of [<code>Command</code>](#Command)  
+**Returns**: <code>Promise.&lt;CommandContext&gt;</code> - Return a CommandContext or throw an AxonCommandError.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>Object</code> | { msg, args, guildConfig, isAdmin, isOwner } |
+
+<a name="Command+_execute"></a>
+
+### command.\_execute({) ⇒ <code>CommandContext</code>
+Execute the command.
+Get the CommandResponse fromthe command execution or create it in case of errors.
+Create the CommandContext and returns it.
 
 **Kind**: instance method of [<code>Command</code>](#Command)  
 
 | Param | Type | Description |
 | --- | --- | --- |
+| { | <code>Object</code> | msg, args, guildConfig, isAdmin, isOwner } |
+
+<a name="Command+execute"></a>
+
+### command.execute(object) ⇒ <code>Promise.&lt;CommandResponse&gt;</code>
+Execute method to override in all commands child.
+
+**Kind**: instance method of [<code>Command</code>](#Command)  
+**Returns**: <code>Promise.&lt;CommandResponse&gt;</code> - Returns a CommandResponse that will be used to create the CommandContext  
+
+| Param | Type | Description |
+| --- | --- | --- |
 | object | <code>Object</code> | An Object with all arguments to use execute |
-| [object.message] | <code>Object</code> | The message Object |
+| [object.message] | <code>Object.&lt;Message&gt;</code> | The Eris message Object |
 | [object.args] | <code>Array.&lt;String&gt;</code> | The Array of arguments |
-| [object.guildConf] | <code>Object</code> | The guildConfig if it exists |
+| [object.guildConfig] | <code>Object.&lt;GuildConfig&gt;</code> | The guildConfig if it exists |
 
-<a id="sendHelp"></a>
+<a name="Command+sendHelp"></a>
 
-### sendHelp({msg,) ⇒ <code>Promise.&lt;Message&gt;</code>
-Send Help message in the current channel.  
-Call custom sendHelp (Client method if it exists instead of the default one).  
+### command.sendHelp({) ⇒ <code>Promise.&lt;CommandContext&gt;</code>
+Send help message in the current channel with perm checks done before.
+Call a custom sendHelp method if it exists, use the default one if it doesn't.
 
-**Kind**: Instance method of [<code>Command</code>](#Command)  
-**Returns**: <code>Promise.&lt;Message&gt;</code> - Message Object  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| {msg, | <code>Object.&lt;Message&gt;</code> | guildconf} - The message object |
-
-<a id="canExecute"></a>
-
-### canExecute(msg, guildConf) ⇒ <code>Boolean</code>
-Permission verifier - Checks whether the user has perms to execute the command or not.  
-Bypass - One of the perms (override) => doesn't go through other verifiers.  
-Needed - All perms => still go through other checkers.  
-
-**Kind**: Instance method of [<code>Command</code>](#Command)  
-**Returns**: <code>Boolean</code> - True if the user can execute command / False if not  
+**Kind**: instance method of [<code>Command</code>](#Command)  
+**Returns**: <code>Promise.&lt;CommandContext&gt;</code> - Message Object  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| msg | <code>Object.&lt;Message&gt;</code> | The Message Object |
-| guildConf | <code>Object</code> | GuildConfig |
+| { | <code>Object.&lt;Message&gt;</code> | msg, guildConfig, isAdmin, isOwner } - The message object |
 
-<a id="sendBotPerms"></a>
+<a name="Command+sendBotPerms"></a>
 
-### sendBotPerms(channel, [permissions]) ⇒ <code>Promise.&lt;?Message&gt;</code>
-Sends an error message for invalid Bot permissions.  
-After a delay the message auto deletes.  
+### command.sendBotPerms(channel, [permissions]) ⇒ <code>Promise.&lt;?Message&gt;</code>
+Send an error message in case of invalid bot permissions, delete it automatically after a delay.
 
-**Kind**: Instance method of [<code>Command</code>](#Command)  
+**Kind**: instance method of [<code>Command</code>](#Command)  
 **Returns**: <code>Promise.&lt;?Message&gt;</code> - Message Object  
 
 | Param | Type | Default | Description |
@@ -167,44 +146,59 @@ After a delay the message auto deletes.
 | channel | <code>Object.&lt;Channel&gt;</code> |  | The channel Object |
 | [permissions] | <code>Array.&lt;String&gt;</code> | <code>[]</code> | Optional array of permissions string |
 
-<a id="sendUserPerms"></a>
+<a name="Command+sendUserPerms"></a>
 
-### sendUserPerms(channel, member, [permission]) ⇒ <code>Promise.&lt;?Message&gt;</code>
-Sends an error message for Source user permissions.  
-After a delay the message auto deletes.  
+### command.sendUserPerms(channel, member, [deleteTimeout]) ⇒ <code>Promise.&lt;?Message&gt;</code>
+Send an error message in case of invalid user permissions, delete it automatically after a delay.
+Uses the template message in config/template.
 
-**Kind**: Instance method of [<code>Command</code>](#Command)  
+**Kind**: instance method of [<code>Command</code>](#Command)  
 **Returns**: <code>Promise.&lt;?Message&gt;</code> - Message Object  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| channel | <code>Object.&lt;Channel&gt;</code> |  | The channel Object |
+| channel | <code>Object.&lt;Channel&gt;</code> |  | The channel object |
 | member | <code>Object.&lt;Member&gt;</code> |  | The member object |
-| [permission] | <code>Array.&lt;String&gt;</code> | <code>[]</code> | Optional array of permissions string |
+| [deleteTimeout] | <code>Number</code> | <code>9000</code> | The permission message deletion timeout, if `null` the the message will not delete |
 
-<a id="sendDestPerms"></a>
+<a name="Command+sendTargetPerms"></a>
 
-### sendDestPerms(channel) ⇒ <code>Promise.&lt;?Message&gt;</code>
-Sends an error message for Destination user permissions.  
-After a delay the message auto deletes.  
+### command.sendTargetPerms(channel) ⇒ <code>Promise.&lt;?Message&gt;</code>
+Send an error message incase of invalid target permissions (serverMod/serverAdmin).
+Uses the template message in config/template.
 
-**Kind**: Instance method of [<code>Command</code>](#Command)  
+**Kind**: instance method of [<code>Command</code>](#Command)  
 **Returns**: <code>Promise.&lt;?Message&gt;</code> - Message Object  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | channel | <code>Object.&lt;Channel&gt;</code> | The channel Object |
 
-<a id="sendCooldown"></a>
+<a name="Command+sendCooldown"></a>
 
-### sendCooldown(channel) ⇒ <code>Promise.&lt;?Message&gt;</code>
-Sends an error message for invalid cooldown.  
-After a delay the message auto deletes.  
+### command.sendCooldown(channel) ⇒ <code>Promise.&lt;?Message&gt;</code>
+Send an error message in case of invalid cooldown, delete it automatically after a delay.
 
-**Kind**: Instance method of [<code>Command</code>](#Command)  
+**Kind**: instance method of [<code>Command</code>](#Command)  
 **Returns**: <code>Promise.&lt;?Message&gt;</code> - Message Object  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | channel | <code>Object.&lt;Channel&gt;</code> | The channel Object |
+
+<a name="Command.Command"></a>
+
+### Command.Command
+**Kind**: static class of [<code>Command</code>](#Command)  
+<a name="new_Command.Command_new"></a>
+
+#### new Command(module)
+Creates a Command instance.
+Handles execution of this command.
+Overrides the execute method. Execute method will be called everytime the command is called.
+
+
+| Param | Type |
+| --- | --- |
+| module | <code>Object.&lt;Module&gt;</code> | 
 

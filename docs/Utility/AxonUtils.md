@@ -1,59 +1,47 @@
-<a id="axonutils"></a>
+<a name="AxonUtils"></a>
 
 ## AxonUtils
-Specific utility Class for AxonCore.  
-All methods useful for internal uses or AxonClient related actions.
-
 **Kind**: global class  
 **Author**: KhaaZ  
-
-[AxonUtils](#AxonUtils)
-- _static_
-  - [AxonUtils](#AxonUtils)
-      - [new AxonUtils(axon)](#AxonUtils_new)
-- _instance_
-  - [triggerWebhook(type, embed, opt)](#triggerWebhook)
-  - [isBotOwner(uID)](#isBotOwner) ⇒ <code>Boolean</code>
-  - [isBotAdmin(uID)](#isBotAdmin) ⇒ <code>Boolean</code>
-  - [isBotStaff(uID)](#isBotStaff) ⇒ <code>Boolean</code>
-  - [isAdmin(member)](#isAdmin) ⇒ <code>Boolean</code>
-  - [isMod(member, guildConf)](#isMod) ⇒ <code>Boolean</code>
-  - [sendMessage(channel, content, [options])](#sendMessage) ⇒ <code>Promise.&lt;?Message&gt;</code>
-  - [editMessage(message, content)](#editMessage) ⇒ <code>Promise.&lt;?Message&gt;</code>
-  - [sendDM(user, content, [options])](#sendDM) ⇒ <code>Promise.&lt;?Message&gt;</code>
-  - [sendError(channel, content, [options])](#sendError) ⇒ <code>Promise.&lt;?Message&gt;</code>
-  - [sendSuccess(channel, content, [options])](#sendSuccess) ⇒ <code>Promise.&lt;?Message&gt;</code>
-  - [error(msg, err, type, errMsg)](#error) ⇒ <code>Promise.&lt;?Message&gt;</code>
-    
-
-<a id="axonutils"></a>
-
-### AxonUtils
-**Kind**: static class of [<code>AxonUtils</code>](#AxonUtils)  
 **Properties**
 
 | Name | Type | Description |
 | --- | --- | --- |
 | axon | <code>Object.&lt;AxonClient&gt;</code> | Axon Client [GETTER: _axon] |
-| bot | <code>Object.&lt;Eris.Client&gt;</code> | Eris bot Client [GETTER: _axon.client] |
-| Logger | <code>Object</code> | Logger Object/Methods [GETTER: axon.Logger] |
-| AxonUtils | <code>Object</code> | AxonUtils Object/Methods [GETTER: axon.AxonUtils] |
-| Utils | <code>Object</code> | Utils Object/Methods [GETTER: axon.Utils] |
-
-<a id="axonutils_new"></a>
-
-#### new AxonUtils(axon)
-Creates an AxonUtils instance.
+| bot | <code>Object.&lt;Eris.Client&gt;</code> | Eris bot Client [GETTER: _axon.botClient] |
+| logger | <code>Object</code> | Logger Object/Methods [GETTER: axon.logger] |
+| utils | <code>Object</code> | Utils Object/Methods [GETTER: axon.utils] |
 
 
-| Param | Type |
-| --- | --- |
-| axon | <code>Object.&lt;AxonClient&gt;</code> | 
+* [AxonUtils](#AxonUtils)
+    * [new AxonUtils()](#new_AxonUtils_new)
+    * _instance_
+        * [.triggerWebhook(type, embed, opt)](#AxonUtils+triggerWebhook)
+        * [.isBotOwner(uID)](#AxonUtils+isBotOwner) ⇒ <code>Boolean</code>
+        * [.isBotAdmin(uID)](#AxonUtils+isBotAdmin) ⇒ <code>Boolean</code>
+        * [.isBotStaff(uID)](#AxonUtils+isBotStaff) ⇒ <code>Boolean</code>
+        * [.isServerMod(member, guildConfig)](#AxonUtils+isServerMod) ⇒ <code>Boolean</code>
+        * [.isServerManager(member)](#AxonUtils+isServerManager) ⇒ <code>Boolean</code>
+        * [.isServerAdmin(member)](#AxonUtils+isServerAdmin) ⇒ <code>Boolean</code>
+        * [.isServerOwner(member)](#AxonUtils+isServerOwner) ⇒ <code>Boolean</code>
+        * [.sendDM(user, content, [options])](#AxonUtils+sendDM) ⇒ <code>Promise.&lt;?Message&gt;</code>
+        * [.sendMessage(channel, content, [options])](#AxonUtils+sendMessage) ⇒ <code>Promise.&lt;?Message&gt;</code>
+        * [.editMessage(message, content)](#AxonUtils+editMessage) ⇒ <code>Promise.&lt;?Message&gt;</code>
+    * _static_
+        * [.AxonUtils](#AxonUtils.AxonUtils)
+            * [new AxonUtils(axon)](#new_AxonUtils.AxonUtils_new)
 
-<a id="triggerwebhook"></a>
+<a name="new_AxonUtils_new"></a>
 
-### triggerWebhook(type, embed, opt)
-Triger an Axon Webhook.  
+### new AxonUtils()
+AxonCore Utility Class.
+
+AxonCore specific methods + internal uses
+
+<a name="AxonUtils+triggerWebhook"></a>
+
+### axonUtils.triggerWebhook(type, embed, opt)
+Triger an Axon Webhook.
 Works directly with axon._configs._tokens. [GETTER: axon.webhooks]
 
 **Kind**: instance method of [<code>AxonUtils</code>](#AxonUtils)  
@@ -64,9 +52,9 @@ Works directly with axon._configs._tokens. [GETTER: axon.webhooks]
 | embed | <code>Object</code> | Embed object |
 | opt | <code>String</code> | Optional string to use as bot username |
 
-<a id="isbotowner"></a>
+<a name="AxonUtils+isBotOwner"></a>
 
-### isBotOwner(uID) ⇒ <code>Boolean</code>
+### axonUtils.isBotOwner(uID) ⇒ <code>Boolean</code>
 Check if the user is a bot owner.
 
 **Kind**: instance method of [<code>AxonUtils</code>](#AxonUtils)  
@@ -75,9 +63,9 @@ Check if the user is a bot owner.
 | --- | --- | --- |
 | uID | <code>String</code> | the user ID |
 
-<a id="isbotadmin"></a>
+<a name="AxonUtils+isBotAdmin"></a>
 
-### isBotAdmin(uID) ⇒ <code>Boolean</code>
+### axonUtils.isBotAdmin(uID) ⇒ <code>Boolean</code>
 Check if the user is a bot admin.
 
 **Kind**: instance method of [<code>AxonUtils</code>](#AxonUtils)  
@@ -86,9 +74,9 @@ Check if the user is a bot admin.
 | --- | --- | --- |
 | uID | <code>String</code> | the user ID |
 
-<a id="isBotStaff"></a>
+<a name="AxonUtils+isBotStaff"></a>
 
-### isBotStaff(uID) ⇒ <code>Boolean</code>
+### axonUtils.isBotStaff(uID) ⇒ <code>Boolean</code>
 Check if the user is part of the bot staff.
 
 **Kind**: instance method of [<code>AxonUtils</code>](#AxonUtils)  
@@ -97,10 +85,25 @@ Check if the user is part of the bot staff.
 | --- | --- | --- |
 | uID | <code>String</code> | the user ID |
 
-<a id="isAdmin"></a>
+<a name="AxonUtils+isServerMod"></a>
 
-### isAdmin(member) ⇒ <code>Boolean</code>
-Check is the user is an admin.
+### axonUtils.isServerMod(member, guildConfig) ⇒ <code>Boolean</code>
+Check if the user is a moderator or higher. Admins are also moderators.
+Managers, Admins and Owner are automatically Mod.
+
+**Kind**: instance method of [<code>AxonUtils</code>](#AxonUtils)  
+**Returns**: <code>Boolean</code> - True if user is a mod / False if not  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| member | <code>Object.&lt;Member&gt;</code> | The member object |
+| guildConfig | <code>Object</code> | The guild Config from the DB |
+
+<a name="AxonUtils+isServerManager"></a>
+
+### axonUtils.isServerManager(member) ⇒ <code>Boolean</code>
+Check is the user is a server manager (manage server permission).
+Admin and Owner are automatically Manager.
 
 **Kind**: instance method of [<code>AxonUtils</code>](#AxonUtils)  
 **Returns**: <code>Boolean</code> - True if admin / False if not  
@@ -109,55 +112,36 @@ Check is the user is an admin.
 | --- | --- | --- |
 | member | <code>Object.&lt;Member&gt;</code> | The member object |
 
-<a id="ismod"></a>
+<a name="AxonUtils+isServerAdmin"></a>
 
-### isMod(member, guildConf) ⇒ <code>Boolean</code>
-Check if the user is a moderator or higher. Admins are also moderators.
+### axonUtils.isServerAdmin(member) ⇒ <code>Boolean</code>
+Check is the user is an admin (administrator permission).
+Owner is automatically Admin.
 
 **Kind**: instance method of [<code>AxonUtils</code>](#AxonUtils)  
-**Returns**: <code>Boolean</code> - True if user is a mod / False if not  
+**Returns**: <code>Boolean</code> - True if admin / False if not  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | member | <code>Object.&lt;Member&gt;</code> | The member object |
-| guildConf | <code>Object</code> | The guild Config from the DB |
 
-<a id="sendmessage"></a>
+<a name="AxonUtils+isServerOwner"></a>
 
-### sendMessage(channel, content, [options]) ⇒ <code>Promise.&lt;?Message&gt;</code>
-Send a message in the given channel. Checks for bot permissions, message/embed length.  
-Doesn't support file uploads.
+### axonUtils.isServerOwner(member) ⇒ <code>Boolean</code>
+Check is the user is the server owner.
 
 **Kind**: instance method of [<code>AxonUtils</code>](#AxonUtils)  
-**Returns**: <code>Promise.&lt;?Message&gt;</code> - Message Object  
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| channel | <code>Object.&lt;Channel&gt;</code> |  | The channel Object |
-| content | <code>Object</code> \| <code>String</code> |  | Message content: String or Embed Object |
-| [options] | <code>Object</code> | <code>{}</code> | Options { disableEveryone: Boolean, delete: Boolean, delay: Number } |
-| [options.disableEveryone] | <code>Object</code> | <code>true</code> | Whether to allow mentioning everyone or not |
-| [options.delete] | <code>Object</code> | <code>false</code> | Whether to deletethe message or not |
-| [options.delay] | <code>Object</code> | <code></code> | Delay after which the message will be deleted |
-
-<a id="editmessage"></a>
-
-### editMessage(message, content) ⇒ <code>Promise.&lt;?Message&gt;</code>
-Edit a message. Checks for bot permissions and message embed/length.
-
-**Kind**: instance method of [<code>AxonUtils</code>](#AxonUtils)  
-**Returns**: <code>Promise.&lt;?Message&gt;</code> - Message Object  
+**Returns**: <code>Boolean</code> - True if admin / False if not  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| message | <code>Object.&lt;Message&gt;</code> | The message object to edit |
-| content | <code>Object/String</code> | Object (embed) or String |
+| member | <code>Object.&lt;Member&gt;</code> | The member object |
 
-<a id="senddm"></a>
+<a name="AxonUtils+sendDM"></a>
 
-### sendDM(user, content, [options]) ⇒ <code>Promise.&lt;?Message&gt;</code>
-Message the targeted user if the bot is able to retrieve their DM channel.  
-Error if not.
+### axonUtils.sendDM(user, content, [options]) ⇒ <code>Promise.&lt;?Message&gt;</code>
+Message the targeted user if the bot is able to retrieve their DM channel.
+Reject promise if not
 
 **Kind**: instance method of [<code>AxonUtils</code>](#AxonUtils)  
 **Returns**: <code>Promise.&lt;?Message&gt;</code> - Message Object  
@@ -171,29 +155,12 @@ Error if not.
 | [options.delete] | <code>Object</code> | <code>false</code> | Whether to deletethe message or not |
 | [options.delay] | <code>Object</code> | <code></code> | Delay after which the message will be deleted |
 
-<a id="senderror"></a>
+<a name="AxonUtils+sendMessage"></a>
 
-### sendError(channel, content, [options]) ⇒ <code>Promise.&lt;?Message&gt;</code>
-Send an error message. Adds an error emote to the content.  
-Checks for sendMessage permissions.
-
-**Kind**: instance method of [<code>AxonUtils</code>](#AxonUtils)  
-**Returns**: <code>Promise.&lt;?Message&gt;</code> - Message Object  
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| channel | <code>Object.&lt;Channel&gt;</code> |  | The channel Object |
-| content | <code>String</code> |  | Error message content (String only) |
-| [options] | <code>Object</code> | <code>{}</code> | Options { disableEveryone: Boolean, delete: Boolean, delay: Number } |
-| [options.disableEveryone] | <code>Object</code> | <code>true</code> | Whether to allow mentioning everyone or not |
-| [options.delete] | <code>Object</code> | <code>false</code> | Whether to deletethe message or not |
-| [options.delay] | <code>Object</code> | <code></code> | Delay after which the message will be deleted |
-
-<a id="sendsuccess"></a>
-
-### sendSuccess(channel, content, [options]) ⇒ <code>Promise.&lt;?Message&gt;</code>
-Send a success message. Adds a success emote to the content.  
-Checks for sendMessage permissions.
+### axonUtils.sendMessage(channel, content, [options]) ⇒ <code>Promise.&lt;?Message&gt;</code>
+Send a message.
+Checks for bot permissions + message/embed length.
+Doesn't support file uploads.
 
 **Kind**: instance method of [<code>AxonUtils</code>](#AxonUtils)  
 **Returns**: <code>Promise.&lt;?Message&gt;</code> - Message Object  
@@ -201,24 +168,37 @@ Checks for sendMessage permissions.
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | channel | <code>Object.&lt;Channel&gt;</code> |  | The channel Object |
-| content | <code>String</code> |  | Error message content (String only) |
+| content | <code>Object</code> \| <code>String</code> |  | Message content: String or Embed Object |
 | [options] | <code>Object</code> | <code>{}</code> | Options { disableEveryone: Boolean, delete: Boolean, delay: Number } |
-| [options.disableEveryone] | <code>Object</code> | <code>true</code> | Whether to allow mentioning everyone or not |
-| [options.delete] | <code>Object</code> | <code>false</code> | Whether to deletethe message or not |
-| [options.delay] | <code>Object</code> | <code></code> | Delay after which the message will be deleted |
+| [options.disableEveryone] | <code>Boolean</code> | <code>true</code> | Whether to allow mentioning everyone or not |
+| [options.delete] | <code>Boolean</code> | <code>false</code> | Whether to deletethe message or not |
+| [options.delay] | <code>Number</code> | <code></code> | Delay after which the message will be deleted |
 
-<a id="error"></a>
+<a name="AxonUtils+editMessage"></a>
 
-### error(msg, err, type, errMsg) ⇒ <code>Promise.&lt;?Message&gt;</code>
-Handles errors and sends an error message/log.  
-Calls sendError().
+### axonUtils.editMessage(message, content) ⇒ <code>Promise.&lt;?Message&gt;</code>
+Edit a message.
+Checks for bot permissions + message embed/length.
 
 **Kind**: instance method of [<code>AxonUtils</code>](#AxonUtils)  
 **Returns**: <code>Promise.&lt;?Message&gt;</code> - Message Object  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| msg | <code>Object.&lt;Message&gt;</code> | The message Object |
-| err | <code>Object.&lt;Error&gt;</code> | The error message |
-| type | <code>String</code> | Type of error (api, db, internal) |
-| errMsg | <code>String</code> | Optional error message |
+| message | <code>Object.&lt;Message&gt;</code> | The message object to edit |
+| content | <code>Object/String</code> | Object (embed) or String |
+
+<a name="AxonUtils.AxonUtils"></a>
+
+### AxonUtils.AxonUtils
+**Kind**: static class of [<code>AxonUtils</code>](#AxonUtils)  
+<a name="new_AxonUtils.AxonUtils_new"></a>
+
+#### new AxonUtils(axon)
+Creates an AxonUtils instance.
+
+
+| Param | Type |
+| --- | --- |
+| axon | <code>Object.&lt;AxonClient&gt;</code> | 
+

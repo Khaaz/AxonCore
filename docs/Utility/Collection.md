@@ -1,76 +1,63 @@
-<a id="collection"></a>
+<a name="Collection"></a>
 
-# Collection ⇐ <code>Map</code>
-Holds a bunch of something.  
-Based on Eris Collection.
-
+## Collection ⇐ <code>Map</code>
 **Kind**: global class  
 **Extends**: <code>Map</code>  
 **Author**: KhaaZ  
-
-[Collection](#Collection) ⇐ <code>Map</code>
-- _static_
-  - [Collection](#Collection)
-    - [new Collection([baseObject], iterable)](#Collection_new)
-- _instance_
-  - [new Collection([baseObject], iterable)](#new_Collection_new)
-  - [toArray()](#toArray) ⇒ <code>Array.&lt;Class&gt;</code>
-  - [toObject()](#toObject) ⇒ <code>Object.&lt;key:value&gt;</code>
-  - [add(value, key, replace)](#add) ⇒ <code>Class</code>
-  - [find(func)](#find) ⇒ <code>Class</code>
-  - [map(func)](#map) ⇒ <code>Array</code>
-  - [filter(func)](#filter) ⇒ <code>Array.&lt;Class&gt;</code>
-  - [reduce(callbackFn, [currentIndex])](#reduce)
-  - [some(func)](#some) ⇒ <code>Boolean</code>
-  - [every(func)](#every) ⇒ <code>Boolean</code>
-  - [update(key, value, replace)](#update) ⇒ <code>Class</code>
-  - [remove(key)](#remove) ⇒ <code>Class</code>
-  - [random()](#random) ⇒ <code>Class</code>
-
-<a id="collection"></a>
-
-## Collection
-
-**Kind**:  static class of [<code>Collection</code>](#Collection)  
 **Properties**
 
 | Name | Type | Description |
 | --- | --- | --- |
 | baseObject | <code>Class</code> | The base class for all items |
 
-<a id="collection_new"></a>
 
-### new Collection([baseObject], iterable)
-Construct a Collection
+* [Collection](#Collection) ⇐ <code>Map</code>
+    * [new Collection()](#new_Collection_new)
+    * _instance_
+        * [.toArray()](#Collection+toArray) ⇒ <code>Array.&lt;Class&gt;</code>
+        * [.toObject()](#Collection+toObject) ⇒ <code>Object.&lt;key:value&gt;</code>
+        * [.add(value, key, replace)](#Collection+add) ⇒ <code>Class</code>
+        * [.find(func)](#Collection+find) ⇒ <code>Class</code>
+        * [.map(func)](#Collection+map) ⇒ <code>Array</code>
+        * [.filter(func)](#Collection+filter) ⇒ <code>Array.&lt;Class&gt;</code>
+        * [.reduce(callbackFn, [initialValue])](#Collection+reduce) ⇒
+        * [.some(func)](#Collection+some) ⇒ <code>Boolean</code>
+        * [.every(func)](#Collection+every) ⇒ <code>Boolean</code>
+        * [.update(key, value, replace)](#Collection+update) ⇒ <code>Class</code>
+        * [.remove(key)](#Collection+remove) ⇒ <code>Class</code>
+        * [.random()](#Collection+random) ⇒ <code>Class</code>
+    * _static_
+        * [.Collection](#Collection.Collection)
+            * [new Collection(data)](#new_Collection.Collection_new)
 
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| [baseObject] | <code>Class</code> | <code></code> | The base class for all items |
-| iterable | <code>Object</code> |  | Iterable to construct the Map from |
+<a name="new_Collection_new"></a>
 
-<a id="toarray"></a>
+### new Collection()
+Extended Map with built in methods foreaseof data manipulation.
+Based on Eris.Collection
 
-### toArray() ⇒ <code>Array.&lt;Class&gt;</code>
-Converts a Map to an array with the values of the map, ignoring its keys
+<a name="Collection+toArray"></a>
+
+### collection.toArray() ⇒ <code>Array.&lt;Class&gt;</code>
+Map to array
 [ value, value, value ]
 
-**Kind**: Instance method of [<code>Collection</code>](#Collection)  
+**Kind**: instance method of [<code>Collection</code>](#Collection)  
+<a name="Collection+toObject"></a>
 
-<a id="toobject"></a>
-
-### toObject() ⇒ <code>Object.&lt;key:value&gt;</code>
-Converts a Map to a javascript object
+### collection.toObject() ⇒ <code>Object.&lt;key:value&gt;</code>
+Map to object
 { key: value, key: value }
 
-**Kind**: Instance method of [<code>Collection</code>](#Collection)  
+**Kind**: instance method of [<code>Collection</code>](#Collection)  
+<a name="Collection+add"></a>
 
-<a id="add"></a>
+### collection.add(value, key, replace) ⇒ <code>Class</code>
+Add an object
+If baseObject, add only if instance of baseObject
+If no baseObject, add
 
-### add(value, key, replace) ⇒ <code>Class</code>
-Adds an object
-The object (value) is added only if the key isn't existing already and / or the replace param is set to true. It is also added only when the baseObject exists
-
-**Kind**: Instance method of [<code>Collection</code>](#Collection)  
+**Kind**: instance method of [<code>Collection</code>](#Collection)  
 **Returns**: <code>Class</code> - The existing or newly created object  
 
 | Param | Type | Description |
@@ -79,84 +66,85 @@ The object (value) is added only if the key isn't existing already and / or the 
 | key | <code>Object</code> | The object data |
 | replace | <code>Boolean</code> | Whether to replace an existing object with the same ID |
 
-<a id="find"></a>
+<a name="Collection+find"></a>
 
-### find(func) ⇒ <code>Class</code>
-Returns the first object to make the function evaluate true
+### collection.find(func) ⇒ <code>Class</code>
+Return the first object to make the function evaluate true
 
-**Kind**: Instance method of [<code>Collection</code>](#Collection)  
-**Returns**: <code>Class</code> - The first matching object, or undefined if no match  
+**Kind**: instance method of [<code>Collection</code>](#Collection)  
+**Returns**: <code>Class</code> - The first matching object, or null if no match  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | func | <code>function</code> | A function that takes an object and returns true if it matches |
 
-<a id="map"></a>
+<a name="Collection+map"></a>
 
-### map(func) ⇒ <code>Array</code>
-Returns an array with the results of applying the given function to each element
+### collection.map(func) ⇒ <code>Array</code>
+Return an array with the results of applying the given function to each element
 
-**Kind**: Instance method of [<code>Collection</code>](#Collection)  
+**Kind**: instance method of [<code>Collection</code>](#Collection)  
 **Returns**: <code>Array</code> - An array containing the results  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | func | <code>function</code> | A function that takes an object and returns something |
 
-<a id="filter"></a>
+<a name="Collection+filter"></a>
 
-### filter(func) ⇒ <code>Array.&lt;Class&gt;</code>
-Returns all the objects that make the function evaluate true
+### collection.filter(func) ⇒ <code>Array.&lt;Class&gt;</code>
+Return all the objects that make the function evaluate true
 
-**Kind**: Instance method of [<code>Collection</code>](#Collection)  
+**Kind**: instance method of [<code>Collection</code>](#Collection)  
 **Returns**: <code>Array.&lt;Class&gt;</code> - An array containing all the objects that matched  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | func | <code>function</code> | A function that takes an object and returns true if it matches |
 
-<a id="reduce"></a>
+<a name="Collection+reduce"></a>
 
-### reduce(callbackFn, [currentIndex])
-Reduces values by  the given function
+### collection.reduce(callbackFn, [initialValue]) ⇒
+Reduce values by function
 
-**Kind**: Instance method of [<code>Collection</code>](#Collection)  
+**Kind**: instance method of [<code>Collection</code>](#Collection)  
+**Returns**: accumulator  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | callbackFn | <code>function</code> |  | Function to execute on each element in the array |
-| [currentIndex] | <code>Number</code> | <code>0</code> | Value to use as the first argument to the first call of the callback |
+| [initialValue] | <code>Number</code> | <code>0</code> | Value to use as the first argument to the first call of the callback |
 
-<a id="some"></a>
+<a name="Collection+some"></a>
 
-### some(func) ⇒ <code>Boolean</code>
-Tests if at least one element passes the test implemented by the provided function. Returns true if yes, or false if not.
+### collection.some(func) ⇒ <code>Boolean</code>
+Test if at least one element passes the test implemented by the provided function. Returns true if yes, or false if not.
 
-**Kind**: Instance method of [<code>Collection</code>](#Collection)  
+**Kind**: instance method of [<code>Collection</code>](#Collection)  
 **Returns**: <code>Boolean</code> - An array containing all the objects that matched  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | func | <code>function</code> | A function that takes an object and returns true if it matches |
 
-<a id="every"></a>
+<a name="Collection+every"></a>
 
-### every(func) ⇒ <code>Boolean</code>
-Tests if all elements pass the test implemented by the provided function. Returns true if yes, or false if not.
+### collection.every(func) ⇒ <code>Boolean</code>
+Test if all elements passe the test implemented by the provided function. Returns true if yes, or false if not.
 
-**Kind**: Instance method of [<code>Collection</code>](#Collection)  
+**Kind**: instance method of [<code>Collection</code>](#Collection)  
 **Returns**: <code>Boolean</code> - An array containing all the objects that matched  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | func | <code>function</code> | A function that takes an object and returns true if it matches |
 
-<a nameid="update"></a>
+<a name="Collection+update"></a>
 
-### update(key, value, replace) ⇒ <code>Class</code>
-Updates an object
+### collection.update(key, value, replace) ⇒ <code>Class</code>
+Update an object
 
-**Kind**: Instance method of [<code>Collection</code>](#Collection)  
+**Kind**: instance method of [<code>Collection</code>](#Collection)  
 **Returns**: <code>Class</code> - The updated object  
 
 | Param | Type | Description |
@@ -165,22 +153,38 @@ Updates an object
 | value | <code>Object</code> | The updated object data |
 | replace | <code>Boolean</code> | Whether to replace an existing object with the same ID |
 
-<a id="remove"></a>
+<a name="Collection+remove"></a>
 
-### remove(key) ⇒ <code>Class</code>
-Removes an object
+### collection.remove(key) ⇒ <code>Class</code>
+Remove an object
 
-**Kind**: Instance method of [<code>Collection</code>](#Collection)  
+**Kind**: instance method of [<code>Collection</code>](#Collection)  
 **Returns**: <code>Class</code> - The removed object, or null if nothing was removed  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | key | <code>String</code> | The ID of the object |
 
-<a id="random"></a>
+<a name="Collection+random"></a>
 
-### random() ⇒ <code>Class</code>
-Gets a random object from the Collection
+### collection.random() ⇒ <code>Class</code>
+Get a random object from the Collection
 
-**Kind**: Instance method of [<code>Collection</code>](#Collection)  
-**Returns**: <code>Class</code> - The random object, or undefined if there is no match  
+**Kind**: instance method of [<code>Collection</code>](#Collection)  
+**Returns**: <code>Class</code> - The random object, or null if there is no match  
+<a name="Collection.Collection"></a>
+
+### Collection.Collection
+**Kind**: static class of [<code>Collection</code>](#Collection)  
+<a name="new_Collection.Collection_new"></a>
+
+#### new Collection(data)
+Creates an instance of Collection.
+
+
+| Param | Type | Default |
+| --- | --- | --- |
+| data | <code>Object</code> |  | 
+| [data.base] | <code>Class</code> | <code></code> | 
+| [data.iterable] | <code>Object</code> |  | 
+

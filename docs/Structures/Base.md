@@ -1,54 +1,46 @@
-<a id="base"></a>
+<a name="Base"></a>
 
 ## Base
 **Kind**: global class  
 **Author**: KhaaZ  
-
-[Base](#Base)  
-- _static_  
-    - [Base](#Base)
-        - [new Base(axonClient)](#Base_new)
-- _instance_
-    - [getModule(module)](#getModule) ⇒ <code>Object.&lt;Module&gt;</code> \| <code>NULL</code>
-    - [getCommand(fullLabel)](#getCommand) ⇒ <code>Object.&lt;Command&gt;</code> \| <code>NULL</code>
-    - [sendDM(user, content, [options])](#sendDM) ⇒ <code>Promise.&lt;?Message&gt;</code>
-    - [sendMessage(channel, content, [options])](#sendMessage) ⇒ <code>Promise.&lt;?Message&gt;</code>
-    - [editMessage(message, content)](#editMessage) ⇒ <code>Promise.&lt;?Message&gt;</code>
-    - [sendError(channel, content, [options])](#sendError) ⇒ <code>Promise.&lt;?Message&gt;</code>
-    - [sendSuccess(channel, content, [options])](#sendSuccess) ⇒ <code>Promise.&lt;?Message&gt;</code>
-    - [error(msg, err, type, errMsg)](#error) ⇒ <code>Promise.&lt;?Message&gt;</code>
-    - [toString()](#toString) ⇒ <code>String</code>
-    - [toJSON()](#toJSON) ⇒ <code>Object</code>
-    - [inspect()](#inspect) ⇒ <code>Object</code>]
-    
-<a id="base"></a>
-
-### Base.Base
-**Kind**: static class of [<code>Base</code>](#Base)  
 **Properties**
 
 | Name | Type | Description |
 | --- | --- | --- |
 | axon | <code>Object.&lt;AxonClient&gt;</code> | Axon Client [GETTER: _axon] |
-| bot | <code>Object.&lt;Eris.Client&gt;</code> | Eris bot Client [GETTER: _axon.client] |
-| Logger | <code>Object</code> | Logger Object/Methods [GETTER: axon.Logger] |
+| bot | <code>Object.&lt;Eris.Client&gt;</code> | Eris bot Client [GETTER: _axon.botClient] |
+| logger | <code>Object</code> | Logger Object/Methods [GETTER: axon.logger] |
 | Resolver | <code>Object</code> | Resolver Object/Methods [GETTER: axon.Resolver] |
-| AxonUtils | <code>Object</code> | AxonUtils Object/Methods [GETTER: axon.AxonUtils] |
-| Utils | <code>Object</code> | Utils Object/Methods [GETTER: axon.Utils] |
+| axonUtils | <code>Object</code> | AxonUtils Object/Methods [GETTER: axon.axonUtils] |
+| utils | <code>Object</code> | Utils Object/Methods [GETTER: axon.utils] |
 
-<a id="base_new"></a>
 
-#### new Base(axonClient)
-Creates an instance of Base.  
+* [Base](#Base)
+    * [new Base()](#new_Base_new)
+    * _instance_
+        * [.getModule(module)](#Base+getModule) ⇒ <code>Object.&lt;Module&gt;</code> \| <code>NULL</code>
+        * [.getCommand(fullLabel)](#Base+getCommand) ⇒ <code>Object.&lt;Command&gt;</code> \| <code>NULL</code>
+        * [.sendDM(user, content, [options])](#Base+sendDM) ⇒ <code>Promise.&lt;?Message&gt;</code>
+        * [.sendMessage(channel, content, [options])](#Base+sendMessage) ⇒ <code>Promise.&lt;?Message&gt;</code>
+        * [.editMessage(message, content)](#Base+editMessage) ⇒ <code>Promise.&lt;?Message&gt;</code>
+        * [.sendSuccess(channel, content, [options])](#Base+sendSuccess) ⇒ <code>Promise.&lt;CommandResponse&gt;</code>
+        * [.sendError(content, [options])](#Base+sendError) ⇒ <code>Promise.&lt;CommandResponse&gt;</code>
+        * [.error(msg, err, type, errMsg)](#Base+error) ⇒ <code>Promise.&lt;CommandResponse&gt;</code>
+        * [.toString()](#Base+toString) ⇒ <code>String</code>
+        * [.toJSON()](#Base+toJSON) ⇒ <code>Object</code>
+    * _static_
+        * [.Base](#Base.Base)
+            * [new Base(axonClient)](#new_Base.Base_new)
 
-| Param | Type |
-| --- | --- |
-| axonClient | <code>Object.&lt;AxonClient&gt;</code> | 
+<a name="new_Base_new"></a>
 
-<a id="getmodule"></a>
+### new Base()
+Base Class with default properties and utility methods used by all Commands / Modules / Events.
 
-### getModule(module) ⇒ <code>Object.&lt;Module&gt;</code> \| <code>NULL</code>
-Get a module from AxonClient with the label.  
+<a name="Base+getModule"></a>
+
+### base.getModule(module) ⇒ <code>Object.&lt;Module&gt;</code> \| <code>NULL</code>
+Get a module from AxonClient with the label
 
 **Kind**: instance method of [<code>Base</code>](#Base)  
 
@@ -56,10 +48,10 @@ Get a module from AxonClient with the label.
 | --- | --- | --- |
 | module | <code>String</code> | Module label |
 
-<a id="getcommand"></a>
+<a name="Base+getCommand"></a>
 
-### getCommand(fullLabel) ⇒ <code>Object.&lt;Command&gt;</code> \| <code>NULL</code>
-Get a command/subcommand from AxonClient with the full label.  
+### base.getCommand(fullLabel) ⇒ <code>Object.&lt;Command&gt;</code> \| <code>NULL</code>
+Get a command/subcommand from AxonClient with the full label
 
 **Kind**: instance method of [<code>Base</code>](#Base)  
 
@@ -67,11 +59,11 @@ Get a command/subcommand from AxonClient with the full label.
 | --- | --- | --- |
 | fullLabel | <code>String</code> | Full command (or subcommand) label |
 
-<a id="senddm"></a>
+<a name="Base+sendDM"></a>
 
-### sendDM(user, content, [options]) ⇒ <code>Promise.&lt;?Message&gt;</code>
-DM targeted user if the bot is able to retrieve DM channel.  
-Reject promise if not.  
+### base.sendDM(user, content, [options]) ⇒ <code>Promise.&lt;?Message&gt;</code>
+DM targeted user if the bot is able to retrieve DM channel.
+Reject promise if not
 
 **Kind**: instance method of [<code>Base</code>](#Base)  
 **Returns**: <code>Promise.&lt;?Message&gt;</code> - Message Object  
@@ -81,16 +73,16 @@ Reject promise if not.
 | user | <code>Object.&lt;User&gt;</code> |  | User object to get the DM channel |
 | content | <code>Object/String</code> |  | String or object (embed) |
 | [options] | <code>Object</code> | <code>{}</code> | Options { disableEveryone: Boolean, delete: Boolean, delay: Number } |
-| [options.disableEveryone] | <code>Object</code> | <code>true</code> | Whether to allow mentioning everyone or not |
-| [options.delete] | <code>Object</code> | <code>false</code> | Whether to deletethe message or not |
-| [options.delay] | <code>Object</code> | <code></code> | Delay after which the message will be deleted |
+| [options.disableEveryone] | <code>Boolean</code> | <code>true</code> | Whether to allow mentioning everyone or not |
+| [options.delete] | <code>Number</code> | <code>false</code> | Whether to deletethe message or not |
+| [options.delay] | <code>Boolean</code> | <code></code> | Delay after which the message will be deleted |
 
-<a id="sendmessage"></a>
+<a name="Base+sendMessage"></a>
 
-### sendMessage(channel, content, [options]) ⇒ <code>Promise.&lt;?Message&gt;</code>
-Send a message.  
-Check for bot permissions + message/embed length.  
-Doesn't support file.  
+### base.sendMessage(channel, content, [options]) ⇒ <code>Promise.&lt;?Message&gt;</code>
+Send a message.
+Check for bot permissions + message/embed length
+Doesn't support file
 
 **Kind**: instance method of [<code>Base</code>](#Base)  
 **Returns**: <code>Promise.&lt;?Message&gt;</code> - Message Object  
@@ -100,15 +92,15 @@ Doesn't support file.
 | channel | <code>Object.&lt;Channel&gt;</code> |  | The channel Object |
 | content | <code>Object/String</code> |  | Message content, String or Embed Object |
 | [options] | <code>Object</code> | <code>{}</code> | Options { disableEveryone: Boolean, delete: Boolean, delay: Number } |
-| [options.disableEveryone] | <code>Object</code> | <code>true</code> | Whether to allow mentioning everyone or not |
-| [options.delete] | <code>Object</code> | <code>false</code> | Whether to deletethe message or not |
-| [options.delay] | <code>Object</code> | <code></code> | Delay after which the message will be deleted |
+| [options.disableEveryone] | <code>Boolean</code> | <code>true</code> | Whether to allow mentioning everyone or not |
+| [options.delete] | <code>Number</code> | <code>false</code> | Whether to deletethe message or not |
+| [options.delay] | <code>Boolean</code> | <code></code> | Delay after which the message will be deleted |
 
-<a id="editmessage"></a>
+<a name="Base+editMessage"></a>
 
-### editMessage(message, content) ⇒ <code>Promise.&lt;?Message&gt;</code>
-Edit a message.  
-Check for bot permissions and message embed/length.  
+### base.editMessage(message, content) ⇒ <code>Promise.&lt;?Message&gt;</code>
+Edit a message
+Check for bot permissions + message embed/length
 
 **Kind**: instance method of [<code>Base</code>](#Base)  
 **Returns**: <code>Promise.&lt;?Message&gt;</code> - Message Object  
@@ -118,50 +110,55 @@ Check for bot permissions and message embed/length.
 | message | <code>Object.&lt;Message&gt;</code> | The message object to edit |
 | content | <code>Object/String</code> | Object (embed) or String |
 
-<a id="senderror"></a>
+<a name="Base+sendSuccess"></a>
 
-### sendError(channel, content, [options]) ⇒ <code>Promise.&lt;?Message&gt;</code>
-Send an error message with the error emote at the beginning.  
-Check for sendMessage perms.  
+### base.sendSuccess(channel, content, [options]) ⇒ <code>Promise.&lt;CommandResponse&gt;</code>
+Send a success message. If the content is a string, suffixe the success emote to the content.
+Check for sendMessage perms.
+Await for sendMessage to throw correctly potential errors.
 
 **Kind**: instance method of [<code>Base</code>](#Base)  
-**Returns**: <code>Promise.&lt;?Message&gt;</code> - Message Object  
+**Returns**: <code>Promise.&lt;CommandResponse&gt;</code> - The successful Command Response  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | channel | <code>Object.&lt;Channel&gt;</code> |  | The channel Object |
-| content | <code>String</code> |  | Error message content (String only) |
-| [options] | <code>Object</code> | <code>{}</code> | Options { disableEveryone: Boolean, delete: Boolean, delay: Number } |
-| [options.disableEveryone] | <code>Object</code> | <code>true</code> | Whether to allow mentioning everyone or not |
-| [options.delete] | <code>Object</code> | <code>false</code> | Whether to deletethe message or not |
-| [options.delay] | <code>Object</code> | <code></code> | Delay after which the message will be deleted |
+| content | <code>Object</code> \| <code>String</code> |  | Success message content |
+| [options] | <code>Object</code> | <code>{}</code> | Additional options |
+| [options.disableEveryone] | <code>Boolean</code> | <code>true</code> | Whether to allow mentioning everyone or not |
+| [options.delete] | <code>Boolean</code> | <code>false</code> | Whether to deletethe message or not |
+| [options.delay] | <code>Number</code> | <code></code> | Delay after which the message will be deleted |
+| [options.triggerCooldown] | <code>Boolean</code> | <code>true</code> | Whether the command shoudl trigger cooldown or not |
 
-<a id="sendsuccess"></a>
+<a name="Base+sendError"></a>
 
-### sendSuccess(channel, content, [options]) ⇒ <code>Promise.&lt;?Message&gt;</code>
-Send a success message with the success emote at the beginning.  
-Check for sendMessage perms.  
+### base.sendError(content, [options]) ⇒ <code>Promise.&lt;CommandResponse&gt;</code>
+Send an error message. If the content is a string, suffixe the error emote to the content.
+Check for sendMessage perms.
+Await for sendMessage to throw correctly potential errors.
 
 **Kind**: instance method of [<code>Base</code>](#Base)  
-**Returns**: <code>Promise.&lt;?Message&gt;</code> - Message Object  
+**Returns**: <code>Promise.&lt;CommandResponse&gt;</code> - The non successful Command Response  
+**@param**: <code>Object&lt;Channel&gt;</code> channel - The channel Object  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| channel | <code>Object.&lt;Channel&gt;</code> |  | The channel Object |
-| content | <code>String</code> |  | Error message content (String only) |
-| [options] | <code>Object</code> | <code>{}</code> | Options { disableEveryone: Boolean, delete: Boolean, delay: Number } |
-| [options.disableEveryone] | <code>Object</code> | <code>true</code> | Whether to allow mentioning everyone or not |
-| [options.delete] | <code>Object</code> | <code>false</code> | Whether to deletethe message or not |
-| [options.delay] | <code>Object</code> | <code></code> | Delay after which the message will be deleted |
+| content | <code>Object</code> \| <code>String</code> |  | Success message content |
+| [options] | <code>Object</code> | <code>{}</code> | Additional options |
+| [options.disableEveryone] | <code>Boolean</code> | <code>true</code> | Whether to allow mentioning everyone or not |
+| [options.delete] | <code>Boolean</code> | <code>false</code> | Whether to deletethe message or not |
+| [options.delay] | <code>Number</code> | <code></code> | Delay after which the message will be deleted |
+| [options.triggerCooldown] | <code>Boolean</code> | <code>false</code> | Whether the command shoudl trigger cooldown or not |
+| [options.error] | <code>Object</code> \| <code>String</code> | <code></code> | Whether the command shoudl trigger cooldown or not |
 
-<a id="error"></a>
+<a name="Base+error"></a>
 
-### error(msg, err, type, errMsg) ⇒ <code>Promise.&lt;?Message&gt;</code>
-Handle errors (send error message/log).  
-Call sendError.  
+### base.error(msg, err, type, errMsg) ⇒ <code>Promise.&lt;CommandResponse&gt;</code>
+Handles errors and sends an error message/log.
+Calls sendError().
 
 **Kind**: instance method of [<code>Base</code>](#Base)  
-**Returns**: <code>Promise.&lt;?Message&gt;</code> - Message Object  
+**Returns**: <code>Promise.&lt;CommandResponse&gt;</code> - The non successful Command Response  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -170,26 +167,31 @@ Call sendError.
 | type | <code>String</code> | Type of error (api, db, internal) |
 | errMsg | <code>String</code> | Optional error message |
 
-<a id="tostring"></a>
+<a name="Base+toString"></a>
 
-### toString() ⇒ <code>String</code>
-ToString method.  
+### base.toString() ⇒ <code>String</code>
+Custom toString method.
 
 **Kind**: instance method of [<code>Base</code>](#Base)  
+<a name="Base+toJSON"></a>
 
-<a id="tojson"></a>
-
-### toJSON() ⇒ <code>Object</code>
-ToJSON method.  
+### base.toJSON() ⇒ <code>Object</code>
+Custom toJSON method.
+(Based of Eris')
 
 **Kind**: instance method of [<code>Base</code>](#Base)  
 **Returns**: <code>Object</code> - JSON-like Object  
+<a name="Base.Base"></a>
 
-<a id="inspect"></a>
+### Base.Base
+**Kind**: static class of [<code>Base</code>](#Base)  
+<a name="new_Base.Base_new"></a>
 
-### inspect() ⇒ <code>Object</code>
-Custom inspect method.  
-Doesn't list prefixed property and undefined property.
+#### new Base(axonClient)
+Creates an instance of Base.
 
-**Kind**: Instance method of [<code>AxonClient</code>](#AxonClient)  
-**Returns**: <code>Object</code> - JSON-like Object 
+
+| Param | Type |
+| --- | --- |
+| axonClient | <code>Object.&lt;AxonClient&gt;</code> | 
+

@@ -1,51 +1,35 @@
-<a id="eventmanager"></a>
+<a name="EventManager"></a>
 
 ## EventManager ⇐ <code>Base</code>
-**Kind**: Global class  
+**Kind**: global class  
 **Extends**: <code>Base</code>  
 **Author**: KhaaZ  
 
-[EventManager](#EventManager) ⇐ <code>Base</code>
-- _static_
-  - [.EventManager](#EventManager)
-    - [new EventManager(axon)](#EventManager_new)
-- _instance_
-  - [getListeners(eventName)](#getListeners) ⇒ <code>Array</code>
-  - [bindListeners()](#bindListeners)
-  - [bindHandlers()](#bindHandlers)
-  - [registerListener(event)](#registerListener)
-  - [registerHandler(event)](#registerHandler) ⇒ <code>Object</code>
-  - [registerEvent(event)](#registerEvent) ⇒ <code>Object</code>
-  - [createHandler(events, ...args)](#createHandler)
-  - [unregisterListener(event, label)](#unregisterListener) ⇒ <code>Boolean</code>
-  - [unregisterHandler(event)](#unregisterHandler) ⇒ <code>Boolean</code>
-  - [unregisterEvent(event)](#unregisterEvent) ⇒ <code>Boolean</code>
-    
-<a id="eventmanager"></a>
+* [EventManager](#EventManager) ⇐ <code>Base</code>
+    * [new EventManager()](#new_EventManager_new)
+    * _instance_
+        * [.getListeners(eventName)](#EventManager+getListeners) ⇒ <code>Array</code>
+        * [.bindListeners()](#EventManager+bindListeners)
+        * [.bindHandlers()](#EventManager+bindHandlers)
+        * [.registerListener(listener)](#EventManager+registerListener)
+        * [.registerHandler(event)](#EventManager+registerHandler) ⇒ <code>Object</code>
+        * [.registerEvent(event)](#EventManager+registerEvent) ⇒ <code>Object</code>
+        * [.unregisterListener(event, label)](#EventManager+unregisterListener) ⇒ <code>Boolean</code>
+        * [.unregisterHandler(event)](#EventManager+unregisterHandler) ⇒ <code>Boolean</code>
+        * [.unregisterEvent(event)](#EventManager+unregisterEvent) ⇒ <code>Boolean</code>
+    * _static_
+        * [.EventManager](#EventManager.EventManager)
+            * [new EventManager(axon)](#new_EventManager.EventManager_new)
 
-### EventManager.EventManager
-**Kind**: Static class of [<code>EventManager</code>](#EventManager)  
-**Properties**
+<a name="new_EventManager_new"></a>
 
-| Name | Type | Description |
-| --- | --- | --- |
-| _listeners | <code>Object</code> | Object that link an event name to an Array of Event Object { eventName: [Event, Event] } |
-| _handlers | <code>Collection.&lt;Object&gt;</code> | Collection of handler keyed to the event name [key: eventName, value: Handler] |
-| events | <code>Object</code> | Collection of Eris events listened by the client [GETTER: _handlers] |
+### new EventManager()
+Event Manager class
 
-<a id="eventmanager_new"></a>
+<a name="EventManager+getListeners"></a>
 
-#### new EventManager(axon)
-Creates an Instance of EventManager.  
-
-| Param | Type |
-| --- | --- |
-| axon | <code>Object.&lt;AxonClient&gt;</code> | 
-
-<a id="getlisteners"></a>
-
-### getListeners(eventName) ⇒ <code>Array</code>
-Get all functions bound to the event passed in parameters.  
+### eventManager.getListeners(eventName) ⇒ <code>Array</code>
+Get all functions bound to the event passed in parameters.
 
 **Kind**: instance method of [<code>EventManager</code>](#EventManager)  
 **Returns**: <code>Array</code> - Array of the functions bound to the event  
@@ -54,81 +38,68 @@ Get all functions bound to the event passed in parameters.
 | --- | --- | --- |
 | eventName | <code>String</code> | The Eris event name |
 
-<a id="bindlisteners"></a>
+<a name="EventManager+bindListeners"></a>
 
-### bindListeners()
-Binds all Listeners to an Handler  .
-Creates and registers an Handler for each event.
-If the bot is ready, it (EventManager) also call bindHandlers().
+### eventManager.bindListeners()
+Bind all listeners to a handler.
+Create and register a handler for each event.
+Called by AxonClient in start method.
+If the bot is ready, also call bindHandlers()
 
-**Kind**: Instance method of [<code>EventManager</code>](#EventManager)  
+**Kind**: instance method of [<code>EventManager</code>](#EventManager)  
+<a name="EventManager+bindHandlers"></a>
 
-<a id="bindhandlers"></a>
+### eventManager.bindHandlers()
+Bind every handler to the correct event emitter
 
-### bindHandlers()
-Binds every Handler to the correct Event emission
+**Kind**: instance method of [<code>EventManager</code>](#EventManager)  
+<a name="EventManager+registerListener"></a>
 
-**Kind**: Instance method of [<code>EventManager</code>](#EventManager)  
+### eventManager.registerListener(listener)
+Register a listener for the given discord event.
+Add the Listener in the array of Listener for each discord event.
+Called by ModuleLoader when registering an event.
 
-<a id="registerlistener"></a>
-
-### registerListener(event)
-Registers a listener for this event.
-Adds the Event object in the array of Event objects for each events
-
-**Kind**: Instance method of [<code>EventManager</code>](#EventManager)  
+**Kind**: instance method of [<code>EventManager</code>](#EventManager)  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| event | <code>Object.&lt;Event&gt;</code> | Event Object |
+| listener | <code>Object.&lt;Listener&gt;</code> | Event Object |
 
-<a id="registerhandler"></a>
+<a name="EventManager+registerHandler"></a>
 
-### registerHandler(event) ⇒ <code>Object</code>
-Registers an Handler.
-Removes the current event listener if the handler already exists
-Create a new Handler from the array of listeners for this event
+### eventManager.registerHandler(event) ⇒ <code>Object</code>
+Register a handler.
+Remove the current event listener if the handler already exists.
+Create a new handler from the array of listeners for the given event.
 
-**Kind**: Instance method of [<code>EventManager</code>](#EventManager)  
+**Kind**: instance method of [<code>EventManager</code>](#EventManager)  
 **Returns**: <code>Object</code> - The new Handler created  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | event | <code>String</code> | The Event name |
 
-<a id="registerevent"></a>
+<a name="EventManager+registerEvent"></a>
 
-### registerEvent(event) ⇒ <code>Object</code>
-Registers an event.
-Recreates an handler and binds an handler to the event emitted
+### eventManager.registerEvent(event) ⇒ <code>Object</code>
+Register an event handler and start listen to this event.
+Recreate a handler and bind it to the event emitter.
 
-**Kind**: Instance method of [<code>EventManager</code>](#EventManager)  
+**Kind**: instance method of [<code>EventManager</code>](#EventManager)  
 **Returns**: <code>Object</code> - The Handler Object  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| event | <code>String</code> | The Event name to register |
+| event | <code>String</code> | The Discord event name to register |
 
-<a id="createhandler"></a>
+<a name="EventManager+unregisterListener"></a>
 
-### createHandler(events, ...args)
-Creates one Handler function from all listeners
-Checks if the module / event is globally disabled
+### eventManager.unregisterListener(event, label) ⇒ <code>Boolean</code>
+Unregister a listener.
+Recreate the handler and listen to the updated handler
 
-**Kind**: Instance method of [<code>EventManager</code>](#EventManager)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| events | <code>Array</code> | All listeners for this event |
-| ...args | <code>Array</code> | All arguments possibly passed to an event |
-
-<a id="unregisterlistener"></a>
-
-### unregisterListener(event, label) ⇒ <code>Boolean</code>
-Unregisters a listener
-Recreates the handler and re-listens to the updated handler
-
-**Kind**: Instance method of [<code>EventManager</code>](#EventManager)  
+**Kind**: instance method of [<code>EventManager</code>](#EventManager)  
 **Returns**: <code>Boolean</code> - True if worked / False if label or event doesn't exist  
 
 | Param | Type | Description |
@@ -136,27 +107,49 @@ Recreates the handler and re-listens to the updated handler
 | event | <code>String</code> | Name of the event |
 | label | <code>String</code> | Name of the listener |
 
-<a id="unregisterhandler"></a>
+<a name="EventManager+unregisterHandler"></a>
 
 ### eventManager.unregisterHandler(event) ⇒ <code>Boolean</code>
-Unregisters a Handler. Unregisters the event and deletes the handler
+Unregister a handler. Unregister the event and delete the handler.
 
-**Kind**: Instance method of [<code>EventManager</code>](#EventManager)  
+**Kind**: instance method of [<code>EventManager</code>](#EventManager)  
 **Returns**: <code>Boolean</code> - True if worked / False if event doesn't exist  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | event | <code>String</code> | Name of the event |
 
-<a id="unregisterevent"></a>
+<a name="EventManager+unregisterEvent"></a>
 
-### unregisterEvent(event) ⇒ <code>Boolean</code>
-Unregister one event without deleting the handler
-Just stop listening to the specified event emitted
+### eventManager.unregisterEvent(event) ⇒ <code>Boolean</code>
+Unregister the given event without deleting the handler.
+Just stop listening to the event emitter.
 
-**Kind**: Instance method of [<code>EventManager</code>](#EventManager)  
+**Kind**: instance method of [<code>EventManager</code>](#EventManager)  
 **Returns**: <code>Boolean</code> - True if worked / False if event doesn't exist  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | event | <code>String</code> | Name of the event |
+
+<a name="EventManager.EventManager"></a>
+
+### EventManager.EventManager
+**Kind**: static class of [<code>EventManager</code>](#EventManager)  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| _listeners | <code>Object</code> | Object that links an event name to an array of event objects { eventName: [Event, Event] } |
+| _handlers | <code>Collection.&lt;Object&gt;</code> | Collection of handler keyed to the event name [key: eventName, value: Handler] |
+
+<a name="new_EventManager.EventManager_new"></a>
+
+#### new EventManager(axon)
+Creates an EventManager instance.
+
+
+| Param | Type |
+| --- | --- |
+| axon | <code>Object.&lt;AxonClient&gt;</code> | 
+

@@ -118,7 +118,7 @@ class CommandPermissions {
      *
      * @param {Object<Message>} msg - The Message Object
      * @param {Object} guildConf - GuildConfig
-     * @returns {Array[Boolean, String|null]} True if the user can execute command / False if not. Second element is the missing permission || null
+     * @returns {Array<Boolean, String|null>} True if the user can execute command / False if not. Second element is the missing permission || null
      *
      * @memberof Command
      */

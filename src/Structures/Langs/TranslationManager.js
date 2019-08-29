@@ -37,7 +37,7 @@ class TranslationManager {
      * Return all messages for the specified lang or the default lang if no specified lang.
      *
      * @param {String} lang
-     * @returns
+     * @returns {Object}
      * @memberof TranslationManager
      */
     getMessages(lang) {
@@ -49,7 +49,7 @@ class TranslationManager {
      *
      * @param {String} message
      * @param {String} lang
-     * @returns
+     * @returns {String}
      * @memberof TranslationManager
      */
     getMessage(message, lang) {
