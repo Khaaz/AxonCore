@@ -13,7 +13,9 @@ import AxonError from '../../Errors/AxonError';
  *
  * @prop {Number} [argsMin=0] - Minimum arguments required to execute the command
  * @prop {Boolean} [invalidUsageMessage=true] - Whether to trigger the help command on invalid usage (not enough arguments)
- * @prop {Boolean} [invalidPermissionMessage=false] - Whether to trigger an error message on invalid permission (bot / user / custom etc)
+ * @prop {Boolean} [sendPermissionMessage=false] - Whether to trigger an error message on invalid permission (bot / user / custom etc)
+ * @prop {Function | String} [invalidPermissionMessage=null] - What the invalid permission message should be
+ * @prop {Number} [invalidPermissionMessageTimeout=9000] - What the invalid permission message deletion timeout should be
  * @prop {Boolean} [deleteCommand=false] - Whether to delete the command input after trigger
  * @prop {Boolean} [guildOnly=true] - Whether to allow executing this command outside of guilds
  * @prop {Boolean} [hidden=false] - Whether to hide this command from help command (general / subcommands)
@@ -50,9 +52,20 @@ class CommandOptions {
             base = override;
         }
 
+        if (!base.invalidPermissionMessage) {
+            this.invalidPermissionMessage = null
+        }
+        else if (typeof base.invalidPermissionMessage === 'string') {
+            this.invalidPermissionMessage = (channel, member) => base.invalidPermissionMessage
+        }
+        else {
+            this.invalidPermissionMessage = base.invalidPermissionMessage
+        }
+
         this.argsMin = base.argsMin || 0;
         this.invalidUsageMessage = base.invalidUsageMessage ? base.invalidUsageMessage : true;
-        this.invalidPermissionMessage = !!base.invalidPermissionMessage;
+        this.sendPermissionMessage = !!base.sendPermissionMessage;
+        this.invalidPermissionMessageTimeout = base.invalidPermissionMessageTimeout !== undefined ? base.invalidPermissionMessageTimeout : 9000
         this.deleteCommand = !!base.deleteCommand;
         this.guildOnly = base.guildOnly !== undefined ? base.guildOnly : true;
         this.hidden = !!base.hidden;
@@ -114,6 +127,19 @@ class CommandOptions {
      */
     shouldDeleteCommand() {
         return this.deleteCommand;
+    }
+
+    /**
+     * Get the invalid permission message
+     * 
+     * @param {Channel} channel - The guild channel
+     * @param {Member} member - The guild member
+     * 
+     * @returns {String}
+     */
+    getInvalidPermissionMessage(channel, member) {
+        const permMessage = this.invalidPermissionMessage; // Just so the below ternary operator is clean
+        return permMessage ? permMessage(channel, member) : this.template.message.error.permSource
     }
 }
 
