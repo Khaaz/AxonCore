@@ -7,8 +7,7 @@
 
 | Name | Type | Description |
 | --- | --- | --- |
-| axon | <code>Object.&lt;AxonClient&gt;</code> | Axon Client [GETTER: _axon] |
-| bot | <code>Object.&lt;Eris.Client&gt;</code> | Eris bot Client [GETTER: _axon.botClient] |
+| _axon | <code>Object.&lt;AxonClient&gt;</code> | AxonClient |
 | userMention | <code>RegExp</code> | Regular Expression to match a userMention |
 | roleMention | <code>RegExp</code> | Regular Expression to match a roleMention |
 | channelMention | <code>RegExp</code> | Regular Expression to match a channelMention |

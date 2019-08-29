@@ -22,9 +22,9 @@
 | axonUtils | <code>Object</code> | Util methods (Axon) |
 | utils | <code>Object</code> | Utils methods (general) |
 | DBProvider | <code>Object.&lt;DBProvider&gt;</code> | JSON(default) / Mongoose |
-| configs | <code>Object</code> | configs (axon, template, _tokens) [GETTER: _configs] |
-| [configs.bot] | <code>Object</code> | configs (bot, template, _tokens) [GETTER: _configs] |
-| [configs._tokens] | <code>Object</code> | configs (axon, template, _tokens) [GETTER: _configs] |
+| configs | <code>Object</code> | configs (axon, _tokens) |
+| [configs.bot] | <code>Object</code> | bot general config |
+| [configs._tokens] | <code>Object</code> | token secret config |
 | staff | <code>Object</code> | BotStaff (owners, admins, +...) |
 | [staff.owners] | <code>Array.&lt;String&gt;</code> | Array of user IDs with BotOwner permissions |
 | [staff.admins] | <code>Array.&lt;String&gt;</code> | Array of user IDs with BotAdmin permisions |

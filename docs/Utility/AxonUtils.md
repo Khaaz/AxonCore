@@ -7,10 +7,7 @@
 
 | Name | Type | Description |
 | --- | --- | --- |
-| axon | <code>Object.&lt;AxonClient&gt;</code> | Axon Client [GETTER: _axon] |
-| bot | <code>Object.&lt;Eris.Client&gt;</code> | Eris bot Client [GETTER: _axon.botClient] |
-| logger | <code>Object</code> | Logger Object/Methods [GETTER: axon.logger] |
-| utils | <code>Object</code> | Utils Object/Methods [GETTER: axon.utils] |
+| _axon | <code>Object.&lt;AxonClient&gt;</code> | Axon Client |
 
 
 * [AxonUtils](#AxonUtils)

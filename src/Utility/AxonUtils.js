@@ -9,10 +9,8 @@ import Validater from '../Structures/Validater';
  *
  * @class AxonUtils
  *
- * @prop {Object<AxonClient>} axon - Axon Client [GETTER: _axon]
- * @prop {Object<Eris.Client>} bot - Eris bot Client [GETTER: _axon.botClient]
- * @prop {Object} logger - Logger Object/Methods [GETTER: axon.logger]
- * @prop {Object} utils - Utils Object/Methods [GETTER: axon.utils]
+ * @prop {Object<AxonClient>} _axon - Axon Client
+ *
  */
 class AxonUtils {
     /**

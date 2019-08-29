@@ -22,8 +22,7 @@ const HEX_CODE = /^#?([0-9A-Fa-f]{6})$/;
  *
  * @class Utils
  *
- * @prop {Object<AxonClient>} axon - Axon Client [GETTER: _axon]
- * @prop {Object<Eris.Client>} bot - Eris bot Client [GETTER: _axon.botClient]
+ * @prop {Object<AxonClient>} _axon - AxonClient
  *
  * @prop {RegExp} userMention - Regular Expression to match a userMention
  * @prop {RegExp} roleMention - Regular Expression to match a roleMention

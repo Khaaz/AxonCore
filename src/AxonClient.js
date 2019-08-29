@@ -52,9 +52,9 @@ import MessageManager from './Structures/Langs/MessageManager';
  * @prop {Object} axonUtils - Util methods (Axon)
  * @prop {Object} utils - Utils methods (general)
  * @prop {Object<DBProvider>} DBProvider - JSON(default) / Mongoose
- * @prop {Object} configs - configs (axon, template, _tokens) [GETTER: _configs]
- * @prop {Object} [configs.bot] - configs (bot, template, _tokens) [GETTER: _configs]
- * @prop {Object} [configs._tokens] - configs (axon, template, _tokens) [GETTER: _configs]
+ * @prop {Object} configs - configs (axon, _tokens)
+ * @prop {Object} [configs.bot] - bot general config
+ * @prop {Object} [configs._tokens] - token secret config
  * @prop {Object} staff - BotStaff (owners, admins, +...)
  * @prop {Array<String>} [staff.owners] - Array of user IDs with BotOwner permissions
  * @prop {Array<String>} [staff.admins] - Array of user IDs with BotAdmin permisions
