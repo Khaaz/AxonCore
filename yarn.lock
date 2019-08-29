@@ -387,10 +387,9 @@ emoji-regex@^7.0.1:
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-7.0.3.tgz#933a04052860c85e83c122479c4748a8e4c72156"
   integrity sha512-CwBLREIQ7LvYFB0WyRvwhq5N5qPhc6PMjD6bYggFlI5YyDgl+0vxq5VHbMOFqLg7hfWzmu8T5Z1QofhmTIhItA==
 
-eris@^0.10.1:
+eris@abalabahaha/eris#dev:
   version "0.10.1"
-  resolved "https://registry.yarnpkg.com/eris/-/eris-0.10.1.tgz#1ecc13ff06d45edb86c344b70ec2dd2e7ef270df"
-  integrity sha512-POWCQ91xmG75U5V3i2bAvh/hco+HkgF+YJzerTcULe++AgKutA4l1adxqUrJ13Nxah/O+olkkQCufO+gQoawtA==
+  resolved "https://codeload.github.com/abalabahaha/eris/tar.gz/2423da106813b669f9f3580d5d437e91ba3cf55f"
   dependencies:
     ws "^6.0.0"
   optionalDependencies:

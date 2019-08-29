@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AxonCore</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Documentation for AxonCore framework.">
+  <meta name="author" content="KhaaZ">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="//unpkg.com/docsify/lib/themes/vue.css" title="light" id="theme" >
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <style>
+    nav.app-nav li ul {
+      min-width: 100px;
+    }
+  </style>
+</head>
+<<body>
+  <div id="app"></div>
+  <img src="./_images/arrow.png" alt="arrow" onclick="topFunction()" id="ToTop">
+  <label class="switch" id="switchTheme">
+      <input type="checkbox" onclick="switchTheme()">
+      <span class="sliderSwitch round"></span>
+    </label>
+  <script>
+    window.$docsify = {
+      name: 'AxonCore',
+      repo: 'Khaazz/AxonCore',
+      logo: './_images/logo.png',
+      auto2top: true,
+      loadNavbar: true,
+      mergeNavbar: true,
+      executeScript: true,
+      search: {
+        noData: {
+          '/': 'No results!'
+        },
+        paths: 'auto',
+        placeholder: {
+          '/': 'Search'
+        }
+      },
+    }
+  </script>
+  <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
+  <script src="//unpkg.com/docsify/lib/plugins/search.min.js"></script>
+  <script src="//unpkg.com/docsify/lib/plugins/ga.min.js"></script>
+  <script src="//unpkg.com/prismjs/components/prism-bash.min.js"></script>
+  <script src="//unpkg.com/prismjs/components/prism-markdown.min.js"></script>
+  <script src="//unpkg.com/prismjs/components/prism-nginx.min.js"></script>
+  <script>
+    // When the user scrolls down 20px from the top of the document, show the button
+    window.onscroll = function() { scrollFunction() };
+    
+    function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("ToTop").style.display = "block";
+            document.getElementById("switchTheme").style.display = "none";
+        } else {
+            document.getElementById("ToTop").style.display = "none";
+            document.getElementById("switchTheme").style.display = "block";
+        }
+    }
+    // When the user clicks on the button, scroll to the top of the document
+    function topFunction() {
+        document.body.scrollTop = 0; // For Safari
+        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    }
+
+    function switchTheme() {
+      var oldLink = document.getElementsByTagName("link").item(0);
+      var newLink = document.createElement("link");
+
+      newLink.setAttribute("id", "theme");
+      newLink.setAttribute("rel", "stylesheet");
+      newLink.setAttribute("id", "theme");
+      
+      if (oldLink.href === "http://unpkg.com/docsify/lib/themes/dark.css" || oldLink.href === "https://unpkg.com/docsify/lib/themes/dark.css") {
+        newLink.setAttribute("href", "//unpkg.com/docsify/lib/themes/vue.css");
+      } else {
+        newLink.setAttribute("href", "//unpkg.com/docsify/lib/themes/dark.css");
+      }
+      newLink.setAttribute("title", "light");
+      document.getElementsByTagName("head").item(0).replaceChild(newLink, oldLink)
+    }
+  </script>
+</body>
+</html>
