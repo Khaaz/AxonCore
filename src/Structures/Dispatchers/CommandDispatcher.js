@@ -9,6 +9,8 @@ import Dispatcher from './Dispatcher';
  *
  * @class Dispatcher
  * @extends Dispatcher
+ *
+ * @prop {RegExp} mentionFormatter
  */
 class CommandDispatcher extends Dispatcher {
     /**

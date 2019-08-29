@@ -80,6 +80,10 @@
         "output": "Structures/Handler.md"
     },
     {
+        "input": "Structures/Dispatchers/CommandDispatcher.js",
+        "output": "Structures/CommandDispatcher.md"
+    },
+    {
         "input": "Structures/GuildConfigCache.js",
         "output": "Structures/GuildConfigCache.md"
     },

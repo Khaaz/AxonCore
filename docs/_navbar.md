@@ -19,6 +19,7 @@
   * [CommandResponse](Structures/CommandResponse.md)
   * [EventManager](Structures/EventManager.md)
   * [Handler](Structures/Handler.md)
+  * [CommandDispatcher](Structures/CommandDispatcher.md)
   * [GuildConfigCache](Structures/GuildConfigCache.md)
   * [MessageManager](Structures/MessageManager.md)
   * [TranslationManager](Structures/TranslationManager.md)
