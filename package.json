@@ -12,17 +12,14 @@
     "esm": "^3.2.25",
     "eventemitter3": "^4.0.0"
   },
-  "peerDependencies": {
-    "eris": "^0.10.1"
-  },
   "devDependencies": {
+    "@axonteam/doc-gen": "git+https://github.com/AxonTeam/doc-gen",
     "@axonteam/eslint-config": "^2.2.0",
     "@types/node": "^12.6.2",
     "chalk": "^2.4.2",
     "discord.js": "discordjs/discord.js",
     "eris": "abalabahaha/eris#dev",
     "eslint": "^6.1.0",
-    "jsdoc-to-markdown": "^4.0.1",
     "mongoose": "^5.6.8",
     "superagent": "^5.1.0",
     "typescript": "^3.5.3",
