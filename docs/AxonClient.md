@@ -8,7 +8,7 @@
 
 | Name | Type | Description |
 | --- | --- | --- |
-| client | <code>Object.&lt;Client&gt;</code> | Eris or Discordjs Client [GETER: _client] |
+| _botClient | <code>Object.&lt;BotClient&gt;</code> | Eris or Discordjs Client |
 | modules | <code>Collection.&lt;Module&gt;</code> | All modules in the client [key: label, value: module] |
 | commands | <code>Collection.&lt;Command&gt;</code> | All commands in the client [key: label, value: command] |
 | commandAliases | <code>Map.&lt;String&gt;</code> | All aliases in the client [key: alias, value: commandLabel] |
@@ -253,8 +253,8 @@ Creates an AxonClient instance.
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| botClient | <code>Object.&lt;Client&gt;</code> |  | Eris or Discordjs Client instance |
-| [axonOptions] | <code>Object.&lt;axonOptions&gt;</code> | <code>{}</code> | Axon options |
+| botClient | <code>Object.&lt;BotClient&gt;</code> |  | Eris or Discordjs Client instance |
+| [axonOptions] | <code>Object.&lt;AxonOptions&gt;</code> | <code>{}</code> | Axon options |
 | [axonOptions.botConfig] | <code>Object</code> | <code></code> | General Axon config |
 | [axonOptions.lang] | <code>Object</code> | <code></code> | Message templates / translations |
 | [axonOptions.tokenConfig] | <code>Object</code> | <code></code> | Token config |

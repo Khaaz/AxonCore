@@ -38,7 +38,7 @@ import MessageManager from './Structures/Langs/MessageManager';
  * @class AxonClient
  * @extends EventEmitter
  *
- * @prop {Object<Client>} client - Eris or Discordjs Client [GETER: _client]
+ * @prop {Object<BotClient>} _botClient - Eris or Discordjs Client
  * @prop {Collection<Module>} modules - All modules in the client [key: label, value: module]
  * @prop {Collection<Command>} commands - All commands in the client [key: label, value: command]
  * @prop {Map<String>} commandAliases - All aliases in the client [key: alias, value: commandLabel]
@@ -70,8 +70,8 @@ class AxonClient extends EventEmitter {
     /**
      * Creates an AxonClient instance.
      *
-     * @param {Object<Client>} botClient - Eris or Discordjs Client instance
-     * @param {Object<axonOptions>} [axonOptions={}] - Axon options
+     * @param {Object<BotClient>} botClient - Eris or Discordjs Client instance
+     * @param {Object<AxonOptions>} [axonOptions={}] - Axon options
      * @param {Object} [axonOptions.botConfig=null] - General Axon config
      * @param {Object} [axonOptions.lang=null] - Message templates / translations
      * @param {Object} [axonOptions.tokenConfig=null] - Token config
