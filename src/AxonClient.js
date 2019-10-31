@@ -469,7 +469,7 @@ class AxonClient extends EventEmitter {
             console.time('- Net');
             console.time('- Node');
         }
-
+        
         command._process( {
             msg, args, guildConfig, isAdmin, isOwner,
         } )

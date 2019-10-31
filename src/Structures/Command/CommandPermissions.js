@@ -178,7 +178,7 @@ class CommandPermissions {
         }
 
         // Needed: if one of the perms is false => doesn't exec the command
-        const perm = !this._checkPermsUserNeeded(member); // discord permissions
+        const perm = this._checkPermsUserNeeded(member); // discord permissions
         if (!perm[0] ) {
             return [false, this.library.enums.PERMISSIONS_NAMES[perm[1]]];
         }
@@ -190,12 +190,11 @@ class CommandPermissions {
         if (!this._checkStaffNeeded(member) ) { // bot staff
             return [false, 'Bot Staff'];
         }
-
         // custom is a function that returns a boolean
         if (this.custom) {
             return [this.custom(msg), null];
         }
-
+        
         return [true];
     }
 

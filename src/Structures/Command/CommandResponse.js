@@ -5,6 +5,7 @@
  *
  * @prop {Boolean} success
  * @prop {Boolean} triggerCooldown
+ * @prop {Object<Error>|null} error
  */
 class CommandResponse {
     /**
