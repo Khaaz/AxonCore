@@ -474,15 +474,18 @@ class AxonClient extends EventEmitter {
             msg, args, guildConfig, isAdmin, isOwner,
         } )
             .then( (context) => {
-                this.emit('commandSuccess', { msg, guildConfig, context } );
+                context.executed
+                    ? this.emit('commandSuccess', { msg, guildConfig, context } )
+                    : this.emit('commandFailure', { msg, guildConfig, context } );
+                
                 this.settings.debugMode && console.timeEnd('- Net');
             } )
             .catch(err => {
-                this.emit('commandFailure', { msg, guildConfig, err } );
+                this.emit('commandError', { msg, guildConfig, err } );
                 this.settings.debugMode && console.timeEnd('- Net');
 
                 this.logger.emerg(err.stack);
-                this.axonUtils.triggerWebhook('AxonCommandError', {
+                this.axonUtils.triggerWebhook('error', {
                     color: 15158332,
                     timestamp: new Date(),
                     description: (err.stack && err.stack.length < EMBED_LIMITS.LIMIT_DESCRIPTION) ? err.stack : err.message,
@@ -514,11 +517,11 @@ class AxonClient extends EventEmitter {
                 this.settings.debugMode && console.timeEnd('- Net');
             } )
             .catch(err => {
-                this.emit('commandFailure', { msg, guildConfig, err } );
+                this.emit('commandError', { msg, guildConfig, err } );
                 this.settings.debugMode && console.timeEnd('- Net');
 
                 this.logger.emerg(err.stack);
-                this.axonUtils.triggerWebhook('AxonCommandError', {
+                this.axonUtils.triggerWebhook('error', {
                     color: 15158332,
                     timestamp: new Date(),
                     description: (err.stack && err.stack.length < EMBED_LIMITS.LIMIT_DESCRIPTION) ? err.stack : err.message,
@@ -539,10 +542,10 @@ class AxonClient extends EventEmitter {
                 this.emit('eventSuccess', { event: listener.eventName, listener, guildConfig } );
             } )
             .catch(err => {
-                this.emit('eventFailure', { event: listener.eventName, listener, guildConfig, err } );
+                this.emit('eventError', { event: listener.eventName, listener, guildConfig, err } );
 
                 this.logger.error(`[EVENT](${listener.eventName}) - ${listener.label}\n${err}`);
-                this.axonUtils.triggerWebhook('AxonEventError', {
+                this.axonUtils.triggerWebhook('error', {
                     color: 15158332,
                     timestamp: new Date(),
                     description: (err.stack && err.stack.length < EMBED_LIMITS.LIMIT_DESCRIPTION) ? err.stack : err.message,
@@ -559,6 +562,7 @@ class AxonClient extends EventEmitter {
      *
      * @param {Object<Message>} msg - The message object
      * @returns {Promise<Message>} Message Object
+     *
      * @memberof AxonClient
      */
     async sendFullHelp(msg, guildConfig) {
@@ -622,6 +626,7 @@ class AxonClient extends EventEmitter {
      * @param {String} gID - The guild ID
      * @param {Array<String>} prefixArr - The array of prefixes
      * @returns {Promise<Object>} The guild Schema from the DB / Error if error
+     *
      * @memberof AxonClient
      */
     async registerGuildPrefixes(gID, prefixArr) {
@@ -671,7 +676,6 @@ class AxonClient extends EventEmitter {
         }
         return base;
     }
-
     
     /**
      * Custom inspect method

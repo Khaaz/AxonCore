@@ -63,11 +63,9 @@ class Handler {
                 continue;
             }
             // Ignore guild disabled Module/Event
-            if (guildConfig) {
-                if ( (guildConfig.isModuleDisabled(listener.module) && !listener.module.serverBypass)
-                    || (guildConfig.isListenerDisabled(listener) && !listener.serverBypass) ) {
-                    continue;
-                }
+            if (guildConfig && (
+                (guildConfig.isModuleDisabled(listener.module) && !listener.module.serverBypass) || (guildConfig.isListenerDisabled(listener) && !listener.serverBypass) ) ) {
+                continue;
             }
             this._axon._execListener(listener, guildConfig, ...args);
         }

@@ -161,7 +161,7 @@ class CommandDispatcher extends Dispatcher {
         if (content.startsWith(this._axon.settings.ownerPrefix) && !!this._axon.axonUtils.isBotOwner(authorID) ) { // Owner prefix + user is owner
             isOwner = true;
             isAdmin = true;
-        } if (content.startsWith(this._axon.settings.adminPrefix) && !!this._axon.axonUtils.isBotAdmin(authorID) ) { // admin prefix + user is admin+ (admin/owner)
+        } else if (content.startsWith(this._axon.settings.adminPrefix) && !!this._axon.axonUtils.isBotAdmin(authorID) ) { // admin prefix + user is admin+ (admin/owner)
             isAdmin = true;
         }
         
