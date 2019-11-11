@@ -24,26 +24,34 @@ import Base from './Base';
 class Listener extends Base {
     /**
      * Creates an Listener instance.
+     *
      * @param {Object<Module>} module
+     * @param {Object} [data={}] - All events parameters
+     * @param {String} [data.eventName]
+     * @param {String} [data.label]
+     * @param {Boolean} [data.load]
+     * @param {Boolean} [data.enabled]
+     * @param {Boolean} [data.serverBypass]
+     * @param {Object} [data.infos]
      *
      * @memberof Listener
      */
-    constructor(module) {
+    constructor(module, data = {} ) {
         super(module.axon);
 
         this._module = module;
 
         /* Event Name (Discord name) */
-        this.eventName = 'event';
+        this.eventName = data.eventName || null;
         /* Listener name (Function name) */
-        this.label = 'label';
+        this.label = data.label || null;
 
-        this.load = true;
-        this.enabled = module.enabled;
+        this.load = data.load !== undefined ? data.load : true;
+        this.enabled = data.enabled !== undefined ? data.enabled : module.enabled;
         /* Bypass all perms - can/can't be server disabled */
-        this.serverBypass = module.serverBypass;
+        this.serverBypass = data.serverBypass !== undefined ? data.serverBypass : module.serverBypass;
 
-        this.infos = {
+        this.infos = data.infos || {
             owners: [],
             description: 'description',
         };
