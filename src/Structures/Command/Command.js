@@ -26,27 +26,25 @@ import { COMMAND_EXECUTION_STATE } from '../../Utility/Constants/AxonEnums';
  * @prop {String} label - Command label (name/id)
  * @prop {Array<String>} [aliases=[]] - Array of commands aliases (including the command label)
  *
- * @prop {Boolean} [enabled=module.enabled] - Is the command enabled?
- * @prop {Boolean} [serverBypass=module.serverBypass] - Can the command be disabled?
+ * @prop {Boolean} [enabled=module.enabled] - Whether the command is enabled
+ * @prop {Boolean} [serverBypass=module.serverBypass] - Whether the command can be disabled
  *
- * @prop {Boolean} [isSubcmd=false] - Command is a subcommand
+ * @prop {Boolean} [isSubcmd=false] - Whether the command is a subcommand
  * @prop {Object<Command>} [parentCommand=null] - Reference to the parent command (if isSubcmd = true)
- * @prop {Boolean} [hasSubcmd=false] - Does the command have subcommands?
- * @prop {Array} subcmds - Array of subcommand objects (deleted after init)
+ * @prop {Boolean} [hasSubcmd=false] - Whether the command has subcommands
+ * @prop {Array<Object>} subcmds - Array of subcommand objects (deleted after init)
  * @prop {Collection<Command>} [subCommands=null] - Collection of subcommands
  * @prop {Object<Map>} [subCommandsAliases=null] - Map of subcommand aliases
  *
  * @prop {Object} infos - Default info about the command
- * @prop {Array} [infos.owners] - Command authors
+ * @prop {Array<String>} [infos.owners] - Command authors
  * @prop {String} [infos.cmdName] - Full command name
  * @prop {String} [infos.description] - Command description
  * @prop {String} [infos.usage] - Command usage
- * @prop {Array} [infos.example] - Array of command examples
+ * @prop {Array<String>} [infos.example] - Array of command examples
  *
  * @prop {Object<CommandOptions>} options - Options Object for the command (manage all command options)
  * @prop {Object<CommandPermissions>} permissions - Permissions Object for the command (manage all command permissions)
- *
- * @prop {Object} fullLabel - Get the full label of the command (whole command label through thecommands tree)
  */
 class Command extends Base {
     /**
@@ -55,10 +53,21 @@ class Command extends Base {
      * Overrides the execute method. Execute method will be called everytime the command is called.
      *
      * @param {Object<Module>} module
+     * @param {Object} [data={}] - All command parameters
+     * @param {String} [data.label]
+     * @param {Array<String>} [data.aliases]
+     * @param {Boolean} [data.isSubcmd]
+     * @param {Boolean} [data.hasSubcmd]
+     * @param {Boolean} [data.enabled]
+     * @param {Boolean} [data.serverBypass]
+     * @param {Array<String>} [data.subcmds]
+     * @param {Object} [data.infos]
+     * @param {Object<CommandOptions>|Object} [data.options]
+     * @param {Object<CommandPermissions>|Object} [data.permissions]
      *
      * @memberof Command
      */
-    constructor(module) {
+    constructor(module, data = {} ) {
         super(module.axon);
 
         this._module = module; // (module Object)
@@ -66,16 +75,16 @@ class Command extends Base {
         this._cooldown = new CommandCooldown(this);
 
         /* Command main options */
-        this.label = 'label';
-        this.aliases = []; // Includes label/main name of the command
-        this.enabled = module.enabled; // Default to module state
+        this.label = data.label || null;
+        this.aliases = data.aliases || []; // Includes label/main name of the command
+        this.enabled = data.enabled !== undefined ? data.enabled : module.enabled; // Default to module state
 
         /* Subcommands */
-        this.isSubcmd = false;
-        this.parentCommand = null; // Reference to the parent command
-        this.hasSubcmd = false;
+        this.isSubcmd = data.isSubcmd || false;
+        this.parentCommand = null; // Reference to the parent command - affected at instantiation
+        this.hasSubcmd = data.hasSubcmd || false;
         // temp var used to init subcommands
-        this.subcmds = []; // Array of imported commands - deleted after init
+        this.subcmds = data.subcmds || []; // Array of imported commands - deleted after init
 
         /*
          * Initiated if there are subcommands
@@ -84,20 +93,36 @@ class Command extends Base {
         this.subCommandsAliases = null; // Map of subcommand aliases
 
         /* Bypass all perms - true = prevent the command to be disabled */
-        this.serverBypass = module.serverBypass; // Default to module state
+        this.serverBypass = data.serverBypass !== undefined ? data.serverBypass : module.serverBypass; // Default to module state
 
         /* Command infos (help command) */
-        this.infos = {
-            owners: ['Owner'], // ['KhaaZ'] or ['KhaaZ', 'Jack']
-            name: 'parentLabel label', // Full name of the command
-            description: 'Description of the command.', // 'A cool command that does things.' <-- With the dot!
-            usage: 'label [param] (optional param)', // Full usage of the command
-            examples: ['example of command usage'], // ['', ...]
+        this.infos = data.infos || {
+            owners: [], // ['KhaaZ'] or ['KhaaZ', 'Jack']
+            name: null, // Full name of the command
+            description: null, // 'A cool command that does things.'
+            usage: null, // Full usage of the command
+            examples: [], // Some usages examples
         };
 
-        this.options = new CommandOptions(this);
-        
-        this.permissions = new CommandPermissions(this);
+        if (data.options) {
+            if (data.options instanceof CommandOptions) {
+                this.options = data.options;
+            } else {
+                this.options = new CommandOptions(this, data.options);
+            }
+        } else {
+            this.options = new CommandOptions(this);
+        }
+
+        if (data.permissions) {
+            if (data.permissions instanceof CommandPermissions) {
+                this.permissions = data.permissions;
+            } else {
+                this.permissions = new CommandPermissions(this, data.permissions);
+            }
+        } else {
+            this.options = new CommandPermissions(this);
+        }
     }
 
     // **** GETTER **** //
@@ -421,7 +446,7 @@ class Command extends Base {
             this.l.ERR_BOT_PERM( {
                 permissions: permissions.map(p => `\`${this.library.enums.PERMISSIONS_NAMES[p]}\``).join(', '),
             } ),
-            { delete: true, delay: 9000 }
+            { delete: true, delay: 9000 },
         );
     }
 
@@ -441,7 +466,7 @@ class Command extends Base {
         return this.sendError(
             channel,
             this.options.getInvalidPermissionMessage(channel, member, missingPermission),
-            options
+            options,
         );
     }
 
