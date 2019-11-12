@@ -11,6 +11,7 @@ logs/
 # Miscellaneous
 .vscode/
 axoncore.code-workspace
+docs/
 examples/
 _images/
 
