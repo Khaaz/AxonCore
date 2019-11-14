@@ -1,15 +1,15 @@
-name: Node CI
+name: Test
 
 on: [push]
 
 jobs:
-  build:
+  lint:
 
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [8.x, 10.x, 12.x]
+        node-version: [12.x]
 
     steps:
     - uses: actions/checkout@v1
@@ -17,10 +17,9 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: npm install, build, and test
+    - name: yarn install and lint
       run: |
-        npm ci
-        npm run build --if-present
-        npm test
+        yarn install
+        yarn lint
       env:
         CI: true
