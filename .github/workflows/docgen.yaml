@@ -1,0 +1,25 @@
+name: Docgen
+
+on: 
+  push:
+    branches:
+    - master
+
+jobs:
+  docgen:
+    name: Docgen
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@master
+
+      - name: Install Node v12
+        uses: actions/setup-node@master
+        with:
+          node-version: 12
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Generate and commit documentation
+        uses: axonteam/action-docgen@master
