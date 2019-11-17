@@ -1,21 +1,24 @@
 <div align="center">
   <br />
   <p>
-    <a href="https://khaazz.github.io/AxonCore"><img src="_images/banner.png" width="546" alt="AxonCore" /></a>
+    <a href="https://khaazz.github.io/AxonCore"> <img src="_images/banner.png" width="546" alt="AxonCore" /> </a>
   </p>
   <p>
-    <a href="https://github.com/Khaazz/AxonCore/releases"><img src="https://img.shields.io/github/release/Khaazz/AxonCore.svg?style=flat-square" alt="Release" /> </a>
-    <a href="https://www.npmjs.com/package/axoncore"><img src="https://img.shields.io/npm/v/axoncore.svg?maxAge=3600" alt="NPM version" /> </a>
-    <a href="https://github.com/Khaazz/AxonCore/actions"><img src="https://github.com/Khaazz/AxonCore/workflows/Test/badge.svg" alt="Test status" /> </a>
-    <a href="https://github.com/Khaazz/AxonCore/actions"><img src="https://github.com/Khaazz/AxonCore/workflows/Docgen/badge.svg" alt="Docgen status" /> </a>
-    <a href="https://discord.gg/QZ6B5US"><img src="https://discordapp.com/api/guilds/365236789855649814/embed.png" alt="Discord server" /></a>
+    <a href="https://github.com/Khaazz/AxonCore/releases"> <img src="https://img.shields.io/github/release/Khaazz/AxonCore.svg?style=flat-square" alt="Release" /> </a>
+    <a href="https://www.npmjs.com/package/axoncore"> <img src="https://img.shields.io/npm/v/axoncore.svg?maxAge=3600" alt="NPM version" /> </a>
+    <a href="https://github.com/Khaazz/AxonCore/actions"> <img src="https://github.com/Khaazz/AxonCore/workflows/Test/badge.svg" alt="Test status" /> </a>
+    <a href="https://github.com/Khaazz/AxonCore/actions"> <img src="https://github.com/Khaazz/AxonCore/workflows/Docgen/badge.svg" alt="Docgen status" /> </a>
+    <a href="https://discord.gg/QZ6B5US"> <img src="https://discordapp.com/api/guilds/365236789855649814/embed.png" alt="Discord server" /> </a>
   </p>
   <p>
-    <a href="https://nodei.co/npm/axoncore/"><img src="https://nodei.co/npm/axoncore.png?downloads=true&stars=true" alt="npm installinfo" /></a>
+    <a href="https://nodei.co/npm/axoncore/"> <img src="https://nodei.co/npm/axoncore.png?downloads=true&stars=true" alt="npm installinfo" /> </a>
   </p>
 </div>
 
 # AxonCore
+
+>__**Stable, Fast, Powerful**__  
+> The power of a fully featured framework, the simplicity of a predictable API.
 
 AxonCore is an all in one framework, built to make bot deveopment fast and easy. Focus only on what matters: creating commands for your users. AxonCore handles all the hard and annoying work for you. Take advantage of its stability and robustness to fasten your development.  
 AxonCore is opiniated to enforce good code practice and has all features you could possibly want in a framework, from command and event handlers, to full Database support, more details further down.  
@@ -25,6 +28,7 @@ AxonCore is lib agnostic, which mean you can use it indifferently with [Eris](ht
 
 - If you want power and stability in your bots.
 - Creating simple bots fast and easy with many customisation options.
+- Creating large stable bots designed to scale.
 
 **When not to use AxonCore:**
 
@@ -39,18 +43,18 @@ AxonCore is lib agnostic, which mean you can use it indifferently with [Eris](ht
 - **Event Handler** - Setup and react to events.
 - **Library agnostic** - Work with either Eris or Discord.js.
 - **Modular** - Separate your bot into several modules to entirely encapsulate your application.
-- **Extendable** - Extend anything that you want and on top of the framework.
+- **Extendable** - Extend anything that you want on top of the framework.
 - **Controlable execution flow** - Control every step from client initialisation to command execution.
 - **Database** - Built in database support (extendable to any database type - SQL, NoSQL).
 - **Advanced error management** - Advanced context management and error tracking for easy bughunting.
-- **Hooks** - Execute functions and actions on events (inhibitor hooks, pre/post-runhooks, finalizers hooks). [TODO]
+- **Hooks** - Execute functions and actions on events (inhibitor hooks, pre/post-run hooks, finalizers hooks). [TODO]
 - **Translaions** - Built-in support for a translation system.
 - **Logging** - Built-in custom logging.
 - **Statistic** - Easily track command usage, events and errors with custom events emitted by AxonCore.
 
 ## Philosophy
 
-AxonCore was built with specific aims. At it's core, it makes developing a bot fast and easy, particularly for developers that want to create small and specific bots for communities (singe server, small set of servers) that can scale.
+AxonCore was built with specific aims. At it's core, it makes developing a bot fast and easy, particularly for developers that want to create small and specific bots for communities (singe server, small set of servers). However, this framewok is also designed for scaling, and creating a big public bot is super easy and fast thanks to all features embeded in the framework and its stability.
 
 Primarily designed to work with [Eris](https://github.com/abalabahaha/eris), all the library implementation was abstracted to make the framework library agnostic, which means you can use it with other existing JS libraries, like [Discord.js](https://github.com/discordjs/discord.js), [Eris](https://github.com/abalabahaha/eris) or [Detritusjs](https://github.com/detritusjs/client)).
 
