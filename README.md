@@ -167,7 +167,7 @@ Github actions used in this project can be found here:
 
 - [Auto lint](.github/workflows/test.yaml) on PR.
 - [Doc building](https://github.com/AxonTeam/action-docgen) on commit ton master.
-- [Auto publish]() on npm and github packages on releases.
+- [Auto publish](.github/workflows/publish.yaml) on npm and github packages on releases.
 
 ## Documentation
 
