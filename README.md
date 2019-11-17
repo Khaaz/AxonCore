@@ -18,8 +18,8 @@
 # AxonCore
 
 AxonCore is an all in one framework, built to make bot deveopment fast and easy. Focus only on what matters: creating commands for your users. AxonCore handles all the hard and annoying work for you. Take advantage of its stability and robustness to fasten your development.  
-AxonCore is opiniated to enforce good code practice and has all features you could possibly want in a framework, from command and event handlers, to full Database support, more details further down.
-AxonCore is lib agnostic, which mean you can use it indifferently with [Eris](https://github.com/abalabahaha/eris), [Discord.js](https://github.com/discordjs/discord.js) or [Detritusjs](https://github.com/detritusjs/client).  
+AxonCore is opiniated to enforce good code practice and has all features you could possibly want in a framework, from command and event handlers, to full Database support, more details further down.  
+AxonCore is lib agnostic, which mean you can use it indifferently with [Eris](https://github.com/abalabahaha/eris), [Discord.js](https://github.com/discordjs/discord.js) or [Detritusjs](https://github.com/detritusjs/client).
 
 **When to use AxonCore:**
 
@@ -59,7 +59,7 @@ It was built with an OOP approach and uses predictable abstraction while keeping
 ## Features Overview
 
 Because it is built with the correct level abstraction, using AxonCore feels natural and powerful. Everything is easily accessible, extendable and customisable.
-AxonCore takes full benefits of promises while having a strong and complete error management system. Events are emitted on command execution (on success / failure / error) with a full context information.
+AxonCore takes full benefits of promises while having a strong and complete error management system. Events are emitted on command execution (on success / failure / error) with a full context information.  
 It also takes advantage of the lastest ECMAScript and Node features (Node12, ECMAScript 2019...). It also uses [ESM](https://github.com/standard-things/esm) to fully profit of ES6 modules (import / export syntax).
 
 Guild configs are abstracted in a specific cache, which allows easy access and data management and switching to other types of caches later on (eg: LRUCache, redis...).
@@ -72,7 +72,7 @@ You can create commands by extending [Command](src/Structures/Command/Command.js
 
 ### Listener
 
-You can also create listeners by extending [Listener](src/Structures/Listener.js).
+You can also create listeners by extending [Listener](src/Structures/Listener.js).  
 A **Listener** is a function that is run when a Discord-specific event occurs. Many listeners can be bound to one Discord event.  
 A **Handler** is an object responsible of running all listeners for a specific Discord event.
 
@@ -110,7 +110,7 @@ TODO
 
 ### Execution context, error management, usage tracking
 
-A command should return a Promise. It should either be a [CommandResponse](src/Structures/Command/CommandResponse.js) instance or the promise returned by [`sendMessage`](a), [`sendSuccess`](a), [`sendError`](a).
+A command should return a Promise. It should either be a [CommandResponse](src/Structures/Command/CommandResponse.js) instance or the promise returned by [`sendMessage`](a), [`sendSuccess`](a), [`sendError`](a).  
 
 The framework will build a [CommandContext](src/Structures/Command/CommandContext.js) object after each command execution.  
 Three type of events will then be emitted, depending on the scenario:
@@ -152,17 +152,17 @@ axonClient.on('eventError', { event: String, listener: Listener, guildConfig: Gu
 ### Dependency
 
 [ESM](https://www.npmjs.com/package/esm) is used to run this framework. It makes using ES6 modules possible, of which AxonCore takes full advantage of.  
-See [here](https://www.npmjs.com/package/esm#getting-started) on how to use ESM.
+See [here](https://www.npmjs.com/package/esm#getting-started) on how to use ESM.  
 You don't however need ESM to use this framework, using require is also compatible.
 
-You can use any Database you want. If support for this Database isn't built-in, you can create your own by extending [DBProvider](src/Database/DBProvider.js) and passing it in [AxonOptions](src/AxonOptions.js).
-There is currently support for: [Mongoose](https://github.com/Automattic/mongoose).
+You can use any Database you want. If support for this Database isn't built-in, you can create your own by extending [DBProvider](src/Database/DBProvider.js) and passing it in [AxonOptions](src/AxonOptions.js).  
+There is currently support for: [Mongoose](https://github.com/Automattic/mongoose).  
 You can also use the available JSON variant, if you don't need a DB solution.
 
 ### Dev-tools
 
 This project strongly uses eslint to enforce style rules and to avoid bugs. The eslint config used can be found [here](https://github.com/AxonTeam/eslint-config).
-Docs are built with a custom solution that can be found [here](https://github.com/AxonTeam/doc-gen).
+Docs are built with a custom solution that can be found [here](https://github.com/AxonTeam/doc-gen).  
 Github actions used in this project can be found here:
 
 - [Auto lint](.github/workflows/test.yaml) on PR.
@@ -182,5 +182,5 @@ AxonCore is being used in these cool projects:
 
 ## Contributions
 
-Feel free to contribute to this project by opening PRs or Issues. Contributions are always welcome.
+Feel free to contribute to this project by opening PRs or Issues. Contributions are always welcome.  
 To know more about contributions, discuss the development of AxonCore or need help, you can join our discord server [here](https://discord.gg/QZ6B5US).
