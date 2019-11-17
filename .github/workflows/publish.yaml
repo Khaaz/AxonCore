@@ -46,10 +46,7 @@ jobs:
       - name: Dep install
         run: yarn install
       - name: Autoscope package
-        run: |
-          cat package.json | sed -i -e 's/"name": "\([a-z0-9]*\)"/"name": "'$SCOPE'\/\1"/' package.json
-        env:
-          SCOPE: '@khaazz'
+        uses: khaazz/action-autoscope@master
       - name: Configure .npmrc
         run: echo registry=https://npm.pkg.github.com/Khaazz >> .npmrc
       - name: Publish
