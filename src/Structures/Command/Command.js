@@ -121,7 +121,7 @@ class Command extends Base {
                 this.permissions = new CommandPermissions(this, data.permissions);
             }
         } else {
-            this.options = new CommandPermissions(this);
+            this.permissions = new CommandPermissions(this);
         }
     }
 

@@ -35,7 +35,8 @@ class LibraryHandler {
 
             default: {
                 axon.logger.error('No Selected Library Interface.');
-                return null;
+                libraryInterface = new ErisInterface(axon);
+                axon.logger.info('[DEFAULT] Selected Library Interface: ERIS.');
             }
         }
 
