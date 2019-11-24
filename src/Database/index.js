@@ -1,5 +1,7 @@
 import JsonProvider from './JsonProvider';
 
+import { DB_TYPES } from './../Utility/Constants/AxonEnums';
+
 /**
  * Database Handler
  * Use require to dynamically load a Database Provider depending on installed dependencies.
@@ -17,7 +19,7 @@ class DBHandler {
 
         switch (db) {
             // Json Database
-            case 0:
+            case DB_TYPES.JSON:
             default: {
                 DBProvider = new JsonProvider(axon);
                 axon.logger.info('Selected Database: JSON DB.');
@@ -25,7 +27,7 @@ class DBHandler {
             }
 
             // MongoDB Database
-            case 1: {
+            case DB_TYPES.MONGO: {
                 try {
                     const MongoService = require('./MongoProvider').default;
                     DBProvider = new MongoService(axon);

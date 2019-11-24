@@ -56,8 +56,7 @@
 
     "lang": "english",
 
-    "debugMode": false,
-
+    "debugMode": true,
     "library": 1,
     "logger": 1,
     "db": 0
