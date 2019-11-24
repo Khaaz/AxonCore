@@ -1,6 +1,6 @@
 import Loader from './Loader';
 
-import Listener from '../Listener';
+import Listener from '../Event/Listener';
 
 import AxonError from '../../Errors/AxonError';
 

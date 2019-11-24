@@ -1,6 +1,6 @@
-import Base from './Base';
+import Base from '../Base';
 
-import Collection from '../Utility/Collection';
+import Collection from '../../Utility/Collection';
 import Handler from './Handler';
 
 /**

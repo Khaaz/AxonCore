@@ -12,7 +12,7 @@ export { default as CommandPermissions } from './src/Structures/Command/CommandP
 export { default as CommandOptions } from './src/Structures/Command/CommandOptions';
 export { default as CommandResponse } from './src/Structures/Command/CommandResponse';
 export { default as CommandContext } from './src/Structures/Command/CommandContext';
-export { default as Listener } from './src/Structures/Listener';
+export { default as Listener } from './src/Structures/Event/Listener';
 
 export { default as AxonConfig } from './src/Structures/DataStructure/AxonConfig';
 export { default as GuildConfig } from './src/Structures/DataStructure/GuildConfig';

@@ -5,7 +5,7 @@ import util from 'util';
 // Core - Structures
 import Module from './Structures/Module';
 import Command from './Structures/Command/Command';
-import EventManager from './Structures/EventManager';
+import EventManager from './Structures/Event/EventManager';
 import CommandDispatcher from './Structures/Dispatchers/CommandDispatcher';
 import GuildConfigCache from './Structures/GuildConfigCache';
 

@@ -7,7 +7,7 @@ import ListenerLoader from './Loaders/ListenerLoader';
 import Collection from '../Utility/Collection';
 
 import Command from './Command/Command';
-import Listener from './Listener';
+import Listener from './Event/Listener';
 import CommandPermissions from './Command/CommandPermissions';
 import CommandOptions from './Command/CommandOptions';
 

@@ -1,5 +1,5 @@
-import NoAbstractInstanceException from '../Errors/NoAbstractInstanceException';
-import NotImplementedException from '../Errors/NotImplementedException';
+import NoAbstractInstanceException from '../../Errors/NoAbstractInstanceException';
+import NotImplementedException from '../../Errors/NotImplementedException';
 
 /**
  * Abstract class for handlers.

@@ -1,4 +1,4 @@
-import Handler from '../../../Structures/Handler';
+import Handler from '../../../Structures/Event/Handler';
 
 class VoiceChannelLeaveHandler extends Handler {
     handle(member) {
