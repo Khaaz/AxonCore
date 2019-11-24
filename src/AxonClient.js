@@ -107,7 +107,7 @@ class AxonClient extends EventEmitter {
         }
         /* DBProvider */
         if (axonOptions.DBProvider && axonOptions.DBProvider.prototype instanceof DBProvider) {
-            this.DBProvider = axonOptions.DBProvider;
+            this.DBProvider = new axonOptions.DBProvider(this);
         } else {
             this.DBProvider = DBHandler.pickDBProvider(axonOptions, this);
         }
@@ -315,9 +315,8 @@ class AxonClient extends EventEmitter {
             this.logger.error(err.stack);
         }
 
-        this.botClient.once(this.library.enums.EVENTS.READY, this._onReady.bind(this) );
-        // this.botClient.on('debug', console.log);
-        this.botClient.on(this.library.enums.EVENTS.MESSAGE_CREATE, this._onMessageCreate.bind(this) );
+        this.library.onMessageCreate(this._onMessageCreate.bind(this) );
+        this.library.onceReady(this._onReady.bind(this) );
     }
     
     // **** LifeCycle methods **** //

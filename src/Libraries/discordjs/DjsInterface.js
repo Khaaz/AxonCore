@@ -32,6 +32,18 @@ class DjsInterface extends LibraryInterface {
     get HANDLERS() {
         return HANDLERS;
     }
+
+    onMessageCreate(func) {
+        this.botClient.on(this.enums.EVENTS.MESSAGE_CREATE, (msg) => {
+            func(msg);
+        } );
+    }
+
+    onceReady(func) {
+        this.botClient.once(this.enums.EVENTS.READY, () => {
+            func();
+        } );
+    }
 }
 
 export default DjsInterface;
