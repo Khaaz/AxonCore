@@ -6,9 +6,9 @@ class SchemaGenerator {
      * Generate 
      * @param {String} type - Mongoose | Sequelize | JSON
      */
-    constructor (type='json') {
+    constructor(type = 'json') {
         if (this.constructor === 'SchemaGenerator') {
-                throw new NoAbstractInstanceException();
+            throw new NoAbstractInstanceException();
         }
         type = type.toLowerCase();
         switch (type) {
@@ -34,7 +34,7 @@ class SchemaGenerator {
      * Generates schemas based on provided object and settings.
      * @param {Object<any>} obj - Object to generate schema for.
      */
-    generate(obj=null) {
+    generate(obj = null) {
         throw new NotImplementedException();
     }
 }

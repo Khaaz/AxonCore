@@ -1,8 +1,8 @@
 import SchemaGenerator from './SchemaGenerator';
-import { Schema, model } from 'mongoose';
+import { Schema } from 'mongoose';
 
 class MongoSchemaGenerator extends SchemaGenerator {
-     constructor () {
+     constructor() {
           super('mongo');
      }
 
@@ -10,7 +10,7 @@ class MongoSchemaGenerator extends SchemaGenerator {
       * Convert object to mongoose schema.
       * @param {Object<any>} obj - Object to convert into mongoschema.
       */
-     generate(obj, indexKey='id', required=[]) {
+     generate(obj, indexKey = 'id', required = []) {
           const keys = Object.keys(obj);
           const schema = {};
 
@@ -25,7 +25,7 @@ class MongoSchemaGenerator extends SchemaGenerator {
                     schema[key].index = true;
                     schema[key].required = true;
                }
-               
+
                if (required.includes(key)) {
                     schema[key].required = true;
                }
@@ -53,7 +53,7 @@ class MongoSchemaGenerator extends SchemaGenerator {
                if (typeof value === 'string') {
                     schema[key].type = String;
                }
-               
+
                if (typeof value === 'boolean') {
                     schema[key].type = Boolean;
                }
@@ -64,7 +64,7 @@ class MongoSchemaGenerator extends SchemaGenerator {
 
                continue;
           }
-          
+
           return schema;
      }
 }

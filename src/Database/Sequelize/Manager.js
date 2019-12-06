@@ -64,7 +64,7 @@ class Manager {
     buildModelClasses() {
         this._axonSchema = this._Sequelize.define('AxonSchema', this.typeData(this._axonDefault));
         this._guildSchema = this._Sequelize.define('GuildSchema', this.typeData(this._axonDefault));
-        
+
     }
 
     typeData(obj) {
@@ -140,7 +140,7 @@ class Manager {
             }
 
             continue;
-            
+
         }
 
         return modelTypes;
