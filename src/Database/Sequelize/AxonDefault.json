@@ -1,0 +1,10 @@
+{
+    "ID": "1",
+    "prefix": "a!",
+    "modules": [],
+    "commands": [],
+    "events": [],
+    "webhooks": {},
+    "bannedGuilds": [],
+    "bannedUsers": []
+}

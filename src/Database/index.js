@@ -1,4 +1,5 @@
 import JsonProvider from './JsonProvider';
+import SequelizeService from './SequelizeService';
 
 /**
  * Database Handler
@@ -34,6 +35,21 @@ class DBHandler {
                     DBProvider = new JsonProvider(axon);
                     axon.logger.warn('Mongoose wasn\'t found, using JSON DB instead.');
                     axon.logger.info('Selected Database: JSON DB.');
+                }
+                break;
+            }
+
+            // SequelizeService
+            case 2: {
+                try {
+                    let opts = axonOptions.axonConf.sequelize ? axonOptions.axonConf.sequelize : {dialiect: 'mysql'};
+                    DBservice = new SequelizeService(axon);
+                    DBservice.init(opts);
+                    axon.Logger.info('Selected Database: Sequelize');
+                } catch (err) {
+                    DBservice = new JsonService();
+                    axon.Logger.warn('Sequelize wasn\'t found, using JSON DB instead.');
+                    axon.Logger.info('Selected Database: JSON DB.');
                 }
                 break;
             }

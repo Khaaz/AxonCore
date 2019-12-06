@@ -1,0 +1,15 @@
+{
+    "guildID": "",
+    "prefix": ["a!"],
+    "modules": [],
+    "commands": [],
+    "events": [],
+    "createdAt": "",
+    "updatedAt": "",
+    "ignoredUsers": [],
+    "ignoredRoles": [],
+    "ignoredChannels": [],
+    "modOnly": false,
+    "modRoles": [],
+    "modUsers": []
+}
