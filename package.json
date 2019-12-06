@@ -12,27 +12,28 @@
     "esm": "^3.2.25",
     "eventemitter3": "^4.0.0"
   },
-  "peerDependencies": {
-    "eris": "^0.10.1"
+  "optionalDependencies": {
+    "mongoose": "^5.7.7"
   },
   "devDependencies": {
+    "@axonteam/doc-gen": "git+https://github.com/AxonTeam/doc-gen",
     "@axonteam/eslint-config": "^2.2.0",
     "@types/node": "^12.6.2",
     "chalk": "^2.4.2",
     "discord.js": "discordjs/discord.js",
-    "eris": "^0.10.1",
-    "eslint": "^6.1.0",
-    "jsdoc-to-markdown": "^4.0.1",
-    "mongoose": "^5.6.8",
+    "eris": "abalabahaha/eris#dev",
+    "eslint": "^6.6.0",
+    "mongoose": "^5.7.7",
     "superagent": "^5.1.0",
-    "typescript": "^3.5.3",
-    "yarn": "^1.17.3"
+    "typescript": "^3.6.4",
+    "yarn": "^1.19.1"
   },
   "main": "./index.js",
   "types": "./index.d.ts",
   "scripts": {
-    "lint": "eslint .",
+    "lint": "eslint src *.js",
     "test": "eslint src *.js",
+    "docgen": "node ./scripts/gendoc.js && cp README.md ./docs/README.md",
     "start:eris": "node -r esm examples/eris/src/index.js",
     "start:djs": "node -r esm examples/djs/src/index.js",
     "pm2start:eris": "node examples/eris/scripts/start.js",

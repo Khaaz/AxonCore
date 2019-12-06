@@ -1,0 +1,24 @@
+{
+    "bot": {
+        "token": ""
+    },
+
+    "webhooks": {
+        "status": {
+            "id": "",
+            "token": ""
+        },
+        "loader": {
+            "id": "",
+            "token": ""
+        },
+        "error": {
+            "id": "",
+            "token": ""
+        },
+        "misc": {
+            "id": "",
+            "token": ""
+        }
+    }
+}

@@ -26,7 +26,7 @@ class Pong extends Command {
             cooldown: 10000,
             guildOnly: false,
             hidden: true,
-            invalidPermissionMessage: true,
+            sendPermissionMessage: true,
         } );
 
         this.permissions = new CommandPermissions(this, {

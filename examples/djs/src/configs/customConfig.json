@@ -38,6 +38,24 @@
         ]
     },
 
+    "template": {
+        "embeds": {
+            "help": "ffffff",
+            "global": 4315874,
+            "error": 15844367
+        },
+    
+        "emotes": {
+            "error": "<:error:426906693624922113>",
+            "success": "<:success:426906630463160330>",
+            "loading": "<a:loading:397911964988342282>",
+            "update": "<:update:373546418952077323>",
+            "info": ":information_source:"
+        }
+    },
+
+    "lang": "english",
+
     "debugMode": false,
 
     "library": 1,

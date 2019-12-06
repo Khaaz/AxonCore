@@ -24,8 +24,8 @@ class MongoProvider extends DBService {
      */
     init(axonOptions = null) { // eslint-disable-line no-unused-vars
         // We use require to require the schema at runtime.
-        // This will prevent the MingoProvider to DIRECTLY dependingon mongoose and preventing to make it break the global export
-        // This will also only create the model at runtime, allowing to override the model if the MongoProvider is extended
+        // This will prevent the MongoProvider from DIRECTLY depending on mongoose and preventing to make it break the global export
+        // This will also only create the model at runtime, allowing to override the model if the MongoProvider is extended and the init method overrided
         this.AxonSchema = require('./Mongo/AxonSchema').default;
         this.GuildSchema = require('./Mongo/GuildSchema').default;
     }

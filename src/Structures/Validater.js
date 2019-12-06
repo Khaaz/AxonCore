@@ -31,7 +31,7 @@ class Validater {
             debug && module.logger.verbose(`Valid command permissions [${module.label}]`);
         }
 
-        /** Validate Eris permissions */
+        /* Validate Eris permissions */
         for (const perm of module.permissions.bot) {
             if (!this.checkValidPermissionName(PERMS, perm) ) {
                 debug && module.logger.warn(`Invalid permissions name (${perm}) in Module.permissions.bot [${module.label}]`);
@@ -73,7 +73,7 @@ class Validater {
         const PERMS = command.axon.library.enums.PERMISSIONS;
         const debug = command.axon.settings.debugMode;
 
-        /** Correct: No aliases, or aliases does not include the label. */
+        /* Correct: No aliases, or aliases does not include the label. */
         if (!command.aliases || command.aliases.length === 0) {
             command.aliases = [command.label];
             debug && command.logger.verbose(`No aliases... adding default [${command.fullLabel}]`);
@@ -85,7 +85,7 @@ class Validater {
             debug && command.logger.verbose(`Aliases not an array... fixing [${command.fullLabel}]`);
         }
 
-        /** Correct commands properties */
+        /* Correct commands properties */
         if (!(command._cooldown instanceof CommandCooldown) ) {
             command._cooldown = new CommandCooldown(command);
             debug && command.logger.verbose(`Invalid command cooldown... recreating [${command.fullLabel}]`);
@@ -107,7 +107,7 @@ class Validater {
             debug && command.logger.verbose(`Valid command permissions [${command.fullLabel}]`);
         }
 
-        /** Validate Eris permissions */
+        /* Validate Library permissions */
         for (const perm of command.permissions.bot) {
             if (!this.checkValidPermissionName(PERMS, perm) ) {
                 command.logger.warn(`Invalid permissions name (${perm}) in Command.permissions.bot [${command.fullLabel}]`);

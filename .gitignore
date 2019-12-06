@@ -1,6 +1,7 @@
 # configs file
 examples/eris/src/configs/tokenConfig.json
 examples/djs/src/configs/tokenConfig.json
+examples/tokenConfig.json
 
 # json db
 src/Database/JSON/Database/*.json

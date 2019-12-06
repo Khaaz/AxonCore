@@ -1,0 +1,88 @@
+
+.app-name {
+  width: 50%
+}
+
+/* Override vue/dark css themes so it's all the same color within markdown tab */
+.markdown-section p.tip,.markdown-section tr:nth-child(2n) {
+  background-color: inherit;
+}
+
+#ToTop {
+    display: none; /* Hidden by default */
+    position: fixed; /* Fixed/sticky position */
+    height: 10%;
+    border:none;
+    bottom: 20px; /* Place the button at the bottom of the page */
+    right: 30px; /* Place the button 30px from the right */
+    cursor: pointer; /* Add a mouse pointer on hover */
+    padding: 15px; /* Some padding */
+}
+
+ /* The switch - the box around the slider */
+ #switchTheme {
+    display: inline-block; /* Hidden by default */
+    position: fixed; /* Fixed/sticky position */
+    bottom: 20px; /* Place the button at the bottom of the page */
+    right: 30px; /* Place the button 30px from the right */
+    cursor: pointer; /* Add a mouse pointer on hover */
+    padding: 15px; 
+    width: 60px;
+    height: 34px;
+  }
+  
+  /* Hide default HTML checkbox */
+  #switchTheme input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  /* The slider */
+  .sliderSwitch {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgb(63,63,63);
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .sliderSwitch:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .sliderSwitch {
+    background-color: #ccc;
+  }
+  
+  input:focus + .sliderSwitch {
+    box-shadow: 0 0 1px rgb(33, 37, 41);
+  }
+  
+  input:checked + .sliderSwitch:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+  
+  /* Rounded sliders */
+  .sliderSwitch.round {
+    border-radius: 34px;
+  }
+  
+  .sliderSwitch.round:before {
+    border-radius: 50%;
+  } 
+

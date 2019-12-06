@@ -32,7 +32,6 @@ class Ping extends Command {
 
     async execute( { msg } ) {
         const start = Date.now();
-
         const mess = await this.sendMessage(msg.channel, 'Pong! ');
         if (!mess) {
             return new CommandResponse( { success: false } );

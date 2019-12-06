@@ -39,7 +39,7 @@ class AxonConfig {
     }
 
     // **** CHECKERS (used IN the framework) **** //
-    /** Can be overriden/changed but need to exists / keep the same name */
+    /* Can be overriden/changed but need to exists / keep the same name */
     //
 
     /**
@@ -69,7 +69,7 @@ class AxonConfig {
 
     //
     // **** UPDATER - never used directly IN the framework **** //
-    /** Easily overridable. Can be changed as will (even methods name etc) */
+    /* Easily overridable. Can be changed as will (even methods name etc) */
     //
 
     /**

@@ -10,15 +10,17 @@ import Handler from './Handler';
  *
  * @class EventManager
  * @extends {Base}
+ *
+ * @prop {Object} _listeners - Object that links an event name to an array of event objects { eventName: [Event, Event] }
+ * @prop {Collection<Object>} _handlers - Collection of handler keyed to the event name [key: eventName, value: Handler]
  */
 
 class EventManager extends Base {
     /**
      * Creates an EventManager instance.
+     *
      * @param {Object<AxonClient>} axon
      *
-     * @prop {Object} _listeners - Object that links an event name to an array of event objects { eventName: [Event, Event] }
-     * @prop {Collection<Object>} _handlers - Collection of handler keyed to the event name [key: eventName, value: Handler]
      * @memberof EventManager
      */
     constructor(axon) {
@@ -31,12 +33,26 @@ class EventManager extends Base {
         // this.HANDLERS = this.axon.libInterface.HANDLERS;
     }
 
+    // **** GETTERS **** //
+
+    /**
+     * Returns all Handlers base
+     *
+     * @readonly
+     * @type {Object}
+     * @memberof EventManager
+     */
     get HANDLERS() {
         return this.axon.library.HANDLERS;
     }
 
-    // **** GETTERS **** //
-
+    /**
+     * Returns Collection of every handlers for every discord event
+     *
+     * @readonly
+     * @type {Collection<Object>}
+     * @memberof EventManager
+     */
     get events() {
         return this._handlers;
     }
@@ -53,7 +69,7 @@ class EventManager extends Base {
     }
 
     // **** BINDERS **** //
-    /** Called by AxonClient */
+    /* Called by AxonClient */
 
     /**
      * Bind all listeners to a handler.
@@ -99,7 +115,7 @@ class EventManager extends Base {
      * @memberof EventManager
      */
     registerListener(listener) {
-        /** Doesn't load the listener */
+        /* Doesn't load the listener */
         if (!listener.load) {
             return null;
         }
@@ -134,7 +150,7 @@ class EventManager extends Base {
 
         let handler = this._handlers.get(event);
         if (handler) {
-            /** Remove the current event if any registered */
+            /* Remove the current event if any registered */
             this.bot.off(event, handler._handle);
         }
 

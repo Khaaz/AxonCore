@@ -9,10 +9,18 @@ import NotImplementedException from '../Errors/NotImplementedException';
  *
  * @abstract
  * @class Handler
+ *
+ * @prop {Object<AxonClient>} _axon
+ * @prop {String} name
+ * @prop {Array<Listener>} _listeners
  */
 class Handler {
     /**
      * Creates an instance of Handler.
+     *
+     * @param {Object<AxonClient>} axon
+     * @param {String} name
+     * @param {Array<Listener>} listeners
      *
      * @memberof Handler
      */
@@ -29,6 +37,13 @@ class Handler {
         this._handle = this._handle.bind(this);
     }
 
+    /**
+     * Returns the sizeof an Handler (number of listeners)
+     *
+     * @readonly
+     * @type {Number}
+     * @memberof Handler
+     */
     get size() {
         return this._listeners.length;
     }
@@ -48,18 +63,16 @@ class Handler {
                 continue;
             }
             // Ignore guild disabled Module/Event
-            if (guildConfig) {
-                if ( (guildConfig.isModuleDisabled(listener.module) && !listener.module.serverBypass)
-                    || (guildConfig.isListenerDisabled(listener) && !listener.serverBypass) ) {
-                    continue;
-                }
+            if (guildConfig && (
+                (guildConfig.isModuleDisabled(listener.module) && !listener.module.serverBypass) || (guildConfig.isListenerDisabled(listener) && !listener.serverBypass) ) ) {
+                continue;
             }
             this._axon._execListener(listener, guildConfig, ...args);
         }
     }
 
     /**
-     * Takesthe event parameters as arguments and returns the guild ID if possible or null.
+     * Takes the event parameters as arguments and returns the guild ID if possible or null.
      *
      * @param {Object} args - All parameters for this event
      * @returns {String|null} The guild ID

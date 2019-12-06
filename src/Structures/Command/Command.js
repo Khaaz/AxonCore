@@ -19,35 +19,32 @@ import { COMMAND_EXECUTION_STATE } from '../../Utility/Constants/AxonEnums';
  * @class Command
  * @extends Base
  *
- * @prop {Object<Module>} module - Module object [GETTER: _module]
+ * @prop {Object<Module>} _module - Module object
  *
  * @prop {Object<CommandCooldown>} _cooldown - Cooldown Object for the command (manage all command cooldowns)
  *
  * @prop {String} label - Command label (name/id)
  * @prop {Array<String>} [aliases=[]] - Array of commands aliases (including the command label)
  *
- * @prop {Boolean} [enabled=module.enabled] - Is the command enabled?
- * @prop {Boolean} [serverBypass=module.serverBypass] - Can the command be disabled?
+ * @prop {Boolean} [enabled=module.enabled] - Whether the command is enabled
+ * @prop {Boolean} [serverBypass=module.serverBypass] - Whether the command can be disabled
  *
- * @prop {Boolean} [isSubcmd=false] - Command is a subcommand
+ * @prop {Boolean} [isSubcmd=false] - Whether the command is a subcommand
  * @prop {Object<Command>} [parentCommand=null] - Reference to the parent command (if isSubcmd = true)
- * @prop {Boolean} [hasSubcmd=false] - Does the command have subcommands?
- * @prop {Array} subcmds - Array of subcommand objects (deleted after init)
+ * @prop {Boolean} [hasSubcmd=false] - Whether the command has subcommands
+ * @prop {Array<Object>} subcmds - Array of subcommand objects (deleted after init)
  * @prop {Collection<Command>} [subCommands=null] - Collection of subcommands
  * @prop {Object<Map>} [subCommandsAliases=null] - Map of subcommand aliases
  *
  * @prop {Object} infos - Default info about the command
- * @prop {Array} [infos.owners] - Command authors
+ * @prop {Array<String>} [infos.owners] - Command authors
  * @prop {String} [infos.cmdName] - Full command name
  * @prop {String} [infos.description] - Command description
  * @prop {String} [infos.usage] - Command usage
- * @prop {Array} [infos.example] - Array of command examples
+ * @prop {Array<String>} [infos.example] - Array of command examples
  *
  * @prop {Object<CommandOptions>} options - Options Object for the command (manage all command options)
  * @prop {Object<CommandPermissions>} permissions - Permissions Object for the command (manage all command permissions)
- *
- * @prop {Object} template - Template object shortcut [GETTER: axon.configs.template]
- * @prop {Object} fullLabel - Get the full label of the command (whole command label through thecommands tree)
  */
 class Command extends Base {
     /**
@@ -56,65 +53,120 @@ class Command extends Base {
      * Overrides the execute method. Execute method will be called everytime the command is called.
      *
      * @param {Object<Module>} module
+     * @param {Object} [data={}] - All command parameters
+     * @param {String} [data.label]
+     * @param {Array<String>} [data.aliases]
+     * @param {Boolean} [data.isSubcmd]
+     * @param {Boolean} [data.hasSubcmd]
+     * @param {Boolean} [data.enabled]
+     * @param {Boolean} [data.serverBypass]
+     * @param {Array<String>} [data.subcmds]
+     * @param {Object} [data.infos]
+     * @param {Object<CommandOptions>|Object} [data.options]
+     * @param {Object<CommandPermissions>|Object} [data.permissions]
      *
      * @memberof Command
      */
-    constructor(module) {
+    constructor(module, data = {} ) {
         super(module.axon);
 
         this._module = module; // (module Object)
 
         this._cooldown = new CommandCooldown(this);
 
-        // Command main options
-        this.label = 'label';
-        this.aliases = []; // Includes label/main name of the command
-        this.enabled = module.enabled; // Default to module state
+        /* Command main options */
+        this.label = data.label || null;
+        this.aliases = data.aliases || []; // Includes label/main name of the command
+        this.enabled = data.enabled !== undefined ? data.enabled : module.enabled; // Default to module state
 
-        /** Subcommands */
-        this.isSubcmd = false;
-        this.parentCommand = null; // Reference to the parent command
-        this.hasSubcmd = false;
+        /* Subcommands */
+        this.isSubcmd = data.isSubcmd || false;
+        this.parentCommand = null; // Reference to the parent command - affected at instantiation
+        this.hasSubcmd = data.hasSubcmd || false;
         // temp var used to init subcommands
-        this.subcmds = []; // Array of imported commands - deleted after init
+        this.subcmds = data.subcmds || []; // Array of imported commands - deleted after init
 
-        /**
+        /*
          * Initiated if there are subcommands
          */
         this.subCommands = null; // Collection of subcommands
         this.subCommandsAliases = null; // Map of subcommand aliases
 
-        /** Bypass all perms - true = prevent the command to be disabled */
-        this.serverBypass = module.serverBypass; // Default to module state
+        /* Bypass all perms - true = prevent the command to be disabled */
+        this.serverBypass = data.serverBypass !== undefined ? data.serverBypass : module.serverBypass; // Default to module state
 
-        /** Command infos (help command) */
-        this.infos = {
-            owners: ['Owner'], // ['KhaaZ'] or ['KhaaZ', 'Jack']
-            name: 'parentLabel label', // Full name of the command
-            description: 'Description of the command.', // 'A cool command that does things.' <-- With the dot!
-            usage: 'label [param] (optional param)', // Full usage of the command
-            examples: ['example of command usage'], // ['', ...]
+        /* Command infos (help command) */
+        this.infos = data.infos || {
+            owners: [], // ['KhaaZ'] or ['KhaaZ', 'Jack']
+            name: null, // Full name of the command
+            description: null, // 'A cool command that does things.'
+            usage: null, // Full usage of the command
+            examples: [], // Some usages examples
         };
 
-        this.options = new CommandOptions(this);
-        
-        this.permissions = new CommandPermissions(this);
+        if (data.options) {
+            if (data.options instanceof CommandOptions) {
+                this.options = data.options;
+            } else {
+                this.options = new CommandOptions(this, data.options);
+            }
+        } else {
+            this.options = new CommandOptions(this);
+        }
+
+        if (data.permissions) {
+            if (data.permissions instanceof CommandPermissions) {
+                this.permissions = data.permissions;
+            } else {
+                this.permissions = new CommandPermissions(this, data.permissions);
+            }
+        } else {
+            this.options = new CommandPermissions(this);
+        }
     }
 
     // **** GETTER **** //
 
+    /**
+     * Returns the parent module instance
+     *
+     * @readonly
+     * @type {Object<Module>}
+     * @memberof Command
+     */
     get module() {
         return this._module;
     }
 
+    /**
+     * Returns the template object
+     *
+     * @readonly
+     * @type {Object}
+     * @memberof Command
+     */
     get template() {
-        return this.axon.configs.template;
+        return this.axon.template;
     }
 
+    /**
+     * Returns the library Interface instance
+     *
+     * @readonly
+     * @type {Object<LibraryInterface>}
+     * @memberof Command
+     */
     get library() {
         return this.axon.library;
     }
 
+    /**
+     * Returns the ful label for this command (label + all parent labels)
+     *
+     * @readonly
+     * @type {String}
+     * @memberof Command
+     */
     get fullLabel() {
         let cmd = this; // eslint-disable-line
         const fullLabel = [this.label];
@@ -151,7 +203,7 @@ class Command extends Base {
                 } ).resolveAsync();
             }
         } else { // REGULAR EXECUTION
-            /** Permissions checkers */
+            /* Permissions checkers */
             if (!this.permissions._checkPermsBot(channel) ) {
                 this.sendBotPerms(channel);
                 return new CommandContext(this, msg, {
@@ -161,17 +213,20 @@ class Command extends Base {
                 } ).resolveAsync();
             }
 
-            /** Permissions checkers */
-            if (!isAdmin && !this.permissions.canExecute(msg, guildConfig) ) {
-                /** Sends invalid perm message in case of invalid perm [option enabled] */
-                if (this.options.shouldSendInvalidPermissionMessage(guildConfig) ) {
-                    this.sendUserPerms(channel, this.library.message.getMember(msg) );
+            /* Permissions checkers */
+            if (!isAdmin) {
+                const canExecute = this.permissions.canExecute(msg, guildConfig);
+                if (!canExecute[0] ) {
+                /* Sends invalid perm message in case of invalid perm [option enabled] */
+                    if (this.options.shouldSendInvalidPermissionMessage(guildConfig) ) {
+                        this.sendUserPerms(channel, this.library.message.getMember(msg), this.options.invalidPermissionMessageTimeout, canExecute[1] );
+                    }
+                    return new CommandContext(this, msg, {
+                        executed: false,
+                        executionType: CommandContext.getExecutionType(isAdmin, isOwner),
+                        executionState: COMMAND_EXECUTION_STATE.INVALID_PERMISSIONS_USER,
+                    } ).resolveAsync();
                 }
-                return new CommandContext(this, msg, {
-                    executed: false,
-                    executionType: CommandContext.getExecutionType(isAdmin, isOwner),
-                    executionState: COMMAND_EXECUTION_STATE.INVALID_PERMISSIONS_USER,
-                } ).resolveAsync();
             }
         }
 
@@ -186,7 +241,7 @@ class Command extends Base {
                 } ).resolveAsync();
             }
         } else {
-            /** Test for Cooldown - Send Cooldown message */
+            /* Test for Cooldown - Send Cooldown message */
             const [timeLeft, shouldSendCDMessage] = this._cooldown.shouldCooldown(userID);
             if (timeLeft) {
                 if (shouldSendCDMessage) {
@@ -200,7 +255,7 @@ class Command extends Base {
             }
         }
 
-        /** Sends invalid usage message in case of invalid usage (not enough argument) [option enabled] */
+        /* Sends invalid usage message in case of invalid usage (not enough argument) [option enabled] */
         if (this.options.shouldSendInvalidUsageMessage(args) ) {
             return this.sendHelp( {
                 msg, args, guildConfig, isAdmin, isOwner,
@@ -246,13 +301,13 @@ class Command extends Base {
         } );
         
         return this.execute( { msg, args, guildConfig } )
-            /** Successful and failed execution + catched errors (this.error()) */
+            /* Successful and failed execution + catched errors (this.error()) */
             .then( (response) => {
-                !isAdmin && this._cooldown.shouldSetCooldown(response) && this._cooldown.setCooldown(this.library.message.getAuthorID(msg) );
+                this._cooldown.shouldSetCooldown(response) && this._cooldown.setCooldown(this.library.message.getAuthorID(msg) );
                 
                 return context.addResponseData(response);
             } )
-            /** UNEXPECTED ERRORS ONLY (non catched) */
+            /* UNEXPECTED ERRORS ONLY (non catched) */
             .catch(err => {
                 !isAdmin && this._cooldown.shouldSetCooldown() && this._cooldown.setCooldown(this.library.message.getAuthorID(msg) );
 
@@ -262,7 +317,8 @@ class Command extends Base {
     }
 
     /**
-     * Execute method to override in all commands child.
+     * Override this method in all Command child.
+     * Main method - command logic being executed when the command is actually ran.
      *
      * @param {Object} object - An Object with all arguments to use execute
      * @param {Object<Message>} [object.message] - The Eris message Object
@@ -292,7 +348,7 @@ class Command extends Base {
      * @memberof Command
      */
     sendHelp( { msg, guildConfig, isAdmin, isOwner } ) {
-        /** OVERRIDE default sendHelp with a CUSTOM in AxonClient */
+        /* OVERRIDE default sendHelp with a CUSTOM in AxonClient */
         if (this.axon.sendHelp) {
             return this.axon.sendHelp(this, { msg, guildConfig, isAdmin, isOwner } );
         }
@@ -305,9 +361,9 @@ class Command extends Base {
             icon_url: this.library.client.getAvatar(),
         };
 
-        embed.color = typeof this.template.embed.colors.help === 'string'
-            ? parseInt(this.template.embed.colors.help, 16) || null
-            : this.template.embed.colors.help;
+        embed.color = typeof this.template.embeds.help === 'string'
+            ? parseInt(this.template.embeds.help, 16) || null
+            : this.template.embeds.help;
 
         embed.description = `**Description:** ${this.infos.description}\n`;
 
@@ -341,7 +397,7 @@ class Command extends Base {
         }
 
         embed.fields = [];
-        /** SubCommands */
+        /* SubCommands */
         if (this.hasSubcmd) {
             const subcmds = this.subCommands.filter(e => !e.options.hidden).map(e => `${prefix}${e.infos.usage}`);
             if (subcmds.length > 0) {
@@ -353,7 +409,7 @@ class Command extends Base {
             }
         }
 
-        /** Aliases */
+        /* Aliases */
         if (this.aliases.length > 1) {
             const aliases = this.aliases.filter(e => e !== this.label);
             embed.fields.push( {
@@ -386,8 +442,11 @@ class Command extends Base {
         }
         return this.sendError(
             channel,
-            `${this.template.message.error.permBot} ${permissions.map(p => `\`${this.library.enums.PERMISSIONS_NAMES[p]}\``).join(', ')}.`,
-            { delete: true, delay: 9000 }
+            // eslint-disable-next-line new-cap
+            this.l.ERR_BOT_PERM( {
+                permissions: permissions.map(p => `\`${this.library.enums.PERMISSIONS_NAMES[p]}\``).join(', '),
+            } ),
+            { delete: true, delay: 9000 },
         );
     }
 
@@ -395,21 +454,19 @@ class Command extends Base {
      * Send an error message in case of invalid user permissions, delete it automatically after a delay.
      * Uses the template message in config/template.
      *
-     * @param {Object<Channel>} channel - The channel Object
+     * @param {Object<Channel>} channel - The channel object
      * @param {Object<Member>} member - The member object
-     * @param {Array<String>} [permission=[]] - Optional array of permissions string
+     * @param {Number} [deleteTimeout] - The permission message deletion timeout, if `null` the the message will not delete
      * @returns {Promise<Message?>} Message Object
      * @memberof Command
      */
-    sendUserPerms(channel, member, permissions = [] ) {
-        if (permissions.length === 0) {
-            permissions = this.utils.missingPerms(member, this.permissions.user.needed);
-        }
+    // eslint-disable-next-line no-magic-numbers
+    sendUserPerms(channel, member, deleteTimeout = 9000, missingPermission = null) {
+        const options = deleteTimeout === null ? { delete: false } : { delete: true, delay: deleteTimeout };
         return this.sendError(
             channel,
-            this.template.message.error.permSource
-            + (permissions.length > 0 ? ` ${permissions.map(p => `\`${this.library.enums.PERMISSIONS_NAMES[p]}\``).join(', ')}.` : '.'),
-            { delete: true, delay: 9000 }
+            this.options.getInvalidPermissionMessage(channel, member, missingPermission),
+            options,
         );
     }
 
@@ -422,7 +479,8 @@ class Command extends Base {
      * @memberof Command
      */
     sendTargetPerms(channel) {
-        return this.sendError(channel, this.template.message.error.permTarget, { delete: true, delay: 9000 } );
+        // eslint-disable-next-line new-cap
+        return this.sendError(channel, this.l.ERR_DESTINATION_PERM(), { delete: true, delay: 9000 } );
     }
 
     /**
@@ -435,7 +493,8 @@ class Command extends Base {
     sendCooldown(channel, time) {
         return this.sendError(
             channel,
-            `${this.template.message.error.cooldown} **${Math.ceil( (this.options.cooldown - time) / 100) / 10}sec**...`,
+            // eslint-disable-next-line new-cap
+            this.l.ERR_COOLDOWN( { cooldown: Math.ceil( (this.options.cooldown - time) / 100) / 10 } ),
             { delete: true, delay: 9000 },
         );
     }

@@ -49,19 +49,19 @@ class Module extends Base {
 
         this.label = 'moduleLabel';
 
-        /**
+        /*
          * Containments - all commands and events within this module
          */
         this.commands = new Collection( { base: Command } );
         this.listeners = new Collection( { base: Listener } );
 
-        /**
+        /*
          * Default options and params
          */
         this.enabled = true; // global enable/disable
         this.serverBypass = false; // Bypass all perms - true = prevent the command to be server disabled
 
-        /**
+        /*
          * Info for the help command
          * All fields are required
          */
@@ -71,11 +71,11 @@ class Module extends Base {
             description: 'moduleDesc',
         };
 
-        /** Default CommandPermissions at the module level */
+        /* Default CommandPermissions at the module level */
         this.permissions = new CommandPermissions(this);
         this.options = new CommandOptions(this);
 
-        /** Loaders */
+        /* Loaders */
         this.commandLoader = new CommandLoader(this);
         this.listenerLoader = new ListenerLoader(this);
     }

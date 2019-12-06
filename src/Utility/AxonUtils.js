@@ -9,10 +9,8 @@ import Validater from '../Structures/Validater';
  *
  * @class AxonUtils
  *
- * @prop {Object<AxonClient>} axon - Axon Client [GETTER: _axon]
- * @prop {Object<Eris.Client>} bot - Eris bot Client [GETTER: _axon.botClient]
- * @prop {Object} logger - Logger Object/Methods [GETTER: axon.logger]
- * @prop {Object} utils - Utils Object/Methods [GETTER: axon.utils]
+ * @prop {Object<AxonClient>} _axon - Axon Client
+ *
  */
 class AxonUtils {
     /**
@@ -28,26 +26,68 @@ class AxonUtils {
 
     // **** GETTER **** //
 
+    /**
+     * Returns the AxonClient instance
+     *
+     * @readonly
+     * @type {Object<AxonClient>}
+     * @memberof AxonUtils
+     */
     get axon() {
         return this._axon;
     }
 
+    /**
+     * Returns the BotClient instance
+     *
+     * @readonly
+     * @type {Object<BotClient>}
+     * @memberof AxonUtils
+     */
     get bot() {
         return this.axon.botClient;
     }
 
+    /**
+     * Returns the template object
+     *
+     * @readonly
+     * @type {Object}
+     * @memberof AxonUtils
+     */
     get template() {
-        return this.axon.configs.template;
+        return this.axon.template;
     }
 
+    /**
+     * Returns the Logger instance
+     *
+     * @readonly
+     * @type {Object<Logger>}
+     * @memberof AxonUtils
+     */
     get logger() {
         return this.axon.logger;
     }
 
+    /**
+     * Returns the Utils instance
+     *
+     * @readonly
+     * @type {Object<Utils>}
+     * @memberof AxonUtils
+     */
     get utils() {
         return this.axon.utils;
     }
 
+    /**
+     * Returns the LibraryInterface instance
+     *
+     * @readonly
+     * @type {Object<LibraryInterface>}
+     * @memberof AxonUtils
+     */
     get library() {
         return this.axon.library;
     }
@@ -253,7 +293,7 @@ class AxonUtils {
 
         return this.library.channel.sendMessage(channel, content)
             .then(message => {
-                /** Delete the message automatically */
+                /* Delete the message automatically */
                 if (message && options.delete) {
                     if (options.delay) {
                         this.utils.sleep(options.delay).then( () => this.library.message.delete(message).catch(this.logger.warn) );

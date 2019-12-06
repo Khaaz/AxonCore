@@ -1,0 +1,174 @@
+[
+    {
+        "input": "AxonClient.js",
+        "output": "AxonClient.md"
+    },
+    {
+        "input": "AxonOptions.js",
+        "output": "AxonOptions.md"
+    },
+    {
+        "input": "Database/DBProvider.js",
+        "output": "Database/DBProvider.md"
+    },
+    {
+        "input": "Database/JsonProvider.js",
+        "output": "Database/JsonProvider.md"
+    },
+    {
+        "input": "Database/MongoProvider.js",
+        "output": "Database/MongoProvider.md"
+    },
+    {
+        "input": "Errors/AxonCommandError.js",
+        "output": "Errors/AxonCommandError.md"
+    },
+    {
+        "input": "Errors/AxonError.js",
+        "output": "Errors/AxonError.md"
+    },
+    {
+        "input": "Errors/NoAbstractInstanceException.js",
+        "output": "Errors/NoAbstractInstanceException.md"
+    },
+    {
+        "input": "Errors/NotImplementedException.js",
+        "output": "Errors/NotImplementedException.md"
+    },
+    {
+        "input": "Loggers/Logger.js",
+        "output": "Loggers/Logger.md"
+    },
+    {
+        "input": "Structures/Base.js",
+        "output": "Structures/Base.md"
+    },
+    {
+        "input": "Structures/Module.js",
+        "output": "Structures/Module.md"
+    },
+    {
+        "input": "Structures/Command/Command.js",
+        "output": "Structures/Command.md"
+    },
+    {
+        "input": "Structures/Command/CommandOptions.js",
+        "output": "Structures/CommandOptions.md"
+    },
+    {
+        "input": "Structures/Command/CommandPermissions.js",
+        "output": "Structures/CommandPermissions.md"
+    },
+    {
+        "input": "Structures/Command/CommandResponse.js",
+        "output": "Structures/CommandResponse.md"
+    },
+    {
+        "input": "Structures/Command/CommandContext.js",
+        "output": "Structures/CommandContext.md"
+    },
+    {
+        "input": "Structures/Listener.js",
+        "output": "Structures/Listener.md"
+    },
+    {
+        "input": "Structures/EventManager.js",
+        "output": "Structures/EventManager.md"
+    },
+    {
+        "input": "Structures/Handler.js",
+        "output": "Structures/Handler.md"
+    },
+    {
+        "input": "Structures/Dispatchers/CommandDispatcher.js",
+        "output": "Structures/CommandDispatcher.md"
+    },
+    {
+        "input": "Structures/GuildConfigCache.js",
+        "output": "Structures/GuildConfigCache.md"
+    },
+    {
+        "input": "Structures/GuildConfigCache.js",
+        "output": "Structures/GuildConfigCache.md"
+    },
+    {
+        "input": "Structures/GuildConfigCache.js",
+        "output": "Structures/GuildConfigCache.md"
+    },
+    {
+        "input": "Structures/DataStructure/AxonConfig.js",
+        "output": "Structures/AxonConfig.md"
+    },
+    {
+        "input": "Structures/DataStructure/GuildConfig.js",
+        "output": "Structures/GuildConfig.md"
+    },
+    {
+        "input": "Structures/Langs/MessageManager.js",
+        "output": "Structures/MessageManager.md"
+    },
+    {
+        "input": "Structures/Langs/TranslationManager.js",
+        "output": "Structures/TranslationManager.md"
+    },
+    {
+        "input": "Structures/Langs/MessageParser.js",
+        "output": "Structures/MessageParser.md"
+    },
+    {
+        "input": "Structures/Loaders/ModuleLoader.js",
+        "output": "Structures/ModuleLoader.md"
+    },
+    {
+        "input": "Structures/Loaders/CommandLoader.js",
+        "output": "Structures/CommandLoader.md"
+    },
+    {
+        "input": "Structures/Loaders/ListenerLoader.js",
+        "output": "Structures/ListenerLoader.md"
+    },
+    {
+        "input": "Utility/AxonUtils.js",
+        "output": "Utility/AxonUtils.md"
+    },
+    {
+        "input": "Utility/Utils.js",
+        "output": "Utility/Utils.md"
+    },
+    {
+        "input": "Utility/Collection.js",
+        "output": "Utility/Collection.md"
+    },
+    {
+        "input": "Utility/Resolver.js",
+        "output": "Utility/Resolver.md"
+    },
+    {
+        "input": "Utility/External/Embed.js",
+        "output": "Utility/Embed.md"
+    },
+    {
+        "input": "Utility/External/MessageCollector.js",
+        "output": "Utility/MessageCollector.md"
+    },
+    {
+        "input": "Utility/External/Prompt.js",
+        "output": "Utility/Prompt.md"
+    },
+    {
+        "input": "Utility/External/Queue.js",
+        "output": "Utility/Queue.md"
+    },
+    {
+        "input": "Utility/External/AsyncQueue.js",
+        "output": "Utility/AsyncQueue.md"
+    },
+    {
+        "input": "Utility/External/AutoQueue.js",
+        "output": "Utility/AutoQueue.md"
+    },
+    {
+        "input": "Utility/External/LRUCache.js",
+        "output": "Utility/LRUCache.md"
+    }
+]

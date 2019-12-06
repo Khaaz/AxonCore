@@ -94,18 +94,46 @@ class CommandPermissions {
         this.custom = base.custom || ( () => true);
     }
 
+    /**
+     * Returns the AxonClient instance
+     *
+     * @readonly
+     * @type {Object<AxonClient>}
+     * @memberof CommandPermissions
+     */
     get axon() {
         return this._command.axon;
     }
 
+    /**
+     *
+     *
+     * @readonly
+     * @type {Object<Utils>}
+     * @memberof CommandPermissions
+     */
     get utils() {
         return this._command.utils;
     }
 
+    /**
+     * Returns the AxonUtils instance
+     *
+     * @readonly
+     * @type {Object<AxonUtils>}
+     * @memberof CommandPermissions
+     */
     get axonUtils() {
         return this._command.axonUtils;
     }
 
+    /**
+     * Returns the LibraryInterface instance
+     *
+     * @readonly
+     * @type {Object<LibraryInterface>}
+     * @memberof CommandPermissions
+     */
     get library() {
         return this.axon.library;
     }
@@ -118,7 +146,7 @@ class CommandPermissions {
      *
      * @param {Object<Message>} msg - The Message Object
      * @param {Object} guildConf - GuildConfig
-     * @returns {Boolean} True if the user can execute command / False if not
+     * @returns {Array<Boolean, String|null>} True if the user can execute command / False if not. Second element is the missing permission || null
      *
      * @memberof Command
      */
@@ -132,32 +160,42 @@ class CommandPermissions {
             || this._checkRoleBypass(member)
             || this._checkChannelBypass(channel)
             || this._checkStaffBypass(member) ) {
-            return true;
+            return [true];
         }
 
-        if ( ( (guildConf.modOnly || this.serverMod) && !this.axonUtils.isServerMod(member, guildConf) )
-            || (this.serverManager && !this.axonUtils.isServerManager(member) )
-            || (this.serverAdmin && !this.axonUtils.isServerAdmin(member) )
-            || (this.serverOwner && !this.axonUtils.isServerOwner(member, this.library.channel.getGuild(channel) ) )
-        ) {
-            return false;
+        // Needed: server staff
+        if ( (guildConf.modOnly || this.serverMod) && !this.axonUtils.isServerMod(member, guildConf) ) {
+            return [false, 'Server Mod'];
+        }
+        if (this.serverManager && !this.axonUtils.isServerManager(member) ) {
+            return [false, 'Server Manager'];
+        }
+        if (this.serverAdmin && !this.axonUtils.isServerAdmin(member) ) {
+            return [false, 'Server Admin'];
+        }
+        if (this.serverOwner && !this.axonUtils.isServerOwner(member, this.library.channel.getGuild(channel) ) ) {
+            return [false, 'Server Owner'];
         }
 
         // Needed: if one of the perms is false => doesn't exec the command
-        if (!this._checkPermsUserNeeded(member)
-            || !this._checkUserNeeded(member)
-            || !this._checkRoleNeeded(member)
-            || !this._checkChannelNeeded(channel)
-            || !this._checkStaffNeeded(member) ) {
-            return false;
+        const perm = this._checkPermsUserNeeded(member); // discord permissions
+        if (!perm[0] ) {
+            return [false, this.library.enums.PERMISSIONS_NAMES[perm[1]]];
         }
-
+        if (!this._checkUserNeeded(member) // ids
+            || !this._checkRoleNeeded(member)
+            || !this._checkChannelNeeded(channel) ) {
+            return [false, null];
+        }
+        if (!this._checkStaffNeeded(member) ) { // bot staff
+            return [false, 'Bot Staff'];
+        }
         // custom is a function that returns a boolean
         if (this.custom) {
-            return this.custom(msg);
+            return [this.custom(msg), null];
         }
-
-        return true;
+        
+        return [true];
     }
 
     // **** SETTER **** //
@@ -421,14 +459,14 @@ class CommandPermissions {
      */
     _checkPermsUserNeeded(member) {
         if (!this.user.needed.length) {
-            return true;
+            return [true];
         }
         for (const userPerm of this.user.needed) {
             if (!this.library.member.hasPermission(member, userPerm) ) {
-                return false;
+                return [false, userPerm];
             }
         }
-        return true;
+        return [true];
     }
 
     /**

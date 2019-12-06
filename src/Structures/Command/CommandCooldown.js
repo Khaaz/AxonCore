@@ -23,6 +23,17 @@ class CommandCooldown {
     }
 
     /**
+     * Returns the cooldown for this command
+     *
+     * @readonly
+     * @type {Number}
+     * @memberof CommandCooldown
+     */
+    get cooldown() {
+        return this._command.options.cooldown;
+    }
+
+    /**
      * Checks the command cooldown of the user
      *
      * @param {String} userID - The userID
@@ -40,7 +51,7 @@ class CommandCooldown {
 
         // Time spent since last uses <= cooldown chose for that command
         const timeLeft = Date.now() - cooldown.time;
-        if (timeLeft <= this._command.options.cooldown) {
+        if (timeLeft <= this.cooldown) {
             return [timeLeft, this.shouldSendCooldownMessage(cooldown)]; // Return [time left, should send a cooldown message]
         }
 
@@ -59,7 +70,7 @@ class CommandCooldown {
     }
 
     shouldSetCooldown(response = null) {
-        if (!this._command.cooldown || this._command.cooldown === 0) {
+        if (!this.cooldown || this.cooldown === 0) {
             return false;
         }
         return response ? response.triggerCooldown : false;

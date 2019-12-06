@@ -22,8 +22,7 @@ const HEX_CODE = /^#?([0-9A-Fa-f]{6})$/;
  *
  * @class Utils
  *
- * @prop {Object<AxonClient>} axon - Axon Client [GETTER: _axon]
- * @prop {Object<Eris.Client>} bot - Eris bot Client [GETTER: _axon.botClient]
+ * @prop {Object<AxonClient>} _axon - AxonClient
  *
  * @prop {RegExp} userMention - Regular Expression to match a userMention
  * @prop {RegExp} roleMention - Regular Expression to match a roleMention
@@ -50,35 +49,95 @@ class Utils {
         this.hexCode = HEX_CODE;
     }
 
-    // Static getters
+    /**
+     * Returns the UserMention regex
+     *
+     * @readonly
+     * @static
+     * @type {RegExp}
+     * @memberof Utils
+     */
     static get userMention() {
         return USER_MENTION;
     }
 
+    /**
+     * Returns the RoleMention regex
+     *
+     * @readonly
+     * @static
+     * @type {RegExp}
+     * @memberof Utils
+     */
     static get roleMention() {
         return ROLE_MENTION;
     }
 
+    /**
+     * Returns the ChannelMention regex
+     *
+     * @readonly
+     * @static
+     * @type {RegExp}
+     * @memberof Utils
+     */
     static get channelMention() {
         return CHANNEL_MENTION;
     }
 
+    /**
+     * Returns the ID regex
+     *
+     * @readonly
+     * @static
+     * @type {RegExp}
+     * @memberof Utils
+     */
     static get id() {
         return ID;
     }
 
+    /**
+     * Return the HexCode regex
+     *
+     * @readonly
+     * @static
+     * @type {RegExp}
+     * @memberof Utils
+     */
     static get hexCode() {
         return HEX_CODE;
     }
 
+    /**
+     * Returns the AxonClient instance
+     *
+     * @readonly
+     * @type {Object<AxonClient>}
+     * @memberof Utils
+     */
     get axon() {
         return this._axon;
     }
 
+    /**
+     * Returns the BotClient instance
+     *
+     * @readonly
+     * @type {Object<BotClient>}
+     * @memberof Utils
+     */
     get bot() {
         return this._axon.botClient;
     }
 
+    /**
+     * Returns the LibraryInterface instance
+     *
+     * @readonly
+     * @type {Object<LibraryInterface>}
+     * @memberof Utils
+     */
     get library() {
         return this._axon.library;
     }

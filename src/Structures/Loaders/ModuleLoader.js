@@ -18,10 +18,24 @@ class ModuleLoader extends Loader {
         super(axonClient);
     }
 
+    /**
+     * Returns the AxonClient instance
+     *
+     * @readonly
+     * @type {Object<AxonClient>}
+     * @memberof ModuleLoader
+     */
     get axon() {
         return this.loadIn;
     }
 
+    /**
+     * Returns the Logger instance
+     *
+     * @readonly
+     * @type {Object<Logger>}
+     * @memberof ModuleLoader
+     */
     get logger() {
         return this.axon.logger;
     }
@@ -88,7 +102,7 @@ class ModuleLoader extends Loader {
     * @memberof ModuleLoader
     */
     registerModule(module) {
-        /** Register all module's commands */
+        /* Register all module's commands */
         for (const [label, cmd] of module.commands) {
             if (this.axon.commands.has(label) ) {
                 throw new AxonError(`Command: ${label} already registered!`, 'INIT', module.label);
@@ -103,12 +117,12 @@ class ModuleLoader extends Loader {
             }
         }
 
-        /** Register all module's events */
+        /* Register all module's events */
         for (const listener of module.listeners.values() ) {
             this.axon.eventManager.registerListener(listener);
         }
 
-        /** Register the module */
+        /* Register the module */
         this.axon.modules.set(module.label, module);
         this.logger._initModule(module);
     }
@@ -127,7 +141,7 @@ class ModuleLoader extends Loader {
             throw new AxonError(`Module: ${module.label} not registered!`, 'INIT', 'AxonClient');
         }
 
-        /** Unregister all module's commands */
+        /* Unregister all module's commands */
         for (const [l, cmd] of module.commands) {
             for (const alias of cmd.aliases) {
                 this.axon.commandAliases.delete(alias);
@@ -135,12 +149,12 @@ class ModuleLoader extends Loader {
             this.axon.commands.delete(l);
         }
 
-        /** Unregister all module's events */
+        /* Unregister all module's events */
         for (const listener of module.listeners.values() ) {
             this.axon.eventManager.unregisterListener(listener.eventName, listener.label);
         }
 
-        /** Unregister the module */
+        /* Unregister the module */
         this.axon.modules.delete(module.label);
         this.logger.info(`Module: ${module.label} unregistered!`);
     }

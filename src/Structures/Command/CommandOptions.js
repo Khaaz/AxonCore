@@ -13,7 +13,9 @@ import AxonError from '../../Errors/AxonError';
  *
  * @prop {Number} [argsMin=0] - Minimum arguments required to execute the command
  * @prop {Boolean} [invalidUsageMessage=true] - Whether to trigger the help command on invalid usage (not enough arguments)
- * @prop {Boolean} [invalidPermissionMessage=false] - Whether to trigger an error message on invalid permission (bot / user / custom etc)
+ * @prop {Boolean} [sendPermissionMessage=false] - Whether to trigger an error message on invalid permission (bot / user / custom etc)
+ * @prop {Function | String} [invalidPermissionMessage=null] - What the invalid permission message should be
+ * @prop {Number} [invalidPermissionMessageTimeout=9000] - What the invalid permission message deletion timeout should be
  * @prop {Boolean} [deleteCommand=false] - Whether to delete the command input after trigger
  * @prop {Boolean} [guildOnly=true] - Whether to allow executing this command outside of guilds
  * @prop {Boolean} [hidden=false] - Whether to hide this command from help command (general / subcommands)
@@ -33,7 +35,7 @@ class CommandOptions {
         let isModule = false;
         if (!(command instanceof Command) ) {
             if (!(command instanceof Module) ) {
-                throw new AxonError('First argument needs to be the Command.', 'CommandPermissions');
+                throw new AxonError('First argument needs to be the Command.', 'CommandOptions');
             } else {
                 isModule = true;
             }
@@ -50,13 +52,38 @@ class CommandOptions {
             base = override;
         }
 
+        if (typeof base.invalidPermissionMessage === 'string') {
+            // eslint-disable-next-line no-unused-vars
+            this.invalidPermissionMessage = (channel, member) => base.invalidPermissionMessage;
+        } else if (typeof base.invalidPermissionMessage === 'function') {
+            this.invalidPermissionMessage = base.invalidPermissionMessage;
+        } else {
+            this.invalidPermissionMessage = null;
+        }
+
         this.argsMin = base.argsMin || 0;
-        this.invalidUsageMessage = base.invalidUsageMessage ? base.invalidUsageMessage : true;
+        this.invalidUsageMessage = base.invalidUsageMessage !== false;
+
+        // invalid permissions
         this.invalidPermissionMessage = !!base.invalidPermissionMessage;
+        this.sendPermissionMessage = !!base.sendPermissionMessage;
+        this.invalidPermissionMessageTimeout = base.invalidPermissionMessageTimeout !== undefined ? base.invalidPermissionMessageTimeout : 9000; // eslint-disable-line no-magic-numbers
+        
         this.deleteCommand = !!base.deleteCommand;
-        this.guildOnly = base.guildOnly !== undefined ? base.guildOnly : true;
+        this.guildOnly = base.guildOnly !== false;
         this.hidden = !!base.hidden;
-        this.cooldown = (base.cooldown === 0 || base.cooldown === null) ? 0 : 3000; // eslint-disable-line no-magic-numbers
+        this.cooldown = (base.cooldown === 0 || base.cooldown === null) ? 0 : (base.cooldown || 3000); // eslint-disable-line no-magic-numbers
+    }
+
+    /**
+     * Returns the MessageManager instance
+     *
+     * @readonly
+     * @type {Object<MessageManager>}
+     * @memberof CommandOptions
+     */
+    get l() {
+        return this._command.l;
     }
 
     /**
@@ -102,7 +129,7 @@ class CommandOptions {
      * @memberof CommandOptions
      */
     shouldSendInvalidPermissionMessage(guildConfig) {
-        return (!guildConfig.isModOnly() && this.invalidPermissionMessage);
+        return (!guildConfig.isModOnly() && this.sendPermissionMessage);
     }
 
     /**
@@ -114,6 +141,22 @@ class CommandOptions {
      */
     shouldDeleteCommand() {
         return this.deleteCommand;
+    }
+
+    /**
+     * Get the invalid permission message
+     *
+     * @param {Channel} channel - The guild channel
+     * @param {Member} member - The guild member
+     *
+     * @returns {String}
+     */
+    getInvalidPermissionMessage(channel, member, permission) {
+        const message = this.invalidPermissionMessage
+            ? this.invalidPermissionMessage(channel, member)
+            : this.l.getMessage('ERR_CALLER_PERM');
+
+        return this.l.parser.parse(message, { permissions: permission || 'Custom' } );
     }
 }
 

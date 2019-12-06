@@ -7,7 +7,7 @@
  * @class AxonOptions
  *
  * @prop {Object} [botConfig=null] - General Axon config
- * @prop {Object} [templateConfig=null] - Tempalte config
+ * @prop {Object} [lang=null] - Message templates / translations
  * @prop {Object} [tokenConfig=null] - Token config
  * @prop {Function} [logo=null] - Custom function that will log a logo
  * @prop {Object<Utils>} [utils=null] - Custom utils. Needs to be an instance of AxonCore.Utils
@@ -23,7 +23,7 @@ class AxonOptions {
      *
      * @param {Object} [data={}]
      * @param {Object} [data.botConfig=null] - General Axon config
-     * @param {Object} [data.templateConfig=null] - Tempalte config
+     * @param {Object} [data.lang=null] - Message templates / translations
      * @param {Object} [data.tokenConfig=null] - Token config
      * @param {String} [data.token=null] - The discord js token to automatically connect the bot client
      * @param {Function} [data.logo=null] - Custom function that will log a logo
@@ -38,7 +38,7 @@ class AxonOptions {
      */
     constructor(data = {} ) {
         this.botConfig = data.botConfig || null;
-        this.templateConfig = data.templateConfig || null;
+        this.lang = data.lang || null;
         this.tokenConfig = data.tokenConfig || null;
 
         this._token = data.token || null; // DJS token to login

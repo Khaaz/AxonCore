@@ -46,7 +46,8 @@ class Resolver {
         return user; // Return the user object.
     }
 
-    /** Resolve a member within a guild.
+    /**
+     * Resolve a member within a guild.
      *
      * @param {Object<Guild>} guild - Object Guild resolved by the command.
      * @param {Array|String} args - Array of arguments resolved by the command.

@@ -5,6 +5,7 @@
  *
  * @prop {Boolean} success
  * @prop {Boolean} triggerCooldown
+ * @prop {Object<Error>|null} error
  */
 class CommandResponse {
     /**
@@ -19,8 +20,8 @@ class CommandResponse {
      * @memberof CommandResponse
      */
     constructor(data = {} ) {
-        this.success = data.success !== undefined ? data.success : true;
-        this.triggerCooldown = data.triggerCooldown !== undefined ? data.triggerCooldown : true;
+        this.success = data.success !== false;
+        this.triggerCooldown = data.triggerCooldown !== false;
         this.error = data.error || null;
     }
 
