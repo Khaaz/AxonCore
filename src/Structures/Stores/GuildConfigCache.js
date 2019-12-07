@@ -1,7 +1,8 @@
-import Collection from '../Utility/Collection';
-import GuildConfig from './DataStructure/GuildConfig';
+import LRUCache from './../../Utility/External/LRUCache';
 
-import AxonError from '../Errors/AxonError';
+import GuildConfig from '../DataStructure/GuildConfig';
+
+import AxonError from '../../Errors/AxonError';
 
 /**
  * Handles GuildConfigs cache.
@@ -12,7 +13,7 @@ import AxonError from '../Errors/AxonError';
  * @class GuildConfigsCache
  *
  * @prop {Object<AxonClient>} _axon
- * @prop {Collection<GuildConfig>} guildConfigs
+ * @prop {LRUCache<GuildConfig>} guildConfigs
  */
 class GuildConfigsCache {
     /**
@@ -25,7 +26,7 @@ class GuildConfigsCache {
     constructor(axonClient) {
         this._axon = axonClient;
 
-        this.guildConfigs = new Collection( { base: GuildConfig } );
+        this.guildConfigs = new LRUCache(1000, { base: GuildConfig } );
     }
 
     /**

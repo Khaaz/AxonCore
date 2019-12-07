@@ -13,13 +13,14 @@ class Collection extends Map {
     /**
      * Creates an instance of Collection.
      *
-     * @param {Object} data
-     * @param {Class} [data.base=null]
-     * @param {Object} [data.iterable]
+     * @param {Object} options
+     * @param {Class} [options.base=null]
+     * @param {Array|Object} options.iterable
      *
      * @memberof Collection
      */
-    constructor( { base: baseObject = null, iterable } ) {
+    constructor(options = {} ) {
+        const { base: baseObject = null, iterable } = options;
         if (iterable && iterable instanceof Array) {
             super(iterable);
         } else if (iterable && iterable instanceof Object) {
