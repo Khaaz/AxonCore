@@ -161,7 +161,7 @@ class Utils {
      * Returns the guild prefix of the given msg.
      *
      * @param {Object} msg - Message object given at the command.
-     * @returns {String} The prefix as string.
+     * @returns {Promise<String>} The prefix as string.
      *
      * @memberof Utils
      */

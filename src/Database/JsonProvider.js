@@ -24,7 +24,7 @@ class JsonProvider extends DBProvider {
      * @memberof JsonProvider
      */
     init(axonOptions = {} ) { // eslint-disable-next-line no-unused-vars
-        this.manager = new Manager(axonOptions.DBLocation);
+        this.manager = new Manager(axonOptions.extensions.DBLocation);
     }
 
     // **** INIT **** //

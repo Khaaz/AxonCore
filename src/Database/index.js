@@ -15,7 +15,7 @@ class DBHandler {
         let DBProvider;
 
         // eslint-disable-next-line no-shadow
-        const db = axonOptions.botConfig ? axonOptions.botConfig.db : 0;
+        const { db } = axonOptions.settings;
 
         switch (db) {
             // Json Database

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import NoAbstractInstanceException from '../../Errors/NoAbstractInstanceException';
 import NotImplementedException from '../../Errors/NotImplementedException';
 
@@ -35,7 +36,6 @@ class Loader {
      *
      * @memberof Loader
      */
-    // eslint-disable-next-line no-unused-vars
     load(toLoad) {
         throw new NotImplementedException();
     }

@@ -1,9 +1,3 @@
-import defaultBotConfig from '../../Configs/botConfig.json';
-import defaultTokenConfig from '../../Configs/tokenConfig.json';
-
-import Utils from '../../Utility/Utils';
-import DefaultLogger from '../../Loggers/Logger';
-
 /**
  * Loads the AxonClient.
  *
@@ -14,38 +8,6 @@ import DefaultLogger from '../../Loggers/Logger';
  */
 class ClientInitialiser {
     /**
-     * Create a config object from configs given in parameters.
-     * Ensure config validity by comparing to the default one. Make sure the config has all required fields.
-     *
-     * @static
-     * @param {Object} { axonConfig, tokenConfig }
-     * @returns {Object} The newly created configs object
-     * @memberof ClientInitialiser
-     */
-    static initConfigs( { botConfig, tokenConfig } ) {
-        const configs = {};
-
-        /* Axon Config */
-        if (botConfig && Utils.compareObject(defaultBotConfig, botConfig) ) {
-            configs.bot = botConfig;
-        } else {
-            configs.bot = defaultBotConfig;
-            DefaultLogger.error('Couldn\'t init custom axon config: Invalid format. Used default values instead.');
-        }
-
-        /* Token Config */
-        if (tokenConfig && Utils.compareObject(defaultTokenConfig, tokenConfig) ) {
-            configs._tokens = tokenConfig;
-        } else {
-            configs._tokens = defaultTokenConfig;
-            DefaultLogger.warn('Couldn\'t init custom token config: Invalid format. Used default values instead.');
-        }
-
-        DefaultLogger.init('Configs initialised!');
-        return configs;
-    }
-
-    /**
      * Initialise AxonStaff from the configuration file.
      *
      * @static
@@ -54,11 +16,11 @@ class ClientInitialiser {
      * @returns {Object} Axon staff newly created.
      * @memberof ClientInitialiser
      */
-    static initStaff(botConfig, logger) {
+    static initStaff(staffConfig, logger) {
         const staff = {};
 
-        for (const s of Object.keys(botConfig.staff) ) {
-            staff[s] = botConfig.staff[s].map(o => o.id);
+        for (const s of Object.keys(staffConfig) ) {
+            staff[s] = staffConfig[s].map(o => o.id);
         }
         logger.init('Bot-Staff engaged!');
 

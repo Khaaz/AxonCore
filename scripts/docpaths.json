@@ -68,15 +68,15 @@
         "output": "Structures/CommandContext.md"
     },
     {
-        "input": "Structures/Listener.js",
+        "input": "Structures/Event/Listener.js",
         "output": "Structures/Listener.md"
     },
     {
-        "input": "Structures/EventManager.js",
+        "input": "Structures/Event/EventManager.js",
         "output": "Structures/EventManager.md"
     },
     {
-        "input": "Structures/Handler.js",
+        "input": "Structures/Event/Handler.js",
         "output": "Structures/Handler.md"
     },
     {
@@ -84,7 +84,7 @@
         "output": "Structures/CommandDispatcher.md"
     },
     {
-        "input": "Structures/GuildConfigCache.js",
+        "input": "Structures/Stores/GuildConfigCache.js",
         "output": "Structures/GuildConfigCache.md"
     },
     {
@@ -104,15 +104,15 @@
         "output": "Structures/GuildConfig.md"
     },
     {
-        "input": "Structures/Langs/MessageManager.js",
+        "input": "Langs/MessageManager.js",
         "output": "Structures/MessageManager.md"
     },
     {
-        "input": "Structures/Langs/TranslationManager.js",
+        "input": "Langs/TranslationManager.js",
         "output": "Structures/TranslationManager.md"
     },
     {
-        "input": "Structures/Langs/MessageParser.js",
+        "input": "Langs/MessageParser.js",
         "output": "Structures/MessageParser.md"
     },
     {

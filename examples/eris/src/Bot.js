@@ -12,10 +12,20 @@ import MyUtils from './MyUtils';
 
 
 const axonOptions = new AxonOptions( {
-    botConfig,
+    prefixes: botConfig.prefixes,
+    settings: botConfig.settings,
     lang,
-    tokenConfig,
+    logo: null,
 
+    info: botConfig.info,
+    staff: botConfig.staff,
+    template: botConfig.template,
+    custom: {
+        param: 1,
+    },
+},
+tokenConfig.webhooks,
+{
     utils: MyUtils, // use your own Utils
     logger: null, // custom Logger
     DBProvider: null, // custom DB Service
@@ -43,12 +53,12 @@ const client = new Eris.Client(
         disableEvents: {
             TYPING_START: true,
         },
-    }
+    },
 );
 
 const Bot = new Client(
     client,
-    axonOptions
+    axonOptions,
 );
 
 export default Bot;

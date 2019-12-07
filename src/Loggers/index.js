@@ -64,10 +64,9 @@ class LoggerHandler {
                 break;
             }
         }
-
         
         try {
-            axonConfig.debug && this.testLogger(Logger);
+            axonConfig.debugMode && this.testLogger(Logger);
         } catch (err) {
             /** Fallback to DefLogger */
             Logger = DefaultLogger;

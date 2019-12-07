@@ -7,7 +7,7 @@ import Module from './Structures/Module';
 import Command from './Structures/Command/Command';
 import EventManager from './Structures/Event/EventManager';
 import CommandDispatcher from './Structures/Dispatchers/CommandDispatcher';
-import GuildConfigCache from './Structures/GuildConfigCache';
+import GuildConfigCache from './Structures/Stores/GuildConfigCache';
 
 import ModuleLoader from './Structures/Loaders/ModuleLoader';
 import ClientInitialiser from './Structures/Loaders/ClientInitialiser';
@@ -27,7 +27,7 @@ import DBProvider from './Database/DBProvider'; // default DBProvider
 import logo from './Configs/logo';
 import packageJSON from '../package.json';
 import { EMBED_LIMITS } from './Utility/Constants/DiscordEnums';
-import MessageManager from './Structures/Langs/MessageManager';
+import MessageManager from './Langs/MessageManager';
 
 
 /**
@@ -48,21 +48,19 @@ import MessageManager from './Structures/Langs/MessageManager';
  * @prop {Object<CommandDispatcher>} dispatcher - Dispatch commands onMessageCreate.
  * @prop {Object<ModuleLoader>} moduleLoader - Load, register, unregister modules.
  * @prop {Object<MessageManager>} messageManager - Message manager object accessible with `<AxonClient>.l`
- * @prop {Object} logger - Default Logger / Chalk Logger / Signale Logge
- * @prop {Object} axonUtils - Util methods (Axon)
+ * @prop {Object} logger - The Logger instance
+ * @prop {Object} axonUtils - Util methods (AxonCore)
  * @prop {Object} utils - Utils methods (general)
- * @prop {Object<DBProvider>} DBProvider - JSON(default) / Mongoose
- * @prop {Object} configs - configs (axon, _tokens)
- * @prop {Object} [configs.bot] - bot general config
- * @prop {Object} [configs._tokens] - token secret config
- * @prop {Object} staff - BotStaff (owners, admins, +...)
- * @prop {Array<String>} [staff.owners] - Array of user IDs with BotOwner permissions
- * @prop {Array<String>} [staff.admins] - Array of user IDs with BotAdmin permisions
+ * @prop {Object<DBProvider>} DBProvider - The DBProvider instance
+ * @prop {Object} configs - configs (webhooks, template, custom)
+ * @prop {Object} staff - Bot Staff (owners, admins, +...)
+ * @prop {Array<String>} staff.owners - Array of user IDs with BotOwner permissions
+ * @prop {Array<String>} staff.admins - Array of user IDs with BotAdmin permisions
  * @prop {Object} settings - Bot settings
- * @prop {Boolean} [settings.debugMode] - Enable to show commands latency and debug informations
- * @prop {Array<String>} [settings.prefixes] - Default bot prefixes
- * @prop {String} [settings.adminPrefix] - Admins prefix : override perms/cd except Owner
- * @prop {String} [settings.ownerPrefix] - Owner prefix : override perms/cd
+ * @prop {Boolean} settings.debugMode - Enable to show commands latency and debug informations
+ * @prop {Array<String>} settings.prefixes - Default bot prefixes
+ * @prop {String} settings.adminPrefix- Admins prefix : override perms/cd except Owner
+ * @prop {String} settings.ownerPrefix - Owner prefix : override perms/cd
  * @prop {Object} infos - General infos { name, description, version, library, owners }
  * @prop {Object} axoncore - AxonCore infos { name, version, author, github }s]
  */
@@ -72,17 +70,6 @@ class AxonClient extends EventEmitter {
      *
      * @param {Object<BotClient>} botClient - Eris or Discordjs Client instance
      * @param {Object<AxonOptions>} [axonOptions={}] - Axon options
-     * @param {Object} [axonOptions.botConfig=null] - General Axon config
-     * @param {Object} [axonOptions.lang=null] - Message templates / translations
-     * @param {Object} [axonOptions.tokenConfig=null] - Token config
-     * @param {Function} [axonOptions.logo=null] - Custom function that will log a logo
-     * @param {Object<Utils>} [axonOptions.utils] - Utils class, needs to be an instance of AxonCore.Utils
-     * @param {Object} [axonOptions.logger] - Custom logger
-     * @param {Object<DBProvider>} [axonOptions.DBProvider] - DBProvider. Needs to be an instance of DBProvider
-     * @param {String} [data.DBLocation=null] - Path to use as default location for usage of the JSONProvider
-     * @param {Object<AxonConfig>} [axonOptions.axonConfig=null] - Custom AxonConfig object to use instead of default AxonConfig
-     * @param {Object<GuildConfig>} [axonOptions.guildConfig=null] - Custom GuildConfig object to use instead of default GuildConfig
-     *
      * @param {Object} [modules={}] - Object with all modules to add in the bot
      *
      * @memberof AxonClient
@@ -91,23 +78,36 @@ class AxonClient extends EventEmitter {
         super();
         axonOptions.logo ? axonOptions.logo() : logo();
 
-        /* configs */
-        this.configs = ClientInitialiser.initConfigs(axonOptions) || {};
+        this.configs = {
+            webhooks: axonOptions.webhooksConfig,
+            template: axonOptions.template,
+            custom: axonOptions.custom,
+        };
+
+        /* Bot settings */
+        this.settings = {
+            debugMode: axonOptions.settings.debugMode || false,
+            prefixes: [axonOptions.prefixes.general],
+            adminPrefix: axonOptions.prefixes.admin, // meant to be different prefix on all AxonClient instance (global override)
+            ownerPrefix: axonOptions.prefixes.owner, // meant to be same prefix on all AxonClient instance (global override)
+            lang: axonOptions.settings.lang,
+            guildConfigCache: axonOptions.settings.guildConfigCache,
+        };
 
         /* Logger */
-        this.logger = axonOptions.logger || LoggerHandler.pickLogger(this.configs.bot);
+        this.logger = axonOptions.extensions.logger || LoggerHandler.pickLogger(axonOptions.settings);
 
         /* AxonUtils */
         this.axonUtils = new AxonUtils(this);
         /* Utils */
-        if (axonOptions.utils && axonOptions.utils.prototype instanceof Utils) {
-            this.utils = new axonOptions.utils(this); // eslint-disable-line
+        if (axonOptions.extensions.utils && axonOptions.extensions.utils.prototype instanceof Utils) {
+            this.utils = new axonOptions.extensions.utils(this); // eslint-disable-line new-cap
         } else {
             this.utils = new Utils(this);
         }
         /* DBProvider */
-        if (axonOptions.DBProvider && axonOptions.DBProvider.prototype instanceof DBProvider) {
-            this.DBProvider = new axonOptions.DBProvider(this);
+        if (axonOptions.extensions.DBProvider && axonOptions.extensions.DBProvider.prototype instanceof DBProvider) {
+            this.DBProvider = new axonOptions.extensions.DBProvider(this);
         } else {
             this.DBProvider = DBHandler.pickDBProvider(axonOptions, this);
         }
@@ -124,32 +124,23 @@ class AxonClient extends EventEmitter {
         this.commandAliases = new Map(); // Command Alias => Command label
         this.eventManager = new EventManager(this); // Event Label => Event function
         /* GuildConfigs */
-        this.guildConfigs = new GuildConfigCache(this); // Guild ID => guildConfig
+        this.guildConfigs = new GuildConfigCache(this, axonOptions.settings.guildConfigCache); // Guild ID => guildConfig
 
         /* Core Logic */
         this.moduleLoader = new ModuleLoader(this);
         this.dispatcher = new CommandDispatcher(this);
 
-        this.messageManager = new MessageManager(this, axonOptions.lang);
+        this.messageManager = new MessageManager(this, axonOptions.lang, axonOptions.settings.lang);
         
         /* General */
-        this.staff = ClientInitialiser.initStaff(axonOptions.botConfig, this.logger);
-        
-        /* Bot settings */
-        this.settings = {
-            debugMode: this.configs.bot.debugMode || false,
-            prefixes: [this.configs.bot.prefix.general],
-            adminPrefix: this.configs.bot.prefix.admin, // meant to be different prefix on all AxonClient instance (global override)
-            ownerPrefix: this.configs.bot.prefix.owner, // meant to be same prefix on all AxonClient instance (global override)
-        };
+        this.staff = ClientInitialiser.initStaff(axonOptions.staff, this.logger);
 
         /* Bot informations */
         this.infos = {
-            name: this.configs.bot.general.name,
-            description: this.configs.bot.general.description,
-            version: this.configs.bot.general.version,
-            library: this.configs.bot.general.library,
-            owners: Object.values(this.configs.bot.staff.owners).map(o => o.name),
+            name: axonOptions.info.name,
+            description: axonOptions.info.description,
+            version: axonOptions.info.version,
+            owners: Object.values(axonOptions.staff.owners).map(o => o.name),
         };
 
         /* Client specification */
@@ -215,7 +206,7 @@ class AxonClient extends EventEmitter {
      * @memberof AxonClient
      */
     get webhooks() {
-        return this.configs._tokens.webhooks;
+        return this.configs.webhooks;
     }
 
     /**
@@ -226,7 +217,18 @@ class AxonClient extends EventEmitter {
      * @memberof AxonClient
      */
     get template() {
-        return this.configs.bot.template;
+        return this.configs.template;
+    }
+    
+    /**
+     *
+     *
+     * @readonly
+     * @type {Object}
+     * @memberof AxonClient
+     */
+    get custom() {
+        return this.configs.custom;
     }
 
     /**
@@ -261,22 +263,7 @@ class AxonClient extends EventEmitter {
      * @memberof AxonClient
      */
     getCommand(fullLabel) {
-        const splitLabel = fullLabel.split(' ');
-
-        const label = this.commandAliases.get(splitLabel[0].toLowerCase() );
-        let command = this.commands.get(label);
-        if (!command) {
-            return null;
-        }
-
-        splitLabel.shift();
-        for (const sub of splitLabel) {
-            if (command.hasSubcmd) {
-                const subLabel = command.subCommandsAliases.get(sub.toLowerCase() );
-                command = command.subCommands.get(subLabel);
-            }
-        }
-        return command || null;
+        return this.commands.get(fullLabel);
     }
 
     // **** MAIN **** //
