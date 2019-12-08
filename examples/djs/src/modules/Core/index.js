@@ -16,8 +16,10 @@ class Core extends Module {
             name: 'Core',
             description: 'The main module with most basic commands.',
         };
+    }
 
-        this.init(commands, listeners);
+    init() {
+        return { commands, listeners };
     }
 }
 

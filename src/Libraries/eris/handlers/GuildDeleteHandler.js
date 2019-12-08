@@ -1,4 +1,4 @@
-import Handler from '../../../Structures/Handler';
+import Handler from '../../../Structures/Event/Handler';
 
 class GuildDeleteHandler extends Handler {
     handle(guild) {

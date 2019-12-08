@@ -10,13 +10,22 @@ import lang from './configs/lang.json';
 
 import MyUtils from './MyUtils';
 
-
 const axonOptions = new AxonOptions( {
-    botConfig,
-    lang,
-    tokenConfig,
     token: tokenConfig.bot.token,
+    prefixes: botConfig.prefixes,
+    settings: botConfig.settings,
+    lang,
+    logo: null,
 
+    info: botConfig.info,
+    staff: botConfig.staff,
+    template: botConfig.template,
+    custom: {
+        param: 1,
+    },
+},
+tokenConfig.webhooks,
+{
     utils: MyUtils, // use your own Utils
     logger: null, // custom Logger
     DBProvider: null, // custom DB Service
@@ -38,12 +47,12 @@ const client = new Discordjs.Client(
         fetchAllMembers: false,
         messageCacheMaxSize: 100,
         disabledEvents: ['TYPING_START'],
-    }
+    },
 );
 
 const Bot = new Client(
     client,
-    axonOptions
+    axonOptions,
 );
 
 export default Bot;

@@ -1,4 +1,4 @@
-import DBService from './DBProvider';
+import DBProvider from './DBProvider';
 
 import AxonConfig from '../Structures/DataStructure/AxonConfig';
 import GuildConfig from '../Structures/DataStructure/GuildConfig';
@@ -14,7 +14,7 @@ import GuildConfig from '../Structures/DataStructure/GuildConfig';
  * @prop {Object} AxonSchema
  * @prop {Object} GuildSchema
  */
-class MongoProvider extends DBService {
+class MongoProvider extends DBProvider {
     /**
      * Override init method.
      *

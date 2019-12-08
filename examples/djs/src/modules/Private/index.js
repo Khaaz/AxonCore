@@ -18,8 +18,10 @@ class Private extends Module {
         };
 
         this.permissions = new CommandPermissions(this, {}, true);
+    }
 
-        this.init(commands);
+    init() {
+        return { commands };
     }
 }
 

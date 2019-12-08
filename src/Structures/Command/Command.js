@@ -29,9 +29,9 @@ import { COMMAND_EXECUTION_STATE } from '../../Utility/Constants/AxonEnums';
  * @prop {Boolean} [enabled=module.enabled] - Whether the command is enabled
  * @prop {Boolean} [serverBypass=module.serverBypass] - Whether the command can be disabled
  *
- * @prop {Boolean} [isSubcmd=false] - Whether the command is a subcommand
+ * @prop {Boolean} [isSubcmd=false] - Whether the command IS a subcommand
  * @prop {Object<Command>} [parentCommand=null] - Reference to the parent command (if isSubcmd = true)
- * @prop {Boolean} [hasSubcmd=false] - Whether the command has subcommands
+ * @prop {Boolean} [hasSubcmd=false] - Whether the command HAS subcommands
  * @prop {Array<Object>} subcmds - Array of subcommand objects (deleted after init)
  * @prop {Collection<Command>} [subCommands=null] - Collection of subcommands
  * @prop {Object<Map>} [subCommandsAliases=null] - Map of subcommand aliases
@@ -54,23 +54,23 @@ class Command extends Base {
      *
      * @param {Object<Module>} module
      * @param {Object} [data={}] - All command parameters
-     * @param {String} [data.label]
-     * @param {Array<String>} [data.aliases]
-     * @param {Boolean} [data.isSubcmd]
-     * @param {Boolean} [data.hasSubcmd]
-     * @param {Boolean} [data.enabled]
-     * @param {Boolean} [data.serverBypass]
-     * @param {Array<String>} [data.subcmds]
+     * @param {String} [data.label] - The command label
+     * @param {Array<String>} [data.aliases] - The command aliases
+     * @param {Boolean} [data.isSubcmd] - Whether the command IS a subcommand
+     * @param {Boolean} [data.hasSubcmd] - Whether the command HAS subcommands
+     * @param {Boolean} [data.enabled] - Whether the command is enabled
+     * @param {Boolean} [data.serverBypass] - Whether the ciommand can be server disabled
+     * @param {Array<String>} [data.subcmds] - List of subcommands class to be added in the Command
      * @param {Object} [data.infos]
-     * @param {Object<CommandOptions>|Object} [data.options]
-     * @param {Object<CommandPermissions>|Object} [data.permissions]
+     * @param {Object<CommandOptions>|Object} [data.options] - The command options
+     * @param {Object<CommandPermissions>|Object} [data.permissions] - The command permissions
      *
      * @memberof Command
      */
     constructor(module, data = {} ) {
         super(module.axon);
 
-        this._module = module; // (module Object)
+        this._module = module;
 
         this._cooldown = new CommandCooldown(this);
 
@@ -90,7 +90,6 @@ class Command extends Base {
          * Initiated if there are subcommands
          */
         this.subCommands = null; // Collection of subcommands
-        this.subCommandsAliases = null; // Map of subcommand aliases
 
         /* Bypass all perms - true = prevent the command to be disabled */
         this.serverBypass = data.serverBypass !== undefined ? data.serverBypass : module.serverBypass; // Default to module state
@@ -121,7 +120,7 @@ class Command extends Base {
                 this.permissions = new CommandPermissions(this, data.permissions);
             }
         } else {
-            this.options = new CommandPermissions(this);
+            this.permissions = new CommandPermissions(this);
         }
     }
 
@@ -399,7 +398,7 @@ class Command extends Base {
         embed.fields = [];
         /* SubCommands */
         if (this.hasSubcmd) {
-            const subcmds = this.subCommands.filter(e => !e.options.hidden).map(e => `${prefix}${e.infos.usage}`);
+            const subcmds = this.subCommands.getAll().filter(e => !e.options.hidden).map(e => `${prefix}${e.infos.usage}`);
             if (subcmds.length > 0) {
                 embed.fields.push( {
                     name: 'SubCommands:',

@@ -1,6 +1,6 @@
-import Base from './Base';
+import Base from '../Base';
 
-import Collection from '../Utility/Collection';
+import Collection from '../../Utility/Collection';
 import Handler from './Handler';
 
 /**
@@ -11,7 +11,7 @@ import Handler from './Handler';
  * @class EventManager
  * @extends {Base}
  *
- * @prop {Object} _listeners - Object that links an event name to an array of event objects { eventName: [Event, Event] }
+ * @prop {Object} _eve,ts - Object that links an event name to an array of Listener objects { eventName: [Listener, Listener] }
  * @prop {Collection<Object>} _handlers - Collection of handler keyed to the event name [key: eventName, value: Handler]
  */
 
@@ -25,12 +25,10 @@ class EventManager extends Base {
      */
     constructor(axon) {
         super(axon);
-        // For each eventName => Array of Event Obj
-        this._listeners = {};
+        // For each eventName => Array of Listener Obj
+        this._events = {};
         // For each eventName => One Function
         this._handlers = new Collection( { base: Handler } );
-
-        // this.HANDLERS = this.axon.libInterface.HANDLERS;
     }
 
     // **** GETTERS **** //
@@ -53,19 +51,19 @@ class EventManager extends Base {
      * @type {Collection<Object>}
      * @memberof EventManager
      */
-    get events() {
+    get handlers() {
         return this._handlers;
     }
 
     /**
      * Get all functions bound to the event passed in parameters.
      *
-     * @param {String} eventName - The Eris event name
+     * @param {String} eventName - The library event name
      * @returns {Array} Array of the functions bound to the event
      * @memberof EventManager
      */
     getListeners(eventName) {
-        return this._listeners[eventName];
+        return this._events[eventName];
     }
 
     // **** BINDERS **** //
@@ -81,7 +79,7 @@ class EventManager extends Base {
      */
     bindListeners() {
         // Create handler for each event
-        for (const event in this._listeners) {
+        for (const event in this._events) {
             this.registerHandler(event);
         }
         // Bind Handlers to the event emission if bot is ready
@@ -91,7 +89,7 @@ class EventManager extends Base {
     }
 
     /**
-     * Bind every handler to the correct event emitter
+     * Bind every handler to the correct Discord event and start listening to this event.
      *
      * @memberof EventManager
      */
@@ -110,7 +108,7 @@ class EventManager extends Base {
      * Add the Listener in the array of Listener for each discord event.
      * Called by ModuleLoader when registering an event.
      *
-     * @param {Object<Listener>} listener - Event Object
+     * @param {Object<Listener>} listener - The Listener Object
      *
      * @memberof EventManager
      */
@@ -119,16 +117,16 @@ class EventManager extends Base {
         if (!listener.load) {
             return null;
         }
-        this._listeners[listener.eventName] = this._listeners[listener.eventName] || [];
+        this._events[listener.eventName] = this._events[listener.eventName] || [];
         // Remove/replace if already existing
-        const index = this._listeners[listener.eventName].findIndex(l => l.label === listener.label);
+        const index = this._events[listener.eventName].findIndex(l => l.label === listener.label);
         if (index > -1) {
-            this._listeners[listener.eventName].splice(index, 1);
+            this._events[listener.eventName].splice(index, 1);
         }
         // Add Listener
-        this._listeners[listener.eventName].push(listener);
+        this._events[listener.eventName].push(listener);
         this.logger._initEvent(false, listener);
-        return this._listeners[listener.eventName];
+        return this._events[listener.eventName];
     }
 
     /**
@@ -136,7 +134,7 @@ class EventManager extends Base {
      * Remove the current event listener if the handler already exists.
      * Create a new handler from the array of listeners for the given event.
      *
-     * @param {String} event - The Event name
+     * @param {String} event - The Discord event name
      * @returns {Object} The new Handler created
      *
      * @memberof EventManager
@@ -154,7 +152,7 @@ class EventManager extends Base {
             this.bot.off(event, handler._handle);
         }
 
-        handler = new HandlerClass(this.axon, event, this._listeners[event] );
+        handler = new HandlerClass(this.axon, event, this._events[event] );
 
         this._handlers.set(event, handler);
 
@@ -180,20 +178,20 @@ class EventManager extends Base {
     
     /**
      * Unregister a listener.
-     * Recreate the handler and listen to the updated handler
+     * Recreate the handler without the unregistered listener and listen to the updated handler
      *
-     * @param {String} event - Name of the event
-     * @param {String} label - Name of the listener
+     * @param {String} event - Name of the Discord event
+     * @param {String} label - Label of the listener
      * @returns {Boolean} True if worked / False if label or event doesn't exist
      * @memberof EventManager
      */
     unregisterListener(event, label) {
-        if (!this._listeners[event] ) {
+        if (!this._events[event] ) {
             return false;
         }
-        const index = this._listeners[event].findIndex(e => e.label === label);
+        const index = this._events[event].findIndex(e => e.label === label);
         if (index > -1) {
-            this._listeners[event].splice(index, 1);
+            this._events[event].splice(index, 1);
         } else {
             return false;
         }
@@ -210,7 +208,7 @@ class EventManager extends Base {
     /**
      * Unregister a handler. Unregister the event and delete the handler.
      *
-     * @param {String} event - Name of the event
+     * @param {String} event - Name of the Discord event
      * @returns {Boolean} True if worked / False if event doesn't exist
      * @memberof EventManager
      */
@@ -225,9 +223,9 @@ class EventManager extends Base {
 
     /**
      * Unregister the given event without deleting the handler.
-     * Just stop listening to the event emitter.
+     * Just stop listening to the discord event emitted.
      *
-     * @param {String} event - Name of the event
+     * @param {String} event - Name of the Discord event
      * @returns {Boolean} True if worked / False if event doesn't exist
      * @memberof EventManager
      */

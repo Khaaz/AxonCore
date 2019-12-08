@@ -29,19 +29,22 @@ class LRUCache {
     /**
      * Creates an instance of LRUCache.
      *
-     * @param {Number} limit
-     * @param {Array|Object} [iterable=null]
+     * @param {Number} limit - Max number of element in the Collection
+     * @param {Object} options - Options used to construct the Collection
+     * @param {Class} [options.base=null]
+     * @param {Array|Object} [options.iterable=null]
      *
      * @memberof LRUCache
      */
-    constructor(limit, iterable = null) {
+    constructor(limit, options = {} ) {
+        const { iterable = null } = options;
         this.limit = limit;
         this.size = 0;
         
         this.head = null;
         this.queue = null;
         
-        this.cache = new Collection();
+        this.cache = new Collection( { base: options.base } );
         
         if (iterable && iterable instanceof Array) {
             for (const elem of iterable) {

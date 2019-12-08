@@ -18,7 +18,8 @@
   "devDependencies": {
     "@axonteam/doc-gen": "git+https://github.com/AxonTeam/doc-gen",
     "@axonteam/eslint-config": "^2.2.0",
-    "@types/node": "^12.6.2",
+    "@types/mongoose": "^5.5.32",
+    "@types/node": "^12.12.14",
     "chalk": "^2.4.2",
     "discord.js": "discordjs/discord.js",
     "eris": "abalabahaha/eris#dev",

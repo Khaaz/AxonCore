@@ -1,6 +1,8 @@
 import ErisInterface from './eris/ErisInterface';
 import DjsInterface from './discordjs/DjsInterface';
 
+import { LIBRARY_TYPES } from '../Utility/Constants/AxonEnums';
+
 /**
  * Library Handler
  * Use eris or discord.js.
@@ -17,19 +19,24 @@ class LibraryHandler {
         const lib = axonOptions.botConfig ? axonOptions.botConfig.library : 0;
 
         switch (lib) {
-            // Json Database
-            case 0:
-            default: {
+            // Eris
+            case LIBRARY_TYPES.ERIS: {
                 libraryInterface = new ErisInterface(axon);
                 axon.logger.info('Selected Library Interface: ERIS.');
                 break;
             }
 
-            // MongoDB Database
-            case 1: {
+            // Discordjs
+            case LIBRARY_TYPES.DISCORDJS: {
                 libraryInterface = new DjsInterface(axon, axonOptions._token);
                 axon.logger.info('Selected Library Interface: DISCORD.JS.');
                 break;
+            }
+
+            default: {
+                axon.logger.error('No Selected Library Interface.');
+                libraryInterface = new ErisInterface(axon);
+                axon.logger.info('[DEFAULT] Selected Library Interface: ERIS.');
             }
         }
 

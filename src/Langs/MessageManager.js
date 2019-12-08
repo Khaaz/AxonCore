@@ -24,12 +24,12 @@ class MessageManager {
      *
      * @memberof MessageManager
      */
-    constructor(axonClient, messages) {
+    constructor(axonClient, messages, baseLang) {
         this._axon = axonClient;
 
         this._messages = messages;
     
-        this.translation = new TranslationManager(this);
+        this.translation = new TranslationManager(this, baseLang);
         this.parser = new MessageParser();
 
         // creating method for every message to make access easier

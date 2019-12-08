@@ -1,5 +1,5 @@
 {
-    "general": {
+    "info": {
         "name": "Axon",
         "description": "AxonCore - Bot client, core module (eris lib)",
         "version": "1.0.0",
@@ -17,7 +17,7 @@
         "grafana": ""
     },
     
-    "prefix": {
+    "prefixes": {
         "general": "a!",
         "owner": "!!",
         "admin": "a."
@@ -54,11 +54,12 @@
         }
     },
 
-    "lang": "english",
-
-    "debugMode": false,
-
-    "library": 1,
-    "logger": 1,
-    "db": 0
+    "settings": {
+        "lang": "english",
+        "debugMode": true,
+        "library": 1,
+        "logger": 1,
+        "db": 0,
+        "guildConfigCache": 1000
+    }
 }

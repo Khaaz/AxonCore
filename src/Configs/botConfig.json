@@ -1,11 +1,11 @@
 {
-    "general": {
-        "name": "Axon",
-        "description": "AxonCore - Bot client, core module (eris lib)",
+    "info": {
+        "name": "AxonCore",
+        "description": "AxonCore - Full fledged framework.",
         "version": "1.0.0"
     },
     
-    "prefix": {
+    "prefixes": {
         "general": "a!",
         "owner": "!!",
         "admin": "a."
@@ -14,14 +14,14 @@
     "staff": {
         "owners": [ 
             {
-                "name": "Khaaz",
-                "id": "179908288337412096"
+                "name": "",
+                "id": ""
             }
         ],
         "admins": [ 
             {
-                "name": "Khaaz",
-                "id": "179908288337412096"
+                "name": "",
+                "id": ""
             }
         ]
     },
@@ -34,12 +34,5 @@
             "error": ":x:",
             "success": ":white_check_mark:"
         }
-    },
-    
-    "lang": "english",
-
-    "debugMode": false,
-    "library": 0,
-    "logger": 0,
-    "db": 0
+    }
 }

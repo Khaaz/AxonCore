@@ -1,4 +1,4 @@
-import Base from './Base';
+import Base from '../Base';
 
 /**
  * Default Listener class

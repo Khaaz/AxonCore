@@ -1,4 +1,4 @@
-import defaultLang from '../../Configs/lang.json';
+import defaultLang from '../Configs/lang.json';
 
 /**
  * Class dedicated to manage translations.
@@ -18,10 +18,10 @@ class TranslationManager {
      * @param {Object<MessageManager>} manager
      * @memberof TranslationManager
      */
-    constructor(manager) {
+    constructor(manager, lang) {
         this._manager = manager;
 
-        this.lang = manager._axon.configs.bot.lang || 'english';
+        this.lang = lang;
         
         if (!manager._messages[this.lang] ) {
             this.lang = 'english';

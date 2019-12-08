@@ -4,12 +4,9 @@ import Base from './Base';
 import CommandLoader from './Loaders/CommandLoader';
 import ListenerLoader from './Loaders/ListenerLoader';
 
-import Collection from '../Utility/Collection';
-
-import Command from './Command/Command';
-import Listener from './Listener';
 import CommandPermissions from './Command/CommandPermissions';
 import CommandOptions from './Command/CommandOptions';
+import NotImplementedException from '../Errors/NotImplementedException';
 
 /**
  * AxonCore Module.
@@ -22,8 +19,6 @@ import CommandOptions from './Command/CommandOptions';
  * @extends Base
  *
  * @prop {String} label - Module label (name/id)
- * @prop {Collection<Command>} commands - Collection of commands in the module [key: label, value: command Obj]
- * @prop {Collection<Listener>} listeners - Collection of events in the module [key: label, value: listener Obj]
  * @prop {Boolean} [enabled=true] - Whether the module is enabled or not
  * @prop {Boolean} [serverBypass=false] - Whether the module can be disabled or not (will bypass guild disabled)
  * @prop {Object} info - Default info about the module
@@ -41,39 +36,58 @@ class Module extends Base {
      * Creates a Module instance.
      *
      * @param {Object<AxonClient>} client
+     * @param {Object} [data={}] - All module parameters
+     * @param {String} [data.label] - The module label
+     * @param {Boolean} [data.enabled] - Whether the module is enabled or not
+     * @param {Boolean} [data.serverBypass] - Whether the module can be disabled in a server or not
+     * @param {Object} [data.infos]
+     * @param {Object<CommandOptions>|Object} [data.options] - The default options for all commands in this module
+     * @param {Object<CommandPermissions>|Object} [data.permissions] - The default permissions for all commands in this module
      *
      * @memberof Module
      */
-    constructor(client) {
+    constructor(client, data = {} ) {
         super(client);
 
-        this.label = 'moduleLabel';
-
-        /*
-         * Containments - all commands and events within this module
-         */
-        this.commands = new Collection( { base: Command } );
-        this.listeners = new Collection( { base: Listener } );
+        this.label = data.label || null;
 
         /*
          * Default options and params
          */
-        this.enabled = true; // global enable/disable
-        this.serverBypass = false; // Bypass all perms - true = prevent the command to be server disabled
+        this.enabled = data.enabled !== undefined ? data.enabled : true; // global enable/disable
+        this.serverBypass = data.serverBypass !== undefined ? data.serverBypass : true; // Bypass all perms - true = prevent the command to be server disabled
 
         /*
          * Info for the help command
          * All fields are required
          */
-        this.infos = {
-            name: 'moduleName',
-            category: 'category',
-            description: 'moduleDesc',
+        this.infos = data.infos || {
+            name: this.label,
+            category: null,
+            description: null,
         };
 
         /* Default CommandPermissions at the module level */
-        this.permissions = new CommandPermissions(this);
-        this.options = new CommandOptions(this);
+        if (data.options) {
+            if (data.options instanceof CommandOptions) {
+                this.options = data.options;
+            } else {
+                this.options = new CommandOptions(this, data.options);
+            }
+        } else {
+            this.options = new CommandOptions(this);
+        }
+
+        /* Default CommandOptions at the module level */
+        if (data.permissions) {
+            if (data.permissions instanceof CommandPermissions) {
+                this.permissions = data.permissions;
+            } else {
+                this.permissions = new CommandPermissions(this, data.permissions);
+            }
+        } else {
+            this.permissions = new CommandPermissions(this);
+        }
 
         /* Loaders */
         this.commandLoader = new CommandLoader(this);
@@ -81,15 +95,47 @@ class Module extends Base {
     }
 
     /**
-     * Init a module with all commands and events.
-     * Called at the end of every module contructor with correct parameters.
+     * A Collection of all commands the module holds
      *
-     * @param {Object<Commands>} [commands=null] - Object containing all commands
-     * @param {Object<Listener>} [listeners=null] - Object containing all listeners
+     * @readonly
+     *
+     * @memberof Module
      */
-    init(commands = null, listeners = null) {
+    get commands() {
+        return this.axon.commands.getAll().apply('label', 'filter', (c) => c.module === this);
+    }
+
+    /**
+     * A Collection of all listeners the module holds
+     *
+     * @readonly
+     *
+     * @memberof Module
+     */
+    get listeners() {
+        return this.axon.listeners.getAll().apply('label', 'filter', (l) => l.module === this);
+    }
+
+    /**
+     * Init a module with all commands and listeners.
+     *
+     * @memberof Module
+     */
+    _init() {
+        const { commands, listeners } = this.init();
         commands && this.commandLoader.loadAll(commands);
         listeners && this.listenerLoader.loadAll(listeners);
+    }
+
+    /**
+     * Override this method to returns { commands, listeners }
+     *
+     * @returns {Object<{Commands, Listeners}>} An object containing commands and listeners to initialise. { commands, listeners}
+     *
+     * @memberof Module
+     */
+    init() {
+        throw new NotImplementedException();
     }
 }
 

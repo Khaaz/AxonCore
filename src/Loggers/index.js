@@ -1,5 +1,7 @@
 import DefaultLogger from './Logger';
 
+import { LOGGER_TYPES } from '../Utility/Constants/AxonEnums';
+
 /**
  * Logger Handler
  * Use require to dynamically load a Logger depending on installed dependencies.
@@ -14,7 +16,7 @@ class LoggerHandler {
 
         switch (axonConfig.logger) {
             // Default Logger
-            case 0:
+            case LOGGER_TYPES.DEFAULT:
             default: {
                 Logger = DefaultLogger;
                 Logger.info('Selected Logger: Default Logger.');
@@ -22,7 +24,7 @@ class LoggerHandler {
             }
 
             // Chalk logger
-            case 1: {
+            case LOGGER_TYPES.CHALK: {
                 try {
                     Logger = require('./ChalkLogger').default;
                     Logger.info('Selected Logger: Chalk Logger.');
@@ -36,7 +38,7 @@ class LoggerHandler {
 
             // Signale Logger
             /** @TODO incompatibility with full logging */
-            case 2: {
+            case LOGGER_TYPES.SIGNALE: {
                 try {
                     Logger = require('./SignaleLogger').default;
                     Logger.info('Selected Logger: Signale Logger.');
@@ -50,7 +52,7 @@ class LoggerHandler {
 
             // Winston Logger
             /** @TODO incompatibility with full logging */
-            case 3: {
+            case LOGGER_TYPES.WINSTON: {
                 try {
                     Logger = require('./WinstonLogger').default;
                     Logger.info('Selected Logger: Winston Logger.');
@@ -62,10 +64,9 @@ class LoggerHandler {
                 break;
             }
         }
-
         
         try {
-            axonConfig.debug && this.testLogger(Logger);
+            axonConfig.debugMode && this.testLogger(Logger);
         } catch (err) {
             /** Fallback to DefLogger */
             Logger = DefaultLogger;

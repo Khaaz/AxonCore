@@ -1,6 +1,5 @@
 import Loader from './Loader';
-
-import Listener from '../Listener';
+import Listener from '../Event/Listener';
 
 import AxonError from '../../Errors/AxonError';
 
@@ -12,9 +11,9 @@ import AxonError from '../../Errors/AxonError';
  * @extends {Loader}
  */
 class ListenerLoader extends Loader {
-    // eslint-disable-next-line no-useless-constructor
     constructor(module) {
-        super(module);
+        super(module.axon);
+        this._module = module;
     }
 
     /**
@@ -24,8 +23,20 @@ class ListenerLoader extends Loader {
      * @type {Object<Module>}
      * @memberof ListenerLoader
      */
-    get module() {
+    get axon() {
         return this.loadIn;
+    }
+
+    /**
+     * Returns the Module instance
+     *
+     * @readonly
+     * @type {Object<Module>}
+     *
+     * @memberof CommandLoader
+     */
+    get module() {
+        return this._module;
     }
 
     /**
@@ -50,20 +61,14 @@ class ListenerLoader extends Loader {
      */
     load(listener) {
         if (!(listener instanceof Listener) ) {
-            this.logger.error(`[Module(${this.module.label})] Listener: ${listener.toString()} - Not a Listener.`);
-            return false;
+            throw new AxonError(`[${listener.toString()}] Not a Listener!`, 'LISTENER-LOADER', this.module.label);
         }
 
         if (listener.label.includes(' ') ) {
-            this.logger.error(`[Module(${this.module.label})] Listener: ${listener.label} - Listener label may not have spaces`);
-            return false;
+            throw new AxonError(`[${listener.label}] Listener label may not have spaces!`, 'LISTENER-LOADER', this.module.label);
         }
-        if (this.module.listeners.has(listener.label) ) {
-            this.logger.error(`[Module(${this.module.label})] Listener: ${listener.label} - You have already registered a listener in this module.`);
-            return false;
-        }
-
-        this.registerListener(listener);
+        
+        this.axon.listeners.register(listener.label, listener);
         return true;
     }
 
@@ -79,44 +84,29 @@ class ListenerLoader extends Loader {
     loadAll(listeners) {
         if (listeners.default) {
             this.logger.error(`[Module(${this.module.label})] Listeners: No listeners found.`);
-            return;
+            return false;
         }
         for (const Value of Object.values(listeners) ) {
             const listener = new Value(this.module);
-            this.load(listener);
+            try {
+                this.load(listener);
+            } catch (err) {
+                this.logger.error(err);
+            }
         }
-    }
-
-    // **** REGISTERING **** //
-
-    /**
-     * Register an event and add it to the module.
-     *
-     * @param {Object<Listener>} listener - Listener object
-     *
-     * @memberof ListenerLoader
-     */
-    registerListener(listener) {
-        this.module.listeners.set(listener.label, listener); // add the event to the Collection of events.
+        return true;
     }
 
     /**
-     * Remove an event from the module and event manager.
+     * Unload a Listener from the client
      *
-     * @param {String} label - The event label
-     * @returns {Boolean} True if successful / Error othewise
+     * @param {String} label - The Listener label to unload
+     * @returns {Boolean} Whether it worked
      *
      * @memberof ListenerLoader
      */
-    unregisterListener(label) {
-        const listener = this.module.listeners.get(label);
-        if (!listener) {
-            throw new AxonError(`Command: ${label} not registered!`, 'UNREGISTER-Listener', this.module.label);
-        }
-        this.module.listeners.delete(listener.label);
-        this.module.axon.eventManager.unregisterListener(listener.eventName, listener.label);
-        
-        this.logger.info(`[Module(${this.label})] Listener: ${label} unregistered!`);
+    unload(label) {
+        this.axon.listeners.unregister(label);
         return true;
     }
 }

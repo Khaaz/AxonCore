@@ -13,13 +13,14 @@ class Collection extends Map {
     /**
      * Creates an instance of Collection.
      *
-     * @param {Object} data
-     * @param {Class} [data.base=null]
-     * @param {Object} [data.iterable]
+     * @param {Object} options
+     * @param {Class} [options.base=null]
+     * @param {Array|Object} options.iterable
      *
      * @memberof Collection
      */
-    constructor( { base: baseObject = null, iterable } ) {
+    constructor(options = {} ) {
+        const { base: baseObject = null, iterable } = options;
         if (iterable && iterable instanceof Array) {
             super(iterable);
         } else if (iterable && iterable instanceof Object) {
@@ -28,6 +29,19 @@ class Collection extends Map {
             super();
         }
         this.baseObject = baseObject;
+    }
+
+    /**
+     * Creates a collection from an array
+     *
+     * @static
+     * @param {Array<Class>} array - The array of object
+     * @param {String} key - The property to use as key
+     * @returns {Collection<Class>} A newly created Collection
+     * @memberof Collection
+     */
+    static from(array, key) {
+        return new Collection( { base: array[0].constructor, iterable: array.map(e => [e[key], e] ) } );
     }
 
     /**
@@ -56,6 +70,19 @@ class Collection extends Map {
             obj[key] = value;
         }
         return obj;
+    }
+
+    /**
+     * Apply a function to the Collection and returns a new Collection
+     *
+     * @param {String} key - The property to use as key for the new Collection
+     * @param {String} func - The function name to apply to the Collection
+     * @param {Object} args - All the argument that need to be applied to the Collection
+     * @returns {Collection} A new Collection modified by the apply call
+     * @memberof Collection
+     */
+    apply(key, func, ...args) {
+        return new Collection( { base: this.baseObject, iterable: this[func](...args).map(e => [e[key], e] ) } );
     }
 
     /**
