@@ -41,7 +41,7 @@ class Collection extends Map {
      * @memberof Collection
      */
     static from(array, key) {
-        return new Collection( { base: array[0].prototype, iterable: array.map(e => [e[key], e] ) } );
+        return new Collection( { base: array[0].constructor, iterable: array.map(e => [e[key], e] ) } );
     }
 
     /**
