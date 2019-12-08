@@ -10,11 +10,13 @@ class MongoSchemaGenerator extends SchemaGenerator {
      * Convert object to mongoose schema.
      * @param {Object<any>} obj - Object to convert into mongoschema.
      */
-    generate(obj, indexKey = 'id', required = []) {
+    generate(obj, indexKey = 'id', required = [] ) {
         const keys = Object.keys(obj);
         const schema = {};
 
-        if (!obj || typeof obj !== 'object') return {};
+        if (!obj || typeof obj !== 'object') {
+            return {};
+        }
 
         for (let i = 0; i < keys.length; i++) {
             const key = keys[i];
@@ -26,7 +28,7 @@ class MongoSchemaGenerator extends SchemaGenerator {
                 schema[key].required = true;
             }
 
-            if (required.includes(key)) {
+            if (required.includes(key) ) {
                 schema[key].required = true;
             }
 

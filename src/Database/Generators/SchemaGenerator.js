@@ -1,9 +1,10 @@
+/* eslint-disable no-unused-vars */
 import NoAbstractInstanceException from '../../Errors/NoAbstractInstanceException';
 import NotImplementedException from '../../Errors/NotImplementedException';
 
 class SchemaGenerator {
     /**
-     * Generate 
+     * Generate
      * @param {String} type - Mongoose | Sequelize | JSON
      */
     constructor(type = 'json') {
