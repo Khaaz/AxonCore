@@ -41,13 +41,20 @@ class Module extends Base {
      * Creates a Module instance.
      *
      * @param {Object<AxonClient>} client
+     * @param {Object} [data={}] - All module parameters
+     * @param {String} [data.label] - The module label
+     * @param {Boolean} [data.enabled] - Whether the module is enabled or not
+     * @param {Boolean} [data.serverBypass] - Whether the module can be disabled in a server or not
+     * @param {Object} [data.infos]
+     * @param {Object<CommandOptions>|Object} [data.options] - The default options for all commands in this module
+     * @param {Object<CommandPermissions>|Object} [data.permissions] - The default permissions for all commands in this module
      *
      * @memberof Module
      */
-    constructor(client) {
+    constructor(client, data = {} ) {
         super(client);
 
-        this.label = 'moduleLabel';
+        this.label = data.label || null;
 
         /*
          * Containments - all commands and events within this module
@@ -58,22 +65,39 @@ class Module extends Base {
         /*
          * Default options and params
          */
-        this.enabled = true; // global enable/disable
-        this.serverBypass = false; // Bypass all perms - true = prevent the command to be server disabled
+        this.enabled = data.enabled !== undefined ? data.enabled : true; // global enable/disable
+        this.serverBypass = data.serverBypass !== undefined ? data.serverBypass : true; // Bypass all perms - true = prevent the command to be server disabled
 
         /*
          * Info for the help command
          * All fields are required
          */
-        this.infos = {
-            name: 'moduleName',
-            category: 'category',
-            description: 'moduleDesc',
+        this.infos = data.infos || {
+            name: this.label,
+            category: null,
+            description: null,
         };
 
         /* Default CommandPermissions at the module level */
-        this.permissions = new CommandPermissions(this);
-        this.options = new CommandOptions(this);
+        if (data.options) {
+            if (data.options instanceof CommandOptions) {
+                this.options = data.options;
+            } else {
+                this.options = new CommandOptions(this, data.options);
+            }
+        } else {
+            this.options = new CommandOptions(this);
+        }
+
+        if (data.permissions) {
+            if (data.permissions instanceof CommandPermissions) {
+                this.permissions = data.permissions;
+            } else {
+                this.permissions = new CommandPermissions(this, data.permissions);
+            }
+        } else {
+            this.permissions = new CommandPermissions(this);
+        }
 
         /* Loaders */
         this.commandLoader = new CommandLoader(this);
