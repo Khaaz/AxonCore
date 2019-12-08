@@ -35,5 +35,5 @@ Creates an instance of AxonCommandError.
 | Param | Type | Description |
 | --- | --- | --- |
 | commandContext | <code>Object.&lt;CommandContext&gt;</code> | The command context that contains all information about the command execution |
-| err | <code>Object.&lt;Error&gt;</code> | Discord Error (givin by eris/discord/other) |
+| err | <code>Object.&lt;Error&gt;</code> | Discord Error (given by library/discord/other) |
 

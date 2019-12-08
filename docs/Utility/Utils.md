@@ -22,7 +22,7 @@
         * [.bot](#Utils+bot) : <code>Object.&lt;BotClient&gt;</code>
         * [.library](#Utils+library) : <code>Object.&lt;LibraryInterface&gt;</code>
         * [.splitMessage(content)](#Utils+splitMessage) ⇒ <code>Array.&lt;String&gt;</code> \| <code>String</code>
-        * [.getPrefix(msg)](#Utils+getPrefix) ⇒ <code>String</code>
+        * [.getPrefix(msg)](#Utils+getPrefix) ⇒ <code>Promise.&lt;String&gt;</code>
         * [.getRoles(guild, member)](#Utils+getRoles) ⇒ <code>Array.&lt;Role&gt;</code>
         * [.getHighestRole(guild, member)](#Utils+getHighestRole) ⇒ <code>Object.&lt;Role&gt;</code>
         * [.sortRoles(array)](#Utils+sortRoles) ⇒ <code>Array.&lt;Role&gt;</code>
@@ -87,11 +87,11 @@ Split at 1900 characters.
 
 <a name="Utils+getPrefix"></a>
 
-### utils.getPrefix(msg) ⇒ <code>String</code>
+### utils.getPrefix(msg) ⇒ <code>Promise.&lt;String&gt;</code>
 Returns the guild prefix of the given msg.
 
 **Kind**: instance method of [<code>Utils</code>](#Utils)  
-**Returns**: <code>String</code> - The prefix as string.  
+**Returns**: <code>Promise.&lt;String&gt;</code> - The prefix as string.  
 
 | Param | Type | Description |
 | --- | --- | --- |

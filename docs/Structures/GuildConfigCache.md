@@ -8,7 +8,7 @@
 | Name | Type |
 | --- | --- |
 | _axon | <code>Object.&lt;AxonClient&gt;</code> | 
-| guildConfigs | <code>Collection.&lt;GuildConfig&gt;</code> | 
+| guildConfigs | <code>LRUCache.&lt;GuildConfig&gt;</code> | 
 
 
 * [GuildConfigsCache](#GuildConfigsCache)

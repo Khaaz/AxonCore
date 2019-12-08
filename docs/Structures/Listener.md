@@ -26,7 +26,7 @@
         * [._execute(guildConfig, ...args)](#Listener+_execute) ⇒ <code>Promise</code>
     * _static_
         * [.Listener](#Listener.Listener)
-            * [new Listener(module)](#new_Listener.Listener_new)
+            * [new Listener(module, [data])](#new_Listener.Listener_new)
 
 <a name="new_Listener_new"></a>
 
@@ -59,11 +59,18 @@ Promisify the return execute return to prevent promise issue
 **Kind**: static class of [<code>Listener</code>](#Listener)  
 <a name="new_Listener.Listener_new"></a>
 
-#### new Listener(module)
+#### new Listener(module, [data])
 Creates an Listener instance.
 
 
-| Param | Type |
-| --- | --- |
-| module | <code>Object.&lt;Module&gt;</code> | 
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| module | <code>Object.&lt;Module&gt;</code> |  |  |
+| [data] | <code>Object</code> | <code>{}</code> | All events parameters |
+| [data.eventName] | <code>String</code> |  |  |
+| [data.label] | <code>String</code> |  |  |
+| [data.load] | <code>Boolean</code> |  |  |
+| [data.enabled] | <code>Boolean</code> |  |  |
+| [data.serverBypass] | <code>Boolean</code> |  |  |
+| [data.infos] | <code>Object</code> |  |  |
 

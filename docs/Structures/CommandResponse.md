@@ -8,6 +8,7 @@
 | --- | --- |
 | success | <code>Boolean</code> | 
 | triggerCooldown | <code>Boolean</code> | 
+| error | <code>Object.&lt;Error&gt;</code> \| <code>null</code> | 
 
 
 * [CommandResponse](#CommandResponse)

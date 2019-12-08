@@ -6,12 +6,11 @@
 
 * [ListenerLoader](#ListenerLoader) ⇐ <code>Loader</code>
     * [new ListenerLoader()](#new_ListenerLoader_new)
-    * [.module](#ListenerLoader+module) : <code>Object.&lt;Module&gt;</code>
+    * [.axon](#ListenerLoader+axon) : <code>Object.&lt;Module&gt;</code>
     * [.logger](#ListenerLoader+logger) : <code>Object.&lt;Logger&gt;</code>
     * [.load(listener)](#ListenerLoader+load) ⇒ <code>Boolean</code>
     * [.loadAll(listeners)](#ListenerLoader+loadAll) ⇒ <code>Boolean</code>
-    * [.registerListener(listener)](#ListenerLoader+registerListener)
-    * [.unregisterListener(label)](#ListenerLoader+unregisterListener) ⇒ <code>Boolean</code>
+    * [.unload(label)](#ListenerLoader+unload) ⇒ <code>Boolean</code>
 
 <a name="new_ListenerLoader_new"></a>
 
@@ -19,9 +18,9 @@
 Load listeners in a Module.
 Validate the listener validity entirely.
 
-<a name="ListenerLoader+module"></a>
+<a name="ListenerLoader+axon"></a>
 
-### listenerLoader.module : <code>Object.&lt;Module&gt;</code>
+### listenerLoader.axon : <code>Object.&lt;Module&gt;</code>
 Returns the Module instance
 
 **Kind**: instance property of [<code>ListenerLoader</code>](#ListenerLoader)  
@@ -57,26 +56,15 @@ Instantiate all events.
 | --- | --- |
 | listeners | <code>Object.&lt;Listener&gt;</code> | 
 
-<a name="ListenerLoader+registerListener"></a>
+<a name="ListenerLoader+unload"></a>
 
-### listenerLoader.registerListener(listener)
-Register an event and add it to the module.
+### listenerLoader.unload(label) ⇒ <code>Boolean</code>
+Unload a Listener from the client
 
 **Kind**: instance method of [<code>ListenerLoader</code>](#ListenerLoader)  
+**Returns**: <code>Boolean</code> - Whether it worked  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| listener | <code>Object.&lt;Listener&gt;</code> | Listener object |
-
-<a name="ListenerLoader+unregisterListener"></a>
-
-### listenerLoader.unregisterListener(label) ⇒ <code>Boolean</code>
-Remove an event from the module and event manager.
-
-**Kind**: instance method of [<code>ListenerLoader</code>](#ListenerLoader)  
-**Returns**: <code>Boolean</code> - True if successful / Error othewise  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| label | <code>String</code> | The event label |
+| label | <code>String</code> | The Listener label to unload |
 

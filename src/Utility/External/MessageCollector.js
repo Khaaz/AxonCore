@@ -28,7 +28,7 @@ class MessageCollector extends EventEmitter {
     constructor(client, options = {} ) {
         super();
         this._options = {
-            timeout: options.timeout || 60000,
+            timeout: options.timeout || 60000, // eslint-disable-line no-magic-numbers
             count: options.count || 100,
             ignoreBots: options.ignoreBots === undefined ? true : !!options.ignoreBots, // Ignore bots by default
             caseSensitive: options.caseSensitive === undefined ? true : !!options.caseSensitive, // Be case sensitive by default
@@ -127,7 +127,7 @@ class MessageCollector extends EventEmitter {
         }
         if (this.messages.has(oldMsg.id) ) {
             this.emit('edit', oldMsg, msg);
-            await this.axon.utils.sleep(500);
+            await this.axon.utils.sleep(500); // eslint-disable-line no-magic-numbers
             this.messages.update(msg.id, msg);
         }
     }

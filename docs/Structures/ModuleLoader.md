@@ -3,6 +3,7 @@
 ## ModuleLoader ⇐ <code>Loader</code>
 **Kind**: global class  
 **Extends**: <code>Loader</code>  
+**Author**: KhaaZ  
 
 * [ModuleLoader](#ModuleLoader) ⇐ <code>Loader</code>
     * [new ModuleLoader()](#new_ModuleLoader_new)
@@ -10,8 +11,7 @@
     * [.logger](#ModuleLoader+logger) : <code>Object.&lt;Logger&gt;</code>
     * [.load(module)](#ModuleLoader+load) ⇒ <code>Boolean</code>
     * [.loadAll(modules)](#ModuleLoader+loadAll) ⇒ <code>Boolean</code>
-    * [.registerModule(module)](#ModuleLoader+registerModule)
-    * [.unregisterModule(label)](#ModuleLoader+unregisterModule)
+    * [.unload(label)](#ModuleLoader+unload) ⇒ <code>Boolean</code>
 
 <a name="new_ModuleLoader_new"></a>
 
@@ -57,27 +57,15 @@ Instantiate all modules.
 | --- | --- |
 | modules | <code>Object.&lt;Module&gt;</code> | 
 
-<a name="ModuleLoader+registerModule"></a>
+<a name="ModuleLoader+unload"></a>
 
-### moduleLoader.registerModule(module)
-Register a new module.
-Initialise all module's commands (command, commandAliases) and events in AxonClient, then register the module.
-
-**Kind**: instance method of [<code>ModuleLoader</code>](#ModuleLoader)  
-
-| Param | Type |
-| --- | --- |
-| module | <code>Object.&lt;Module&gt;</code> | 
-
-<a name="ModuleLoader+unregisterModule"></a>
-
-### moduleLoader.unregisterModule(label)
-Unregister a module.
-Remove the module from the client, remove all module's commands, commandAliases and events.
+### moduleLoader.unload(label) ⇒ <code>Boolean</code>
+Unload a Module from the client
 
 **Kind**: instance method of [<code>ModuleLoader</code>](#ModuleLoader)  
+**Returns**: <code>Boolean</code> - Whether it worked  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| label | <code>String</code> | Label of the module to unregister |
+| label | <code>String</code> | The Module label to unload |
 
