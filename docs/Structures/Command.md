@@ -12,23 +12,22 @@
 | _cooldown | <code>Object.&lt;CommandCooldown&gt;</code> |  | Cooldown Object for the command (manage all command cooldowns) |
 | label | <code>String</code> |  | Command label (name/id) |
 | [aliases] | <code>Array.&lt;String&gt;</code> | <code>[]</code> | Array of commands aliases (including the command label) |
-| [enabled] | <code>Boolean</code> | <code>module.enabled</code> | Is the command enabled? |
-| [serverBypass] | <code>Boolean</code> | <code>module.serverBypass</code> | Can the command be disabled? |
-| [isSubcmd] | <code>Boolean</code> | <code>false</code> | Command is a subcommand |
+| [enabled] | <code>Boolean</code> | <code>module.enabled</code> | Whether the command is enabled |
+| [serverBypass] | <code>Boolean</code> | <code>module.serverBypass</code> | Whether the command can be disabled |
+| [isSubcmd] | <code>Boolean</code> | <code>false</code> | Whether the command IS a subcommand |
 | [parentCommand] | [<code>Object.&lt;Command&gt;</code>](#Command) | <code></code> | Reference to the parent command (if isSubcmd = true) |
-| [hasSubcmd] | <code>Boolean</code> | <code>false</code> | Does the command have subcommands? |
-| subcmds | <code>Array</code> |  | Array of subcommand objects (deleted after init) |
+| [hasSubcmd] | <code>Boolean</code> | <code>false</code> | Whether the command HAS subcommands |
+| subcmds | <code>Array.&lt;Object&gt;</code> |  | Array of subcommand objects (deleted after init) |
 | [subCommands] | [<code>Collection.&lt;Command&gt;</code>](#Command) | <code></code> | Collection of subcommands |
 | [subCommandsAliases] | <code>Object.&lt;Map&gt;</code> | <code></code> | Map of subcommand aliases |
 | infos | <code>Object</code> |  | Default info about the command |
-| [infos.owners] | <code>Array</code> |  | Command authors |
+| [infos.owners] | <code>Array.&lt;String&gt;</code> |  | Command authors |
 | [infos.cmdName] | <code>String</code> |  | Full command name |
 | [infos.description] | <code>String</code> |  | Command description |
 | [infos.usage] | <code>String</code> |  | Command usage |
-| [infos.example] | <code>Array</code> |  | Array of command examples |
+| [infos.example] | <code>Array.&lt;String&gt;</code> |  | Array of command examples |
 | options | <code>Object.&lt;CommandOptions&gt;</code> |  | Options Object for the command (manage all command options) |
 | permissions | <code>Object.&lt;CommandPermissions&gt;</code> |  | Permissions Object for the command (manage all command permissions) |
-| fullLabel | <code>Object</code> |  | Get the full label of the command (whole command label through thecommands tree) |
 
 
 * [Command](#Command) ⇐ <code>Base</code>
@@ -48,7 +47,7 @@
         * [.sendCooldown(channel)](#Command+sendCooldown) ⇒ <code>Promise.&lt;?Message&gt;</code>
     * _static_
         * [.Command](#Command.Command)
-            * [new Command(module)](#new_Command.Command_new)
+            * [new Command(module, [data])](#new_Command.Command_new)
 
 <a name="new_Command_new"></a>
 
@@ -196,13 +195,24 @@ Send an error message in case of invalid cooldown, delete it automatically after
 **Kind**: static class of [<code>Command</code>](#Command)  
 <a name="new_Command.Command_new"></a>
 
-#### new Command(module)
+#### new Command(module, [data])
 Creates a Command instance.
 Handles execution of this command.
 Overrides the execute method. Execute method will be called everytime the command is called.
 
 
-| Param | Type |
-| --- | --- |
-| module | <code>Object.&lt;Module&gt;</code> | 
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| module | <code>Object.&lt;Module&gt;</code> |  |  |
+| [data] | <code>Object</code> | <code>{}</code> | All command parameters |
+| [data.label] | <code>String</code> |  | The command label |
+| [data.aliases] | <code>Array.&lt;String&gt;</code> |  | The command aliases |
+| [data.isSubcmd] | <code>Boolean</code> |  | Whether the command IS a subcommand |
+| [data.hasSubcmd] | <code>Boolean</code> |  | Whether the command HAS subcommands |
+| [data.enabled] | <code>Boolean</code> |  | Whether the command is enabled |
+| [data.serverBypass] | <code>Boolean</code> |  | Whether the ciommand can be server disabled |
+| [data.subcmds] | <code>Array.&lt;String&gt;</code> |  | List of subcommands class to be added in the Command |
+| [data.infos] | <code>Object</code> |  |  |
+| [data.options] | <code>Object.&lt;CommandOptions&gt;</code> \| <code>Object</code> |  | The command options |
+| [data.permissions] | <code>Object.&lt;CommandPermissions&gt;</code> \| <code>Object</code> |  | The command permissions |
 

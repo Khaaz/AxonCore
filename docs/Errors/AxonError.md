@@ -30,5 +30,5 @@ Creates an instance of AxonError.
 | --- | --- | --- | --- |
 | message | <code>String</code> |  | custom error message |
 | module | <code>Object.&lt;Module&gt;</code> \| <code>String</code> |  | Module in which the error originated from |
-| [subModule] | <code>String</code> | <code>&#x27;&#x27;</code> | Module in which the error originated from |
+| [subModule] | <code>String</code> | <code></code> | Module in which the error originated from |
 

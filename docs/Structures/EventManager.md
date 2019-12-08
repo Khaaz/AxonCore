@@ -8,7 +8,7 @@
 
 | Name | Type | Description |
 | --- | --- | --- |
-| _listeners | <code>Object</code> | Object that links an event name to an array of event objects { eventName: [Event, Event] } |
+| _eve,ts | <code>Object</code> | Object that links an event name to an array of Listener objects { eventName: [Listener, Listener] } |
 | _handlers | <code>Collection.&lt;Object&gt;</code> | Collection of handler keyed to the event name [key: eventName, value: Handler] |
 
 
@@ -16,7 +16,7 @@
     * [new EventManager()](#new_EventManager_new)
     * _instance_
         * [.HANDLERS](#EventManager+HANDLERS) : <code>Object</code>
-        * [.events](#EventManager+events) : <code>Collection.&lt;Object&gt;</code>
+        * [.handlers](#EventManager+handlers) : <code>Collection.&lt;Object&gt;</code>
         * [.getListeners(eventName)](#EventManager+getListeners) ⇒ <code>Array</code>
         * [.bindListeners()](#EventManager+bindListeners)
         * [.bindHandlers()](#EventManager+bindHandlers)
@@ -42,9 +42,9 @@ Returns all Handlers base
 
 **Kind**: instance property of [<code>EventManager</code>](#EventManager)  
 **Read only**: true  
-<a name="EventManager+events"></a>
+<a name="EventManager+handlers"></a>
 
-### eventManager.events : <code>Collection.&lt;Object&gt;</code>
+### eventManager.handlers : <code>Collection.&lt;Object&gt;</code>
 Returns Collection of every handlers for every discord event
 
 **Kind**: instance property of [<code>EventManager</code>](#EventManager)  
@@ -59,7 +59,7 @@ Get all functions bound to the event passed in parameters.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| eventName | <code>String</code> | The Eris event name |
+| eventName | <code>String</code> | The library event name |
 
 <a name="EventManager+bindListeners"></a>
 
@@ -73,7 +73,7 @@ If the bot is ready, also call bindHandlers()
 <a name="EventManager+bindHandlers"></a>
 
 ### eventManager.bindHandlers()
-Bind every handler to the correct event emitter
+Bind every handler to the correct Discord event and start listening to this event.
 
 **Kind**: instance method of [<code>EventManager</code>](#EventManager)  
 <a name="EventManager+registerListener"></a>
@@ -87,7 +87,7 @@ Called by ModuleLoader when registering an event.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| listener | <code>Object.&lt;Listener&gt;</code> | Event Object |
+| listener | <code>Object.&lt;Listener&gt;</code> | The Listener Object |
 
 <a name="EventManager+registerHandler"></a>
 
@@ -101,7 +101,7 @@ Create a new handler from the array of listeners for the given event.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| event | <code>String</code> | The Event name |
+| event | <code>String</code> | The Discord event name |
 
 <a name="EventManager+registerEvent"></a>
 
@@ -120,15 +120,15 @@ Recreate a handler and bind it to the event emitter.
 
 ### eventManager.unregisterListener(event, label) ⇒ <code>Boolean</code>
 Unregister a listener.
-Recreate the handler and listen to the updated handler
+Recreate the handler without the unregistered listener and listen to the updated handler
 
 **Kind**: instance method of [<code>EventManager</code>](#EventManager)  
 **Returns**: <code>Boolean</code> - True if worked / False if label or event doesn't exist  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| event | <code>String</code> | Name of the event |
-| label | <code>String</code> | Name of the listener |
+| event | <code>String</code> | Name of the Discord event |
+| label | <code>String</code> | Label of the listener |
 
 <a name="EventManager+unregisterHandler"></a>
 
@@ -140,20 +140,20 @@ Unregister a handler. Unregister the event and delete the handler.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| event | <code>String</code> | Name of the event |
+| event | <code>String</code> | Name of the Discord event |
 
 <a name="EventManager+unregisterEvent"></a>
 
 ### eventManager.unregisterEvent(event) ⇒ <code>Boolean</code>
 Unregister the given event without deleting the handler.
-Just stop listening to the event emitter.
+Just stop listening to the discord event emitted.
 
 **Kind**: instance method of [<code>EventManager</code>](#EventManager)  
 **Returns**: <code>Boolean</code> - True if worked / False if event doesn't exist  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| event | <code>String</code> | Name of the event |
+| event | <code>String</code> | Name of the Discord event |
 
 <a name="EventManager.EventManager"></a>
 

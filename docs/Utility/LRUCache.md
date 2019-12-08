@@ -26,7 +26,7 @@
         * [.every(func)](#LRUCache+every) ⇒ <code>Boolean</code>
     * _static_
         * [.LRUCache](#LRUCache.LRUCache)
-            * [new LRUCache(limit, [iterable])](#new_LRUCache.LRUCache_new)
+            * [new LRUCache(limit, options)](#new_LRUCache.LRUCache_new)
 
 <a name="new_LRUCache_new"></a>
 
@@ -137,12 +137,14 @@ Test if all elements passe the test implemented by the provided function. Return
 **Kind**: static class of [<code>LRUCache</code>](#LRUCache)  
 <a name="new_LRUCache.LRUCache_new"></a>
 
-#### new LRUCache(limit, [iterable])
+#### new LRUCache(limit, options)
 Creates an instance of LRUCache.
 
 
-| Param | Type | Default |
-| --- | --- | --- |
-| limit | <code>Number</code> |  | 
-| [iterable] | <code>Array</code> \| <code>Object</code> | <code></code> | 
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| limit | <code>Number</code> |  | Max number of element in the Collection |
+| options | <code>Object</code> |  | Options used to construct the Collection |
+| [options.base] | <code>Class</code> | <code></code> |  |
+| [options.iterable] | <code>Array</code> \| <code>Object</code> | <code></code> |  |
 

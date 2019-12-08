@@ -16,6 +16,7 @@
     * _instance_
         * [.toArray()](#Collection+toArray) ⇒ <code>Array.&lt;Class&gt;</code>
         * [.toObject()](#Collection+toObject) ⇒ <code>Object.&lt;key:value&gt;</code>
+        * [.apply(key, func, ...args)](#Collection+apply) ⇒ [<code>Collection</code>](#Collection)
         * [.add(value, key, replace)](#Collection+add) ⇒ <code>Class</code>
         * [.find(func)](#Collection+find) ⇒ <code>Class</code>
         * [.map(func)](#Collection+map) ⇒ <code>Array</code>
@@ -28,7 +29,8 @@
         * [.random()](#Collection+random) ⇒ <code>Class</code>
     * _static_
         * [.Collection](#Collection.Collection)
-            * [new Collection(data)](#new_Collection.Collection_new)
+            * [new Collection(options)](#new_Collection.Collection_new)
+        * [.from(array, key)](#Collection.from) ⇒ <code>Collection.&lt;Class&gt;</code>
 
 <a name="new_Collection_new"></a>
 
@@ -50,6 +52,20 @@ Map to object
 { key: value, key: value }
 
 **Kind**: instance method of [<code>Collection</code>](#Collection)  
+<a name="Collection+apply"></a>
+
+### collection.apply(key, func, ...args) ⇒ [<code>Collection</code>](#Collection)
+Apply a function to the Collection and returns a new Collection
+
+**Kind**: instance method of [<code>Collection</code>](#Collection)  
+**Returns**: [<code>Collection</code>](#Collection) - A new Collection modified by the apply call  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| key | <code>String</code> | The property to use as key for the new Collection |
+| func | <code>String</code> | The function name to apply to the Collection |
+| ...args | <code>Object</code> | All the argument that need to be applied to the Collection |
+
 <a name="Collection+add"></a>
 
 ### collection.add(value, key, replace) ⇒ <code>Class</code>
@@ -178,13 +194,26 @@ Get a random object from the Collection
 **Kind**: static class of [<code>Collection</code>](#Collection)  
 <a name="new_Collection.Collection_new"></a>
 
-#### new Collection(data)
+#### new Collection(options)
 Creates an instance of Collection.
 
 
 | Param | Type | Default |
 | --- | --- | --- |
-| data | <code>Object</code> |  | 
-| [data.base] | <code>Class</code> | <code></code> | 
-| [data.iterable] | <code>Object</code> |  | 
+| options | <code>Object</code> |  | 
+| [options.base] | <code>Class</code> | <code></code> | 
+| options.iterable | <code>Array</code> \| <code>Object</code> |  | 
+
+<a name="Collection.from"></a>
+
+### Collection.from(array, key) ⇒ <code>Collection.&lt;Class&gt;</code>
+Creates a collection from an array
+
+**Kind**: static method of [<code>Collection</code>](#Collection)  
+**Returns**: <code>Collection.&lt;Class&gt;</code> - A newly created Collection  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| array | <code>Array.&lt;Class&gt;</code> | The array of object |
+| key | <code>String</code> | The property to use as key |
 

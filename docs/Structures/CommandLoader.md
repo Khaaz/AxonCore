@@ -3,13 +3,16 @@
 ## CommandLoader ⇐ <code>Loader</code>
 **Kind**: global class  
 **Extends**: <code>Loader</code>  
+**Author**: KhaaZ  
 
 * [CommandLoader](#CommandLoader) ⇐ <code>Loader</code>
     * [new CommandLoader()](#new_CommandLoader_new)
+    * [.axon](#CommandLoader+axon) : <code>Object.&lt;AxonClient&gt;</code>
     * [.module](#CommandLoader+module) : <code>Object.&lt;Module&gt;</code>
     * [.logger](#CommandLoader+logger) : <code>Object.&lt;Logger&gt;</code>
     * [.load(command, [parent])](#CommandLoader+load) ⇒ <code>Boolean</code>
     * [.loadAll(commands)](#CommandLoader+loadAll) ⇒ <code>Boolean</code>
+    * [.unload(label)](#CommandLoader+unload) ⇒ <code>Boolean</code>
     * [.registerCommand(command)](#CommandLoader+registerCommand)
     * [.registerSubCommand(command, parent)](#CommandLoader+registerSubCommand)
     * [.unregisterCommand(fullLabel)](#CommandLoader+unregisterCommand) ⇒ <code>Boolean</code>
@@ -21,6 +24,13 @@
 Load commands in a Module.
 Validate the command validity entirely.
 
+<a name="CommandLoader+axon"></a>
+
+### commandLoader.axon : <code>Object.&lt;AxonClient&gt;</code>
+Returns the AxonClient instance
+
+**Kind**: instance property of [<code>CommandLoader</code>](#CommandLoader)  
+**Read only**: true  
 <a name="CommandLoader+module"></a>
 
 ### commandLoader.module : <code>Object.&lt;Module&gt;</code>
@@ -60,6 +70,18 @@ Instantiate all commands.
 | --- | --- |
 | commands | <code>Object.&lt;Command&gt;</code> | 
 
+<a name="CommandLoader+unload"></a>
+
+### commandLoader.unload(label) ⇒ <code>Boolean</code>
+Unload a Command from the client
+
+**Kind**: instance method of [<code>CommandLoader</code>](#CommandLoader)  
+**Returns**: <code>Boolean</code> - Whether it worked  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| label | <code>String</code> | The Command label to unload |
+
 <a name="CommandLoader+registerCommand"></a>
 
 ### commandLoader.registerCommand(command)
@@ -93,7 +115,7 @@ Remove a command from the module and the global cache.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| fullLabel | <code>String</code> | Full command label** |
+| fullLabel | <code>String</code> | Full command label |
 
 <a name="CommandLoader+unregisterSubCommand"></a>
 

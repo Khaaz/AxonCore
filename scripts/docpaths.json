@@ -88,14 +88,6 @@
         "output": "Structures/GuildConfigCache.md"
     },
     {
-        "input": "Structures/GuildConfigCache.js",
-        "output": "Structures/GuildConfigCache.md"
-    },
-    {
-        "input": "Structures/GuildConfigCache.js",
-        "output": "Structures/GuildConfigCache.md"
-    },
-    {
         "input": "Structures/DataStructure/AxonConfig.js",
         "output": "Structures/AxonConfig.md"
     },

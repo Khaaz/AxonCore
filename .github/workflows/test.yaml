@@ -20,6 +20,6 @@ jobs:
     - name: yarn install and lint
       run: |
         yarn install
-        yarn lint
+        yarn test:push
       env:
         CI: true
