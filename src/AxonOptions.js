@@ -147,7 +147,7 @@ class AxonOptions {
         this.info = Utils.compareObject(defaultConfig.info, data.info)
             ? data.info
             : defaultConfig.info;
-        this.staff = Utils.compareObject(defaultConfig.staff, data.info)
+        this.staff = Utils.compareObject(defaultConfig.staff, data.staff)
             ? data.staff
             : defaultConfig.staff;
         this.template = Utils.compareObject(defaultConfig.template, data.template)

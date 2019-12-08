@@ -4,12 +4,9 @@ import Base from './Base';
 import CommandLoader from './Loaders/CommandLoader';
 import ListenerLoader from './Loaders/ListenerLoader';
 
-import Collection from '../Utility/Collection';
-
-import Command from './Command/Command';
-import Listener from './Event/Listener';
 import CommandPermissions from './Command/CommandPermissions';
 import CommandOptions from './Command/CommandOptions';
+import NotImplementedException from '../Errors/NotImplementedException';
 
 /**
  * AxonCore Module.
@@ -22,8 +19,6 @@ import CommandOptions from './Command/CommandOptions';
  * @extends Base
  *
  * @prop {String} label - Module label (name/id)
- * @prop {Collection<Command>} commands - Collection of commands in the module [key: label, value: command Obj]
- * @prop {Collection<Listener>} listeners - Collection of events in the module [key: label, value: listener Obj]
  * @prop {Boolean} [enabled=true] - Whether the module is enabled or not
  * @prop {Boolean} [serverBypass=false] - Whether the module can be disabled or not (will bypass guild disabled)
  * @prop {Object} info - Default info about the module
@@ -57,12 +52,6 @@ class Module extends Base {
         this.label = data.label || null;
 
         /*
-         * Containments - all commands and events within this module
-         */
-        this.commands = new Collection( { base: Command } );
-        this.listeners = new Collection( { base: Listener } );
-
-        /*
          * Default options and params
          */
         this.enabled = data.enabled !== undefined ? data.enabled : true; // global enable/disable
@@ -89,6 +78,7 @@ class Module extends Base {
             this.options = new CommandOptions(this);
         }
 
+        /* Default CommandOptions at the module level */
         if (data.permissions) {
             if (data.permissions instanceof CommandPermissions) {
                 this.permissions = data.permissions;
@@ -105,15 +95,47 @@ class Module extends Base {
     }
 
     /**
-     * Init a module with all commands and events.
-     * Called at the end of every module contructor with correct parameters.
+     * A Collection of all commands the module holds
      *
-     * @param {Object<Commands>} [commands=null] - Object containing all commands
-     * @param {Object<Listener>} [listeners=null] - Object containing all listeners
+     * @readonly
+     *
+     * @memberof Module
      */
-    init(commands = null, listeners = null) {
+    get commands() {
+        return this.axon.commands.getAll().apply('label', 'filter', (c) => c.module === this);
+    }
+
+    /**
+     * A Collection of all listeners the module holds
+     *
+     * @readonly
+     *
+     * @memberof Module
+     */
+    get listeners() {
+        return this.axon.listeners.getAll().apply('label', 'filter', (l) => l.module === this);
+    }
+
+    /**
+     * Init a module with all commands and listeners.
+     *
+     * @memberof Module
+     */
+    _init() {
+        const { commands, listeners } = this.init();
         commands && this.commandLoader.loadAll(commands);
         listeners && this.listenerLoader.loadAll(listeners);
+    }
+
+    /**
+     * Override this method to returns { commands, listeners }
+     *
+     * @returns {Object<{Commands, Listeners}>} An object containing commands and listeners to initialise. { commands, listeners}
+     *
+     * @memberof Module
+     */
+    init() {
+        throw new NotImplementedException();
     }
 }
 

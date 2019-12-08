@@ -9,6 +9,8 @@ import AxonError from '../../Errors/AxonError';
  * Load modules in AxonClient.
  * Validate the module validity entirely.
  *
+ * @author KhaaZ
+ *
  * @class ModuleLoader
  * @extends {Loader}
  */
@@ -51,22 +53,21 @@ class ModuleLoader extends Loader {
      */
     load(module) {
         if (!(module instanceof Module) ) {
-            throw new AxonError(`Module: ${module.toString()} - Not a Module!`, 'INIT', 'AxonClient');
+            throw new AxonError('Not a Module!', 'MODULE-LOADER', module.toString() );
         }
         
         if (module.label.includes(' ') ) {
-            throw new AxonError(`Module: ${module.label} - Module label may not have spaces!`, 'INIT', 'AxonClient');
-        }
-
-        if (this.axon.modules.has(module.label) ) {
-            throw new AxonError(`Module: ${module.label} - Already registered!`, 'INIT', 'AxonClient');
+            throw new AxonError('Module label may not have spaces!', 'MODULE-LOADER', module.label);
         }
         
         if (!Validater.validModule(module) ) {
-            return false;
+            throw new AxonError(`[${module.label}] Invalid Module (enable debugMode)!`, 'MODULE-LOADER', module.label);
         }
 
-        this.registerModule(module);
+        /* Register the module */
+        this.axon.modules.register(module.label, module);
+        
+        this.logger._initModule(module);
         return true;
     }
 
@@ -82,81 +83,32 @@ class ModuleLoader extends Loader {
     loadAll(modules) {
         if (Object.keys(modules).length === 0) {
             this.logger.error('Modules: No modules found.');
+            return false;
         }
 
         for (const Value of Object.values(modules) ) {
             const module = new Value(this.axon);
-            this.load(module);
+            try {
+                this.load(module);
+            } catch (err) {
+                this.logger.error(err);
+            }
         }
         this.logger.init(`Initialised! | [AxonClient] | Modules loaded -${this.axon.modules.size}-`);
-    }
-
-    // **** REGISTERING **** //
-
-    /**
-    * Register a new module.
-    * Initialise all module's commands (command, commandAliases) and events in AxonClient, then register the module.
-    *
-    * @param {Object<Module>} module
-    *
-    * @memberof ModuleLoader
-    */
-    registerModule(module) {
-        /* Register all module's commands */
-        for (const [label, cmd] of module.commands) {
-            if (this.axon.commands.has(label) ) {
-                throw new AxonError(`Command: ${label} already registered!`, 'INIT', module.label);
-            }
-            this.axon.commands.set(label, cmd); // Add the command in the commands Collection (references to module.commands.get(label))
-
-            for (const alias of cmd.aliases) {
-                if (this.axon.commandAliases.has(alias) ) {
-                    throw new AxonError(`Command: ${label}) - Alias: ${alias} already registered!`, 'INIT', module.label);
-                }
-                this.axon.commandAliases.set(alias, label); // Add the commands aliases in aliases Map (references to the command label)
-            }
-        }
-
-        /* Register all module's events */
-        for (const listener of module.listeners.values() ) {
-            this.axon.eventManager.registerListener(listener);
-        }
-
-        /* Register the module */
-        this.axon.modules.set(module.label, module);
-        this.logger._initModule(module);
+        return true;
     }
 
     /**
-    * Unregister a module.
-    * Remove the module from the client, remove all module's commands, commandAliases and events.
-    *
-    * @param {String} label - Label of the module to unregister
-    *
-    * @memberof ModuleLoader
-    */
-    unregisterModule(label) {
-        const module = this.axon.modules.get(label);
-        if (!module) {
-            throw new AxonError(`Module: ${module.label} not registered!`, 'INIT', 'AxonClient');
-        }
-
-        /* Unregister all module's commands */
-        for (const [l, cmd] of module.commands) {
-            for (const alias of cmd.aliases) {
-                this.axon.commandAliases.delete(alias);
-            }
-            this.axon.commands.delete(l);
-        }
-
-        /* Unregister all module's events */
-        for (const listener of module.listeners.values() ) {
-            this.axon.eventManager.unregisterListener(listener.eventName, listener.label);
-        }
-
-        /* Unregister the module */
-        this.axon.modules.delete(module.label);
-        this.logger.info(`Module: ${module.label} unregistered!`);
+     * Unload a Module from the client
+     *
+     * @param {String} label - The Module label to unload
+     * @returns {Boolean} Whether it worked
+     *
+     * @memberof ModuleLoader
+     */
+    unload(label) {
+        this.axon.modules.unregister(label);
+        return true;
     }
 }
 

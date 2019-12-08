@@ -4,14 +4,14 @@ import NotImplementedException from '../../Errors/NotImplementedException';
 
 /**
  * Abstract class for loaders.
- * Client Loader, Module Loader, Command Loader
+ * Module Loader, Command Loader, Listener Loader
  *
  * @author KhaaZ
  *
  * @abstract
  * @class Loader
  *
- * @prop {Object} loadIn - The object where we are loding items
+ * @prop {Object} loadIn - The object in which we are loading items
  */
 class Loader {
     /**
@@ -29,8 +29,7 @@ class Loader {
     }
 
     /**
-     * Loader main method.
-     * Need to be overrided. Loads the object givenin parameters.
+     * Loads the object given in parameter.
      *
      * @param {Object} toLoad - The Object to load
      *
@@ -41,8 +40,7 @@ class Loader {
     }
 
     /**
-     * Loader main method.
-     * Need to be overrided. Loads all objects given in parameters.
+     * Loads all objects given in parameters.
      *
      * @param {Object|Array} toLoad - All Objects to load
      *
@@ -50,6 +48,17 @@ class Loader {
      */
     // eslint-disable-next-line no-unused-vars
     loadAll(toLoad) {
+        throw new NotImplementedException();
+    }
+
+    /**
+     * Unload the object given in parameter.
+     *
+     * @param {String} toUnload
+     *
+     * @memberof Loader
+     */
+    unload(toUnload) {
         throw new NotImplementedException();
     }
 }

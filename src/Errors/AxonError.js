@@ -13,17 +13,16 @@ class AxonError extends Error {
      *
      * @param {String} message - custom error message
      * @param {Object<Module>|String} module Module in which the error originated from
-     * @param {String} [subModule=''] Module in which the error originated from
+     * @param {String} [subModule=null] Module in which the error originated from
      * @memberof AxonError
      */
-    constructor(message, module, subModule = '') {
+    constructor(message, module, subModule = null) {
         super();
-
 
         this.module = (typeof module === 'string') ? module : module.label;
         this.subModule = subModule;
 
-        const short = `[${this.module}] ${(subModule.length > 0) ? `| ${subModule} ` : ''}- ${message}`;
+        const short = `[${this.module}] ${subModule.length ? `| ${subModule} ` : ''}- ${message}`;
         
         Object.defineProperty(this, 'short', {
             value: short,

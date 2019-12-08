@@ -122,7 +122,7 @@ class CommandDispatcher extends Dispatcher {
         }
 
         /* Resolve command (and subcommand if needed) */
-        const command = this.resolveCommand(label, args, guildConfig);
+        const command = this._axon.commands.resolve(label, args, guildConfig);
         if (!command) { // command doesn't exist or not globally enabled
             return;
         }
@@ -208,52 +208,6 @@ class CommandDispatcher extends Dispatcher {
 
         return (content.startsWith(`${clientMention} `) && `${clientMention} `) // prefix = bot mention
             || prefixes.find(prefix => content.startsWith(prefix) );
-    }
-
-    /**
-     * Resolves the command Object. Only resolves the command if it's not globally disabled.
-     * Don't resolve the command if the command is guild disabled.
-     *
-     * @param {String} label - The command label/ command alias
-     * @param {Array<String>} args - Array of arguments
-     * @param {Object<GuildConfig>} [guildConfig=null] - GuildConfig
-     * @returns {Object|null} The command object or null if the command doesn't exist or is not enabled
-     *
-     * @memberof CommandDispatcher
-     */
-    resolveCommand(label, args, guildConfig = null) {
-        label = this._axon.commandAliases.get(label);
-
-        let command = this._axon.commands.get(label);
-
-        if (!command || !command.module.enabled || !command.enabled) {
-            return null;
-        }
-
-        if (guildConfig
-            && (
-                (guildConfig.isModuleDisabled(command.module) && !command.module.serverBypass) // module server-disabled
-                || (guildConfig.isCommandDisabled(command) && !command.serverBypass) // command server-disabled
-            )
-        ) {
-            return null;
-        }
-
-        if (command.hasSubcmd) {
-            while (command.hasSubcmd) {
-                const subLabel = args[0] ? command.subCommandsAliases.get(args[0].toLowerCase() ) : null;
-                if (subLabel) {
-                    args.shift();
-                    command = command.subCommands.get(subLabel.toLowerCase() );
-                    if (!command || !command.module.enabled || !command.enabled) {
-                        return null;
-                    }
-                } else {
-                    break;
-                }
-            }
-        }
-        return command;
     }
 }
 

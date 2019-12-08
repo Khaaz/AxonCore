@@ -50,7 +50,7 @@ class ClientInitialiser {
         }
         
         // eslint-disable-next-line require-atomic-updates
-        axon.axonConfig = axonConf; // We have to do it here and not return the value because we need to unwap the promise and actually assign the value.
+        axon.axonConfig = axonConf; // We have to do it here and not return the value because we need to unwrap the promise and actually assign the value.
         
         axon.logger.init('[INIT] Axon config initialised!');
     }

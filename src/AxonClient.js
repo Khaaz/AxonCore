@@ -3,17 +3,17 @@ import EventEmitter from 'eventemitter3';
 import util from 'util';
 
 // Core - Structures
-import Module from './Structures/Module';
-import Command from './Structures/Command/Command';
 import EventManager from './Structures/Event/EventManager';
 import CommandDispatcher from './Structures/Dispatchers/CommandDispatcher';
+import CommandRegistry from './Structures/Stores/CommandRegistry';
 import GuildConfigCache from './Structures/Stores/GuildConfigCache';
 
 import ModuleLoader from './Structures/Loaders/ModuleLoader';
 import ClientInitialiser from './Structures/Loaders/ClientInitialiser';
 
+import MessageManager from './Langs/MessageManager';
+
 // Utility
-import Collection from './Utility/Collection';
 import AxonUtils from './Utility/AxonUtils';
 import Utils from './Utility/Utils';
 
@@ -27,8 +27,8 @@ import DBProvider from './Database/DBProvider'; // default DBProvider
 import logo from './Configs/logo';
 import packageJSON from '../package.json';
 import { EMBED_LIMITS } from './Utility/Constants/DiscordEnums';
-import MessageManager from './Langs/MessageManager';
-
+import ListenerRegistry from './Structures/Stores/ListenerRegistry';
+import ModuleRegistry from './Structures/Stores/ModuleRegistry';
 
 /**
  * AxonCore - Client constructor
@@ -119,10 +119,11 @@ class AxonClient extends EventEmitter {
         this.library = LibraryHandler.pickLibrary(this, axonOptions);
 
         /* Structures */
-        this.modules = new Collection( { base: Module } ); // Module Label => Module Object
-        this.commands = new Collection( { base: Command } ); // Command Label => Command Object
-        this.commandAliases = new Map(); // Command Alias => Command label
-        this.eventManager = new EventManager(this); // Event Label => Event function
+        this.modules = new ModuleRegistry(this);
+        this.commands = new CommandRegistry(this);
+        this.listeners = new ListenerRegistry(this);
+        this.eventManager = new EventManager(this);
+        
         /* GuildConfigs */
         this.guildConfigs = new GuildConfigCache(this, axonOptions.settings.guildConfigCache); // Guild ID => guildConfig
 
@@ -170,6 +171,7 @@ class AxonClient extends EventEmitter {
      *
      * @readonly
      * @type {Object<BotClient>}
+     *
      * @memberof AxonClient
      */
     get botClient() {
@@ -177,21 +179,23 @@ class AxonClient extends EventEmitter {
     }
 
     /**
-     * Returns all discord events in eventManager
+     * Returns all event handlers in eventManager
      *
      * @readonly
      * @type {Collection<Object>}
+     *
      * @memberof AxonClient
      */
-    get events() {
-        return this.eventManager.events;
+    get handlers() {
+        return this.eventManager.handlers;
     }
 
     /**
-     * Returns all listeners for the discord event name
+     * Returns all registrered listeners for the discord event name
      *
      * @param {String} eventName
      * @returns {Array}
+     *
      * @memberof AxonClient
      */
     getListeners(eventName) {
@@ -203,6 +207,7 @@ class AxonClient extends EventEmitter {
      *
      * @readonly
      * @type {Object}
+     *
      * @memberof AxonClient
      */
     get webhooks() {
@@ -214,6 +219,7 @@ class AxonClient extends EventEmitter {
      *
      * @readonly
      * @type {Object}
+     *
      * @memberof AxonClient
      */
     get template() {
@@ -225,6 +231,7 @@ class AxonClient extends EventEmitter {
      *
      * @readonly
      * @type {Object}
+     *
      * @memberof AxonClient
      */
     get custom() {
@@ -236,6 +243,7 @@ class AxonClient extends EventEmitter {
      *
      * @readonly
      * @type {Object<MessageManager>}
+     *
      * @memberof AxonClient
      */
     get l() {
@@ -251,7 +259,7 @@ class AxonClient extends EventEmitter {
      * @memberof AxonClient
      */
     getModule(module) {
-        return this.modules.find(m => m.toLowerCase() === module.toLowerCase() ) || null;
+        return this.modules.get(module);
     }
 
     /**
@@ -263,7 +271,7 @@ class AxonClient extends EventEmitter {
      * @memberof AxonClient
      */
     getCommand(fullLabel) {
-        return this.commands.get(fullLabel);
+        return this.commands.getFull(fullLabel.split(' ') );
     }
 
     // **** MAIN **** //
@@ -277,6 +285,7 @@ class AxonClient extends EventEmitter {
      * Calls custom onReady() methodwhen AxonClient is ready.
      *
      * @async
+     *
      * @memberof AxonClient
      */
     async start() {
@@ -313,6 +322,7 @@ class AxonClient extends EventEmitter {
      * Method executed after the object is finished to be constructed (in the constructor)
      *
      * @returns {*}
+     *
      * @memberof AxonClient
      */
     onInit() {
@@ -324,6 +334,7 @@ class AxonClient extends EventEmitter {
      * Method executed at the beginning of the start method.
      *
      * @returns {Promise}
+     *
      * @memberof AxonClient
      */
     onStart() {
@@ -335,6 +346,7 @@ class AxonClient extends EventEmitter {
      * Method executed at the end of the start method (when the AxonClient is ready).
      *
      * @returns {Promise}
+     *
      * @memberof AxonClient
      */
     onReady() {
