@@ -38,6 +38,26 @@ class AxonConfig {
         this.bannedGuilds = values.bannedGuilds || [];
     }
 
+    /**
+     * This method provides the definition for the AxonConfig.
+     * It is used to autogenerate the Database structure.
+     * It represents the actual DB structure.
+     * This method is meant to be overriden by Class extending this Class to adapt the definitions.
+     *
+     * @returns {Object} The definition object
+     * @memberof AxonConfig
+     */
+    definitions() {
+        return {
+            id: 'string',
+            prefix: 'array',
+            createdAt: 'date',
+            updatedAt: 'date',
+            bannedGuilds: 'array',
+            bannedUsers: 'array',
+        };
+    }
+    
     // **** CHECKERS (used IN the framework) **** //
     /* Can be overriden/changed but need to exists / keep the same name */
     //

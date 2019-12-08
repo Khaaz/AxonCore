@@ -1,4 +1,5 @@
 /**
+import ModuleRegistry from './../Stores/ModuleRegistry';
  * Default GuildConfig data structure used in AxonCore.
  * This class can be extended and changed as you want.
  * All methods flagged with "is used internally" can be overriden but need to keep the same name.
@@ -51,6 +52,33 @@ class GuildConfig {
         this.modOnly = values.modOnly || false;
         this.modRoles = values.modRoles || [];
         this.modUsers = values.modUsers || [];
+    }
+
+    /**
+     * This method provides the definition for the guildConfig.
+     * It is used to autogenerate the Database structure.
+     * It represents the actual DB structure.
+     * This method is meant to be overriden by Class extending this Class to adapt the definitions.
+     *
+     * @returns {Object} The definition object
+     * @memberof GuildConfig
+     */
+    definitions() {
+        return {
+            guildID: 'string',
+            prefixes: 'array',
+            modules: 'array',
+            commands: 'array',
+            eventListeners: 'array',
+            createdAt: 'date',
+            updatedAt: 'date',
+            ignoredUsers: 'array',
+            ignoredRoles: 'array',
+            ignoredChannels: 'array',
+            modOnly: 'boolean',
+            modRoles: 'array',
+            modUsers: 'array',
+        };
     }
 
     //
