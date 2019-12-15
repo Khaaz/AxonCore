@@ -123,7 +123,7 @@ class AxonClient extends EventEmitter {
         this.commands = new CommandRegistry(this);
         this.listeners = new ListenerRegistry(this);
         this.eventManager = new EventManager(this);
-        
+
         /* GuildConfigs */
         this.guildConfigs = new GuildConfigCache(this, axonOptions.settings.guildConfigCache); // Guild ID => guildConfig
 
@@ -132,7 +132,7 @@ class AxonClient extends EventEmitter {
         this.dispatcher = new CommandDispatcher(this);
 
         this.messageManager = new MessageManager(this, axonOptions.lang, axonOptions.settings.lang);
-        
+
         /* General */
         this.staff = ClientInitialiser.initStaff(axonOptions.staff, this.logger);
 
@@ -225,7 +225,7 @@ class AxonClient extends EventEmitter {
     get template() {
         return this.configs.template;
     }
-    
+
     /**
      *
      *
@@ -290,7 +290,7 @@ class AxonClient extends EventEmitter {
      */
     async start() {
         await this.onStart();
-        
+
         this.library.client.connect()
             .then( () => {
                 this.logger.notice('=== BotClient Connected! ===');
@@ -314,7 +314,7 @@ class AxonClient extends EventEmitter {
         this.library.onMessageCreate(this._onMessageCreate.bind(this) );
         this.library.onceReady(this._onReady.bind(this) );
     }
-    
+
     // **** LifeCycle methods **** //
 
     /**
@@ -384,7 +384,7 @@ class AxonClient extends EventEmitter {
 
         /* Bind handlers to events */
         this.eventManager.bindHandlers();
-        
+
         /* Initialise status. Default AxonCore status or use custom one */
         this.initStatus();
         this.logger.axon('Status setup!');
@@ -467,7 +467,7 @@ class AxonClient extends EventEmitter {
             console.time('- Net');
             console.time('- Node');
         }
-        
+
         command._process( {
             msg, args, guildConfig, isAdmin, isOwner,
         } )
@@ -475,7 +475,7 @@ class AxonClient extends EventEmitter {
                 context.executed
                     ? this.emit('commandSuccess', { msg, guildConfig, context } )
                     : this.emit('commandFailure', { msg, guildConfig, context } );
-                
+
                 this.settings.debugMode && console.timeEnd('- Net');
             } )
             .catch(err => {
@@ -564,7 +564,7 @@ class AxonClient extends EventEmitter {
      * @memberof AxonClient
      */
     async sendFullHelp(msg, guildConfig) {
-        const prefix = (guildConfig && guildConfig.getPrefixes().length > 0)
+        const prefix = (guildConfig && guildConfig.getPrefixes().length > 0 && !this.DBProvider.databaseless)
             ? guildConfig.getPrefixes()[0]
             : this.settings.prefixes[0];
 
@@ -584,15 +584,15 @@ class AxonClient extends EventEmitter {
             : this.template.embeds.help;
 
         let commandList = '';
-        if (guildConfig) {
-            for (const module of this.modules.values() ) {
+        if (guildConfig && !this.DBProvider.databaseless) {
+            for (const module of this.modules.registry.values() ) {
                 const commands = module.commands.filter(c => c.permissions.canExecute(msg, guildConfig)[0] );
                 if (commands.length > 0) {
                     commandList += `**${module.label}**\n${commands.map(c => `\`${prefix}${c.label}\` - ${c.infos.description}`).join('\n')}\n`;
                 }
             }
         } else {
-            for (const module of this.modules.values() ) {
+            for (const module of this.modules.registry.values() ) {
                 commandList += `**${module.label}**\n${module.commands.map(c => `\`${prefix}${c.label}\` - ${c.infos.description}`).join('\n')}\n`;
             }
         }
@@ -674,7 +674,7 @@ class AxonClient extends EventEmitter {
         }
         return base;
     }
-    
+
     /**
      * Custom inspect method
      * Doesn't list prefixed property and undefined property.

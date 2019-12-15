@@ -18,6 +18,9 @@ class MessageCreateMod extends Listener {
     }
 
     execute(message, guildConfig) { // eslint-disable-line
+        if (!message.channel.guild) {
+            return Promise.resolve();
+        }
         console.log(`Prefix: ${guildConfig.prefixes}`);
         return Promise.resolve();
     }
