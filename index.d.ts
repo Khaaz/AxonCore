@@ -714,7 +714,7 @@ declare module "axoncore" {
         };
         LIBRARY_TYPES: { ERIS: number, DISCORDJS: 1 };
         LOGGER_TYPES: { DEFAULT: number; CHALK: number; SIGNALE: number; WINSTON: number; };
-        DB_TYPES: { JSON: number; MONGO: number, DBLESS: number };
+        DB_TYPES: { DBLESS: number, JSON: number; MONGO: number };
         AXON_PERMISSION_LEVELS: {
             OWNER: number;
             ADMINISTRATOR: number;
