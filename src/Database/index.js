@@ -21,7 +21,7 @@ class DBHandler {
             // No database
             case DB_TYPES.DBLESS:
             default: {
-                const DBLessService = require('./DBLessService').default;
+                const DBLessService = require('./InMemoryProvider').InMemoryProvider;
                 DBProvider = new DBLessService(axon);
                 axon.logger.info('Selected Database: Database-Less');
                 axon.logger.warn('Configs will not change.');

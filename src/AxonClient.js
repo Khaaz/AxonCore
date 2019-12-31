@@ -564,7 +564,7 @@ class AxonClient extends EventEmitter {
      * @memberof AxonClient
      */
     async sendFullHelp(msg, guildConfig) {
-        const prefix = (guildConfig && guildConfig.getPrefixes().length > 0 && !this.DBProvider.databaseless)
+        const prefix = (guildConfig && guildConfig.getPrefixes().length > 0)
             ? guildConfig.getPrefixes()[0]
             : this.settings.prefixes[0];
 
@@ -584,7 +584,7 @@ class AxonClient extends EventEmitter {
             : this.template.embeds.help;
 
         let commandList = '';
-        if (guildConfig && !this.DBProvider.databaseless) {
+        if (guildConfig) {
             for (const module of this.modules.registry.values() ) {
                 const commands = module.commands.filter(c => c.permissions.canExecute(msg, guildConfig)[0] );
                 if (commands.length > 0) {

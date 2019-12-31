@@ -10,12 +10,7 @@ import GuildConfig from '../Structures/DataStructure/GuildConfig';
  * @class DatabaselessService
  * @extends DBService
  */
-class DDBLessService extends DBService {
-    // eslint-disable-next-line no-useless-constructor
-    constructor(axonClient) {
-        super(axonClient);
-        this.databaseless = true;
-    }
+class InMemoryProvider extends DBService {
 
     // eslint-disable-next-line
     init(axonOptions = {} ) {
@@ -97,4 +92,4 @@ class DDBLessService extends DBService {
     }
 }
 
-export default DDBLessService;
+export default InMemoryProvider;
