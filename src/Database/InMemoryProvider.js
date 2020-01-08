@@ -1,16 +1,16 @@
-import DBService from './DBProvider';
+import DBProvider from './DBProvider';
 import AxonConfig from '../Structures/DataStructure/AxonConfig';
 import GuildConfig from '../Structures/DataStructure/GuildConfig';
 
 /**
- * A schema designed to remove databases from AxonCore
+ * A schema designed use an InMemory solution in AxonCore
  *
  * @author VoidNulll
  *
- * @class DatabaselessService
+ * @class InMemoryProvider
  * @extends DBService
  */
-class InMemoryProvider extends DBService {
+class InMemoryProvider extends DBProvider {
 
     // eslint-disable-next-line
     init(axonOptions = {} ) {
