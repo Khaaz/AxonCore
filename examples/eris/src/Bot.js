@@ -10,7 +10,6 @@ import lang from './configs/lang.json';
 
 import MyUtils from './MyUtils';
 
-
 const axonOptions = new AxonOptions( {
     prefixes: botConfig.prefixes,
     settings: botConfig.settings,

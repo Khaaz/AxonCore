@@ -60,6 +60,11 @@ Primarily designed to work with [Eris](https://github.com/abalabahaha/eris), all
 
 It was built with an OOP approach and uses predictable abstraction while keeping the power and speed of javascript prototypal nature. Separation of concerns makes sure everything is correctly encapsulated, maintainable and extendable. The framework is fully modular. A bot written with AxonCore is created from a set of modules. Each Module has a set of commands, events, etc... It also comes with a lot of features for all possible usages and needs. AxonCore will handle everything, leaving only one job to you: creating the bot. It does however still allow you to edit and customise anything you want with a full extendable approach and total control over the initialisation and execution flow.
 
+## Setup
+
+[Examples](./examples)
+[create-axoncore-app](https://github.com/Khaazz/create-axoncore-app) [WIP - not updated for v2]
+
 ## Features Overview
 
 Because it is built with the correct level abstraction, using AxonCore feels natural and powerful. Everything is easily accessible, extendable and customisable.
@@ -74,13 +79,13 @@ There's also a built-in help command that you can easily override if you want to
 
 You can create commands by extending [Command](src/Structures/Command/Command.js), [CommandPermissions](src/Structures/Command/CommandPermissions.js) and [CommandOptions](src/Structures/Command/CommandOptions.js).
 
-### Listener
+### Listeners
 
 You can also create listeners by extending [Listener](src/Structures/Listener.js).  
 A **Listener** is a function that is run when a Discord-specific event occurs. Many listeners can be bound to one Discord event.  
 A **Handler** is an object responsible of running all listeners for a specific Discord event.
 
-### Database support
+### Databases support
 
 All database interactions are done by AxonCore via a [DBProvider](src/Database/DBProvider.js).  
 There are specific providers for each type of Database, such as:
@@ -131,7 +136,7 @@ axonClient.on('commandFailure', ({ msg: Message, guildConfig: GuildConfig, conte
 axonClient.on('commandError', ({ msg: Message, guildConfig: GuildConfig, err: AxonCommandError }) => {} ); // err.context = CommandContext
 ```
 
-For listener execution, **eventSuccess** and **eventError** events are also emitted by the AxonClient.
+For listener execution, **eventSuccess** and **eventError** events are also emitted by AxonClient.
 
 ```js
 axonClient.on('eventSuccess', { event: String, listener: Listener, guildConfig: GuildConfig } ); // event: the event name, listener: the Listener object
@@ -153,7 +158,7 @@ axonClient.on('eventError', { event: String, listener: Listener, guildConfig: Gu
 
 ## Notes
 
-### Dependency
+### Dependencies
 
 [ESM](https://www.npmjs.com/package/esm) is used to run this framework. It makes using ES6 modules possible, of which AxonCore takes full advantage of.  
 See [here](https://www.npmjs.com/package/esm#getting-started) on how to use ESM.  
@@ -187,4 +192,4 @@ AxonCore is being used in these cool projects:
 ## Contributions
 
 Feel free to contribute to this project by opening PRs or Issues. Contributions are always welcome.  
-To know more about contributions, discuss the development of AxonCore or need help, you can join our discord server [here](https://discord.gg/QZ6B5US).
+To know more about contributions, discuss the development of AxonCore or get help, you can join our discord server [here](https://discord.gg/QZ6B5US).

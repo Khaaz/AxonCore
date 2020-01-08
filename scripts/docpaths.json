@@ -12,6 +12,10 @@
         "output": "Database/DBProvider.md"
     },
     {
+        "input": "Database/InMemoryProvider.js",
+        "output": "Database/InMemoryProvider.md"
+    },
+    {
         "input": "Database/JsonProvider.js",
         "output": "Database/JsonProvider.md"
     },

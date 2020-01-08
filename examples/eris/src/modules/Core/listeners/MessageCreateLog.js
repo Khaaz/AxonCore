@@ -18,6 +18,9 @@ class MessageCreateLog extends Listener {
     }
 
     execute(message, guildConfig) { // eslint-disable-line
+        if (!message.channel.guild) {
+            return Promise.resolve();
+        }
         console.log(`Msg ${message.channel.guild.id}`);
         return Promise.resolve();
     }

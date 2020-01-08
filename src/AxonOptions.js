@@ -128,21 +128,21 @@ class AxonOptions {
         this.prefixes = Utils.compareObject(defaultConfig.prefixes, data.prefixes)
             ? data.prefixes
             : defaultConfig.prefixes;
-        
+
         const settings = data.settings || {};
         this.settings = {
             lang: settings.lang || 'english',
             debugMode: !!settings.debugMode,
             library: settings.library !== undefined ? settings.library : LIBRARY_TYPES.ERIS,
             logger: settings.logger !== undefined ? settings.logger : LOGGER_TYPES.DEFAULT,
-            db: settings.db !== undefined ? settings.fb : DB_TYPES.JSON,
+            db: settings.db !== undefined ? settings.db : DB_TYPES.DBLESS,
             guildConfigCache: settings.guildConfigCache || 10000,
         };
-        
+
         this.lang = Utils.compareObject(defaultLang, data.lang)
             ? data.lang
             : defaultLang;
-        
+
         this.logo = data.logo || null;
         this.info = Utils.compareObject(defaultConfig.info, data.info)
             ? data.info
@@ -153,7 +153,7 @@ class AxonOptions {
         this.template = Utils.compareObject(defaultConfig.template, data.template)
             ? data.template
             : defaultConfig.template;
-        
+
         // Additional setting (custom)
         this.custom = data.custom || null;
 
@@ -161,7 +161,7 @@ class AxonOptions {
         this.webhooksConfig = Utils.compareObject(defaultWebhooksConfig, webhooksConfig)
             ? webhooksConfig
             : defaultWebhooksConfig;
-        
+
         // extensions
         this.extensions = {
             utils: extensions.utils || null,
