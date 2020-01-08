@@ -8,7 +8,7 @@ import GuildConfig from '../Structures/DataStructure/GuildConfig';
  * @author VoidNulll
  *
  * @class InMemoryProvider
- * @extends DBService
+ * @extends DBProvider
  */
 class InMemoryProvider extends DBProvider {
 
