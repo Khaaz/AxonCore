@@ -79,13 +79,13 @@ There's also a built-in help command that you can easily override if you want to
 
 You can create commands by extending [Command](src/Structures/Command/Command.js), [CommandPermissions](src/Structures/Command/CommandPermissions.js) and [CommandOptions](src/Structures/Command/CommandOptions.js).
 
-### Listener
+### Listeners
 
 You can also create listeners by extending [Listener](src/Structures/Listener.js).  
 A **Listener** is a function that is run when a Discord-specific event occurs. Many listeners can be bound to one Discord event.  
 A **Handler** is an object responsible of running all listeners for a specific Discord event.
 
-### Database support
+### Databases support
 
 All database interactions are done by AxonCore via a [DBProvider](src/Database/DBProvider.js).  
 There are specific providers for each type of Database, such as:
@@ -136,7 +136,7 @@ axonClient.on('commandFailure', ({ msg: Message, guildConfig: GuildConfig, conte
 axonClient.on('commandError', ({ msg: Message, guildConfig: GuildConfig, err: AxonCommandError }) => {} ); // err.context = CommandContext
 ```
 
-For listener execution, **eventSuccess** and **eventError** events are also emitted by the AxonClient.
+For listener execution, **eventSuccess** and **eventError** events are also emitted by AxonClient.
 
 ```js
 axonClient.on('eventSuccess', { event: String, listener: Listener, guildConfig: GuildConfig } ); // event: the event name, listener: the Listener object
@@ -158,7 +158,7 @@ axonClient.on('eventError', { event: String, listener: Listener, guildConfig: Gu
 
 ## Notes
 
-### Dependency
+### Dependencies
 
 [ESM](https://www.npmjs.com/package/esm) is used to run this framework. It makes using ES6 modules possible, of which AxonCore takes full advantage of.  
 See [here](https://www.npmjs.com/package/esm#getting-started) on how to use ESM.  
@@ -192,4 +192,4 @@ AxonCore is being used in these cool projects:
 ## Contributions
 
 Feel free to contribute to this project by opening PRs or Issues. Contributions are always welcome.  
-To know more about contributions, discuss the development of AxonCore or need help, you can join our discord server [here](https://discord.gg/QZ6B5US).
+To know more about contributions, discuss the development of AxonCore or get help, you can join our discord server [here](https://discord.gg/QZ6B5US).
