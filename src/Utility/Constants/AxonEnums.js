@@ -10,7 +10,7 @@ export const HTTP_CODE = {
     CREATED: 201,
     ACCEPTED: 202,
     NO_CONTENT: 204,
-    
+
     MULTIPLE_CHOICES: 300,
     MOVED_PERMANENTLY: 301,
     FOUND: 302,
@@ -27,7 +27,7 @@ export const HTTP_CODE = {
     UNSUPPORTED_MEDIA_TYPE: 415,
     LOCKED: 423,
     TOO_MANY_REQUESTS: 429,
-    
+
     INTERNAL_SERVER_ERROR: 500,
     NOT_IMPLEMENTED: 501,
     BAD_GATEWAY: 502,
@@ -114,8 +114,9 @@ export const LOGGER_TYPES = {
 };
 
 export const DB_TYPES = {
-    JSON: 0,
-    MONGO: 1,
+    DBLESS: 0,
+    JSON: 1,
+    MONGO: 2,
 };
 
 export const AXON_PERMISSIONS_LEVELS = {

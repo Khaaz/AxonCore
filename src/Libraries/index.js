@@ -16,7 +16,7 @@ class LibraryHandler {
         let libraryInterface;
 
         // eslint-disable-next-line no-shadow
-        const lib = axonOptions.botConfig ? axonOptions.botConfig.library : 0;
+        const lib = axonOptions.settings ? axonOptions.settings.library : 0;
 
         switch (lib) {
             // Eris

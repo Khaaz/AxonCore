@@ -132,12 +132,16 @@ declare module "axoncore" {
     }
 
     // OK
-    export class JsonProvider extends DBProvider {
+    class InMemoryProvider extends DBProvider {
+    }
+
+    // OK
+    class JsonProvider extends DBProvider {
         public manager?: JsonManager;
     }
 
     // OK
-    export class MongoProvider extends DBProvider {
+    class MongoProvider extends DBProvider {
         public AxonSchema?: any;
         public GuildSchema?: any;
     }
@@ -709,7 +713,7 @@ declare module "axoncore" {
         };
         LIBRARY_TYPES: { ERIS: number, DISCORDJS: 1 };
         LOGGER_TYPES: { DEFAULT: number; CHALK: number; SIGNALE: number; WINSTON: number; };
-        DB_TYPES: { JSON: number; MONGO: number };
+        DB_TYPES: { DBLESS: number, JSON: number; MONGO: number };
         AXON_PERMISSION_LEVELS: {
             OWNER: number;
             ADMINISTRATOR: number;

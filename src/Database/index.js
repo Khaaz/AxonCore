@@ -18,9 +18,18 @@ class DBHandler {
         const { db } = axonOptions.settings;
 
         switch (db) {
-            // Json Database
-            case DB_TYPES.JSON:
+            // No database
+            case DB_TYPES.DBLESS:
             default: {
+                const InMemoryProvider = require('./InMemoryProvider').default;
+                DBProvider = new InMemoryProvider(axon);
+                axon.logger.info('Selected Database: Database-Less');
+                axon.logger.warn('Configs will not change.');
+                break;
+            }
+
+            // Json Database
+            case DB_TYPES.JSON: {
                 DBProvider = new JsonProvider(axon);
                 axon.logger.info('Selected Database: JSON DB.');
                 break;
