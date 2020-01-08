@@ -1,0 +1,38 @@
+{
+    "info": {
+        "name": "AxonCore",
+        "description": "AxonCore - Full fledged framework.",
+        "version": "1.0.0"
+    },
+    
+    "prefixes": {
+        "general": "a!",
+        "owner": "!!",
+        "admin": "a."
+    },
+    
+    "staff": {
+        "owners": [ 
+            {
+                "name": "",
+                "id": ""
+            }
+        ],
+        "admins": [ 
+            {
+                "name": "",
+                "id": ""
+            }
+        ]
+    },
+
+    "template": {
+        "embeds": {
+            "help": 32768
+        },
+        "emotes": {
+            "error": ":x:",
+            "success": ":white_check_mark:"
+        }
+    }
+}

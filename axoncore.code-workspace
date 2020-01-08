@@ -6,7 +6,7 @@
     ],
     "settings": {
         "editor.insertSpaces": true,
-        "editor.autoIndent": true,
+        "editor.autoIndent": "full",
         "editor.tabSize": 4,
 
         "editor.wordWrap": "off",
@@ -17,6 +17,8 @@
 
         // vsCode eslint support
         "eslint.enable": true,
-        "eslint.autoFixOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.fixAll.eslint": true
+        },
     }
 }

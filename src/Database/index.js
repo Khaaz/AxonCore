@@ -1,49 +1,58 @@
-import JsonService from './JsonService';
+import JsonProvider from './JsonProvider';
+
+import { DB_TYPES } from './../Utility/Constants/AxonEnums';
 
 /**
  * Database Handler
- * Use require to dynamically load a Database Service depending on installed dependencies.
+ * Use require to dynamically load a Database Provider depending on installed dependencies.
  *
  * @author KhaaZ
  *
  * @class DBHandler
  */
 class DBHandler {
-    static pickDBService(axonOptions, axon) {
-        let DBservice;
+    static pickDBProvider(axonOptions, axon) {
+        let DBProvider;
 
         // eslint-disable-next-line no-shadow
-        const db = axonOptions.axonConf ? axonOptions.axonConf.db : 0;
+        const { db } = axonOptions.settings;
 
         switch (db) {
-            // Json Database
-            case 0:
+            // No database
+            case DB_TYPES.DBLESS:
             default: {
-                DBservice = new JsonService();
-                axon.Logger.info('Selected Database: JSON DB.');
+                const InMemoryProvider = require('./InMemoryProvider').default;
+                DBProvider = new InMemoryProvider(axon);
+                axon.logger.info('Selected Database: Database-Less');
+                axon.logger.warn('Configs will not change.');
+                break;
+            }
+
+            // Json Database
+            case DB_TYPES.JSON: {
+                DBProvider = new JsonProvider(axon);
+                axon.logger.info('Selected Database: JSON DB.');
                 break;
             }
 
             // MongoDB Database
-            case 1: {
+            case DB_TYPES.MONGO: {
                 try {
-                    const MongoService = require('./MongoService').default;
-
-                    DBservice = new MongoService(axon);
-                    DBservice.init(axonOptions);
-
-                    axon.Logger.info('Selected Database: MongoDB.');
+                    const MongoService = require('./MongoProvider').default;
+                    DBProvider = new MongoService(axon);
+                    axon.logger.info('Selected Database: MongoDB.');
                 } catch (err) {
-                    DBservice = new JsonService();
-                    axon.Logger.warn('MongoDB wasn\'t found, using JSON DB instead.');
-                    axon.Logger.info('Selected Database: JSON DB.');
+                    DBProvider = new JsonProvider(axon);
+                    axon.logger.warn('Mongoose wasn\'t found, using JSON DB instead.');
+                    axon.logger.info('Selected Database: JSON DB.');
                 }
                 break;
             }
         }
 
-        axon.Logger.axon('DB ready.');
-        return DBservice;
+        DBProvider.init(axonOptions);
+        axon.logger.axon('DB ready.');
+        return DBProvider;
     }
 }
 

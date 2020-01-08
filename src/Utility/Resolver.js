@@ -1,9 +1,9 @@
 import Utils from './Utils';
-// Error
+
 import AxonError from '../Errors/AxonError';
 
 /**
- * Resolver class for AxonClient
+ * Static Resolver class for AxonCore
  *
  * @author KhaaZ
  *
@@ -15,7 +15,7 @@ class Resolver {
      * Resolve a user within all the users the bot has.
      *
      * @param {Object<Eris.Client>} client - The bot client
-     * @param {Array/String} args - Array of arguments resolved by the command.
+     * @param {Array|String} args - Array of arguments resolved by the command.
      * @returns {Object|null} The user object / Null if not found / Error
      */
     static user(client, args) {
@@ -46,10 +46,11 @@ class Resolver {
         return user; // Return the user object.
     }
 
-    /** Resolve a member within a guild.
+    /**
+     * Resolve a member within a guild.
      *
      * @param {Object<Guild>} guild - Object Guild resolved by the command.
-     * @param {Array/String} args - Array of arguments resolved by the command.
+     * @param {Array|String} args - Array of arguments resolved by the command.
      * @returns {Object|null} The member object / Null if not found / Error
      */
     static member(guild, args) {
@@ -88,7 +89,7 @@ class Resolver {
      * Resolve a role within a guild.
      *
      * @param {Object<Guild>} guild - Object Guild resolved by the command.
-     * @param {Array/String} args - Array of arguments resolved by the command.
+     * @param {Array|String} args - Array of arguments resolved by the command.
      * @returns {Object|null} The role object / Null if not found / Error
      */
     static role(guild, args) {
@@ -123,7 +124,7 @@ class Resolver {
      * Resolve a channel within a guild.
      *
      * @param {Object<Guild>} guild - Object Guild resolved by the command.
-     * @param {Array/String} args - Array of arguments resolved by the command.
+     * @param {Array|String} args - Array of arguments resolved by the command.
      * @returns {Object|null} The channel object / Null if not found / Error
      */
     static channel(guild, args) {

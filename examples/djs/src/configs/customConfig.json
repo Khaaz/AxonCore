@@ -1,0 +1,65 @@
+{
+    "info": {
+        "name": "Axon",
+        "description": "AxonCore - Bot client, core module (eris lib)",
+        "version": "1.0.0",
+        "library": "eris"
+    },
+
+    "links": {
+        "website": "",
+        "invite": "",
+        "server": "",
+
+        "github": "https://github.com/khaazz/AxonCore",
+        "trello": "",
+        "sentry": "",
+        "grafana": ""
+    },
+
+    "prefixes": {
+        "general": "a!",
+        "owner": "!!",
+        "admin": "a."
+    },
+
+    "staff": {
+        "owners": [
+            {
+                "name": "KhaaZ#0001",
+                "id": "179908288337412096"
+            }
+        ],
+        "admins": [
+            {
+                "name": "KhaaZ#0001",
+                "id": "179908288337412096"
+            }
+        ]
+    },
+
+    "template": {
+        "embeds": {
+            "help": "ffffff",
+            "global": 4315874,
+            "error": 15844367
+        },
+
+        "emotes": {
+            "error": "<:error:426906693624922113>",
+            "success": "<:success:426906630463160330>",
+            "loading": "<a:loading:397911964988342282>",
+            "update": "<:update:373546418952077323>",
+            "info": ":information_source:"
+        }
+    },
+
+    "settings": {
+        "lang": "english",
+        "debugMode": true,
+        "library": 1,
+        "logger": 1,
+        "db": 1,
+        "guildConfigCache": 1000
+    }
+}

@@ -11,7 +11,8 @@ logs/
 # Miscellaneous
 .vscode/
 axoncore.code-workspace
-example/
+docs/
+examples/
 _images/
 
 # NPM ignore

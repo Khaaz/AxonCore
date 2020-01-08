@@ -1,10 +1,8 @@
 {
-    "ID": "1",
+    "id": "1",
     "prefix": "a!",
-    "modules": [],
-    "commands": [],
-    "events": [],
-    "webhooks": {},
+    "createdAt": "",
+    "updatedAt": "",
     "bannedGuilds": [],
     "bannedUsers": []
 }

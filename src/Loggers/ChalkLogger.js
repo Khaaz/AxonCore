@@ -185,7 +185,7 @@ class ChalkLogger extends Console {
     _initEvent(bind, event) {
         let mess;
         if (bind) {
-            mess = `${chalk.cyan(`${this._parseTime()} - [  EVT  ] => `)}Bound ${event.size} event${event.size > 1 ? 's' : ''} for ${event.name}`;
+            mess = `${chalk.cyan(`${this._parseTime()} - [  EVT  ] => `)}Bound ${event.size} listener${event.size > 1 ? 's' : ''} for ${event.name}`;
         } else {
             mess = `${chalk.cyan(`${this._parseTime()} - [  EVT  ] => `)}Registered ${event.label} for ${event.eventName}`;
         }
