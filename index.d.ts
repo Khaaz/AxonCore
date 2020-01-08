@@ -132,8 +132,7 @@ declare module "axoncore" {
     }
 
     // OK
-    class DBLessService extends DBProvider {
-        public databaseless: true;
+    class InMemoryProvider extends DBProvider {
     }
 
     // OK
