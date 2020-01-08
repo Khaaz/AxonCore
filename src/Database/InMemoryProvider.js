@@ -11,12 +11,6 @@ import GuildConfig from '../Structures/DataStructure/GuildConfig';
  * @extends DBProvider
  */
 class InMemoryProvider extends DBProvider {
-
-    // eslint-disable-next-line
-    init(axonOptions = {} ) {
-
-    }
-
     async fetchAxon() {
         let axon = this.axon.axonConfig;
         if (!axon) {
