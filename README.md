@@ -60,6 +60,11 @@ Primarily designed to work with [Eris](https://github.com/abalabahaha/eris), all
 
 It was built with an OOP approach and uses predictable abstraction while keeping the power and speed of javascript prototypal nature. Separation of concerns makes sure everything is correctly encapsulated, maintainable and extendable. The framework is fully modular. A bot written with AxonCore is created from a set of modules. Each Module has a set of commands, events, etc... It also comes with a lot of features for all possible usages and needs. AxonCore will handle everything, leaving only one job to you: creating the bot. It does however still allow you to edit and customise anything you want with a full extendable approach and total control over the initialisation and execution flow.
 
+## Setup
+
+[Examples](./examples)
+[create-axoncore-app](https://github.com/Khaazz/create-axoncore-app) [WIP - not updated for v2]
+
 ## Features Overview
 
 Because it is built with the correct level abstraction, using AxonCore feels natural and powerful. Everything is easily accessible, extendable and customisable.
