@@ -52,6 +52,7 @@
 
 * **[Database](Database/index.md)**
   * [DBProvider](Database/DBProvider.md)
+  * [InMemoryProvider](Database/InMemoryProvider.md)
   * [JsonProvider](Database/JsonProvider.md)
   * [MongoProvider](Database/MongoProvider.md)
 
