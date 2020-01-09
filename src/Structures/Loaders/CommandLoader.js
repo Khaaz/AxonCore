@@ -13,7 +13,7 @@ import CommandRegistry from './../Stores/CommandRegistry';
  * @author KhaaZ
  *
  * @class CommandLoader
- * @extends {Loader}
+ * @extends Loader
  */
 class CommandLoader extends Loader {
     constructor(module) {

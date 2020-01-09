@@ -5,7 +5,7 @@
  * @author KhaaZ
  *
  * @class AxonError
- * @extends {Error}
+ * @extends Error
  */
 class AxonError extends Error {
     /**

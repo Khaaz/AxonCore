@@ -24,6 +24,7 @@ class Node {
  * @prop {Number} size - Current size of the LRU
  * @prop {Object<Node>} head
  * @prop {Object<Node>} tail
+ * @prop {Collection<*>} _cache - The Collection holding the cache (private, handled by the LRU structure)
  */
 class LRUCache {
     /**
@@ -44,7 +45,7 @@ class LRUCache {
         this.head = null;
         this.queue = null;
         
-        this.cache = new Collection( { base: options.base } );
+        this._cache = new Collection( { base: options.base } );
         
         if (iterable && iterable instanceof Array) {
             for (const elem of iterable) {
@@ -75,7 +76,7 @@ class LRUCache {
         }
   
         // Update the cache map
-        this.cache.set(key, this.head);
+        this._cache.set(key, this.head);
         this.size++;
     }
 
@@ -88,7 +89,7 @@ class LRUCache {
      * @memberof LRUCache
      */
     get(key) {
-        const node = this.cache.get(key);
+        const node = this._cache.get(key);
         if (node) {
             const { value } = node;
 
@@ -101,8 +102,15 @@ class LRUCache {
         return null;
     }
 
+    /**
+     * Remove an element from the LRUCache
+     *
+     * @param {String} key
+     *
+     * @memberof LRUCache
+     */
     remove(key) {
-        const node = this.cache.get(key);
+        const node = this._cache.get(key);
   
         if (node.prev !== null) {
             node.prev.next = node.next;
@@ -116,15 +124,20 @@ class LRUCache {
             this.tail = node.prev;
         }
   
-        this.cache.delete(key);
+        this._cache.delete(key);
         this.size--;
     }
 
+    /**
+     * Empty the LRUCache entirely
+     *
+     * @memberof LRUCache
+     */
     clear() {
         this.head = null;
         this.tail = null;
         this.size = 0;
-        this.cache = new Collection();
+        this._cache = new Collection();
     }
 
     _ensureLimit() {
@@ -141,7 +154,7 @@ class LRUCache {
      * @memberof LRUCache
      */
     forEach(fn) {
-        this.cache.forEach(fn);
+        this._cache.forEach(fn);
     }
 
     /**
@@ -153,7 +166,7 @@ class LRUCache {
      * @memberof LRUCache
      */
     find(func) {
-        return this.cache.find(func);
+        return this._cache.find(func);
     }
 
     /**
@@ -165,7 +178,7 @@ class LRUCache {
      * @memberof LRUCache
      */
     map(func) {
-        return this.cache.map(func);
+        return this._cache.map(func);
     }
 
     /**
@@ -177,7 +190,7 @@ class LRUCache {
      * @memberof LRUCache
      */
     filter(func) {
-        return this.cache.filter(func);
+        return this._cache.filter(func);
     }
 
     /**
@@ -189,7 +202,7 @@ class LRUCache {
      * @memberof LRUCache
      */
     some(func) {
-        return this.cache.some(func);
+        return this._cache.some(func);
     }
 
     /**
@@ -201,7 +214,7 @@ class LRUCache {
      * @memberof LRUCache
      */
     every(func) {
-        return this.cache.every(func);
+        return this._cache.every(func);
     }
 
   

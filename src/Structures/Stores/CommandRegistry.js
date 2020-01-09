@@ -11,7 +11,7 @@ import AxonError from '../../Errors/AxonError';
  * @prop {Map} aliases - All commands aliases.
  *
  * @class CommandRegistry
- * @extends {Registry}
+ * @extends Registry
  */
 class CommandRegistry extends Registry {
     constructor(axon) {

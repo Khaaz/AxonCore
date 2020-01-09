@@ -1,4 +1,5 @@
 import Queue from './Queue';
+
 /**
  * This data structure is a queue that will run every function one by one sequentially.
  * It will run indifferently synchrones and asynchrones functions. Making sure the previous oneis over before starting the next one. It will essentially wait for the previous function to be finished before running the next one.
@@ -9,6 +10,7 @@ import Queue from './Queue';
  * @author KhaaZ
  *
  * @class AsyncQueue
+ * @extends Queue
  */
 class AsyncQueue extends Queue {
     /**

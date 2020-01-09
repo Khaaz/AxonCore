@@ -8,7 +8,7 @@ import * as modules from './modules/index';
  * @author KhaaZ
  *
  * @class Client
- * @extends {AxonCore.AxonClient}
+ * @extends AxonCore.AxonClient
  */
 class Client extends AxonClient {
     constructor(client, axonOptions) {

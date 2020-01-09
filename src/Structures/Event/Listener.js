@@ -7,7 +7,7 @@ import Base from '../Base';
  * @author KhaaZ
  *
  * @class Listener
- * @extends {Base}
+ * @extends Base
  *
  * @prop {Object<Module>} _module - Module instance
  * @prop {String} eventName - The discord event name

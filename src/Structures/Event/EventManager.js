@@ -9,7 +9,7 @@ import Handler from './Handler';
  * @author KhaaZ
  *
  * @class EventManager
- * @extends {Base}
+ * @extends Base
  *
  * @prop {Object} _eve,ts - Object that links an event name to an array of Listener objects { eventName: [Listener, Listener] }
  * @prop {Collection<Object>} _handlers - Collection of handler keyed to the event name [key: eventName, value: Handler]

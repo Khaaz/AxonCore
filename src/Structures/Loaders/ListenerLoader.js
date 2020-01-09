@@ -8,7 +8,7 @@ import AxonError from '../../Errors/AxonError';
  * Validate the listener validity entirely.
  *
  * @class ListenerLoader
- * @extends {Loader}
+ * @extends Loader
  */
 class ListenerLoader extends Loader {
     constructor(module) {

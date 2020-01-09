@@ -41,7 +41,7 @@ const logOptions = {
  * https://github.com/klauscfhq/signale
  *
  * @class SignaleLogger
- * @extends {Signale}
+ * @extends Signale
  */
 class SignaleLogger extends Signale {
     constructor(options) {

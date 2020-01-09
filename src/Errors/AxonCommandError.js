@@ -5,7 +5,7 @@
  * @author KhaaZ
  *
  * @class AxonCommandError
- * @extends {Error}
+ * @extends Error
  *
  * @prop {Object<CommandContext>} context - Command Context containing all informations about the command execution
  */

@@ -7,7 +7,7 @@ import { format } from 'util';
  * @author KhaaZ
  *
  * @class DefLogger
- * @extends {Console}
+ * @extends Console
  */
 class DefLogger extends Console {
     constructor() {

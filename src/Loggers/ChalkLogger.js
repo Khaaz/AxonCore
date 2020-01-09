@@ -8,7 +8,7 @@ import chalk from 'chalk';
  * @author KhaaZ
  *
  * @class ChalkLogger
- * @extends {Console}
+ * @extends Console
  */
 class ChalkLogger extends Console {
     constructor() {

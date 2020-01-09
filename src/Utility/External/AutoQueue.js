@@ -10,6 +10,7 @@ import Queue from './Queue';
  * @KhaaZ
  *
  * @class AutoQueue
+ * @extends Queue
  */
 class AutoQueue extends Queue {
     /**

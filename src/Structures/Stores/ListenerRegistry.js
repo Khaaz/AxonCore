@@ -9,7 +9,7 @@ import AxonError from '../../Errors/AxonError';
  * @author KhaaZ
  *
  * @class ListenerRegistry
- * @extends {Registry}
+ * @extends Registry
  */
 class ListenerRegistry extends Registry {
     constructor(axon) {

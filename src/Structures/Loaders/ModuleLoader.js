@@ -12,7 +12,7 @@ import AxonError from '../../Errors/AxonError';
  * @author KhaaZ
  *
  * @class ModuleLoader
- * @extends {Loader}
+ * @extends Loader
  */
 class ModuleLoader extends Loader {
     // eslint-disable-next-line no-useless-constructor

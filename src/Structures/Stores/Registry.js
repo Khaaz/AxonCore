@@ -10,7 +10,7 @@ import Collection from './../../Utility/Collection';
  * @author KhaaZ
  *
  * @prop {Object<AxonClient>} _axon - The AxonClient
- * @prop {Collection<Object>} registry - The collection of items hold by the registry
+ * @prop {Collection<*>} registry - The collection of items hold by the registry
  *
  * @class Registry
  */
