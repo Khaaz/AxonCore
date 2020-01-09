@@ -1,3 +1,11 @@
+/**
+ * Error thrown when an abstract class is instantiated.
+ *
+ * @author KhaaZ
+ *
+ * @class NoAbstractInstanceException
+ * @extends Error
+ */
 class NoAbstractInstanceException extends Error {
     constructor(...args) {
         super(...args);

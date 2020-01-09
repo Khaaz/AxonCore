@@ -1,3 +1,11 @@
+/**
+ * Error thrown when a method not implemented (not overrided) is used.
+ *
+ * @author KhaaZ
+ *
+ * @class NotImplementedException
+ * @extends Error
+ */
 class NotImplementedException extends Error {
     constructor(...args) {
         super(...args);
