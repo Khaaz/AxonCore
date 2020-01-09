@@ -1,17 +1,19 @@
+import Selector from './../Structures/Selector';
 import JsonProvider from './JsonProvider';
 
 import { DB_TYPES } from './../Utility/Constants/AxonEnums';
 
 /**
- * Database Handler
+ * Database Selector
  * Use require to dynamically load a Database Provider depending on installed dependencies.
  *
  * @author KhaaZ
  *
- * @class DBHandler
+ * @class DBSelector
+ * @extends Selector
  */
-class DBHandler {
-    static pickDBProvider(axonOptions, axon) {
+class DBSelector extends Selector {
+    static select(axonOptions, axon) {
         let DBProvider;
 
         // eslint-disable-next-line no-shadow
@@ -56,4 +58,4 @@ class DBHandler {
     }
 }
 
-export default DBHandler;
+export default DBSelector;

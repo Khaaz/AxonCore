@@ -5,30 +5,34 @@ import util from 'util';
 // Core - Structures
 import EventManager from './Structures/Event/EventManager';
 import CommandDispatcher from './Structures/Dispatchers/CommandDispatcher';
+// Registries
+import ModuleRegistry from './Structures/Stores/ModuleRegistry';
 import CommandRegistry from './Structures/Stores/CommandRegistry';
+import ListenerRegistry from './Structures/Stores/ListenerRegistry';
+
 import GuildConfigCache from './Structures/Stores/GuildConfigCache';
+
+import MessageManager from './Langs/MessageManager';
 
 import ModuleLoader from './Structures/Loaders/ModuleLoader';
 import ClientInitialiser from './Structures/Loaders/ClientInitialiser';
 
-import MessageManager from './Langs/MessageManager';
+import DBProvider from './Database/DBProvider'; // default DBProvider
 
 // Utility
 import AxonUtils from './Utility/AxonUtils';
 import Utils from './Utility/Utils';
 
-import LibraryHandler from './Libraries/index';
-
-import LoggerHandler from './Loggers/index';
-import DBHandler from './Database/index';
-import DBProvider from './Database/DBProvider'; // default DBProvider
+// Selector
+import LibrarySelector from './Libraries/index';
+import LoggerSelector from './Loggers/index';
+import DBSelector from './Database/index';
 
 // Misc
 import logo from './Configs/logo';
 import packageJSON from '../package.json';
 import { EMBED_LIMITS } from './Utility/Constants/DiscordEnums';
-import ListenerRegistry from './Structures/Stores/ListenerRegistry';
-import ModuleRegistry from './Structures/Stores/ModuleRegistry';
+
 
 /**
  * AxonCore - Client constructor
@@ -95,7 +99,7 @@ class AxonClient extends EventEmitter {
         };
 
         /* Logger */
-        this.logger = axonOptions.extensions.logger || LoggerHandler.pickLogger(axonOptions.settings);
+        this.logger = axonOptions.extensions.logger || LoggerSelector.select(axonOptions.settings);
 
         /* AxonUtils */
         this.axonUtils = new AxonUtils(this);
@@ -109,14 +113,14 @@ class AxonClient extends EventEmitter {
         if (axonOptions.extensions.DBProvider && axonOptions.extensions.DBProvider.prototype instanceof DBProvider) {
             this.DBProvider = new axonOptions.extensions.DBProvider(this);
         } else {
-            this.DBProvider = DBHandler.pickDBProvider(axonOptions, this);
+            this.DBProvider = DBSelector.select(axonOptions, this);
         }
 
         /*
          * Initialise Bot Client and LibraryInterface
          */
         this._botClient = botClient;
-        this.library = LibraryHandler.pickLibrary(this, axonOptions);
+        this.library = LibrarySelector.select(this, axonOptions);
 
         /* Structures */
         this.modules = new ModuleRegistry(this);

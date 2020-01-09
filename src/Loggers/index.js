@@ -1,3 +1,5 @@
+import Selector from './../Structures/Selector';
+
 import DefaultLogger from './Logger';
 
 import { LOGGER_TYPES } from '../Utility/Constants/AxonEnums';
@@ -8,10 +10,11 @@ import { LOGGER_TYPES } from '../Utility/Constants/AxonEnums';
  *
  * @author Eleos, KhaaZ
  *
- * @class LoggerHandler
+ * @class LoggerSelector
+ * @extends Selector
  */
-class LoggerHandler {
-    static pickLogger(axonConfig) {
+class LoggerSelector extends Selector {
+    static static(axonConfig) {
         let Logger;
 
         switch (axonConfig.logger) {
@@ -94,4 +97,4 @@ class LoggerHandler {
     }
 }
 
-export default LoggerHandler;
+export default LoggerSelector;

@@ -12,6 +12,7 @@ import Collection from './../../Utility/Collection';
  * @prop {Object<AxonClient>} _axon - The AxonClient
  * @prop {Collection<*>} registry - The collection of items hold by the registry
  *
+ * @abstract
  * @class Registry
  */
 class Registry {

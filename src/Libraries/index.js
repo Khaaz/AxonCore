@@ -1,3 +1,5 @@
+import Selector from './../Structures/Selector';
+
 import ErisInterface from './eris/ErisInterface';
 import DjsInterface from './discordjs/DjsInterface';
 
@@ -9,10 +11,11 @@ import { LIBRARY_TYPES } from '../Utility/Constants/AxonEnums';
  *
  * @author KhaaZ
  *
- * @class LibraryHandler
+ * @class LibrarySelector
+ * @extends Selector
  */
-class LibraryHandler {
-    static pickLibrary(axon, axonOptions) {
+class LibrarySelector extends Selector {
+    static select(axon, axonOptions) {
         let libraryInterface;
 
         // eslint-disable-next-line no-shadow
@@ -45,4 +48,4 @@ class LibraryHandler {
     }
 }
 
-export default LibraryHandler;
+export default LibrarySelector;

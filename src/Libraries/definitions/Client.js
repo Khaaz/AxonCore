@@ -29,7 +29,7 @@ class Client {
     }
 
     getAvatar() {
-        throw new NoAbstractInstanceException();
+        throw new NotImplementedException();
     }
 
     getUser() {
