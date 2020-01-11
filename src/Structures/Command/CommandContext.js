@@ -117,33 +117,33 @@ class CommandContext {
     }
 
     /**
-     * By default returns the Command Response asynchronously.
+     * By default returns the Command Context asynchronously.
      *
-     * @returns {Promise<CommandResponse>}
+     * @returns {Promise<CommandContext>}
      *
-     * @memberof CommandResponse
+     * @memberof CommandContext
      */
     resolve() {
         return this.resolveAsync();
     }
 
     /**
-     * Returns the Command Response in a Promise (asynchronously)
+     * Returns the Command Context wrapped in a Promise (asynchronously)
      *
-     * @returns {Promise<CommandResponse>}
+     * @returns {Promise<CommandContext>}
      *
-     * @memberof CommandResponse
+     * @memberof CommandContext
      */
     resolveAsync() {
         return Promise.resolve(this);
     }
 
     /**
-     * Returns the Command Response (synchronously)
+     * Returns the Command Context (synchronously)
      *
-     * @returns {CommandResponse}
+     * @returns {CommandContext}
      *
-     * @memberof CommandResponse
+     * @memberof CommandContext
      */
     resolveSync() {
         return this;
