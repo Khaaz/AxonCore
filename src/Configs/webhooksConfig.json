@@ -1,17 +1,29 @@
 {
-    "status": {
+    "EMERG": {
         "id": "",
         "token": ""
     },
-    "loader": {
+    "ERROR": {
         "id": "",
         "token": ""
     },
-    "error": {
+    "WARN": {
         "id": "",
         "token": ""
     },
-    "misc": {
+    "DEBUG": {
+        "id": "",
+        "token": ""
+    },
+    "NOTICE": {
+        "id": "",
+        "token": ""
+    },
+    "INFO": {
+        "id": "",
+        "token": ""
+    },
+    "VERBOSE": {
         "id": "",
         "token": ""
     }

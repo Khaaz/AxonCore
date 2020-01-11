@@ -287,21 +287,21 @@ export const PERMISSION_MANAGER = 'MANAGE_GUILD';
 // Logging
 /**
  * @typedef {String} WEBHOOK_TYPES
- * * EMERG: 'emerg'
- * * ERROR: 'error'
- * * WARN: 'warn'
- * * DEBUG: 'debug'
- * * INFO: 'info'
- * * NOTICE: 'notice'
- * * VERBOSE: 'verbose'
+ * * EMERG: 'EMERG'
+ * * ERROR: 'ERROR'
+ * * WARN: 'WARN'
+ * * DEBUG: 'DEBUG'
+ * * NOTICE: 'NOTICE'
+ * * INFO: 'INFO'
+ * * VERBOSE: 'VERBOSE'
  */
 export const WEBHOOK_TYPES = {
     EMERG: 'EMERG',
     ERROR: 'ERROR',
     WARN: 'WARN',
     DEBUG: 'DEBUG',
-    INFO: 'INFO',
     NOTICE: 'NOTICE',
+    INFO: 'INFO',
     VERBOSE: 'VERBOSE',
 };
 
@@ -311,8 +311,8 @@ export const WEBHOOK_TYPES = {
  * * ERROR: 'error'
  * * WARN: 'warn'
  * * DEBUG: 'debug'
- * * INFO: 'info'
  * * NOTICE: 'notice'
+ * * INFO: 'info'
  * * VERBOSE: 'verbose'
  */
 export const LOG_LEVELS = {
@@ -320,8 +320,8 @@ export const LOG_LEVELS = {
     ERROR: 'error',
     WARN: 'warn',
     DEBUG: 'debug',
-    INFO: 'info',
     NOTICE: 'notice',
+    INFO: 'info',
     VERBOSE: 'verbose',
 };
 
@@ -331,18 +331,18 @@ export const LOG_LEVELS = {
  * * ERROR: 'error'
  * * WARN: 'warn'
  * * DEBUG: 'debug'
- * * INFO: 'info'
  * * NOTICE: 'notice'
+ * * INFO: 'info'
  * * VERBOSE: 'verbose'
  */
 export const WEBHOOK_TO_COLOR = {
-    EMERG: 'emerg',
-    ERROR: 'error',
-    WARN: 'warn',
-    DEBUG: 'debug',
-    INFO: 'info',
-    NOTICE: 'notice',
-    VERBOSE: 'verbose',
+    EMERG: 0xFF0000,
+    ERROR: 0xFF0000,
+    WARN: 0xFF4500,
+    DEBUG: 0x0000FF,
+    NOTICE: 0x00FF00,
+    INFO: 0x00FF00,
+    VERBOSE: 0x808080,
 };
 
 /**

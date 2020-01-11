@@ -14,7 +14,7 @@ import { LOGGER_TYPES } from '../Utility/Constants/AxonEnums';
  * @extends Selector
  */
 class LoggerSelector extends Selector {
-    static static(axonConfig) {
+    static select(axonConfig) {
         let Logger;
 
         switch (axonConfig.logger) {

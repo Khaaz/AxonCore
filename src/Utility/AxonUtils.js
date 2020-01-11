@@ -106,7 +106,7 @@ class AxonUtils {
      * @memberof AxonUtils
      */
     triggerWebhook(type, embed, opt) {
-        const wh = this.axon.webhooks[type];
+        const wh = this.axon.configs.webhooks[type];
         if (wh && wh.id && wh.token && wh.id.length > 0 && wh.token.length) {
             this.library.client.triggerWebhook(
                 wh.id,

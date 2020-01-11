@@ -49,11 +49,14 @@ import defaultWebhooksConfig from './Configs/webhooksConfig.json';
  * @prop {Object} data.custom - Custom configs that can be provided
  *
  * // Webhooks
- * @prop {Object} webhooksConfig - Webhooks tokens / id
- * @prop {Object} webhooksConfig.status - Webhooks tokens / id for status info
- * @prop {Object} webhooksConfig.loader - Webhooks tokens / id for loader info
- * @prop {Object} webhooksConfig.error - Webhooks tokens / id for error info
- * @prop {Object} webhooksConfig.misc - Webhooks tokens / id for misc info
+ * @prop {Object} webhooks - Webhooks tokens / id
+ * @prop {Object} webhooks.EMERG
+ * @prop {Object} webhooks.ERROR
+ * @prop {Object} webhooks.WARN
+ * @prop {Object} webhooks.DEBUG
+ * @prop {Object} webhooks.NOTICE
+ * @prop {Object} webhooks.INFO
+ * @prop {Object} webhooks.VERBOSE
  *
  * // Extensions
  * @prop {Object} extensions - Classes overrides
@@ -105,11 +108,14 @@ class AxonOptions {
      * @param {Object} data.custom - Custom configs that can be provided
      *
      * // Webhooks
-     * @param {Object} [webhooksConfig={}] - Webhooks tokens / id
-     * @param {Object} webhooksConfig.status - Webhooks tokens / id for status info
-     * @param {Object} webhooksConfig.loader - Webhooks tokens / id for loader info
-     * @param {Object} webhooksConfig.error - Webhooks tokens / id for error info
-     * @param {Object} webhooksConfig.misc - Webhooks tokens / id for misc info
+     * @param {Object} [webhooks={}] - Webhooks tokens / id
+     * @param {Object} webhooks.EMERG
+     * @param {Object} webhooks.ERROR
+     * @param {Object} webhooks.WARN
+     * @param {Object} webhooks.DEBUG
+     * @param {Object} webhooks.NOTICE
+     * @param {Object} webhooks.INFO
+     * @param {Object} webhooks.VERBOSE
      *
      * // Extensions
      * @param {Object} [extensions={}] - Classes overrides
@@ -122,7 +128,7 @@ class AxonOptions {
      *
      * @memberof AxonOptions
      */
-    constructor(data = {}, webhooksConfig = {}, extensions = {} ) {
+    constructor(data = {}, webhooks = {}, extensions = {} ) {
         this._token = data.token || null; // DJS token to login
 
         this.prefixes = Utils.compareObject(defaultConfig.prefixes, data.prefixes)
@@ -158,8 +164,8 @@ class AxonOptions {
         this.custom = data.custom || null;
 
         // webhooks
-        this.webhooksConfig = Utils.compareObject(defaultWebhooksConfig, webhooksConfig)
-            ? webhooksConfig
+        this.webhooks = Utils.compareObject(defaultWebhooksConfig, webhooks)
+            ? webhooks
             : defaultWebhooksConfig;
 
         // extensions
