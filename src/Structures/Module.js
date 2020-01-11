@@ -25,24 +25,24 @@ import NotImplementedException from '../Errors/NotImplementedException';
  * @prop {String} [info.name]
  * @prop {String} [info.category]
  * @prop {String} [info.description]
- * @prop {Object<CommandPermissions>} permissions - Default values potentially used for CommandPermissions
- * @prop {Object<CommandOptions>} options - Default values potentially used  for CommandOptions
+ * @prop {CommandPermissions} permissions - Default values potentially used for CommandPermissions
+ * @prop {CommandOptions} options - Default values potentially used  for CommandOptions
  *
- * @prop {Object<CommandLoader>} commandLoader - Load all commands in the module / register / unregister
- * @prop {Object<ListenerLoader>} listenerLoader - Load all events in the module / register / unregister
+ * @prop {CommandLoader} commandLoader - Load all commands in the module / register / unregister
+ * @prop {ListenerLoader} listenerLoader - Load all events in the module / register / unregister
  */
 class Module extends Base {
     /**
      * Creates a Module instance.
      *
-     * @param {Object<AxonClient>} client
+     * @param {AxonClient} client
      * @param {Object} [data={}] - All module parameters
      * @param {String} [data.label] - The module label
      * @param {Boolean} [data.enabled] - Whether the module is enabled or not
      * @param {Boolean} [data.serverBypass] - Whether the module can be disabled in a server or not
      * @param {Object} [data.infos]
-     * @param {Object<CommandOptions>|Object} [data.options] - The default options for all commands in this module
-     * @param {Object<CommandPermissions>|Object} [data.permissions] - The default permissions for all commands in this module
+     * @param {CommandOptions|Object} [data.options] - The default options for all commands in this module
+     * @param {CommandPermissions|Object} [data.permissions] - The default permissions for all commands in this module
      *
      * @memberof Module
      */

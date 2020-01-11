@@ -42,20 +42,20 @@ import { WEBHOOK_TYPES, LOG_LEVELS, WEBHOOK_TO_COLOR } from './Utility/Constants
  * @class AxonClient
  * @extends EventEmitter
  *
- * @prop {Object<BotClient>} _botClient - Eris or Discordjs Client
+ * @prop {BotClient} _botClient - Eris or Discordjs Client
  * @prop {Collection<Module>} modules - All modules in the client [key: label, value: module]
  * @prop {Collection<Command>} commands - All commands in the client [key: label, value: command]
  * @prop {Map<String>} commandAliases - All aliases in the client [key: alias, value: commandLabel]
- * @prop {Object<EventManager>} EventManager - The EventManager instance that handle all AxonCore events
- * @prop {Object<GuildConfigCache>} guildConfigs - The Manager that handles GuildConfigs (cache / DB etc)
- * @prop {Object<AxonConfig>} axonConfig - The AxonConfigobject that handles globally blacklisted users and guilds
- * @prop {Object<CommandDispatcher>} dispatcher - Dispatch commands onMessageCreate.
- * @prop {Object<ModuleLoader>} moduleLoader - Load, register, unregister modules.
- * @prop {Object<MessageManager>} messageManager - Message manager object accessible with `<AxonClient>.l`
+ * @prop {EventManager} EventManager - The EventManager instance that handle all AxonCore events
+ * @prop {GuildConfigCache} guildConfigs - The Manager that handles GuildConfigs (cache / DB etc)
+ * @prop {AxonConfig} axonConfig - The AxonConfigobject that handles globally blacklisted users and guilds
+ * @prop {CommandDispatcher} dispatcher - Dispatch commands onMessageCreate.
+ * @prop {ModuleLoader} moduleLoader - Load, register, unregister modules.
+ * @prop {MessageManager} messageManager - Message manager object accessible with `<AxonClient>.l`
  * @prop {Object} logger - The Logger instance
  * @prop {Object} axonUtils - Util methods (AxonCore)
  * @prop {Object} utils - Utils methods (general)
- * @prop {Object<DBProvider>} DBProvider - The DBProvider instance
+ * @prop {DBProvider} DBProvider - The DBProvider instance
  * @prop {Object} configs - configs (webhooks, template, custom)
  * @prop {Object} staff - Bot Staff (owners, admins, +...)
  * @prop {Array<String>} staff.owners - Array of user IDs with BotOwner permissions
@@ -72,8 +72,8 @@ class AxonClient extends EventEmitter {
     /**
      * Creates an AxonClient instance.
      *
-     * @param {Object<BotClient>} botClient - Eris or Discordjs Client instance
-     * @param {Object<AxonOptions>} [axonOptions={}] - Axon options
+     * @param {BotClient} botClient - Eris or Discordjs Client instance
+     * @param {AxonOptions} [axonOptions={}] - Axon options
      * @param {Object} [modules={}] - Object with all modules to add in the bot
      *
      * @memberof AxonClient
@@ -174,7 +174,7 @@ class AxonClient extends EventEmitter {
      * Returns the bot client instance
      *
      * @readonly
-     * @type {Object<BotClient>}
+     * @type {BotClient}
      *
      * @memberof AxonClient
      */
@@ -246,7 +246,7 @@ class AxonClient extends EventEmitter {
      * Return the MessageManager instance
      *
      * @readonly
-     * @type {Object<MessageManager>}
+     * @type {MessageManager}
      *
      * @memberof AxonClient
      */
@@ -258,7 +258,7 @@ class AxonClient extends EventEmitter {
      * Get a module from AxonClient with the given label.
      *
      * @param {String} module - Module label
-     * @returns {Object<Module>|null}
+     * @returns {Module|null}
      *
      * @memberof AxonClient
      */
@@ -270,7 +270,7 @@ class AxonClient extends EventEmitter {
      * Get a command/subcommand from AxonClient with the given full label.
      *
      * @param {String} fullLabel - Full command (or subcommand) label
-     * @returns {Object<Command>|null}
+     * @returns {Command|null}
      *
      * @memberof AxonClient
      */
@@ -390,7 +390,7 @@ class AxonClient extends EventEmitter {
     /**
      * Function executed on the global messageCreate event and dispatch to the correct command and execution
      *
-     * @param {Object<Message>} msg
+     * @param {Message} msg
      *
      * @memberof AxonClient
      */
@@ -548,7 +548,7 @@ class AxonClient extends EventEmitter {
      * Doesn't show commands that the user can't execute.
      * This method can be overridden in child.
      *
-     * @param {Object<Message>} msg - The message object
+     * @param {Message} msg - The message object
      * @returns {Promise<Message>} Message Object
      *
      * @memberof AxonClient

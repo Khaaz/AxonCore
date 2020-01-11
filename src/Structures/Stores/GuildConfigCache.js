@@ -12,14 +12,14 @@ import AxonError from '../../Errors/AxonError';
  *
  * @class GuildConfigsCache
  *
- * @prop {Object<AxonClient>} _axon
+ * @prop {AxonClient} _axon
  * @prop {LRUCache<GuildConfig>} guildConfigs
  */
 class GuildConfigsCache {
     /**
      * Creates an instance of GuildConfigsCache.
      *
-     * @param {Object<AxonClient>} axonClient
+     * @param {AxonClient} axonClient
      *
      * @memberof GuildConfigsCache
      */

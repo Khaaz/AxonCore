@@ -64,7 +64,7 @@ class Validater {
      * Will automatically correct the command by using default fors ome part
      *
      * @static
-     * @param {Object<Command>} command
+     * @param {Command} command
      * @returns {Boolean} Whether the command is considered valid or not
      *
      * @memberof Validater

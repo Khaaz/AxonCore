@@ -40,7 +40,7 @@ class CommandRegistry extends Registry {
      * Get a command/subcommand with the given full label.
      *
      * @param {Array<String>} splitLabel - Full command (or subcommand) label
-     * @returns {Object<Command>|null}
+     * @returns {Command|null}
      *
      * @memberof CommandRegistry
      */
@@ -61,7 +61,7 @@ class CommandRegistry extends Registry {
      * Register a Command inside the CommandRegistry
      *
      * @param {String} label - The command label
-     * @param {Object<Command>} command - The command object
+     * @param {Command} command - The command object
      *
      * @memberof CommandRegistry
      */
@@ -84,7 +84,7 @@ class CommandRegistry extends Registry {
      * Unregister a Command from the CommandRegistry
      *
      * @param {String} label - The command label
-     * @param {Object<Commands>} [command=null] - The command object
+     * @param {Commands} [command=null] - The command object
      * @memberof CommandRegistry
      */
     unregister(label, command = null) {
@@ -110,8 +110,8 @@ class CommandRegistry extends Registry {
      *
      * @param {String} label - The command label/ command alias
      * @param {Array<String>} args - Array of arguments
-     * @param {Object<GuildConfig>} [guildConfig=null] - GuildConfig
-     * @returns {Object<Command>|null} The command object or null if the command doesn't exist or is not enabled
+     * @param {GuildConfig} [guildConfig=null] - GuildConfig
+     * @returns {Command|null} The command object or null if the command doesn't exist or is not enabled
      *
      * @memberof CommandRegistry
      */

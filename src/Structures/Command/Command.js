@@ -19,9 +19,9 @@ import { COMMAND_EXECUTION_STATE } from '../../Utility/Constants/AxonEnums';
  * @class Command
  * @extends Base
  *
- * @prop {Object<Module>} _module - Module object
+ * @prop {Module} _module - Module object
  *
- * @prop {Object<CommandCooldown>} _cooldown - Cooldown Object for the command (manage all command cooldowns)
+ * @prop {CommandCooldown} _cooldown - Cooldown Object for the command (manage all command cooldowns)
  *
  * @prop {String} label - Command label (name/id)
  * @prop {Array<String>} [aliases=[]] - Array of commands aliases (including the command label)
@@ -30,11 +30,11 @@ import { COMMAND_EXECUTION_STATE } from '../../Utility/Constants/AxonEnums';
  * @prop {Boolean} [serverBypass=module.serverBypass] - Whether the command can be disabled
  *
  * @prop {Boolean} [isSubcmd=false] - Whether the command IS a subcommand
- * @prop {Object<Command>} [parentCommand=null] - Reference to the parent command (if isSubcmd = true)
+ * @prop {Command} [parentCommand=null] - Reference to the parent command (if isSubcmd = true)
  * @prop {Boolean} [hasSubcmd=false] - Whether the command HAS subcommands
  * @prop {Array<Object>} subcmds - Array of subcommand objects (deleted after init)
  * @prop {Collection<Command>} [subCommands=null] - Collection of subcommands
- * @prop {Object<Map>} [subCommandsAliases=null] - Map of subcommand aliases
+ * @prop {Map} [subCommandsAliases=null] - Map of subcommand aliases
  *
  * @prop {Object} infos - Default info about the command
  * @prop {Array<String>} [infos.owners] - Command authors
@@ -43,8 +43,8 @@ import { COMMAND_EXECUTION_STATE } from '../../Utility/Constants/AxonEnums';
  * @prop {String} [infos.usage] - Command usage
  * @prop {Array<String>} [infos.example] - Array of command examples
  *
- * @prop {Object<CommandOptions>} options - Options Object for the command (manage all command options)
- * @prop {Object<CommandPermissions>} permissions - Permissions Object for the command (manage all command permissions)
+ * @prop {CommandOptions} options - Options Object for the command (manage all command options)
+ * @prop {CommandPermissions} permissions - Permissions Object for the command (manage all command permissions)
  */
 class Command extends Base {
     /**
@@ -52,7 +52,7 @@ class Command extends Base {
      * Handles execution of this command.
      * Overrides the execute method. Execute method will be called everytime the command is called.
      *
-     * @param {Object<Module>} module
+     * @param {Module} module
      * @param {Object} [data={}] - All command parameters
      * @param {String} [data.label] - The command label
      * @param {Array<String>} [data.aliases] - The command aliases
@@ -62,8 +62,8 @@ class Command extends Base {
      * @param {Boolean} [data.serverBypass] - Whether the ciommand can be server disabled
      * @param {Array<String>} [data.subcmds] - List of subcommands class to be added in the Command
      * @param {Object} [data.infos]
-     * @param {Object<CommandOptions>|Object} [data.options] - The command options
-     * @param {Object<CommandPermissions>|Object} [data.permissions] - The command permissions
+     * @param {CommandOptions|Object} [data.options] - The command options
+     * @param {CommandPermissions|Object} [data.permissions] - The command permissions
      *
      * @memberof Command
      */
@@ -130,7 +130,7 @@ class Command extends Base {
      * Returns the parent module instance
      *
      * @readonly
-     * @type {Object<Module>}
+     * @type {Module}
      * @memberof Command
      */
     get module() {
@@ -152,7 +152,7 @@ class Command extends Base {
      * Returns the library Interface instance
      *
      * @readonly
-     * @type {Object<LibraryInterface>}
+     * @type {LibraryInterface}
      * @memberof Command
      */
     get library() {
@@ -320,9 +320,9 @@ class Command extends Base {
      * Main method - command logic being executed when the command is actually ran.
      *
      * @param {Object} object - An Object with all arguments to use execute
-     * @param {Object<Message>} [object.message] - The Eris message Object
+     * @param {Message} [object.message] - The Eris message Object
      * @param {Array<String>} [object.args] - The Array of arguments
-     * @param {Object<GuildConfig>} [object.guildConfig] - The guildConfig if it exists
+     * @param {GuildConfig} [object.guildConfig] - The guildConfig if it exists
      *
      * @returns {Promise<CommandResponse>} Returns a CommandResponse that will be used to create the CommandContext
      *
@@ -342,7 +342,7 @@ class Command extends Base {
      * Send help message in the current channel with perm checks done before.
      * Call a custom sendHelp method if it exists, use the default one if it doesn't.
      *
-     * @param {Object<Message>} { msg, guildConfig, isAdmin, isOwner } - The message object
+     * @param {Message} { msg, guildConfig, isAdmin, isOwner } - The message object
      * @returns {Promise<CommandContext>} Message Object
      * @memberof Command
      */
@@ -429,7 +429,7 @@ class Command extends Base {
     /**
      * Send an error message in case of invalid bot permissions, delete it automatically after a delay.
      *
-     * @param {Object<Channel>} channel - The channel Object
+     * @param {Channel} channel - The channel Object
      * @param {Array<String>} [permissions=[]] - Optional array of permissions string
      * @returns {Promise<Message?>} Message Object
      * @memberof Command
@@ -453,8 +453,8 @@ class Command extends Base {
      * Send an error message in case of invalid user permissions, delete it automatically after a delay.
      * Uses the template message in config/template.
      *
-     * @param {Object<Channel>} channel - The channel object
-     * @param {Object<Member>} member - The member object
+     * @param {Channel} channel - The channel object
+     * @param {Member} member - The member object
      * @param {Number} [deleteTimeout] - The permission message deletion timeout, if `null` the the message will not delete
      * @returns {Promise<Message?>} Message Object
      * @memberof Command
@@ -473,7 +473,7 @@ class Command extends Base {
      * Send an error message incase of invalid target permissions (serverMod/serverAdmin).
      * Uses the template message in config/template.
      *
-     * @param {Object<Channel>} channel - The channel Object
+     * @param {Channel} channel - The channel Object
      * @returns {Promise<Message?>} Message Object
      * @memberof Command
      */
@@ -485,7 +485,7 @@ class Command extends Base {
     /**
      * Send an error message in case of invalid cooldown, delete it automatically after a delay.
      *
-     * @param {Object<Channel>} channel - The channel Object
+     * @param {Channel} channel - The channel Object
      * @returns {Promise<Message?>} Message Object
      * @memberof Command
      */

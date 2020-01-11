@@ -20,7 +20,7 @@ class ModuleRegistry extends Registry {
      * Register a Module inside the ModuleRegistry
      *
      * @param {String} label - The module label
-     * @param {Object<Module>} modile - The module object
+     * @param {Module} modile - The module object
      *
      * @memberof ModuleRegistry
      */
@@ -39,7 +39,7 @@ class ModuleRegistry extends Registry {
      * Unregister a Module from the ModuleRegistry
      *
      * @param {String} label - The module label
-     * @param {Object<Module>} [module=null] - The module object
+     * @param {Module} [module=null] - The module object
      * @memberof ModuleRegistry
      */
     unregister(label, module = null) {

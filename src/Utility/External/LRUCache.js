@@ -22,8 +22,8 @@ class Node {
  *
  * @prop {Number} limit - Maximum size of the LRU
  * @prop {Number} size - Current size of the LRU
- * @prop {Object<Node>} head
- * @prop {Object<Node>} tail
+ * @prop {Node} head
+ * @prop {Node} tail
  * @prop {Collection<*>} _cache - The Collection holding the cache (private, handled by the LRU structure)
  */
 class LRUCache {

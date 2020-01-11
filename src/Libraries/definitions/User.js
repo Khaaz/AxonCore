@@ -34,7 +34,7 @@ class User {
     /**
      * Get the DM channel for this user.
      *
-     * @param {Object<User>} user
+     * @param {User} user
      * @returns {Promise<Channel>} - The DM channel
      *
      * @memberof User

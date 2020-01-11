@@ -35,7 +35,7 @@ class ClientInitialiser {
      * Otherwise the return value is a promise.
      *
      * @static
-     * @param {Object<AxonClient>} axon
+     * @param {AxonClient} axon
      * @memberof ClientInitialiser
      */
     static async initAxon(axon) {

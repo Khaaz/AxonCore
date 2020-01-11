@@ -9,7 +9,7 @@ import Collection from './../../Utility/Collection';
  *
  * @author KhaaZ
  *
- * @prop {Object<AxonClient>} _axon - The AxonClient
+ * @prop {AxonClient} _axon - The AxonClient
  * @prop {Collection<*>} registry - The collection of items hold by the registry
  *
  * @abstract
@@ -19,7 +19,7 @@ class Registry {
     /**
      * Creates an instance of Registry.
      *
-     * @param {Object<AxonClient>} axon - The AxonClient
+     * @param {AxonClient} axon - The AxonClient
      * @param {Object} base - The base definition to use for the registry
      *
      * @memberof Registry

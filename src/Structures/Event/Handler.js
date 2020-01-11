@@ -10,7 +10,7 @@ import NotImplementedException from '../../Errors/NotImplementedException';
  * @abstract
  * @class Handler
  *
- * @prop {Object<AxonClient>} _axon
+ * @prop {AxonClient} _axon
  * @prop {String} name
  * @prop {Array<Listener>} _listeners
  */
@@ -18,7 +18,7 @@ class Handler {
     /**
      * Creates an instance of Handler.
      *
-     * @param {Object<AxonClient>} axon
+     * @param {AxonClient} axon
      * @param {String} name
      * @param {Array<Listener>} listeners
      *

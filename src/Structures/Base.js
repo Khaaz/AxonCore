@@ -11,13 +11,13 @@ import { TYPE_ERRORS } from '../Utility/Constants/AxonEnums';
  *
  * @class Base
  *
- * @prop {Object<AxonClient>} _axon - AxonClient
+ * @prop {AxonClient} _axon - AxonClient
  */
 class Base {
     /**
      * Creates an instance of Base.
      *
-     * @param {Object<AxonClient>} axonClient
+     * @param {AxonClient} axonClient
      *
      * @memberof Base
      */
@@ -31,7 +31,7 @@ class Base {
      * Returns the AxonClient instance
      *
      * @readonly
-     * @type {Object<AxonClient>}
+     * @type {AxonClient}
      * @memberof Base
      */
     get axon() {
@@ -42,7 +42,7 @@ class Base {
      * Returns the bot client instance
      *
      * @readonly
-     * @type {Object<Client>}
+     * @type {Client}
      * @memberof Base
      */
     get bot() {
@@ -53,7 +53,7 @@ class Base {
      * Returns the Logger instance
      *
      * @readonly
-     * @type {Object<Logger>}
+     * @type {Logger}
      * @memberof Base
      */
     get logger() {
@@ -65,7 +65,7 @@ class Base {
      *
      * @deprecated
      * @readonly
-     * @type {Object<Resolver>}
+     * @type {Resolver}
      * @memberof Base
      */
     get Resolver() { // used as a shortcut only if a Resolver exists as AxonClient property
@@ -76,7 +76,7 @@ class Base {
      * Returns the AxonUtils instance
      *
      * @readonly
-     * @type {Object<AxonUtils>}
+     * @type {AxonUtils}
      * @memberof Base
      */
     get axonUtils() {
@@ -87,7 +87,7 @@ class Base {
      * Returns the Utils instance
      *
      * @readonly
-     * @type {Object<Utils>}
+     * @type {Utils}
      * @memberof Base
      */
     get utils() {
@@ -98,7 +98,7 @@ class Base {
      * Returns the MessageManager instance
      *
      * @readonly
-     * @type {Object<MessageManager>}
+     * @type {MessageManager}
      * @memberof Base
      */
     get l() {
@@ -109,7 +109,7 @@ class Base {
      * Get a module from AxonClient with the label
      *
      * @param {String} module - Module label
-     * @returns {Object<Module>|NULL}
+     * @returns {Module|NULL}
      * @memberof Base
      */
     getModule(module) {
@@ -120,7 +120,7 @@ class Base {
      * Get a command/subcommand from AxonClient with the full label
      *
      * @param {String} fullLabel - Full command (or subcommand) label
-     * @returns {Object<Command>|NULL}
+     * @returns {Command|NULL}
      * @memberof Base
      */
     getCommand(fullLabel) {
@@ -133,7 +133,7 @@ class Base {
      * DM targeted user if the bot is able to retrieve DM channel.
      * Reject promise if not
      *
-     * @param {Object<User>} user - User object to get the DM channel
+     * @param {User} user - User object to get the DM channel
      * @param {Object/String} content - String or object (embed)
      * @param {Object} [options={}] - Options { disableEveryone: Boolean, delete: Boolean, delay: Number }
      * @param {Boolean} [options.disableEveryone=true] - Whether to allow mentioning everyone or not
@@ -152,7 +152,7 @@ class Base {
      * Check for bot permissions + message/embed length
      * Doesn't support file
      *
-     * @param {Object<Channel>} channel - The channel Object
+     * @param {Channel} channel - The channel Object
      * @param {Object/String} content - Message content, String or Embed Object
      * @param {Object} [options={}] - Options { disableEveryone: Boolean, delete: Boolean, delay: Number }
      * @param {Boolean} [options.disableEveryone=true] - Whether to allow mentioning everyone or not
@@ -170,7 +170,7 @@ class Base {
      * Edit a message
      * Check for bot permissions + message embed/length
      *
-     * @param {Object<Message>} message - The message object to edit
+     * @param {Message} message - The message object to edit
      * @param {Object/String} content - Object (embed) or String
      * @returns {Promise<Message?>} Message Object
      *
@@ -185,7 +185,7 @@ class Base {
      * Check for sendMessage perms.
      * Await for sendMessage to throw correctly potential errors.
      *
-     * @param {Object<Channel>} channel - The channel Object
+     * @param {Channel} channel - The channel Object
      * @param {Object|String} content - Success message content
      * @param {Object} [options={}] - Additional options
      * @param {Boolean} [options.disableEveryone=true] - Whether to allow mentioning everyone or not
@@ -211,7 +211,7 @@ class Base {
      * Check for sendMessage perms.
      * Await for sendMessage to throw correctly potential errors.
      *
-     * @@param {Object<Channel>} channel - The channel Object
+     * @@param {Channel} channel - The channel Object
      * @param {Object|String} content - Success message content
      * @param {Object} [options={}] - Additional options
      * @param {Boolean} [options.disableEveryone=true] - Whether to allow mentioning everyone or not
@@ -237,8 +237,8 @@ class Base {
      * Handles errors and sends an error message/log.
      * Calls sendError().
      *
-     * @param {Object<Message>} msg - The message Object
-     * @param {Object<Error>} err - The error message
+     * @param {Message} msg - The message Object
+     * @param {Error} err - The error message
      * @param {String} type - Type of error (api, db, internal)
      * @param {String} errMsg - Optional error message
      * @returns {Promise<CommandResponse>} The non successful Command Response

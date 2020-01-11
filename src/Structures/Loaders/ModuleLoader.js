@@ -24,7 +24,7 @@ class ModuleLoader extends Loader {
      * Returns the AxonClient instance
      *
      * @readonly
-     * @type {Object<AxonClient>}
+     * @type {AxonClient}
      * @memberof ModuleLoader
      */
     get axon() {
@@ -35,7 +35,7 @@ class ModuleLoader extends Loader {
      * Returns the Logger instance
      *
      * @readonly
-     * @type {Object<Logger>}
+     * @type {Logger}
      * @memberof ModuleLoader
      */
     get logger() {
@@ -46,7 +46,7 @@ class ModuleLoader extends Loader {
      * Load one module instance in the client.
      * Validate and correct the module before registering it.
      *
-     * @param {Object<Module>} module - The module to load
+     * @param {Module} module - The module to load
      * @returns {Boolean}
      *
      * @memberof ModuleLoader
@@ -75,7 +75,7 @@ class ModuleLoader extends Loader {
      * Load all modules in the client.
      * Instantiate all modules.
      *
-     * @param {Object<Module>} modules
+     * @param {Module} modules
      * @returns {Boolean}
      *
      * @memberof ModuleLoader

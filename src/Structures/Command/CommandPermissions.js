@@ -35,7 +35,7 @@ class CommandPermissions {
     /**
      * Creates an instance of CommandPermissions.
      *
-     * @param {Object<Command>} command - The base command
+     * @param {Command} command - The base command
      * @param {Object} [override={}] - The specific permissions for this command (format - CommandPermissions)
      * @param {Boolean} [useModuleDefault=false] - Whether to use or not the module's base permissions before applying override permissions
      *
@@ -98,7 +98,7 @@ class CommandPermissions {
      * Returns the AxonClient instance
      *
      * @readonly
-     * @type {Object<AxonClient>}
+     * @type {AxonClient}
      * @memberof CommandPermissions
      */
     get axon() {
@@ -109,7 +109,7 @@ class CommandPermissions {
      *
      *
      * @readonly
-     * @type {Object<Utils>}
+     * @type {Utils}
      * @memberof CommandPermissions
      */
     get utils() {
@@ -120,7 +120,7 @@ class CommandPermissions {
      * Returns the AxonUtils instance
      *
      * @readonly
-     * @type {Object<AxonUtils>}
+     * @type {AxonUtils}
      * @memberof CommandPermissions
      */
     get axonUtils() {
@@ -131,7 +131,7 @@ class CommandPermissions {
      * Returns the LibraryInterface instance
      *
      * @readonly
-     * @type {Object<LibraryInterface>}
+     * @type {LibraryInterface}
      * @memberof CommandPermissions
      */
     get library() {
@@ -144,7 +144,7 @@ class CommandPermissions {
      * Needed - Needs all specified permissions => Goes through other checkers
      * ServerMod
      *
-     * @param {Object<Message>} msg - The Message Object
+     * @param {Message} msg - The Message Object
      * @param {Object} guildConf - GuildConfig
      * @returns {Array<Boolean, String|null>} True if the user can execute command / False if not. Second element is the missing permission || null
      *
@@ -416,7 +416,7 @@ class CommandPermissions {
     /**
      * Check bot permission
      *
-     * @param {Object<Channel>} channel
+     * @param {Channel} channel
      * @returns {Boolean}
      *
      * @memberof CommandPermissions
@@ -431,7 +431,7 @@ class CommandPermissions {
     /**
      * Check user permissions [bypass]
      *
-     * @param {Object<Member>} member
+     * @param {Member} member
      * @returns {Boolean}
      *
      * @memberof CommandPermissions
@@ -452,7 +452,7 @@ class CommandPermissions {
     /**
      * Check user permissions [needed]
      *
-     * @param {Object<Member>} member
+     * @param {Member} member
      * @returns {Boolean}
      *
      * @memberof CommandPermissions
@@ -472,7 +472,7 @@ class CommandPermissions {
     /**
      * Check userIDs [bypass]
      *
-     * @param {Object<Member>} member
+     * @param {Member} member
      * @returns {Boolean}
      *
      * @memberof CommandPermissions
@@ -487,7 +487,7 @@ class CommandPermissions {
     /**
      * Check userIDs [needed]
      *
-     * @param {Object<Member>} member
+     * @param {Member} member
      * @returns {Boolean}
      *
      * @memberof CommandPermissions
@@ -502,7 +502,7 @@ class CommandPermissions {
     /**
      * Check roleIDs [bypass]
      *
-     * @param {Object<Member>} member
+     * @param {Member} member
      * @returns {Boolean}
      *
      * @memberof CommandPermissions
@@ -523,7 +523,7 @@ class CommandPermissions {
     /**
      * Check roleIDs [needed]
      *
-     * @param {Object<Member>} member
+     * @param {Member} member
      * @returns {Boolean}
      *
      * @memberof CommandPermissions
@@ -544,7 +544,7 @@ class CommandPermissions {
     /**
      * Check channelIDs [bypass]
      *
-     * @param {Object<Channel>} channel
+     * @param {Channel} channel
      * @returns {Boolean}
      *
      * @memberof CommandPermissions
@@ -559,7 +559,7 @@ class CommandPermissions {
     /**
      * Check channelIDs [needed]
      *
-     * @param {Object<Channel>} channel
+     * @param {Channel} channel
      * @returns {Boolean}
      *
      * @memberof CommandPermissions
@@ -574,7 +574,7 @@ class CommandPermissions {
     /**
      * Check if the user is bot staff [bypass]
      *
-     * @param {Object<Member>} member
+     * @param {Member} member
      * @returns {Boolean} True if Staff / False if not
      *
      * @memberof CommandPermissions
@@ -589,7 +589,7 @@ class CommandPermissions {
     /**
      * Check if the user is bot staff [needed]
      *
-     * @param {Object<Member>} member
+     * @param {Member} member
      * @returns {Boolean} True if Staff / False if not
      *
      * @memberof CommandPermissions

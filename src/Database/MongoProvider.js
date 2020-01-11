@@ -18,7 +18,7 @@ class MongoProvider extends DBProvider {
     /**
      * Override init method.
      *
-     * @param {Object<AxonOptions>}
+     * @param {AxonOptions}
      *
      * @memberof MongoProvider
      */

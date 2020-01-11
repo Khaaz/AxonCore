@@ -17,13 +17,13 @@ import NotImplementedException from '../Errors/NotImplementedException';
  * @abstract
  * @class DBProvider
  *
- * @prop {Object<AxonClient>} axon - The AxonClient
+ * @prop {AxonClient} axon - The AxonClient
  */
 class DBProvider {
     /**
      * Creates an instance of DBProvider.
      *
-     * @param {Object<AxonClient>} axon
+     * @param {AxonClient} axon
      *
      * @memberof DBProvider
      */
@@ -43,7 +43,7 @@ class DBProvider {
      * Init the DBProvider.
      * Method calledjust after instantiation.Can be overrided with anything that willbe used by the provider.
      *
-     * @param {Object<AxonOptions>}
+     * @param {AxonOptions}
      *
      * @memberof DBProvider
      */

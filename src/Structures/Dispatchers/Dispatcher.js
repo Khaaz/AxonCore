@@ -10,13 +10,13 @@ import NotImplementedException from '../../Errors/NotImplementedException';
  * @abstract
  * @class Dispatcher
  *
- * @prop {Object<AxonClient>} _axon - AxonClient
+ * @prop {AxonClient} _axon - AxonClient
  */
 class Dispatcher {
     /**
      * Creates an instance of Dispatcher.
      *
-     * @param {Object<AxonClient>} axon
+     * @param {AxonClient} axon
      *
      * @memberof Dispatcher
      */

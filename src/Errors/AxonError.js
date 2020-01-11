@@ -12,7 +12,7 @@ class AxonError extends Error {
      * Creates an instance of AxonError.
      *
      * @param {String} message - custom error message
-     * @param {Object<Module>|String} module Module in which the error originated from
+     * @param {Module|String} module Module in which the error originated from
      * @param {String} [subModule=null] Module in which the error originated from
      * @memberof AxonError
      */

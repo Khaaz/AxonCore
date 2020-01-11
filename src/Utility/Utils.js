@@ -22,7 +22,7 @@ const HEX_CODE = /^#?([0-9A-Fa-f]{6})$/;
  *
  * @class Utils
  *
- * @prop {Object<AxonClient>} _axon - AxonClient
+ * @prop {AxonClient} _axon - AxonClient
  *
  * @prop {RegExp} userMention - Regular Expression to match a userMention
  * @prop {RegExp} roleMention - Regular Expression to match a roleMention
@@ -34,7 +34,7 @@ class Utils {
     /**
      * Creates an instance of Utils.
      *
-     * @param {Object<AxonClient>} client
+     * @param {AxonClient} client
      *
      * @memberof Utils
      */
@@ -113,7 +113,7 @@ class Utils {
      * Returns the AxonClient instance
      *
      * @readonly
-     * @type {Object<AxonClient>}
+     * @type {AxonClient}
      * @memberof Utils
      */
     get axon() {
@@ -124,7 +124,7 @@ class Utils {
      * Returns the BotClient instance
      *
      * @readonly
-     * @type {Object<BotClient>}
+     * @type {BotClient}
      * @memberof Utils
      */
     get bot() {
@@ -135,7 +135,7 @@ class Utils {
      * Returns the LibraryInterface instance
      *
      * @readonly
-     * @type {Object<LibraryInterface>}
+     * @type {LibraryInterface}
      * @memberof Utils
      */
     get library() {
@@ -176,8 +176,8 @@ class Utils {
     /**
      * Get an array of role objects from a member.
      *
-     * @param {Object<Guild>} guild
-     * @param {Object<Member>} member
+     * @param {Guild} guild
+     * @param {Member} member
      * @returns {Array<Role>} Array of roles object
      *
      * @memberof Utils
@@ -192,9 +192,9 @@ class Utils {
     /**
      * Get highest role of the given member.
      *
-     * @param {Object<Guild>} guild
-     * @param {Object<Member>} member
-     * @returns {Object<Role>} Role Object
+     * @param {Guild} guild
+     * @param {Member} member
+     * @returns {Role} Role Object
      *
      * @memberof Utils
      */
@@ -218,8 +218,8 @@ class Utils {
     /**
      * Check if the first role is higher than the other.
      *
-     * @param {Object<Role>} role1
-     * @param {Object<Role>} role2
+     * @param {Role} role1
+     * @param {Role} role2
      * @returns {Boolean}
      *
      * @memberof Utils
@@ -239,9 +239,9 @@ class Utils {
     /**
      * Check if the highest role of first is higher than the highest role of second
      *
-     * @param {Object<Guild>} guild
-     * @param {Object<Member>} first
-     * @param {Object<Member>} second
+     * @param {Guild} guild
+     * @param {Member} first
+     * @param {Member} second
      * @returns {Boolean}
      *
      * @memberof Utils
@@ -257,7 +257,7 @@ class Utils {
     /**
      * Check if the member has correct permissions to execute
      *
-     * @param {Object<Member>} member - Member object
+     * @param {Member} member - Member object
      * @param {Array<String>} permissions - List of permissions to test
      * @returns {Boolean} hether the member has permissions or not
      *
@@ -275,9 +275,9 @@ class Utils {
     /**
      * Check if the given user has correct permissions to execute in the specific channel.
      *
-     * @param {Object<Channel>} channel - Channel object
+     * @param {Channel} channel - Channel object
      * @param {Array<String>} permissions - List of permissions to test
-     * @param {Object<User>} [user=this.bot.user] - User to test
+     * @param {User} [user=this.bot.user] - User to test
      * @returns {Boolean} Whether the member has permissions or not
      *
      * @memberof Utils
@@ -294,7 +294,7 @@ class Utils {
     /**
      * List all missing permissions of the given user.
      *
-     * @param {Object<Member>} member
+     * @param {Member} member
      * @param {Array<String>} [permissions=[]] - List of permissions to test
      * @returns {Array<String>} An array of missing permissions
      *

@@ -13,7 +13,7 @@ import Collection from '../Collection';
  */
 class MessageCollector extends EventEmitter {
     /**
-     * @param {Object<AxonClient>} client - The axon client object
+     * @param {AxonClient} client - The axon client object
      *
      * @param {Object} [options] - The default options for the message collector instance
      * @param {Number} [options.timeout=60000] - The time before the collector times out in milliseconds
@@ -56,7 +56,7 @@ class MessageCollector extends EventEmitter {
     /**
      * Runs the message collector
      *
-     * @param {Object<Channel>} channel The channel object to listen to
+     * @param {Channel} channel The channel object to listen to
      *
      * @param {Object} [options] The options for the message collector
      * @param {Number} [options.timeout=60000] The time before the collector times out in milliseconds

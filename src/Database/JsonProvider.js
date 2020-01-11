@@ -13,13 +13,13 @@ import Manager from './JSON/Manager';
  * @class JsonProvider
  * @extends DBProvider
  *
- * @prop {Object<Manager>} manager - Class responsible to read / write data to the DB as json.
+ * @prop {Manager} manager - Class responsible to read / write data to the DB as json.
  */
 class JsonProvider extends DBProvider {
     /**
      * Override init method.
      *
-     * @param {Object<AxonOptions>}
+     * @param {AxonOptions}
      *
      * @memberof JsonProvider
      */
@@ -46,7 +46,7 @@ class JsonProvider extends DBProvider {
      * Use default AxonClient prefix settings when creating the new guild config.
      *
      * @param {String} gID - Guild ID
-     * @param {Object<AxonClient>} axonClient
+     * @param {AxonClient} axonClient
      *
      * @returns {Promise<GuildConfig|null>} Newly created Guild config from the DB
      *

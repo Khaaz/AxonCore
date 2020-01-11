@@ -19,7 +19,7 @@ class AxonConfig {
     /**
      * Creates an instance of AxonConfig.
      *
-     * @param {Object<AxonClient>} axon
+     * @param {AxonClient} axon
      *
      * @param {Object} values DB values for the current Guild
      *

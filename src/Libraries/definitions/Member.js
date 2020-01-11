@@ -19,7 +19,7 @@ class Member {
     /**
      * Returns Roles ids
      *
-     * @param {Object<Member>} member
+     * @param {Member} member
      * @returns {Array<String>} - Array of roles IDs
      *
      * @memberof Member
@@ -31,8 +31,8 @@ class Member {
     /**
      * Returns Roles object
      *
-     * @param {Object<Member>} member
-     * @returns {Array<Object<Role>>} - Array of Roles object
+     * @param {Member} member
+     * @returns {Array<Role>} - Array of Roles object
      *
      * @memberof Member
      */
@@ -43,7 +43,7 @@ class Member {
     /**
      * Whether the member has this permission or not
      *
-     * @param {Object<Member>} member
+     * @param {Member} member
      * @param {String} permission
      * @returns {Boolean}
      *

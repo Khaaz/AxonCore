@@ -20,7 +20,7 @@ class ListenerRegistry extends Registry {
      * Register a Listener inside the ListenerRegistry
      *
      * @param {String} label - The listener label
-     * @param {Object<Listener>} listener - The listener object
+     * @param {Listener} listener - The listener object
      *
      * @memberof ListenerRegistry
      */
@@ -37,7 +37,7 @@ class ListenerRegistry extends Registry {
      * Unregister a Listener from the ListenerRegistry
      *
      * @param {String} label - The listener label
-     * @param {Object<Listener>} [listener=null] - The listener object
+     * @param {Listener} [listener=null] - The listener object
      * @memberof ListenerRegistry
      */
     unregister(label, listener = null) {

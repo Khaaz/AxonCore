@@ -49,7 +49,7 @@ class Resolver {
     /**
      * Resolve a member within a guild.
      *
-     * @param {Object<Guild>} guild - Object Guild resolved by the command.
+     * @param {Guild} guild - Object Guild resolved by the command.
      * @param {Array|String} args - Array of arguments resolved by the command.
      * @returns {Object|null} The member object / Null if not found / Error
      */
@@ -88,7 +88,7 @@ class Resolver {
     /**
      * Resolve a role within a guild.
      *
-     * @param {Object<Guild>} guild - Object Guild resolved by the command.
+     * @param {Guild} guild - Object Guild resolved by the command.
      * @param {Array|String} args - Array of arguments resolved by the command.
      * @returns {Object|null} The role object / Null if not found / Error
      */
@@ -123,7 +123,7 @@ class Resolver {
     /**
      * Resolve a channel within a guild.
      *
-     * @param {Object<Guild>} guild - Object Guild resolved by the command.
+     * @param {Guild} guild - Object Guild resolved by the command.
      * @param {Array|String} args - Array of arguments resolved by the command.
      * @returns {Object|null} The channel object / Null if not found / Error
      */

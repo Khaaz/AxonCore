@@ -25,7 +25,7 @@ class GuildConfig {
     /**
      * Creates an instance of GuildConfig.
      *
-     * @param {Object<AxonClient>} axon
+     * @param {AxonClient} axon
      * @param {Object} values - DB values for the current guild
      *
      * @memberof GuildConfig
@@ -73,7 +73,7 @@ class GuildConfig {
      * Check if the user/role/channel is ignored on the specified guild.
      * *used internally*
      *
-     * @param {Object<Message>} msg
+     * @param {Message} msg
      * @returns {Boolean} True if either one of the three is ignored
      *
      * @memberof GuildConfig
@@ -99,7 +99,7 @@ class GuildConfig {
     /**
      * Check if the user/role/channel is ignored on the specified guild.
      *
-     * @param {Object<Member>} member
+     * @param {Member} member
      * @returns {Boolean} True if the member has one of the ignored roles
      *
      * @memberof GuildConfig
@@ -128,7 +128,7 @@ class GuildConfig {
      * Check if the module is disabled on the specified guild.
      * *used internally*
      *
-     * @param {Object<Command>} command - The command object
+     * @param {Command} command - The command object
      * @returns {Boolean} Whether the module is disabled or not
      *
      * @memberof GuildConfig
@@ -141,7 +141,7 @@ class GuildConfig {
      * Check if the command is disabled on the specified guild.
      * *used internally*
      *
-     * @param {Object<Command>} command - The command object
+     * @param {Command} command - The command object
      * @returns {Boolean} Whether the command is disabled or not
      *
      * @memberof GuildConfig
@@ -154,7 +154,7 @@ class GuildConfig {
      * Check if the listener is disabled on the specified guild.
      * *used internally*
      *
-     * @param {Object<Listener>} listener - The listener object
+     * @param {Listener} listener - The listener object
      * @returns {Boolean} Whether the listener is disabled or not
      *
      * @memberof GuildConfig

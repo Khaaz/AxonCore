@@ -7,14 +7,14 @@
  * @class AxonCommandError
  * @extends Error
  *
- * @prop {Object<CommandContext>} context - Command Context containing all informations about the command execution
+ * @prop {CommandContext} context - Command Context containing all informations about the command execution
  */
 class AxonCommandError extends Error {
     /**
      * Creates an instance of AxonCommandError.
      *
-     * @param {Object<CommandContext>} commandContext - The command context that contains all information about the command execution
-     * @param {Object<Error>} err - Discord Error (given by library/discord/other)
+     * @param {CommandContext} commandContext - The command context that contains all information about the command execution
+     * @param {Error} err - Discord Error (given by library/discord/other)
      *
      * @memberof AxonCommandError
      */

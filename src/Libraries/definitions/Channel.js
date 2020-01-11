@@ -35,8 +35,8 @@ class Channel {
     /**
      * Whether the user has the perm in the channel
      *
-     * @param {Object<Channel>} channel
-     * @param {Object<User>} user
+     * @param {Channel} channel
+     * @param {User} user
      * @param {String} perm
      * @returns {Boolean}
      *
@@ -51,7 +51,7 @@ class Channel {
     /**
      * Send a message in the channel
      *
-     * @param {Object<Channel>} channel
+     * @param {Channel} channel
      * @param {String|Object} content
      * @returns {Promise<Message>}
      *

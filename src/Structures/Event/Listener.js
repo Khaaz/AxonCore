@@ -9,7 +9,7 @@ import Base from '../Base';
  * @class Listener
  * @extends Base
  *
- * @prop {Object<Module>} _module - Module instance
+ * @prop {Module} _module - Module instance
  * @prop {String} eventName - The discord event name
  * @prop {String} label - The listener name
  *
@@ -25,7 +25,7 @@ class Listener extends Base {
     /**
      * Creates an Listener instance.
      *
-     * @param {Object<Module>} module
+     * @param {Module} module
      * @param {Object} [data={}] - All events parameters
      * @param {String} [data.eventName]
      * @param {String} [data.label]
@@ -61,7 +61,7 @@ class Listener extends Base {
      * Returns the parent Module instance
      *
      * @readonly
-     * @type {Object<Module>}
+     * @type {Module}
      * @memberof Listener
      */
     get module() {

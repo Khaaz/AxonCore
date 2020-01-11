@@ -19,7 +19,7 @@ class EventManager extends Base {
     /**
      * Creates an EventManager instance.
      *
-     * @param {Object<AxonClient>} axon
+     * @param {AxonClient} axon
      *
      * @memberof EventManager
      */
@@ -108,7 +108,7 @@ class EventManager extends Base {
      * Add the Listener in the array of Listener for each discord event.
      * Called by ModuleLoader when registering an event.
      *
-     * @param {Object<Listener>} listener - The Listener Object
+     * @param {Listener} listener - The Listener Object
      *
      * @memberof EventManager
      */

@@ -8,14 +8,14 @@ import defaultLang from '../Configs/lang.json';
  *
  * @class TranslationManager
  *
- * @prop {Object<MessageManager>} _manager
+ * @prop {MessageManager} _manager
  * @prop {String} [lang='english'] - The default lang
  */
 class TranslationManager {
     /**
      * Creates an instance of TranslationManager.
      *
-     * @param {Object<MessageManager>} manager
+     * @param {MessageManager} manager
      * @memberof TranslationManager
      */
     constructor(manager, lang) {

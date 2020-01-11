@@ -17,7 +17,7 @@ class Loader {
     /**
      * Creates an instance of Loader.
      *
-     * @param {Object<AxonClient>} axon
+     * @param {AxonClient} axon
      *
      * @memberof Loader
      */

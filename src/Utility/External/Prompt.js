@@ -29,7 +29,7 @@ class Prompt {
      * @param {Boolean} [defaultOptions.resendWhenInvalid=false] Whether or not to resend when the prompt got a invalid returned message, does not send invalid message
      *
      * @prop {String} userID - The user ID that is bound to the current prompt
-     * @prop {Object<Channel>} channel - The channel where the prompt is running
+     * @prop {Channel} channel - The channel where the prompt is running
      * @prop {Boolean} timedOut - Whether the Prompt timed out
      * @prop {Boolean} ended - Whether the prompt ended
      *
@@ -157,7 +157,7 @@ class Prompt {
     /**
      * Checker for this._onMsgCreate
      *
-     * @param {Object<Message>} msg The message object to check against.
+     * @param {Message} msg The message object to check against.
      */
     _checker(msg) {
         if (this._actualOptions.allowed.length === 0) { // Options does not have allowed

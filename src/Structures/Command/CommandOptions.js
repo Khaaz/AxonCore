@@ -25,7 +25,7 @@ class CommandOptions {
     /**
      * Creates an instance of CommandOptions.
      *
-     * @param {Object<Command>} command - The base command
+     * @param {Command} command - The base command
      * @param {Object} [override={}] - - The specific options for this command (format - CommandOptions)
      * @param {Boolean} [useModuleDefault=false] - Whether to use or not the module's base options before applying override permissions
      *
@@ -79,7 +79,7 @@ class CommandOptions {
      * Returns the MessageManager instance
      *
      * @readonly
-     * @type {Object<MessageManager>}
+     * @type {MessageManager}
      * @memberof CommandOptions
      */
     get l() {
@@ -123,7 +123,7 @@ class CommandOptions {
     /**
      * Whether we should send the invalid permission message or not
      *
-     * @param {Object<GuildConfig>} guildConfig
+     * @param {GuildConfig} guildConfig
      * @returns {Boolean}
      *
      * @memberof CommandOptions

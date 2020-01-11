@@ -20,7 +20,7 @@ class ListenerLoader extends Loader {
      * Returns the Module instance
      *
      * @readonly
-     * @type {Object<Module>}
+     * @type {Module}
      * @memberof ListenerLoader
      */
     get axon() {
@@ -31,7 +31,7 @@ class ListenerLoader extends Loader {
      * Returns the Module instance
      *
      * @readonly
-     * @type {Object<Module>}
+     * @type {Module}
      *
      * @memberof CommandLoader
      */
@@ -43,7 +43,7 @@ class ListenerLoader extends Loader {
      * Returns the Logger instance
      *
      * @readonly
-     * @type {Object<Logger>}
+     * @type {Logger}
      * @memberof ListenerLoader
      */
     get logger() {
@@ -54,7 +54,7 @@ class ListenerLoader extends Loader {
      * Load one event instance in the module.
      * Validate and correct the event before registering it.
      *
-     * @param {Object<Listener>} listener - The event to load
+     * @param {Listener} listener - The event to load
      * @returns {Boolean}
      *
      * @memberof ListenerLoader
@@ -76,7 +76,7 @@ class ListenerLoader extends Loader {
      * Load all events in the module.
      * Instantiate all events.
      *
-     * @param {Object<Listener>} listeners
+     * @param {Listener} listeners
      * @returns {Boolean}
      *
      * @memberof ListenerLoader

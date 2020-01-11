@@ -9,14 +9,14 @@ import Validater from '../Structures/Validater';
  *
  * @class AxonUtils
  *
- * @prop {Object<AxonClient>} _axon - Axon Client
+ * @prop {AxonClient} _axon - Axon Client
  *
  */
 class AxonUtils {
     /**
      * Creates an AxonUtils instance.
      *
-     * @param {Object<AxonClient>} axon
+     * @param {AxonClient} axon
      *
      * @memberof AxonUtils
      */
@@ -30,7 +30,7 @@ class AxonUtils {
      * Returns the AxonClient instance
      *
      * @readonly
-     * @type {Object<AxonClient>}
+     * @type {AxonClient}
      * @memberof AxonUtils
      */
     get axon() {
@@ -41,7 +41,7 @@ class AxonUtils {
      * Returns the BotClient instance
      *
      * @readonly
-     * @type {Object<BotClient>}
+     * @type {BotClient}
      * @memberof AxonUtils
      */
     get bot() {
@@ -63,7 +63,7 @@ class AxonUtils {
      * Returns the Logger instance
      *
      * @readonly
-     * @type {Object<Logger>}
+     * @type {Logger}
      * @memberof AxonUtils
      */
     get logger() {
@@ -74,7 +74,7 @@ class AxonUtils {
      * Returns the Utils instance
      *
      * @readonly
-     * @type {Object<Utils>}
+     * @type {Utils}
      * @memberof AxonUtils
      */
     get utils() {
@@ -85,7 +85,7 @@ class AxonUtils {
      * Returns the LibraryInterface instance
      *
      * @readonly
-     * @type {Object<LibraryInterface>}
+     * @type {LibraryInterface}
      * @memberof AxonUtils
      */
     get library() {
@@ -171,7 +171,7 @@ class AxonUtils {
      * Check if the user is a moderator or higher. Admins are also moderators.
      * Managers, Admins and Owner are automatically Mod.
      *
-     * @param {Object<Member>} member - The member object
+     * @param {Member} member - The member object
      * @param {Object} guildConfig - The guild Config from the DB
      * @returns {Boolean} True if user is a mod / False if not
      *
@@ -196,7 +196,7 @@ class AxonUtils {
      * Check is the user is a server manager (manage server permission).
      * Admin and Owner are automatically Manager.
      *
-     * @param {Object<Member>} member - The member object
+     * @param {Member} member - The member object
      * @returns {Boolean} True if admin / False if not
      *
      * @memberof AxonUtils
@@ -209,7 +209,7 @@ class AxonUtils {
      * Check is the user is an admin (administrator permission).
      * Owner is automatically Admin.
      *
-     * @param {Object<Member>} member - The member object
+     * @param {Member} member - The member object
      * @returns {Boolean} True if admin / False if not
      *
      * @memberof AxonUtils
@@ -221,7 +221,7 @@ class AxonUtils {
     /**
      * Check is the user is the server owner.
      *
-     * @param {Object<Member>} member - The member object
+     * @param {Member} member - The member object
      * @returns {Boolean} True if admin / False if not
      *
      * @memberof AxonUtils
@@ -236,7 +236,7 @@ class AxonUtils {
      * Message the targeted user if the bot is able to retrieve their DM channel.
      * Reject promise if not
      *
-     * @param {Object<User>} user - User object to get the DM channel
+     * @param {User} user - User object to get the DM channel
      * @param {Object/String} content - String or object (embed)
      * @param {Object} [options={}] - Options { disableEveryone: Boolean, delete: Boolean, delay: Number }
      * @param {Object} [options.disableEveryone=true] - Whether to allow mentioning everyone or not
@@ -259,7 +259,7 @@ class AxonUtils {
      * Checks for bot permissions + message/embed length.
      * Doesn't support file uploads.
      *
-     * @param {Object<Channel>} channel - The channel Object
+     * @param {Channel} channel - The channel Object
      * @param {Object|String} content - Message content: String or Embed Object
      * @param {Object} [options={}] - Options { disableEveryone: Boolean, delete: Boolean, delay: Number }
      * @param {Boolean} [options.disableEveryone=true] - Whether to allow mentioning everyone or not
@@ -309,7 +309,7 @@ class AxonUtils {
      * Edit a message.
      * Checks for bot permissions + message embed/length.
      *
-     * @param {Object<Message>} message - The message object to edit
+     * @param {Message} message - The message object to edit
      * @param {Object/String} content - Object (embed) or String
      * @returns {Promise<Message?>} Message Object
      *

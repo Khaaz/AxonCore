@@ -9,17 +9,17 @@ import MessageParser from './MessageParser';
  *
  * @class MessageManager
  *
- * @prop {Object<AxonClient>} _axon
+ * @prop {AxonClient} _axon
  * @prop {Object} _message - All messages (all langs)
- * @prop {Object<TranslationManager>} translation
- * @prop {Object<MessageParser>} parser
+ * @prop {TranslationManager} translation
+ * @prop {MessageParser} parser
  */
 class MessageManager {
     /**
      * Creates an instance of MessageManager.
      * Dynamically create one method for each message so we can use <this>.MESSAGE_CONSTANT() directly. It will actually call the get method.
      *
-     * @param {Object<AxonClient>} axonClient
+     * @param {AxonClient} axonClient
      * @param {Object} messages
      *
      * @memberof MessageManager

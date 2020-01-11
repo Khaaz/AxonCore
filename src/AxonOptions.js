@@ -60,12 +60,12 @@ import defaultWebhooksConfig from './Configs/webhooksConfig.json';
  *
  * // Extensions
  * @prop {Object} extensions - Classes overrides
- * @prop {Object<Utils>} extensions.utils - Custom utils. Needs to be an instance of AxonCore.Utils
+ * @prop {Utils} extensions.utils - Custom utils. Needs to be an instance of AxonCore.Utils
  * @prop {Object} extensions.logger - Custom logger
- * @prop {Object<DBProvider>} extensions.DBProvider - DBProvider. Needs to be an instance of DBProvider
+ * @prop {DBProvider} extensions.DBProvider - DBProvider. Needs to be an instance of DBProvider
  * @prop {String} extensions.DBLocation - Path to use as default location for usage of the JSONProvider
- * @prop {Object<AxonConfig>} extensions.axonConfig - Custom AxonConfig object to use instead of default AxonConfig
- * @prop {Object<GuildConfig>} extensions.guildConfig - Custom GuildConfig object to use instead of default GuildConfig
+ * @prop {AxonConfig} extensions.axonConfig - Custom AxonConfig object to use instead of default AxonConfig
+ * @prop {GuildConfig} extensions.guildConfig - Custom GuildConfig object to use instead of default GuildConfig
  */
 class AxonOptions {
     /**
@@ -119,12 +119,12 @@ class AxonOptions {
      *
      * // Extensions
      * @param {Object} [extensions={}] - Classes overrides
-     * @param {Object<Utils>} extensions.utils - Custom utils. Needs to be an instance of AxonCore.Utils
+     * @param {Utils} extensions.utils - Custom utils. Needs to be an instance of AxonCore.Utils
      * @param {Object} extensions.logger - Custom logger
-     * @param {Object<DBProvider>} extensions.DBProvider - DBProvider. Needs to be an instance of DBProvider
+     * @param {DBProvider} extensions.DBProvider - DBProvider. Needs to be an instance of DBProvider
      * @param {String} extensions.DBLocation - Path to use as default location for usage of the JSONProvider
-     * @param {Object<AxonConfig>} extensions.axonConfig - Custom AxonConfig object to use instead of default AxonConfig
-     * @param {Object<GuildConfig>} extensions.guildConfig - Custom GuildConfig object to use instead of default GuildConfig
+     * @param {AxonConfig} extensions.axonConfig - Custom AxonConfig object to use instead of default AxonConfig
+     * @param {GuildConfig} extensions.guildConfig - Custom GuildConfig object to use instead of default GuildConfig
      *
      * @memberof AxonOptions
      */

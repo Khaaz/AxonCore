@@ -5,14 +5,14 @@
  *
  * @class CommandCooldown
  *
- * @prop {Object<Command>} _command - The base command
+ * @prop {Command} _command - The base command
  * @prop {Map} _cooldowns - Map of cooldowns. It maps userID => Cooldown Object { time: Date, post: Boolean}
  */
 class CommandCooldown {
     /**
      * Creates an instance of CommandCooldown.
      *
-     * @param {Object<Command>} command
+     * @param {Command} command
      *
      * @memberof CommandCooldown
      */

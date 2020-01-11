@@ -25,7 +25,7 @@ class CommandLoader extends Loader {
      * Returns the AxonClient instance
      *
      * @readonly
-     * @type {Object<AxonClient>}
+     * @type {AxonClient}
      *
      * @memberof CommandLoader
      */
@@ -37,7 +37,7 @@ class CommandLoader extends Loader {
      * Returns the Module instance
      *
      * @readonly
-     * @type {Object<Module>}
+     * @type {Module}
      *
      * @memberof CommandLoader
      */
@@ -49,7 +49,7 @@ class CommandLoader extends Loader {
      * Returns the Logger instance
      *
      * @readonly
-     * @type {Object<Logger>}
+     * @type {Logger}
      *
      * @memberof CommandLoader
      */
@@ -61,8 +61,8 @@ class CommandLoader extends Loader {
      * Load one command instance in the module.
      * Validate and correct the command before registering it.
      *
-     * @param {Object<Command>} command - The command to load
-     * @param {Object<Command>} [parent=null] - The optional parent command
+     * @param {Command} command - The command to load
+     * @param {Command} [parent=null] - The optional parent command
      * @returns {Boolean}
      *
      * @memberof CommandLoader
@@ -92,7 +92,7 @@ class CommandLoader extends Loader {
      * Load all commands in the module.
      * Instantiate all commands.
      *
-     * @param {Object<Command>} commands
+     * @param {Command} commands
      * @returns {Boolean}
      *
      * @memberof CommandLoader
@@ -117,7 +117,7 @@ class CommandLoader extends Loader {
     /**
      * Init and construct/instance all subcommands of the given parent comand
      *
-     * @param {Object<Command>} command - The command Object
+     * @param {Command} command - The command Object
      * @memberof Command
      */
     loadSubCommands(parentCommand) {
@@ -156,7 +156,7 @@ class CommandLoader extends Loader {
     /**
      * Register a Command. Register its subcommands if it has any.
      *
-     * @param {Object<Command>} command - Command object
+     * @param {Command} command - Command object
      *
      * @memberof CommandLoader
      */
@@ -174,8 +174,8 @@ class CommandLoader extends Loader {
     /**
      * Register a SubCommand.Register its subcommands if it has any
      *
-     * @param {Object<Commands>} command - The subcommand to register
-     * @param {Object<Commands>} parent - The parent command
+     * @param {Commands} command - The subcommand to register
+     * @param {Commands} parent - The parent command
      *
      * @memberof CommandLoader
      */
@@ -222,8 +222,8 @@ class CommandLoader extends Loader {
     /**
      * Remove a subcommand from a command
      *
-     * @param {Object<Command>} command - The parent Command
-     * @param {Object<Command>} subCommand - The Subcommand to unregister
+     * @param {Command} command - The parent Command
+     * @param {Command} subCommand - The Subcommand to unregister
      *
      * @memberof CommandLoader
      */

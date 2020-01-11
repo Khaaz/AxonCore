@@ -39,8 +39,8 @@ class CommandContext {
     /**
      * Creates an instance of CommandContext.
      *
-     * @param {Object<Command>} command
-     * @param {Object<Message>} triggerMessage
+     * @param {Command} command
+     * @param {Message} triggerMessage
      * @param {Object} [data={}]
      * @param {Boolean} [data.executed=true]
      * @param {Boolean} [data.helpExecution=false]
@@ -82,7 +82,7 @@ class CommandContext {
      * Add the command response data to the command context object.
      * Add the state of the command success and optionaly the error.
      *
-     * @param {Object<CommandResponse>} commandResponse - CommandResponse object obtained or created after the command execution
+     * @param {CommandResponse} commandResponse - CommandResponse object obtained or created after the command execution
      * @returns {CommandContext}
      *
      * @memberof CommandContext
