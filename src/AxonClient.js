@@ -32,7 +32,7 @@ import DBSelector from './Database/index';
 import logo from './Configs/logo';
 import packageJSON from '../package.json';
 import { EMBED_LIMITS } from './Utility/Constants/DiscordEnums';
-
+import { WEBHOOK_TYPES, LOG_LEVELS, WEBHOOK_TO_COLOR } from './Utility/Constants/AxonEnums';
 
 /**
  * AxonCore - Client constructor
@@ -83,7 +83,7 @@ class AxonClient extends EventEmitter {
         axonOptions.logo ? axonOptions.logo() : logo();
 
         this.configs = {
-            webhooks: axonOptions.webhooksConfig,
+            webhooks: axonOptions.webhooks,
             template: axonOptions.template,
             custom: axonOptions.custom,
         };
@@ -358,6 +358,36 @@ class AxonClient extends EventEmitter {
     }
 
     /**
+     * Log both to console and to the correct webhook
+     *
+     * @param {LOG_LEVELS} level
+     * @param {String|Error} content - The content or the error to log
+     *
+     * @memberof AxonClient
+     */
+    log(level, content) {
+        if (!LOG_LEVELS[level] ) {
+            this.logger.warn(`Incorrect log level: ${level}`);
+        }
+
+        let err = null;
+        if (content instanceof Error) {
+            err = (content.stack && content.stack.length < EMBED_LIMITS.LIMIT_DESCRIPTION) ? err.stack : err.message;
+            content = content.stack || content.message;
+        }
+
+        this.logger[LOG_LEVELS[level]](content);
+        
+        const whType = WEBHOOK_TYPES[level];
+        console.log(whType);
+        this.axonUtils.triggerWebhook(whType, {
+            color: WEBHOOK_TO_COLOR[whType],
+            timestamp: new Date(),
+            description: err || content,
+        }, `${whType}${this.library.client.getUser() ? ` - ${this.library.client.getUsername()}` : ''}`);
+    }
+
+    /**
      * Function executed on the global messageCreate event and dispatch to the correct command and execution
      *
      * @param {Object<Message>} msg
@@ -391,13 +421,7 @@ class AxonClient extends EventEmitter {
 
         /* Initialise status. Default AxonCore status or use custom one */
         this.initStatus();
-        this.logger.axon('Status setup!');
-
-        this.axonUtils.triggerWebhook('status', {
-            color: 2067276,
-            timestamp: new Date(),
-            description: '**Instance Ready!**',
-        } );
+        this.log('NOTICE', '**Instance Ready!**');
     }
 
     /**
@@ -408,43 +432,19 @@ class AxonClient extends EventEmitter {
      */
     initErrorListeners() {
         process.on('uncaughtException', (err) => {
-            this.logger.emerg(err.stack);
-
-            this.axonUtils.triggerWebhook('error', {
-                color: 15158332,
-                timestamp: new Date(),
-                description: (err.stack && err.stack.length < EMBED_LIMITS.LIMIT_DESCRIPTION) ? err.stack : err.message,
-            }, `Exception${this.library.client.getUser() ? ` - ${this.library.client.getUsername()}` : ''}`);
+            this.log('EMERG', err);
         } );
 
         process.on('unhandledRejection', (err) => {
-            this.logger.emerg(err.stack);
-
-            this.axonUtils.triggerWebhook('error', {
-                color: 15158332,
-                timestamp: new Date(),
-                description: (err.stack && err.stack.length < EMBED_LIMITS.LIMIT_DESCRIPTION) ? err.stack : err.message,
-            }, `Rejection${this.library.client.getUser() ? ` - ${this.library.client.getUsername()}` : ''}`);
+            this.log('EMERG', err);
         } );
 
         this.botClient.on('error', (err) => {
-            this.logger.error(err.stack);
-
-            this.axonUtils.triggerWebhook('error', {
-                color: 15158332,
-                timestamp: new Date(),
-                description: (err.stack && err.stack.length < EMBED_LIMITS.LIMIT_DESCRIPTION) ? err.stack : err.message,
-            } );
+            this.log('ERROR', err);
         } );
 
         this.botClient.on('warn', (msg) => {
-            this.logger.warn(msg);
-
-            this.axonUtils.triggerWebhook('error', {
-                color: 15105570,
-                timestamp: new Date(),
-                description: msg,
-            }, `Warn${this.library.client.getUser() ? ` - ${this.library.client.getUsername()}` : ''}`);
+            this.log('ERROR', msg);
         } );
 
         this.logger.axon('Error listeners bound!');
@@ -485,13 +485,8 @@ class AxonClient extends EventEmitter {
             .catch(err => {
                 this.emit('commandError', { msg, guildConfig, err } );
                 this.settings.debugMode && console.timeEnd('- Net');
-
-                this.logger.emerg(err.stack);
-                this.axonUtils.triggerWebhook('error', {
-                    color: 15158332,
-                    timestamp: new Date(),
-                    description: (err.stack && err.stack.length < EMBED_LIMITS.LIMIT_DESCRIPTION) ? err.stack : err.message,
-                } );
+                
+                this.log('ERROR', err);
             } );
 
         if (this.settings.debugMode) {
@@ -522,12 +517,7 @@ class AxonClient extends EventEmitter {
                 this.emit('commandError', { msg, guildConfig, err } );
                 this.settings.debugMode && console.timeEnd('- Net');
 
-                this.logger.emerg(err.stack);
-                this.axonUtils.triggerWebhook('error', {
-                    color: 15158332,
-                    timestamp: new Date(),
-                    description: (err.stack && err.stack.length < EMBED_LIMITS.LIMIT_DESCRIPTION) ? err.stack : err.message,
-                } );
+                this.log('ERROR', err);
             } );
 
         if (this.settings.debugMode) {
@@ -546,12 +536,8 @@ class AxonClient extends EventEmitter {
             .catch(err => {
                 this.emit('eventError', { event: listener.eventName, listener, guildConfig, err } );
 
-                this.logger.error(`[EVENT](${listener.eventName}) - ${listener.label}\n${err}`);
-                this.axonUtils.triggerWebhook('error', {
-                    color: 15158332,
-                    timestamp: new Date(),
-                    description: (err.stack && err.stack.length < EMBED_LIMITS.LIMIT_DESCRIPTION) ? err.stack : err.message,
-                } );
+                this.log('ERROR', err);
+                // this.logger.error(`[EVENT](${listener.eventName}) - ${listener.label}\n${err}`);
             } );
     }
 
