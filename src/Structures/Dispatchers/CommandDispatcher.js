@@ -1,4 +1,4 @@
-import Dispatcher from './Dispatcher';
+import ADispatcher from './ADispatcher';
 
 /**
  * Class responsible to call the correct command and correct execution flow when needed.
@@ -12,7 +12,7 @@ import Dispatcher from './Dispatcher';
  *
  * @prop {RegExp} mentionFormatter
  */
-class CommandDispatcher extends Dispatcher {
+class CommandDispatcher extends ADispatcher {
     /**
      * Creates an instance of CommandDispatcher.
      *

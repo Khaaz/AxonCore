@@ -8,11 +8,11 @@ import NotImplementedException from '../../Errors/NotImplementedException';
  * @author KhaaZ
  *
  * @abstract
- * @class Dispatcher
+ * @class ADispatcher
  *
  * @prop {AxonClient} _axon - AxonClient
  */
-class Dispatcher {
+class ADispatcher {
     /**
      * Creates an instance of Dispatcher.
      *
@@ -39,4 +39,4 @@ class Dispatcher {
     }
 }
 
-export default Dispatcher;
+export default ADispatcher;
