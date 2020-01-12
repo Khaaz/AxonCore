@@ -5,124 +5,105 @@
     },
     {
         "input": "AxonOptions.js",
-        "output": "AxonOptions.md"
-    },
-    {
-        "input": "Database/DBProvider.js",
-        "output": "Database/DBProvider.md"
-    },
-    {
-        "input": "Database/InMemoryProvider.js",
-        "output": "Database/InMemoryProvider.md"
-    },
-    {
-        "input": "Database/JsonProvider.js",
-        "output": "Database/JsonProvider.md"
-    },
-    {
-        "input": "Database/MongoProvider.js",
-        "output": "Database/MongoProvider.md"
-    },
-    {
-        "input": "Errors/AxonCommandError.js",
-        "output": "Errors/AxonCommandError.md"
-    },
-    {
-        "input": "Errors/AxonError.js",
-        "output": "Errors/AxonError.md"
-    },
-    {
-        "input": "Errors/NoAbstractInstanceException.js",
-        "output": "Errors/NoAbstractInstanceException.md"
-    },
-    {
-        "input": "Errors/NotImplementedException.js",
-        "output": "Errors/NotImplementedException.md"
-    },
-    {
-        "input": "Loggers/Logger.js",
-        "output": "Loggers/Logger.md"
+        "output": "Structures/AxonOptions.md"
     },
     {
         "input": "Structures/Base.js",
         "output": "Structures/Base.md"
     },
     {
-        "input": "Structures/Module.js",
-        "output": "Structures/Module.md"
-    },
-    {
-        "input": "Structures/Command/Command.js",
-        "output": "Structures/Command.md"
-    },
-    {
-        "input": "Structures/Command/CommandOptions.js",
-        "output": "Structures/CommandOptions.md"
-    },
-    {
-        "input": "Structures/Command/CommandPermissions.js",
-        "output": "Structures/CommandPermissions.md"
-    },
-    {
-        "input": "Structures/Command/CommandResponse.js",
-        "output": "Structures/CommandResponse.md"
-    },
-    {
-        "input": "Structures/Command/CommandContext.js",
-        "output": "Structures/CommandContext.md"
-    },
-    {
-        "input": "Structures/Event/Listener.js",
-        "output": "Structures/Listener.md"
-    },
-    {
-        "input": "Structures/Event/EventManager.js",
-        "output": "Structures/EventManager.md"
-    },
-    {
-        "input": "Structures/Event/Handler.js",
-        "output": "Structures/Handler.md"
-    },
-    {
-        "input": "Structures/Dispatchers/CommandDispatcher.js",
-        "output": "Structures/CommandDispatcher.md"
-    },
-    {
         "input": "Structures/Stores/GuildConfigCache.js",
         "output": "Structures/GuildConfigCache.md"
     },
     {
-        "input": "Structures/DataStructure/AxonConfig.js",
-        "output": "Structures/AxonConfig.md"
+        "input": "Structures/Stores/ARegistry.js",
+        "output": "Structures/ARegistry.md"
+    },
+
+    {
+        "input": "Structures/Module.js",
+        "output": "Modules/Module.md"
     },
     {
-        "input": "Structures/DataStructure/GuildConfig.js",
-        "output": "Structures/GuildConfig.md"
-    },
-    {
-        "input": "Langs/MessageManager.js",
-        "output": "Structures/MessageManager.md"
-    },
-    {
-        "input": "Langs/TranslationManager.js",
-        "output": "Structures/TranslationManager.md"
-    },
-    {
-        "input": "Langs/MessageParser.js",
-        "output": "Structures/MessageParser.md"
+        "input": "Structures/Stores/ModuleRegistry.js",
+        "output": "Modules/ModuleRegistry.md"
     },
     {
         "input": "Structures/Loaders/ModuleLoader.js",
-        "output": "Structures/ModuleLoader.md"
+        "output": "Modules/ModuleLoader.md"
+    },
+
+
+    {
+        "input": "Structures/Command/Command.js",
+        "output": "Commands/Command.md"
+    },
+    {
+        "input": "Structures/Command/CommandOptions.js",
+        "output": "Commands/CommandOptions.md"
+    },
+    {
+        "input": "Structures/Command/CommandPermissions.js",
+        "output": "Commands/CommandPermissions.md"
+    },
+    {
+        "input": "Structures/Command/CommandResponse.js",
+        "output": "Commands/CommandResponse.md"
+    },
+    {
+        "input": "Structures/Command/CommandContext.js",
+        "output": "Commands/CommandContext.md"
+    },
+    {
+        "input": "Structures/Dispatchers/CommandDispatcher.js",
+        "output": "Commands/CommandDispatcher.md"
+    },
+    {
+        "input": "Structures/Stores/CommandRegistry.js",
+        "output": "Commands/CommandRegistry.md"
     },
     {
         "input": "Structures/Loaders/CommandLoader.js",
-        "output": "Structures/CommandLoader.md"
+        "output": "Commands/CommandLoader.md"
+    },
+
+
+    {
+        "input": "Structures/Event/Listener.js",
+        "output": "Listeners/Listener.md"
+    },
+    {
+        "input": "Structures/Event/EventManager.js",
+        "output": "Listeners/EventManager.md"
+    },
+    {
+        "input": "Structures/Event/AHandler.js",
+        "output": "Listeners/AHandler.md"
+    },
+    {
+        "input": "Structures/Stores/ListenerRegistry.js",
+        "output": "Listeners/ListenerRegistry.md"
     },
     {
         "input": "Structures/Loaders/ListenerLoader.js",
-        "output": "Structures/ListenerLoader.md"
+        "output": "Listeners/ListenerLoader.md"
     },
+    
+    
+    {
+        "input": "Langs/MessageManager.js",
+        "output": "Translations/MessageManager.md"
+    },
+    {
+        "input": "Langs/TranslationManager.js",
+        "output": "Translations/TranslationManager.md"
+    },
+    {
+        "input": "Langs/MessageParser.js",
+        "output": "Translations/MessageParser.md"
+    },
+
+
     {
         "input": "Utility/AxonUtils.js",
         "output": "Utility/AxonUtils.md"
@@ -166,5 +147,62 @@
     {
         "input": "Utility/External/LRUCache.js",
         "output": "Utility/LRUCache.md"
+    },
+
+    
+    {
+        "input": "Utility/Constants/AxonEnums.js",
+        "output": "Enums/AxonEnums.md"
+    },
+    {
+        "input": "Utility/Constants/DiscordEnums.js",
+        "output": "Enums/DiscordEnums.md"
+    },
+
+    {
+        "input": "Errors/AxonCommandError.js",
+        "output": "Errors/AxonCommandError.md"
+    },
+    {
+        "input": "Errors/AxonError.js",
+        "output": "Errors/AxonError.md"
+    },
+    {
+        "input": "Errors/NoAbstractInstanceException.js",
+        "output": "Errors/NoAbstractInstanceException.md"
+    },
+    {
+        "input": "Errors/NotImplementedException.js",
+        "output": "Errors/NotImplementedException.md"
+    },
+
+    {
+        "input": "Structures/DataStructure/AxonConfig.js",
+        "output": "Structures/AxonConfig.md"
+    },
+    {
+        "input": "Structures/DataStructure/GuildConfig.js",
+        "output": "Structures/GuildConfig.md"
+    },
+    {
+        "input": "Database/ADBProvider.js",
+        "output": "Database/ADBProvider.md"
+    },
+    {
+        "input": "Database/InMemoryProvider.js",
+        "output": "Database/InMemoryProvider.md"
+    },
+    {
+        "input": "Database/JsonProvider.js",
+        "output": "Database/JsonProvider.md"
+    },
+    {
+        "input": "Database/MongoProvider.js",
+        "output": "Database/MongoProvider.md"
+    },
+
+    {
+        "input": "Loggers/ALogger.js",
+        "output": "Loggers/ALogger.md"
     }
 ]

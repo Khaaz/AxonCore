@@ -1,33 +1,34 @@
 <!--_navbar.md -->
 
-* **[Setup](Setup.md)**
-
-* **[Main](index.md)**
+* **[Setup](index.md)**
   * [AxonClient](AxonClient.md)
-  * [Base](Structures/Base.md)
-  * [Module](Structures/Module.md)
-  * [Command](Structures/Command.md)
-  * [Listener](Structures/Listener.md)
-  * [AxonConfig](Structures/AxonConfig.md)
-  * [GuildConfig](Structures/GuildConfig.md)
- 
-* **[Structures](Structures/index.md)**
   * [AxonOptions](Structures/AxonOptions.md)
-  * [CommandOptions](Structures/CommandOptions.md)
-  * [CommandPermissions](Structures/CommandPermissions.md)
-  * [CommandContext](Structures/CommandContext.md)
-  * [CommandResponse](Structures/CommandResponse.md)
-  * [EventManager](Structures/EventManager.md)
-  * [Handler](Structures/Handler.md)
-  * [CommandDispatcher](Structures/CommandDispatcher.md)
+  * [Base](Structures/Base.md)
+  * [ARegistry](Structures/ARegistry.md)
   * [GuildConfigCache](Structures/GuildConfigCache.md)
-  * [MessageManager](Structures/MessageManager.md)
-  * [TranslationManager](Structures/TranslationManager.md)
-  * [MessageParser](Structures/MessageParser.md)
-  * [CommandLoader](Structures/CommandLoader.md)
-  * [ListenerLoader](Structures/ListenerLoader.md)
-  * [ModuleLoader](Structures/ModuleLoader.md)
-  
+
+* **[Modules](Modules/index.md)**
+  * [Module](Modules/Module.md)
+  * [ModuleRegistry](Modules/ModuleRegistry.md)
+  * [ModuleLoader](Modules/ModuleLoader.md)
+
+* **[Commands](Commands/index.md)**
+  * [Command](Commands/Command.md)
+  * [CommandOptions](Commands/CommandOptions.md)
+  * [CommandPermissions](Commands/CommandPermissions.md)
+  * [CommandContext](Commands/CommandContext.md)
+  * [CommandResponse](Commands/CommandResponse.md)
+  * [CommandRegistry](Commands/CommandRegistry.md)
+  * [CommandDispatcher](Commands/CommandDispatcher.md)
+  * [CommandLoader](Commands/CommandLoader.md)
+
+* **[Listeners](Listeners/index.md)**
+  * [Listener](Listeners/Listener.md)
+  * [EventManager](Listeners/EventManager.md)
+  * [AHandler](Listeners/AHandler.md)
+  * [ListenerRegistry](Listeners/ListenerRegistry.md)
+  * [ListenerLoader](Listeners/ListenerLoader.md)
+
 * **[Utility](Utility/index.md)**
   * [AxonUtils](Utility/AxonUtils.md)
   * [Utils](Utility/Utils.md)
@@ -41,27 +42,32 @@
   * [AutoQueue](Utility/AutoQueue.md)
   * [LRUCache](Utility/LRUCache.md)
 
+* **[Translation](Translations/index.md)**
+  * [MessageManager](Translations/MessageManager.md)
+  * [TranslationManager](Translations/TranslationManager.md)
+  * [MessageParser](Translations/MessageParser.md)
+
 * **[Enums](Enums/index.md)**
-  * [AxonEnums]()
-  * [DiscordEnums]()
-  * [ErisEnums]()
-  * [DjsEnums]()
-  * 
-* **[Logging](Loggers/index.md)**
-  * [Default](Loggers/Logger.md)
-
-* **[Database](Database/index.md)**
-  * [DBProvider](Database/DBProvider.md)
-  * [InMemoryProvider](Database/InMemoryProvider.md)
-  * [JsonProvider](Database/JsonProvider.md)
-  * [MongoProvider](Database/MongoProvider.md)
-
-* **[Errors](Errors/index.md)**
+  * [AxonEnums](Enums/AxonEnums.md)
+  * [DiscordEnums](Enums/DiscordEnums.md)
   * [AxonCommandError](Errors/AxonCommandError.md)
   * [AxonError](Errors/AxonError.md)
   * [NoAbstractInstanceException](Errors/NoAbstractInstanceException.md)
   * [NotImplementedException](Errors/NotImplementedException.md)
+  * [ErisEnums]()
+  * [DjsEnums]()
 
+* **[Database](Database/index.md)**
+  * [AxonConfig](Structures/AxonConfig.md)
+  * [GuildConfig](Structures/GuildConfig.md)
+  * [ADBProvider](Database/ADBProvider.md)
+  * [InMemoryProvider](Database/InMemoryProvider.md)
+  * [JsonProvider](Database/JsonProvider.md)
+  * [MongoProvider](Database/MongoProvider.md)
+
+* **[Logging](Loggers/index.md)**
+  * [Default](Loggers/Logger.md)
+  
 * **[About](About.md)**
   * [EASE](https://github.com/AxonTeam/Ease)
   * [WebSpell](https://github.com/Khaazz/webSPELL)
