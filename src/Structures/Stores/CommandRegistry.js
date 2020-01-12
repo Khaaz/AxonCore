@@ -1,4 +1,4 @@
-import Registry from './Registry';
+import ARegistry from './ARegistry';
 
 import Command from '../Command/Command';
 import AxonError from '../../Errors/AxonError';
@@ -11,9 +11,9 @@ import AxonError from '../../Errors/AxonError';
  * @prop {Map} aliases - All commands aliases.
  *
  * @class CommandRegistry
- * @extends Registry
+ * @extends ARegistry
  */
-class CommandRegistry extends Registry {
+class CommandRegistry extends ARegistry {
     constructor(axon) {
         super(axon, Command);
 

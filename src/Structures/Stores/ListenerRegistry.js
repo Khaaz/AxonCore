@@ -1,4 +1,4 @@
-import Registry from './Registry';
+import ARegistry from './ARegistry';
 
 import Listener from '../Event/Listener';
 import AxonError from '../../Errors/AxonError';
@@ -9,9 +9,9 @@ import AxonError from '../../Errors/AxonError';
  * @author KhaaZ
  *
  * @class ListenerRegistry
- * @extends Registry
+ * @extends ARegistry
  */
-class ListenerRegistry extends Registry {
+class ListenerRegistry extends ARegistry {
     constructor(axon) {
         super(axon, Listener);
     }

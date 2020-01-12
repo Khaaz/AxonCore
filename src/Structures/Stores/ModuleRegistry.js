@@ -1,4 +1,4 @@
-import Registry from './Registry';
+import ARegistry from './ARegistry';
 
 import Module from '../Module';
 import AxonError from '../../Errors/AxonError';
@@ -9,9 +9,9 @@ import AxonError from '../../Errors/AxonError';
  * @author KhaaZ
  *
  * @class ModuleRegistry
- * @extends Registry
+ * @extends ARegistry
  */
-class ModuleRegistry extends Registry {
+class ModuleRegistry extends ARegistry {
     constructor(axon) {
         super(axon, Module);
     }

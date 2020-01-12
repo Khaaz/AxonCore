@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
-import NoAbstractInstanceException from './../../Errors/NoAbstractInstanceException';
+import NoAbstractInstanceException from '../../Errors/NoAbstractInstanceException';
 import NotImplementedException from '../../Errors/NotImplementedException';
 
-import Collection from './../../Utility/Collection';
+import Collection from '../../Utility/Collection';
 
 /**
  * Abstract class to hold and manage a set of items.
@@ -13,9 +13,9 @@ import Collection from './../../Utility/Collection';
  * @prop {Collection<*>} registry - The collection of items hold by the registry
  *
  * @abstract
- * @class Registry
+ * @class ARegistry
  */
-class Registry {
+class ARegistry {
     /**
      * Creates an instance of Registry.
      *
@@ -128,4 +128,4 @@ class Registry {
     }
 }
 
-export default Registry;
+export default ARegistry;
