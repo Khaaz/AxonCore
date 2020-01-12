@@ -14,14 +14,14 @@ import NotImplementedException from '../../Errors/NotImplementedException';
  */
 class ADispatcher {
     /**
-     * Creates an instance of Dispatcher.
+     * Creates an instance of ADispatcher.
      *
      * @param {AxonClient} axon
      *
-     * @memberof Dispatcher
+     * @memberof ADispatcher
      */
     constructor(axon) {
-        if (this.constructor === 'Dispatcher') {
+        if (this.constructor === 'ADispatcher') {
             throw new NoAbstractInstanceException();
         }
 
@@ -29,10 +29,10 @@ class ADispatcher {
     }
 
     /**
-     * Dispatcher main method.
+     * ADispatcher main method.
      * Need to be overrided, any parameters can  be used.
      *
-     * @memberof Dispatcher
+     * @memberof ADispatcher
      */
     dispatch() {
         throw new NotImplementedException();

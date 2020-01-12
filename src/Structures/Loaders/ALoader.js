@@ -15,14 +15,14 @@ import NotImplementedException from '../../Errors/NotImplementedException';
  */
 class ALoader {
     /**
-     * Creates an instance of Loader.
+     * Creates an instance of ALoader.
      *
      * @param {AxonClient} axon
      *
-     * @memberof Loader
+     * @memberof ALoader
      */
     constructor(loadIn) {
-        if (this.constructor === 'Loader') {
+        if (this.constructor === 'ALoader') {
             throw new NoAbstractInstanceException();
         }
         this.loadIn = loadIn;
@@ -33,7 +33,7 @@ class ALoader {
      *
      * @param {Object} toLoad - The Object to load
      *
-     * @memberof Loader
+     * @memberof ALoader
      */
     load(toLoad) {
         throw new NotImplementedException();
@@ -44,7 +44,7 @@ class ALoader {
      *
      * @param {Object|Array} toLoad - All Objects to load
      *
-     * @memberof Loader
+     * @memberof ALoader
      */
     // eslint-disable-next-line no-unused-vars
     loadAll(toLoad) {
@@ -56,7 +56,7 @@ class ALoader {
      *
      * @param {String} toUnload
      *
-     * @memberof Loader
+     * @memberof ALoader
      */
     unload(toUnload) {
         throw new NotImplementedException();

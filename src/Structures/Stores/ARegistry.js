@@ -17,15 +17,15 @@ import Collection from '../../Utility/Collection';
  */
 class ARegistry {
     /**
-     * Creates an instance of Registry.
+     * Creates an instance of ARegistry.
      *
      * @param {AxonClient} axon - The AxonClient
      * @param {Object} base - The base definition to use for the registry
      *
-     * @memberof Registry
+     * @memberof ARegistry
      */
     constructor(axon, base) {
-        if (this.constructor === 'Registry') {
+        if (this.constructor === 'ARegistry') {
             throw new NoAbstractInstanceException();
         }
         this._axon = axon;
@@ -36,7 +36,7 @@ class ARegistry {
      * Get the AxonClient
      *
      * @readonly
-     * @memberof Registry
+     * @memberof ARegistry
      */
     get axon() {
         return this._axon;
@@ -46,7 +46,7 @@ class ARegistry {
      * Get the size of the registry
      *
      * @readonly
-     * @memberof Registry
+     * @memberof ARegistry
      */
     get size() {
         return this.registry.size;
@@ -57,7 +57,7 @@ class ARegistry {
      *
      * @param {String} key
      * @returns {Boolean} - Whether the item exist
-     * @memberof Registry
+     * @memberof ARegistry
      */
     has(key) {
         return this.registry.has(key);
@@ -68,7 +68,7 @@ class ARegistry {
      *
      * @param {String} key
      * @returns {Object} - The item
-     * @memberof Registry
+     * @memberof ARegistry
      */
     get(key) {
         return this.registry.get(key.toLowerCase() );
@@ -115,7 +115,7 @@ class ARegistry {
      *
      * @param {String} key
      * @param {Object} value
-     * @memberof Registry
+     * @memberof ARegistry
      */
     register(key, value) {
         throw new NotImplementedException();
@@ -126,7 +126,7 @@ class ARegistry {
      *
      * @param {String} key
      * @param {Object} value
-     * @memberof Registry
+     * @memberof ARegistry
      */
     unregister(key, value) {
         throw new NotImplementedException();
