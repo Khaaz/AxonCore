@@ -35,6 +35,7 @@ import logo from './Configs/logo';
 import packageJSON from '../package.json';
 import { EMBED_LIMITS } from './Utility/Constants/DiscordEnums';
 import { WEBHOOK_TYPES, LOG_LEVELS, WEBHOOK_TO_COLOR } from './Utility/Constants/AxonEnums';
+import ALogger from './Loggers/ALogger';
 
 /**
  * AxonCore - Client constructor
@@ -117,7 +118,11 @@ class AxonClient extends EventEmitter {
         };
 
         /* Logger */
-        this.logger = axonOptions.extensions.logger || LoggerSelector.select(axonOptions.settings);
+        if (axonOptions.extensions.logger && axonOptions.extensions.logger.prototype instanceof ALogger) {
+            this.logger = axonOptions.extensions.logger; // eslint-disable-line new-cap
+        } else {
+            this.logger = LoggerSelector.select(axonOptions.settings);
+        }
 
         /* AxonUtils */
         this.axonUtils = new AxonUtils(this);
