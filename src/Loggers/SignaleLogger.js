@@ -1,5 +1,6 @@
 import { Signale } from 'signale';
 import figures from 'figures';
+import Context from './Context';
 
 const logOptions = {
     types: {
@@ -7,31 +8,6 @@ const logOptions = {
             badge: figures.info,
             label: 'verbose',
             color: 'gray',
-        },
-        axon: {
-            badge: figures.star,
-            label: 'axon',
-            color: 'magenta',
-        },
-        init: {
-            badge: figures.play,
-            label: 'init',
-            color: 'green',
-        },
-        moduleS: {
-            badge: 'M',
-            label: 'module',
-            color: 'blue',
-        },
-        commandS: {
-            badge: 'C',
-            label: 'command',
-            color: 'cyan',
-        },
-        subcmdS: {
-            badge: 'c',
-            label: 'subcmd',
-            color: 'cyanBright',
         },
     },
 };
@@ -45,45 +21,89 @@ const logOptions = {
  */
 class SignaleLogger extends Signale {
     constructor(options) {
-        super(options);
+        super(new Signale(options) );
 
         this.config( {
             displayTimestamp: true,
         } );
     }
 
-    // Renames
-    emerg(input) {
-        this.fatal(input);
+    /**
+     * Major - Critical fault
+     * Crashing bugs, unexpected errors...
+     *
+     * @param {String} input
+     * @param {Context} opt - context object
+     * @memberof WinstonLogger
+     */
+    fatal(input, opt) {
+        this.out.fatal(`${Context.from(opt).get()}${input}`);
     }
 
-    notice(input) {
-        this.note(input);
+    /**
+     * Major - critical error
+     *
+     * @param {String} input
+     * @param {Context} opt - context object
+     * @memberof WinstonLogger
+     */
+    error(input, opt) {
+        this.out.error(`${Context.from(opt).get()}${input}`);
     }
 
-    // Custom methods
-    _initModule(module) {
-        this.moduleS(`[${module.label}] Initialised! Commands loaded -${module.commands.size}-`);
+    /**
+     * Warns - expected errors
+     *
+     * @param {String} input
+     * @param {Context} opt - context object
+     * @memberof WinstonLogger
+     */
+    warn(input, opt) {
+        this.out.warn(`${Context.from(opt).get()}${input}`);
+    }
+    
+    /**
+     * Eval - Debugging logs
+     *
+     * @param {String} input
+     * @param {Context} opt - context object
+     * @memberof WinstonLogger
+     */
+    debug(input, opt) {
+        this.out.debug(`${Context.from(opt).get()}${input}`);
     }
 
-    _initCommand(command) {
-        let mess;
-        if (command.hasSubcmd) {
-            mess = `${command.label} Initialised! Subcommands loaded -${command.subCommands.size}-`;
-        } else {
-            mess = `${command.label} Initialised!`;
-        }
-        this.commandS(mess);
+    /**
+     * Important information
+     *
+     * @param {String} input
+     * @param {Context} opt - context object
+     * @memberof WinstonLogger
+     */
+    notice(input, opt) {
+        this.out.note(`${Context.from(opt).get()}${input}`);
     }
 
-    _initSubCmd(sub) {
-        let mess;
-        if (sub.hasSubcmd) {
-            mess = `${sub.label} Initialised! Subcommands loaded -${sub.subCommands.size}-`;
-        } else {
-            mess = `${sub.label} Initialised!`;
-        }
-        this.subcmdS(mess);
+    /**
+     * Default information
+     *
+     * @param {String} input
+     * @param {Context} opt - context object
+     * @memberof WinstonLogger
+     */
+    info(input, opt) {
+        this.out.info(`${Context.from(opt).get()}${input}`);
+    }
+
+    /**
+     * Other Logging - executed commands, etc...
+     *
+     * @param {String} input
+     * @param {Context} opt - context object
+     * @memberof WinstonLogger
+     */
+    verbose(input, opt) {
+        this.out.verbose(`${Context.from(opt).get()}${input}`);
     }
 }
 

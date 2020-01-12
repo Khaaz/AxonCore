@@ -1,6 +1,6 @@
 import Selector from './../Structures/Selector';
 
-import DefaultLogger from './Logger';
+import DefaultLogger from './DefLogger';
 
 import { LOGGER_TYPES } from '../Utility/Constants/AxonEnums';
 
@@ -32,6 +32,7 @@ class LoggerSelector extends Selector {
                     Logger = require('./ChalkLogger').default;
                     Logger.info('Selected Logger: Chalk Logger.');
                 } catch (err) {
+                    console.log(err);
                     Logger = DefaultLogger;
                     Logger.warn('The specified logger is missing dependencies, the default logger will be used instead.');
                     Logger.info('Logger: Default Logger.');
@@ -77,22 +78,20 @@ class LoggerSelector extends Selector {
             Logger.info('Selected Logger: Default Logger.');
         }
 
-        Logger.axon('Logger ready');
+        Logger.notice('Logger ready.');
         return Logger;
     }
 
     static testLogger(Logger) {
         /** LOGGER TESTING */
         console.log(' ');
-        Logger.emerg('- Test EMERG -');
+        Logger.fatal('- Test FATAL -');
         Logger.error('- Test ERROR -');
         Logger.warn('- Test WARN -');
         Logger.debug('- Test DEBUG -');
         Logger.notice('- Test notice -');
         Logger.info('- Test info -');
         Logger.verbose('- Test verbose -');
-        Logger.axon('- Test AXON -');
-        Logger.init('- Test INIT -');
         console.log(' ');
     }
 }
