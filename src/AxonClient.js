@@ -385,7 +385,7 @@ class AxonClient extends EventEmitter {
 
         let err = null;
         if (content instanceof Error) {
-            err = (content.stack && content.stack.length < EMBED_LIMITS.LIMIT_DESCRIPTION) ? err.stack : err.message;
+            err = (content.stack && content.stack.length < EMBED_LIMITS.LIMIT_DESCRIPTION) ? content.stack : content.message;
             content = content.stack || content.message;
         }
 
