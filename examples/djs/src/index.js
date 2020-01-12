@@ -12,10 +12,10 @@ if (customConf.db === 1) {
                 Bot.logger.notice('Connected to AxonCore DataBase.');
             } )
             .catch(err => {
-                Bot.logger.emerg(`Could NOT connect to AxonCore DataBase.\n${err.stack}`);
+                Bot.logger.fatal(`Could NOT connect to AxonCore DataBase.\n${err.stack}`);
             } );
     } catch (e) {
-        Bot.logger.emerg(`Could NOT connect to AxonCore DataBase.\n${e.stack}`);
+        Bot.logger.fatal(`Could NOT connect to AxonCore DataBase.\n${e.stack}`);
     }
 }
 
