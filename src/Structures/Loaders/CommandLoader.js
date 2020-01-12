@@ -1,7 +1,7 @@
-import Loader from './Loader';
+import ALoader from './ALoader';
+import Command from '../Command/Command';
 
 import Validater from '../Validater';
-import Command from '../Command/Command';
 
 import AxonError from '../../Errors/AxonError';
 import CommandRegistry from './../Stores/CommandRegistry';
@@ -13,9 +13,9 @@ import CommandRegistry from './../Stores/CommandRegistry';
  * @author KhaaZ
  *
  * @class CommandLoader
- * @extends Loader
+ * @extends ALoader
  */
-class CommandLoader extends Loader {
+class CommandLoader extends ALoader {
     constructor(module) {
         super(module.axon);
         this._module = module;

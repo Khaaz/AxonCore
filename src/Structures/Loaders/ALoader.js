@@ -9,11 +9,11 @@ import NotImplementedException from '../../Errors/NotImplementedException';
  * @author KhaaZ
  *
  * @abstract
- * @class Loader
+ * @class ALoader
  *
  * @prop {Object} loadIn - The object in which we are loading items
  */
-class Loader {
+class ALoader {
     /**
      * Creates an instance of Loader.
      *
@@ -63,4 +63,4 @@ class Loader {
     }
 }
 
-export default Loader;
+export default ALoader;

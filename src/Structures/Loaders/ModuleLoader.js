@@ -1,7 +1,7 @@
-import Loader from './Loader';
+import ALoader from './ALoader';
+import Module from '../Module';
 
 import Validater from '../Validater';
-import Module from '../Module';
 
 import AxonError from '../../Errors/AxonError';
 
@@ -12,9 +12,9 @@ import AxonError from '../../Errors/AxonError';
  * @author KhaaZ
  *
  * @class ModuleLoader
- * @extends Loader
+ * @extends ALoader
  */
-class ModuleLoader extends Loader {
+class ModuleLoader extends ALoader {
     // eslint-disable-next-line no-useless-constructor
     constructor(axonClient) {
         super(axonClient);

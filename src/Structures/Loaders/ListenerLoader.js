@@ -1,4 +1,4 @@
-import Loader from './Loader';
+import ALoader from './ALoader';
 import Listener from '../Event/Listener';
 
 import AxonError from '../../Errors/AxonError';
@@ -8,9 +8,9 @@ import AxonError from '../../Errors/AxonError';
  * Validate the listener validity entirely.
  *
  * @class ListenerLoader
- * @extends Loader
+ * @extends ALoader
  */
-class ListenerLoader extends Loader {
+class ListenerLoader extends ALoader {
     constructor(module) {
         super(module.axon);
         this._module = module;
