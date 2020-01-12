@@ -41,7 +41,7 @@ export { default as ErisEnums } from './src/Libraries/eris/lib/ErisEnums';
 export { default as DjsEnums } from './src/Libraries/discordjs/lib/DjsEnums';
 
 // Database
-export { default as DBProvider } from './src/Database/DBProvider';
+export { default as ADBProvider } from './src/Database/ADBProvider';
 export { default as JsonProvider } from './src/Database/JsonProvider';
 export { default as MongoProvider } from './src/Database/MongoProvider';
 

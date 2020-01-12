@@ -1,4 +1,4 @@
-import DBProvider from './DBProvider';
+import ADBProvider from './ADBProvider';
 import AxonConfig from '../Structures/DataStructure/AxonConfig';
 import GuildConfig from '../Structures/DataStructure/GuildConfig';
 
@@ -8,9 +8,9 @@ import GuildConfig from '../Structures/DataStructure/GuildConfig';
  * @author VoidNulll
  *
  * @class InMemoryProvider
- * @extends DBProvider
+ * @extends ADBProvider
  */
-class InMemoryProvider extends DBProvider {
+class InMemoryProvider extends ADBProvider {
     async fetchAxon() {
         let axon = this.axon.axonConfig;
         if (!axon) {

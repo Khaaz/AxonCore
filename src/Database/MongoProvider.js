@@ -1,4 +1,4 @@
-import DBProvider from './DBProvider';
+import ADBProvider from './ADBProvider';
 
 import AxonConfig from '../Structures/DataStructure/AxonConfig';
 import GuildConfig from '../Structures/DataStructure/GuildConfig';
@@ -9,12 +9,12 @@ import GuildConfig from '../Structures/DataStructure/GuildConfig';
  * @author KhaaZ
  *
  * @class MongoProvider
- * @extends DBProvider
+ * @extends ADBProvider
  *
  * @prop {Object} AxonSchema
  * @prop {Object} GuildSchema
  */
-class MongoProvider extends DBProvider {
+class MongoProvider extends ADBProvider {
     /**
      * Override init method.
      *

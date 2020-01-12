@@ -19,7 +19,7 @@ import MessageManager from './Langs/MessageManager';
 import ModuleLoader from './Structures/Loaders/ModuleLoader';
 import ClientInitialiser from './Structures/Loaders/ClientInitialiser';
 
-import DBProvider from './Database/DBProvider'; // default DBProvider
+import ADBProvider from './Database/ADBProvider'; // default DBProvider
 
 // Utility
 import AxonUtils from './Utility/AxonUtils';
@@ -135,7 +135,7 @@ class AxonClient extends EventEmitter {
             this.utils = new Utils(this);
         }
         /* DBProvider */
-        if (axonOptions.extensions.DBProvider && axonOptions.extensions.DBProvider.prototype instanceof DBProvider) {
+        if (axonOptions.extensions.DBProvider && axonOptions.extensions.DBProvider.prototype instanceof ADBProvider) {
             this.DBProvider = new axonOptions.extensions.DBProvider(this);
         } else {
             this.DBProvider = DBSelector.select(axonOptions, this);

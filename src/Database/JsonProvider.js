@@ -1,4 +1,4 @@
-import DBProvider from './DBProvider';
+import ADBProvider from './ADBProvider';
 
 import AxonConfig from '../Structures/DataStructure/AxonConfig';
 import GuildConfig from '../Structures/DataStructure/GuildConfig';
@@ -11,11 +11,11 @@ import Manager from './JSON/Manager';
  * @author Olybear, KhaaZ
  *
  * @class JsonProvider
- * @extends DBProvider
+ * @extends ADBProvider
  *
  * @prop {Manager} manager - Class responsible to read / write data to the DB as json.
  */
-class JsonProvider extends DBProvider {
+class JsonProvider extends ADBProvider {
     /**
      * Override init method.
      *

@@ -15,11 +15,11 @@ import NotImplementedException from '../Errors/NotImplementedException';
  * @author KhaaZ
  *
  * @abstract
- * @class DBProvider
+ * @class ADBProvider
  *
  * @prop {AxonClient} axon - The AxonClient
  */
-class DBProvider {
+class ADBProvider {
     /**
      * Creates an instance of DBProvider.
      *
@@ -163,4 +163,4 @@ class DBProvider {
     }
 }
 
-export default DBProvider;
+export default ADBProvider;
