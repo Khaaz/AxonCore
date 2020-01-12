@@ -67,7 +67,7 @@ class ModuleLoader extends Loader {
         /* Register the module */
         this.axon.modules.register(module.label, module);
         
-        this.logger._initModule(module);
+        this.logger.info(`[MOD] => Initialised! | Commands loaded -${module.commands.size}- | [${module.label}]`);
         return true;
     }
 
@@ -94,7 +94,7 @@ class ModuleLoader extends Loader {
                 this.logger.error(err);
             }
         }
-        this.logger.init(`Initialised! | [AxonClient] | Modules loaded -${this.axon.modules.size}-`);
+        this.axon.log('INFO', `Initialised! | [AxonClient] | Modules loaded -${this.axon.modules.size}-`);
         return true;
     }
 

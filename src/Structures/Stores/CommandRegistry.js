@@ -101,7 +101,7 @@ class CommandRegistry extends Registry {
         }
         this.remove(label);
 
-        this.axon.logger.info(`COMMAND-REGISTRY - [Module(${command.module.label})] Command: ${label} unregistered!`);
+        this.axon.log('INFO', `COMMAND-REGISTRY - [Module(${command.module.label})] Command: ${label} unregistered!`);
     }
 
     /**

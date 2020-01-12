@@ -98,11 +98,34 @@ class AxonClient extends EventEmitter {
             guildConfigCache: axonOptions.settings.guildConfigCache,
         };
 
+        /* Bot informations */
+        this.infos = {
+            name: axonOptions.info.name,
+            description: axonOptions.info.description,
+            version: axonOptions.info.version,
+            owners: Object.values(axonOptions.staff.owners).map(o => o.name),
+        };
+
+        /* Client specification */
+        this.axoncore = {
+            name: packageJSON.name,
+            version: packageJSON.version,
+            author: packageJSON.author,
+            github: packageJSON.link,
+        };
+
         /* Logger */
         this.logger = axonOptions.extensions.logger || LoggerSelector.select(axonOptions.settings);
 
         /* AxonUtils */
         this.axonUtils = new AxonUtils(this);
+        /*
+         * Initialise Bot Client and LibraryInterface
+         */
+        this._botClient = botClient;
+        this.library = LibrarySelector.select(this, axonOptions);
+        this.log('NOTICE', `Library Interface ready. [TYPE: ${this.library.type}]`);
+
         /* Utils */
         if (axonOptions.extensions.utils && axonOptions.extensions.utils.prototype instanceof Utils) {
             this.utils = new axonOptions.extensions.utils(this); // eslint-disable-line new-cap
@@ -115,12 +138,6 @@ class AxonClient extends EventEmitter {
         } else {
             this.DBProvider = DBSelector.select(axonOptions, this);
         }
-
-        /*
-         * Initialise Bot Client and LibraryInterface
-         */
-        this._botClient = botClient;
-        this.library = LibrarySelector.select(this, axonOptions);
 
         /* Structures */
         this.modules = new ModuleRegistry(this);
@@ -139,22 +156,6 @@ class AxonClient extends EventEmitter {
 
         /* General */
         this.staff = ClientInitialiser.initStaff(axonOptions.staff, this.logger);
-
-        /* Bot informations */
-        this.infos = {
-            name: axonOptions.info.name,
-            description: axonOptions.info.description,
-            version: axonOptions.info.version,
-            owners: Object.values(axonOptions.staff.owners).map(o => o.name),
-        };
-
-        /* Client specification */
-        this.axoncore = {
-            name: packageJSON.name,
-            version: packageJSON.version,
-            author: packageJSON.author,
-            github: packageJSON.link,
-        };
 
         /* AxonConfig */
         ClientInitialiser.initAxon(this);
@@ -297,7 +298,7 @@ class AxonClient extends EventEmitter {
 
         this.library.client.connect()
             .then( () => {
-                this.logger.notice('=== BotClient Connected! ===');
+                this.log('NOTICE', '=== BotClient Connected! ===');
             } )
             .catch(err => {
                 this.logger.error(err.stack);
@@ -308,11 +309,11 @@ class AxonClient extends EventEmitter {
             this.initErrorListeners();
             /* Bind Listeners to Handlers */
             this.eventManager.bindListeners();
-            this.logger.axon('=== AxonClient Ready! ===');
+            this.log('NOTICE', '=== AxonClient Ready! ===');
             /* Custom onReady method */
             this.onReady();
         } catch (err) {
-            this.logger.error(err.stack);
+            this.log('FATAL', err);
         }
 
         this.library.onMessageCreate(this._onMessageCreate.bind(this) );
@@ -360,12 +361,17 @@ class AxonClient extends EventEmitter {
     /**
      * Log both to console and to the correct webhook
      *
-     * @param {LOG_LEVELS} level
+     * @param {LOG_LEVELS} level - The LOG-LEVEL
      * @param {String|Error} content - The content or the error to log
+     * @param {Object} [ctx=null] - Additional context to be passed to logger
+     * @param {Object|String} ctx.guild
+     * @param {String} ctx.cmd
+     * @param {Object|String} ctx.user
+     * @param {Boolean} [execWebhook=true] - Whether to execute the webhook
      *
      * @memberof AxonClient
      */
-    log(level, content) {
+    log(level, content, ctx = null, execWebhook = true) {
         if (!LOG_LEVELS[level] ) {
             this.logger.warn(`Incorrect log level: ${level}`);
         }
@@ -376,15 +382,22 @@ class AxonClient extends EventEmitter {
             content = content.stack || content.message;
         }
 
-        this.logger[LOG_LEVELS[level]](content);
+        this.logger[LOG_LEVELS[level]](content, ctx);
         
-        const whType = WEBHOOK_TYPES[level];
-        console.log(whType);
-        this.axonUtils.triggerWebhook(whType, {
-            color: WEBHOOK_TO_COLOR[whType],
-            timestamp: new Date(),
-            description: err || content,
-        }, `${whType}${this.library.client.getUser() ? ` - ${this.library.client.getUsername()}` : ''}`);
+        if (content.length > EMBED_LIMITS.LIMIT_DESCRIPTION) {
+            content = content.slice(0, EMBED_LIMITS.LIMIT_DESCRIPTION);
+        }
+        if (execWebhook && this.library) {
+            const whType = WEBHOOK_TYPES[level];
+            this.axonUtils.triggerWebhook(whType, {
+                color: WEBHOOK_TO_COLOR[whType],
+                timestamp: new Date(),
+                description: err || content,
+            // eslint-disable-next-line no-nested-ternary
+            }, `${whType}${this.library.client.getUser()
+                ? ` - ${this.library.client.getUsername()}`
+                : this.infos.name ? ` - ${this.infos.name}` : ''}`);
+        }
     }
 
     /**
@@ -413,7 +426,7 @@ class AxonClient extends EventEmitter {
      * @memberof AxonClient
      */
     _onReady() {
-        this.logger.axon('=== BotClient Ready! ===');
+        this.log('NOTICE', '=== BotClient Ready! ===');
         this.botClient.ready = true;
 
         /* Bind handlers to events */
@@ -421,7 +434,7 @@ class AxonClient extends EventEmitter {
 
         /* Initialise status. Default AxonCore status or use custom one */
         this.initStatus();
-        this.log('NOTICE', '**Instance Ready!**');
+        this.log('NOTICE', '=== **Ready!** ===');
     }
 
     /**
@@ -432,11 +445,11 @@ class AxonClient extends EventEmitter {
      */
     initErrorListeners() {
         process.on('uncaughtException', (err) => {
-            this.log('EMERG', err);
+            this.log('FATAL', err);
         } );
 
         process.on('unhandledRejection', (err) => {
-            this.log('EMERG', err);
+            this.log('FATAL', err);
         } );
 
         this.botClient.on('error', (err) => {
@@ -447,7 +460,7 @@ class AxonClient extends EventEmitter {
             this.log('ERROR', msg);
         } );
 
-        this.logger.axon('Error listeners bound!');
+        this.log('INFO', 'Error listeners bound!');
     }
 
     /**
@@ -467,7 +480,7 @@ class AxonClient extends EventEmitter {
 
     _execCommand(msg, args, command, guildConfig, { isAdmin, isOwner } ) {
         if (this.settings.debugMode) {
-            this.logger.verbose(`${guildConfig ? '[GUILD]' : '[DM]'} ${isAdmin ? 'Admin' : 'Regular'} execution of ${command.fullLabel}`);
+            this.log('VERBOSE', `${guildConfig ? '[GUILD]' : '[DM]'} ${isAdmin ? 'Admin' : 'Regular'} execution of ${command.fullLabel}`);
             console.time('- Net');
             console.time('- Node');
         }
@@ -501,7 +514,7 @@ class AxonClient extends EventEmitter {
         }
 
         if (this.settings.debugMode) {
-            this.logger.verbose(`${guildConfig ? '[GUILD]' : '[DM]'} ${isAdmin ? 'Admin' : 'Regular'} -HELP- execution of ${command.fullLabel}`);
+            this.log('VERBOSE', `${guildConfig ? '[GUILD]' : '[DM]'} ${isAdmin ? 'Admin' : 'Regular'} -HELP- execution of ${command.fullLabel}`);
             console.time('- Net');
             console.time('- Node');
         }
@@ -529,15 +542,14 @@ class AxonClient extends EventEmitter {
         listener._execute(guildConfig, ...args)
             .then( () => {
                 if (this.settings.debugMode) {
-                    this.logger.verbose(`[EVENT](${listener.eventName}) - ${listener.label}`);
+                    this.log('VERBOSE', `[EVENT](${listener.eventName}) - ${listener.label}`);
                 }
                 this.emit('eventSuccess', { event: listener.eventName, listener, guildConfig } );
             } )
             .catch(err => {
                 this.emit('eventError', { event: listener.eventName, listener, guildConfig, err } );
 
-                this.log('ERROR', err);
-                // this.logger.error(`[EVENT](${listener.eventName}) - ${listener.label}\n${err}`);
+                this.log('ERROR', `[EVENT](${listener.eventName}) - ${listener.label}\n${err}`);
             } );
     }
 

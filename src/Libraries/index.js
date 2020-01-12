@@ -25,25 +25,24 @@ class LibrarySelector extends Selector {
             // Eris
             case LIBRARY_TYPES.ERIS: {
                 libraryInterface = new ErisInterface(axon);
-                axon.logger.info('Selected Library Interface: ERIS.');
+                axon.log('INFO', 'Selected Library Interface: ERIS.');
                 break;
             }
 
             // Discordjs
             case LIBRARY_TYPES.DISCORDJS: {
                 libraryInterface = new DjsInterface(axon, axonOptions._token);
-                axon.logger.info('Selected Library Interface: DISCORD.JS.');
+                axon.log('INFO', 'Selected Library Interface: DISCORD.JS.');
                 break;
             }
 
             default: {
-                axon.logger.error('No Selected Library Interface.');
+                axon.log('WARN', 'No Selected Library Interface.');
                 libraryInterface = new ErisInterface(axon);
-                axon.logger.info('[DEFAULT] Selected Library Interface: ERIS.');
+                axon.log('INFO', '[DEFAULT] Selected Library Interface: ERIS.');
             }
         }
 
-        axon.logger.axon('Library Interface ready.');
         return libraryInterface;
     }
 }

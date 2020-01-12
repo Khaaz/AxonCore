@@ -22,7 +22,7 @@ class ClientInitialiser {
         for (const s of Object.keys(staffConfig) ) {
             staff[s] = staffConfig[s].map(o => o.id);
         }
-        logger.init('Bot-Staff engaged!');
+        logger.info('Bot-Staff engaged!');
 
         return staff;
     }
@@ -52,7 +52,7 @@ class ClientInitialiser {
         // eslint-disable-next-line require-atomic-updates
         axon.axonConfig = axonConf; // We have to do it here and not return the value because we need to unwrap the promise and actually assign the value.
         
-        axon.logger.init('[INIT] Axon config initialised!');
+        axon.logger.info('[INIT] Axon config initialised!');
     }
 }
 

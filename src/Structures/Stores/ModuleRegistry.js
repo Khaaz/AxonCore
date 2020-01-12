@@ -62,7 +62,7 @@ class ModuleRegistry extends Registry {
 
         this.remove(label);
 
-        this.axon.logger.info(`MODULE-REGISTRY - [Module(${module.label})] Module: ${label} unregistered!`);
+        this.axon.log('INFO', `MODULE-REGISTRY - [Module(${module.label})] Module: ${label} unregistered!`);
     }
 }
 

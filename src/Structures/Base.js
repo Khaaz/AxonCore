@@ -127,6 +127,22 @@ class Base {
         return this.axon.getCommand(fullLabel);
     }
 
+    /**
+     * Log both to console and to the correct webhook
+     *
+     * @param {LOG_LEVELS} level - The LOG-LEVEL
+     * @param {String|Error} content - The content or the error to log
+     * @param {Object} [ctx=null] - Additional context to be passed to logger
+     * @param {Object|String} ctx.guild
+     * @param {String} ctx.cmd
+     * @param {Object|String} ctx.user
+     * @param {Boolean} [execWebhook=true] - Whether to execute the webhook
+     *
+     * @memberof AxonClient
+     */
+    log(level, content, ctx = null, execWebhook = true) {
+        this.axon.log(level, content, ctx, execWebhook);
+    }
     // **** METHODS - API/SENDER **** //
 
     /**
@@ -253,7 +269,7 @@ class Base {
             err.message = `Type: ${TYPE_ERRORS[type.toLowerCase()]} | ${err.message}`;
             throw err;
         }
-        this.logger.emerg(`Unexpected error [${msg.channel.guild.name} - ${msg.channale.guild.id}]!\n${err.stack}`);
+        this.log('FATAL', `Unexpected error [${msg.channel.guild.name} - ${msg.channel.guild.id}]!\n${err.stack}`);
         return this.sendError(msg.channel, errMsg);
     }
 

@@ -16,7 +16,7 @@ class CommandDispatcher extends Dispatcher {
     /**
      * Creates an instance of CommandDispatcher.
      *
-     * @param {AxonClient} axon
+     * @param {Object<AxonClient>} axon
      *
      * @memberof Dispatcher
      */
@@ -30,7 +30,7 @@ class CommandDispatcher extends Dispatcher {
      * Returns the LibraryInterface instance
      *
      * @readonly
-     * @type {LibraryInterface}
+     * @type {Object<LibraryInterface>}
      * @memberof CommandDispatcher
      */
     get library() {
@@ -49,7 +49,7 @@ class CommandDispatcher extends Dispatcher {
      *      - Regular execution
      *      - DM execution
      *
-     * @param {Message} msg - Message Object from Eris
+     * @param {Object<Message>} msg - Message Object from Eris
      * @returns {Promise}
      *
      * @memberof CommandDispatcher
@@ -83,7 +83,7 @@ class CommandDispatcher extends Dispatcher {
             try {
                 guildConfig = await this._axon.guildConfigs.getOrFetch(this.library.guild.getID(guild) );
             } catch (err) {
-                this._axon.logger.error(err.stack, { guild } );
+                this._axon.log('EMERG', err.stack, { guild } );
                 return;
             }
         }
@@ -146,7 +146,7 @@ class CommandDispatcher extends Dispatcher {
      * Give the execution type: Owner or Admin execution.
      * It uses the global admin and owner prefixes and checks for the BotStaff rank of the caller.
      *
-     * @param {Message} msg
+     * @param {Object<Message>} msg
      * @returns {Object} { isAdmin: Boolean, isOwner: Boolean }
      *
      * @memberof CommandDispatcher
@@ -173,8 +173,8 @@ class CommandDispatcher extends Dispatcher {
      * Will resolve the owner or admin prefix if it's an owner or admin execution.
      * It will otherwise regularly resolve the prefix for this particular guild.
      *
-     * @param {Message} msg - The message object
-     * @param {GuildConfig} guildConfig - The guildConfig Object
+     * @param {Object<Message>} msg - The message object
+     * @param {Object<GuildConfig>} guildConfig - The guildConfig Object
      * @param {Boolean} [isAdmin=false] - The guildConfig Object
      * @param {Boolean} [isOwner=false] - The guildConfig Object
      * @returns {String?} The prefix if found / Undefined if not
@@ -192,8 +192,8 @@ class CommandDispatcher extends Dispatcher {
      * If the message starts with one of the guild prefixes it returns the prefix, otherwise it returns undefined.
      * Global prefixes will only take over if no prefix are specified in this guild.
      *
-     * @param {Message} msg - The message object
-     * @param {GuildConfig} guildConfig - The guildConfig Object
+     * @param {Object<Message>} msg - The message object
+     * @param {Object<GuildConfig>} guildConfig - The guildConfig Object
      * @returns {String?} The prefix if found / Undefined if not
      *
      * @memberof CommandDispatcher

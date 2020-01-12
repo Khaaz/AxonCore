@@ -50,7 +50,7 @@ import defaultWebhooksConfig from './Configs/webhooksConfig.json';
  *
  * // Webhooks
  * @prop {Object} webhooks - Webhooks tokens / id
- * @prop {Object} webhooks.EMERG
+ * @prop {Object} webhooks.FATAL
  * @prop {Object} webhooks.ERROR
  * @prop {Object} webhooks.WARN
  * @prop {Object} webhooks.DEBUG
@@ -109,7 +109,7 @@ class AxonOptions {
      *
      * // Webhooks
      * @param {Object} [webhooks={}] - Webhooks tokens / id
-     * @param {Object} webhooks.EMERG
+     * @param {Object} webhooks.FATAL
      * @param {Object} webhooks.ERROR
      * @param {Object} webhooks.WARN
      * @param {Object} webhooks.DEBUG

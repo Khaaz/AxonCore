@@ -168,7 +168,9 @@ class CommandLoader extends Loader {
         delete command.subcmds;
        
         this.axon.commands.register(command.label, command); // add the command to the Map of commands.
-        this.logger._initCommand(command);
+        this.logger.info(command.hasSubcmd
+            ? `[CMD] => Initialised! | SubCommands loaded -${command.subCommands.size}- | *${command.label}*`
+            : `[CMD] => Initialised! | *${command.label}*`);
     }
 
     /**
@@ -190,7 +192,9 @@ class CommandLoader extends Loader {
         command.parentCommand = parent;
 
         parent.subCommands.register(command.label, command);
-        this.logger._initSubCmd(command);
+        this.logger.info(command.hasSubcmd
+            ? `[SUB] => Initialised! | SubCommands loaded -${command.subCommands.size}- | ${command.label}`
+            : `[SUB] => Initialised! | ${command.label}`);
     }
 
     /**

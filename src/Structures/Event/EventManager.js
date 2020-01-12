@@ -97,7 +97,7 @@ class EventManager extends Base {
         // bind handler to event emission
         for (const [event, handler] of this._handlers) {
             this.bot.on(event, handler._handle);
-            this.logger._initEvent(true, handler);
+            this.logger.info(`[EVT] => Bound ${handler.size} listener${handler.size > 1 ? 's' : ''} for ${handler.name}`);
         }
     }
 
@@ -125,7 +125,7 @@ class EventManager extends Base {
         }
         // Add Listener
         this._events[listener.eventName].push(listener);
-        this.logger._initEvent(false, listener);
+        this.logger.info(`[EVT] => Registered ${listener.label} for ${listener.eventName}`);
         return this._events[listener.eventName];
     }
 

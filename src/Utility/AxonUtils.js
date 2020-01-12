@@ -341,7 +341,7 @@ class AxonUtils {
      */
     updateGlobalStateModule(module, state = true) {
         this.axon.modules.get(module).enabled = state;
-        this.logger.info(`Globally ${state ? 'enabled' : 'disabled'} module: ${module}.`);
+        this.log('NOTICE', `Globally ${state ? 'enabled' : 'disabled'} module: ${module}.`);
     }
 
     /**
@@ -353,7 +353,7 @@ class AxonUtils {
      */
     updateGlobalStateCommand(command, state = true) {
         this.axon.commands.get(command).enabled = state;
-        this.logger.info(`Globally ${state ? 'enabled' : 'disabled'} command: ${command}.`);
+        this.log('NOTICE', `Globally ${state ? 'enabled' : 'disabled'} command: ${command}.`);
     }
 }
 

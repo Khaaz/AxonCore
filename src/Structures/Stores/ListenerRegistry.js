@@ -50,7 +50,7 @@ class ListenerRegistry extends Registry {
         this.remove(label);
         this.axon.eventManager.unregisterListener(listener.eventName, listener.label);
         
-        this.axon.logger.info(`LISTENER-REGISTRY - [Module(${listener.module.label})] Listener: ${label} unregistered!`);
+        this.axon.log('INFO', `LISTENER-REGISTRY - [Module(${listener.module.label})] Listener: ${label} unregistered!`);
     }
 }
 

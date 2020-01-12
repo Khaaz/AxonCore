@@ -25,15 +25,15 @@ class DBSelector extends Selector {
             default: {
                 const InMemoryProvider = require('./InMemoryProvider').default;
                 DBProvider = new InMemoryProvider(axon);
-                axon.logger.info('Selected Database: Database-Less');
-                axon.logger.warn('Configs will not change.');
+                axon.log('INFO', 'Selected Database: Database-Less');
+                axon.log('WARN', 'Configs will not change.');
                 break;
             }
 
             // Json Database
             case DB_TYPES.JSON: {
                 DBProvider = new JsonProvider(axon);
-                axon.logger.info('Selected Database: JSON DB.');
+                axon.log('INFO', 'Selected Database: JSON DB.');
                 break;
             }
 
@@ -42,18 +42,18 @@ class DBSelector extends Selector {
                 try {
                     const MongoService = require('./MongoProvider').default;
                     DBProvider = new MongoService(axon);
-                    axon.logger.info('Selected Database: MongoDB.');
+                    axon.log('INFO', 'Selected Database: MongoDB.');
                 } catch (err) {
                     DBProvider = new JsonProvider(axon);
-                    axon.logger.warn('Mongoose wasn\'t found, using JSON DB instead.');
-                    axon.logger.info('Selected Database: JSON DB.');
+                    axon.log('WARN', 'Mongoose wasn\'t found, using JSON DB instead.');
+                    axon.log('INFO', 'Selected Database: JSON DB.');
                 }
                 break;
             }
         }
 
         DBProvider.init(axonOptions);
-        axon.logger.axon('DB ready.');
+        axon.log('NOTICE', 'DB ready.');
         return DBProvider;
     }
 }

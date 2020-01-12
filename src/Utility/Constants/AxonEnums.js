@@ -287,7 +287,7 @@ export const PERMISSION_MANAGER = 'MANAGE_GUILD';
 // Logging
 /**
  * @typedef {String} WEBHOOK_TYPES
- * * EMERG: 'EMERG'
+ * * FATAL: 'FATAL'
  * * ERROR: 'ERROR'
  * * WARN: 'WARN'
  * * DEBUG: 'DEBUG'
@@ -296,7 +296,7 @@ export const PERMISSION_MANAGER = 'MANAGE_GUILD';
  * * VERBOSE: 'VERBOSE'
  */
 export const WEBHOOK_TYPES = {
-    EMERG: 'EMERG',
+    FATAL: 'FATAL',
     ERROR: 'ERROR',
     WARN: 'WARN',
     DEBUG: 'DEBUG',
@@ -307,7 +307,7 @@ export const WEBHOOK_TYPES = {
 
 /**
  * @typedef {String} LOG_LEVELS
- * * EMERG: 'emerg'
+ * * FATAL: 'fatal'
  * * ERROR: 'error'
  * * WARN: 'warn'
  * * DEBUG: 'debug'
@@ -316,7 +316,7 @@ export const WEBHOOK_TYPES = {
  * * VERBOSE: 'verbose'
  */
 export const LOG_LEVELS = {
-    EMERG: 'emerg',
+    FATAL: 'fatal',
     ERROR: 'error',
     WARN: 'warn',
     DEBUG: 'debug',
@@ -327,7 +327,7 @@ export const LOG_LEVELS = {
 
 /**
  * @typedef {String} WEBHOOK_TO_COLOR
- * * EMERG: 'emerg'
+ * * FATAL: 'fatal'
  * * ERROR: 'error'
  * * WARN: 'warn'
  * * DEBUG: 'debug'
@@ -336,7 +336,7 @@ export const LOG_LEVELS = {
  * * VERBOSE: 'verbose'
  */
 export const WEBHOOK_TO_COLOR = {
-    EMERG: 0xFF0000,
+    FATAL: 0xFF0000,
     ERROR: 0xFF0000,
     WARN: 0xFF4500,
     DEBUG: 0x0000FF,
