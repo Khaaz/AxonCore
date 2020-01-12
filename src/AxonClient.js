@@ -3,6 +3,8 @@ import EventEmitter from 'eventemitter3';
 import util from 'util';
 
 // Core - Structures
+import Base from './Structures/Base';
+
 import EventManager from './Structures/Event/EventManager';
 import CommandDispatcher from './Structures/Dispatchers/CommandDispatcher';
 // Registries
@@ -658,23 +660,7 @@ class AxonClient extends EventEmitter {
      * @memberof AxonClient
      */
     toJSON() {
-        const base = {};
-        for (const key in this) {
-            if (!base.hasOwnProperty(key) && this.hasOwnProperty(key) && !key.startsWith('_') ) {
-                if (!this[key] ) {
-                    base[key] = this[key];
-                } else if (this[key] instanceof Set) {
-                    base[key] = Array.from(this[key] );
-                } else if (this[key] instanceof Map) {
-                    base[key] = Array.from(this[key].values() );
-                } else if (typeof this[key].toJSON === 'function') {
-                    base[key] = this[key].toJSON();
-                } else {
-                    base[key] = this[key];
-                }
-            }
-        }
-        return base;
+        return Base.prototype.toJSON.call(this);
     }
 
     /**
@@ -687,14 +673,7 @@ class AxonClient extends EventEmitter {
      * @memberof AxonClient
      */
     [util.inspect.custom]() {
-        // http://stackoverflow.com/questions/5905492/dynamic-function-name-in-javascript
-        const copy = new { [this.constructor.name]: class {} }[this.constructor.name]();
-        for (const key in this) {
-            if (this.hasOwnProperty(key) && !key.startsWith('_') && this[key] !== undefined) {
-                copy[key] = this[key];
-            }
-        }
-        return copy;
+        return Base.prototype[util.inspect.custom].call(this);
     }
 }
 
