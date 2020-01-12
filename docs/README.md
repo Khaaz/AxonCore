@@ -62,7 +62,7 @@ It was built with an OOP approach and uses predictable abstraction while keeping
 
 ## Setup
 
-[Examples](./examples)
+[Examples](./examples)  
 [create-axoncore-app](https://github.com/Khaazz/create-axoncore-app) [WIP - not updated for v2]
 
 ## Features Overview
