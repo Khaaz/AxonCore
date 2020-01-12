@@ -15,10 +15,10 @@
 | [info.name] | <code>String</code> |  |  |
 | [info.category] | <code>String</code> |  |  |
 | [info.description] | <code>String</code> |  |  |
-| permissions | <code>Object.&lt;CommandPermissions&gt;</code> |  | Default values potentially used for CommandPermissions |
-| options | <code>Object.&lt;CommandOptions&gt;</code> |  | Default values potentially used  for CommandOptions |
-| commandLoader | <code>Object.&lt;CommandLoader&gt;</code> |  | Load all commands in the module / register / unregister |
-| listenerLoader | <code>Object.&lt;ListenerLoader&gt;</code> |  | Load all events in the module / register / unregister |
+| permissions | <code>CommandPermissions</code> |  | Default values potentially used for CommandPermissions |
+| options | <code>CommandOptions</code> |  | Default values potentially used  for CommandOptions |
+| commandLoader | <code>CommandLoader</code> |  | Load all commands in the module / register / unregister |
+| listenerLoader | <code>ListenerLoader</code> |  | Load all events in the module / register / unregister |
 
 
 * [Module](#Module) ⇐ <code>Base</code>
@@ -78,12 +78,12 @@ Creates a Module instance.
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| client | <code>Object.&lt;AxonClient&gt;</code> |  |  |
+| client | <code>AxonClient</code> |  |  |
 | [data] | <code>Object</code> | <code>{}</code> | All module parameters |
 | [data.label] | <code>String</code> |  | The module label |
 | [data.enabled] | <code>Boolean</code> |  | Whether the module is enabled or not |
 | [data.serverBypass] | <code>Boolean</code> |  | Whether the module can be disabled in a server or not |
 | [data.infos] | <code>Object</code> |  |  |
-| [data.options] | <code>Object.&lt;CommandOptions&gt;</code> \| <code>Object</code> |  | The default options for all commands in this module |
-| [data.permissions] | <code>Object.&lt;CommandPermissions&gt;</code> \| <code>Object</code> |  | The default permissions for all commands in this module |
+| [data.options] | <code>CommandOptions</code> \| <code>Object</code> |  | The default options for all commands in this module |
+| [data.permissions] | <code>CommandPermissions</code> \| <code>Object</code> |  | The default permissions for all commands in this module |
 

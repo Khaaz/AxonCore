@@ -1,0 +1,322 @@
+## Typedefs
+
+<dl>
+<dt><a href="#DISCORD_GATEWAY_EVENTS">DISCORD_GATEWAY_EVENTS</a> : <code>Array.&lt;String&gt;</code></dt>
+<dd><ul>
+<li>&#39;HELLO&#39;</li>
+<li>&#39;READY&#39;</li>
+<li>&#39;RESUMED&#39;</li>
+<li>&#39;INVALID_SESSION&#39;</li>
+<li>&#39;CHANNEL_CREATE&#39;</li>
+<li>&#39;CHANNEL_UPDATE&#39;</li>
+<li>&#39;CHANNEL_DELETE&#39;</li>
+<li>&#39;CHANNEL_PINS_UPDATE&#39;</li>
+<li>&#39;GUILD_CREATE&#39;</li>
+<li>&#39;GUILD_UPDATE&#39;</li>
+<li>&#39;GUILD_DELETE&#39;</li>
+<li>&#39;GUILD_BAN_ADD&#39;</li>
+<li>&#39;GUILD_BAN_REMOVE&#39;</li>
+<li>&#39;GUILD_EMOJIS_UPDATE&#39;</li>
+<li>&#39;GUILD_INTEGRATIONS_UPDATE&#39;</li>
+<li>&#39;GUILD_MEMBER_ADD&#39;</li>
+<li>&#39;GUILD_MEMBER_REMOVE&#39;</li>
+<li>&#39;GUILD_MEMBER_UPDATE&#39;</li>
+<li>&#39;GUILD_MEMBERS_CHUNK&#39;</li>
+<li>&#39;GUILD_ROLE_CREATE&#39;</li>
+<li>&#39;GUILD_ROLE_UPDATE&#39;</li>
+<li>&#39;GUILD_ROLE_DELETE&#39;</li>
+<li>&#39;MESSAGE_CREATE&#39;</li>
+<li>&#39;MESSAGE_UPDATE&#39;</li>
+<li>&#39;MESSAGE_DELETE&#39;</li>
+<li>&#39;MESSAGE_DELETE_BULK&#39;</li>
+<li>&#39;MESSAGE_REACTION_ADD&#39;</li>
+<li>&#39;MESSAGE_REACTION_REMOVE&#39;</li>
+<li>&#39;MESSAGE_REACTION_REMOVE_ALL&#39;</li>
+<li>&#39;TYPING_START&#39;</li>
+<li>&#39;USER_UPDATE&#39;</li>
+<li>&#39;VOICE_STATE_UPDATE&#39;</li>
+<li>&#39;VOICE_SERVER_UPDATE&#39;</li>
+<li>&#39;WEBHOOKS_UPDATE&#39;</li>
+</ul>
+</dd>
+<dt><a href="#DISCORD_PERMISSIONS">DISCORD_PERMISSIONS</a> : <code>Array.&lt;String&gt;</code></dt>
+<dd><ul>
+<li>&#39;CREATE_INSTANT_INVITE&#39;</li>
+<li>&#39;KICK_MEMBERS&#39;</li>
+<li>&#39;BAN_MEMBERS&#39;</li>
+<li>&#39;ADMINISTRATOR&#39;</li>
+<li>&#39;MANAGE_CHANNELS&#39;</li>
+<li>&#39;MANAGE_GUILD&#39;</li>
+<li>&#39;ADD_REACTIONS&#39;</li>
+<li>&#39;VIEW_AUDIT_LOG&#39;</li>
+<li>&#39;PRIORITY_SPEAKER&#39;</li>
+<li>&#39;STREAM&#39;</li>
+<li>&#39;VIEW_CHANNEL&#39;</li>
+<li>&#39;SEND_MESSAGES&#39;</li>
+<li>&#39;SEND_TTS_MESSAGES&#39;</li>
+<li>&#39;MANAGE_MESSAGES&#39;</li>
+<li>&#39;EMBED_LINKS&#39;</li>
+<li>&#39;ATTACH_FILES&#39;</li>
+<li>&#39;READ_MESSAGE_HISTORY&#39;</li>
+<li>&#39;MENTION_EVERYONE&#39;</li>
+<li>&#39;USE_EXTERNAL_EMOJIS&#39;</li>
+<li>&#39;CONNECT&#39;</li>
+<li>&#39;SPEAK&#39;</li>
+<li>&#39;MUTE_MEMBERS&#39;</li>
+<li>&#39;DEAFEN_MEMBERS&#39;</li>
+<li>&#39;MOVE_MEMBERS&#39;</li>
+<li>&#39;USE_VAD&#39;</li>
+<li>&#39;CHANGE_NICKNAME&#39;</li>
+<li>&#39;MANAGE_NICKNAMES&#39;</li>
+<li>&#39;MANAGE_ROLES&#39;</li>
+<li>&#39;MANAGE_WEBHOOKS&#39;</li>
+<li>&#39;MANAGE_EMOJIS&#39;</li>
+</ul>
+</dd>
+<dt><a href="#PERMISSIONS_NUMBERS">PERMISSIONS_NUMBERS</a> : <code>Number</code></dt>
+<dd><ul>
+<li>CREATE_INSTANT_INVITE: 1 &lt;&lt; 0</li>
+<li>KICK_MEMBERS: 1 &lt;&lt; 1</li>
+<li>BAN_MEMBERS: 1 &lt;&lt; 2</li>
+<li>ADMINISTRATOR: 1 &lt;&lt; 3</li>
+<li>MANAGE_CHANNELS: 1 &lt;&lt; 4</li>
+<li>MANAGE_GUILD: 1 &lt;&lt; 5</li>
+<li>ADD_REACTIONS: 1 &lt;&lt; 6</li>
+<li>VIEW_AUDIT_LOG: 1 &lt;&lt; 7</li>
+<li>PRIORITY_SPEAKER: 1 &lt;&lt; 8</li>
+<li>STREAM: 1 &lt;&lt; 9</li>
+<li>VIEW_CHANNEL: 1 &lt;&lt; 10</li>
+<li>SEND_MESSAGES: 1 &lt;&lt; 11</li>
+<li>SEND_TTS_MESSAGES: 1 &lt;&lt; 12</li>
+<li>MANAGE_MESSAGES: 1 &lt;&lt; 13</li>
+<li>EMBED_LINKS: 1 &lt;&lt; 14</li>
+<li>ATTACH_FILES: 1 &lt;&lt; 15</li>
+<li>READ_MESSAGE_HISTORY: 1 &lt;&lt; 16</li>
+<li>MENTION_EVERYONE: 1 &lt;&lt; 17</li>
+<li>USE_EXTERNAL_EMOJIS: 1 &lt;&lt; 1, * *</li>
+<li>CONNECT: 1 &lt;&lt; 20</li>
+<li>SPEAK: 1 &lt;&lt; 21</li>
+<li>MUTE_MEMBERS: 1 &lt;&lt; 22</li>
+<li>DEAFEN_MEMBERS: 1 &lt;&lt; 23</li>
+<li>MOVE_MEMBERS: 1 &lt;&lt; 24</li>
+<li>USE_VAD: 1 &lt;&lt; 25</li>
+<li>CHANGE_NICKNAME: 1 &lt;&lt; 26</li>
+<li>MANAGE_NICKNAMES: 1 &lt;&lt; 27</li>
+<li>MANAGE_ROLES: 1 &lt;&lt; 28</li>
+<li>MANAGE_WEBHOOKS: 1 &lt;&lt; 29</li>
+<li>MANAGE_EMOJIS: 1 &lt;&lt; 30</li>
+<li>ALL: TOTAL</li>
+</ul>
+</dd>
+<dt><a href="#EMBED_LIMITS">EMBED_LIMITS</a> : <code>Number</code></dt>
+<dd><ul>
+<li>LIMIT_CONTENT: 2000</li>
+<li>LIMIT_TOTAL_EMBED: 6000</li>
+<li>LIMIT_TITLE: 256</li>
+<li>LIMIT_DESCRIPTION: 2048</li>
+<li>NUMBER_FIELDS: 25</li>
+<li>LIMIT_FIELD_NAME: 256</li>
+<li>LIMIT_FIELD_VALUE: 1024</li>
+<li>LIMIT_FOOTER_TEXT: 2048</li>
+<li>LIMIT_AUTHOR_NAME: 256</li>
+</ul>
+</dd>
+<dt><a href="#CHANNEL_TYPES">CHANNEL_TYPES</a> : <code>Number</code></dt>
+<dd><ul>
+<li>GUILD_TEXT: 0</li>
+<li>DM: 1</li>
+<li>GUILD_VOICE: 2</li>
+<li>GROUP_DM: 3</li>
+<li>GUILD_CATEGORY: 4</li>
+<li>GUILD_NEWS: 5</li>
+<li>GUILD_STORE: 6</li>
+</ul>
+</dd>
+<dt><a href="#MESSAGE_TYPES">MESSAGE_TYPES</a> : <code>Number</code></dt>
+<dd><ul>
+<li>DEFAULT: 0</li>
+<li>RECIPIENT_ADD: 1</li>
+<li>RECIPIENT_REMOVE: 2</li>
+<li>CALL: 3</li>
+<li>CHANNEL_NAME_CHANGE: 4</li>
+<li>CHANNEL_ICON_CHANGE: 5</li>
+<li>CHANNEL_PINNED_MESSAGE: 6</li>
+<li>GUILD_MEMBER_JOIN: 7</li>
+<li>USER_PREMIUM_GUILD_SUBSCRIPTION: 8</li>
+<li>USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_1: 9</li>
+<li>USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_2: 10</li>
+<li>USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_3: 11</li>
+</ul>
+</dd>
+<dt><a href="#CLIENT_STATUS_TYPES">CLIENT_STATUS_TYPES</a> : <code>Number</code></dt>
+<dd><ul>
+<li>PLAYING: 0</li>
+<li>STREAMING: 1</li>
+<li>LISTENING: 2</li>
+<li>WATCHING: 3</li>
+</ul>
+</dd>
+</dl>
+
+<a name="DISCORD_GATEWAY_EVENTS"></a>
+
+## DISCORD\_GATEWAY\_EVENTS : <code>Array.&lt;String&gt;</code>
+* 'HELLO'
+* 'READY'
+* 'RESUMED'
+* 'INVALID_SESSION'
+* 'CHANNEL_CREATE'
+* 'CHANNEL_UPDATE'
+* 'CHANNEL_DELETE'
+* 'CHANNEL_PINS_UPDATE'
+* 'GUILD_CREATE'
+* 'GUILD_UPDATE'
+* 'GUILD_DELETE'
+* 'GUILD_BAN_ADD'
+* 'GUILD_BAN_REMOVE'
+* 'GUILD_EMOJIS_UPDATE'
+* 'GUILD_INTEGRATIONS_UPDATE'
+* 'GUILD_MEMBER_ADD'
+* 'GUILD_MEMBER_REMOVE'
+* 'GUILD_MEMBER_UPDATE'
+* 'GUILD_MEMBERS_CHUNK'
+* 'GUILD_ROLE_CREATE'
+* 'GUILD_ROLE_UPDATE'
+* 'GUILD_ROLE_DELETE'
+* 'MESSAGE_CREATE'
+* 'MESSAGE_UPDATE'
+* 'MESSAGE_DELETE'
+* 'MESSAGE_DELETE_BULK'
+* 'MESSAGE_REACTION_ADD'
+* 'MESSAGE_REACTION_REMOVE'
+* 'MESSAGE_REACTION_REMOVE_ALL'
+* 'TYPING_START'
+* 'USER_UPDATE'
+* 'VOICE_STATE_UPDATE'
+* 'VOICE_SERVER_UPDATE'
+* 'WEBHOOKS_UPDATE'
+
+**Kind**: global typedef  
+<a name="DISCORD_PERMISSIONS"></a>
+
+## DISCORD\_PERMISSIONS : <code>Array.&lt;String&gt;</code>
+* 'CREATE_INSTANT_INVITE'
+* 'KICK_MEMBERS'
+* 'BAN_MEMBERS'
+* 'ADMINISTRATOR'
+* 'MANAGE_CHANNELS'
+* 'MANAGE_GUILD'
+* 'ADD_REACTIONS'
+* 'VIEW_AUDIT_LOG'
+* 'PRIORITY_SPEAKER'
+* 'STREAM'
+* 'VIEW_CHANNEL'
+* 'SEND_MESSAGES'
+* 'SEND_TTS_MESSAGES'
+* 'MANAGE_MESSAGES'
+* 'EMBED_LINKS'
+* 'ATTACH_FILES'
+* 'READ_MESSAGE_HISTORY'
+* 'MENTION_EVERYONE'
+* 'USE_EXTERNAL_EMOJIS'
+* 'CONNECT'
+* 'SPEAK'
+* 'MUTE_MEMBERS'
+* 'DEAFEN_MEMBERS'
+* 'MOVE_MEMBERS'
+* 'USE_VAD'
+* 'CHANGE_NICKNAME'
+* 'MANAGE_NICKNAMES'
+* 'MANAGE_ROLES'
+* 'MANAGE_WEBHOOKS'
+* 'MANAGE_EMOJIS'
+
+**Kind**: global typedef  
+<a name="PERMISSIONS_NUMBERS"></a>
+
+## PERMISSIONS\_NUMBERS : <code>Number</code>
+* CREATE_INSTANT_INVITE: 1 << 0
+* KICK_MEMBERS: 1 << 1
+* BAN_MEMBERS: 1 << 2
+* ADMINISTRATOR: 1 << 3
+* MANAGE_CHANNELS: 1 << 4
+* MANAGE_GUILD: 1 << 5
+* ADD_REACTIONS: 1 << 6
+* VIEW_AUDIT_LOG: 1 << 7
+* PRIORITY_SPEAKER: 1 << 8
+* STREAM: 1 << 9
+* VIEW_CHANNEL: 1 << 10
+* SEND_MESSAGES: 1 << 11
+* SEND_TTS_MESSAGES: 1 << 12
+* MANAGE_MESSAGES: 1 << 13
+* EMBED_LINKS: 1 << 14
+* ATTACH_FILES: 1 << 15
+* READ_MESSAGE_HISTORY: 1 << 16
+* MENTION_EVERYONE: 1 << 17
+* USE_EXTERNAL_EMOJIS: 1 << 1, * *
+* CONNECT: 1 << 20
+* SPEAK: 1 << 21
+* MUTE_MEMBERS: 1 << 22
+* DEAFEN_MEMBERS: 1 << 23
+* MOVE_MEMBERS: 1 << 24
+* USE_VAD: 1 << 25
+* CHANGE_NICKNAME: 1 << 26
+* MANAGE_NICKNAMES: 1 << 27
+* MANAGE_ROLES: 1 << 28
+* MANAGE_WEBHOOKS: 1 << 29
+* MANAGE_EMOJIS: 1 << 30
+* ALL: TOTAL
+
+**Kind**: global typedef  
+<a name="EMBED_LIMITS"></a>
+
+## EMBED\_LIMITS : <code>Number</code>
+* LIMIT_CONTENT: 2000
+* LIMIT_TOTAL_EMBED: 6000
+* LIMIT_TITLE: 256
+* LIMIT_DESCRIPTION: 2048
+* NUMBER_FIELDS: 25
+* LIMIT_FIELD_NAME: 256
+* LIMIT_FIELD_VALUE: 1024
+* LIMIT_FOOTER_TEXT: 2048
+* LIMIT_AUTHOR_NAME: 256
+
+**Kind**: global typedef  
+<a name="CHANNEL_TYPES"></a>
+
+## CHANNEL\_TYPES : <code>Number</code>
+* GUILD_TEXT: 0
+* DM: 1
+* GUILD_VOICE: 2
+* GROUP_DM: 3
+* GUILD_CATEGORY: 4
+* GUILD_NEWS: 5
+* GUILD_STORE: 6
+
+**Kind**: global typedef  
+<a name="MESSAGE_TYPES"></a>
+
+## MESSAGE\_TYPES : <code>Number</code>
+* DEFAULT: 0
+* RECIPIENT_ADD: 1
+* RECIPIENT_REMOVE: 2
+* CALL: 3
+* CHANNEL_NAME_CHANGE: 4
+* CHANNEL_ICON_CHANGE: 5
+* CHANNEL_PINNED_MESSAGE: 6
+* GUILD_MEMBER_JOIN: 7
+* USER_PREMIUM_GUILD_SUBSCRIPTION: 8
+* USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_1: 9
+* USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_2: 10
+* USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_3: 11
+
+**Kind**: global typedef  
+<a name="CLIENT_STATUS_TYPES"></a>
+
+## CLIENT\_STATUS\_TYPES : <code>Number</code>
+* PLAYING: 0
+* STREAMING: 1
+* LISTENING: 2
+* WATCHING: 3
+
+**Kind**: global typedef  

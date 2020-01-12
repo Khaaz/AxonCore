@@ -8,34 +8,34 @@
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| _module | <code>Object.&lt;Module&gt;</code> |  | Module object |
-| _cooldown | <code>Object.&lt;CommandCooldown&gt;</code> |  | Cooldown Object for the command (manage all command cooldowns) |
+| _module | <code>Module</code> |  | Module object |
+| _cooldown | <code>CommandCooldown</code> |  | Cooldown Object for the command (manage all command cooldowns) |
 | label | <code>String</code> |  | Command label (name/id) |
 | [aliases] | <code>Array.&lt;String&gt;</code> | <code>[]</code> | Array of commands aliases (including the command label) |
 | [enabled] | <code>Boolean</code> | <code>module.enabled</code> | Whether the command is enabled |
 | [serverBypass] | <code>Boolean</code> | <code>module.serverBypass</code> | Whether the command can be disabled |
 | [isSubcmd] | <code>Boolean</code> | <code>false</code> | Whether the command IS a subcommand |
-| [parentCommand] | [<code>Object.&lt;Command&gt;</code>](#Command) | <code></code> | Reference to the parent command (if isSubcmd = true) |
+| [parentCommand] | [<code>Command</code>](#Command) | <code></code> | Reference to the parent command (if isSubcmd = true) |
 | [hasSubcmd] | <code>Boolean</code> | <code>false</code> | Whether the command HAS subcommands |
 | subcmds | <code>Array.&lt;Object&gt;</code> |  | Array of subcommand objects (deleted after init) |
 | [subCommands] | [<code>Collection.&lt;Command&gt;</code>](#Command) | <code></code> | Collection of subcommands |
-| [subCommandsAliases] | <code>Object.&lt;Map&gt;</code> | <code></code> | Map of subcommand aliases |
+| [subCommandsAliases] | <code>Map</code> | <code></code> | Map of subcommand aliases |
 | infos | <code>Object</code> |  | Default info about the command |
 | [infos.owners] | <code>Array.&lt;String&gt;</code> |  | Command authors |
 | [infos.cmdName] | <code>String</code> |  | Full command name |
 | [infos.description] | <code>String</code> |  | Command description |
 | [infos.usage] | <code>String</code> |  | Command usage |
 | [infos.example] | <code>Array.&lt;String&gt;</code> |  | Array of command examples |
-| options | <code>Object.&lt;CommandOptions&gt;</code> |  | Options Object for the command (manage all command options) |
-| permissions | <code>Object.&lt;CommandPermissions&gt;</code> |  | Permissions Object for the command (manage all command permissions) |
+| options | <code>CommandOptions</code> |  | Options Object for the command (manage all command options) |
+| permissions | <code>CommandPermissions</code> |  | Permissions Object for the command (manage all command permissions) |
 
 
 * [Command](#Command) ⇐ <code>Base</code>
     * [new Command()](#new_Command_new)
     * _instance_
-        * [.module](#Command+module) : <code>Object.&lt;Module&gt;</code>
+        * [.module](#Command+module) : <code>Module</code>
         * [.template](#Command+template) : <code>Object</code>
-        * [.library](#Command+library) : <code>Object.&lt;LibraryInterface&gt;</code>
+        * [.library](#Command+library) : <code>LibraryInterface</code>
         * [.fullLabel](#Command+fullLabel) : <code>String</code>
         * [._process(params)](#Command+_process) ⇒ <code>Promise.&lt;CommandContext&gt;</code>
         * [._execute({)](#Command+_execute) ⇒ <code>CommandContext</code>
@@ -56,7 +56,7 @@ AxonCore - Command contructor
 
 <a name="Command+module"></a>
 
-### command.module : <code>Object.&lt;Module&gt;</code>
+### command.module : <code>Module</code>
 Returns the parent module instance
 
 **Kind**: instance property of [<code>Command</code>](#Command)  
@@ -70,7 +70,7 @@ Returns the template object
 **Read only**: true  
 <a name="Command+library"></a>
 
-### command.library : <code>Object.&lt;LibraryInterface&gt;</code>
+### command.library : <code>LibraryInterface</code>
 Returns the library Interface instance
 
 **Kind**: instance property of [<code>Command</code>](#Command)  
@@ -119,9 +119,9 @@ Main method - command logic being executed when the command is actually ran.
 | Param | Type | Description |
 | --- | --- | --- |
 | object | <code>Object</code> | An Object with all arguments to use execute |
-| [object.message] | <code>Object.&lt;Message&gt;</code> | The Eris message Object |
+| [object.message] | <code>Message</code> | The Eris message Object |
 | [object.args] | <code>Array.&lt;String&gt;</code> | The Array of arguments |
-| [object.guildConfig] | <code>Object.&lt;GuildConfig&gt;</code> | The guildConfig if it exists |
+| [object.guildConfig] | <code>GuildConfig</code> | The guildConfig if it exists |
 
 <a name="Command+sendHelp"></a>
 
@@ -134,7 +134,7 @@ Call a custom sendHelp method if it exists, use the default one if it doesn't.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| { | <code>Object.&lt;Message&gt;</code> | msg, guildConfig, isAdmin, isOwner } - The message object |
+| { | <code>Message</code> | msg, guildConfig, isAdmin, isOwner } - The message object |
 
 <a name="Command+sendBotPerms"></a>
 
@@ -146,7 +146,7 @@ Send an error message in case of invalid bot permissions, delete it automaticall
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| channel | <code>Object.&lt;Channel&gt;</code> |  | The channel Object |
+| channel | <code>Channel</code> |  | The channel Object |
 | [permissions] | <code>Array.&lt;String&gt;</code> | <code>[]</code> | Optional array of permissions string |
 
 <a name="Command+sendUserPerms"></a>
@@ -160,8 +160,8 @@ Uses the template message in config/template.
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| channel | <code>Object.&lt;Channel&gt;</code> |  | The channel object |
-| member | <code>Object.&lt;Member&gt;</code> |  | The member object |
+| channel | <code>Channel</code> |  | The channel object |
+| member | <code>Member</code> |  | The member object |
 | [deleteTimeout] | <code>Number</code> | <code>9000</code> | The permission message deletion timeout, if `null` the the message will not delete |
 
 <a name="Command+sendTargetPerms"></a>
@@ -175,7 +175,7 @@ Uses the template message in config/template.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| channel | <code>Object.&lt;Channel&gt;</code> | The channel Object |
+| channel | <code>Channel</code> | The channel Object |
 
 <a name="Command+sendCooldown"></a>
 
@@ -187,7 +187,7 @@ Send an error message in case of invalid cooldown, delete it automatically after
 
 | Param | Type | Description |
 | --- | --- | --- |
-| channel | <code>Object.&lt;Channel&gt;</code> | The channel Object |
+| channel | <code>Channel</code> | The channel Object |
 
 <a name="Command.Command"></a>
 
@@ -203,7 +203,7 @@ Overrides the execute method. Execute method will be called everytime the comman
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| module | <code>Object.&lt;Module&gt;</code> |  |  |
+| module | <code>Module</code> |  |  |
 | [data] | <code>Object</code> | <code>{}</code> | All command parameters |
 | [data.label] | <code>String</code> |  | The command label |
 | [data.aliases] | <code>Array.&lt;String&gt;</code> |  | The command aliases |
@@ -213,6 +213,6 @@ Overrides the execute method. Execute method will be called everytime the comman
 | [data.serverBypass] | <code>Boolean</code> |  | Whether the ciommand can be server disabled |
 | [data.subcmds] | <code>Array.&lt;String&gt;</code> |  | List of subcommands class to be added in the Command |
 | [data.infos] | <code>Object</code> |  |  |
-| [data.options] | <code>Object.&lt;CommandOptions&gt;</code> \| <code>Object</code> |  | The command options |
-| [data.permissions] | <code>Object.&lt;CommandPermissions&gt;</code> \| <code>Object</code> |  | The command permissions |
+| [data.options] | <code>CommandOptions</code> \| <code>Object</code> |  | The command options |
+| [data.permissions] | <code>CommandPermissions</code> \| <code>Object</code> |  | The command permissions |
 

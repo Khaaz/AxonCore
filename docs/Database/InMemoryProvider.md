@@ -1,8 +1,8 @@
 <a name="InMemoryProvider"></a>
 
-## InMemoryProvider ⇐ <code>DBProvider</code>
+## InMemoryProvider ⇐ <code>ADBProvider</code>
 **Kind**: global class  
-**Extends**: <code>DBProvider</code>  
+**Extends**: <code>ADBProvider</code>  
 **Author**: VoidNulll  
 <a name="new_InMemoryProvider_new"></a>
 

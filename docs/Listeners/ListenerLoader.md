@@ -1,13 +1,13 @@
 <a name="ListenerLoader"></a>
 
-## ListenerLoader ⇐ <code>Loader</code>
+## ListenerLoader ⇐ <code>ALoader</code>
 **Kind**: global class  
-**Extends**: <code>Loader</code>  
+**Extends**: <code>ALoader</code>  
 
-* [ListenerLoader](#ListenerLoader) ⇐ <code>Loader</code>
+* [ListenerLoader](#ListenerLoader) ⇐ <code>ALoader</code>
     * [new ListenerLoader()](#new_ListenerLoader_new)
-    * [.axon](#ListenerLoader+axon) : <code>Object.&lt;Module&gt;</code>
-    * [.logger](#ListenerLoader+logger) : <code>Object.&lt;Logger&gt;</code>
+    * [.axon](#ListenerLoader+axon) : <code>Module</code>
+    * [.logger](#ListenerLoader+logger) : <code>Logger</code>
     * [.load(listener)](#ListenerLoader+load) ⇒ <code>Boolean</code>
     * [.loadAll(listeners)](#ListenerLoader+loadAll) ⇒ <code>Boolean</code>
     * [.unload(label)](#ListenerLoader+unload) ⇒ <code>Boolean</code>
@@ -20,14 +20,14 @@ Validate the listener validity entirely.
 
 <a name="ListenerLoader+axon"></a>
 
-### listenerLoader.axon : <code>Object.&lt;Module&gt;</code>
+### listenerLoader.axon : <code>Module</code>
 Returns the Module instance
 
 **Kind**: instance property of [<code>ListenerLoader</code>](#ListenerLoader)  
 **Read only**: true  
 <a name="ListenerLoader+logger"></a>
 
-### listenerLoader.logger : <code>Object.&lt;Logger&gt;</code>
+### listenerLoader.logger : <code>Logger</code>
 Returns the Logger instance
 
 **Kind**: instance property of [<code>ListenerLoader</code>](#ListenerLoader)  
@@ -42,7 +42,7 @@ Validate and correct the event before registering it.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| listener | <code>Object.&lt;Listener&gt;</code> | The event to load |
+| listener | <code>Listener</code> | The event to load |
 
 <a name="ListenerLoader+loadAll"></a>
 
@@ -54,7 +54,7 @@ Instantiate all events.
 
 | Param | Type |
 | --- | --- |
-| listeners | <code>Object.&lt;Listener&gt;</code> | 
+| listeners | <code>Listener</code> | 
 
 <a name="ListenerLoader+unload"></a>
 

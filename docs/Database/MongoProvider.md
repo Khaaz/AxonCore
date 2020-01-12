@@ -1,8 +1,8 @@
 <a name="MongoProvider"></a>
 
-## MongoProvider ⇐ <code>DBProvider</code>
+## MongoProvider ⇐ <code>ADBProvider</code>
 **Kind**: global class  
-**Extends**: <code>DBProvider</code>  
+**Extends**: <code>ADBProvider</code>  
 **Author**: KhaaZ  
 **Properties**
 
@@ -12,7 +12,7 @@
 | GuildSchema | <code>Object</code> | 
 
 
-* [MongoProvider](#MongoProvider) ⇐ <code>DBProvider</code>
+* [MongoProvider](#MongoProvider) ⇐ <code>ADBProvider</code>
     * [new MongoProvider()](#new_MongoProvider_new)
     * [.init(axonOptions)](#MongoProvider+init)
     * [.initAxon()](#MongoProvider+initAxon) ⇒ <code>Promise.&lt;AxonConfig&gt;</code>
@@ -39,7 +39,7 @@ Override init method.
 
 | Param | Type | Default |
 | --- | --- | --- |
-| axonOptions | <code>Object.&lt;AxonOptions&gt;</code> | <code></code> | 
+| axonOptions | <code>AxonOptions</code> | <code></code> | 
 
 <a name="MongoProvider+initAxon"></a>
 

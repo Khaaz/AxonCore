@@ -1,10 +1,11 @@
 <a name="AsyncQueue"></a>
 
-## AsyncQueue
+## AsyncQueue ⇐ <code>Queue</code>
 **Kind**: global class  
+**Extends**: <code>Queue</code>  
 **Author**: KhaaZ  
 
-* [AsyncQueue](#AsyncQueue)
+* [AsyncQueue](#AsyncQueue) ⇐ <code>Queue</code>
     * [new AsyncQueue()](#new_AsyncQueue_new)
     * [.exec()](#AsyncQueue+exec)
     * [.add(func, [toExec], ...args)](#AsyncQueue+add) ⇒ <code>Promise</code>

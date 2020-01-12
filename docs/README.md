@@ -15,7 +15,7 @@
   </p>
 </div>
 
-# AxonCore
+# **AxonCore**
 
 >__**Stable, Fast, Powerful**__  
 > The power of a fully featured framework, the simplicity of a predictable API.
@@ -48,7 +48,7 @@ AxonCore is lib agnostic, which mean you can use it indifferently with [Eris](ht
 - **Database** - Built in database support (extendable to any database type - SQL, NoSQL).
 - **Advanced error management** - Advanced context management and error tracking for easy bughunting.
 - **Hooks** - Execute functions and actions on events (inhibitor hooks, pre/post-run hooks, finalizers hooks). [TODO]
-- **Translaions** - Built-in support for a translation system.
+- **Translations** - Built-in support for a translation system.
 - **Logging** - Built-in custom logging.
 - **Statistic** - Easily track command usage, events and errors with custom events emitted by AxonCore.
 

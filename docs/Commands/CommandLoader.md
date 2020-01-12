@@ -1,15 +1,15 @@
 <a name="CommandLoader"></a>
 
-## CommandLoader ⇐ <code>Loader</code>
+## CommandLoader ⇐ <code>ALoader</code>
 **Kind**: global class  
-**Extends**: <code>Loader</code>  
+**Extends**: <code>ALoader</code>  
 **Author**: KhaaZ  
 
-* [CommandLoader](#CommandLoader) ⇐ <code>Loader</code>
+* [CommandLoader](#CommandLoader) ⇐ <code>ALoader</code>
     * [new CommandLoader()](#new_CommandLoader_new)
-    * [.axon](#CommandLoader+axon) : <code>Object.&lt;AxonClient&gt;</code>
-    * [.module](#CommandLoader+module) : <code>Object.&lt;Module&gt;</code>
-    * [.logger](#CommandLoader+logger) : <code>Object.&lt;Logger&gt;</code>
+    * [.axon](#CommandLoader+axon) : <code>AxonClient</code>
+    * [.module](#CommandLoader+module) : <code>Module</code>
+    * [.logger](#CommandLoader+logger) : <code>Logger</code>
     * [.load(command, [parent])](#CommandLoader+load) ⇒ <code>Boolean</code>
     * [.loadAll(commands)](#CommandLoader+loadAll) ⇒ <code>Boolean</code>
     * [.unload(label)](#CommandLoader+unload) ⇒ <code>Boolean</code>
@@ -26,21 +26,21 @@ Validate the command validity entirely.
 
 <a name="CommandLoader+axon"></a>
 
-### commandLoader.axon : <code>Object.&lt;AxonClient&gt;</code>
+### commandLoader.axon : <code>AxonClient</code>
 Returns the AxonClient instance
 
 **Kind**: instance property of [<code>CommandLoader</code>](#CommandLoader)  
 **Read only**: true  
 <a name="CommandLoader+module"></a>
 
-### commandLoader.module : <code>Object.&lt;Module&gt;</code>
+### commandLoader.module : <code>Module</code>
 Returns the Module instance
 
 **Kind**: instance property of [<code>CommandLoader</code>](#CommandLoader)  
 **Read only**: true  
 <a name="CommandLoader+logger"></a>
 
-### commandLoader.logger : <code>Object.&lt;Logger&gt;</code>
+### commandLoader.logger : <code>Logger</code>
 Returns the Logger instance
 
 **Kind**: instance property of [<code>CommandLoader</code>](#CommandLoader)  
@@ -55,8 +55,8 @@ Validate and correct the command before registering it.
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| command | <code>Object.&lt;Command&gt;</code> |  | The command to load |
-| [parent] | <code>Object.&lt;Command&gt;</code> | <code></code> | The optional parent command |
+| command | <code>Command</code> |  | The command to load |
+| [parent] | <code>Command</code> | <code></code> | The optional parent command |
 
 <a name="CommandLoader+loadAll"></a>
 
@@ -68,7 +68,7 @@ Instantiate all commands.
 
 | Param | Type |
 | --- | --- |
-| commands | <code>Object.&lt;Command&gt;</code> | 
+| commands | <code>Command</code> | 
 
 <a name="CommandLoader+unload"></a>
 
@@ -91,7 +91,7 @@ Register a Command. Register its subcommands if it has any.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| command | <code>Object.&lt;Command&gt;</code> | Command object |
+| command | <code>Command</code> | Command object |
 
 <a name="CommandLoader+registerSubCommand"></a>
 
@@ -102,8 +102,8 @@ Register a SubCommand.Register its subcommands if it has any
 
 | Param | Type | Description |
 | --- | --- | --- |
-| command | <code>Object.&lt;Commands&gt;</code> | The subcommand to register |
-| parent | <code>Object.&lt;Commands&gt;</code> | The parent command |
+| command | <code>Commands</code> | The subcommand to register |
+| parent | <code>Commands</code> | The parent command |
 
 <a name="CommandLoader+unregisterCommand"></a>
 
@@ -126,6 +126,6 @@ Remove a subcommand from a command
 
 | Param | Type | Description |
 | --- | --- | --- |
-| command | <code>Object.&lt;Command&gt;</code> | The parent Command |
-| subCommand | <code>Object.&lt;Command&gt;</code> | The Subcommand to unregister |
+| command | <code>Command</code> | The parent Command |
+| subCommand | <code>Command</code> | The Subcommand to unregister |
 

@@ -7,18 +7,18 @@
 
 | Name | Type | Description |
 | --- | --- | --- |
-| _axon | <code>Object.&lt;AxonClient&gt;</code> | Axon Client |
+| _axon | <code>AxonClient</code> | Axon Client |
 
 
 * [AxonUtils](#AxonUtils)
     * [new AxonUtils()](#new_AxonUtils_new)
     * _instance_
-        * [.axon](#AxonUtils+axon) : <code>Object.&lt;AxonClient&gt;</code>
-        * [.bot](#AxonUtils+bot) : <code>Object.&lt;BotClient&gt;</code>
+        * [.axon](#AxonUtils+axon) : <code>AxonClient</code>
+        * [.bot](#AxonUtils+bot) : <code>BotClient</code>
         * [.template](#AxonUtils+template) : <code>Object</code>
-        * [.logger](#AxonUtils+logger) : <code>Object.&lt;Logger&gt;</code>
-        * [.utils](#AxonUtils+utils) : <code>Object.&lt;Utils&gt;</code>
-        * [.library](#AxonUtils+library) : <code>Object.&lt;LibraryInterface&gt;</code>
+        * [.logger](#AxonUtils+logger) : <code>Logger</code>
+        * [.utils](#AxonUtils+utils) : <code>Utils</code>
+        * [.library](#AxonUtils+library) : <code>LibraryInterface</code>
         * [.triggerWebhook(type, embed, opt)](#AxonUtils+triggerWebhook)
         * [.isBotOwner(uID)](#AxonUtils+isBotOwner) ⇒ <code>Boolean</code>
         * [.isBotAdmin(uID)](#AxonUtils+isBotAdmin) ⇒ <code>Boolean</code>
@@ -43,14 +43,14 @@ AxonCore specific methods + internal uses
 
 <a name="AxonUtils+axon"></a>
 
-### axonUtils.axon : <code>Object.&lt;AxonClient&gt;</code>
+### axonUtils.axon : <code>AxonClient</code>
 Returns the AxonClient instance
 
 **Kind**: instance property of [<code>AxonUtils</code>](#AxonUtils)  
 **Read only**: true  
 <a name="AxonUtils+bot"></a>
 
-### axonUtils.bot : <code>Object.&lt;BotClient&gt;</code>
+### axonUtils.bot : <code>BotClient</code>
 Returns the BotClient instance
 
 **Kind**: instance property of [<code>AxonUtils</code>](#AxonUtils)  
@@ -64,21 +64,21 @@ Returns the template object
 **Read only**: true  
 <a name="AxonUtils+logger"></a>
 
-### axonUtils.logger : <code>Object.&lt;Logger&gt;</code>
+### axonUtils.logger : <code>Logger</code>
 Returns the Logger instance
 
 **Kind**: instance property of [<code>AxonUtils</code>](#AxonUtils)  
 **Read only**: true  
 <a name="AxonUtils+utils"></a>
 
-### axonUtils.utils : <code>Object.&lt;Utils&gt;</code>
+### axonUtils.utils : <code>Utils</code>
 Returns the Utils instance
 
 **Kind**: instance property of [<code>AxonUtils</code>](#AxonUtils)  
 **Read only**: true  
 <a name="AxonUtils+library"></a>
 
-### axonUtils.library : <code>Object.&lt;LibraryInterface&gt;</code>
+### axonUtils.library : <code>LibraryInterface</code>
 Returns the LibraryInterface instance
 
 **Kind**: instance property of [<code>AxonUtils</code>](#AxonUtils)  
@@ -141,7 +141,7 @@ Managers, Admins and Owner are automatically Mod.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| member | <code>Object.&lt;Member&gt;</code> | The member object |
+| member | <code>Member</code> | The member object |
 | guildConfig | <code>Object</code> | The guild Config from the DB |
 
 <a name="AxonUtils+isServerManager"></a>
@@ -155,7 +155,7 @@ Admin and Owner are automatically Manager.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| member | <code>Object.&lt;Member&gt;</code> | The member object |
+| member | <code>Member</code> | The member object |
 
 <a name="AxonUtils+isServerAdmin"></a>
 
@@ -168,7 +168,7 @@ Owner is automatically Admin.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| member | <code>Object.&lt;Member&gt;</code> | The member object |
+| member | <code>Member</code> | The member object |
 
 <a name="AxonUtils+isServerOwner"></a>
 
@@ -180,7 +180,7 @@ Check is the user is the server owner.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| member | <code>Object.&lt;Member&gt;</code> | The member object |
+| member | <code>Member</code> | The member object |
 
 <a name="AxonUtils+sendDM"></a>
 
@@ -193,7 +193,7 @@ Reject promise if not
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| user | <code>Object.&lt;User&gt;</code> |  | User object to get the DM channel |
+| user | <code>User</code> |  | User object to get the DM channel |
 | content | <code>Object/String</code> |  | String or object (embed) |
 | [options] | <code>Object</code> | <code>{}</code> | Options { disableEveryone: Boolean, delete: Boolean, delay: Number } |
 | [options.disableEveryone] | <code>Object</code> | <code>true</code> | Whether to allow mentioning everyone or not |
@@ -212,7 +212,7 @@ Doesn't support file uploads.
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| channel | <code>Object.&lt;Channel&gt;</code> |  | The channel Object |
+| channel | <code>Channel</code> |  | The channel Object |
 | content | <code>Object</code> \| <code>String</code> |  | Message content: String or Embed Object |
 | [options] | <code>Object</code> | <code>{}</code> | Options { disableEveryone: Boolean, delete: Boolean, delay: Number } |
 | [options.disableEveryone] | <code>Boolean</code> | <code>true</code> | Whether to allow mentioning everyone or not |
@@ -230,7 +230,7 @@ Checks for bot permissions + message embed/length.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| message | <code>Object.&lt;Message&gt;</code> | The message object to edit |
+| message | <code>Message</code> | The message object to edit |
 | content | <code>Object/String</code> | Object (embed) or String |
 
 <a name="AxonUtils.AxonUtils"></a>
@@ -245,5 +245,5 @@ Creates an AxonUtils instance.
 
 | Param | Type |
 | --- | --- |
-| axon | <code>Object.&lt;AxonClient&gt;</code> | 
+| axon | <code>AxonClient</code> | 
 

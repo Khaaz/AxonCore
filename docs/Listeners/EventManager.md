@@ -9,7 +9,7 @@
 | Name | Type | Description |
 | --- | --- | --- |
 | _eve,ts | <code>Object</code> | Object that links an event name to an array of Listener objects { eventName: [Listener, Listener] } |
-| _handlers | <code>Collection.&lt;Object&gt;</code> | Collection of handler keyed to the event name [key: eventName, value: Handler] |
+| _handlers | <code>Collection.&lt;Object&gt;</code> | Collection of handler keyed to the event name [key: eventName, value: AHandler] |
 
 
 * [EventManager](#EventManager) ⇐ <code>Base</code>
@@ -87,7 +87,7 @@ Called by ModuleLoader when registering an event.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| listener | <code>Object.&lt;Listener&gt;</code> | The Listener Object |
+| listener | <code>Listener</code> | The Listener Object |
 
 <a name="EventManager+registerHandler"></a>
 
@@ -167,5 +167,5 @@ Creates an EventManager instance.
 
 | Param | Type |
 | --- | --- |
-| axon | <code>Object.&lt;AxonClient&gt;</code> | 
+| axon | <code>AxonClient</code> | 
 

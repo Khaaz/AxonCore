@@ -1,17 +1,17 @@
 <a name="JsonProvider"></a>
 
-## JsonProvider ⇐ <code>DBProvider</code>
+## JsonProvider ⇐ <code>ADBProvider</code>
 **Kind**: global class  
-**Extends**: <code>DBProvider</code>  
+**Extends**: <code>ADBProvider</code>  
 **Author**: Olybear, KhaaZ  
 **Properties**
 
 | Name | Type | Description |
 | --- | --- | --- |
-| manager | <code>Object.&lt;Manager&gt;</code> | Class responsible to read / write data to the DB as json. |
+| manager | <code>Manager</code> | Class responsible to read / write data to the DB as json. |
 
 
-* [JsonProvider](#JsonProvider) ⇐ <code>DBProvider</code>
+* [JsonProvider](#JsonProvider) ⇐ <code>ADBProvider</code>
     * [new JsonProvider()](#new_JsonProvider_new)
     * [.init(axonOptions)](#JsonProvider+init)
     * [.initAxon()](#JsonProvider+initAxon) ⇒ <code>Promise.&lt;AxonConfig&gt;</code>
@@ -37,7 +37,7 @@ Override init method.
 
 | Param | Type |
 | --- | --- |
-| axonOptions | <code>Object.&lt;AxonOptions&gt;</code> | 
+| axonOptions | <code>AxonOptions</code> | 
 
 <a name="JsonProvider+initAxon"></a>
 
@@ -58,7 +58,7 @@ Use default AxonClient prefix settings when creating the new guild config.
 | Param | Type | Description |
 | --- | --- | --- |
 | gID | <code>String</code> | Guild ID |
-| axonClient | <code>Object.&lt;AxonClient&gt;</code> |  |
+| axonClient | <code>AxonClient</code> |  |
 
 <a name="JsonProvider+fetchAxon"></a>
 

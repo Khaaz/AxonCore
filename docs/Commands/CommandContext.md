@@ -30,6 +30,9 @@
     * [new CommandContext()](#new_CommandContext_new)
     * _instance_
         * [.addResponseData(commandResponse)](#CommandContext+addResponseData) ⇒ [<code>CommandContext</code>](#CommandContext)
+        * [.resolve()](#CommandContext+resolve) ⇒ [<code>Promise.&lt;CommandContext&gt;</code>](#CommandContext)
+        * [.resolveAsync()](#CommandContext+resolveAsync) ⇒ [<code>Promise.&lt;CommandContext&gt;</code>](#CommandContext)
+        * [.resolveSync()](#CommandContext+resolveSync) ⇒ [<code>CommandContext</code>](#CommandContext)
     * _static_
         * [.CommandContext](#CommandContext.CommandContext)
             * [new CommandContext(command, triggerMessage, [data])](#new_CommandContext.CommandContext_new)
@@ -58,8 +61,26 @@ Add the state of the command success and optionaly the error.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| commandResponse | <code>Object.&lt;CommandResponse&gt;</code> | CommandResponse object obtained or created after the command execution |
+| commandResponse | <code>CommandResponse</code> | CommandResponse object obtained or created after the command execution |
 
+<a name="CommandContext+resolve"></a>
+
+### commandContext.resolve() ⇒ [<code>Promise.&lt;CommandContext&gt;</code>](#CommandContext)
+By default returns the Command Context asynchronously.
+
+**Kind**: instance method of [<code>CommandContext</code>](#CommandContext)  
+<a name="CommandContext+resolveAsync"></a>
+
+### commandContext.resolveAsync() ⇒ [<code>Promise.&lt;CommandContext&gt;</code>](#CommandContext)
+Returns the Command Context wrapped in a Promise (asynchronously)
+
+**Kind**: instance method of [<code>CommandContext</code>](#CommandContext)  
+<a name="CommandContext+resolveSync"></a>
+
+### commandContext.resolveSync() ⇒ [<code>CommandContext</code>](#CommandContext)
+Returns the Command Context (synchronously)
+
+**Kind**: instance method of [<code>CommandContext</code>](#CommandContext)  
 <a name="CommandContext.CommandContext"></a>
 
 ### CommandContext.CommandContext
@@ -72,8 +93,8 @@ Creates an instance of CommandContext.
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| command | <code>Object.&lt;Command&gt;</code> |  |  |
-| triggerMessage | <code>Object.&lt;Message&gt;</code> |  |  |
+| command | <code>Command</code> |  |  |
+| triggerMessage | <code>Message</code> |  |  |
 | [data] | <code>Object</code> | <code>{}</code> |  |
 | [data.executed] | <code>Boolean</code> | <code>true</code> |  |
 | [data.helpExecution] | <code>Boolean</code> | <code>false</code> |  |

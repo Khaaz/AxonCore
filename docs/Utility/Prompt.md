@@ -91,7 +91,7 @@ Checker for this._onMsgCreate
 
 | Param | Type | Description |
 | --- | --- | --- |
-| msg | <code>Object.&lt;Message&gt;</code> | The message object to check against. |
+| msg | <code>Message</code> | The message object to check against. |
 
 <a name="Prompt+_onMsgCreate"></a>
 
@@ -114,7 +114,7 @@ When a message is created
 | Name | Type | Description |
 | --- | --- | --- |
 | userID | <code>String</code> | The user ID that is bound to the current prompt |
-| channel | <code>Object.&lt;Channel&gt;</code> | The channel where the prompt is running |
+| channel | <code>Channel</code> | The channel where the prompt is running |
 | timedOut | <code>Boolean</code> | Whether the Prompt timed out |
 | ended | <code>Boolean</code> | Whether the prompt ended |
 
@@ -197,7 +197,7 @@ Checker for this._onMsgCreate
 
 | Param | Type | Description |
 | --- | --- | --- |
-| msg | <code>Object.&lt;Message&gt;</code> | The message object to check against. |
+| msg | <code>Message</code> | The message object to check against. |
 
 <a name="Prompt+_onMsgCreate"></a>
 

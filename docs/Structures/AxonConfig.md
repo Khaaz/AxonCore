@@ -99,6 +99,6 @@ Creates an instance of AxonConfig.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| axon | <code>Object.&lt;AxonClient&gt;</code> |  |
+| axon | <code>AxonClient</code> |  |
 | values | <code>Object</code> | DB values for the current Guild |
 

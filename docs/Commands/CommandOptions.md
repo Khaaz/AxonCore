@@ -21,7 +21,7 @@
 * [CommandOptions](#CommandOptions)
     * [new CommandOptions()](#new_CommandOptions_new)
     * _instance_
-        * [.l](#CommandOptions+l) : <code>Object.&lt;MessageManager&gt;</code>
+        * [.l](#CommandOptions+l) : <code>MessageManager</code>
         * [.isGuildOnly()](#CommandOptions+isGuildOnly) ⇒ <code>Boolean</code>
         * [.isHidden()](#CommandOptions+isHidden) ⇒ <code>Boolean</code>
         * [.shouldSendInvalidUsageMessage(args)](#CommandOptions+shouldSendInvalidUsageMessage) ⇒ <code>Boolean</code>
@@ -40,7 +40,7 @@ Holds options for a command and all necessary checkers.
 
 <a name="CommandOptions+l"></a>
 
-### commandOptions.l : <code>Object.&lt;MessageManager&gt;</code>
+### commandOptions.l : <code>MessageManager</code>
 Returns the MessageManager instance
 
 **Kind**: instance property of [<code>CommandOptions</code>](#CommandOptions)  
@@ -77,7 +77,7 @@ Whether we should send the invalid permission message or not
 
 | Param | Type |
 | --- | --- |
-| guildConfig | <code>Object.&lt;GuildConfig&gt;</code> | 
+| guildConfig | <code>GuildConfig</code> | 
 
 <a name="CommandOptions+shouldDeleteCommand"></a>
 
@@ -109,7 +109,7 @@ Creates an instance of CommandOptions.
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| command | <code>Object.&lt;Command&gt;</code> |  | The base command |
+| command | <code>Command</code> |  | The base command |
 | [override] | <code>Object</code> | <code>{}</code> | - The specific options for this command (format - CommandOptions) |
 | [useModuleDefault] | <code>Boolean</code> | <code>false</code> | Whether to use or not the module's base options before applying override permissions |
 

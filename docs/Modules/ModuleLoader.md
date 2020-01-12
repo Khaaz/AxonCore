@@ -1,14 +1,14 @@
 <a name="ModuleLoader"></a>
 
-## ModuleLoader ⇐ <code>Loader</code>
+## ModuleLoader ⇐ <code>ALoader</code>
 **Kind**: global class  
-**Extends**: <code>Loader</code>  
+**Extends**: <code>ALoader</code>  
 **Author**: KhaaZ  
 
-* [ModuleLoader](#ModuleLoader) ⇐ <code>Loader</code>
+* [ModuleLoader](#ModuleLoader) ⇐ <code>ALoader</code>
     * [new ModuleLoader()](#new_ModuleLoader_new)
-    * [.axon](#ModuleLoader+axon) : <code>Object.&lt;AxonClient&gt;</code>
-    * [.logger](#ModuleLoader+logger) : <code>Object.&lt;Logger&gt;</code>
+    * [.axon](#ModuleLoader+axon) : <code>AxonClient</code>
+    * [.logger](#ModuleLoader+logger) : <code>Logger</code>
     * [.load(module)](#ModuleLoader+load) ⇒ <code>Boolean</code>
     * [.loadAll(modules)](#ModuleLoader+loadAll) ⇒ <code>Boolean</code>
     * [.unload(label)](#ModuleLoader+unload) ⇒ <code>Boolean</code>
@@ -21,14 +21,14 @@ Validate the module validity entirely.
 
 <a name="ModuleLoader+axon"></a>
 
-### moduleLoader.axon : <code>Object.&lt;AxonClient&gt;</code>
+### moduleLoader.axon : <code>AxonClient</code>
 Returns the AxonClient instance
 
 **Kind**: instance property of [<code>ModuleLoader</code>](#ModuleLoader)  
 **Read only**: true  
 <a name="ModuleLoader+logger"></a>
 
-### moduleLoader.logger : <code>Object.&lt;Logger&gt;</code>
+### moduleLoader.logger : <code>Logger</code>
 Returns the Logger instance
 
 **Kind**: instance property of [<code>ModuleLoader</code>](#ModuleLoader)  
@@ -43,7 +43,7 @@ Validate and correct the module before registering it.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| module | <code>Object.&lt;Module&gt;</code> | The module to load |
+| module | <code>Module</code> | The module to load |
 
 <a name="ModuleLoader+loadAll"></a>
 
@@ -55,7 +55,7 @@ Instantiate all modules.
 
 | Param | Type |
 | --- | --- |
-| modules | <code>Object.&lt;Module&gt;</code> | 
+| modules | <code>Module</code> | 
 
 <a name="ModuleLoader+unload"></a>
 

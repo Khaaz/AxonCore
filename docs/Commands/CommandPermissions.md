@@ -28,10 +28,10 @@
 * [CommandPermissions](#CommandPermissions)
     * [new CommandPermissions()](#new_CommandPermissions_new)
     * _instance_
-        * [.axon](#CommandPermissions+axon) : <code>Object.&lt;AxonClient&gt;</code>
-        * [.utils](#CommandPermissions+utils) : <code>Object.&lt;Utils&gt;</code>
-        * [.axonUtils](#CommandPermissions+axonUtils) : <code>Object.&lt;AxonUtils&gt;</code>
-        * [.library](#CommandPermissions+library) : <code>Object.&lt;LibraryInterface&gt;</code>
+        * [.axon](#CommandPermissions+axon) : <code>AxonClient</code>
+        * [.utils](#CommandPermissions+utils) : <code>Utils</code>
+        * [.axonUtils](#CommandPermissions+axonUtils) : <code>AxonUtils</code>
+        * [.library](#CommandPermissions+library) : <code>LibraryInterface</code>
         * [.setBot([array], [toAdd])](#CommandPermissions+setBot) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
         * [.setServerMod([boolean])](#CommandPermissions+setServerMod) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
         * [.setServerManager([boolean])](#CommandPermissions+setServerManager) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
@@ -68,26 +68,26 @@ bypass => needed to have **ONE** <BYPASS> permission to execute the command
 
 <a name="CommandPermissions+axon"></a>
 
-### commandPermissions.axon : <code>Object.&lt;AxonClient&gt;</code>
+### commandPermissions.axon : <code>AxonClient</code>
 Returns the AxonClient instance
 
 **Kind**: instance property of [<code>CommandPermissions</code>](#CommandPermissions)  
 **Read only**: true  
 <a name="CommandPermissions+utils"></a>
 
-### commandPermissions.utils : <code>Object.&lt;Utils&gt;</code>
+### commandPermissions.utils : <code>Utils</code>
 **Kind**: instance property of [<code>CommandPermissions</code>](#CommandPermissions)  
 **Read only**: true  
 <a name="CommandPermissions+axonUtils"></a>
 
-### commandPermissions.axonUtils : <code>Object.&lt;AxonUtils&gt;</code>
+### commandPermissions.axonUtils : <code>AxonUtils</code>
 Returns the AxonUtils instance
 
 **Kind**: instance property of [<code>CommandPermissions</code>](#CommandPermissions)  
 **Read only**: true  
 <a name="CommandPermissions+library"></a>
 
-### commandPermissions.library : <code>Object.&lt;LibraryInterface&gt;</code>
+### commandPermissions.library : <code>LibraryInterface</code>
 Returns the LibraryInterface instance
 
 **Kind**: instance property of [<code>CommandPermissions</code>](#CommandPermissions)  
@@ -217,7 +217,7 @@ Check bot permission
 
 | Param | Type |
 | --- | --- |
-| channel | <code>Object.&lt;Channel&gt;</code> | 
+| channel | <code>Channel</code> | 
 
 <a name="CommandPermissions+_checkPermsUserBypass"></a>
 
@@ -228,7 +228,7 @@ Check user permissions [bypass]
 
 | Param | Type |
 | --- | --- |
-| member | <code>Object.&lt;Member&gt;</code> | 
+| member | <code>Member</code> | 
 
 <a name="CommandPermissions+_checkPermsUserNeeded"></a>
 
@@ -239,7 +239,7 @@ Check user permissions [needed]
 
 | Param | Type |
 | --- | --- |
-| member | <code>Object.&lt;Member&gt;</code> | 
+| member | <code>Member</code> | 
 
 <a name="CommandPermissions+_checkUserBypass"></a>
 
@@ -250,7 +250,7 @@ Check userIDs [bypass]
 
 | Param | Type |
 | --- | --- |
-| member | <code>Object.&lt;Member&gt;</code> | 
+| member | <code>Member</code> | 
 
 <a name="CommandPermissions+_checkUserNeeded"></a>
 
@@ -261,7 +261,7 @@ Check userIDs [needed]
 
 | Param | Type |
 | --- | --- |
-| member | <code>Object.&lt;Member&gt;</code> | 
+| member | <code>Member</code> | 
 
 <a name="CommandPermissions+_checkRoleBypass"></a>
 
@@ -272,7 +272,7 @@ Check roleIDs [bypass]
 
 | Param | Type |
 | --- | --- |
-| member | <code>Object.&lt;Member&gt;</code> | 
+| member | <code>Member</code> | 
 
 <a name="CommandPermissions+_checkRoleNeeded"></a>
 
@@ -283,7 +283,7 @@ Check roleIDs [needed]
 
 | Param | Type |
 | --- | --- |
-| member | <code>Object.&lt;Member&gt;</code> | 
+| member | <code>Member</code> | 
 
 <a name="CommandPermissions+_checkChannelBypass"></a>
 
@@ -294,7 +294,7 @@ Check channelIDs [bypass]
 
 | Param | Type |
 | --- | --- |
-| channel | <code>Object.&lt;Channel&gt;</code> | 
+| channel | <code>Channel</code> | 
 
 <a name="CommandPermissions+_checkChannelNeeded"></a>
 
@@ -305,7 +305,7 @@ Check channelIDs [needed]
 
 | Param | Type |
 | --- | --- |
-| channel | <code>Object.&lt;Channel&gt;</code> | 
+| channel | <code>Channel</code> | 
 
 <a name="CommandPermissions+_checkStaffBypass"></a>
 
@@ -317,7 +317,7 @@ Check if the user is bot staff [bypass]
 
 | Param | Type |
 | --- | --- |
-| member | <code>Object.&lt;Member&gt;</code> | 
+| member | <code>Member</code> | 
 
 <a name="CommandPermissions+_checkStaffNeeded"></a>
 
@@ -329,7 +329,7 @@ Check if the user is bot staff [needed]
 
 | Param | Type |
 | --- | --- |
-| member | <code>Object.&lt;Member&gt;</code> | 
+| member | <code>Member</code> | 
 
 <a name="CommandPermissions.CommandPermissions"></a>
 
@@ -343,7 +343,7 @@ Creates an instance of CommandPermissions.
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| command | <code>Object.&lt;Command&gt;</code> |  | The base command |
+| command | <code>Command</code> |  | The base command |
 | [override] | <code>Object</code> | <code>{}</code> | The specific permissions for this command (format - CommandPermissions) |
 | [useModuleDefault] | <code>Boolean</code> | <code>false</code> | Whether to use or not the module's base permissions before applying override permissions |
 

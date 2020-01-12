@@ -8,7 +8,7 @@
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| _module | <code>Object.&lt;Module&gt;</code> |  | Module instance |
+| _module | <code>Module</code> |  | Module instance |
 | eventName | <code>String</code> |  | The discord event name |
 | label | <code>String</code> |  | The listener name |
 | load | <code>Boolean</code> |  | Whether to load this event on startup or not |
@@ -22,7 +22,7 @@
 * [Listener](#Listener) ⇐ <code>Base</code>
     * [new Listener()](#new_Listener_new)
     * _instance_
-        * [.module](#Listener+module) : <code>Object.&lt;Module&gt;</code>
+        * [.module](#Listener+module) : <code>Module</code>
         * [._execute(guildConfig, ...args)](#Listener+_execute) ⇒ <code>Promise</code>
     * _static_
         * [.Listener](#Listener.Listener)
@@ -36,7 +36,7 @@ Extends Listener to create an event
 
 <a name="Listener+module"></a>
 
-### listener.module : <code>Object.&lt;Module&gt;</code>
+### listener.module : <code>Module</code>
 Returns the parent Module instance
 
 **Kind**: instance property of [<code>Listener</code>](#Listener)  
@@ -65,7 +65,7 @@ Creates an Listener instance.
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| module | <code>Object.&lt;Module&gt;</code> |  |  |
+| module | <code>Module</code> |  |  |
 | [data] | <code>Object</code> | <code>{}</code> | All events parameters |
 | [data.eventName] | <code>String</code> |  |  |
 | [data.label] | <code>String</code> |  |  |

@@ -7,7 +7,7 @@
 
 | Name | Type | Description |
 | --- | --- | --- |
-| _axon | <code>Object.&lt;AxonClient&gt;</code> | AxonClient |
+| _axon | <code>AxonClient</code> | AxonClient |
 | userMention | <code>RegExp</code> | Regular Expression to match a userMention |
 | roleMention | <code>RegExp</code> | Regular Expression to match a roleMention |
 | channelMention | <code>RegExp</code> | Regular Expression to match a channelMention |
@@ -18,13 +18,13 @@
 * [Utils](#Utils)
     * [new Utils()](#new_Utils_new)
     * _instance_
-        * [.axon](#Utils+axon) : <code>Object.&lt;AxonClient&gt;</code>
-        * [.bot](#Utils+bot) : <code>Object.&lt;BotClient&gt;</code>
-        * [.library](#Utils+library) : <code>Object.&lt;LibraryInterface&gt;</code>
+        * [.axon](#Utils+axon) : <code>AxonClient</code>
+        * [.bot](#Utils+bot) : <code>BotClient</code>
+        * [.library](#Utils+library) : <code>LibraryInterface</code>
         * [.splitMessage(content)](#Utils+splitMessage) ⇒ <code>Array.&lt;String&gt;</code> \| <code>String</code>
         * [.getPrefix(msg)](#Utils+getPrefix) ⇒ <code>Promise.&lt;String&gt;</code>
         * [.getRoles(guild, member)](#Utils+getRoles) ⇒ <code>Array.&lt;Role&gt;</code>
-        * [.getHighestRole(guild, member)](#Utils+getHighestRole) ⇒ <code>Object.&lt;Role&gt;</code>
+        * [.getHighestRole(guild, member)](#Utils+getHighestRole) ⇒ <code>Role</code>
         * [.sortRoles(array)](#Utils+sortRoles) ⇒ <code>Array.&lt;Role&gt;</code>
         * [.isRoleHigher(role1, role2)](#Utils+isRoleHigher) ⇒ <code>Boolean</code>
         * [.isHigherRole(guild, first, second)](#Utils+isHigherRole) ⇒ <code>Boolean</code>
@@ -53,21 +53,21 @@ All methods useful and usable everywhere
 
 <a name="Utils+axon"></a>
 
-### utils.axon : <code>Object.&lt;AxonClient&gt;</code>
+### utils.axon : <code>AxonClient</code>
 Returns the AxonClient instance
 
 **Kind**: instance property of [<code>Utils</code>](#Utils)  
 **Read only**: true  
 <a name="Utils+bot"></a>
 
-### utils.bot : <code>Object.&lt;BotClient&gt;</code>
+### utils.bot : <code>BotClient</code>
 Returns the BotClient instance
 
 **Kind**: instance property of [<code>Utils</code>](#Utils)  
 **Read only**: true  
 <a name="Utils+library"></a>
 
-### utils.library : <code>Object.&lt;LibraryInterface&gt;</code>
+### utils.library : <code>LibraryInterface</code>
 Returns the LibraryInterface instance
 
 **Kind**: instance property of [<code>Utils</code>](#Utils)  
@@ -107,21 +107,21 @@ Get an array of role objects from a member.
 
 | Param | Type |
 | --- | --- |
-| guild | <code>Object.&lt;Guild&gt;</code> | 
-| member | <code>Object.&lt;Member&gt;</code> | 
+| guild | <code>Guild</code> | 
+| member | <code>Member</code> | 
 
 <a name="Utils+getHighestRole"></a>
 
-### utils.getHighestRole(guild, member) ⇒ <code>Object.&lt;Role&gt;</code>
+### utils.getHighestRole(guild, member) ⇒ <code>Role</code>
 Get highest role of the given member.
 
 **Kind**: instance method of [<code>Utils</code>](#Utils)  
-**Returns**: <code>Object.&lt;Role&gt;</code> - Role Object  
+**Returns**: <code>Role</code> - Role Object  
 
 | Param | Type |
 | --- | --- |
-| guild | <code>Object.&lt;Guild&gt;</code> | 
-| member | <code>Object.&lt;Member&gt;</code> | 
+| guild | <code>Guild</code> | 
+| member | <code>Member</code> | 
 
 <a name="Utils+sortRoles"></a>
 
@@ -144,8 +144,8 @@ Check if the first role is higher than the other.
 
 | Param | Type |
 | --- | --- |
-| role1 | <code>Object.&lt;Role&gt;</code> | 
-| role2 | <code>Object.&lt;Role&gt;</code> | 
+| role1 | <code>Role</code> | 
+| role2 | <code>Role</code> | 
 
 <a name="Utils+isHigherRole"></a>
 
@@ -156,9 +156,9 @@ Check if the highest role of first is higher than the highest role of second
 
 | Param | Type |
 | --- | --- |
-| guild | <code>Object.&lt;Guild&gt;</code> | 
-| first | <code>Object.&lt;Member&gt;</code> | 
-| second | <code>Object.&lt;Member&gt;</code> | 
+| guild | <code>Guild</code> | 
+| first | <code>Member</code> | 
+| second | <code>Member</code> | 
 
 <a name="Utils+hasPerms"></a>
 
@@ -170,7 +170,7 @@ Check if the member has correct permissions to execute
 
 | Param | Type | Description |
 | --- | --- | --- |
-| member | <code>Object.&lt;Member&gt;</code> | Member object |
+| member | <code>Member</code> | Member object |
 | permissions | <code>Array.&lt;String&gt;</code> | List of permissions to test |
 
 <a name="Utils+hasChannelPerms"></a>
@@ -183,9 +183,9 @@ Check if the given user has correct permissions to execute in the specific chann
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| channel | <code>Object.&lt;Channel&gt;</code> |  | Channel object |
+| channel | <code>Channel</code> |  | Channel object |
 | permissions | <code>Array.&lt;String&gt;</code> |  | List of permissions to test |
-| [user] | <code>Object.&lt;User&gt;</code> | <code>this.bot.user</code> | User to test |
+| [user] | <code>User</code> | <code>this.bot.user</code> | User to test |
 
 <a name="Utils+missingPerms"></a>
 
@@ -197,7 +197,7 @@ List all missing permissions of the given user.
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| member | <code>Object.&lt;Member&gt;</code> |  |  |
+| member | <code>Member</code> |  |  |
 | [permissions] | <code>Array.&lt;String&gt;</code> | <code>[]</code> | List of permissions to test |
 
 <a name="Utils+calculatePerms"></a>
@@ -260,7 +260,7 @@ Creates an instance of Utils.
 
 | Param | Type |
 | --- | --- |
-| client | <code>Object.&lt;AxonClient&gt;</code> | 
+| client | <code>AxonClient</code> | 
 
 <a name="Utils.userMention"></a>
 

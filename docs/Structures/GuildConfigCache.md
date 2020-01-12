@@ -7,7 +7,7 @@
 
 | Name | Type |
 | --- | --- |
-| _axon | <code>Object.&lt;AxonClient&gt;</code> | 
+| _axon | <code>AxonClient</code> | 
 | guildConfigs | <code>LRUCache.&lt;GuildConfig&gt;</code> | 
 
 
@@ -86,5 +86,5 @@ Creates an instance of GuildConfigsCache.
 
 | Param | Type |
 | --- | --- |
-| axonClient | <code>Object.&lt;AxonClient&gt;</code> | 
+| axonClient | <code>AxonClient</code> | 
 

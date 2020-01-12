@@ -8,20 +8,20 @@
 
 | Name | Type | Description |
 | --- | --- | --- |
-| _botClient | <code>Object.&lt;BotClient&gt;</code> | Eris or Discordjs Client |
+| _botClient | <code>BotClient</code> | Eris or Discordjs Client |
 | modules | <code>Collection.&lt;Module&gt;</code> | All modules in the client [key: label, value: module] |
 | commands | <code>Collection.&lt;Command&gt;</code> | All commands in the client [key: label, value: command] |
 | commandAliases | <code>Map.&lt;String&gt;</code> | All aliases in the client [key: alias, value: commandLabel] |
-| EventManager | <code>Object.&lt;EventManager&gt;</code> | The EventManager instance that handle all AxonCore events |
-| guildConfigs | <code>Object.&lt;GuildConfigCache&gt;</code> | The Manager that handles GuildConfigs (cache / DB etc) |
-| axonConfig | <code>Object.&lt;AxonConfig&gt;</code> | The AxonConfigobject that handles globally blacklisted users and guilds |
-| dispatcher | <code>Object.&lt;CommandDispatcher&gt;</code> | Dispatch commands onMessageCreate. |
-| moduleLoader | <code>Object.&lt;ModuleLoader&gt;</code> | Load, register, unregister modules. |
-| messageManager | <code>Object.&lt;MessageManager&gt;</code> | Message manager object accessible with `<AxonClient>.l` |
+| EventManager | <code>EventManager</code> | The EventManager instance that handle all AxonCore events |
+| guildConfigs | <code>GuildConfigCache</code> | The Manager that handles GuildConfigs (cache / DB etc) |
+| axonConfig | <code>AxonConfig</code> | The AxonConfigobject that handles globally blacklisted users and guilds |
+| dispatcher | <code>CommandDispatcher</code> | Dispatch commands onMessageCreate. |
+| moduleLoader | <code>ModuleLoader</code> | Load, register, unregister modules. |
+| messageManager | <code>MessageManager</code> | Message manager object accessible with `<AxonClient>.l` |
 | logger | <code>Object</code> | The Logger instance |
 | axonUtils | <code>Object</code> | Util methods (AxonCore) |
 | utils | <code>Object</code> | Utils methods (general) |
-| DBProvider | <code>Object.&lt;DBProvider&gt;</code> | The DBProvider instance |
+| DBProvider | <code>DBProvider</code> | The DBProvider instance |
 | configs | <code>Object</code> | configs (webhooks, template, custom) |
 | staff | <code>Object</code> | Bot Staff (owners, admins, +...) |
 | staff.owners | <code>Array.&lt;String&gt;</code> | Array of user IDs with BotOwner permissions |
@@ -38,19 +38,20 @@
 * [AxonClient](#AxonClient) ⇐ <code>EventEmitter</code>
     * [new AxonClient()](#new_AxonClient_new)
     * _instance_
-        * [.botClient](#AxonClient+botClient) : <code>Object.&lt;BotClient&gt;</code>
+        * [.botClient](#AxonClient+botClient) : <code>BotClient</code>
         * [.handlers](#AxonClient+handlers) : <code>Collection.&lt;Object&gt;</code>
         * [.webhooks](#AxonClient+webhooks) : <code>Object</code>
         * [.template](#AxonClient+template) : <code>Object</code>
         * [.custom](#AxonClient+custom) : <code>Object</code>
-        * [.l](#AxonClient+l) : <code>Object.&lt;MessageManager&gt;</code>
+        * [.l](#AxonClient+l) : <code>MessageManager</code>
         * [.getListeners(eventName)](#AxonClient+getListeners) ⇒ <code>Array</code>
-        * [.getModule(module)](#AxonClient+getModule) ⇒ <code>Object.&lt;Module&gt;</code> \| <code>null</code>
-        * [.getCommand(fullLabel)](#AxonClient+getCommand) ⇒ <code>Object.&lt;Command&gt;</code> \| <code>null</code>
+        * [.getModule(module)](#AxonClient+getModule) ⇒ <code>Module</code> \| <code>null</code>
+        * [.getCommand(fullLabel)](#AxonClient+getCommand) ⇒ <code>Command</code> \| <code>null</code>
         * [.start()](#AxonClient+start)
         * [.onInit()](#AxonClient+onInit) ⇒ <code>\*</code>
         * [.onStart()](#AxonClient+onStart) ⇒ <code>Promise</code>
         * [.onReady()](#AxonClient+onReady) ⇒ <code>Promise</code>
+        * [.log(level, content, [ctx], [execWebhook])](#AxonClient+log)
         * [._onMessageCreate(msg)](#AxonClient+_onMessageCreate)
         * [._onReady()](#AxonClient+_onReady)
         * [.initErrorListeners()](#AxonClient+initErrorListeners)
@@ -70,7 +71,7 @@ AxonCore - Client constructor
 
 <a name="AxonClient+botClient"></a>
 
-### axonClient.botClient : <code>Object.&lt;BotClient&gt;</code>
+### axonClient.botClient : <code>BotClient</code>
 Returns the bot client instance
 
 **Kind**: instance property of [<code>AxonClient</code>](#AxonClient)  
@@ -101,7 +102,7 @@ Return the webhooks object
 **Read only**: true  
 <a name="AxonClient+l"></a>
 
-### axonClient.l : <code>Object.&lt;MessageManager&gt;</code>
+### axonClient.l : <code>MessageManager</code>
 Return the MessageManager instance
 
 **Kind**: instance property of [<code>AxonClient</code>](#AxonClient)  
@@ -119,7 +120,7 @@ Returns all registrered listeners for the discord event name
 
 <a name="AxonClient+getModule"></a>
 
-### axonClient.getModule(module) ⇒ <code>Object.&lt;Module&gt;</code> \| <code>null</code>
+### axonClient.getModule(module) ⇒ <code>Module</code> \| <code>null</code>
 Get a module from AxonClient with the given label.
 
 **Kind**: instance method of [<code>AxonClient</code>](#AxonClient)  
@@ -130,7 +131,7 @@ Get a module from AxonClient with the given label.
 
 <a name="AxonClient+getCommand"></a>
 
-### axonClient.getCommand(fullLabel) ⇒ <code>Object.&lt;Command&gt;</code> \| <code>null</code>
+### axonClient.getCommand(fullLabel) ⇒ <code>Command</code> \| <code>null</code>
 Get a command/subcommand from AxonClient with the given full label.
 
 **Kind**: instance method of [<code>AxonClient</code>](#AxonClient)  
@@ -171,6 +172,23 @@ Override this method.
 Method executed at the end of the start method (when the AxonClient is ready).
 
 **Kind**: instance method of [<code>AxonClient</code>](#AxonClient)  
+<a name="AxonClient+log"></a>
+
+### axonClient.log(level, content, [ctx], [execWebhook])
+Log both to console and to the correct webhook
+
+**Kind**: instance method of [<code>AxonClient</code>](#AxonClient)  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| level | <code>LOG\_LEVELS</code> |  | The LOG-LEVEL |
+| content | <code>String</code> \| <code>Error</code> |  | The content or the error to log |
+| [ctx] | <code>Object</code> | <code></code> | Additional context to be passed to logger |
+| ctx.guild | <code>Object</code> \| <code>String</code> |  |  |
+| ctx.cmd | <code>String</code> |  |  |
+| ctx.user | <code>Object</code> \| <code>String</code> |  |  |
+| [execWebhook] | <code>Boolean</code> | <code>true</code> | Whether to execute the webhook |
+
 <a name="AxonClient+_onMessageCreate"></a>
 
 ### axonClient.\_onMessageCreate(msg)
@@ -180,7 +198,7 @@ Function executed on the global messageCreate event and dispatch to the correct 
 
 | Param | Type |
 | --- | --- |
-| msg | <code>Object.&lt;Message&gt;</code> | 
+| msg | <code>Message</code> | 
 
 <a name="AxonClient+_onReady"></a>
 
@@ -215,7 +233,7 @@ This method can be overridden in child.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| msg | <code>Object.&lt;Message&gt;</code> | The message object |
+| msg | <code>Message</code> | The message object |
 
 <a name="AxonClient+registerGuildPrefixes"></a>
 
@@ -257,7 +275,7 @@ Creates an AxonClient instance.
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| botClient | <code>Object.&lt;BotClient&gt;</code> |  | Eris or Discordjs Client instance |
-| [axonOptions] | <code>Object.&lt;AxonOptions&gt;</code> | <code>{}</code> | Axon options |
+| botClient | <code>BotClient</code> |  | Eris or Discordjs Client instance |
+| [axonOptions] | <code>AxonOptions</code> | <code>{}</code> | Axon options |
 | [modules] | <code>Object</code> | <code>{}</code> | Object with all modules to add in the bot |
 

@@ -31,7 +31,7 @@ Collect bunch of message object according to choosen options
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| client | <code>Object.&lt;AxonClient&gt;</code> |  | The axon client object |
+| client | <code>AxonClient</code> |  | The axon client object |
 | [options] | <code>Object</code> |  | The default options for the message collector instance |
 | [options.timeout] | <code>Number</code> | <code>60000</code> | The time before the collector times out in milliseconds |
 | [options.count] | <code>Number</code> | <code>100</code> | The amount of messages to collect before automatically ending |
@@ -53,7 +53,7 @@ Runs the message collector
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| channel | <code>Object.&lt;Channel&gt;</code> |  | The channel object to listen to |
+| channel | <code>Channel</code> |  | The channel object to listen to |
 | [options] | <code>Object</code> |  | The options for the message collector |
 | [options.timeout] | <code>Number</code> | <code>60000</code> | The time before the collector times out in milliseconds |
 | [options.count] | <code>Number</code> | <code>100</code> | The amount of messages to collect before automatically ending |
@@ -103,7 +103,7 @@ Collect bunch of message object according to choosen options
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| client | <code>Object.&lt;AxonClient&gt;</code> |  | The axon client object |
+| client | <code>AxonClient</code> |  | The axon client object |
 | [options] | <code>Object</code> |  | The default options for the message collector instance |
 | [options.timeout] | <code>Number</code> | <code>60000</code> | The time before the collector times out in milliseconds |
 | [options.count] | <code>Number</code> | <code>100</code> | The amount of messages to collect before automatically ending |
@@ -125,7 +125,7 @@ Runs the message collector
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| channel | <code>Object.&lt;Channel&gt;</code> |  | The channel object to listen to |
+| channel | <code>Channel</code> |  | The channel object to listen to |
 | [options] | <code>Object</code> |  | The options for the message collector |
 | [options.timeout] | <code>Number</code> | <code>60000</code> | The time before the collector times out in milliseconds |
 | [options.count] | <code>Number</code> | <code>100</code> | The amount of messages to collect before automatically ending |

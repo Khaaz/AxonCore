@@ -40,7 +40,7 @@ Resolve a member within a guild.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| guild | <code>Object.&lt;Guild&gt;</code> | Object Guild resolved by the command. |
+| guild | <code>Guild</code> | Object Guild resolved by the command. |
 | args | <code>Array</code> \| <code>String</code> | Array of arguments resolved by the command. |
 
 <a name="Resolver.role"></a>
@@ -53,7 +53,7 @@ Resolve a role within a guild.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| guild | <code>Object.&lt;Guild&gt;</code> | Object Guild resolved by the command. |
+| guild | <code>Guild</code> | Object Guild resolved by the command. |
 | args | <code>Array</code> \| <code>String</code> | Array of arguments resolved by the command. |
 
 <a name="Resolver.channel"></a>
@@ -66,7 +66,7 @@ Resolve a channel within a guild.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| guild | <code>Object.&lt;Guild&gt;</code> | Object Guild resolved by the command. |
+| guild | <code>Guild</code> | Object Guild resolved by the command. |
 | args | <code>Array</code> \| <code>String</code> | Array of arguments resolved by the command. |
 
 <a name="Resolver.guild"></a>

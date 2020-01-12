@@ -71,7 +71,7 @@ Check if the user/role/channel is ignored on the specified guild.
 
 | Param | Type |
 | --- | --- |
-| msg | <code>Object.&lt;Message&gt;</code> | 
+| msg | <code>Message</code> | 
 
 <a name="GuildConfig+isUserIgnored"></a>
 
@@ -95,7 +95,7 @@ Check if the user/role/channel is ignored on the specified guild.
 
 | Param | Type |
 | --- | --- |
-| member | <code>Object.&lt;Member&gt;</code> | 
+| member | <code>Member</code> | 
 
 <a name="GuildConfig+isChannelIgnored"></a>
 
@@ -120,7 +120,7 @@ Check if the module is disabled on the specified guild.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| command | <code>Object.&lt;Command&gt;</code> | The command object |
+| command | <code>Command</code> | The command object |
 
 <a name="GuildConfig+isCommandDisabled"></a>
 
@@ -133,7 +133,7 @@ Check if the command is disabled on the specified guild.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| command | <code>Object.&lt;Command&gt;</code> | The command object |
+| command | <code>Command</code> | The command object |
 
 <a name="GuildConfig+isListenerDisabled"></a>
 
@@ -146,7 +146,7 @@ Check if the listener is disabled on the specified guild.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| listener | <code>Object.&lt;Listener&gt;</code> | The listener object |
+| listener | <code>Listener</code> | The listener object |
 
 <a name="GuildConfig+isModOnly"></a>
 
@@ -292,6 +292,6 @@ Creates an instance of GuildConfig.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| axon | <code>Object.&lt;AxonClient&gt;</code> |  |
+| axon | <code>AxonClient</code> |  |
 | values | <code>Object</code> | DB values for the current guild |
 

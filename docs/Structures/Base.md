@@ -7,21 +7,21 @@
 
 | Name | Type | Description |
 | --- | --- | --- |
-| _axon | <code>Object.&lt;AxonClient&gt;</code> | AxonClient |
+| _axon | <code>AxonClient</code> | AxonClient |
 
 
 * [Base](#Base)
     * [new Base()](#new_Base_new)
     * _instance_
-        * [.axon](#Base+axon) : <code>Object.&lt;AxonClient&gt;</code>
-        * [.bot](#Base+bot) : <code>Object.&lt;Client&gt;</code>
-        * [.logger](#Base+logger) : <code>Object.&lt;Logger&gt;</code>
-        * ~~[.Resolver](#Base+Resolver) : <code>Object.&lt;Resolver&gt;</code>~~
-        * [.axonUtils](#Base+axonUtils) : <code>Object.&lt;AxonUtils&gt;</code>
-        * [.utils](#Base+utils) : <code>Object.&lt;Utils&gt;</code>
-        * [.l](#Base+l) : <code>Object.&lt;MessageManager&gt;</code>
-        * [.getModule(module)](#Base+getModule) ⇒ <code>Object.&lt;Module&gt;</code> \| <code>NULL</code>
-        * [.getCommand(fullLabel)](#Base+getCommand) ⇒ <code>Object.&lt;Command&gt;</code> \| <code>NULL</code>
+        * [.axon](#Base+axon) : <code>AxonClient</code>
+        * [.bot](#Base+bot) : <code>Client</code>
+        * [.logger](#Base+logger) : <code>Logger</code>
+        * ~~[.Resolver](#Base+Resolver) : <code>Resolver</code>~~
+        * [.axonUtils](#Base+axonUtils) : <code>AxonUtils</code>
+        * [.utils](#Base+utils) : <code>Utils</code>
+        * [.l](#Base+l) : <code>MessageManager</code>
+        * [.getModule(module)](#Base+getModule) ⇒ <code>Module</code> \| <code>NULL</code>
+        * [.getCommand(fullLabel)](#Base+getCommand) ⇒ <code>Command</code> \| <code>NULL</code>
         * [.sendDM(user, content, [options])](#Base+sendDM) ⇒ <code>Promise.&lt;?Message&gt;</code>
         * [.sendMessage(channel, content, [options])](#Base+sendMessage) ⇒ <code>Promise.&lt;?Message&gt;</code>
         * [.editMessage(message, content)](#Base+editMessage) ⇒ <code>Promise.&lt;?Message&gt;</code>
@@ -41,28 +41,28 @@ Base Class with default properties and utility methods used by all Commands / Mo
 
 <a name="Base+axon"></a>
 
-### base.axon : <code>Object.&lt;AxonClient&gt;</code>
+### base.axon : <code>AxonClient</code>
 Returns the AxonClient instance
 
 **Kind**: instance property of [<code>Base</code>](#Base)  
 **Read only**: true  
 <a name="Base+bot"></a>
 
-### base.bot : <code>Object.&lt;Client&gt;</code>
+### base.bot : <code>Client</code>
 Returns the bot client instance
 
 **Kind**: instance property of [<code>Base</code>](#Base)  
 **Read only**: true  
 <a name="Base+logger"></a>
 
-### base.logger : <code>Object.&lt;Logger&gt;</code>
+### base.logger : <code>Logger</code>
 Returns the Logger instance
 
 **Kind**: instance property of [<code>Base</code>](#Base)  
 **Read only**: true  
 <a name="Base+Resolver"></a>
 
-### ~~base.Resolver : <code>Object.&lt;Resolver&gt;</code>~~
+### ~~base.Resolver : <code>Resolver</code>~~
 ***Deprecated***
 
 Returns the Resolver class
@@ -71,28 +71,28 @@ Returns the Resolver class
 **Read only**: true  
 <a name="Base+axonUtils"></a>
 
-### base.axonUtils : <code>Object.&lt;AxonUtils&gt;</code>
+### base.axonUtils : <code>AxonUtils</code>
 Returns the AxonUtils instance
 
 **Kind**: instance property of [<code>Base</code>](#Base)  
 **Read only**: true  
 <a name="Base+utils"></a>
 
-### base.utils : <code>Object.&lt;Utils&gt;</code>
+### base.utils : <code>Utils</code>
 Returns the Utils instance
 
 **Kind**: instance property of [<code>Base</code>](#Base)  
 **Read only**: true  
 <a name="Base+l"></a>
 
-### base.l : <code>Object.&lt;MessageManager&gt;</code>
+### base.l : <code>MessageManager</code>
 Returns the MessageManager instance
 
 **Kind**: instance property of [<code>Base</code>](#Base)  
 **Read only**: true  
 <a name="Base+getModule"></a>
 
-### base.getModule(module) ⇒ <code>Object.&lt;Module&gt;</code> \| <code>NULL</code>
+### base.getModule(module) ⇒ <code>Module</code> \| <code>NULL</code>
 Get a module from AxonClient with the label
 
 **Kind**: instance method of [<code>Base</code>](#Base)  
@@ -103,7 +103,7 @@ Get a module from AxonClient with the label
 
 <a name="Base+getCommand"></a>
 
-### base.getCommand(fullLabel) ⇒ <code>Object.&lt;Command&gt;</code> \| <code>NULL</code>
+### base.getCommand(fullLabel) ⇒ <code>Command</code> \| <code>NULL</code>
 Get a command/subcommand from AxonClient with the full label
 
 **Kind**: instance method of [<code>Base</code>](#Base)  
@@ -123,7 +123,7 @@ Reject promise if not
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| user | <code>Object.&lt;User&gt;</code> |  | User object to get the DM channel |
+| user | <code>User</code> |  | User object to get the DM channel |
 | content | <code>Object/String</code> |  | String or object (embed) |
 | [options] | <code>Object</code> | <code>{}</code> | Options { disableEveryone: Boolean, delete: Boolean, delay: Number } |
 | [options.disableEveryone] | <code>Boolean</code> | <code>true</code> | Whether to allow mentioning everyone or not |
@@ -142,7 +142,7 @@ Doesn't support file
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| channel | <code>Object.&lt;Channel&gt;</code> |  | The channel Object |
+| channel | <code>Channel</code> |  | The channel Object |
 | content | <code>Object/String</code> |  | Message content, String or Embed Object |
 | [options] | <code>Object</code> | <code>{}</code> | Options { disableEveryone: Boolean, delete: Boolean, delay: Number } |
 | [options.disableEveryone] | <code>Boolean</code> | <code>true</code> | Whether to allow mentioning everyone or not |
@@ -160,7 +160,7 @@ Check for bot permissions + message embed/length
 
 | Param | Type | Description |
 | --- | --- | --- |
-| message | <code>Object.&lt;Message&gt;</code> | The message object to edit |
+| message | <code>Message</code> | The message object to edit |
 | content | <code>Object/String</code> | Object (embed) or String |
 
 <a name="Base+sendSuccess"></a>
@@ -175,7 +175,7 @@ Await for sendMessage to throw correctly potential errors.
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| channel | <code>Object.&lt;Channel&gt;</code> |  | The channel Object |
+| channel | <code>Channel</code> |  | The channel Object |
 | content | <code>Object</code> \| <code>String</code> |  | Success message content |
 | [options] | <code>Object</code> | <code>{}</code> | Additional options |
 | [options.disableEveryone] | <code>Boolean</code> | <code>true</code> | Whether to allow mentioning everyone or not |
@@ -192,7 +192,7 @@ Await for sendMessage to throw correctly potential errors.
 
 **Kind**: instance method of [<code>Base</code>](#Base)  
 **Returns**: <code>Promise.&lt;CommandResponse&gt;</code> - The non successful Command Response  
-**@param**: <code>Object&lt;Channel&gt;</code> channel - The channel Object  
+**@param**: <code>Channel</code> channel - The channel Object  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -215,8 +215,8 @@ Calls sendError().
 
 | Param | Type | Description |
 | --- | --- | --- |
-| msg | <code>Object.&lt;Message&gt;</code> | The message Object |
-| err | <code>Object.&lt;Error&gt;</code> | The error message |
+| msg | <code>Message</code> | The message Object |
+| err | <code>Error</code> | The error message |
 | type | <code>String</code> | Type of error (api, db, internal) |
 | errMsg | <code>String</code> | Optional error message |
 
@@ -246,5 +246,5 @@ Creates an instance of Base.
 
 | Param | Type |
 | --- | --- |
-| axonClient | <code>Object.&lt;AxonClient&gt;</code> | 
+| axonClient | <code>AxonClient</code> | 
 

@@ -1,10 +1,11 @@
 <a name="AutoQueue"></a>
 
-## AutoQueue
+## AutoQueue ⇐ <code>Queue</code>
 **Kind**: global class  
+**Extends**: <code>Queue</code>  
 **Khaaz**:   
 
-* [AutoQueue](#AutoQueue)
+* [AutoQueue](#AutoQueue) ⇐ <code>Queue</code>
     * [new AutoQueue()](#new_AutoQueue_new)
     * [.exec()](#AutoQueue+exec)
 

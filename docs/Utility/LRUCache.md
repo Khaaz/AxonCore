@@ -9,8 +9,9 @@
 | --- | --- | --- |
 | limit | <code>Number</code> | Maximum size of the LRU |
 | size | <code>Number</code> | Current size of the LRU |
-| head | <code>Object.&lt;Node&gt;</code> |  |
-| tail | <code>Object.&lt;Node&gt;</code> |  |
+| head | <code>Node</code> |  |
+| tail | <code>Node</code> |  |
+| _cache | <code>Collection.&lt;\*&gt;</code> | The Collection holding the cache (private, handled by the LRU structure) |
 
 
 * [LRUCache](#LRUCache)
@@ -18,6 +19,8 @@
     * _instance_
         * [.set(key, value)](#LRUCache+set)
         * [.get(key)](#LRUCache+get) ⇒ <code>\*</code>
+        * [.remove(key)](#LRUCache+remove)
+        * [.clear()](#LRUCache+clear)
         * [.forEach(fn)](#LRUCache+forEach)
         * [.find(func)](#LRUCache+find) ⇒ <code>Class</code>
         * [.map(func)](#LRUCache+map) ⇒ <code>Array</code>
@@ -60,6 +63,23 @@ Retrieve a value from the LRU cache
 | --- | --- |
 | key | <code>String</code> | 
 
+<a name="LRUCache+remove"></a>
+
+### lruCache.remove(key)
+Remove an element from the LRUCache
+
+**Kind**: instance method of [<code>LRUCache</code>](#LRUCache)  
+
+| Param | Type |
+| --- | --- |
+| key | <code>String</code> | 
+
+<a name="LRUCache+clear"></a>
+
+### lruCache.clear()
+Empty the LRUCache entirely
+
+**Kind**: instance method of [<code>LRUCache</code>](#LRUCache)  
 <a name="LRUCache+forEach"></a>
 
 ### lruCache.forEach(fn)
