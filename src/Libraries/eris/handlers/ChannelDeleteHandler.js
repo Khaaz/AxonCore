@@ -1,6 +1,6 @@
-import Handler from '../../../Structures/Event/Handler';
+import AHandler from '../../../Structures/Event/AHandler';
 
-class ChannelDeleteHandler extends Handler {
+class ChannelDeleteHandler extends AHandler {
     handle(channel) {
         return channel.guild ? channel.guild.id : null;
     }

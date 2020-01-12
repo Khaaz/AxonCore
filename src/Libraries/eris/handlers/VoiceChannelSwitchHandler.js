@@ -1,6 +1,6 @@
-import Handler from '../../../Structures/Event/Handler';
+import AHandler from '../../../Structures/Event/AHandler';
 
-class VoiceChannelSwitchHandler extends Handler {
+class VoiceChannelSwitchHandler extends AHandler {
     handle(member) {
         return member.guild ? member.guild.id : null;
     }

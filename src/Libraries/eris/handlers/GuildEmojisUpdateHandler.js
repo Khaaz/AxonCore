@@ -1,6 +1,6 @@
-import Handler from '../../../Structures/Event/Handler';
+import AHandler from '../../../Structures/Event/AHandler';
 
-class GuildEmojisUpdateHandler extends Handler {
+class GuildEmojisUpdateHandler extends AHandler {
     handle(guild) {
         return guild.id;
     }

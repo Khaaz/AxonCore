@@ -1,6 +1,6 @@
-import Handler from '../../../Structures/Event/Handler';
+import AHandler from '../../../Structures/Event/AHandler';
 
-class TypingStartHandler extends Handler {
+class TypingStartHandler extends AHandler {
     handle(channel) {
         return channel.guild ? channel.guild.id : null;
     }

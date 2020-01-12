@@ -8,24 +8,24 @@ import NotImplementedException from '../../Errors/NotImplementedException';
  * @author KhaaZ
  *
  * @abstract
- * @class Handler
+ * @class AHandler
  *
  * @prop {AxonClient} _axon
  * @prop {String} name
  * @prop {Array<Listener>} _listeners
  */
-class Handler {
+class AHandler {
     /**
-     * Creates an instance of Handler.
+     * Creates an instance of AHandler.
      *
      * @param {AxonClient} axon
      * @param {String} name
      * @param {Array<Listener>} listeners
      *
-     * @memberof Handler
+     * @memberof AHandler
      */
     constructor(axon, name, listeners) {
-        if (this.constructor === 'Handler') {
+        if (this.constructor === 'AHandler') {
             throw new NoAbstractInstanceException();
         }
 
@@ -42,7 +42,7 @@ class Handler {
      *
      * @readonly
      * @type {Number}
-     * @memberof Handler
+     * @memberof AHandler
      */
     get size() {
         return this._listeners.length;
@@ -77,11 +77,11 @@ class Handler {
      * @param {Object} args - All parameters for this event
      * @returns {String|null} The guild ID
      *
-     * @memberof Handler
+     * @memberof AHandler
      */
     handle(...args) { // eslint-disable-line no-unused-vars
         throw new NotImplementedException();
     }
 }
 
-export default Handler;
+export default AHandler;

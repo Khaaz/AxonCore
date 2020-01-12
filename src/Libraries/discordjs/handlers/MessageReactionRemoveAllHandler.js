@@ -1,6 +1,6 @@
-import Handler from '../../../Structures/Event/Handler';
+import AHandler from '../../../Structures/Event/AHandler';
 
-class MessageReactionRemoveAllHandler extends Handler {
+class MessageReactionRemoveAllHandler extends AHandler {
     handle(message) {
         return message.guild ? message.guild.id : null;
     }

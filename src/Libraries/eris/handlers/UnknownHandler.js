@@ -1,6 +1,6 @@
-import Handler from '../../../Structures/Event/Handler';
+import AHandler from '../../../Structures/Event/AHandler';
 
-class UnknownHandler extends Handler {
+class UnknownHandler extends AHandler {
     handle() {
         return null;
     }

@@ -1,6 +1,6 @@
-import Handler from '../../../Structures/Event/Handler';
+import AHandler from '../../../Structures/Event/AHandler';
 
-class ShardDisconnectHandler extends Handler {
+class ShardDisconnectHandler extends AHandler {
     handle() {
         return null;
     }

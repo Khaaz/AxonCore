@@ -1,6 +1,6 @@
-import Handler from '../../../Structures/Event/Handler';
+import AHandler from '../../../Structures/Event/AHandler';
 
-class GuildRoleCreateHandler extends Handler {
+class GuildRoleCreateHandler extends AHandler {
     handle(guild) {
         return guild.id;
     }

@@ -1,6 +1,6 @@
-import Handler from '../../../Structures/Event/Handler';
+import AHandler from '../../../Structures/Event/AHandler';
 
-class GuildBanRemoveHandler extends Handler {
+class GuildBanRemoveHandler extends AHandler {
     handle(guild) {
         return guild.id;
     }

@@ -1,6 +1,6 @@
-import Handler from '../../../Structures/Event/Handler';
+import AHandler from '../../../Structures/Event/AHandler';
 
-class ChannelCreateHandler extends Handler {
+class ChannelCreateHandler extends AHandler {
     handle(channel) {
         return channel.guild ? channel.guild.id : null;
     }

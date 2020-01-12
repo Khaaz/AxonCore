@@ -1,6 +1,6 @@
-import Handler from '../../../Structures/Event/Handler';
+import AHandler from '../../../Structures/Event/AHandler';
 
-class VoiceStateUpdateHandler extends Handler {
+class VoiceStateUpdateHandler extends AHandler {
     handle(voiceState) {
         return voiceState.guild ? voiceState.guild.id : null;
     }

@@ -1,7 +1,7 @@
 import Base from '../Base';
 
 import Collection from '../../Utility/Collection';
-import Handler from './Handler';
+import AHandler from './AHandler';
 
 /**
  * Event Manager class
@@ -12,7 +12,7 @@ import Handler from './Handler';
  * @extends Base
  *
  * @prop {Object} _eve,ts - Object that links an event name to an array of Listener objects { eventName: [Listener, Listener] }
- * @prop {Collection<Object>} _handlers - Collection of handler keyed to the event name [key: eventName, value: Handler]
+ * @prop {Collection<Object>} _handlers - Collection of handler keyed to the event name [key: eventName, value: AHandler]
  */
 
 class EventManager extends Base {
@@ -28,7 +28,7 @@ class EventManager extends Base {
         // For each eventName => Array of Listener Obj
         this._events = {};
         // For each eventName => One Function
-        this._handlers = new Collection( { base: Handler } );
+        this._handlers = new Collection( { base: AHandler } );
     }
 
     // **** GETTERS **** //

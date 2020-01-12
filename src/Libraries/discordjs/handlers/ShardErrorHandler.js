@@ -1,6 +1,6 @@
-import Handler from '../../../Structures/Event/Handler';
+import AHandler from '../../../Structures/Event/AHandler';
 
-class ShardErrorHandler extends Handler {
+class ShardErrorHandler extends AHandler {
     handle() {
         return null;
     }
