@@ -1,4 +1,4 @@
-import Selector from './../Structures/Selector';
+import ASelector from '../Structures/ASelector';
 import JsonProvider from './JsonProvider';
 
 import { DB_TYPES } from './../Utility/Constants/AxonEnums';
@@ -10,9 +10,9 @@ import { DB_TYPES } from './../Utility/Constants/AxonEnums';
  * @author KhaaZ
  *
  * @class DBSelector
- * @extends Selector
+ * @extends ASelector
  */
-class DBSelector extends Selector {
+class DBSelector extends ASelector {
     static select(axonOptions, axon) {
         let DBProvider;
 

@@ -1,4 +1,4 @@
-import Selector from './../Structures/Selector';
+import ASelector from '../Structures/ASelector';
 
 import DefaultLogger from './DefLogger';
 
@@ -11,9 +11,9 @@ import { LOGGER_TYPES } from '../Utility/Constants/AxonEnums';
  * @author Eleos, KhaaZ
  *
  * @class LoggerSelector
- * @extends Selector
+ * @extends ASelector
  */
-class LoggerSelector extends Selector {
+class LoggerSelector extends ASelector {
     static select(axonConfig) {
         let Logger;
 

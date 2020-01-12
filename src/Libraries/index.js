@@ -1,4 +1,4 @@
-import Selector from './../Structures/Selector';
+import ASelector from '../Structures/ASelector';
 
 import ErisInterface from './eris/ErisInterface';
 import DjsInterface from './discordjs/DjsInterface';
@@ -12,9 +12,9 @@ import { LIBRARY_TYPES } from '../Utility/Constants/AxonEnums';
  * @author KhaaZ
  *
  * @class LibrarySelector
- * @extends Selector
+ * @extends ASelector
  */
-class LibrarySelector extends Selector {
+class LibrarySelector extends ASelector {
     static select(axon, axonOptions) {
         let libraryInterface;
 
