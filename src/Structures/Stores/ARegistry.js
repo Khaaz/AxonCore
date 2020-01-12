@@ -105,6 +105,11 @@ class ARegistry {
         return this.registry.delete(key);
     }
 
+    // for - of directly on the registry
+    [Symbol.iterator]() {
+        return this.registry[Symbol.iterator]();
+    }
+
     /**
      * Register correctly an item in the registry.
      *

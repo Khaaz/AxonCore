@@ -53,6 +53,11 @@ class GuildConfigsCache {
         this.guildConfigs.set(key, value);
     }
 
+    // for - of directly on guildConfigs cache
+    [Symbol.iterator]() {
+        return this.guildConfigs[Symbol.iterator]();
+    }
+
     /**
      * Get a GuildConfig from the cache or from the DB if not in the cache.
      *
