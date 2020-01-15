@@ -1,4 +1,4 @@
-import { Command, Prompt } from '../../../../../..';
+import { Command, Prompt } from 'axoncore';
 
 class Wave extends Command {
     constructor(module) {

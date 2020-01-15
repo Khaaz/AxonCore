@@ -1,4 +1,4 @@
-import { Command, CommandOptions, CommandResponse } from '../../../../../..';
+import { Command, CommandOptions, CommandResponse } from 'axoncore';
 
 import Pong from './Ping_Pong';
 

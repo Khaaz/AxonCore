@@ -1,4 +1,4 @@
-import { Module, CommandPermissions } from '../../../../..';
+import { Module, CommandPermissions } from 'axoncore';
 
 import * as commands from './commands/index';
 // import * as events from './commands/index';
