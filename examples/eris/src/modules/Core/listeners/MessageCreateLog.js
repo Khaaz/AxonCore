@@ -1,4 +1,4 @@
-import { Listener } from '../../../../../..';
+import { Listener } from 'axoncore';
 
 class MessageCreateLog extends Listener {
     constructor(...args) {
