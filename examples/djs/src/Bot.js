@@ -1,6 +1,6 @@
 import Discordjs from 'discord.js';
 
-import { AxonOptions } from '../../..';
+import { AxonOptions } from 'axoncore';
 
 import Client from './Client';
 

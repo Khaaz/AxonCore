@@ -1,4 +1,4 @@
-import { Utils } from '../../..';
+import { Utils } from 'axoncore';
 
 class MyUtils extends Utils {
     constructor(...args) {
