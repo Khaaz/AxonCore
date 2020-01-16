@@ -21,31 +21,31 @@ import NotImplementedException from '../Errors/NotImplementedException';
  */
 class ADBProvider {
     /**
-     * Creates an instance of DBProvider.
+     * Creates an instance of ADBProvider.
      *
      * @param {AxonClient} axon
      *
-     * @memberof DBProvider
+     * @memberof ADBProvider
      */
     constructor(axonClient) {
-        if (this.constructor === 'DBProvider') {
+        if (this.constructor === 'ADBProvider') {
             throw new NoAbstractInstanceException();
         }
 
         if (!axonClient || !(axonClient instanceof AxonClient) ) {
-            throw new AxonError('First argument needs to be the AxonClient.', 'DBProvider');
+            throw new AxonError('First argument needs to be the AxonClient.', 'ADBProvider');
         }
 
         this.axon = axonClient;
     }
 
     /**
-     * Init the DBProvider.
+     * Init the ADBProvider.
      * Method calledjust after instantiation.Can be overrided with anything that willbe used by the provider.
      *
      * @param {AxonOptions}
      *
-     * @memberof DBProvider
+     * @memberof ADBProvider
      */
     init(axonOptions = null) {
         throw new NotImplementedException();
@@ -58,7 +58,7 @@ class ADBProvider {
      *
      * @returns {Promise<AxonConfig>} Newly created Axon config from the DB
      *
-     * @memberof DBProvider
+     * @memberof ADBProvider
      */
     initAxon() {
         throw new NotImplementedException();
@@ -72,7 +72,7 @@ class ADBProvider {
      *
      * @returns {Promise<GuildConfig|null>} Newly created Guild config from the DB
      *
-     * @memberof DBProvider
+     * @memberof ADBProvider
      */
     initGuild(gID) {
         throw new NotImplementedException();
@@ -85,7 +85,7 @@ class ADBProvider {
      *
      * @returns {Promise<AxonConfig|null>} AxonSchema Object or null
      *
-     * @memberof DBProvider
+     * @memberof ADBProvider
      */
     fetchAxon() {
         throw new NotImplementedException();
@@ -97,7 +97,7 @@ class ADBProvider {
      * @param {String} gID - guild ID
      * @returns {Promise<GuildConfig|null>}
      *
-     * @memberof DBProvider
+     * @memberof ADBProvider
      */
     fetchGuild(gID) {
         throw new NotImplementedException();
@@ -114,7 +114,7 @@ class ADBProvider {
      * @param {Object|Array|String|Boolean} value - The value to update in the DB
      * @returns {Promise<Boolean>} UWhether the request was successfull or not
      *
-     * @memberof DBProvider
+     * @memberof ADBProvider
      */
     updateAxon(key, value) {
         throw new NotImplementedException();
@@ -131,7 +131,7 @@ class ADBProvider {
      * @param {Object|Array|String|Boolean} value - The value to update in the DB
      * @returns {Promise<Boolean>} Whether the request was successfull or not
      *
-     * @memberof DBProvider
+     * @memberof ADBProvider
      */
     updateGuild(key, gID, value) {
         throw new NotImplementedException();
@@ -140,10 +140,10 @@ class ADBProvider {
     /**
      * Updates the Axon config in the DB with a new Axon config object.
      *
-     * @param {Object} data - the schema object to update
+     * @param {AxonConfig} data - the schema object to update
      * @returns {Promise<AxonConfig|null>} Updated AxonConfig from the DB
      *
-     * @memberof DBProvider
+     * @memberof ADBProvider
      */
     saveAxon(data) {
         throw new NotImplementedException();
@@ -156,7 +156,7 @@ class ADBProvider {
      * @param {Object} data - the schema object to update
      * @returns {Promise<GuildConfig|null>} Updated GuildConfig from the DB
      *
-     * @memberof DBProvider
+     * @memberof ADBProvider
      */
     saveGuild(gID, data) {
         throw new NotImplementedException();

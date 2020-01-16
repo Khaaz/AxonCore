@@ -101,17 +101,20 @@ declare module "axoncore" {
 
     type updateDBVal = object|any[]|string|boolean;
 
-    // OK
-    export abstract class DBProvider {
+    export abstract class ADBProvider {
+        public axon: AxonClient;
         constructor(axonClient: AxonClient);
-        public init(axonOptions: AxonOptions): any;
-        public fetchAxon(): Promise<object> | null;
-        public fetchGuild(gID: string): Promise<object> | null;
-        public initAxon(): Promise<object>;
-        public updateAxon(key: string, value: updateDBVal): Promise<boolean>;
-        public updateGuild(key: string, gID: string, value: updateDBVal): Promise<boolean>;
-        public saveAxon(data: object): Promise<AxonConfig | null>;
-        public saveGuild(gID: string, data: object): Promise<GuildConfig | null>;
+        public init(axonOptions: AxonOptions): any; // Not Implemented
+        public initAxon(): Promise<AxonConfig>; // Not Implemented
+        public initGuild(gID: string): Promise<GuildConfig|null>; // Not Implemented
+        
+        public fetchAxon(): Promise<AxonConfig|null>; // Not Implemented
+        public fetchGuild(gID: string): Promise<GuildConfig|null>; // Not Implemented
+        
+        public updateAxon(key: string, value: updateDBVal): Promise<boolean>; // Not Implemented
+        public updateGuild(key: string, gID: string, value: updateDBVal): Promise<boolean>; // Not Implemented
+        public saveAxon(data: AxonConfig): Promise<AxonConfig | null>; // Not Implemented
+        public saveGuild(gID: string, data: GuildConfig): Promise<GuildConfig | null>;
     }
 
     // OK
@@ -148,16 +151,16 @@ declare module "axoncore" {
     }
 
     // OK
-    class InMemoryProvider extends DBProvider {
+    class InMemoryProvider extends ADBProvider {
     }
 
     // OK
-    class JsonProvider extends DBProvider {
+    class JsonProvider extends ADBProvider {
         public manager?: JsonManager;
     }
 
     // OK
-    class MongoProvider extends DBProvider {
+    class MongoProvider extends ADBProvider {
         public AxonSchema?: any;
         public GuildSchema?: any;
     }
@@ -921,7 +924,7 @@ declare module "axoncore" {
         logo?: (...args: any[]) => any;
         utils?: new (...args: any[]) => any;
         logger?: new (...args: any[]) => any;
-        DBProvider?: new (...args: any[]) => any;
+        ADBProvider?: new (...args: any[]) => any;
         DBLocation?: string;
 
         axonConfig?: object;
