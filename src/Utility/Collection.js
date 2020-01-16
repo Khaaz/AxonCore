@@ -13,9 +13,7 @@ class Collection extends Map {
     /**
      * Creates an instance of Collection.
      *
-     * @param {Object} options
-     * @param {Class} [options.base=null]
-     * @param {Array|Object} options.iterable
+     * @param {{base: Class = null, iterable: [string, Class][] | {[key: string]: Class}}} options
      *
      * @memberof Collection
      */
@@ -60,7 +58,7 @@ class Collection extends Map {
      * Map to object
      * { key: value, key: value }
      *
-     * @returns {Object<key:value>}
+     * @returns {{[key:string]: Class}}
      *
      * @memberof Collection
      */
@@ -77,7 +75,7 @@ class Collection extends Map {
      *
      * @param {String} key - The property to use as key for the new Collection
      * @param {String} func - The function name to apply to the Collection
-     * @param {Object} args - All the argument that need to be applied to the Collection
+     * @param {Array} args - All the argument that need to be applied to the Collection
      * @returns {Collection} A new Collection modified by the apply call
      * @memberof Collection
      */
@@ -90,8 +88,8 @@ class Collection extends Map {
      * If baseObject, add only if instance of baseObject
      * If no baseObject, add
      *
-     * @param {String} value - The ID of the object
-     * @param {Object} key - The object data
+     * @param {String} key - The ID of the object
+     * @param {Object} value - The object data
      * @param {Boolean} replace - Whether to replace an existing object with the same ID
      * @returns {Class} The existing or newly created object
      *

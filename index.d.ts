@@ -11,13 +11,13 @@ type TextableChannel = Eris.TextableChannel | djs.TextChannel;
 declare module "axoncore" {
 
     // OK
-    // @ts-ignore
+    type CollectionFunctions = 'from' |'toArray'|'toObject'|'apply'|'add'|'find'
+    |'map'|'filter'|'reduce'|'some'|'every'|'update'|'remove'|'random'|'toString'
 
     export class Collection<T> extends Map<string | number, T> {
-        public baseObject?: new (...args: any[]) => T;
-        public iterable?: object | any[];
-        public constructor(base: { base: new (...args: any[]) => T, iterable?: object | any[] });
-        public add(obj: T, extra?: any, replace?: boolean): T;
+        public baseObject: new (...args: any[]) => T;
+        public constructor(base: { base?: new (...args: any[]) => T, iterable?: {[key: string]: T} | [string, T][] });
+        public add(key: string, value: object, replace?: boolean): T;
         public find(func: (i: T) => boolean): T;
         public random(): T;
         public filter(func: (i: T) => boolean): T[];
@@ -26,9 +26,11 @@ declare module "axoncore" {
         public every(func: (i: T) => boolean): boolean;
         public some(func: (i: T) => boolean): boolean;
         public update(key: string, value: object): T;
-        public remove(key: string): T | void;
-        public toArray(): any[];
-        public toObject(): object;
+        public remove(key: string): T | null;
+        public toArray(): T[];
+        public toObject(): {[key:string]: T};
+        public toString(): `[Collection<Name>]`;
+        public apply<T extends CollectionFunctions>(key: string, func: T, args: any[]): Collection<any>; // See https://stackoverflow.com/questions/54165536/typescript-function-return-type-based-on-input-parameter
     }
 
     // OK
