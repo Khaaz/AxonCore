@@ -17,7 +17,7 @@ class ALoader {
     /**
      * Creates an instance of ALoader.
      *
-     * @param {AxonClient} axon
+     * @param {Object} loadIn
      *
      * @memberof ALoader
      */
