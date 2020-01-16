@@ -10,6 +10,7 @@ import DjsMember from './lib/DjsMember';
 import DjsMessage from './lib/DjsMessage';
 import DjsChannel from './lib/DjsChannel';
 import DjsGuild from './lib/DjsGuild';
+import DjsResolver from './lib/DjsResolver';
 
 class DjsInterface extends LibraryInterface {
     constructor(botClient, token) {
@@ -19,6 +20,7 @@ class DjsInterface extends LibraryInterface {
             Message: DjsMessage,
             Channel: DjsChannel,
             Guild: DjsGuild,
+            Resolver: DjsResolver,
         } );
 
         this.client = new DjsClient(this, token);
