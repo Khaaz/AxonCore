@@ -3,7 +3,7 @@ import ADBProvider from './ADBProvider';
 import AxonConfig from '../Structures/DataStructure/AxonConfig';
 import GuildConfig from '../Structures/DataStructure/GuildConfig';
 
-import Manager from './JSON/Manager';
+import JsonManager from './JSON/JsonManager';
 
 /**
  * DB interface to interact with a Json Database.
@@ -13,7 +13,7 @@ import Manager from './JSON/Manager';
  * @class JsonProvider
  * @extends ADBProvider
  *
- * @prop {Manager} manager - Class responsible to read / write data to the DB as json.
+ * @prop {JsonManager} manager - Class responsible to read / write data to the DB as json.
  */
 class JsonProvider extends ADBProvider {
     /**
@@ -24,7 +24,7 @@ class JsonProvider extends ADBProvider {
      * @memberof JsonProvider
      */
     init(axonOptions = {} ) { // eslint-disable-next-line no-unused-vars
-        this.manager = new Manager(axonOptions.extensions.DBLocation);
+        this.manager = new JsonManager(axonOptions.extensions.DBLocation);
     }
 
     // **** INIT **** //
