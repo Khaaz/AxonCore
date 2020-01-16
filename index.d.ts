@@ -105,32 +105,54 @@ declare module "axoncore" {
         public axon: AxonClient;
         constructor(axonClient: AxonClient);
         public init(axonOptions: AxonOptions): any; // Not Implemented
-        public initAxon(): Promise<AxonConfig>; // Not Implemented
-        public initGuild(gID: string): Promise<GuildConfig|null>; // Not Implemented
+        public initAxon(): any; // Promise<AxonConfig>; // Not Implemented
+        public initGuild(gID: string): any; // Promise<GuildConfig|null>; // Not Implemented
         
-        public fetchAxon(): Promise<AxonConfig|null>; // Not Implemented
-        public fetchGuild(gID: string): Promise<GuildConfig|null>; // Not Implemented
+        public fetchAxon(): any; // Promise<AxonConfig|null>; // Not Implemented
+        public fetchGuild(gID: string): any; // Promise<GuildConfig|null>; // Not Implemented
         
-        public updateAxon(key: string, value: updateDBVal): Promise<boolean>; // Not Implemented
-        public updateGuild(key: string, gID: string, value: updateDBVal): Promise<boolean>; // Not Implemented
-        public saveAxon(data: AxonConfig): Promise<AxonConfig | null>; // Not Implemented
-        public saveGuild(gID: string, data: GuildConfig): Promise<GuildConfig | null>;
+        public updateAxon(key: string, value: updateDBVal): any; // Promise<boolean>; // Not Implemented
+        public updateGuild(key: string, gID: string, value: updateDBVal): any; // Promise<boolean>; // Not Implemented
+        public saveAxon(data: AxonConfig): any; // Promise<AxonConfig | null>; // Not Implemented
+        public saveGuild(gID: string, data: GuildConfig): any; // Promise<GuildConfig | null>;
     }
 
-    // OK
+    interface AxonJSON {
+        id: string;
+        prefix: string;
+        createdAt: string;
+        updatedAt: string;
+        bannedGuilds: string[];
+        bannedUsers: string[];
+    }
+    interface GuildJSON {
+        guildID: string;
+        prefixes: string[];
+        modules: [];
+        commands: [];
+        eventListeners: [];
+        createdAt: string;
+        updatedAt: string;
+        ignoredUsers: string[];
+        ignoredRoles: string[];
+        ignoredChannels: string[];
+        modOnly: false;
+        modRoles: string[];
+        modUsers: string[];
+    }
     class JsonManager {
-        private _axonDefault: object;
-        private _guildDefault: object;
+        private _axonDefault: AxonJSON;
+        private _guildDefault: GuildJSON;
         private _basePath: string;
         private _axonPath: string;
         public axonExecutor: any; // Replace with AsyncQueue
-        public guildExecutors: object;
+        public guildExecutors: {[key: string]: any}; // Clarify with Khaaz
 
         constructor(basePath: string);
 
         // GETTERS
-        readonly axonDefault: string;
-        readonly guildDefault: string;
+        readonly axonDefault: AxonJSON;
+        readonly guildDefault: GuildJSON;
 
         public getExecutor(guildID: string): any; // Replace with AsyncQueue
         public toJSON(string: string): string | object;
@@ -138,20 +160,51 @@ declare module "axoncore" {
 
         private _buildPath(gID: string): string;
 
-        public readFile(path: string): Promise<string|null>;
-        public writeFile(path: string, content: string): Promise<boolean|void>;
-        public createAxonSchema(defaultPrefix: string): Promise<object|void>;
-        public createGuildSchema(prefixes: string[], gID: string): Promise<object|void>;
-        public fetchAxonSchema(): Promise<object|void>;
-        public fetchGuildSchema(gID: string): Promise<object|void>;
-        public updateGuildKey(gID: string, key: string, value: updateDBVal): Promise<object|void>;
-        public updateAxonKey(key: string, value: updateDBVal): Promise<object|void>;
-        public writeAxonSchema(schema: object): Promise<object|void>;
-        public writeGuildSchema(gID: string, schema: object): Promise<object|void>;
+        public readFile(path: string): Promise<string>;
+        public writeFile(path: string, content: string): Promise<boolean>;
+
+        public createAxonSchema(defaultPrefix: string): Promise<AxonJSON>;
+        public createGuildSchema(prefixes: string[], gID: string): Promise<GuildJSON>;
+
+        public fetchAxonSchema(): Promise<AxonJSON>;
+        public fetchGuildSchema(gID: string): Promise<GuildJSON>;
+
+        public updateGuildKey(gID: string, key: string, value: updateDBVal): Promise<GuildJSON>;
+        public updateAxonKey(key: string, value: updateDBVal): Promise<AxonJSON>;
+
+        public writeAxonSchema(schema: object): Promise<AxonJSON>;
+        public writeGuildSchema(gID: string, schema: object): Promise<GuildJSON>;
     }
 
     // OK
     class InMemoryProvider extends ADBProvider {
+        public fetchAxon(): Promise<AxonConfig>;
+        public fetchGuild(gID: string): Promise<GuildConfig>;
+
+        initAxon(): Promise<AxonConfig>;
+        initGuild(gID: string): Promise<GuildConfig>;
+
+        updateBlacklistUser(blacklistedUsers: string[]): Promise<AxonConfig>;
+        updateBlacklistGuild(blacklistedGuilds: string[]): Promise<AxonConfig>;
+        updateGuildPrefix(gID: string, prefixArr: string[]): Promise<GuildConfig>;
+        updateModule(gID: string, modulesArr: Module[]): Promise<GuildConfig>;
+        updateCommand(gID: string, commandArr: Command[]): Promise<GuildConfig>;
+        updateEvent(gID: string, eventArr: Listener[]): Promise<GuildConfig>;
+        
+        // Ask Null about inconsistency
+        saveAxonSchema(axonSchema: AxonConfig): AxonConfig;
+        saveGuildSchema(gID: string, guildSchema: GuildConfig): void;
+
+        updateAxon(key: 'id' | 'prefix', value: string): Promise<AxonConfig>;
+        updateAxon(key: 'createdAt' | 'updatedAt', value: Date): Promise<AxonConfig>;
+        updateAxon(key: 'bannedUsers' | 'bannedGuilds', value: string[]): Promise<AxonConfig>;
+
+        updateGuild(key: 'prefixes' | 'ignoredUsers' | 'ignoredRoles' | 'ignoredChannels' | 'modRoles' | 'modUsers', gID: string, value: string[]): Promise<GuildConfig>;
+        updateGuild(key: 'createdAt' | 'updatedAt', gID: string, value: Date): Promise<GuildConfig>;
+        updateGuild(key: 'modules', gID: string, value: Module[]): Promise<GuildConfig>;
+        updateGuild(key: 'commands', gID: string, value: Command[]): Promise<GuildConfig>;
+        updateGuild(key: 'listeners', gID: string, value: Listener[]): Promise<GuildConfig>;
+        updateGuild(key: 'modOnly', gID: string, value: boolean): Promise<GuildConfig>;
     }
 
     // OK
@@ -191,26 +244,26 @@ declare module "axoncore" {
     export class GuildConfig {
         private _axon: AxonClient;
         public guildID: string;
-        public prefixes: string[] | [];
+        public prefixes: string[];
 
         public createdAt: Date;
         public updatedAt: Date;
 
-        public modules: Module[] | [];
-        public commands: Command[] | [];
-        public listeners: any[] | []; // Replace any with Listeners
+        public modules: Module[];
+        public commands: Command[];
+        public listeners: any[]; // Replace any with Listeners
 
-        public ignoredUsers: string[] | [];
-        public ignoredRoles: string[] | [];
-        public ignoredChannels: string[] | [];
+        public ignoredUsers: string[];
+        public ignoredRoles: string[];
+        public ignoredChannels: string[];
 
         public modOnly: boolean;
-        public modRoles: string[] | [];
-        public modUsers: string[] | [];
+        public modRoles: string[];
+        public modUsers: string[];
 
         constructor(axon: AxonClient, values: object);
 
-        public getPrefixes(): string[] | [];
+        public getPrefixes(): string[];
         public isIgnored(msg: Message): boolean;
         public isUserIgnored(userID: string): boolean
         public isRoleIgnored(member: Member): boolean;
@@ -430,7 +483,7 @@ declare module "axoncore" {
         public aliases?: string[];
         public enabled?: boolean;
 
-        public subcmds?: Command[] | [];
+        public subcmds?: Command[];
         public isSubcmd?: boolean;
         public hasSubcmd?: boolean;
         public parentCommand?: Command;

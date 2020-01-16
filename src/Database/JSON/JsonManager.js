@@ -162,7 +162,7 @@ class JsonManager {
 
         const res = await this.writeFile(this._axonPath, this.toString(axonSchema) );
         if (res) {
-            return this.axonDefault;
+            return axonSchema;
         }
         return null;
     }
