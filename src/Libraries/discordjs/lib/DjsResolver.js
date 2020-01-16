@@ -1,20 +1,22 @@
-import Utils from './Utils';
+import Resolver from '../../definitions/Resolver';
 
-import AxonError from '../Errors/AxonError';
+import Utils from '../../../Utility/Utils';
+
+import AxonError from '../../../Errors/AxonError';
 
 /**
- * Static Resolver class for AxonCore
+ * Static Resolver class for Djs.AxonCore
  *
  * @author KhaaZ
  *
  * @static
- * @class Resolver
+ * @class DjsResolver
  */
-class Resolver {
+class DjsResolver extends Resolver {
     /**
      * Resolve a user within all the users the bot has.
      *
-     * @param {Object<Eris.Client>} client - The bot client
+     * @param {Object<Djs.Client>} client - The bot client
      * @param {Array|String} args - Array of arguments resolved by the command.
      * @returns {Object|null} The user object / Null if not found / Error
      */
@@ -158,7 +160,7 @@ class Resolver {
     /**
      * Resolve a guild within all guilds the bot is in.
      *
-     * @param {Object<Eris.Client>} client - The bot client
+     * @param {Object<Djs.Client>} client - The bot client
      * @param {Array} args - Array with guild name/ID
      * @returns {Object|null} The guild object / Null if not found / Error
      */
@@ -183,5 +185,5 @@ class Resolver {
     }
 }
 
-export default Resolver;
+export default DjsResolver;
 

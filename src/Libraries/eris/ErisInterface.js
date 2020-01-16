@@ -10,6 +10,7 @@ import ErisMember from './lib/ErisMember';
 import ErisMessage from './lib/ErisMessage';
 import ErisChannel from './lib/ErisChannel';
 import ErisGuild from './lib/ErisGuild';
+import ErisResolver from './lib/ErisResolver';
 
 class ErisInterface extends LibraryInterface {
     constructor(botClient) {
@@ -19,6 +20,7 @@ class ErisInterface extends LibraryInterface {
             Message: ErisMessage,
             Channel: ErisChannel,
             Guild: ErisGuild,
+            Resolver: ErisResolver,
         } );
 
         this.client = new ErisClient(this);

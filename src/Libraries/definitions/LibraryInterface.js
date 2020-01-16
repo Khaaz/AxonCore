@@ -54,7 +54,7 @@ class LibraryInterface {
         }
         this.guild = new structs.Guild(this);
 
-        this.resolver = structs.resolver;
+        this.resolver = structs.Resolver;
     }
 
     get botClient() {

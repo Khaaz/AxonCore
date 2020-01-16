@@ -215,6 +215,19 @@ class AxonClient extends EventEmitter {
     }
 
     /**
+     * Returns all the resolver for the default current library used.
+     * Can be easily overriden with a custom Resolver by overriding this getter.
+     *
+     * @readonly
+     * @type {Resolver}
+     *
+     * @memberof AxonClient
+     */
+    get Resolver() {
+        return this.library.resolver;
+    }
+
+    /**
      * Return the webhooks object
      *
      * @readonly

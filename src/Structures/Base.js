@@ -61,14 +61,13 @@ class Base {
     }
 
     /**
-     * Returns the Resolver class
+     * Returns the Resolver class (Based on AxonClient.Resolver (default: use the current library Resolver))
      *
-     * @deprecated
      * @readonly
      * @type {Resolver}
      * @memberof Base
      */
-    get Resolver() { // used as a shortcut only if a Resolver exists as AxonClient property
+    get Resolver() {
         return this.axon.Resolver;
     }
 
