@@ -27,18 +27,18 @@ class AxonCommandError extends Error {
             + `${this.context.dm ? `DM: ${this.context.callerID}` : `Guild: ${this.context.guildID}`} / Channel: ${this.context.channelID}\n`;
         
         Object.defineProperty(this, 'short', {
-            value: `${short}Error: ${err.name ? err.name : ''}`,
+            value: `${short}Error: ${err.name || ''}`,
             writable: false,
         } );
 
         Object.defineProperty(this, 'message', {
-            value: `${short}Error: ${err.message ? err.message : ''}`,
+            value: `${short}Error: ${err.message || ''}`,
             writable: false,
         } );
 
         if (err.stack) {
             Object.defineProperty(this, 'stack', {
-                value: `${short}Error: ${err.stack ? err.stack : ''}`,
+                value: `${short}Error: ${err.stack}`,
                 writable: false,
             } );
         }

@@ -10,10 +10,8 @@ type TextableChannel = Eris.TextableChannel | djs.TextChannel;
 
 declare module "axoncore" {
 
-    // OK
     type CollectionFunctions = 'from' |'toArray'|'toObject'|'apply'|'add'|'find'
     |'map'|'filter'|'reduce'|'some'|'every'|'update'|'remove'|'random'|'toString'
-
     export class Collection<T> extends Map<string | number, T> {
         public baseObject: new (...args: any[]) => T;
         public constructor(base: { base?: new (...args: any[]) => T, iterable?: {[key: string]: T} | [string, T][] });
@@ -33,26 +31,37 @@ declare module "axoncore" {
         public apply<T extends CollectionFunctions>(key: string, func: T, args: any[]): Collection<any>; // See https://stackoverflow.com/questions/54165536/typescript-function-return-type-based-on-input-parameter
     }
 
-    // OK
-    export class AxonError extends Error {
-        constructor(message: string, module?: Module, command?: Command, err?: object);
+    export class AxonError extends Error { // Clarify with Khaaz, incomplete?
+        constructor(message: string, module: Module, subModule?: Module);
         readonly name: string;
     }
 
-    // OK
     export class AxonCommandError extends Error {
-        constructor(module: Module, command: Command, ctx: string, err: object);
+        public context: CommandContext;
+        readonly short: { value: string, writable: false };
+        /* Conflicting error property names
+        public message: { value: string, writable: false };
+        public stack: { value: string, writable: false };
+        */
+
+        constructor(commandContext: CommandContext, err: Error);
         readonly name: string;
     }
 
-    // OK
     export class NoAbstractInstanceException extends Error {
         constructor(...args: any[]);
+        /* Conflicting error property names
+        readonly name: { value: string, writable: false };
+        readonly message: { value: string, writable: false };
+        */
     }
 
-    // OK
     class NotImplementedException extends Error {
         constructor(...args: any[]);
+        /* Conflicting error property names
+        readonly name: { value: string, writable: false };
+        readonly message: { value: string, writable: false };
+        */
     }
 
         // OK
