@@ -1,4 +1,4 @@
-import LibraryInterface from '../LibraryInterface';
+import LibraryInterface from '../definitions/LibraryInterface';
 
 import * as HANDLERS from './handlers/index';
 
@@ -12,17 +12,17 @@ import ErisChannel from './lib/ErisChannel';
 import ErisGuild from './lib/ErisGuild';
 
 class ErisInterface extends LibraryInterface {
-    constructor(axonClient) {
-        super(axonClient);
-
-        this.type = 0;
+    constructor(botClient) {
+        super(botClient, {
+            User: ErisUser,
+            Member: ErisMember,
+            Message: ErisMessage,
+            Channel: ErisChannel,
+            Guild: ErisGuild,
+        } );
 
         this.client = new ErisClient(this);
-        this.user = new ErisUser(this);
-        this.member = new ErisMember(this);
-        this.message = new ErisMessage(this);
-        this.channel = new ErisChannel(this);
-        this.guild = new ErisGuild(this);
+        this.type = 0;
     }
 
     get enums() {
