@@ -64,34 +64,39 @@ declare module "axoncore" {
         */
     }
 
-        // OK
     interface ModuleInfo {
-        name?: string;
-        description?: string;
-        category?: string;
+        name: string;
+        description: string;
+        category: string;
     }
-
-    // OK
+    interface ModuleData {
+        label?: string;
+        enabled?: boolean;
+        serverBypass?: boolean;
+        infos?: ModuleInfo;
+        options?: CommandOptions; // Check back for object type
+        permissions?: CommandPermissions; // Check back for object type
+    }
     export class Module extends Base {
         public label: string;
-        public enabled?: boolean;
-        public serverBypass?: boolean;
-
-        public infos?: ModuleInfo;
-
-        public commands?: Collection<Command>;
-        public listeners?: Collection<any>; // Uh, replace with Collection<Listener>;
-
-        public permissions: any; // Replace with CommandPermissions class
+        public enabled: boolean;
+        public serverBypass: boolean;
+        
         public options: CommandOptions;
+        public permissions: CommandPermissions;
+
+        public infos: ModuleInfo;
 
         public commandLoader: any; // Replace with CommandLoader
         public listenerLoader: any; // Replace with listenerLoader
 
-        constructor(client: AxonClient);
+        constructor(client: AxonClient, data?: ModuleData);
 
-        // Init - External available
-        public init(commands: Command[], events: Listener[], schema: object): void;
+        public commands: Collection<Command>;
+        public listeners?: Collection<Listener>;
+
+        public init(): void; // {[key: string]: Command | Listener}
+        private _init(): void;
     }
 
     type updateDBVal = object|any[]|string|boolean;

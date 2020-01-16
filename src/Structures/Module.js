@@ -41,6 +41,9 @@ class Module extends Base {
      * @param {Boolean} [data.enabled] - Whether the module is enabled or not
      * @param {Boolean} [data.serverBypass] - Whether the module can be disabled in a server or not
      * @param {Object} [data.infos]
+     * @param {String} data.infos.name - The module name
+     * @param {String} data.infos.description - The module description
+     * @param {String} data.infos.category - The module category
      * @param {CommandOptions|Object} [data.options] - The default options for all commands in this module
      * @param {CommandPermissions|Object} [data.permissions] - The default permissions for all commands in this module
      *
