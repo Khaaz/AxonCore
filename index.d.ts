@@ -511,7 +511,7 @@ declare module "axoncore" {
         public executionState: number;
         public executionType: number;
 
-        public library: any; // REPLACE "ANY" WITH Library CLASS
+        public library: any; // Replace with Library class
 
         public dm: boolean;
         public guildID: string;
@@ -534,51 +534,60 @@ declare module "axoncore" {
         public resolveSync(): CommandContext;
     }
 
-    // SEEMS OK
-    export class Command extends Base {
+    export interface CommandData {
+        label: string;
+        aliases: string[];
+        isSubcmd: boolean;
+        hasSubcmd: boolean;
+        enabled: boolean;
+        serverBypass: boolean;
+        subcmds?: Command[] | null;
+        infos: CommandInfo;
+        options: CommandOptions;
+        permissions: CommandPermissions;
+    }
+
+    export class Command extends Base implements CommandData {
         private _module: Module;
         private _cooldown: CommandCooldown;
 
-        public infos?: CommandInfo;
         public label: string;
-        public aliases?: string[];
-        public enabled?: boolean;
+        public aliases: string[];
+        public isSubcmd: boolean;
+        public hasSubcmd: boolean;
+        public enabled: boolean;
+        public serverBypass: boolean;
+        public subcmds?: Command[] | null;
+        public infos: CommandInfo;
+        public options: CommandOptions;
+        public permissions: CommandPermissions;
 
-        public subcmds?: Command[];
-        public isSubcmd?: boolean;
-        public hasSubcmd?: boolean;
-        public parentCommand?: Command;
+        public parentCommand: Command | null;
 
-        public serverBypass?: boolean;
-
-        public options?: CommandOptions;
-        public permissions?: CommandPermissions;
-
-        public subCommands?: Collection<Command>;
-        public subCommandAliases?: Map<string, string>;
+        public subCommands: Collection<Command> | null;
+        public subCommandAliases?: Map<string, string>; // Missing from actual class
 
         // GETTERS
         readonly module: Module;
-        readonly template: object;
-        readonly library: any; // REPLACE "ANY" WITH Library CLASS
+        readonly template: object; // Clarify types with Khaaz
+        readonly library: any; // Replace from Library class
         readonly fullLabel: string;
 
-        constructor(module: Module);
+        constructor(module: Module, data?: CommandData);
 
         // Internal
-        _process(params: { msg: Message; args: string[]; guildConfig?: object; isAdmin?: boolean; isOwner?: boolean }): CommandContext;
-        public _preExecute(args?: any[]): boolean;
-        public _execute(message: { msg: Message, args?: string[], guildConf?: object, isAdmin?: boolean, isOwner?: boolean }): Promise<any>;
-        public _postExecute(args?: any[]): boolean | any;
+        private _process(object: { msg: Message; args: string[]; guildConfig?: GuildConfig; isAdmin?: boolean; isOwner?: boolean }): Promise<CommandContext>;
+        private _preExecute(): void; // Blank function
+        private _execute(message: { msg: Message, args?: string[], guildConfig?: GuildConfig, isAdmin?: boolean, isOwner?: boolean }): Promise<any>;
+        private _postExecute(): void; // Blank function
 
         //External
-        public execute(message: { msg: Message, args?: string[], guildConf?: object }): Promise<any>;
-        public sendHelp(object: { msg: Message, guildConf?: object }): Promise<Message>;
-        public canExecute(msg: Message, guildConf?: object): boolean;
-        public sendBotPerms(channel: TextableChannel, permissions: string[]): Promise<Message>;
-        public sendUserPerms(channel: TextableChannel, member: Member, permissions: string[]): Promise<Message>;
-        public sendTargetPerms(channel: TextableChannel): Promise<Message>;
-        public sendCooldown(channel: TextableChannel, time: number): Promise<Message>;
+        public execute(object: { msg: Message, args?: string[], guildConfig?: GuildConfig }): any; // Promise<CommandResponse>; // Not implemented
+        public sendHelp(object: { msg: Message, guildConf?: GuildConfig, isAdmin: boolean, isOwner: boolean }): Promise<CommandContext>;
+        public sendBotPerms(channel: TextableChannel, permissions?: string[]): Promise<CommandResponse>;
+        public sendUserPerms(channel: TextableChannel, member: Member, deleteTimeout?: number, missingPermission?: any): Promise<CommandResponse>; // CommandPermissions?
+        public sendTargetPerms(channel: TextableChannel): Promise<CommandContext>;
+        public sendCooldown(channel: TextableChannel, time: number): Promise<CommandContext>;
     }
 
     // OK

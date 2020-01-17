@@ -186,7 +186,7 @@ class Command extends Base {
      *
      * @memberof Command
      */
-    _process(params) {
+    async _process(params) {
         const {
             msg, args, guildConfig, isAdmin, isOwner,
         } = params;
@@ -256,17 +256,15 @@ class Command extends Base {
 
         /* Sends invalid usage message in case of invalid usage (not enough argument) [option enabled] */
         if (this.options.shouldSendInvalidUsageMessage(args) ) {
-            return this.sendHelp( {
+            await this.sendHelp( {
                 msg, args, guildConfig, isAdmin, isOwner,
-            } )
-                .then( () => {
-                    isAdmin && this._cooldown.shouldSetCooldown() && this._cooldown.setCooldown(userID);
-                    return new CommandContext(this, msg, {
-                        executed: false,
-                        executionType: CommandContext.getExecutionType(isAdmin, isOwner),
-                        executionState: COMMAND_EXECUTION_STATE.INVALID_USAGE,
-                    } ).resolveAsync();
-                } );
+            } );
+            isAdmin && this._cooldown.shouldSetCooldown() && this._cooldown.setCooldown(userID);
+            return new CommandContext(this, msg, {
+                executed: false,
+                executionType: CommandContext.getExecutionType(isAdmin, isOwner),
+                executionState: COMMAND_EXECUTION_STATE.INVALID_USAGE,
+            } ).resolveAsync();
         }
 
         if (this.options.shouldDeleteCommand() ) { // delete input
@@ -277,7 +275,7 @@ class Command extends Base {
     }
 
     _preExecute() {
-        // pre execute hoks
+        // pre execute hooks
     }
 
     /**
@@ -346,7 +344,7 @@ class Command extends Base {
      * @returns {Promise<CommandContext>} Message Object
      * @memberof Command
      */
-    sendHelp( { msg, guildConfig, isAdmin, isOwner } ) {
+    async sendHelp( { msg, guildConfig, isAdmin, isOwner } ) {
         /* OVERRIDE default sendHelp with a CUSTOM in AxonClient */
         if (this.axon.sendHelp) {
             return this.axon.sendHelp(this, { msg, guildConfig, isAdmin, isOwner } );
@@ -418,12 +416,12 @@ class Command extends Base {
             } );
         }
 
-        return this.sendMessage(msg.channel, { embed } )
-            .then( () => new CommandContext(this, msg, {
-                executed: true,
-                executionType: CommandContext.getExecutionType(isAdmin, isOwner),
-                helpExecution: true,
-            } ).resolveAsync() );
+        await this.sendMessage(msg.channel, { embed } );
+        return new CommandContext(this, msg, {
+            executed: true,
+            executionType: CommandContext.getExecutionType(isAdmin, isOwner),
+            helpExecution: true,
+        } ).resolveAsync();
     }
 
     /**
@@ -431,7 +429,7 @@ class Command extends Base {
      *
      * @param {Channel} channel - The channel Object
      * @param {Array<String>} [permissions=[]] - Optional array of permissions string
-     * @returns {Promise<Message?>} Message Object
+     * @returns {Promise<CommandResponse>} Message Object
      * @memberof Command
      */
     sendBotPerms(channel, permissions = [] ) {
@@ -456,7 +454,7 @@ class Command extends Base {
      * @param {Channel} channel - The channel object
      * @param {Member} member - The member object
      * @param {Number} [deleteTimeout] - The permission message deletion timeout, if `null` the the message will not delete
-     * @returns {Promise<Message?>} Message Object
+     * @returns {Promise<CommandContext>} Message Object
      * @memberof Command
      */
     // eslint-disable-next-line no-magic-numbers
@@ -474,7 +472,7 @@ class Command extends Base {
      * Uses the template message in config/template.
      *
      * @param {Channel} channel - The channel Object
-     * @returns {Promise<Message?>} Message Object
+     * @returns {Promise<CommandContext>} Message Object
      * @memberof Command
      */
     sendTargetPerms(channel) {
@@ -486,7 +484,7 @@ class Command extends Base {
      * Send an error message in case of invalid cooldown, delete it automatically after a delay.
      *
      * @param {Channel} channel - The channel Object
-     * @returns {Promise<Message?>} Message Object
+     * @returns {Promise<CommandContext>} Message Object
      * @memberof Command
      */
     sendCooldown(channel, time) {
