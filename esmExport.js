@@ -22,8 +22,8 @@ export { default as GuildConfig } from './src/Structures/DataStructure/GuildConf
 // Utility
 export { default as Collection } from './src/Utility/Collection';
 export { default as Utils } from './src/Utility/Utils';
-export { default as Resolver } from './src/Utility/Resolver';
 
+export { default as Resolver } from './src/Libraries/definitions/Resolver';
 export { default as Embed } from './src/Utility/External/Embed';
 export { default as Prompt } from './src/Utility/External/Prompt';
 export { default as MessageCollector } from './src/Utility/External/MessageCollector';

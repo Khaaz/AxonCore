@@ -1,4 +1,4 @@
-import LibraryInterface from '../LibraryInterface';
+import LibraryInterface from '../definitions/LibraryInterface';
 
 import * as HANDLERS from './handlers/index';
 
@@ -10,19 +10,21 @@ import DjsMember from './lib/DjsMember';
 import DjsMessage from './lib/DjsMessage';
 import DjsChannel from './lib/DjsChannel';
 import DjsGuild from './lib/DjsGuild';
+import DjsResolver from './lib/DjsResolver';
 
 class DjsInterface extends LibraryInterface {
-    constructor(axonClient, token) {
-        super(axonClient);
+    constructor(botClient, token) {
+        super(botClient, {
+            User: DjsUser,
+            Member: DjsMember,
+            Message: DjsMessage,
+            Channel: DjsChannel,
+            Guild: DjsGuild,
+            Resolver: DjsResolver,
+        } );
 
-        this.type = 1;
-        
         this.client = new DjsClient(this, token);
-        this.user = new DjsUser(this);
-        this.member = new DjsMember(this);
-        this.message = new DjsMessage(this);
-        this.channel = new DjsChannel(this);
-        this.guild = new DjsGuild(this);
+        this.type = 1;
     }
 
     get enums() {
