@@ -501,9 +501,8 @@ declare module "axoncore" {
         public resolveSync(): CommandResponse;
     }
 
-    // OK
     export class CommandContext {
-        public raw: string | object;
+        public raw: string;
         public commandLabel: string;
         public moduleLabel: string;
 
@@ -528,7 +527,7 @@ declare module "axoncore" {
 
         constructor(command: Command, triggerMessage: Message, data?: { executed?: boolean; helpExecution?: string; executionState?: number; executionType?: object; });
 
-        public addResponseData(commandResponse: CommandResponse | object): CommandContext;
+        public addResponseData(commandResponse?: CommandResponse): CommandContext;
         public static getExecutionType(isAdmin: boolean, isOwner: boolean): number;
         public resolve(): Promise<CommandContext>;
         public resolveAsync(): Promise<CommandContext>;
