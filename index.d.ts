@@ -1,6 +1,7 @@
 import { EventEmitter } from "events";
 import * as Eris from "eris";
 import * as djs from 'discord.js';
+import { Model, Document } from "mongoose";
 type Message = Eris.Message | djs.Message;
 type Member = Eris.Member | djs.GuildMember;
 type Client = Eris.Client | djs.Client;
@@ -10,6 +11,7 @@ type TextableChannel = Eris.TextableChannel | djs.TextChannel;
 
 declare module "axoncore" {
 
+    // OK
     export class Collection<T> extends Map<string | number, T> {
         public baseObject: new (...args: any[]) => T;
         public constructor(base: { base?: new (...args: any[]) => T, iterable?: {[key: string]: T} | [string, T][] });
@@ -73,6 +75,7 @@ declare module "axoncore" {
         */
     }
 
+    // OK
     interface ModuleInfo {
         name: string;
         description: string;
@@ -83,9 +86,10 @@ declare module "axoncore" {
         enabled?: boolean;
         serverBypass?: boolean;
         infos?: ModuleInfo;
-        options?: CommandOptions; // Check back for object type
-        permissions?: CommandPermissions; // Check back for object type
+        options?: CommandOptions;
+        permissions?: CommandPermissions;
     }
+
     export class Module extends Base {
         public label: string;
         public enabled: boolean;
@@ -114,7 +118,7 @@ declare module "axoncore" {
         public axon: AxonClient;
         constructor(axonClient: AxonClient);
         public init(axonOptions: AxonOptions): any; // Not Implemented
-        public initAxon(): any; // Promise<AxonConfig>; // Not Implemented
+        public initAxon(): any; // Promise<AxonConfig|null>; Not Implemented
         public initGuild(gID: string): any; // Promise<GuildConfig|null>; // Not Implemented
         
         public fetchAxon(): any; // Promise<AxonConfig|null>; // Not Implemented
@@ -122,10 +126,11 @@ declare module "axoncore" {
         
         public updateAxon(key: string, value: updateDBVal): any; // Promise<boolean>; // Not Implemented
         public updateGuild(key: string, gID: string, value: updateDBVal): any; // Promise<boolean>; // Not Implemented
-        public saveAxon(data: AxonConfig): any; // Promise<AxonConfig | null>; // Not Implemented
-        public saveGuild(gID: string, data: GuildConfig): any; // Promise<GuildConfig | null>;
+        public saveAxon(data: object): any; // Promise<AxonSchema | null>; // Not Implemented
+        public saveGuild(gID: string, data: object): any; // Promise<GuildSchema | null>;
     }
 
+    // OK
     interface AxonJSON {
         id: string;
         prefix: string;
@@ -215,27 +220,65 @@ declare module "axoncore" {
         updateGuild(key: 'modOnly', gID: string, value: boolean): Promise<GuildConfig>;
     }
 
-    // See https://github.com/Khaazz/AxonCore/pull/42/files#r367720187
+    // OK
     class JsonProvider extends ADBProvider {
-        public manager: JsonManager;
+        public manager?: JsonManager;
 
         initAxon(): Promise<AxonConfig>;
-        initGuild(gID: string): Promise<GuildConfig>; // Promise<GuildConfig|null>;
+        initGuild(gID: string): Promise<GuildConfig|null>;
 
-        fetchAxon(): Promise<AxonConfig>; // Promise<AxonConfig|null>;
-        fetchGuild(gID: string): Promise<GuildConfig>; // Promise<GuildConfig|null>;
+        fetchAxon():  Promise<AxonConfig|null>;
+        fetchGuild(gID: string): Promise<GuildConfig|null>;
 
         updateAxon(key: string, value: updateDBVal): Promise<Boolean>;
         updateGuild(key: string, gID: string, value: updateDBVal): Promise<Boolean>;
 
-        saveAxon(data: AxonConfig): Promise<AxonConfig>; // Promise<AxonConfig|null>;
-        saveGuild(gID: string, data: GuildConfig): Promise<GuildConfig>; // Promise<GuildConfig|null>;
+        saveAxon(data: AxonConfig):  Promise<AxonConfig|null>;
+        saveGuild(gID: string, data: GuildConfig): Promise<GuildConfig|null>;
+    }
+
+    // OK
+    interface GuildSchema extends Document {
+        guildID: string;
+        prefixes: string[];
+        modules: string[];
+        commands: string[];
+        eventListeners: string[];
+        createdAt: Date;
+        updatedAt: Date;
+        ignoredUsers: string[];
+        ignoredRoles: string[];
+        ignoredChannels: string[];
+        modOnly: boolean;
+        modRoles: string[];
+        modUsers: string[];
+    }
+    interface AxonSchema extends Document {
+        id: string;
+        prefix: string;
+        createdAt: Date;
+        updatedAt: Date;
+        bannedGuilds: string[];
+        bannedUsers: string[];
     }
 
     // OK
     class MongoProvider extends ADBProvider {
-        public AxonSchema?: any;
-        public GuildSchema?: any;
+        public AxonSchema?: AxonConfig;
+        public GuildSchema?: GuildConfig;
+
+        init(axonOptions?: AxonOptions): void;
+        initAxon(): Promise<AxonConfig>;
+        initGuild(gID: string): Promise<GuildConfig|null>;
+
+        fetchAxon():  Promise<AxonConfig|null>;
+        fetchGuild(gID: string): Promise<GuildConfig|null>;
+        fetchGuildSchema(gID: string): Promise<Model<GuildSchema> | null>;
+
+        updateAxon(key: string, value: updateDBVal): Promise<boolean>;
+        updateGuild(key: string, gID: string, value: updateDBVal): Promise<boolean>;
+        saveAxon(data: AxonSchema):  Promise<AxonConfig|null>;
+        saveGuild(gID: string, data: GuildSchema): Promise<AxonConfig|null>;
     }
 
     // OK
@@ -246,12 +289,12 @@ declare module "axoncore" {
         public prefix: string;
 
         public createdAt: Date;
-        public updatedA: Date;
+        public updatedAt: Date;
 
         public bannedUsers: string[];
         public bannedGuilds: string[];
 
-        constructor(axon: AxonClient, values: object);
+        constructor(axon: AxonClient, values: AxonConfig);
 
         public isBlacklistedUser(userID: string): boolean;
         public isBlacklistedGuild(guildID: string): boolean;
