@@ -1,4 +1,5 @@
 import Base from '../Base';
+import GuildConfig from '../DataStructure/GuildConfig'; // eslint-disable-line
 
 /**
  * Default Listener class
@@ -71,7 +72,7 @@ class Listener extends Base {
     /**
      * Promisify the return execute return to prevent promise issue
      *
-     * @param {Object?} guildConfig - the guildConfig or undefined if not a guild event
+     * @param {GuildConfig} guildConfig - the guildConfig or undefined if not a guild event
      * @param {Array} args - Array of the events arguments
      * @returns {Promise}
      *
