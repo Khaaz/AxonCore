@@ -109,6 +109,7 @@ class EventManager extends Base {
      * Called by ModuleLoader when registering an event.
      *
      * @param {Listener} listener - The Listener Object
+     * @returns {Array} Array of the functions bound to the event
      *
      * @memberof EventManager
      */

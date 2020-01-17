@@ -613,27 +613,22 @@ declare module "axoncore" {
         // public execute(args: any, guildConf: GuildConfig): Promise<any>; // Function does not exist
     }
 
-    // OK
     class EventManager extends Base {
-        private _listeners: object;
-        private _handlers: Collection<object>;
-        constructor(axon: AxonClient);
+        private _events: {[EventName: string]: Listener[]};
+        private _handlers: Collection<any>; // Replace with AHandler
+        constructor(axon: AxonClient, name: string, listeners: Listener[]);
         // GETTERS
-        readonly HANDLERS: Object;
-        readonly events: Collection<Listener>;
+        readonly HANDLERS: Object; // Create each handler and group them to lib
+        readonly handlers: Collection<any>; // Replace with AHandler
 
-        public getListeners(eventName: string): any[];
+        public getListeners(eventName: string): Listener[];
         public bindListeners(): void;
         public bindHandlers(): void;
 
-        public registerListener(event: Listener): Listener;
-        public registerHandler(event: string): object;
-        public registerEvent(event: string): object;
-        public createHandler(events: Listener[], ...args: any[]): void;
-
-        private _rootHandler(...args: any[]): Promise<object>;
-        private _isEventDisabled(label: string, guildConf: object): boolean|undefined;
-
+        public registerListener(event: Listener): Listener[];
+        public registerHandler(event: string): object; // Each handler, this will become cumbersome
+        public registerEvent(event: string): object; // As above
+        
         public unregisterListener(event: string, label: string): boolean;
         public unregisterHandler(event: string): boolean;
         public unregisterEvent(event: string): boolean;
