@@ -569,7 +569,7 @@ declare module "axoncore" {
 
         // GETTERS
         readonly module: Module;
-        readonly template: object; // Clarify types with Khaaz
+        readonly template: { embeds: { [key: string]: number }, emotes: { [key: string]: string } }
         readonly library: any; // Replace from Library class
         readonly fullLabel: string;
 
