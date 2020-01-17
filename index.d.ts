@@ -314,7 +314,7 @@ declare module "axoncore" {
 
         public modules: Module[];
         public commands: Command[];
-        public listeners: any[]; // Replace any with Listeners
+        public listeners: Listener[];
 
         public ignoredUsers: string[];
         public ignoredRoles: string[];
@@ -324,7 +324,7 @@ declare module "axoncore" {
         public modRoles: string[];
         public modUsers: string[];
 
-        constructor(axon: AxonClient, values: object);
+        constructor(axon: AxonClient, values: GuildConfig);
 
         public getPrefixes(): string[];
         public isIgnored(msg: Message): boolean;
@@ -333,17 +333,19 @@ declare module "axoncore" {
         public isChannelIgnored(channelID: string): boolean;
         public isModuleDisabled(module: Module): boolean;
         public isCommandDisabled(command: Command): boolean;
-        public isListenerDisabled(listener: any): boolean; // Replace "any" with listener
+        public isListenerDisabled(listener: Listener): boolean;
         public isModOnly(): boolean;
         public isModRole(roleID: string): boolean;
         public isModUser(userID: string): boolean;
-        public update(guildConfig: object): Promise<object>;
+        public update(guildConfig: GuildConfig): Promise<Model<GuildSchema> | null>;
         public updatePrefixes(prefixArr: string[]): Promise<GuildConfig|null>;
         public updateStateModule(label: string, boolean: boolean): Promise<GuildConfig|null>;
         public updateStateCommand(label: string, boolean: boolean): Promise<GuildConfig|null>;
         public updateStateListener(label: string, boolean: boolean): Promise<GuildConfig|null>;
         public updateStateModRole(roleID: string, boolean: boolean): Promise<GuildConfig|null>;
         public updateStateModUser(userID: string, boolean: boolean): Promise<GuildConfig|null>;
+
+        private _req(key: string, value: updateDBVal): Promise<GuildConfig|null>
     }
 
     // OK
