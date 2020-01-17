@@ -363,7 +363,7 @@ declare module "axoncore" {
         argsMin?: number;
 
         invalidUsageMessage: boolean;
-        invalidPermissionMessage?: ((channel: TextableChannel, member: Member) => string);
+        invalidPermissionMessage?: ((channel: TextableChannel, member: Member) => string) | null;
         sendPermissionMessage: boolean;
         invalidPermissionMessageTimeout: number;
 
@@ -373,14 +373,13 @@ declare module "axoncore" {
         cooldown?: number;
     }
 
-    // OK
     export class CommandOptions implements ACommandOptions {
         private _command: Command;
         public guildOnly?: boolean;
         public argsMin?: number;
 
         public invalidUsageMessage: boolean;
-        public invalidPermissionMessage?: ((channel: TextableChannel, member: Member) => string);
+        public invalidPermissionMessage: ((channel: TextableChannel, member: Member) => string) | null;
         public sendPermissionMessage: boolean;
         public invalidPermissionMessageTimeout: number;
 
@@ -389,7 +388,9 @@ declare module "axoncore" {
 
         public cooldown?: number;
 
-        constructor(command: Command, override: object | ACommandOptions, useModuleDefault: boolean);
+        constructor(command: Command, override: ACommandOptions, useModuleDefault: boolean);
+
+        readonly l: any; // Replace with MessageManager
 
         public isGuildOnly(): boolean;
         public isHidden(): boolean;
@@ -397,7 +398,7 @@ declare module "axoncore" {
         public shouldSendInvalidUsageMessage(args: string[]): boolean;
         public shouldSendInvalidPermissionMessage(guildConfig: GuildConfig): boolean;
         public shouldDeleteCommand(): boolean;
-        public getInvalidPermissionMessage(channel: TextableChannel, member: Member, permission: any): String;
+        public getInvalidPermissionMessage(channel: TextableChannel, member: Member, permission: any): string; // CommandPermissions?
     }
 
     export class CommandCooldown {
