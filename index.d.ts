@@ -185,7 +185,6 @@ declare module "axoncore" {
         public writeGuildSchema(gID: string, schema: object): Promise<GuildJSON>;
     }
 
-    // OK
     class InMemoryProvider extends ADBProvider {
         public fetchAxon(): Promise<AxonConfig>;
         public fetchGuild(gID: string): Promise<GuildConfig>;
@@ -216,9 +215,21 @@ declare module "axoncore" {
         updateGuild(key: 'modOnly', gID: string, value: boolean): Promise<GuildConfig>;
     }
 
-    // OK
+    // See https://github.com/Khaazz/AxonCore/pull/42/files#r367720187
     class JsonProvider extends ADBProvider {
-        public manager?: JsonManager;
+        public manager: JsonManager;
+
+        initAxon(): Promise<AxonConfig>;
+        initGuild(gID: string): Promise<GuildConfig>; // Promise<GuildConfig|null>;
+
+        fetchAxon(): Promise<AxonConfig>; // Promise<AxonConfig|null>;
+        fetchGuild(gID: string): Promise<GuildConfig>; // Promise<GuildConfig|null>;
+
+        updateAxon(key: string, value: updateDBVal): Promise<Boolean>;
+        updateGuild(key: string, gID: string, value: updateDBVal): Promise<Boolean>;
+
+        saveAxon(data: AxonConfig): Promise<AxonConfig>; // Promise<AxonConfig|null>;
+        saveGuild(gID: string, data: GuildConfig): Promise<GuildConfig>; // Promise<GuildConfig|null>;
     }
 
     // OK
