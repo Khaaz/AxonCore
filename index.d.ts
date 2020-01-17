@@ -10,12 +10,10 @@ type TextableChannel = Eris.TextableChannel | djs.TextChannel;
 
 declare module "axoncore" {
 
-    type CollectionFunctions = 'from' |'toArray'|'toObject'|'apply'|'add'|'find'
-    |'map'|'filter'|'reduce'|'some'|'every'|'update'|'remove'|'random'|'toString'
     export class Collection<T> extends Map<string | number, T> {
         public baseObject: new (...args: any[]) => T;
         public constructor(base: { base?: new (...args: any[]) => T, iterable?: {[key: string]: T} | [string, T][] });
-        public add(key: string, value: object, replace?: boolean): T;
+        public add(key: string, value: T, replace?: boolean): T;
         public find(func: (i: T) => boolean): T;
         public random(): T;
         public filter(func: (i: T) => boolean): T[];
@@ -23,12 +21,23 @@ declare module "axoncore" {
         public reduce<U>(func: (accumulator: U, val: T) => U, initialValue?: U): U;
         public every(func: (i: T) => boolean): boolean;
         public some(func: (i: T) => boolean): boolean;
-        public update(key: string, value: object): T;
+        public update(key: string, value: T): T;
         public remove(key: string): T | null;
         public toArray(): T[];
         public toObject(): {[key:string]: T};
         public toString(): `[Collection<Name>]`;
-        public apply<T extends CollectionFunctions>(key: string, func: T, args: any[]): Collection<any>; // See https://stackoverflow.com/questions/54165536/typescript-function-return-type-based-on-input-parameter
+
+        public apply<R>(key: string, func: 'from', args: [Array<R>, string]): Collection<R>;
+        public apply(key: string, func: 'add', args: [string, T, boolean?]): Collection<T>;
+        public apply(key: string, func: 'find', args: [(i: T) => boolean]): Collection<T>;
+        public apply(key: string, func: 'random'): Collection<T>;
+        public apply(key: string, func: 'filter', args: [(i: T) => boolean]): Collection<T>;
+        public apply<R>(key: string, func: 'map', args: [(i: T) => R]): Collection<R>;
+        public apply<U>(key: string, func: 'reduce', args: [(accumulator: U, val: T) => U, U]): Collection<U>;
+        public apply(key: string, func: 'update', args: [string, T]): Collection<T>;
+        public apply(key: string, func: 'remove', args: [string]): Collection<T | null>;
+        public apply(key: string, func: 'toArray'): Collection<T>;
+        public apply(key: string, func: 'toObject'): Collection<T>;
     }
 
     export class AxonError extends Error { // Clarify with Khaaz, incomplete?
