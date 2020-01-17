@@ -494,8 +494,8 @@ declare module "axoncore" {
     export class CommandResponse {
         public success: boolean;
         public triggerCooldown: boolean;
-        public error?: object|string;
-        constructor(data: { success: boolean; triggerCooldown: boolean; error?: object|string });
+        public error?: Error;
+        constructor(data: { success: boolean; triggerCooldown: boolean; error?: Error });
         public resolve(): Promise<CommandResponse>;
         public resolveAsync(): Promise<CommandResponse>;
         public resolveSync(): CommandResponse;
