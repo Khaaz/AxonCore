@@ -590,11 +590,10 @@ declare module "axoncore" {
         public sendCooldown(channel: TextableChannel, time: number): Promise<CommandContext>;
     }
 
-    // OK
     export class Listener extends Base {
         private _module: Module;
-        public label: string;
         public eventName: string;
+        public label: string;
 
         public load?: boolean;
         public enabled?: boolean;
@@ -607,11 +606,11 @@ declare module "axoncore" {
 
         readonly module: Module;
 
-        constructor(module: Module, data?: { eventName?: string; label?: string; load?: boolean; enabled?: boolean; serverBypass?: boolean });
+        constructor(module: Module, data?: Listener);
 
-        private _execute(guildConf: object, ...args: string[]): Promise<any>;
+        private _execute(guildConf: GuildConfig, ...args: string[]): Promise<any>; // Will error, see below
 
-        public execute(args: any, guildConf: object): Promise<any>;
+        // public execute(args: any, guildConf: GuildConfig): Promise<any>; // Function does not exist
     }
 
     // OK
