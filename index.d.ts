@@ -8,6 +8,8 @@ type Client = Eris.Client | djs.Client;
 type Guild = Eris.Guild | djs.Guild;
 type User = Eris.User | djs.User;
 type TextableChannel = Eris.TextableChannel | djs.TextChannel;
+type Role = Eris.Role | djs.Role;
+type Channel = Eris.Channel | djs.Channel;
 
 declare module "axoncore" {
 
@@ -647,13 +649,12 @@ declare module "axoncore" {
         delay?: number;
     }
 
-    // OK
     export class Resolver {
-        public static user(client: Client, args: string[]|string): object|null;
-        public static member(guild: Guild, args: string[]|string): object|null;
-        public static role(guild: Guild, args: string[]|string): object|null;
-        public static channel(guild: Guild, args: string[]|string): object|null;
-        public static guild(client: Client, args: string[]): object|null;
+        public static user(client: Client, args: string[]|string): any; // User|null; // Not implemented
+        public static member(guild: Guild, args: string[]|string): any; // Member|null; // Not implemented
+        public static role(guild: Guild, args: string[]|string): any; // Role|null; // Not implemented
+        public static channel(guild: Guild, args: string[]|string): any; // Channel|null; // Not implemented
+        public static guild(client: Client, args: string[]): any; // Guild|null; // Not implemented
     }
 
     export class AxonUtils {
