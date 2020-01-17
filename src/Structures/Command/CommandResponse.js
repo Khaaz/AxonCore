@@ -15,7 +15,7 @@ class CommandResponse {
      * @param {Object} [data={}]
      * @param {Boolean} [data.success=true]
      * @param {Boolean} [data.triggerCooldown=true]
-     * @param {Object|String} [data.error=null]
+     * @param {Error} [data.error=null]
      *
      * @memberof CommandResponse
      */

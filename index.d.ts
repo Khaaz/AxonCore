@@ -401,6 +401,7 @@ declare module "axoncore" {
         public getInvalidPermissionMessage(channel: TextableChannel, member: Member, permission: any): string; // CommandPermissions?
     }
 
+    // OK
     export class CommandCooldown {
         private _command: Command;
         private _cooldowns: Map<string, { time: Date, post: boolean }>;
@@ -448,42 +449,37 @@ declare module "axoncore" {
         custom(func: (i: Message) => true): true;
     }
 
-    // OK
     export class CommandPermissions implements ICommandPerms {
-        // Handle some stuff the class will need
-        private _command?: Command;
+        private _command: Command;
 
         public custom(func: (msg: Message) => true): true;
-        // OO! A CLASS CONSTRUCTOR!
-        constructor(command: Command, override: object | ICommandPerms, userModuleDefault: boolean);
+        constructor(command: Command, override?: ICommandPerms, userModuleDefault?: boolean);
         // GETTERS
         readonly axon: AxonClient;
         readonly utils: Utils;
         readonly axonUtils: AxonUtils;
-        readonly library: any; // REPLACE "ANY" WITH Library CLASS
+        readonly library: any; // Replace with Library class
 
         // METHODS
 
-        // Can the command be executed with this context?
-        public canExecute(msg: Message, guildConf: GuildConfig): [boolean, string | null]; // Why is this a array and not an object?
+        public canExecute(msg: Message, guildConf: GuildConfig): [boolean, string | null]; // Ask Khaaz about inconsistency
 
-        // UPDATE PERMS, wait who would use this besides the library itself?
-        public setBot(array: any[], toAdd: boolean): CommandPermissions;
-        public setServerMod(boolean: boolean): CommandPermissions;
-        public setServerManager(boolean: boolean): CommandPermissions;
-        public setServerAdmin(boolean: boolean): CommandPermissions;
-        public setServerOwner(boolean: boolean): CommandPermissions;
-        public setUser(object: { bypass: string[], needed: string[] }, toAdd: boolean): CommandPermissions;
-        public setUserIDs(object: { bypass: string[], needed: string[] }, toAdd: boolean): CommandPermissions;
-        public setRoleIDs(object: { bypass: string[], needed: string[] }, toAdd: boolean): CommandPermissions;
-        public setChannelIDs(object: { bypass: string[], needed: string[] }, toAdd: boolean): CommandPermissions;
-        public setStaff(object: { bypass: string[], needed: string[] }, toAdd: boolean): CommandPermissions;
+        public setBot(array?: string[], toAdd?: boolean): CommandPermissions;
+        public setServerMod(boolean?: boolean): CommandPermissions;
+        public setServerManager(boolean?: boolean): CommandPermissions;
+        public setServerAdmin(boolean?: boolean): CommandPermissions;
+        public setServerOwner(boolean?: boolean): CommandPermissions;
+        public setUser(object?: { bypass?: string[], needed?: string[] }, toAdd?: boolean): CommandPermissions;
+        public setUserIDs(object?: { bypass?: string[], needed?: string[] }, toAdd?: boolean): CommandPermissions;
+        public setRoleIDs(object?: { bypass?: string[], needed?: string[] }, toAdd?: boolean): CommandPermissions;
+        public setChannelIDs(object?: { bypass?: string[], needed?: string[] }, toAdd?: boolean): CommandPermissions;
+        public setStaff(object?: { bypass?: string[], needed?: string[] }, toAdd?: boolean): CommandPermissions;
 
         // CHECK FOR IF PERMISSIONS ARE MET
 
         private _checkPermsBot(channel: TextableChannel): boolean;
-        private _checkPermsUserBypass(member: Member): [boolean, string | null]; // Why is this a array and not an object?
-        private _checkPermsUserNeeded(member: Member): [boolean, string | null]; // Why is this a array and not an object?
+        private _checkPermsUserBypass(member: Member): boolean;
+        private _checkPermsUserNeeded(member: Member): boolean;
         private _checkUserBypass(member: Member): boolean;
         private _checkUserNeeded(member: Member): boolean;
         private _checkRoleBypass(member: Member): boolean;
