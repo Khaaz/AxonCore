@@ -549,6 +549,11 @@ declare module "axoncore" {
         permissions: CommandPermissions;
     }
 
+    export interface AxonTemplate {
+        embeds: {[key: string]: number},
+        emotes: {[key: string]: string}
+    }
+
     export class Command extends Base implements CommandData {
         private _module: Module;
         private _cooldown: CommandCooldown;
@@ -571,7 +576,7 @@ declare module "axoncore" {
 
         // GETTERS
         readonly module: Module;
-        readonly template: { embeds: { [key: string]: number }, emotes: { [key: string]: string } }
+        readonly template: AxonTemplate;
         readonly library: any; // Replace from Library class
         readonly fullLabel: string;
 
@@ -658,12 +663,14 @@ declare module "axoncore" {
     }
 
     export class AxonUtils {
+        private _axon: AxonClient;
         constructor(axon: AxonClient);
         readonly axon: AxonClient;
         readonly bot: Client;
-        readonly template: Object;
-        readonly logger: object;
+        readonly template: AxonTemplate;
+        readonly logger: any; // Replace with ALogger
         readonly utils: Utils;
+        readonly library: any; // Replace with LibraryInterface
 
         public triggerWebhook(type: string, embed: Eris.EmbedBase, opt?: string): void;
         public isBotOwner(uID: string): boolean;
@@ -674,11 +681,10 @@ declare module "axoncore" {
         public isServerAdmin(member: Member): boolean;
         public isServerOwner(member: Member, guild: Guild): boolean;
 
+        public sendDM(user: User, content: AxonMSGCont, options?: AxonMSGOpt): Promise<Message>;
         public sendMessage(channel: TextableChannel, content: AxonMSGCont, options?: AxonMSGOpt): Promise<Message>;
         public editMessage(message: Message, content: AxonMSGCont): Promise<Message>;
-        public sendDM(user: User, content: AxonMSGCont, options?: AxonMSGOpt): Promise<Message>;
-        public sendError(channel: TextableChannel, content: AxonMSGCont, options?: AxonMSGOpt): Promise<Message>;
-
+        
         public updateGlobalStateModule(module: string, state?: boolean): void;
         public updateGlobalStateCommand(command: string, state?: boolean): void;
     }

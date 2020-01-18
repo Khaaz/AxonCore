@@ -245,7 +245,7 @@ class AxonUtils {
      * @returns {Promise<Message?>} Message Object
      * @memberof AxonUtils
      */
-    sendDM(user, content, options) {
+    sendDM(user, content, options = {} ) {
         this.library.user.getDM(user)
             .then(chan => this.sendMessage(chan, content, options) )
             .catch(err => {
