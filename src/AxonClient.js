@@ -497,6 +497,30 @@ class AxonClient extends EventEmitter {
     }
 
     // **** EXECUTOR **** //
+    /**
+     * Fired when a command is successfully ran
+     * @event AxonClient#commandExecution
+     * @prop {Boolean} status - Whereas the command was successfully executed or not
+     * @prop {String} commandFullLabel - The command fullLabel
+     * @prop {Object} data
+     * @prop {Message} data.msg - The message that triggered the command
+     * @prop {Command} data.command - The Command that was executed
+     * @prop {GuildConfig} data.guildConfig - The GuildConfig
+     * @prop {CommandContext} data.context - The execution context
+     * @memberof AxonClient
+     */
+
+    /**
+     * Fired when a command fails
+     * @event AxonClient#commandError
+     * @prop {String} commandFullLabel - The command fullLabel
+     * @prop {Object} data
+     * @prop {Message} data.msg - The message that triggered the command
+     * @prop {Command} data.command - The Command that was executed
+     * @prop {GuildConfig} data.guildConfig - The GuildConfig
+     * @prop {AxonCommandError} data.error - The error
+     * @memberof AxonClient
+     */
 
     _execCommand(msg, args, command, guildConfig, { isAdmin, isOwner } ) {
         if (this.settings.debugMode) {
@@ -509,14 +533,12 @@ class AxonClient extends EventEmitter {
             msg, args, guildConfig, isAdmin, isOwner,
         } )
             .then( (context) => {
-                context.executed
-                    ? this.emit('commandSuccess', { msg, guildConfig, context } )
-                    : this.emit('commandFailure', { msg, guildConfig, context } );
+                this.emit('commandExecution', context.executed, command.fullLabel, { msg, command, guildConfig, context } );
 
                 this.settings.debugMode && console.timeEnd('- Net');
             } )
             .catch(err => {
-                this.emit('commandError', { msg, guildConfig, err } );
+                this.emit('commandError', command.fullLabel, { msg, command, guildConfig, error: err } );
                 this.settings.debugMode && console.timeEnd('- Net');
                 
                 this.log('ERROR', err);
@@ -543,11 +565,11 @@ class AxonClient extends EventEmitter {
             msg, args, guildConfig, isAdmin, isOwner,
         } )
             .then( (context) => {
-                this.emit('commandSuccess', { msg, guildConfig, context } );
+                this.emit('commandExecution', true, command.label, { msg, command, guildConfig, context } );
                 this.settings.debugMode && console.timeEnd('- Net');
             } )
             .catch(err => {
-                this.emit('commandError', { msg, guildConfig, err } );
+                this.emit('commandError', command.label, { msg, command, guildConfig, err } );
                 this.settings.debugMode && console.timeEnd('- Net');
 
                 this.log('ERROR', err);
@@ -558,16 +580,40 @@ class AxonClient extends EventEmitter {
         }
     }
 
+    /**
+     * Fired when a command fails
+     * @event AxonClient#eventExecution
+     * @prop {Boolean} status - Whereas the listener was successfully executed or not
+     * @prop {String} eventName - The discord event name
+     * @prop {String} listenerName - The listener label
+     * @prop {Object} data - Additional information
+     * @prop {Listener} data.listener - The Listener that was executed
+     * @prop {GuildConfig} data.guildConfig - The GuildConfig object
+     * @memberof AxonClient
+     */
+
+    /**
+     * Fired when a command fails
+     * @event AxonClient#eventError
+     * @prop {String} eventName - The discord event name
+     * @prop {String} listenerName - The Listener label
+     * @prop {Object} data - Additional information
+     * @prop {Listener} data.listener - The Listener that was executed
+     * @prop {GuildConfig} data.guildConfig - The GuildConfig object
+     * @prop {Error} data.error - The error
+     * @memberof AxonClient
+     */
+
     _execListener(listener, guildConfig, ...args) {
         listener._execute(guildConfig, ...args)
             .then( () => {
                 if (this.settings.debugMode) {
                     this.log('VERBOSE', `[EVENT](${listener.eventName}) - ${listener.label}`);
                 }
-                this.emit('eventSuccess', { event: listener.eventName, listener, guildConfig } );
+                this.emit('eventExecution', true, listener.eventName, listener.label, { listener, guildConfig } );
             } )
             .catch(err => {
-                this.emit('eventError', { event: listener.eventName, listener, guildConfig, err } );
+                this.emit('eventError', listener.eventName, listener.label, { listener, guildConfig, error: err } );
 
                 this.log('ERROR', `[EVENT](${listener.eventName}) - ${listener.label}\n${err}`);
             } );
