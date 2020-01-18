@@ -955,74 +955,44 @@ declare module "axoncore" {
         inline?: boolean;
     }
 
-    interface embedData {
-        title?: string;
-        url?: string;
-        description?: string;
-        color?: string;
-
-        author?: {
-            name?: string;
-            url?: string;
-            icon_url?: string;
-        };
-        thumbnail?: {
-            url?: string;
-        };
-
-        fields?: fieldComp[];
-
-        image?: {
-            url?: string;
-        };
-
-        footer?: {
-            text?: string;
-            icon_url?: string;
-        }
-
-        timestamp?: string;
-        file?: object;
-    }
-
     // OK?
     export class Embed {
         public title?: string;
         public url?: string;
         public description?: string;
         public color?: string;
-        public author: {
-            name?: string;
+        public author?: {
+            name: string;
             icon_url?: string;
         };
-        public thumbnail: {
+        public thumbnail?: {
             url?: string;
         };
-        public fields: fieldComp[];
-        public image: {
+        public fields?: fieldComp[];
+        public image?: {
             url?: string;
         };
-        public footer: {
-            text?: string;
+        public footer?: {
+            text: string;
             icon_url?: string;
         };
         public timestamp?: string;
-        public file: object;
+        public file?: string;
 
-        constructor(data: embedData);
+        constructor(data?: Embed);
         private _resolveString(data): string;
 
-        public setTitle(title: string): embedData;
-        public setDescription(description: string): embedData;
-        public setURL(url: string): embedData;
-        public setColor(color: string): embedData;
-        public setAuthor(name: string, icon?: string, url?: string): embedData;
-        public setTimestamp(timestamp?: string): embedData;
-        public addField(name: string, value: string, inline?: boolean): embedData;
-        public setThumbnail(url: string): embedData;
-        public setImage(url: string): embedData;
-        public setFooter(text: string, icon?: string): embedData;
-        public attachFile(file: string): embedData;
+        public setTitle(title: string): Embed;
+        public setDescription(description: string): Embed;
+        public setURL(url: string): Embed;
+        public setColor(color: number): Embed;
+        public setAuthor(name: string, icon?: string, url?: string): Embed;
+        public setTimestamp(timestamp?: Date): Embed;
+        public addField(name: string, value: string, inline?: boolean): Embed;
+        public setThumbnail(url: string): Embed;
+        public setImage(url: string): Embed;
+        public setFooter(text: string, icon?: string): Embed;
+        public attachFile(file: string): Embed;
     }
 
     interface promptOptions {
