@@ -108,7 +108,7 @@ class Base {
      * Get a module from AxonClient with the label
      *
      * @param {String} module - Module label
-     * @returns {Module|NULL}
+     * @returns {Module|null}
      * @memberof Base
      */
     getModule(module) {
@@ -119,7 +119,7 @@ class Base {
      * Get a command/subcommand from AxonClient with the full label
      *
      * @param {String} fullLabel - Full command (or subcommand) label
-     * @returns {Command|NULL}
+     * @returns {Command|null}
      * @memberof Base
      */
     getCommand(fullLabel) {

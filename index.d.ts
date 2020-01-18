@@ -763,28 +763,32 @@ declare module "axoncore" {
         public static compareObject(obj1: object, obj2: object): boolean;
     }
 
+    export type LOG_LEVELS = 'FATAL' | 'ERROR' | 'WARN' | 'DEBUG' | 'NOTICE' | 'INFO' | 'VERBOSE';
+
     export class Base {
         public _axon: AxonClient;
 
         public readonly axon: AxonClient;
         public readonly bot: Client;
-        public readonly Logger: object;
+        public readonly logger: any; // Replace with ALogger
         public readonly Resolver?: Resolver;
-        public readonly AxonUtils?: AxonUtils;
-        public readonly Utils?: Utils;
+        public readonly axonUtils?: AxonUtils;
+        public readonly utils?: Utils;
+        public readonly l?: any; // Replace with MessageManager
         constructor(axonClient: AxonClient);
 
         // Methods
-        public getModule(module: string): Module | void;
-        public getCommand(fullLabel: string): Command | void;
+        public getModule(module: string): Module | null;
+        public getCommand(fullLabel: string): Command | null;
 
-        public sendMessage(channel: TextableChannel, content: AxonMSGCont, options?: AxonMSGOpt): Promise<Message>;
+        public log(level: LOG_LEVELS, content: string | Error, ctx?: { guild: Guild, cmd: Command, user: User }, execWebhook?: boolean): void;
+
         public sendDM(user: User, content: AxonMSGCont): Promise<Message|void>;
-        public editMessage(message: Message, content: AxonMSGCont): Promise<Message>;
-        public sendError(channel: TextableChannel, content: AxonMSGCont, options?: AxonMSGOpt): Promise<CommandResponse>;
-        public sendSuccess(channel: TextableChannel, content: AxonMSGCont, options?: AxonMSGOpt): Promise<CommandResponse>;
         public sendMessage(channel: TextableChannel, content: AxonMSGCont, options?: AxonMSGOpt): Promise<Message>;
-        public error(msg: AxonMSGCont, err: Error | object | string, type: String, errMsg?: string): Promise<Message>;
+        public editMessage(message: Message, content: AxonMSGCont): Promise<Message>;
+        public sendSuccess(channel: TextableChannel, content: AxonMSGCont, options?: AxonMSGOpt): Promise<CommandResponse>;
+        public sendError(channel: TextableChannel, content: AxonMSGCont, options?: AxonMSGOpt): Promise<CommandResponse>;
+        public error(msg: Message, err: Error, type: string, errMsg?: string): Promise<CommandResponse>;
 
         public toString(): string;
         public toJSON(): object;
