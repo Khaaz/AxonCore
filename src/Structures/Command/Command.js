@@ -167,13 +167,10 @@ class Command extends Base {
      * @memberof Command
      */
     get fullLabel() {
-        let cmd = this; // eslint-disable-line
-        const fullLabel = [this.label];
-        while (cmd.parentCommand) {
-            fullLabel.push(cmd.parentCommand.label);
-            cmd = cmd.parentCommand;
+        if (!this.parentCommand) {
+            return this.label;
         }
-        return fullLabel.reverse().join(' ');
+        return `${this.parentCommand.fullLabel} ${this.label}`;
     }
 
     // **** MAIN **** //
