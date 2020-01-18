@@ -15,7 +15,7 @@ class Collection extends Map {
      *
      * @param {Object} options
      * @param {Class} [options.base=null]
-     * @param {Array<[string, Class]> | {[key: string]: Class}} [options.iterable]
+     * @param {Array<[string, Class]> | {[key: string]: Class}} options.iterable
      *
      * @memberof Collection
      */
