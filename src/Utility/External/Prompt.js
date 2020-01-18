@@ -21,8 +21,8 @@ class Prompt {
      * @param {Boolean} [defaultOptions.deletePrompt=true] Whether or not you dont want the prompt to be deleted
      * @param {Boolean} [defaultOptions.sendInvalid=true] Whether or not you want a message to be sent when invalid
      * @param {String} [defaultOptions.invalidMessage='Invalid Message!'] The message to send when a prompt is invalid
-     * @param {Number} [defaultOptions.deleteInvalidMessage=false] The time in milliseconds to wait before deleting the invalid message
-     * @param {Number} [defaultOptions.timeoutTime=10000] The time to wait for the prompt to timeout
+     * @param {Number|Boolean} [defaultOptions.deleteInvalidMessage=false] The time in milliseconds to wait before deleting the invalid message
+     * @param {Number} [defaultOptions.timeout=10000] The time to wait for the prompt to timeout
      * @param {Boolean} [defaultOptions.sendTimeout=true] Whether or not you want a message to be sent when timeout
      * @param {String} [defaultOptions.timeoutMessage='Prompt timed out!'] The message to send when the prompt times out.
      * @param {Number} [defaultOptions.deleteTimeoutMsg=false] The time to wait in milliseconds before deleting the timeout message
@@ -158,6 +158,7 @@ class Prompt {
      * Checker for this._onMsgCreate
      *
      * @param {Message} msg The message object to check against.
+     * @returns Whether the check completed successfully
      */
     _checker(msg) {
         if (this._actualOptions.allowed.length === 0) { // Options does not have allowed

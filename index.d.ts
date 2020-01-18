@@ -955,7 +955,7 @@ declare module "axoncore" {
         inline?: boolean;
     }
 
-    // OK?
+    // OK
     export class Embed {
         public title?: string;
         public url?: string;
@@ -1002,11 +1002,11 @@ declare module "axoncore" {
         deletePrompt?: boolean;
         sendInvalid?: boolean;
         invalidMessage?: string;
-        deleteInvalidMessage?: boolean;
+        deleteInvalidMessage?: boolean | number;
         timeoutTime?: number;
         sendTimeout?: boolean;
         timeoutMessage?: string;
-        deleteTimeoutMsg?: number;
+        deleteTimeoutMsg?: boolean | number;
         resendWhenInvalid?: boolean;
     }
 
@@ -1029,7 +1029,7 @@ declare module "axoncore" {
         public run(prompt: AxonMSGCont, options?: promptOptions): Promise<Message>;
         private _startTimeout(): void;
         private _deletePrompt(): void;
-        private _checker(msg: Message);
+        private _checker(msg: Message): boolean;
         private _onInvalidEnd(): string;
         private _onEnded(msg: Message): Message;
         private _onTimeout(): Promise<void>;
