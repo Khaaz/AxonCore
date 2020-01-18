@@ -13,7 +13,9 @@ class Collection extends Map {
     /**
      * Creates an instance of Collection.
      *
-     * @param {{base: Class = null, iterable: [string, Class][] | {[key: string]: Class}}} options
+     * @param {Object} options
+     * @param {Class} [options.base=null]
+     * @param {Array<[string, Class]> | {[key: string]: Class}} [options.iterable]
      *
      * @memberof Collection
      */
