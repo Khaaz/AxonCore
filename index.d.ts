@@ -796,137 +796,157 @@ declare module "axoncore" {
 
     // Wtf,
     // OK
-    export interface Enums {
+    export interface AxonEnums {
         HTTP_CODE: {
-            CONTINUE: number,
+            CONTINUE: 100,
 
-            OK: number,
-            CREATED: number,
-            ACCEPTED: number,
-            NO_CONTENT: number,
+            OK: 200,
+            CREATED: 201,
+            ACCEPTED: 202,
+            NO_CONTENT: 204,
 
-            MULTIPLE_CHOICES: number,
-            MOVED_PERMANENTLY: number,
-            FOUND: number,
+            MULTIPLE_CHOICES: 300,
+            MOVED_PERMANENTLY: 301,
+            FOUND: 302,
 
-            BAD_REQUEST: number,
-            UNAUTHORIZED: number,
-            PAYMENT_REQUIRED: number,
-            FORBIDDEN: number,
-            NOT_FOUND: number,
-            METHOD_NOT_ALLOWED: number,
-            REQUEST_TIMEOUT: number,
-            CONFLICT: number,
-            GONE: number,
-            UNSUPPORTED_MEDIA_TYPE: number,
-            LOCKED: number,
-            TOO_MANY_REQUESTS: number,
+            BAD_REQUEST: 400,
+            UNAUTHORIZED: 401,
+            PAYMENT_REQUIRED: 402,
+            FORBIDDEN: 403,
+            NOT_FOUND: 404,
+            METHOD_NOT_ALLOWED: 405,
+            REQUEST_TIMEOUT: 408,
+            CONFLICT: 409,
+            GONE: 410,
+            UNSUPPORTED_MEDIA_TYPE: 415,
+            LOCKED: 423,
+            TOO_MANY_REQUESTS: 429,
 
-            INTERNAL_SERVER_ERROR: number,
-            NOT_IMPLEMENTED: number,
-            BAD_GATEWAY: number,
-            SERVICE_UNAVAILABLE: number,
-            GATEWAY_TIMEOUT: number,
+            INTERNAL_SERVER_ERROR: 500,
+            NOT_IMPLEMENTED: 501,
+            BAD_GATEWAY: 502,
+            SERVICE_UNAVAILABLE: 503,
+            GATEWAY_TIMEOUT: 504,
         };
         HTTP_MESSAGES: {
-            100: string,
-            101: string,
-            102: string,
-            103: string,
-            200: string,
-            201: string,
-            202: string,
-            203: string,
-            204: string,
-            205: string,
-            206: string,
-            207: string,
-            208: string,
-            226: string,
-            300: string,
-            301: string,
-            302: string,
-            303: string,
-            304: string,
-            305: string,
-            307: string,
-            308: string,
-            400: string,
-            401: string,
-            402: string,
-            403: string,
-            404: string,
-            405: string,
-            406: string,
-            407: string,
-            408: string,
-            409: string,
-            410: string,
-            411: string,
-            412: string,
-            413: string,
-            414: string,
-            415: string,
-            416: string,
-            417: string,
-            418: string,
-            421: string,
-            422: string,
-            423: string,
-            424: string,
-            425: string,
-            426: string,
-            428: string,
-            429: string,
-            431: string,
-            451: string,
-            500: string,
-            501: string,
-            502: string,
-            503: string,
-            504: string,
-            505: string,
-            506: string,
-            507: string,
-            508: string,
-            509: string,
-            510: string,
-            511: string,
+            100: 'Continue',
+            101: 'Switching Protocols',
+            102: 'Processing',
+            103: 'Early Hints',
+            200: 'OK',
+            201: 'Created',
+            202: 'Accepted',
+            203: 'Non-Authoritative Information',
+            204: 'No Content',
+            205: 'Reset Content',
+            206: 'Partial Content',
+            207: 'Multi-Status',
+            208: 'Already Reported',
+            226: 'IM Used',
+            300: 'Multiple Choices',
+            301: 'Moved Permanently',
+            302: 'Found',
+            303: 'See Other',
+            304: 'Not Modified',
+            305: 'Use Proxy',
+            307: 'Temporary Redirect',
+            308: 'Permanent Redirect',
+            400: 'Bad Request',
+            401: 'Unauthorized',
+            402: 'Payment Required',
+            403: 'Forbidden',
+            404: 'Not Found',
+            405: 'Method Not Allowed',
+            406: 'Not Acceptable',
+            407: 'Proxy Authentication Required',
+            408: 'Request Timeout',
+            409: 'Conflict',
+            410: 'Gone',
+            411: 'Length Required',
+            412: 'Precondition Failed',
+            413: 'Payload Too Large',
+            414: 'URI Too Long',
+            415: 'Unsupported Media Type',
+            416: 'Range Not Satisfiable',
+            417: 'Expectation Failed',
+            418: 'I\'m a teapot',
+            421: 'Misdirected Request',
+            422: 'Unprocessable Entity',
+            423: 'Locked',
+            424: 'Failed Dependency',
+            425: 'Unordered Collection',
+            426: 'Upgrade Required',
+            428: 'Precondition Required',
+            429: 'Too Many Requests',
+            431: 'Request Header Fields Too Large',
+            451: 'Unavailable For Legal Reasons',
+            500: 'Internal Server Error',
+            501: 'Not Implemented',
+            502: 'Bad Gateway',
+            503: 'Service Unavailable',
+            504: 'Gateway Timeout',
+            505: 'HTTP Version Not Supported',
+            506: 'Variant Also Negotiates',
+            507: 'Insufficient Storage',
+            508: 'Loop Detected',
+            509: 'Bandwidth Limit Exceeded',
+            510: 'Not Extended',
         };
-        LIBRARY_TYPES: { ERIS: number, DISCORDJS: 1 };
-        LOGGER_TYPES: { DEFAULT: number; CHALK: number; SIGNALE: number; WINSTON: number; };
-        DB_TYPES: { DBLESS: number, JSON: number; MONGO: number };
-        AXON_PERMISSION_LEVELS: {
-            OWNER: number;
-            ADMINISTRATOR: number;
-            MANAGER: number;
-            MODERATOR: number;
-        };
-        PERMISSION_ADMIN: string;
-        PERMISSION_MANAGER: string;
+        LIBRARY_TYPES: { ERIS: 0, DISCORDJS: 1 };
+        LOGGER_TYPES: { DEFAULT: 0; CHALK: 1; SIGNALE: 2; WINSTON: 3; };
+        DB_TYPES: { DBLESS: 0, JSON: 1; MONGO: 2 };
         COMMAND_EXECUTION_TYPES: {
-            REGULAR: number;
-            ADMIN: number;
-            OWNER: number;
+            REGULAR: 0;
+            ADMIN: 1;
+            OWNER: 2;
         };
         COMMAND_EXECUTION_STATE: {
-            NO_ERROR: number;
-            COOLDOWN: number;
-            INVALID_USAGE: number;
-            INVALID_PERMISSIONS_BOT: number;
-            INVALID_PERMISSIONS_USER: number;
+            NO_ERROR: 0;
+            COOLDOWN: 1;
+            INVALID_USAGE: 2;
+            INVALID_PERMISSIONS_BOT: 3;
+            INVALID_PERMISSIONS_USER: 4;
         };
+        AXON_PERMISSION_LEVELS: {
+            OWNER: 0;
+            ADMINISTRATOR: 1;
+            MANAGER: 2;
+            MODERATOR: 3;
+        };
+        PERMISSION_ADMIN: 'ADMINISTRATOR';
+        PERMISSION_MANAGER: 'MANAGE_GUILD';
         WEBHOOK_TYPES: {
-            STATUS: string;
-            LOADER: string;
-            ERROR: string;
-            MISC: string;
+            FATAL: 'FATAL',
+            ERROR: 'ERROR',
+            WARN: 'WARN',
+            DEBUG: 'DEBUG',
+            NOTICE: 'NOTICE',
+            INFO: 'INFO',
+            VERBOSE: 'VERBOSE',
         };
+        LOG_LEVELS: {
+            FATAL: 'fatal',
+            ERROR: 'error',
+            WARN: 'warn',
+            DEBUG: 'debug',
+            NOTICE: 'notice',
+            INFO: 'info',
+            VERBOSE: 'verbose',
+        };
+        WEBHOOK_TO_COLOR: {
+            FATAL: 0xFF0000,
+            ERROR: 0xFF0000,
+            WARN: 0xFF4500,
+            DEBUG: 0x0000FF,
+            NOTICE: 0x00FF00,
+            INFO: 0x00FF00,
+            VERBOSE: 0x808080,
+        }
         TYPE_ERRORS: {
-            api: string;
-            db: string;
-            internal: string;
-            unexpected: string;
+            DAPI: 'DAPI error - failed to retrieve from Discord',
+            DB: 'DB error - failed to retrieve from the DB',
+            INTERNAL: 'Internal error - AxonClient/internal methods',
+            UNKNOWN: 'Unexpected error',
         };
     }
 
