@@ -10,6 +10,7 @@ type User = Eris.User | djs.User;
 type TextableChannel = Eris.TextableChannel | djs.TextChannel;
 type Role = Eris.Role | djs.Role;
 type Channel = Eris.Channel | djs.Channel;
+type Permission = Eris.Permission | Eris.PermissionOverwrite | djs.PermissionOverwrites; // djs.Permissions; // No allow/deny properties
 
 declare module "axoncore" {
 
@@ -689,6 +690,40 @@ declare module "axoncore" {
         public updateGlobalStateCommand(command: string, state?: boolean): void;
     }
 
+    interface PermissionObject {
+        CREATE_INSTANT_INVITE?: boolean;
+        KICK_MEMBERS?: boolean;
+        BAN_MEMBERS?: boolean;
+        ADMINISTRATOR?: boolean;
+        MANAGE_CHANNELS?: boolean;
+        MANAGE_GUILD?: boolean;
+        ADD_REACTIONS?: boolean;
+        VIEW_AUDIT_LOG?: boolean;
+        PRIORITY_SPEAKER?: boolean;
+        STREAM?: boolean;
+        VIEW_CHANNEL?: boolean;
+        SEND_MESSAGES?: boolean;
+        SEND_TTS_MESSAGES?: boolean;
+        MANAGE_MESSAGES?: boolean;
+        EMBED_LINKS?: boolean;
+        ATTACH_FILES?: boolean;
+        READ_MESSAGE_HISTORY?: boolean;
+        MENTION_EVERYONE?: boolean;
+        USE_EXTERNAL_EMOJIS?: boolean;
+
+        CONNECT?: boolean;
+        SPEAK?: boolean;
+        MUTE_MEMBERS?: boolean;
+        DEAFEN_MEMBERS?: boolean;
+        MOVE_MEMBERS?: boolean;
+        USE_VAD?: boolean;
+        CHANGE_NICKNAME?: boolean;
+        MANAGE_NICKNAMES?: boolean;
+        MANAGE_ROLES?: boolean;
+        MANAGE_WEBHOOKS?: boolean;
+        MANAGE_EMOJIS?: boolean;
+    }
+
     export class Utils {
         private _axon: AxonClient;
 
@@ -708,23 +743,23 @@ declare module "axoncore" {
 
         readonly axon: AxonClient;
         readonly bot: Client;
-        readonly library: any; // REPLACE "any" WITH Library CLASS
+        readonly library: any; // Replace with LibraryInterface
 
         public splitMessage(content: string): string[] | string;
-        public getPrefix(msg: Message): string;
-        public getRoles(guild: Guild, member: Member): object[];
-        public getHighestRole(guild: Guild, member: Member): object;
-        public sortRoles(roles: object[]): object[];
-        public isRoleHigher(role1: object, role2: object): boolean;
+        public getPrefix(msg: Message): Promise<string>;
+        public getRoles(guild: Guild, member: Member): Role[];
+        public getHighestRole(guild: Guild, member: Member): Role;
+        public sortRoles(roles: Role[]): Role[];
+        public isRoleHigher(role1: Role, role2: Role): boolean;
         public isHigherRole(guild: Guild, first: Member, second: Member): boolean;
-        public hasPerms(member: Member, permissions: string[]): boolean;
+        public hasPerms(member: Member, permissions?: string[]): boolean;
         public hasChannelPerms(channel: TextableChannel, permissions: string[], user?: User): boolean;
         public missingPerms(member: Member, permissions?: string[]): string[];
-        calculatePerms(data: object): { allow: number, deny: number };
+        public calculatePerms(data: PermissionObject): { allow: number, deny: number };
 
         public sleep(ms: number): Promise<void>;
         public readFileAsync(path: string): Promise<string>;
-        public writeFile(path: string, content: string): Promise<any>;
+        public writeFileAsync(path: string, content: string): Promise<void>;
         public static compareObject(obj1: object, obj2: object): boolean;
     }
 
