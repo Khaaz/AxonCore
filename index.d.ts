@@ -794,7 +794,6 @@ declare module "axoncore" {
         public toJSON(): object;
     }
 
-    // Wtf,
     // OK
     export interface AxonEnums {
         HTTP_CODE: {
