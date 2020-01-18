@@ -1048,6 +1048,10 @@ declare module "axoncore" {
         private _options: mCollectorOptions;
         private _axon: AxonClient;
         private _actualOptions: mCollectorOptions;
+        private _boundMsgEvent: void;
+        private _boundDelEvent: void;
+        private _boundEditEvent: void;
+        private _boundCollectEvent: void;
         public messages: Collection<Message>;
 
         constructor(client: AxonClient, options: mCollectorOptions);
