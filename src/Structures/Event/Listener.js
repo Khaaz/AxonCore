@@ -1,5 +1,7 @@
 import Base from '../Base';
 
+import NotImplementedException from '../../Errors/NotImplementedException';
+
 /**
  * Default Listener class
  * Extends Listener to create an event
@@ -79,6 +81,20 @@ class Listener extends Base {
      */
     async _execute(guildConfig, ...args) {
         return this.execute(...args, guildConfig);
+    }
+
+    /**
+     * Main execute function, need to be overriden in child.
+     *
+     * @param {Array} args - Array of the events arguments (as separate parameters)
+     * @param {GuildConfig?} guildConfig - The guildConfig or undefined if not a guild event
+     * @returns {Promise}
+     *
+     * @memberof Listener
+     */
+    // eslint-disable-next-line no-unused-vars
+    async execute(args, guildConfig) {
+        throw new NotImplementedException();
     }
 }
 
