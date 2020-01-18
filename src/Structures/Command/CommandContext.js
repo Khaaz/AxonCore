@@ -16,7 +16,7 @@ import { COMMAND_EXECUTION_TYPES, COMMAND_EXECUTION_STATE } from '../../Utility/
  * @class CommandContext
  *
  * @prop {String} raw - Raw input
- * @prop {String} commandLabel - The command name
+ * @prop {String} commandLabel - The command full label
  * @prop {String} moduleLabel - The module name
  * STATUS
  * @prop {Boolean} [executed=true] - Whether the command was actually executed or not
