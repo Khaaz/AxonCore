@@ -19,7 +19,7 @@ import MessageManager from './Langs/MessageManager';
 import ModuleLoader from './Structures/Loaders/ModuleLoader';
 import ClientInitialiser from './Structures/Loaders/ClientInitialiser';
 
-import ADBProvider from './Database/ADBProvider'; // default DBProvider
+import ADBProvider from './Database/ADBProvider'; // default ADBProvider
 
 // Utility
 import AxonUtils from './Utility/AxonUtils';
@@ -58,7 +58,7 @@ import ALogger from './Loggers/ALogger';
  * @prop {Object} logger - The Logger instance
  * @prop {Object} axonUtils - Util methods (AxonCore)
  * @prop {Object} utils - Utils methods (general)
- * @prop {DBProvider} DBProvider - The DBProvider instance
+ * @prop {ADBProvider} ADBProvider - The ADBProvider instance
  * @prop {Object} configs - configs (webhooks, template, custom)
  * @prop {Object} staff - Bot Staff (owners, admins, +...)
  * @prop {Array<String>} staff.owners - Array of user IDs with BotOwner permissions
@@ -139,11 +139,11 @@ class AxonClient extends EventEmitter {
         } else {
             this.utils = new Utils(this);
         }
-        /* DBProvider */
-        if (axonOptions.extensions.DBProvider && axonOptions.extensions.DBProvider.prototype instanceof ADBProvider) {
-            this.DBProvider = new axonOptions.extensions.DBProvider(this);
+        /* ADBProvider */
+        if (axonOptions.extensions.ADBProvider && axonOptions.extensions.ADBProvider.prototype instanceof ADBProvider) {
+            this.ADBProvider = new axonOptions.extensions.ADBProvider(this);
         } else {
-            this.DBProvider = DBSelector.select(axonOptions, this);
+            this.ADBProvider = DBSelector.select(axonOptions, this);
         }
 
         /* Structures */
@@ -581,7 +581,6 @@ class AxonClient extends EventEmitter {
      * This method can be overridden in child.
      *
      * @param {Message} msg - The message object
-     * @returns {Promise<Message>} Message Object
      *
      * @memberof AxonClient
      */
@@ -645,7 +644,7 @@ class AxonClient extends EventEmitter {
      *
      * @param {String} gID - The guild ID
      * @param {Array<String>} prefixArr - The array of prefixes
-     * @returns {Promise<Object>} The guild Schema from the DB / Error if error
+     * @returns {Promise<GuildConfig>} The guild Schema from the DB / Error if error
      *
      * @memberof AxonClient
      */

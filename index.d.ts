@@ -14,8 +14,7 @@ type Permission = Eris.Permission | Eris.PermissionOverwrite | djs.PermissionOve
 
 declare module "axoncore" {
 
-    // OK
-    export class Collection<T> extends Map<string | number, T> {
+        export class Collection<T> extends Map<string | number, T> {
         public baseObject: new (...args: any[]) => T;
         public constructor(base: { base?: new (...args: any[]) => T, iterable?: {[key: string]: T} | [string, T][] });
         public add(key: string, value: T, replace?: boolean): T;
@@ -78,8 +77,7 @@ declare module "axoncore" {
         */
     }
 
-    // OK
-    interface ModuleInfo {
+        interface ModuleInfo {
         name: string;
         description: string;
         category: string;
@@ -133,8 +131,7 @@ declare module "axoncore" {
         public saveGuild(gID: string, data: object): any; // Promise<GuildSchema | null>;
     }
 
-    // OK
-    interface AxonJSON {
+        interface AxonJSON {
         id: string;
         prefix: string;
         createdAt: string;
@@ -223,8 +220,7 @@ declare module "axoncore" {
         updateGuild(key: 'modOnly', gID: string, value: boolean): Promise<GuildConfig>;
     }
 
-    // OK
-    class JsonProvider extends ADBProvider {
+        class JsonProvider extends ADBProvider {
         public manager?: JsonManager;
 
         initAxon(): Promise<AxonConfig>;
@@ -240,8 +236,7 @@ declare module "axoncore" {
         saveGuild(gID: string, data: GuildConfig): Promise<GuildConfig|null>;
     }
 
-    // OK
-    interface GuildSchema extends Document {
+        interface GuildSchema extends Document {
         guildID: string;
         prefixes: string[];
         modules: string[];
@@ -265,8 +260,7 @@ declare module "axoncore" {
         bannedUsers: string[];
     }
 
-    // OK
-    class MongoProvider extends ADBProvider {
+        class MongoProvider extends ADBProvider {
         public AxonSchema?: AxonConfig;
         public GuildSchema?: GuildConfig;
 
@@ -284,8 +278,7 @@ declare module "axoncore" {
         saveGuild(gID: string, data: GuildSchema): Promise<AxonConfig|null>;
     }
 
-    // OK
-    export class AxonConfig {
+        export class AxonConfig {
         private _axon: AxonClient;
 
         public id: string;
@@ -306,8 +299,7 @@ declare module "axoncore" {
         private _req(key: string, value: updateDBVal): Promise<AxonConfig|null>;
     }
 
-    // OK
-    export class GuildConfig {
+        export class GuildConfig {
         private _axon: AxonClient;
         public guildID: string;
         public prefixes: string[];
@@ -351,8 +343,7 @@ declare module "axoncore" {
         private _req(key: string, value: updateDBVal): Promise<GuildConfig|null>
     }
 
-    // OK
-    export interface CommandInfo {
+        export interface CommandInfo {
         owners?: string[];
         description?: string;
         examples?: string[];
@@ -360,8 +351,7 @@ declare module "axoncore" {
         name?: string;
     }
 
-    // OK
-    export interface ACommandOptions {
+        export interface ACommandOptions {
         guildOnly?: boolean;
         argsMin?: number;
 
@@ -404,8 +394,7 @@ declare module "axoncore" {
         public getInvalidPermissionMessage(channel: TextableChannel, member: Member, permission: any): string; // CommandPermissions?
     }
 
-    // OK
-    export class CommandCooldown {
+        export class CommandCooldown {
         private _command: Command;
         private _cooldowns: Map<string, { time: Date, post: boolean }>;
 
@@ -422,8 +411,7 @@ declare module "axoncore" {
         public setCooldown(userID: string): void;
     }
 
-    // OK
-    export interface ICommandPerms {
+        export interface ICommandPerms {
         bot?: string[];
         serverMod?: boolean;
         serverManager?: boolean;
@@ -493,8 +481,7 @@ declare module "axoncore" {
         private _checkStaffNeeded(member: Member): boolean;
     }
 
-    // OK
-    export class CommandResponse {
+        export class CommandResponse {
         public success: boolean;
         public triggerCooldown: boolean;
         public error?: Error;
@@ -765,6 +752,8 @@ declare module "axoncore" {
 
     export type LOG_LEVEL_TYPES = 'FATAL' | 'ERROR' | 'WARN' | 'DEBUG' | 'NOTICE' | 'INFO' | 'VERBOSE';
 
+    interface ctx { guild: Guild, cmd: Command, user: User }
+
     export class Base {
         public _axon: AxonClient;
 
@@ -781,7 +770,7 @@ declare module "axoncore" {
         public getModule(module: string): Module | null;
         public getCommand(fullLabel: string): Command | null;
 
-        public log(level: LOG_LEVEL_TYPES, content: string | Error, ctx?: { guild: Guild, cmd: Command, user: User }, execWebhook?: boolean): void;
+        public log(level: LOG_LEVEL_TYPES, content: string | Error, ctx?: ctx, execWebhook?: boolean): void;
 
         public sendDM(user: User, content: AxonMSGCont): Promise<Message|void>;
         public sendMessage(channel: TextableChannel, content: AxonMSGCont, options?: AxonMSGOpt): Promise<Message>;
@@ -946,8 +935,7 @@ declare module "axoncore" {
         UNKNOWN: 'Unexpected error',
     }
 
-    // OK
-    export interface AxonEnums {
+        export interface AxonEnums {
         HTTP_CODE: HTTP_CODE;
         HTTP_MESSAGES: HTTP_MESSAGES;
         LIBRARY_TYPES: LIBRARY_TYPES;
@@ -970,8 +958,7 @@ declare module "axoncore" {
         inline?: boolean;
     }
 
-    // OK
-    export class Embed {
+        export class Embed {
         public title?: string;
         public url?: string;
         public description?: string;
@@ -1025,8 +1012,7 @@ declare module "axoncore" {
         resendWhenInvalid?: boolean;
     }
 
-    // OK
-    export class Prompt {
+        export class Prompt {
         private _axon: AxonClient;
         public userID: string;
         public channel: TextableChannel;
@@ -1058,8 +1044,7 @@ declare module "axoncore" {
         caseSensitive?: boolean;
     }
 
-    // OK
-    export class MessageCollector {
+        export class MessageCollector {
         private _options: mCollectorOptions;
         private _axon: AxonClient;
         private _actualOptions: mCollectorOptions;
@@ -1111,7 +1096,7 @@ declare module "axoncore" {
         logo?: () => void;
         info?: { name: string, description: string, version: string };
         staff?: { [key: string]: { name: string, id: string }[]};
-        template?: { embeds: { help: number }, emotes: { [key: string]: string}, [key: string]: any };
+        template?: AxonTemplate;
         custom?: object | null;
     }
 
@@ -1136,8 +1121,7 @@ declare module "axoncore" {
         axonConfig: AxonConfig;
         guildConfig: GuildConfig;
     }
-    // OK
-    class AxonOptions {
+        class AxonOptions {
         private _token?: string;
         public prefixes: { general: string, admin: string, owner: string };
         public settings: axonOptionsSettings;
@@ -1145,7 +1129,7 @@ declare module "axoncore" {
         public logo: (() => void) | null;
         public info: { name: string, description: string, version: string };
         public staff: { [key: string]: { name: string, id: string }[]};
-        public template: { embeds: { help: number }, emotes: { [key: string]: string}, [key: string]: any };
+        public template: AxonTemplate;
         public custom: object | null;
         public webhooks: Webhooks;
         public extensions: AxonOptionsExtensions;
@@ -1153,9 +1137,9 @@ declare module "axoncore" {
     }
 
     interface axonConfs {
-        axonConf: object;
-        templateConf: object;
-        tokenConf: object;
+        webhooks: Webhooks;
+        template: AxonTemplate;
+        custom: object | null;
     }
 
     interface axonParams {
@@ -1163,13 +1147,14 @@ declare module "axoncore" {
         prefixes: string[];
         ownerPrefix: string;
         adminPrefix: string;
+        lang: string;
+        guildConfigCache: number
     }
 
     interface infos {
         name: string;
         description: string;
         version: string;
-        library: string;
         owners: string[];
     }
 
@@ -1180,41 +1165,51 @@ declare module "axoncore" {
         github: string;
     }
 
-    // OK
     export class AxonClient extends EventEmitter {
+        public configs: axonConfs;
+        public settings: axonParams;
+        public infos: infos;
+        public axoncore: axonInfos;
+        public logger: any; // Replace with ALogger
+        public axonUtils: AxonUtils;
+
         private _botClient: Client;
         public library: any; // REPLACE "any" WITH Library CLASS
-        public configs: object;
+        public utils: Utils;
+        public ADBProvider: ADBProvider
 
-        public modules: Collection<Module>;
-        public commands: Collection<Command>;
-        public commandAliases: Map<String, Command>;
-        public guildConfigs: Collection<object>;
+        public modules: Collection<Module>; // Replace with ModuleRegistry
+        public commands: Collection<Command>; // Replace with CommandRegistry
+        public listeners: any; // Replace with ListenerRegistry
+        public eventManager: EventManager;
+
+        public guildConfigs: Collection<object>; // Replace with GuildConfigCache
 
         public moduleLoader: any; // REPLACE "any" WITH ModuleLoader CLASS
         public dispatcher: any; // REPLACE "any" WITH CommandDispatcher CLASS
         public messageManager: any; // REPLACE "any" WITH MessageManager CLASS
 
-        public eventManager: EventManager;
-        public staff: object;
-        public settings: axonParams;
-        public infos: infos;
-        public axoncore: axonInfos;
+        public staff: { [key: string]: { name: string, id: string }[]};
 
         constructor(botClient: Client, axonOptions: axonOptions, modules: object );
+
         readonly botClient: Client;
-        readonly events: Collection<Listener>;
+        readonly handlers: Collection<any>; // Replace with AHandler
         getListeners(eventName: string): Listener[];
-        readonly webhooks: object;
-        readonly template: object;
+        readonly Resolver: Resolver;
+        readonly webhooks: Webhooks;
+        readonly template: AxonTemplate;
+        readonly custom: object | null;
         readonly l: any; // REPLACE "any" WITH MessageManager CLASS
 
         getModule(module: string): Module | null;
         getCommand(fullLabel: string): Command | null;
 
-        public start(): void;
-        public onInit(): any;
-        public onReady(): any;
+        public start(): Promise<void>;
+        public onInit(): true;
+        public onStart(): Promise<true>;
+        public onReady(): Promise<true>;
+        public log(level: LOG_LEVEL_TYPES, content: Error | string, ctx?: ctx, execWebhook?: boolean): void;
         private _onMessageCreate(msg: Message): void;
 
         private _onReady(): void;
@@ -1225,7 +1220,7 @@ declare module "axoncore" {
         public _execHelp(msg: Message, args: string[], command: Command, guildConfig: GuildConfig, optionals: { isAdmin: boolean, isOwner: boolean }): void;
         public _execListener(listener: Listener, guildConfig: GuildConfig, ...args: any[]): void;
 
-        public sendFullHelp(msg: Message, guildConfig?: GuildConfig): void;
+        public sendFullHelp(msg: Message, guildConfig?: GuildConfig): Promise<void>;
         public registerGuildPrefixes(gID: string, prefixArr: string[]): Promise<GuildConfig>;
         toString(): string;
         toJSON(): object;
