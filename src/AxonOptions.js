@@ -121,7 +121,7 @@ class AxonOptions {
      * @param {Object} [extensions={}] - Classes overrides
      * @param {Utils} extensions.utils - Custom utils. Needs to be an instance of AxonCore.Utils
      * @param {Object} extensions.logger - Custom logger
-     * @param {DBProvider} extensions.DBProvider - DBProvider. Needs to be an instance of DBProvider
+     * @param {DBProvider} extensions.ADBProvider - DBProvider. Needs to be an instance of DBProvider
      * @param {String} extensions.DBLocation - Path to use as default location for usage of the JSONProvider
      * @param {AxonConfig} extensions.axonConfig - Custom AxonConfig object to use instead of default AxonConfig
      * @param {GuildConfig} extensions.guildConfig - Custom GuildConfig object to use instead of default GuildConfig
@@ -172,7 +172,7 @@ class AxonOptions {
         this.extensions = {
             utils: extensions.utils || null,
             logger: extensions.logger || null,
-            DBProvider: extensions.DBProvider || null,
+            ADBProvider: extensions.ADBProvider || null,
             DBLocation: extensions.DBLocation || null,
             axonConfig: extensions.axonConfig || null,
             guildConfig: extensions.guildConfig || null,
