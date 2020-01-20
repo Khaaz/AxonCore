@@ -1116,7 +1116,7 @@ declare module 'axoncore' {
     interface AxonOptionsExtensions {
         utils: Utils;
         logger: any; // Replace with ALogger
-        ADBProvider: ADBProvider;
+        DBProvider: ADBProvider;
         DBLocation: string;
         axonConfig: AxonConfig;
         guildConfig: GuildConfig;
@@ -1176,7 +1176,7 @@ declare module 'axoncore' {
         private _botClient: Client;
         public library: any; // REPLACE "any" WITH Library CLASS
         public utils: Utils;
-        public ADBProvider: ADBProvider
+        public DBProvider: ADBProvider
 
         public modules: Collection<Module>; // Replace with ModuleRegistry
         public commands: Collection<Command>; // Replace with CommandRegistry

@@ -58,7 +58,7 @@ import ALogger from './Loggers/ALogger';
  * @prop {Object} logger - The Logger instance
  * @prop {Object} axonUtils - Util methods (AxonCore)
  * @prop {Object} utils - Utils methods (general)
- * @prop {ADBProvider} ADBProvider - The ADBProvider instance
+ * @prop {ADBProvider} DBProvider - The ADBProvider instance
  * @prop {Object} configs - configs (webhooks, template, custom)
  * @prop {Object} staff - Bot Staff (owners, admins, +...)
  * @prop {Array<String>} staff.owners - Array of user IDs with BotOwner permissions
@@ -140,10 +140,10 @@ class AxonClient extends EventEmitter {
             this.utils = new Utils(this);
         }
         /* ADBProvider */
-        if (axonOptions.extensions.ADBProvider && axonOptions.extensions.ADBProvider.prototype instanceof ADBProvider) {
-            this.ADBProvider = new axonOptions.extensions.ADBProvider(this);
+        if (axonOptions.extensions.DBProvider && axonOptions.extensions.DBProvider.prototype instanceof ADBProvider) {
+            this.DBProvider = new axonOptions.extensions.DBProvider(this);
         } else {
-            this.ADBProvider = DBSelector.select(axonOptions, this);
+            this.DBProvider = DBSelector.select(axonOptions, this);
         }
 
         /* Structures */
