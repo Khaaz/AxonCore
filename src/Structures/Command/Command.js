@@ -341,7 +341,7 @@ class Command extends Base {
      * @returns {Promise<CommandContext>} Message Object
      * @memberof Command
      */
-    async sendHelp( { msg, guildConfig, isAdmin, isOwner } ) {
+    sendHelp( { msg, guildConfig, isAdmin, isOwner } ) {
         /* OVERRIDE default sendHelp with a CUSTOM in AxonClient */
         if (this.axon.sendHelp) {
             return this.axon.sendHelp(this, { msg, guildConfig, isAdmin, isOwner } );
@@ -413,12 +413,12 @@ class Command extends Base {
             } );
         }
 
-        await this.sendMessage(msg.channel, { embed } );
-        return new CommandContext(this, msg, {
-            executed: true,
-            executionType: CommandContext.getExecutionType(isAdmin, isOwner),
-            helpExecution: true,
-        } ).resolveAsync();
+        return this.sendMessage(msg.channel, { embed } )
+            .then( () => new CommandContext(this, msg, {
+                executed: true,
+                executionType: CommandContext.getExecutionType(isAdmin, isOwner),
+                helpExecution: true,
+            } ).resolveAsync() );
     }
 
     /**
