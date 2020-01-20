@@ -143,7 +143,7 @@ class AxonClient extends EventEmitter {
         if (axonOptions.extensions.DBProvider && axonOptions.extensions.DBProvider.prototype instanceof ADBProvider) {
             this.DBProvider = new axonOptions.extensions.DBProvider(this);
         } else {
-            this.DBProvider = DBSelector.select(axonOptions, this);
+            this.DBProvider = DBSelector.select(this, axonOptions);
         }
 
         /* Structures */

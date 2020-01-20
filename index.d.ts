@@ -1225,4 +1225,13 @@ declare module 'axoncore' {
         toString(): string;
         toJSON(): object;
     }
+
+    export abstract class ASelector {
+        constructor();
+        static select(...args: any[] ): any; // Not Implemented
+    }
+
+    export class DBSelector extends ASelector {
+        static select(axonOptions: AxonOptions, axonClient: AxonClient): InMemoryProvider | JsonProvider | MongoProvider;
+    }
 }
