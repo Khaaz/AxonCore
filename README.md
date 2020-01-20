@@ -111,6 +111,7 @@ TODO
 
 - Default
 - [Chalk](https://github.com/chalk/chalk)
+- [Signale](https://github.com/klaussinani/signale)
 - [Winston](https://github.com/winstonjs/winston)
 
 ### Client lifecycle
