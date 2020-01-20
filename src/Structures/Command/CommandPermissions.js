@@ -453,7 +453,7 @@ class CommandPermissions {
      * Check user permissions [needed]
      *
      * @param {Member} member
-     * @returns {Boolean}
+     * @returns {[Boolean, String?]}
      *
      * @memberof CommandPermissions
      */

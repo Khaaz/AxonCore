@@ -470,7 +470,7 @@ declare module 'axoncore' {
 
         private _checkPermsBot(channel: TextableChannel): boolean;
         private _checkPermsUserBypass(member: Member): boolean;
-        private _checkPermsUserNeeded(member: Member): boolean;
+        private _checkPermsUserNeeded(member: Member): [true] | [false, string];
         private _checkUserBypass(member: Member): boolean;
         private _checkUserNeeded(member: Member): boolean;
         private _checkRoleBypass(member: Member): boolean;
