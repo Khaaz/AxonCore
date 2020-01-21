@@ -1244,8 +1244,16 @@ declare module 'axoncore' {
         constructor(axonClient: AxonClient, messages: { [language: string]: AxonLanguageResponse }, baseLang: string)
 
         public messages: { [language: string]: AxonLanguageResponse };
-        getMessages(lang?: string): AxonLanguageResponse;
-        getMessage(message: string, lang?: string): string;
-        get(message: string, args: object, lang: string): string; // What's the structure of args?
+        public getMessages(lang?: string): AxonLanguageResponse;
+        public getMessage(message: string, lang?: string): string;
+        public get(message: string, args: object, lang: string): string; // What's the structure of args?
+    }
+
+    export class MessageParser {
+        public match: RegExp;
+        constructor();
+        public matchAll(message: string): object; // wat is this
+        public parse(message: string, args: object): string;
+        public parse2(message: string, args: any[] ): string; // args type?
     }
 }

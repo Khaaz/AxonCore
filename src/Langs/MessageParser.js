@@ -30,7 +30,7 @@ class MessageParser {
     /**
      * Parse the message by replacing the dynamic content.
      *
-     * @param {Sring} message
+     * @param {String} message
      * @param {Object} args - Custom object with all arguments that needs tobe inserted in the string
      * @returns {String} - The Parsed message
      *
