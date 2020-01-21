@@ -1234,4 +1234,18 @@ declare module 'axoncore' {
     export class DBSelector extends ASelector {
         static select(axonOptions: AxonOptions, axonClient: AxonClient): InMemoryProvider | JsonProvider | MongoProvider;
     }
+
+    export class MessageManager {
+        private _axon: AxonClient;
+        private _messages: { [language: string]: AxonLanguageResponse };
+        public translation: any; // Replace with TranslationManager
+        public parser: any; // Replace with MessageParser
+        
+        constructor(axonClient: AxonClient, messages: { [language: string]: AxonLanguageResponse }, baseLang: string)
+
+        public messages: { [language: string]: AxonLanguageResponse };
+        getMessages(lang?: string): AxonLanguageResponse;
+        getMessage(message: string, lang?: string): string;
+        get(message: string, args: object, lang: string): string; // What's the structure of args?
+    }
 }
