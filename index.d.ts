@@ -1088,11 +1088,15 @@ declare module 'axoncore' {
         [key: string]: string | undefined;
     }
 
+    interface Languages {
+        [language: string]: AxonLanguageResponse;
+    }
+
     interface Axonoptions {
         token?: string;
         prefixes?: { general: string; admin: string; owner: string };
         settings?: AxonOptionsSettings;
-        lang?: { [language: string]: AxonLanguageResponse };
+        lang?: Languages;
         logo?: () => void;
         info?: { name: string; description: string; version: string };
         staff?: { [key: string]: { name: string; id: string }[]};
@@ -1125,7 +1129,7 @@ declare module 'axoncore' {
         private _token?: string;
         public prefixes: { general: string; admin: string; owner: string };
         public settings: AxonOptionsSettings;
-        public lang: { [language: string]: AxonLanguageResponse };
+        public lang: Languages;
         public logo: ( () => void) | null;
         public info: { name: string; description: string; version: string };
         public staff: { [key: string]: { name: string; id: string }[]};
@@ -1237,13 +1241,13 @@ declare module 'axoncore' {
 
     export class MessageManager {
         private _axon: AxonClient;
-        private _messages: { [language: string]: AxonLanguageResponse };
+        private _messages: Languages;
         public translation: any; // Replace with TranslationManager
         public parser: any; // Replace with MessageParser
         
-        constructor(axonClient: AxonClient, messages: { [language: string]: AxonLanguageResponse }, baseLang: string)
+        constructor(axonClient: AxonClient, messages: Languages, baseLang: string)
 
-        public messages: { [language: string]: AxonLanguageResponse };
+        public messages: Languages;
         public getMessages(lang?: string): AxonLanguageResponse;
         public getMessage(message: string, lang?: string): string;
         public get(message: string, args: object, lang: string): string; // What's the structure of args?
@@ -1255,5 +1259,15 @@ declare module 'axoncore' {
         public matchAll(message: string): object; // wat is this
         public parse(message: string, args: object): string;
         public parse2(message: string, args: any[] ): string; // args type?
+    }
+
+    export class TranslationManager {
+        private _manager: MessageManager;
+        public lang: string;
+        constructor(manager: MessageManager, lang: string);
+
+        readonly messages: Languages;
+        public getMessages(lang: string): Languages;
+        public getMessage(message: string, lang: string): string;
     }
 }
