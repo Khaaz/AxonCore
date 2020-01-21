@@ -1337,4 +1337,12 @@ declare module 'axoncore' {
         private _handle(args: any[] ): Promise<void>;
         public handle(args: any[] ): string | null;
     }
+
+    export class ALoader {
+        public loadIn: any;
+        constructor(loadIn: any);
+        load(toLoad: any): any; // Not implemented
+        loadAll(toLoad: any): any; // Not implemented
+        unload(toUnload: any): any; // Not implemented
+    }
 }
