@@ -1298,4 +1298,15 @@ declare module 'axoncore' {
     export class DefLogger extends ALogger {
         public out: Console;
     }
+
+    export class Context {
+        public guild: string;
+        public cmd: string;
+        public user: string;
+
+        constructor(guild: string | Guild, cmd: string, user: User | string);
+
+        public static from(ctx?: { guild: string | Guild; cmd: string; user: string | User } ): Context;
+        public get(): string;
+    }
 }
