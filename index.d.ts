@@ -1309,4 +1309,9 @@ declare module 'axoncore' {
         public static from(ctx?: { guild: string | Guild; cmd: string; user: string | User } ): Context;
         public get(): string;
     }
+
+    export class LoggerSelector extends ASelector {
+        public static select(axonConfig: AxonConfig): ALogger;
+        public static testLogger(Logger: ALogger): void;
+    }
 }
