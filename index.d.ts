@@ -1325,6 +1325,14 @@ declare module 'axoncore' {
         mentionFormatter: RegExp;
         constructor(axon: AxonClient);
         readonly library: any; // Replace with ErisInterface|DjsInterface
-        public dispatch(msg: Message): Promise<void>
+        public dispatch(msg: Message): Promise<void>;
+    }
+
+    export class AHandler {
+        private _axon: AxonClient;
+        public name: string;
+        private _listeners: Listener[];
+        private _handle: Promise<void>;
+        public handle(args: any[] ): string | null;
     }
 }
