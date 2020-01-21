@@ -1289,4 +1289,13 @@ declare module 'axoncore' {
         public verbose(input: string, opt: any): void; // Replace with Context
         private _parseTime(): string;
     }
+
+    // I won't include class extensions for Winston and Signale for now
+    export class ChalkLogger extends ALogger {
+        public out: Console;
+    }
+
+    export class DefLogger extends ALogger {
+        public out: Console;
+    }
 }
