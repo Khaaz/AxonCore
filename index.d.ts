@@ -1270,4 +1270,23 @@ declare module 'axoncore' {
         public getMessages(lang: string): Languages;
         public getMessage(message: string, lang: string): string;
     }
+
+    export class ALogger {
+        /**
+         * Can be Console, Winston or Signale. Chalk will go as Console
+         */
+        public out: any;
+        /**
+         * @param out Can be Console, Winston or Signale. Chalk will go as Console
+         */
+        constructor(out: any);
+        public fatal(input: string, opt: any): void; // Replace with Context
+        public error(input: string, opt: any): void; // Replace with Context
+        public warn(input: string, opt: any): void; // Replace with Context
+        public debug(input: string, opt: any): void; // Replace with Context
+        public notice(input: string, opt: any): void; // Replace with Context
+        public info(input: string, opt: any): void; // Replace with Context
+        public verbose(input: string, opt: any): void; // Replace with Context
+        private _parseTime(): string;
+    }
 }
