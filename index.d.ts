@@ -1256,9 +1256,9 @@ declare module 'axoncore' {
     export class MessageParser {
         public match: RegExp;
         constructor();
-        public matchAll(message: string): object; // wat is this
-        public parse(message: string, args: object): string;
-        public parse2(message: string, args: any[] ): string; // args type?
+        public matchAll(message: string): Generator<RegExpExecArray, void, unknown>;
+        public parse(message: string, args: AxonLanguageResponse): string;
+        public parse2(message: string, args: string[] ): string;
     }
 
     export class TranslationManager {
