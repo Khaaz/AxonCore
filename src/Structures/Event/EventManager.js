@@ -11,7 +11,7 @@ import AHandler from './AHandler';
  * @class EventManager
  * @extends Base
  *
- * @prop {Object} _eve,ts - Object that links an event name to an array of Listener objects { eventName: [Listener, Listener] }
+ * @prop {Object} _events - Object that links an event name to an array of Listener objects { eventName: [Listener, Listener] }
  * @prop {Collection<Object>} _handlers - Collection of handler keyed to the event name [key: eventName, value: AHandler]
  */
 

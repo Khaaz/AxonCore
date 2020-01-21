@@ -1332,7 +1332,9 @@ declare module 'axoncore' {
         private _axon: AxonClient;
         public name: string;
         private _listeners: Listener[];
-        private _handle: Promise<void>;
+        constructor(axon: AxonClient, name: string, listeners: Listener[] );
+        public size: number;
+        private _handle(args: any[] ): Promise<void>;
         public handle(args: any[] ): string | null;
     }
 }
