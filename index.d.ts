@@ -1318,6 +1318,13 @@ declare module 'axoncore' {
     export class ADispatcher {
         private _axon: AxonClient;
         constructor(axon: AxonClient);
-        public dispatch(): any; // Not implemented
+        public dispatch(msg: any): any; // Not implemented
+    }
+
+    export class CommandDispatcher extends ADispatcher {
+        mentionFormatter: RegExp;
+        constructor(axon: AxonClient);
+        readonly library: any; // Replace with ErisInterface|DjsInterface
+        public dispatch(msg: Message): Promise<void>
     }
 }

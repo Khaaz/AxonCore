@@ -23,7 +23,7 @@ class CommandDispatcher extends ADispatcher {
     constructor(axon) {
         super(axon);
 
-        this.mentionFormater = /<@!/g;
+        this.mentionFormatter = /<@!/g;
     }
 
     /**
@@ -98,7 +98,7 @@ class CommandDispatcher extends ADispatcher {
         /* Formatting mention to replace <!@ mention to <@ mentions (uniformise mentions) */
         const content = this.library.message
             .getContent(msg)
-            .replace(this.mentionFormater, '<@');
+            .replace(this.mentionFormatter, '<@');
         this.library.message.setContent(msg, content);
 
         /* IN GUILD | NOT ADMIN | Check if the user/role/channel is ignored in the guild */
