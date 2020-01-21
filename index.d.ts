@@ -1314,4 +1314,10 @@ declare module 'axoncore' {
         public static select(axonConfig: AxonConfig): ALogger;
         public static testLogger(Logger: ALogger): void;
     }
+
+    export class ADispatcher {
+        private _axon: AxonClient;
+        constructor(axon: AxonClient);
+        public dispatch(): any; // Not implemented
+    }
 }
