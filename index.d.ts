@@ -1435,6 +1435,9 @@ declare module 'axoncore' {
     }
 
     export class Validater {
-
+        static validModule(module: Module): boolean;
+        static validCommand(command: Command): boolean;
+        static checkValidPermissionName(PERMISSIONS: string[], perm: string): boolean;
+        static checkMessageValidity(content: Message | string): boolean;
     }
 }
