@@ -1367,7 +1367,14 @@ declare module 'axoncore' {
     }
 
     export class ListenerLoader extends ALoader {
-
+        private _module: Module;
+        constructor(module: Module);
+        readonly axon: AxonClient;
+        readonly module: Module;
+        readonly logger: ALogger;
+        load(listener: Listener): boolean;
+        loadAll(listeners: { [key: string]: Listener } ): boolean;
+        unload(label: string): true;
     }
 
     export class ModuleLoader extends ALoader {

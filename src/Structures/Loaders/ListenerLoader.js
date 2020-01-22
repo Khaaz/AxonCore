@@ -20,7 +20,7 @@ class ListenerLoader extends ALoader {
      * Returns the Module instance
      *
      * @readonly
-     * @type {Module}
+     * @type {AxonClient}
      * @memberof ListenerLoader
      */
     get axon() {
