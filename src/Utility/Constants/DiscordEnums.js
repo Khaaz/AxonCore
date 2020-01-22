@@ -302,6 +302,7 @@ export const CLIENT_STATUS_TYPES = {
     STREAMING: 1,
     LISTENING: 2,
     WATCHING: 3,
+    CUSTOM: 4,
 };
 
 export default {

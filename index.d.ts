@@ -1440,4 +1440,166 @@ declare module 'axoncore' {
         static checkValidPermissionName(PERMISSIONS: string[], perm: string): boolean;
         static checkMessageValidity(content: Message | string): boolean;
     }
+
+    type DISCORD_GATEWAY_EVENTS = [
+        'HELLO',
+        'READY',
+        'RESUMED',
+        'INVALID_SESSION',
+        'CHANNEL_CREATE',
+        'CHANNEL_UPDATE',
+        'CHANNEL_DELETE',
+        'CHANNEL_PINS_UPDATE',
+        'GUILD_CREATE',
+        'GUILD_UPDATE',
+        'GUILD_DELETE',
+        'GUILD_BAN_ADD',
+        'GUILD_BAN_REMOVE',
+        'GUILD_EMOJIS_UPDATE',
+        'GUILD_INTEGRATIONS_UPDATE',
+        'GUILD_MEMBER_ADD',
+        'GUILD_MEMBER_REMOVE',
+        'GUILD_MEMBER_UPDATE',
+        'GUILD_MEMBERS_CHUNK',
+        'GUILD_ROLE_CREATE',
+        'GUILD_ROLE_UPDATE',
+        'GUILD_ROLE_DELETE',
+        'MESSAGE_CREATE',
+        'MESSAGE_UPDATE',
+        'MESSAGE_DELETE',
+        'MESSAGE_DELETE_BULK',
+        'MESSAGE_REACTION_ADD',
+        'MESSAGE_REACTION_REMOVE',
+        'MESSAGE_REACTION_REMOVE_ALL',
+        'TYPING_START',
+        'USER_UPDATE',
+        'VOICE_STATE_UPDATE',
+        'VOICE_SERVER_UPDATE',
+        'WEBHOOKS_UPDATE',
+    ]
+
+    type DISCORD_PERMISSIONS = [
+        'CREATE_INSTANT_INVITE',
+        'KICK_MEMBERS',
+        'BAN_MEMBERS',
+        'ADMINISTRATOR',
+        'MANAGE_CHANNELS',
+        'MANAGE_GUILD',
+        'ADD_REACTIONS',
+        'VIEW_AUDIT_LOG',
+        'PRIORITY_SPEAKER',
+        'STREAM',
+        'VIEW_CHANNEL',
+        'SEND_MESSAGES',
+        'SEND_TTS_MESSAGES',
+        'MANAGE_MESSAGES',
+        'EMBED_LINKS',
+        'ATTACH_FILES',
+        'READ_MESSAGE_HISTORY',
+        'MENTION_EVERYONE',
+        'USE_EXTERNAL_EMOJIS',
+        'CONNECT',
+        'SPEAK',
+        'MUTE_MEMBERS',
+        'DEAFEN_MEMBERS',
+        'MOVE_MEMBERS',
+        'USE_VAD',
+        'CHANGE_NICKNAME',
+        'MANAGE_NICKNAMES',
+        'MANAGE_ROLES',
+        'MANAGE_WEBHOOKS',
+        'MANAGE_EMOJIS',
+    ]
+
+    // There's some inconsistency with this
+    type PERMISSIONS_NUMBERS = {
+        CREATE_INSTANT_INVITE: 1;
+        KICK_MEMBERS: 2;
+        BAN_MEMBERS: 4;
+        ADMINISTRATOR: 8;
+        MANAGE_CHANNELS: 16;
+        MANAGE_GUILD: 32;
+        ADD_REACTIONS: 64;
+        VIEW_AUDIT_LOG: 128;
+        PRIORITY_SPEAKER: 256;
+        STREAM: 512;
+        VIEW_CHANNEL: 1024;
+        SEND_MESSAGES: 2048;
+        SEND_TTS_MESSAGES: 4096;
+        MANAGE_MESSAGES: 8192;
+        EMBED_LINKS: 16384;
+        ATTACH_FILES: 32768;
+        READ_MESSAGE_HISTORY: 65536;
+        MENTION_EVERYONE: 131072;
+        USE_EXTERNAL_EMOJIS: 262144;
+        // View Guild Analytics: 524288
+        CONNECT: 1048576;
+        SPEAK: 2097152;
+        MUTE_MEMBERS: 4194304;
+        DEAFEN_MEMBERS: 8388608;
+        MOVE_MEMBERS: 16777216;
+        USE_VAD: 33554432;
+        CHANGE_NICKNAME: 67108864;
+        MANAGE_NICKNAMES: 134217728;
+        MANAGE_ROLES: 268435456;
+        MANAGE_WEBHOOKS: 536870912;
+        MANAGE_EMOJIS: 1073741824;
+
+        ALL: 2146435070;
+    }
+
+    type EMBED_LIMITS = {
+        LIMIT_CONTENT: 2000;
+        LIMIT_TOTAL_EMBED: 6000;
+        LIMIT_TITLE: 256;
+        LIMIT_DESCRIPTION: 2048;
+        NUMBER_FIELDS: 25;
+        LIMIT_FIELD_NAME: 256;
+        LIMIT_FIELD_VALUE: 1024;
+        LIMIT_FOOTER_TEXT: 2048;
+        LIMIT_AUTHOR_NAME: 256;
+    }
+
+    type CHANNEL_TYPES = {
+        GUILD_TEXT: 0;
+        DM: 1;
+        GUILD_VOICE: 2;
+        GROUP_DM: 3;
+        GUILD_CATEGORY: 4;
+        GUILD_NEWS: 5;
+        GUILD_STORE: 6;
+    }
+
+    type MESSAGE_TYPES = {
+        DEFAULT: 0;
+        RECIPIENT_ADD: 1;
+        RECIPIENT_REMOVE: 2;
+        CALL: 3;
+        CHANNEL_NAME_CHANGE: 4;
+        CHANNEL_ICON_CHANGE: 5;
+        CHANNEL_PINNED_MESSAGE: 6;
+        GUILD_MEMBER_JOIN: 7;
+        USER_PREMIUM_GUILD_SUBSCRIPTION: 8;
+        USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_1: 9;
+        USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_2: 10;
+        USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_3: 11;
+    }
+
+    type CLIENT_STATUS_TYPES = {
+        PLAYING: 0;
+        STREAMING: 1;
+        LISTENING: 2;
+        WATCHING: 3;
+        CUSTOM: 4;
+    }
+
+    export interface DiscordEnums {
+        DISCORD_GATEWAY_EVENTS: DISCORD_GATEWAY_EVENTS;
+        DISCORD_PERMISSIONS: DISCORD_PERMISSIONS;
+        PERMISSION_NUMBERS: PERMISSIONS_NUMBERS;
+        EMBED_LIMITS: EMBED_LIMITS;
+        CHANNEL_TYPES: CHANNEL_TYPES;
+        MESSAGE_TYPES: MESSAGE_TYPES;
+        CLIENT_STATUS_TYPES: CLIENT_STATUS_TYPES;
+    }
 }
