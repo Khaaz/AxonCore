@@ -1352,7 +1352,18 @@ declare module 'axoncore' {
     }
 
     export class CommandLoader extends ALoader {
-
+        private _module: Module;
+        constructor(module: Module);
+        readonly axon: AxonClient;
+        readonly logger: ALogger;
+        load(command: Command, parent?: Command): boolean;
+        loadAll(commands: Command[] ): boolean;
+        loadSubCommands(parentCommand: Command): void;
+        unload(label: string): true;
+        registerCommand(command: Command): void;
+        registerSubCommand(command: Command, parent: Command): void;
+        unregisterCommand(fullLabel: string): boolean;
+        unregisterSubCommand(command: Command, subCommand: Command): void;
     }
 
     export class ListenerLoader extends ALoader {
@@ -1384,6 +1395,6 @@ declare module 'axoncore' {
     }
 
     export class Validater {
-        
+
     }
 }
