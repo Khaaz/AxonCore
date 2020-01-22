@@ -1378,7 +1378,12 @@ declare module 'axoncore' {
     }
 
     export class ModuleLoader extends ALoader {
-
+        constructor(axonClient: AxonClient);
+        readonly axon: AxonClient;
+        readonly logger: ALogger;
+        load(module: Module): boolean;
+        loadAll(modules: { [key: string]: Module } ): boolean;
+        unload(label: string): true;
     }
 
     export class ARegistry {
