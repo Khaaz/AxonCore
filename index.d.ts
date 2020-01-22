@@ -1650,4 +1650,6 @@ declare module 'axoncore' {
         public every(func: (i: T) => boolean): boolean;
         public [Symbol.iterator](): [string|number, T][];
     }
+
+    // ReactionCollector file is empty
 }
