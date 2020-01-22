@@ -1,7 +1,7 @@
 import { EventEmitter } from 'events';
 import * as Eris from 'eris';
 import * as djs from 'discord.js';
-import { Model, Document, Query } from 'mongoose';
+import { Model, Document } from 'mongoose';
 type Message = Eris.Message | djs.Message;
 type Member = Eris.Member | djs.GuildMember;
 type Client = Eris.Client | djs.Client;
@@ -1621,5 +1621,33 @@ declare module 'axoncore' {
 
     export class AutoQueue extends Queue {
         exec(): Promise<void>;
+    }
+
+    class Node {
+        public key: any;
+        public value: any;
+        public next: any;
+        public prev: any;
+    }
+
+    export class LRUCache<T> {
+        public limit: number;
+        public size: number;
+        public head: Node | null;
+        public queue: Node | null;
+        private _cache: Collection<T>;
+        constructor(limit: number, options: { base?: new (...args: any[] ) => T; iterable?: {[key: string]: T} | [string, T][] } );
+        public set(key: string, value: T): void;
+        public get(key: string): T | null;
+        public remove(key: string): void;
+        public clear(): void;
+        private _ensureLimit(): void;
+        public forEach<K>(fn: (value: T, key: K, map: Map<K, T>) => void, thisArg?: any): void;
+        public find(func: (i: T) => boolean): T;
+        public map<R>(func: (i: T) => R): R;
+        public filter(func: (i: T) => boolean): T[];
+        public some(func: (i: T) => boolean): boolean;
+        public every(func: (i: T) => boolean): boolean;
+        public [Symbol.iterator](): [string|number, T][];
     }
 }
