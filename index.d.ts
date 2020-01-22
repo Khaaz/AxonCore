@@ -1,7 +1,7 @@
 import { EventEmitter } from 'events';
 import * as Eris from 'eris';
 import * as djs from 'discord.js';
-import { Model, Document } from 'mongoose';
+import { Model, Document, Query } from 'mongoose';
 type Message = Eris.Message | djs.Message;
 type Member = Eris.Member | djs.GuildMember;
 type Client = Eris.Client | djs.Client;
@@ -1334,8 +1334,8 @@ declare module 'axoncore' {
         private _listeners: Listener[];
         constructor(axon: AxonClient, name: string, listeners: Listener[] );
         public size: number;
-        private _handle(args: any[] ): Promise<void>;
-        public handle(args: any[] ): string | null;
+        private _handle(...args: any[] ): Promise<void>;
+        public handle(...args: any[] ): string | null;
     }
 
     export class ALoader {
@@ -1601,5 +1601,15 @@ declare module 'axoncore' {
         CHANNEL_TYPES: CHANNEL_TYPES;
         MESSAGE_TYPES: MESSAGE_TYPES;
         CLIENT_STATUS_TYPES: CLIENT_STATUS_TYPES;
+    }
+
+    export class Queue {
+        private _functions: Function[];
+        private _running: boolean;
+        public stopOnError: boolean;
+        constructor(stopOnError?: boolean);
+        exec(): void;
+        add(func: Function, toExec?: boolean, ...args: any[] ): void;
+        createClosure(fn: Function, ...args: any[] ): unknown;
     }
 }
