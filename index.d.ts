@@ -1608,8 +1608,14 @@ declare module 'axoncore' {
         private _running: boolean;
         public stopOnError: boolean;
         constructor(stopOnError?: boolean);
-        exec(): void;
-        add(func: Function, toExec?: boolean, ...args: any[] ): void;
-        createClosure(fn: Function, ...args: any[] ): unknown;
+        public exec(): void;
+        public add(func: Function, toExec?: boolean, ...args: any[] ): void;
+        public createClosure(fn: Function, ...args: any[] ): unknown;
+    }
+
+    export class AsyncQueue extends Queue {
+        public exec(): Promise<void>;
+        public add(func: Function, toExec?: boolean, ...args: any[] ): Promise<void>;
+        public createClosure<T>(fn: Function, resolve: (value: unknown) => void, reject: (reason: Error) => void, ...args: any[] ): Promise<void>
     }
 }
