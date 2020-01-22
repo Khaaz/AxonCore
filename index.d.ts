@@ -1428,8 +1428,10 @@ declare module 'axoncore' {
         unregister(label: string, listener?: Listener): void;
     }
 
-    export class ModuleRegistry extends ARegistry {
-
+    export class ModuleRegistry extends ARegistry<Module> {
+        constructor(axon: AxonClient);
+        register(label: string, module: Module): void;
+        unregister(label: string, module?: Module): void;
     }
 
     export class Validater {

@@ -20,7 +20,7 @@ class ModuleRegistry extends ARegistry {
      * Register a Module inside the ModuleRegistry
      *
      * @param {String} label - The module label
-     * @param {Module} modile - The module object
+     * @param {Module} module - The module object
      *
      * @memberof ModuleRegistry
      */
