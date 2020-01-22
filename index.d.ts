@@ -1350,4 +1350,40 @@ declare module 'axoncore' {
         static initStaff(staffConfig: { [key: string]: { name: string; id: string }[]}, logger: ALogger): { [key: string]: string[] };
         static initAxon(axon: AxonClient): Promise<void>;
     }
+
+    export class CommandLoader extends ALoader {
+
+    }
+
+    export class ListenerLoader extends ALoader {
+
+    }
+
+    export class ModuleLoader extends ALoader {
+
+    }
+
+    export class ARegistry {
+
+    }
+
+    export class CommandRegistry extends ARegistry {
+
+    }
+
+    export class GuildConfigCache {
+
+    }
+
+    export class ListenerRegistry extends ARegistry {
+
+    }
+
+    export class ModuleRegistry extends ARegistry {
+
+    }
+
+    export class Validater {
+        
+    }
 }
