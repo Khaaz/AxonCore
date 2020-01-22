@@ -1357,7 +1357,7 @@ declare module 'axoncore' {
         readonly axon: AxonClient;
         readonly logger: ALogger;
         load(command: Command, parent?: Command): boolean;
-        loadAll(commands: Command[] ): boolean;
+        loadAll(commands: { [key: string]: Command } ): boolean;
         loadSubCommands(parentCommand: Command): void;
         unload(label: string): true;
         registerCommand(command: Command): void;
