@@ -1386,8 +1386,20 @@ declare module 'axoncore' {
         unload(label: string): true;
     }
 
-    export class ARegistry {
-
+    export class ARegistry<T> {
+        private _axon: AxonClient;
+        public registry: Collection<T>;
+        constructor(axon: AxonClient, base: T);
+        readonly axon: AxonClient;
+        readonly size: number;
+        has(key: string): boolean;
+        get(key: string): T;
+        getAll(): Collection<T>;
+        add(key: string, value: T): Collection<T>;
+        remove(key: string): boolean;
+        public [Symbol.iterator](): [string|number, T][];
+        public register(key: string, value: T): any; // Not implemented
+        public unregister(key: string, value: T): any; // Not implemented
     }
 
     export class CommandRegistry extends ARegistry {
