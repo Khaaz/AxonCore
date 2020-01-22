@@ -1422,8 +1422,10 @@ declare module 'axoncore' {
         public fetchGuildConf(gID: string): Promise<GuildConfig|null>;
     }
 
-    export class ListenerRegistry extends ARegistry {
-
+    export class ListenerRegistry extends ARegistry<Listener> {
+        constructor(axon: AxonClient);
+        register(label: string, listener: Listener): void;
+        unregister(label: string, listener?: Listener): void;
     }
 
     export class ModuleRegistry extends ARegistry {
