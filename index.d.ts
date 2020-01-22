@@ -1413,7 +1413,13 @@ declare module 'axoncore' {
     }
 
     export class GuildConfigCache {
-
+        private _axon: AxonClient;
+        public guildConfigs: any; // Replace with LRUCache
+        get(key: string): GuildConfig;
+        set(key: string, value: GuildConfig): void;
+        public [Symbol.iterator](): [string|number, GuildConfig];
+        public getOrFetch(key: string): Promise<GuildConfig|null>;
+        public fetchGuildConf(gID: string): Promise<GuildConfig|null>;
     }
 
     export class ListenerRegistry extends ARegistry {
