@@ -11,7 +11,7 @@ class ClientInitialiser {
      * Initialise AxonStaff from the configuration file.
      *
      * @static
-     * @param {Object} botConfig
+     * @param {Object} staffConfig
      * @param {Object} logger
      * @returns {Object} Axon staff newly created.
      * @memberof ClientInitialiser

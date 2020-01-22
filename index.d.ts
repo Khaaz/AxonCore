@@ -1345,4 +1345,9 @@ declare module 'axoncore' {
         loadAll(toLoad: any): any; // Not implemented
         unload(toUnload: any): any; // Not implemented
     }
+
+    export class ClientInitialiser {
+        static initStaff(staffConfig: { [key: string]: { name: string; id: string }[]}, logger: ALogger): { [key: string]: string[] };
+        static initAxon(axon: AxonClient): Promise<void>;
+    }
 }
