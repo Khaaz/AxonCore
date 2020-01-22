@@ -1393,7 +1393,7 @@ declare module 'axoncore' {
         readonly axon: AxonClient;
         readonly size: number;
         has(key: string): boolean;
-        get(key: string): T;
+        get(key: string): T | null;
         getAll(): Collection<T>;
         add(key: string, value: T): Collection<T>;
         remove(key: string): boolean;
@@ -1402,8 +1402,14 @@ declare module 'axoncore' {
         public unregister(key: string, value: T): any; // Not implemented
     }
 
-    export class CommandRegistry extends ARegistry {
-
+    export class CommandRegistry extends ARegistry<Command> {
+        public aliases: Map<string | number, string>;
+        constructor(axon: AxonClient);
+        get(cmd: string): Command | null;
+        getFull(splitLabel: string[] ): Command | null;
+        register(label: string, command: Command): void;
+        unregister(label: string, command?: Command): void;
+        resolve(label: string, args: string[], guildConfig?: GuildConfig): Command | null;
     }
 
     export class GuildConfigCache {
