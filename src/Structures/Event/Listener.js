@@ -81,7 +81,7 @@ class Listener extends Base {
      * @memberof Listener
      */
     async _execute(guildConfig, ...args) {
-        return this.execute(...args, guildConfig); // No execute function
+        return this.execute(...args, guildConfig);
     }
 
     /**
