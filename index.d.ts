@@ -160,7 +160,7 @@ declare module 'axoncore' {
         private _basePath: string;
         private _axonPath: string;
         public axonExecutor: AsyncQueue;
-        public guildExecutors: {[key: string]: any}; // Clarify with Khaaz
+        public guildExecutors: {[guildID: string]: AsyncQueue};
 
         constructor(basePath: string);
 
@@ -560,7 +560,7 @@ declare module 'axoncore' {
         public parentCommand: Command | null;
 
         public subCommands: Collection<Command> | null;
-        public subCommandAliases?: Map<string, string>; // Missing from actual class
+        public subCommandAliases?: Map<string, string>;
 
         // GETTERS
         readonly module: Module;
@@ -603,9 +603,9 @@ declare module 'axoncore' {
 
         constructor(module: Module, data?: Listener);
 
-        private _execute(guildConf: GuildConfig, ...args: string[] ): Promise<any>; // Will error, see below
+        private _execute(guildConf: GuildConfig, ...args: string[] ): Promise<any>;
 
-        // public execute(args: any, guildConf: GuildConfig): Promise<any>; // Function does not exist
+        public execute(args: any, guildConf: GuildConfig): Promise<any>; // `args` spread and placed after `guildConf`?
     }
 
     class EventManager extends Base {
@@ -613,7 +613,7 @@ declare module 'axoncore' {
         private _handlers: Collection<AHandler>;
         constructor(axon: AxonClient, name: string, listeners: Listener[] );
         // GETTERS
-        readonly HANDLERS: Record<string, any>; // Create each handler and group them to lib
+        readonly HANDLERS: Record<string, any>; // Replace with LibInterface
         readonly handlers: Collection<AHandler>;
 
         public getListeners(eventName: string): Listener[];
@@ -882,7 +882,7 @@ declare module 'axoncore' {
 
     interface LibraryTypes { ERIS: 0; DISCORDJS: 1 }
     interface LoggerTypes { DEFAULT: 0; CHALK: 1; SIGNALE: 2; WINSTON: 3 }
-    interface DBTypes { DBLESS: 0; JSON: 1; MONGO: 2 }
+    interface DBTypes { InMemory: 0; JSON: 1; MONGO: 2 }
     interface CommandExecutionTypes {
         REGULAR: 0;
         ADMIN: 1;
@@ -1092,7 +1092,7 @@ declare module 'axoncore' {
         [language: string]: AxonLanguageResponse;
     }
 
-    interface Axonoptions {
+    interface AxonOptionsBase {
         token?: string;
         prefixes?: { general: string; admin: string; owner: string };
         settings?: AxonOptionsSettings;
@@ -1137,7 +1137,7 @@ declare module 'axoncore' {
         public custom: object | null;
         public webhooks: Webhooks;
         public extensions: AxonOptionsExtensions;
-        constructor(data?: Axonoptions | {}, webhooks?: Webhooks | {}, extensions?: AxonOptionsExtensions | {} )
+        constructor(data?: AxonOptionsBase | {}, webhooks?: Webhooks | {}, extensions?: AxonOptionsExtensions | {} )
     }
 
     interface AxonConfs {

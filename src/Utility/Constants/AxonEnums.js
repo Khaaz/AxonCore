@@ -222,12 +222,12 @@ export const LOGGER_TYPES = {
 
 /**
  * @typedef {Number} DB_TYPES
- * * DBLESS: 0
+ * * InMemory: 0
  * * JSON: 1
  * * MONGO: 2
  */
 export const DB_TYPES = {
-    DBLESS: 0,
+    InMemory: 0,
     JSON: 1,
     MONGO: 2,
 };
