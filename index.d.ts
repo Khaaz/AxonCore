@@ -101,8 +101,8 @@ declare module 'axoncore' {
 
         public Infos: ModuleInfo;
 
-        public commandLoader: any; // Replace with CommandLoader
-        public listenerLoader: any; // Replace with listenerLoader
+        public commandLoader: CommandLoader;
+        public listenerLoader: ListenerLoader;
 
         constructor(client: AxonClient, data?: ModuleData);
 
@@ -159,7 +159,7 @@ declare module 'axoncore' {
         private _guildDefault: GuildJSON;
         private _basePath: string;
         private _axonPath: string;
-        public axonExecutor: any; // Replace with AsyncQueue
+        public axonExecutor: AsyncQueue;
         public guildExecutors: {[key: string]: any}; // Clarify with Khaaz
 
         constructor(basePath: string);
@@ -168,7 +168,7 @@ declare module 'axoncore' {
         readonly axonDefault: AxonJSON;
         readonly guildDefault: GuildJSON;
 
-        public getExecutor(guildID: string): any; // Replace with AsyncQueue
+        public getExecutor(guildID: string): AsyncQueue;
         public toJSON(string: string): string | object;
         public toString(json: object): string | object;
 
@@ -383,7 +383,7 @@ declare module 'axoncore' {
 
         constructor(command: Command, override: ACommandOptions, useModuleDefault: boolean);
 
-        readonly l: any; // Replace with MessageManager
+        readonly l: MessageManager;
 
         public isGuildOnly(): boolean;
         public isHidden(): boolean;
@@ -610,11 +610,11 @@ declare module 'axoncore' {
 
     class EventManager extends Base {
         private _events: {[EventName: string]: Listener[]};
-        private _handlers: Collection<any>; // Replace with AHandler
+        private _handlers: Collection<AHandler>;
         constructor(axon: AxonClient, name: string, listeners: Listener[] );
         // GETTERS
         readonly HANDLERS: Record<string, any>; // Create each handler and group them to lib
-        readonly handlers: Collection<any>; // Replace with AHandler
+        readonly handlers: Collection<AHandler>;
 
         public getListeners(eventName: string): Listener[];
         public bindListeners(): void;
@@ -656,7 +656,7 @@ declare module 'axoncore' {
         readonly axon: AxonClient;
         readonly bot: Client;
         readonly template: AxonTemplate;
-        readonly logger: any; // Replace with ALogger
+        readonly logger: ALogger;
         readonly utils: Utils;
         readonly library: any; // Replace with LibraryInterface
 
@@ -759,11 +759,11 @@ declare module 'axoncore' {
 
         public readonly axon: AxonClient;
         public readonly bot: Client;
-        public readonly logger: any; // Replace with ALogger
+        public readonly logger: ALogger;
         public readonly Resolver?: Resolver;
         public readonly axonUtils?: AxonUtils;
         public readonly utils?: Utils;
-        public readonly l?: any; // Replace with MessageManager
+        public readonly l?: MessageManager;
         constructor(axonClient: AxonClient);
 
         // Methods
@@ -1074,7 +1074,7 @@ declare module 'axoncore' {
         lang?: string;
         debugMode?: boolean;
         library?: any; // Replace with Library class
-        logger?: any; // Replace with ALogger
+        logger?: ALogger;
         db?: 0 | 1 | 2;
         guildConfigCache?: number;
     }
@@ -1119,7 +1119,7 @@ declare module 'axoncore' {
 
     interface AxonOptionsExtensions {
         utils: Utils;
-        logger: any; // Replace with ALogger
+        logger: ALogger;
         DBProvider: ADBProvider;
         DBLocation: string;
         axonConfig: AxonConfig;
@@ -1174,7 +1174,7 @@ declare module 'axoncore' {
         public settings: AxonParams;
         public infos: Infos;
         public axoncore: AxonInfos;
-        public logger: any; // Replace with ALogger
+        public logger: ALogger;
         public axonUtils: AxonUtils;
 
         private _botClient: Client;
@@ -1182,29 +1182,30 @@ declare module 'axoncore' {
         public utils: Utils;
         public DBProvider: ADBProvider
 
-        public modules: Collection<Module>; // Replace with ModuleRegistry
-        public commands: Collection<Command>; // Replace with CommandRegistry
-        public listeners: any; // Replace with ListenerRegistry
+        public modules: ModuleRegistry;
+        public commands: CommandRegistry;
+        // Conflicting EventEmitter property name
+        // public listeners: ListenerRegistry;
         public eventManager: EventManager;
 
-        public guildConfigs: Collection<object>; // Replace with GuildConfigCache
+        public guildConfigs: GuildConfigCache;
 
-        public moduleLoader: any; // REPLACE "any" WITH ModuleLoader CLASS
-        public dispatcher: any; // REPLACE "any" WITH CommandDispatcher CLASS
-        public messageManager: any; // REPLACE "any" WITH MessageManager CLASS
+        public moduleLoader: ModuleLoader;
+        public dispatcher: CommandDispatcher;
+        public messageManager: MessageManager;
 
         public staff: { [key: string]: { name: string; id: string }[]};
 
         constructor(botClient: Client, AxonOptions: AxonOptions, modules: object);
 
         readonly botClient: Client;
-        readonly handlers: Collection<any>; // Replace with AHandler
+        readonly handlers: Collection<AHandler>;
         getListeners(eventName: string): Listener[];
         readonly Resolver: Resolver;
         readonly webhooks: Webhooks;
         readonly template: AxonTemplate;
         readonly custom: object | null;
-        readonly l: any; // REPLACE "any" WITH MessageManager CLASS
+        readonly l: MessageManager;
 
         getModule(module: string): Module | null;
         getCommand(fullLabel: string): Command | null;
@@ -1242,8 +1243,8 @@ declare module 'axoncore' {
     export class MessageManager {
         private _axon: AxonClient;
         private _messages: Languages;
-        public translation: any; // Replace with TranslationManager
-        public parser: any; // Replace with MessageParser
+        public translation: TranslationManager;
+        public parser: MessageParser;
         
         constructor(axonClient: AxonClient, messages: Languages, baseLang: string)
 
@@ -1280,13 +1281,13 @@ declare module 'axoncore' {
          * @param out Can be Console, Winston or Signale. Chalk will go as Console
          */
         constructor(out: any);
-        public fatal(input: string, opt: any): void; // Replace with Context
-        public error(input: string, opt: any): void; // Replace with Context
-        public warn(input: string, opt: any): void; // Replace with Context
-        public debug(input: string, opt: any): void; // Replace with Context
-        public notice(input: string, opt: any): void; // Replace with Context
-        public info(input: string, opt: any): void; // Replace with Context
-        public verbose(input: string, opt: any): void; // Replace with Context
+        public fatal(input: string, opt: Context): void;
+        public error(input: string, opt: Context): void;
+        public warn(input: string, opt: Context): void;
+        public debug(input: string, opt: Context): void;
+        public notice(input: string, opt: Context): void;
+        public info(input: string, opt: Context): void;
+        public verbose(input: string, opt: Context): void;
         private _parseTime(): string;
     }
 
@@ -1414,7 +1415,7 @@ declare module 'axoncore' {
 
     export class GuildConfigCache {
         private _axon: AxonClient;
-        public guildConfigs: any; // Replace with LRUCache
+        public guildConfigs: LRUCache<GuildConfig>;
         get(key: string): GuildConfig;
         set(key: string, value: GuildConfig): void;
         public [Symbol.iterator](): [string|number, GuildConfig];
