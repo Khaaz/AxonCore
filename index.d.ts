@@ -1533,7 +1533,7 @@ declare module 'axoncore' {
         READ_MESSAGE_HISTORY: 65536;
         MENTION_EVERYONE: 131072;
         USE_EXTERNAL_EMOJIS: 262144;
-        // View Guild Analytics: 524288
+        VIEW_GUILD_ANALYTICS: 524288;
         CONNECT: 1048576;
         SPEAK: 2097152;
         MUTE_MEMBERS: 4194304;
@@ -1546,7 +1546,7 @@ declare module 'axoncore' {
         MANAGE_WEBHOOKS: 536870912;
         MANAGE_EMOJIS: 1073741824;
 
-        ALL: 2146435070;
+        ALL: 2147483647;
     }
 
     type EMBED_LIMITS = {

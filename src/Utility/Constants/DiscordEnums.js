@@ -164,7 +164,8 @@ export const DISCORD_PERMISSIONS = [
  * * ATTACH_FILES: 1 << 15
  * * READ_MESSAGE_HISTORY: 1 << 16
  * * MENTION_EVERYONE: 1 << 17
- * * USE_EXTERNAL_EMOJIS: 1 << 1, * *
+ * * USE_EXTERNAL_EMOJIS: 1 << 18
+ * * VIEW_GUILD_ANALYTICS: 1 << 19
  * * CONNECT: 1 << 20
  * * SPEAK: 1 << 21
  * * MUTE_MEMBERS: 1 << 22
@@ -198,7 +199,7 @@ const PERMISSIONS_NUMBERS = {
     READ_MESSAGE_HISTORY: 1 << 16,
     MENTION_EVERYONE: 1 << 17,
     USE_EXTERNAL_EMOJIS: 1 << 18,
-
+    VIEW_GUILD_ANALYTICS: 1 << 19,
     CONNECT: 1 << 20,
     SPEAK: 1 << 21,
     MUTE_MEMBERS: 1 << 22,
@@ -296,6 +297,7 @@ export const MESSAGE_TYPES = {
  * * STREAMING: 1
  * * LISTENING: 2
  * * WATCHING: 3
+ * * CUSTOM: 4
  */
 export const CLIENT_STATUS_TYPES = {
     PLAYING: 0,
