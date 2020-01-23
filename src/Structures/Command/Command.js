@@ -183,7 +183,7 @@ class Command extends Base {
      *
      * @memberof Command
      */
-    async _process(params) {
+    _process(params) {
         const {
             msg, args, guildConfig, isAdmin, isOwner,
         } = params;
@@ -253,15 +253,16 @@ class Command extends Base {
 
         /* Sends invalid usage message in case of invalid usage (not enough argument) [option enabled] */
         if (this.options.shouldSendInvalidUsageMessage(args) ) {
-            await this.sendHelp( {
+            return this.sendHelp( {
                 msg, args, guildConfig, isAdmin, isOwner,
+            } ).then( () => {
+                isAdmin && this._cooldown.shouldSetCooldown() && this._cooldown.setCooldown(userID);
+                return new CommandContext(this, msg, {
+                    executed: false,
+                    executionType: CommandContext.getExecutionType(isAdmin, isOwner),
+                    executionState: COMMAND_EXECUTION_STATE.INVALID_USAGE,
+                } ).resolveAsync();
             } );
-            isAdmin && this._cooldown.shouldSetCooldown() && this._cooldown.setCooldown(userID);
-            return new CommandContext(this, msg, {
-                executed: false,
-                executionType: CommandContext.getExecutionType(isAdmin, isOwner),
-                executionState: COMMAND_EXECUTION_STATE.INVALID_USAGE,
-            } ).resolveAsync();
         }
 
         if (this.options.shouldDeleteCommand() ) { // delete input
