@@ -15,16 +15,19 @@
         "lines-between-class-members": 0,
         "@typescript-eslint/no-explicit-any": 0,
         "@typescript-eslint/no-use-before-define": [ 2, { "classes": false} ],
-        "@typescript-eslint/member-delimiter-style": {
-          "multiline": {
-            "delimiter": "semi",
-            "requireLast": true
-          },
-          "singleline": {
-            "delimiter": "semi",
-            "requireLast": true
+        "@typescript-eslint/member-delimiter-style": [
+            "error",
+            {
+            "multiline": {
+              "delimiter": "semi",
+              "requireLast": true
+            },
+            "singleline": {
+              "delimiter": "semi",
+              "requireLast": true
+            }
           }
-        }
+        ]
       }
     }
   ]
