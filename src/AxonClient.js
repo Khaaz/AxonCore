@@ -45,21 +45,24 @@ import ALogger from './Loggers/ALogger';
  * @class AxonClient
  * @extends EventEmitter
  *
- * @prop {BotClient} _botClient - Eris or Discordjs Client
- * @prop {Collection<Module>} modules - All modules in the client [key: label, value: module]
- * @prop {Collection<Command>} commands - All commands in the client [key: label, value: command]
- * @prop {Map<String>} commandAliases - All aliases in the client [key: alias, value: commandLabel]
- * @prop {EventManager} EventManager - The EventManager instance that handle all AxonCore events
+ * @prop {BotClient} _botClient - Discord library Client
+ * @prop {ModuleRegistry} modules - Registry holding all modules
+ * @prop {CommandRegistry} commands - Registry holding all commands
+ * @prop {ListenerRegistry} listeners - Registry holding all listeners
+ * @prop {EventManager} EventManager - The EventManager instance that handle all AxonCore listeners
  * @prop {GuildConfigCache} guildConfigs - The Manager that handles GuildConfigs (cache / DB etc)
- * @prop {AxonConfig} axonConfig - The AxonConfigobject that handles globally blacklisted users and guilds
+ * @prop {AxonConfig} axonConfig - The AxonConfig object that handles globally blacklisted users and guilds
  * @prop {CommandDispatcher} dispatcher - Dispatch commands onMessageCreate.
- * @prop {ModuleLoader} moduleLoader - Load, register, unregister modules.
+ * @prop {ModuleLoader} moduleLoader - Load, unload modules.
  * @prop {MessageManager} messageManager - Message manager object accessible with `<AxonClient>.l`
- * @prop {Object} logger - The Logger instance
- * @prop {Object} axonUtils - Util methods (AxonCore)
- * @prop {Object} utils - Utils methods (general)
+ * @prop {ALogger} logger - The Logger instance
+ * @prop {AxonUtils} axonUtils - Util methods (AxonCore)
+ * @prop {Utils} utils - Utils methods (general)
  * @prop {DBProvider} DBProvider - The DBProvider instance
  * @prop {Object} configs - configs (webhooks, template, custom)
+ * @prop {Object} configs.webhooks - Webhooks configs with all webhooks id and tokens
+ * @prop {Object} configs.template - Template config
+ * @prop {Object} configs.custom - Custom config object optionaly passed via AxonOptions
  * @prop {Object} staff - Bot Staff (owners, admins, +...)
  * @prop {Array<String>} staff.owners - Array of user IDs with BotOwner permissions
  * @prop {Array<String>} staff.admins - Array of user IDs with BotAdmin permisions
@@ -68,8 +71,15 @@ import ALogger from './Loggers/ALogger';
  * @prop {Array<String>} settings.prefixes - Default bot prefixes
  * @prop {String} settings.adminPrefix- Admins prefix : override perms/cd except Owner
  * @prop {String} settings.ownerPrefix - Owner prefix : override perms/cd
- * @prop {Object} infos - General infos { name, description, version, library, owners }
- * @prop {Object} axoncore - AxonCore infos { name, version, author, github }s]
+ * @prop {Object} infos - General infos about the current application
+ * @prop {String} infos.name - Bot name
+ * @prop {String} infos.description - Bot description
+ * @prop {String} infos.version - Bot version
+ * @prop {Array<String>} infos.owners - Bot owners (array of names)
+ * @prop {Object} axoncore - AxonCore info
+ * @prop {String} axoncore.version - AxonCore version
+ * @prop {String} axoncore.author - AxonCore author
+ * @prop {String} axoncore.github - AxonCore github link
  */
 class AxonClient extends EventEmitter {
     /**
@@ -111,7 +121,6 @@ class AxonClient extends EventEmitter {
 
         /* Client specification */
         this.axoncore = {
-            name: packageJSON.name,
             version: packageJSON.version,
             author: packageJSON.author,
             github: packageJSON.link,
@@ -159,7 +168,7 @@ class AxonClient extends EventEmitter {
         this.moduleLoader = new ModuleLoader(this);
         this.dispatcher = new CommandDispatcher(this);
 
-        this.messageManager = new MessageManager(this, axonOptions.lang, axonOptions.settings.lang);
+        this._messageManager = new MessageManager(this, axonOptions.lang, axonOptions.settings.lang);
 
         /* General */
         this.staff = ClientInitialiser.initStaff(axonOptions.staff, this.logger);
@@ -228,7 +237,7 @@ class AxonClient extends EventEmitter {
     }
 
     /**
-     * Return the webhooks object
+     * Return the webhooks config
      *
      * @readonly
      * @type {Object}
@@ -236,11 +245,11 @@ class AxonClient extends EventEmitter {
      * @memberof AxonClient
      */
     get webhooks() {
-        return this.configs.webhooks;
+        return this._configs.webhooks;
     }
 
     /**
-     *
+     * Returns the template config
      *
      * @readonly
      * @type {Object}
@@ -248,11 +257,11 @@ class AxonClient extends EventEmitter {
      * @memberof AxonClient
      */
     get template() {
-        return this.configs.template;
+        return this._configs.template;
     }
 
     /**
-     *
+     * Returns the custom config
      *
      * @readonly
      * @type {Object}
@@ -260,7 +269,7 @@ class AxonClient extends EventEmitter {
      * @memberof AxonClient
      */
     get custom() {
-        return this.configs.custom;
+        return this._configs.custom;
     }
 
     /**
@@ -272,7 +281,7 @@ class AxonClient extends EventEmitter {
      * @memberof AxonClient
      */
     get l() {
-        return this.messageManager;
+        return this._messageManager;
     }
 
     /**
