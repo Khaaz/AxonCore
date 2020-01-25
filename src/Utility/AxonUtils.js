@@ -98,7 +98,7 @@ class AxonUtils {
 
     /**
      * Triger an Axon Webhook.
-     * Works directly with axon._configs._tokens. [GETTER: axon.webhooks]
+     * Works directly with axon._configs.webhooks.
      *
      * @param {String} type - Type of the webhook [status, loader, error, misc]
      * @param {Object} embed - Embed object
@@ -107,13 +107,13 @@ class AxonUtils {
      * @memberof AxonUtils
      */
     triggerWebhook(type, embed, opt) {
-        const wh = this.axon.configs.webhooks[type];
-        if (wh && wh.id && wh.token && wh.id.length > 0 && wh.token.length) {
+        const wh = this.axon.webhooks[type] || {};
+        if (wh.id && wh.token && wh.id.length > 0 && wh.token.length) {
             this.library.client.triggerWebhook(
                 wh.id,
                 wh.token,
                 {
-                    username: opt ? opt : (`${type[0].toUpperCase() + type.slice(1)} - ${this.library.client.getUsername() || ''}`),
+                    username: opt ? opt : (`${type} - ${this.library.client.getUsername() || ''}`),
                     avatarURL: this.library.client.getAvatar(),
                     embeds: [embed],
                 } )

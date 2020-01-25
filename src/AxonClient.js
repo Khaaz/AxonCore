@@ -95,7 +95,7 @@ class AxonClient extends EventEmitter {
         super();
         axonOptions.logo ? axonOptions.logo() : logo();
 
-        this.configs = {
+        this._configs = {
             webhooks: axonOptions.webhooks,
             template: axonOptions.template,
             custom: axonOptions.custom,
@@ -237,6 +237,18 @@ class AxonClient extends EventEmitter {
     }
 
     /**
+     * Return the MessageManager instance
+     *
+     * @readonly
+     * @type {MessageManager}
+     *
+     * @memberof AxonClient
+     */
+    get l() {
+        return this._messageManager;
+    }
+
+    /**
      * Return the webhooks config
      *
      * @readonly
@@ -273,18 +285,6 @@ class AxonClient extends EventEmitter {
     }
 
     /**
-     * Return the MessageManager instance
-     *
-     * @readonly
-     * @type {MessageManager}
-     *
-     * @memberof AxonClient
-     */
-    get l() {
-        return this._messageManager;
-    }
-
-    /**
      * Get a module from AxonClient with the given label.
      *
      * @param {String} module - Module label
@@ -315,7 +315,7 @@ class AxonClient extends EventEmitter {
      * Start bot client.
      * Bind error listeners and event listeners.
      *
-     * Calls custom onStart() method atthe beginning.
+     * Calls custom onStart() method at the beginning.
      * Calls custom onReady() methodwhen AxonClient is ready.
      *
      * @async
