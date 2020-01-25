@@ -4,8 +4,8 @@ import Listener from '../Event/Listener';
 import AxonError from '../../Errors/AxonError';
 
 /**
- * Load listeners in a Module.
- * Validate the listener validity entirely.
+ * Load listeners in AxonClient.
+ * Validate the listener entirely.
  *
  * @class ListenerLoader
  * @extends ALoader
@@ -28,18 +28,6 @@ class ListenerLoader extends ALoader {
     }
 
     /**
-     * Returns the Module instance
-     *
-     * @readonly
-     * @type {Module}
-     *
-     * @memberof CommandLoader
-     */
-    get module() {
-        return this._module;
-    }
-
-    /**
      * Returns the Logger instance
      *
      * @readonly
@@ -47,7 +35,7 @@ class ListenerLoader extends ALoader {
      * @memberof ListenerLoader
      */
     get logger() {
-        return this.module.logger;
+        return this._module.logger;
     }
 
     /**
@@ -61,14 +49,14 @@ class ListenerLoader extends ALoader {
      */
     load(listener) {
         if (!(listener instanceof Listener) ) {
-            throw new AxonError(`[${listener.toString()}] Not a Listener!`, 'LISTENER-LOADER', this.module.label);
+            throw new AxonError(`[${listener.toString()}] Not a Listener!`, 'LISTENER-LOADER', this._module.label);
         }
 
         if (listener.label.includes(' ') ) {
-            throw new AxonError(`[${listener.label}] Listener label may not have spaces!`, 'LISTENER-LOADER', this.module.label);
+            throw new AxonError(`[${listener.label}] Listener label may not have spaces!`, 'LISTENER-LOADER', this._module.label);
         }
         
-        this.axon.listeners.register(listener.label, listener);
+        this.axon.listenerRegistry.register(listener.label, listener);
         return true;
     }
 
@@ -83,11 +71,11 @@ class ListenerLoader extends ALoader {
      */
     loadAll(listeners) {
         if (listeners.default) {
-            this.logger.error(`[Module(${this.module.label})] Listeners: No listeners found.`);
+            this.logger.error(`[Module(${this._module.label})] Listeners: No listeners found.`);
             return false;
         }
         for (const Value of Object.values(listeners) ) {
-            const listener = new Value(this.module);
+            const listener = new Value(this._module);
             try {
                 this.load(listener);
             } catch (err) {
@@ -106,7 +94,7 @@ class ListenerLoader extends ALoader {
      * @memberof ListenerLoader
      */
     unload(label) {
-        this.axon.listeners.unregister(label);
+        this.axon.listenerRegistry.unregister(label);
         return true;
     }
 }

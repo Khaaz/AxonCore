@@ -156,9 +156,9 @@ class AxonClient extends EventEmitter {
         }
 
         /* Structures */
-        this.modules = new ModuleRegistry(this);
-        this.commands = new CommandRegistry(this);
-        this.listeners = new ListenerRegistry(this);
+        this.moduleRegistry = new ModuleRegistry(this);
+        this.commandRegistry = new CommandRegistry(this);
+        this.listenerRegistry = new ListenerRegistry(this);
         this.eventManager = new EventManager(this);
 
         /* GuildConfigs */
@@ -293,7 +293,7 @@ class AxonClient extends EventEmitter {
      * @memberof AxonClient
      */
     getModule(module) {
-        return this.modules.get(module);
+        return this.moduleRegistry.get(module);
     }
 
     /**
@@ -305,7 +305,7 @@ class AxonClient extends EventEmitter {
      * @memberof AxonClient
      */
     getCommand(fullLabel) {
-        return this.commands.getFull(fullLabel.split(' ') );
+        return this.commandRegistry.getFull(fullLabel.split(' ') );
     }
 
     // **** MAIN **** //
@@ -662,14 +662,14 @@ class AxonClient extends EventEmitter {
 
         let commandList = '';
         if (guildConfig) {
-            for (const module of this.modules.registry.values() ) {
+            for (const module of this.moduleRegistry) {
                 const commands = module.commands.filter(c => c.permissions.canExecute(msg, guildConfig)[0] );
                 if (commands.length > 0) {
                     commandList += `**${module.label}**\n${commands.map(c => `\`${prefix}${c.label}\` - ${c.infos.description}`).join('\n')}\n`;
                 }
             }
         } else {
-            for (const module of this.modules.registry.values() ) {
+            for (const module of this.moduleRegistry) {
                 commandList += `**${module.label}**\n${module.commands.map(c => `\`${prefix}${c.label}\` - ${c.infos.description}`).join('\n')}\n`;
             }
         }
