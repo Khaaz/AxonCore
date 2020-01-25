@@ -10,7 +10,7 @@ import { EventEmitter } from 'eventemitter3';
 class Prompt {
     /**
      *
-     * @param {Object} client The Axon client
+     * @param {AxonClient} client The Axon client
      * @param {String} uID The user ID
      * @param {Object} channel The channel object
      *
