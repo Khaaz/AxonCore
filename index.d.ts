@@ -597,9 +597,9 @@ declare module 'axoncore' {
 
         constructor(module: Module, data?: Listener);
 
-        private _execute(guildConf: GuildConfig, ...args: string[] ): Promise<any>;
+        private _execute(guildConf?: GuildConfig, ...args: string[] ): Promise<any>;
 
-        public execute(args: any, guildConf: GuildConfig): Promise<any>; // `args` spread and placed after `guildConf`?
+        public execute(args: any, guildConf?: GuildConfig): Promise<any>;
     }
 
     class EventManager extends Base {
