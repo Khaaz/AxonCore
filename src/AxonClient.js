@@ -581,8 +581,8 @@ class AxonClient extends EventEmitter {
     }
 
     /**
-     * Fired when a command fails
-     * @event AxonClient#eventExecution
+     * Fired when a listener is executed
+     * @event AxonClient#listenerExecution
      * @prop {Boolean} status - Whereas the listener was successfully executed or not
      * @prop {String} eventName - The discord event name
      * @prop {String} listenerName - The listener label
@@ -593,8 +593,8 @@ class AxonClient extends EventEmitter {
      */
 
     /**
-     * Fired when a command fails
-     * @event AxonClient#eventError
+     * Fired when a listener errors
+     * @event AxonClient#listenerError
      * @prop {String} eventName - The discord event name
      * @prop {String} listenerName - The Listener label
      * @prop {Object} data - Additional information
@@ -610,10 +610,10 @@ class AxonClient extends EventEmitter {
                 if (this.settings.debugMode) {
                     this.log('VERBOSE', `[EVENT](${listener.eventName}) - ${listener.label}`);
                 }
-                this.emit('eventExecution', true, listener.eventName, listener.label, { listener, guildConfig } );
+                this.emit('listenerExecution', true, listener.eventName, listener.label, { listener, guildConfig } );
             } )
             .catch(err => {
-                this.emit('eventError', listener.eventName, listener.label, { listener, guildConfig, error: err } );
+                this.emit('listenerError', listener.eventName, listener.label, { listener, guildConfig, error: err } );
 
                 this.log('ERROR', `[EVENT](${listener.eventName}) - ${listener.label}\n${err}`);
             } );
