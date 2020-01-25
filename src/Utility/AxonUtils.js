@@ -103,6 +103,7 @@ class AxonUtils {
      * @param {String} type - Type of the webhook [status, loader, error, misc]
      * @param {Object} embed - Embed object
      * @param {String} opt - Optional string to use as bot username
+     *
      * @memberof AxonUtils
      */
     triggerWebhook(type, embed, opt) {
