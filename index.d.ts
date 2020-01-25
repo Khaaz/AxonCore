@@ -597,7 +597,7 @@ declare module 'axoncore' {
 
         constructor(module: Module, data?: Listener);
 
-        private _execute(guildConf?: GuildConfig, ...args: string[] ): Promise<any>;
+        private _execute(guildConf?: GuildConfig, ...args: any[] ): Promise<any>;
 
         public execute(args: any, guildConf?: GuildConfig): Promise<any>;
     }
