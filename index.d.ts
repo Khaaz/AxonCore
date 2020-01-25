@@ -1646,4 +1646,8 @@ declare module 'axoncore' {
     }
 
     // ReactionCollector file is empty
+
+    export class LibrarySelector extends ASelector {
+        static select(axon: AxonClient, axonOptions: AxonOptions): any; // Replace with ErisInterface | DjsInterface;
+    }
 }
