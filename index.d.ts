@@ -2,15 +2,15 @@ import { EventEmitter } from 'events';
 import * as Eris from 'eris';
 import * as djs from 'discord.js';
 import { Model, Document } from 'mongoose';
-type Message = Eris.Message | djs.Message;
-type Member = Eris.Member | djs.GuildMember;
-type Client = Eris.Client | djs.Client;
-type Guild = Eris.Guild | djs.Guild;
-type User = Eris.User | djs.User;
-type TextableChannel = Eris.TextableChannel | djs.TextChannel;
-type Role = Eris.Role | djs.Role;
-type Channel = Eris.Channel | djs.Channel;
-type Permission = Eris.Permission | Eris.PermissionOverwrite | djs.PermissionOverwrites; // djs.Permissions; // No allow/deny properties
+type LibMessage = Eris.Message | djs.Message;
+type LibMember = Eris.Member | djs.GuildMember;
+type LibClient = Eris.Client | djs.Client;
+type LibGuild = Eris.Guild | djs.Guild;
+type LibUser = Eris.User | djs.User;
+type LibTextableChannel = Eris.TextableChannel | djs.TextChannel;
+type LibRole = Eris.Role | djs.Role;
+type LibChannel = Eris.Channel | djs.Channel;
+type LibPermission = Eris.Permission | Eris.PermissionOverwrite | djs.PermissionOverwrites; // djs.Permissions; // No allow/deny properties
 
 declare module 'axoncore' {
 
@@ -316,9 +316,9 @@ declare module 'axoncore' {
         constructor(axon: AxonClient, values: GuildConfig);
 
         public getPrefixes(): string[];
-        public isIgnored(msg: Message): boolean;
+        public isIgnored(msg: LibMessage): boolean;
         public isUserIgnored(userID: string): boolean
-        public isRoleIgnored(member: Member): boolean;
+        public isRoleIgnored(member: LibMember): boolean;
         public isChannelIgnored(channelID: string): boolean;
         public isModuleDisabled(module: Module): boolean;
         public isCommandDisabled(command: Command): boolean;
@@ -350,7 +350,7 @@ declare module 'axoncore' {
         argsMin?: number;
 
         invalidUsageMessage: boolean;
-        invalidPermissionMessage?: ( (channel: TextableChannel, member: Member) => string) | null;
+        invalidPermissionMessage?: ( (channel: LibTextableChannel, member: LibMember) => string) | null;
         sendPermissionMessage: boolean;
         invalidPermissionMessageTimeout: number;
 
@@ -366,7 +366,7 @@ declare module 'axoncore' {
         public argsMin?: number;
 
         public invalidUsageMessage: boolean;
-        public invalidPermissionMessage: ( (channel: TextableChannel, member: Member) => string) | null;
+        public invalidPermissionMessage: ( (channel: LibTextableChannel, member: LibMember) => string) | null;
         public sendPermissionMessage: boolean;
         public invalidPermissionMessageTimeout: number;
 
@@ -385,7 +385,7 @@ declare module 'axoncore' {
         public shouldSendInvalidUsageMessage(args: string[] ): boolean;
         public shouldSendInvalidPermissionMessage(guildConfig: GuildConfig): boolean;
         public shouldDeleteCommand(): boolean;
-        public getInvalidPermissionMessage(channel: TextableChannel, member: Member, permission: any): string; // CommandPermissions?
+        public getInvalidPermissionMessage(channel: LibTextableChannel, member: LibMember, permission: any): string; // CommandPermissions?
     }
 
     export class CommandCooldown {
@@ -431,13 +431,13 @@ declare module 'axoncore' {
             needed: string[];
             bypass?: string[];
         };
-        custom(func: (i: Message) => true): true;
+        custom(func: (i: LibMessage) => true): true;
     }
 
     export class CommandPermissions implements CommandPerms {
         private _command: Command;
 
-        public custom(func: (msg: Message) => true): true;
+        public custom(func: (msg: LibMessage) => true): true;
         constructor(command: Command, override?: CommandPerms, userModuleDefault?: boolean);
         // GETTERS
         readonly axon: AxonClient;
@@ -447,7 +447,7 @@ declare module 'axoncore' {
 
         // METHODS
 
-        public canExecute(msg: Message, guildConf: GuildConfig): [boolean, string | null]; // Ask Khaaz about inconsistency
+        public canExecute(msg: LibMessage, guildConf: GuildConfig): [boolean, string | null]; // Ask Khaaz about inconsistency
 
         public setBot(array?: string[], toAdd?: boolean): CommandPermissions;
         public setServerMod(boolean?: boolean): CommandPermissions;
@@ -462,17 +462,17 @@ declare module 'axoncore' {
 
         // CHECK FOR IF PERMISSIONS ARE MET
 
-        private _checkPermsBot(channel: TextableChannel): boolean;
-        private _checkPermsUserBypass(member: Member): boolean;
-        private _checkPermsUserNeeded(member: Member): [true] | [false, string];
-        private _checkUserBypass(member: Member): boolean;
-        private _checkUserNeeded(member: Member): boolean;
-        private _checkRoleBypass(member: Member): boolean;
-        private _checkRoleNeeded(member: Member): boolean;
-        private _checkChannelBypass(channel: TextableChannel): boolean;
-        private _checkChannelNeeded(channel: TextableChannel): boolean;
-        private _checkStaffBypass(member: Member): boolean;
-        private _checkStaffNeeded(member: Member): boolean;
+        private _checkPermsBot(channel: LibTextableChannel): boolean;
+        private _checkPermsUserBypass(member: LibMember): boolean;
+        private _checkPermsUserNeeded(member: LibMember): [true] | [false, string];
+        private _checkUserBypass(member: LibMember): boolean;
+        private _checkUserNeeded(member: LibMember): boolean;
+        private _checkRoleBypass(member: LibMember): boolean;
+        private _checkRoleNeeded(member: LibMember): boolean;
+        private _checkChannelBypass(channel: LibTextableChannel): boolean;
+        private _checkChannelNeeded(channel: LibTextableChannel): boolean;
+        private _checkStaffBypass(member: LibMember): boolean;
+        private _checkStaffNeeded(member: LibMember): boolean;
     }
 
     export class CommandResponse {
@@ -509,7 +509,7 @@ declare module 'axoncore' {
 
         public calledAt: Date;
 
-        constructor(command: Command, triggerMessage: Message, data?: { executed?: boolean; helpExecution?: string; executionState?: number; executionType?: object; } );
+        constructor(command: Command, triggerMessage: LibMessage, data?: { executed?: boolean; helpExecution?: string; executionState?: number; executionType?: object; } );
 
         public addResponseData(commandResponse?: CommandResponse): CommandContext;
         public static getExecutionType(isAdmin: boolean, isOwner: boolean): number;
@@ -565,18 +565,18 @@ declare module 'axoncore' {
         constructor(module: Module, data?: CommandData);
 
         // Internal
-        private _process(object: { msg: Message; args: string[]; guildConfig?: GuildConfig; isAdmin?: boolean; isOwner?: boolean; } ): Promise<CommandContext>;
+        private _process(object: { msg: LibMessage; args: string[]; guildConfig?: GuildConfig; isAdmin?: boolean; isOwner?: boolean; } ): Promise<CommandContext>;
         private _preExecute(): void; // Blank function
-        private _execute(message: { msg: Message; args?: string[]; guildConfig?: GuildConfig; isAdmin?: boolean; isOwner?: boolean; } ): Promise<any>;
+        private _execute(message: { msg: LibMessage; args?: string[]; guildConfig?: GuildConfig; isAdmin?: boolean; isOwner?: boolean; } ): Promise<any>;
         private _postExecute(): void; // Blank function
 
         // External
-        public execute(object: { msg: Message; args?: string[]; guildConfig?: GuildConfig; } ): any; // Promise<CommandResponse>; // Not implemented
-        public sendHelp(object: { msg: Message; guildConf?: GuildConfig; isAdmin: boolean; isOwner: boolean; } ): Promise<CommandContext>;
-        public sendBotPerms(channel: TextableChannel, permissions?: string[] ): Promise<CommandResponse>;
-        public sendUserPerms(channel: TextableChannel, member: Member, deleteTimeout?: number, missingPermission?: any): Promise<CommandResponse>; // CommandPermissions?
-        public sendTargetPerms(channel: TextableChannel): Promise<CommandContext>;
-        public sendCooldown(channel: TextableChannel, time: number): Promise<CommandContext>;
+        public execute(object: { msg: LibMessage; args?: string[]; guildConfig?: GuildConfig; } ): any; // Promise<CommandResponse>; // Not implemented
+        public sendHelp(object: { msg: LibMessage; guildConf?: GuildConfig; isAdmin: boolean; isOwner: boolean; } ): Promise<CommandContext>;
+        public sendBotPerms(channel: LibTextableChannel, permissions?: string[] ): Promise<CommandResponse>;
+        public sendUserPerms(channel: LibTextableChannel, member: LibMember, deleteTimeout?: number, missingPermission?: any): Promise<CommandResponse>; // CommandPermissions?
+        public sendTargetPerms(channel: LibTextableChannel): Promise<CommandContext>;
+        public sendCooldown(channel: LibTextableChannel, time: number): Promise<CommandContext>;
     }
 
     export class Listener extends Base {
@@ -637,18 +637,18 @@ declare module 'axoncore' {
     }
 
     export class Resolver {
-        public static user(client: Client, args: string[]|string): any; // User|null; // Not implemented
-        public static member(guild: Guild, args: string[]|string): any; // Member|null; // Not implemented
-        public static role(guild: Guild, args: string[]|string): any; // Role|null; // Not implemented
-        public static channel(guild: Guild, args: string[]|string): any; // Channel|null; // Not implemented
-        public static guild(client: Client, args: string[] ): any; // Guild|null; // Not implemented
+        public static user(client: LibClient, args: string[]|string): any; // LibUser|null; // Not implemented
+        public static member(guild: LibGuild, args: string[]|string): any; // LibMember|null; // Not implemented
+        public static role(guild: LibGuild, args: string[]|string): any; // LibRole|null; // Not implemented
+        public static channel(guild: LibGuild, args: string[]|string): any; // LibChannel|null; // Not implemented
+        public static guild(client: LibClient, args: string[] ): any; // LibGuild|null; // Not implemented
     }
 
     export class AxonUtils {
         private _axon: AxonClient;
         constructor(axon: AxonClient);
         readonly axon: AxonClient;
-        readonly bot: Client;
+        readonly bot: LibClient;
         readonly template: AxonTemplate;
         readonly logger: ALogger;
         readonly utils: Utils;
@@ -658,14 +658,14 @@ declare module 'axoncore' {
         public isBotOwner(uID: string): boolean;
         public isBotAdmin(uID: string): boolean;
         public isBotStaff(uID: string): boolean;
-        public isServerMod(member: Member, guildConfig: GuildConfig): boolean;
-        public isServerManager(member: Member): boolean;
-        public isServerAdmin(member: Member): boolean;
-        public isServerOwner(member: Member, guild: Guild): boolean;
+        public isServerMod(member: LibMember, guildConfig: GuildConfig): boolean;
+        public isServerManager(member: LibMember): boolean;
+        public isServerAdmin(member: LibMember): boolean;
+        public isServerOwner(member: LibMember, guild: LibGuild): boolean;
 
-        public sendDM(user: User, content: AxonMSGCont, options?: AxonMSGOpt): Promise<Message>;
-        public sendMessage(channel: TextableChannel, content: AxonMSGCont, options?: AxonMSGOpt): Promise<Message>;
-        public editMessage(message: Message, content: AxonMSGCont): Promise<Message>;
+        public sendDM(user: LibUser, content: AxonMSGCont, options?: AxonMSGOpt): Promise<LibMessage>;
+        public sendMessage(channel: LibTextableChannel, content: AxonMSGCont, options?: AxonMSGOpt): Promise<LibMessage>;
+        public editMessage(message: LibMessage, content: AxonMSGCont): Promise<LibMessage>;
         
         public updateGlobalStateModule(module: string, state?: boolean): void;
         public updateGlobalStateCommand(command: string, state?: boolean): void;
@@ -723,19 +723,19 @@ declare module 'axoncore' {
         constructor(client: AxonClient);
 
         readonly axon: AxonClient;
-        readonly bot: Client;
+        readonly bot: LibClient;
         readonly library: any; // Replace with LibraryInterface
 
         public splitMessage(content: string): string[] | string;
-        public getPrefix(msg: Message): Promise<string>;
-        public getRoles(guild: Guild, member: Member): Role[];
-        public getHighestRole(guild: Guild, member: Member): Role;
-        public sortRoles(roles: Role[] ): Role[];
-        public isRoleHigher(role1: Role, role2: Role): boolean;
-        public isHigherRole(guild: Guild, first: Member, second: Member): boolean;
-        public hasPerms(member: Member, permissions?: string[] ): boolean;
-        public hasChannelPerms(channel: TextableChannel, permissions: string[], user?: User): boolean;
-        public missingPerms(member: Member, permissions?: string[] ): string[];
+        public getPrefix(msg: LibMessage): Promise<string>;
+        public getRoles(guild: LibGuild, member: LibMember): LibRole[];
+        public getHighestRole(guild: LibGuild, member: LibMember): LibRole;
+        public sortRoles(roles: LibRole[] ): LibRole[];
+        public isRoleHigher(role1: LibRole, role2: LibRole): boolean;
+        public isHigherRole(guild: LibGuild, first: LibMember, second: LibMember): boolean;
+        public hasPerms(member: LibMember, permissions?: string[] ): boolean;
+        public hasChannelPerms(channel: LibTextableChannel, permissions: string[], user?: LibUser): boolean;
+        public missingPerms(member: LibMember, permissions?: string[] ): string[];
         public calculatePerms(data: PermissionObject): { allow: number; deny: number; };
 
         public sleep(ms: number): Promise<void>;
@@ -746,13 +746,13 @@ declare module 'axoncore' {
 
     export type LOG_LEVEL_TYPES = 'FATAL' | 'ERROR' | 'WARN' | 'DEBUG' | 'NOTICE' | 'INFO' | 'VERBOSE';
 
-    interface Ctx { guild: Guild; cmd: Command; user: User; }
+    interface Ctx { guild: LibGuild; cmd: Command; user: LibUser; }
 
     export class Base {
         public _axon: AxonClient;
 
         public readonly axon: AxonClient;
-        public readonly bot: Client;
+        public readonly bot: LibClient;
         public readonly logger: ALogger;
         public readonly Resolver?: Resolver;
         public readonly axonUtils?: AxonUtils;
@@ -766,12 +766,12 @@ declare module 'axoncore' {
 
         public log(level: LOG_LEVEL_TYPES, content: string | Error, ctx?: Ctx, execWebhook?: boolean): void;
 
-        public sendDM(user: User, content: AxonMSGCont): Promise<Message|void>;
-        public sendMessage(channel: TextableChannel, content: AxonMSGCont, options?: AxonMSGOpt): Promise<Message>;
-        public editMessage(message: Message, content: AxonMSGCont): Promise<Message>;
-        public sendSuccess(channel: TextableChannel, content: AxonMSGCont, options?: AxonMSGOpt): Promise<CommandResponse>;
-        public sendError(channel: TextableChannel, content: AxonMSGCont, options?: AxonMSGOpt): Promise<CommandResponse>;
-        public error(msg: Message, err: Error, type: string, errMsg?: string): Promise<CommandResponse>;
+        public sendDM(user: LibUser, content: AxonMSGCont): Promise<LibMessage|void>;
+        public sendMessage(channel: LibTextableChannel, content: AxonMSGCont, options?: AxonMSGOpt): Promise<LibMessage>;
+        public editMessage(message: LibMessage, content: AxonMSGCont): Promise<LibMessage>;
+        public sendSuccess(channel: LibTextableChannel, content: AxonMSGCont, options?: AxonMSGOpt): Promise<CommandResponse>;
+        public sendError(channel: LibTextableChannel, content: AxonMSGCont, options?: AxonMSGOpt): Promise<CommandResponse>;
+        public error(msg: LibMessage, err: Error, type: string, errMsg?: string): Promise<CommandResponse>;
 
         public toString(): string;
         public toJSON(): object;
@@ -1009,7 +1009,7 @@ declare module 'axoncore' {
     export class Prompt {
         private _axon: AxonClient;
         public userID: string;
-        public channel: TextableChannel;
+        public channel: LibTextableChannel;
         private _prompt: string;
         private _options: PromptOptions;
         private _actualOptions: PromptOptions;
@@ -1017,18 +1017,18 @@ declare module 'axoncore' {
         public timedOut: boolean;
         public ended: boolean;
         private _boundEvent(): void;
-        constructor(client: AxonClient, uID: string, channel: TextableChannel, defaultOptions?: PromptOptions);
+        constructor(client: AxonClient, uID: string, channel: LibTextableChannel, defaultOptions?: PromptOptions);
         readonly axon: AxonClient;
-        readonly client: Client;
+        readonly client: LibClient;
 
-        public run(prompt: AxonMSGCont, options?: PromptOptions): Promise<Message>;
+        public run(prompt: AxonMSGCont, options?: PromptOptions): Promise<LibMessage>;
         private _startTimeout(): void;
         private _deletePrompt(): void;
-        private _checker(msg: Message): boolean;
+        private _checker(msg: LibMessage): boolean;
         private _onInvalidEnd(): string;
-        private _onEnded(msg: Message): Message;
+        private _onEnded(msg: LibMessage): LibMessage;
         private _onTimeout(): Promise<void>;
-        private _onMsgCreate(msg: Message): Promise<void>;
+        private _onMsgCreate(msg: LibMessage): Promise<void>;
     }
 
     interface CollectorOptions {
@@ -1046,22 +1046,22 @@ declare module 'axoncore' {
         private _boundDelEvent: void;
         private _boundEditEvent: void;
         private _boundCollectEvent: void;
-        public messages: Collection<Message>;
+        public messages: Collection<LibMessage>;
 
         constructor(client: AxonClient, options: CollectorOptions);
 
         readonly axon: AxonClient;
-        readonly client: Client;
+        readonly client: LibClient;
 
-        public run(channel: TextableChannel, options: CollectorOptions): Promise<Collection<Message> >;
+        public run(channel: LibTextableChannel, options: CollectorOptions): Promise<Collection<LibMessage> >;
         private _onEnd(): void;
         private _startTimeout(): void;
-        private _onMsgDelete(msg: Message): void;
-        private _onMsgEdit(msg: Message): Promise<void>;
+        private _onMsgDelete(msg: LibMessage): void;
+        private _onMsgEdit(msg: LibMessage): Promise<void>;
         private _onCollectEvent(): void;
         public end(): void;
-        private _onMsgCreate(msg: Message): void;
-        public delete(mID: string): Collection<Message>;
+        private _onMsgCreate(msg: LibMessage): void;
+        public delete(mID: string): Collection<LibMessage>;
     }
 
     interface AxonOptionsSettings {
@@ -1171,7 +1171,7 @@ declare module 'axoncore' {
         public logger: ALogger;
         public axonUtils: AxonUtils;
 
-        private _botClient: Client;
+        private _botClient: LibClient;
         public library: any; // REPLACE "any" WITH Library CLASS
         public utils: Utils;
         public DBProvider: ADBProvider
@@ -1189,9 +1189,9 @@ declare module 'axoncore' {
 
         public staff: { [key: string]: { name: string; id: string; }[];};
 
-        constructor(botClient: Client, AxonOptions: AxonOptions, modules: object);
+        constructor(botClient: LibClient, AxonOptions: AxonOptions, modules: object);
 
-        readonly botClient: Client;
+        readonly botClient: LibClient;
         readonly handlers: Collection<AHandler>;
         getListeners(eventName: string): Listener[];
         readonly Resolver: Resolver;
@@ -1208,17 +1208,17 @@ declare module 'axoncore' {
         public onStart(): Promise<true>;
         public onReady(): Promise<true>;
         public log(level: LOG_LEVEL_TYPES, content: Error | string, ctx?: Ctx, execWebhook?: boolean): void;
-        private _onMessageCreate(msg: Message): void;
+        private _onMessageCreate(msg: LibMessage): void;
 
         private _onReady(): void;
         public initErrorListeners(): void;
         public initStatus(): void;
 
-        public _execCommand(msg: Message, args: string[], command: Command, guildConfig: GuildConfig, optionals: { isAdmin: boolean; isOwner: boolean; } ): void;
-        public _execHelp(msg: Message, args: string[], command: Command, guildConfig: GuildConfig, optionals: { isAdmin: boolean; isOwner: boolean; } ): void;
+        public _execCommand(msg: LibMessage, args: string[], command: Command, guildConfig: GuildConfig, optionals: { isAdmin: boolean; isOwner: boolean; } ): void;
+        public _execHelp(msg: LibMessage, args: string[], command: Command, guildConfig: GuildConfig, optionals: { isAdmin: boolean; isOwner: boolean; } ): void;
         public _execListener(listener: Listener, guildConfig: GuildConfig, ...args: any[] ): void;
 
-        public sendFullHelp(msg: Message, guildConfig?: GuildConfig): Promise<void>;
+        public sendFullHelp(msg: LibMessage, guildConfig?: GuildConfig): Promise<void>;
         public registerGuildPrefixes(gID: string, prefixArr: string[] ): Promise<GuildConfig>;
         toString(): string;
         toJSON(): object;
@@ -1298,9 +1298,9 @@ declare module 'axoncore' {
         public cmd: string;
         public user: string;
 
-        constructor(guild: string | Guild, cmd: string, user: User | string);
+        constructor(guild: string | LibGuild, cmd: string, user: LibUser | string);
 
-        public static from(ctx?: { guild: string | Guild; cmd: string; user: string | User; } ): Context;
+        public static from(ctx?: { guild: string | LibGuild; cmd: string; user: string | LibUser; } ): Context;
         public get(): string;
     }
 
@@ -1319,7 +1319,7 @@ declare module 'axoncore' {
         mentionFormatter: RegExp;
         constructor(axon: AxonClient);
         readonly library: any; // Replace with ErisInterface|DjsInterface
-        public dispatch(msg: Message): Promise<void>;
+        public dispatch(msg: LibMessage): Promise<void>;
     }
 
     export class AHandler {
@@ -1432,7 +1432,7 @@ declare module 'axoncore' {
         static validModule(module: Module): boolean;
         static validCommand(command: Command): boolean;
         static checkValidPermissionName(PERMISSIONS: string[], perm: string): boolean;
-        static checkMessageValidity(content: Message | string): boolean;
+        static checkMessageValidity(content: LibMessage | string): boolean;
     }
 
     type DISCORD_GATEWAY_EVENTS = [
@@ -1649,5 +1649,17 @@ declare module 'axoncore' {
 
     export class LibrarySelector extends ASelector {
         static select(axon: AxonClient, axonOptions: AxonOptions): any; // Replace with ErisInterface | DjsInterface;
+    }
+
+    export class Channel {
+        public lib: any; // Replace with LibraryInterface;
+        constructor(lib: any); // Replace with LibraryInterface;
+        getID(channel: LibChannel): string;
+        getName(channel: LibChannel): string;
+        getGuild(channel: LibChannel): LibGuild;
+        getGuildID(channel: LibChannel): string | null;
+        getGuildName(channel: LibChannel): string | null;
+        hasPermission(channel: LibChannel, user: LibUser, perm: string): boolean; // Not Implemented
+        sendMessage(channel: LibChannel, content: AxonMSGCont): Promise<LibMessage>; // Not Implemented
     }
 }

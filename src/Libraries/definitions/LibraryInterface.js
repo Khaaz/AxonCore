@@ -21,7 +21,7 @@ class LibraryInterface {
      * @param {User} structs.User
      * @param {Member} structs.Member
      * @param {Message} structs.Message
-     * @param {Chqnnel} structs.Channel
+     * @param {Channel} structs.Channel
      * @param {Guild} structs.Guild
      * @param {Resolver} structs.resolver
      *
