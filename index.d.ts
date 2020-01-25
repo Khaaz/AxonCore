@@ -1164,7 +1164,7 @@ declare module 'axoncore' {
     }
 
     export class AxonClient extends EventEmitter {
-        public configs: AxonConfs;
+        private _configs: AxonConfs;
         public settings: AxonParams;
         public infos: Infos;
         public axoncore: AxonInfos;
@@ -1186,7 +1186,7 @@ declare module 'axoncore' {
 
         public moduleLoader: ModuleLoader;
         public dispatcher: CommandDispatcher;
-        public messageManager: MessageManager;
+        private _messageManager: MessageManager;
 
         public staff: { [key: string]: { name: string; id: string; }[];};
 
