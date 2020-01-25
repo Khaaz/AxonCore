@@ -16,7 +16,7 @@ declare module 'axoncore' {
 
     export class Collection<T> extends Map<string | number, T> {
         public baseObject: new (...args: any[] ) => T;
-        public constructor(base: { base?: new (...args: any[] ) => T; iterable?: {[key: string]: T} | [string, T][] } );
+        public constructor(base: { base?: new (...args: any[] ) => T; iterable?: {[key: string]: T;} | [string, T][]; } );
         public add(key: string, value: T, replace?: boolean): T;
         public find(func: (i: T) => boolean): T;
         public random(): T;
@@ -28,7 +28,7 @@ declare module 'axoncore' {
         public update(key: string, value: T): T;
         public remove(key: string): T | null;
         public toArray(): T[];
-        public toObject(): {[key: string]: T};
+        public toObject(): {[key: string]: T;};
         public toString(): `[Collection<Name>]`;
 
         public apply<R>(key: string, func: 'from', args: [Array<R>, string] ): Collection<R>;
@@ -103,7 +103,7 @@ declare module 'axoncore' {
         public commands: Collection<Command>;
         public listeners?: Collection<Listener>;
 
-        public init(): {[key: string]: Command | Listener};
+        public init(): {[key: string]: Command | Listener;};
         private _init(): void;
     }
 
@@ -154,7 +154,7 @@ declare module 'axoncore' {
         private _basePath: string;
         private _axonPath: string;
         public axonExecutor: AsyncQueue;
-        public guildExecutors: {[guildID: string]: AsyncQueue};
+        public guildExecutors: {[guildID: string]: AsyncQueue;};
 
         constructor(basePath: string);
 
@@ -390,7 +390,7 @@ declare module 'axoncore' {
 
     export class CommandCooldown {
         private _command: Command;
-        private _cooldowns: Map<string, { time: Date; post: boolean }>;
+        private _cooldowns: Map<string, { time: Date; post: boolean; }>;
 
         constructor(command: Command);
 
@@ -400,8 +400,8 @@ declare module 'axoncore' {
 
         // METHODS
         public shouldCooldown(userID: string): [number, boolean] | [];
-        public shouldSendCooldownMessage(cooldown: { time: Date; post: boolean } ): boolean;
-        public shouldSetCooldown(response: { triggerCooldown: boolean } | null): boolean;
+        public shouldSendCooldownMessage(cooldown: { time: Date; post: boolean; } ): boolean;
+        public shouldSetCooldown(response: { triggerCooldown: boolean; } | null): boolean;
         public setCooldown(userID: string): void;
     }
 
@@ -454,11 +454,11 @@ declare module 'axoncore' {
         public setServerManager(boolean?: boolean): CommandPermissions;
         public setServerAdmin(boolean?: boolean): CommandPermissions;
         public setServerOwner(boolean?: boolean): CommandPermissions;
-        public setUser(object?: { bypass?: string[]; needed?: string[] }, toAdd?: boolean): CommandPermissions;
-        public setUserIDs(object?: { bypass?: string[]; needed?: string[] }, toAdd?: boolean): CommandPermissions;
-        public setRoleIDs(object?: { bypass?: string[]; needed?: string[] }, toAdd?: boolean): CommandPermissions;
-        public setChannelIDs(object?: { bypass?: string[]; needed?: string[] }, toAdd?: boolean): CommandPermissions;
-        public setStaff(object?: { bypass?: string[]; needed?: string[] }, toAdd?: boolean): CommandPermissions;
+        public setUser(object?: { bypass?: string[]; needed?: string[]; }, toAdd?: boolean): CommandPermissions;
+        public setUserIDs(object?: { bypass?: string[]; needed?: string[]; }, toAdd?: boolean): CommandPermissions;
+        public setRoleIDs(object?: { bypass?: string[]; needed?: string[]; }, toAdd?: boolean): CommandPermissions;
+        public setChannelIDs(object?: { bypass?: string[]; needed?: string[]; }, toAdd?: boolean): CommandPermissions;
+        public setStaff(object?: { bypass?: string[]; needed?: string[]; }, toAdd?: boolean): CommandPermissions;
 
         // CHECK FOR IF PERMISSIONS ARE MET
 
@@ -479,7 +479,7 @@ declare module 'axoncore' {
         public success: boolean;
         public triggerCooldown: boolean;
         public error?: Error;
-        constructor(data: { success: boolean; triggerCooldown: boolean; error?: Error } );
+        constructor(data: { success: boolean; triggerCooldown: boolean; error?: Error; } );
         public resolve(): Promise<CommandResponse>;
         public resolveAsync(): Promise<CommandResponse>;
         public resolveSync(): CommandResponse;
@@ -509,7 +509,7 @@ declare module 'axoncore' {
 
         public calledAt: Date;
 
-        constructor(command: Command, triggerMessage: Message, data?: { executed?: boolean; helpExecution?: string; executionState?: number; executionType?: object } );
+        constructor(command: Command, triggerMessage: Message, data?: { executed?: boolean; helpExecution?: string; executionState?: number; executionType?: object; } );
 
         public addResponseData(commandResponse?: CommandResponse): CommandContext;
         public static getExecutionType(isAdmin: boolean, isOwner: boolean): number;
@@ -532,8 +532,8 @@ declare module 'axoncore' {
     }
 
     export interface AxonTemplate {
-        embeds: {[key: string]: number};
-        emotes: {[key: string]: string};
+        embeds: {[key: string]: number;};
+        emotes: {[key: string]: string;};
     }
 
     export class Command extends Base implements CommandData {
@@ -565,14 +565,14 @@ declare module 'axoncore' {
         constructor(module: Module, data?: CommandData);
 
         // Internal
-        private _process(object: { msg: Message; args: string[]; guildConfig?: GuildConfig; isAdmin?: boolean; isOwner?: boolean } ): Promise<CommandContext>;
+        private _process(object: { msg: Message; args: string[]; guildConfig?: GuildConfig; isAdmin?: boolean; isOwner?: boolean; } ): Promise<CommandContext>;
         private _preExecute(): void; // Blank function
-        private _execute(message: { msg: Message; args?: string[]; guildConfig?: GuildConfig; isAdmin?: boolean; isOwner?: boolean } ): Promise<any>;
+        private _execute(message: { msg: Message; args?: string[]; guildConfig?: GuildConfig; isAdmin?: boolean; isOwner?: boolean; } ): Promise<any>;
         private _postExecute(): void; // Blank function
 
         // External
-        public execute(object: { msg: Message; args?: string[]; guildConfig?: GuildConfig } ): any; // Promise<CommandResponse>; // Not implemented
-        public sendHelp(object: { msg: Message; guildConf?: GuildConfig; isAdmin: boolean; isOwner: boolean } ): Promise<CommandContext>;
+        public execute(object: { msg: Message; args?: string[]; guildConfig?: GuildConfig; } ): any; // Promise<CommandResponse>; // Not implemented
+        public sendHelp(object: { msg: Message; guildConf?: GuildConfig; isAdmin: boolean; isOwner: boolean; } ): Promise<CommandContext>;
         public sendBotPerms(channel: TextableChannel, permissions?: string[] ): Promise<CommandResponse>;
         public sendUserPerms(channel: TextableChannel, member: Member, deleteTimeout?: number, missingPermission?: any): Promise<CommandResponse>; // CommandPermissions?
         public sendTargetPerms(channel: TextableChannel): Promise<CommandContext>;
@@ -603,7 +603,7 @@ declare module 'axoncore' {
     }
 
     class EventManager extends Base {
-        private _events: {[EventName: string]: Listener[]};
+        private _events: {[EventName: string]: Listener[];};
         private _handlers: Collection<AHandler>;
         constructor(axon: AxonClient, name: string, listeners: Listener[] );
         // GETTERS
@@ -736,7 +736,7 @@ declare module 'axoncore' {
         public hasPerms(member: Member, permissions?: string[] ): boolean;
         public hasChannelPerms(channel: TextableChannel, permissions: string[], user?: User): boolean;
         public missingPerms(member: Member, permissions?: string[] ): string[];
-        public calculatePerms(data: PermissionObject): { allow: number; deny: number };
+        public calculatePerms(data: PermissionObject): { allow: number; deny: number; };
 
         public sleep(ms: number): Promise<void>;
         public readFileAsync(path: string): Promise<string>;
@@ -746,7 +746,7 @@ declare module 'axoncore' {
 
     export type LOG_LEVEL_TYPES = 'FATAL' | 'ERROR' | 'WARN' | 'DEBUG' | 'NOTICE' | 'INFO' | 'VERBOSE';
 
-    interface Ctx { guild: Guild; cmd: Command; user: User }
+    interface Ctx { guild: Guild; cmd: Command; user: User; }
 
     export class Base {
         public _axon: AxonClient;
@@ -874,9 +874,9 @@ declare module 'axoncore' {
         510: 'Not Extended';
     }
 
-    interface LibraryTypes { ERIS: 0; DISCORDJS: 1 }
-    interface LoggerTypes { DEFAULT: 0; CHALK: 1; SIGNALE: 2; WINSTON: 3 }
-    interface DBTypes { InMemory: 0; JSON: 1; MONGO: 2 }
+    interface LibraryTypes { ERIS: 0; DISCORDJS: 1; }
+    interface LoggerTypes { DEFAULT: 0; CHALK: 1; SIGNALE: 2; WINSTON: 3; }
+    interface DBTypes { InMemory: 0; JSON: 1; MONGO: 2; }
     interface CommandExecutionTypes {
         REGULAR: 0;
         ADMIN: 1;
@@ -1088,17 +1088,17 @@ declare module 'axoncore' {
 
     interface AxonOptionsBase {
         token?: string;
-        prefixes?: { general: string; admin: string; owner: string };
+        prefixes?: { general: string; admin: string; owner: string; };
         settings?: AxonOptionsSettings;
         lang?: Languages;
         logo?: () => void;
-        info?: { name: string; description: string; version: string };
-        staff?: { [key: string]: { name: string; id: string }[]};
+        info?: { name: string; description: string; version: string; };
+        staff?: { [key: string]: { name: string; id: string; }[];};
         template?: AxonTemplate;
         custom?: object | null;
     }
 
-    interface WebhookConfig { id: string; token: string }
+    interface WebhookConfig { id: string; token: string; }
 
     interface Webhooks {
         FATAL: WebhookConfig;
@@ -1121,12 +1121,12 @@ declare module 'axoncore' {
     }
     class AxonOptions {
         private _token?: string;
-        public prefixes: { general: string; admin: string; owner: string };
+        public prefixes: { general: string; admin: string; owner: string; };
         public settings: AxonOptionsSettings;
         public lang: Languages;
         public logo: ( () => void) | null;
-        public info: { name: string; description: string; version: string };
-        public staff: { [key: string]: { name: string; id: string }[]};
+        public info: { name: string; description: string; version: string; };
+        public staff: { [key: string]: { name: string; id: string; }[];};
         public template: AxonTemplate;
         public custom: object | null;
         public webhooks: Webhooks;
@@ -1188,7 +1188,7 @@ declare module 'axoncore' {
         public dispatcher: CommandDispatcher;
         public messageManager: MessageManager;
 
-        public staff: { [key: string]: { name: string; id: string }[]};
+        public staff: { [key: string]: { name: string; id: string; }[];};
 
         constructor(botClient: Client, AxonOptions: AxonOptions, modules: object);
 
@@ -1215,8 +1215,8 @@ declare module 'axoncore' {
         public initErrorListeners(): void;
         public initStatus(): void;
 
-        public _execCommand(msg: Message, args: string[], command: Command, guildConfig: GuildConfig, optionals: { isAdmin: boolean; isOwner: boolean } ): void;
-        public _execHelp(msg: Message, args: string[], command: Command, guildConfig: GuildConfig, optionals: { isAdmin: boolean; isOwner: boolean } ): void;
+        public _execCommand(msg: Message, args: string[], command: Command, guildConfig: GuildConfig, optionals: { isAdmin: boolean; isOwner: boolean; } ): void;
+        public _execHelp(msg: Message, args: string[], command: Command, guildConfig: GuildConfig, optionals: { isAdmin: boolean; isOwner: boolean; } ): void;
         public _execListener(listener: Listener, guildConfig: GuildConfig, ...args: any[] ): void;
 
         public sendFullHelp(msg: Message, guildConfig?: GuildConfig): Promise<void>;
@@ -1301,7 +1301,7 @@ declare module 'axoncore' {
 
         constructor(guild: string | Guild, cmd: string, user: User | string);
 
-        public static from(ctx?: { guild: string | Guild; cmd: string; user: string | User } ): Context;
+        public static from(ctx?: { guild: string | Guild; cmd: string; user: string | User; } ): Context;
         public get(): string;
     }
 
@@ -1342,7 +1342,7 @@ declare module 'axoncore' {
     }
 
     export class ClientInitialiser {
-        static initStaff(staffConfig: { [key: string]: { name: string; id: string }[]}, logger: ALogger): { [key: string]: string[] };
+        static initStaff(staffConfig: { [key: string]: { name: string; id: string; }[];}, logger: ALogger): { [key: string]: string[]; };
         static initAxon(axon: AxonClient): Promise<void>;
     }
 
@@ -1352,7 +1352,7 @@ declare module 'axoncore' {
         readonly axon: AxonClient;
         readonly logger: ALogger;
         load(command: Command, parent?: Command): boolean;
-        loadAll(commands: { [key: string]: Command } ): boolean;
+        loadAll(commands: { [key: string]: Command; } ): boolean;
         loadSubCommands(parentCommand: Command): void;
         unload(label: string): true;
         registerCommand(command: Command): void;
@@ -1368,7 +1368,7 @@ declare module 'axoncore' {
         readonly module: Module;
         readonly logger: ALogger;
         load(listener: Listener): boolean;
-        loadAll(listeners: { [key: string]: Listener } ): boolean;
+        loadAll(listeners: { [key: string]: Listener; } ): boolean;
         unload(label: string): true;
     }
 
@@ -1377,7 +1377,7 @@ declare module 'axoncore' {
         readonly axon: AxonClient;
         readonly logger: ALogger;
         load(module: Module): boolean;
-        loadAll(modules: { [key: string]: Module } ): boolean;
+        loadAll(modules: { [key: string]: Module; } ): boolean;
         unload(label: string): true;
     }
 
@@ -1631,7 +1631,7 @@ declare module 'axoncore' {
         public head: Node | null;
         public queue: Node | null;
         private _cache: Collection<T>;
-        constructor(limit: number, options: { base?: new (...args: any[] ) => T; iterable?: {[key: string]: T} | [string, T][] } );
+        constructor(limit: number, options: { base?: new (...args: any[] ) => T; iterable?: {[key: string]: T;} | [string, T][]; } );
         public set(key: string, value: T): void;
         public get(key: string): T | null;
         public remove(key: string): void;
