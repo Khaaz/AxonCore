@@ -45,21 +45,24 @@ import ALogger from './Loggers/ALogger';
  * @class AxonClient
  * @extends EventEmitter
  *
- * @prop {BotClient} _botClient - Eris or Discordjs Client
- * @prop {Collection<Module>} modules - All modules in the client [key: label, value: module]
- * @prop {Collection<Command>} commands - All commands in the client [key: label, value: command]
- * @prop {Map<String>} commandAliases - All aliases in the client [key: alias, value: commandLabel]
- * @prop {EventManager} EventManager - The EventManager instance that handle all AxonCore events
+ * @prop {BotClient} _botClient - Discord library Client
+ * @prop {ModuleRegistry} modules - Registry holding all modules
+ * @prop {CommandRegistry} commands - Registry holding all commands
+ * @prop {ListenerRegistry} listeners - Registry holding all listeners
+ * @prop {EventManager} EventManager - The EventManager instance that handle all AxonCore listeners
  * @prop {GuildConfigCache} guildConfigs - The Manager that handles GuildConfigs (cache / DB etc)
  * @prop {AxonConfig} axonConfig - The AxonConfig object that handles globally blacklisted users and guilds
  * @prop {CommandDispatcher} dispatcher - Dispatch commands onMessageCreate.
- * @prop {ModuleLoader} moduleLoader - Load, register, unregister modules.
+ * @prop {ModuleLoader} moduleLoader - Load, unload modules.
  * @prop {MessageManager} messageManager - Message manager object accessible with `<AxonClient>.l`
- * @prop {Object} logger - The Logger instance
- * @prop {Object} axonUtils - Util methods (AxonCore)
- * @prop {Object} utils - Utils methods (general)
- * @prop {ADBProvider} DBProvider - The ADBProvider instance
+ * @prop {ALogger} logger - The Logger instance
+ * @prop {AxonUtils} axonUtils - Util methods (AxonCore)
+ * @prop {Utils} utils - Utils methods (general)
+ * @prop {ADBProvider} DBProvider - The DBProvider instance
  * @prop {Object} configs - configs (webhooks, template, custom)
+ * @prop {Object} configs.webhooks - Webhooks configs with all webhooks id and tokens
+ * @prop {Object} configs.template - Template config
+ * @prop {Object} configs.custom - Custom config object optionally passed via AxonOptions
  * @prop {Object} staff - Bot Staff (owners, admins, +...)
  * @prop {Array<String>} staff.owners - Array of user IDs with BotOwner permissions
  * @prop {Array<String>} staff.admins - Array of user IDs with BotAdmin permissions
@@ -68,8 +71,15 @@ import ALogger from './Loggers/ALogger';
  * @prop {Array<String>} settings.prefixes - Default bot prefixes
  * @prop {String} settings.adminPrefix- Admins prefix : override perms/cd except Owner
  * @prop {String} settings.ownerPrefix - Owner prefix : override perms/cd
- * @prop {Object} infos - General infos { name, description, version, library, owners }
- * @prop {Object} axoncore - AxonCore infos { name, version, author, github }s]
+ * @prop {Object} infos - General infos about the current application
+ * @prop {String} infos.name - Bot name
+ * @prop {String} infos.description - Bot description
+ * @prop {String} infos.version - Bot version
+ * @prop {Array<String>} infos.owners - Bot owners (array of names)
+ * @prop {Object} axoncore - AxonCore info
+ * @prop {String} axoncore.version - AxonCore version
+ * @prop {String} axoncore.author - AxonCore author
+ * @prop {String} axoncore.github - AxonCore github link
  */
 class AxonClient extends EventEmitter {
     /**
@@ -85,7 +95,7 @@ class AxonClient extends EventEmitter {
         super();
         axonOptions.logo ? axonOptions.logo() : logo();
 
-        this.configs = {
+        this._configs = {
             webhooks: axonOptions.webhooks,
             template: axonOptions.template,
             custom: axonOptions.custom,
@@ -111,7 +121,6 @@ class AxonClient extends EventEmitter {
 
         /* Client specification */
         this.axoncore = {
-            name: packageJSON.name,
             version: packageJSON.version,
             author: packageJSON.author,
             github: packageJSON.link,
@@ -147,9 +156,9 @@ class AxonClient extends EventEmitter {
         }
 
         /* Structures */
-        this.modules = new ModuleRegistry(this);
-        this.commands = new CommandRegistry(this);
-        this.listeners = new ListenerRegistry(this);
+        this.moduleRegistry = new ModuleRegistry(this);
+        this.commandRegistry = new CommandRegistry(this);
+        this.listenerRegistry = new ListenerRegistry(this);
         this.eventManager = new EventManager(this);
 
         /* GuildConfigs */
@@ -159,7 +168,7 @@ class AxonClient extends EventEmitter {
         this.moduleLoader = new ModuleLoader(this);
         this.dispatcher = new CommandDispatcher(this);
 
-        this.messageManager = new MessageManager(this, axonOptions.lang, axonOptions.settings.lang);
+        this._messageManager = new MessageManager(this, axonOptions.lang, axonOptions.settings.lang);
 
         /* General */
         this.staff = ClientInitialiser.initStaff(axonOptions.staff, this.logger);
@@ -228,42 +237,6 @@ class AxonClient extends EventEmitter {
     }
 
     /**
-     * Return the webhooks object
-     *
-     * @readonly
-     * @type {Object}
-     *
-     * @memberof AxonClient
-     */
-    get webhooks() {
-        return this.configs.webhooks;
-    }
-
-    /**
-     *
-     *
-     * @readonly
-     * @type {Object}
-     *
-     * @memberof AxonClient
-     */
-    get template() {
-        return this.configs.template;
-    }
-
-    /**
-     *
-     *
-     * @readonly
-     * @type {Object}
-     *
-     * @memberof AxonClient
-     */
-    get custom() {
-        return this.configs.custom;
-    }
-
-    /**
      * Return the MessageManager instance
      *
      * @readonly
@@ -272,7 +245,43 @@ class AxonClient extends EventEmitter {
      * @memberof AxonClient
      */
     get l() {
-        return this.messageManager;
+        return this._messageManager;
+    }
+
+    /**
+     * Return the webhooks config
+     *
+     * @readonly
+     * @type {Object}
+     *
+     * @memberof AxonClient
+     */
+    get webhooks() {
+        return this._configs.webhooks;
+    }
+
+    /**
+     * Returns the template config
+     *
+     * @readonly
+     * @type {Object}
+     *
+     * @memberof AxonClient
+     */
+    get template() {
+        return this._configs.template;
+    }
+
+    /**
+     * Returns the custom config
+     *
+     * @readonly
+     * @type {Object}
+     *
+     * @memberof AxonClient
+     */
+    get custom() {
+        return this._configs.custom;
     }
 
     /**
@@ -284,7 +293,7 @@ class AxonClient extends EventEmitter {
      * @memberof AxonClient
      */
     getModule(module) {
-        return this.modules.get(module);
+        return this.moduleRegistry.get(module);
     }
 
     /**
@@ -296,7 +305,7 @@ class AxonClient extends EventEmitter {
      * @memberof AxonClient
      */
     getCommand(fullLabel) {
-        return this.commands.getFull(fullLabel.split(' ') );
+        return this.commandRegistry.getFull(fullLabel.split(' ') );
     }
 
     // **** MAIN **** //
@@ -581,8 +590,8 @@ class AxonClient extends EventEmitter {
     }
 
     /**
-     * Fired when a command fails
-     * @event AxonClient#eventExecution
+     * Fired when a listener is executed
+     * @event AxonClient#listenerExecution
      * @prop {Boolean} status - Whereas the listener was successfully executed or not
      * @prop {String} eventName - The discord event name
      * @prop {String} listenerName - The listener label
@@ -593,8 +602,8 @@ class AxonClient extends EventEmitter {
      */
 
     /**
-     * Fired when a command fails
-     * @event AxonClient#eventError
+     * Fired when a listener errors
+     * @event AxonClient#listenerError
      * @prop {String} eventName - The discord event name
      * @prop {String} listenerName - The Listener label
      * @prop {Object} data - Additional information
@@ -610,10 +619,10 @@ class AxonClient extends EventEmitter {
                 if (this.settings.debugMode) {
                     this.log('VERBOSE', `[EVENT](${listener.eventName}) - ${listener.label}`);
                 }
-                this.emit('eventExecution', true, listener.eventName, listener.label, { listener, guildConfig } );
+                this.emit('listenerExecution', true, listener.eventName, listener.label, { listener, guildConfig } );
             } )
             .catch(err => {
-                this.emit('eventError', listener.eventName, listener.label, { listener, guildConfig, error: err } );
+                this.emit('listenerError', listener.eventName, listener.label, { listener, guildConfig, error: err } );
 
                 this.log('ERROR', `[EVENT](${listener.eventName}) - ${listener.label}\n${err}`);
             } );
@@ -652,14 +661,14 @@ class AxonClient extends EventEmitter {
 
         let commandList = '';
         if (guildConfig) {
-            for (const module of this.modules.registry.values() ) {
+            for (const module of this.moduleRegistry) {
                 const commands = module.commands.filter(c => c.permissions.canExecute(msg, guildConfig)[0] );
                 if (commands.length > 0) {
                     commandList += `**${module.label}**\n${commands.map(c => `\`${prefix}${c.label}\` - ${c.infos.description}`).join('\n')}\n`;
                 }
             }
         } else {
-            for (const module of this.modules.registry.values() ) {
+            for (const module of this.moduleRegistry) {
                 commandList += `**${module.label}**\n${module.commands.map(c => `\`${prefix}${c.label}\` - ${c.infos.description}`).join('\n')}\n`;
             }
         }

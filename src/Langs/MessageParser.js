@@ -14,9 +14,9 @@ class MessageParser {
     /**
      * Generator function that will match all occurrence of the regex and yield a Match structure
      *
+     * @generator
      * @param {String} message
      * @yields {Object} Match
-     *
      * @memberof MessageParser
      */
     *matchAll(message) {

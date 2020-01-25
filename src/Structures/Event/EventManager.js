@@ -12,7 +12,7 @@ import AHandler from './AHandler';
  * @extends Base
  *
  * @prop {Object} _events - Object that links an event name to an array of Listener objects { eventName: [Listener, Listener] }
- * @prop {Collection<Object>} _handlers - Collection of handler keyed to the event name [key: eventName, value: AHandler]
+ * @prop {Collection<AHandler>} _handlers - Collection of handler keyed to the event name [key: eventName, value: AHandler]
  */
 
 class EventManager extends Base {
@@ -136,7 +136,7 @@ class EventManager extends Base {
      * Create a new handler from the array of listeners for the given event.
      *
      * @param {String} event - The Discord event name
-     * @returns {Object} The new Handler created
+     * @returns {AHandler} The new Handler created
      *
      * @memberof EventManager
      */
@@ -165,7 +165,7 @@ class EventManager extends Base {
      * Recreate a handler and bind it to the event emitter.
      *
      * @param {String} event - The Discord event name to register
-     * @returns {Object} The Handler Object
+     * @returns {AHandler} The Handler Object
      *
      * @memberof EventManager
      */

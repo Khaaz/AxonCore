@@ -122,7 +122,7 @@ class CommandDispatcher extends ADispatcher {
         }
 
         /* Resolve command (and subcommand if needed) */
-        const command = this._axon.commands.resolve(label, args, guildConfig);
+        const command = this._axon.commandRegistry.resolve(label, args, guildConfig);
         if (!command) { // command doesn't exist or not globally enabled
             return;
         }
