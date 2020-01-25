@@ -10,9 +10,9 @@ import AxonError from '../Errors/AxonError';
  *
  * @author KhaaZ
  *
- * @class Validater
+ * @class Validator
  */
-class Validater {
+class Validator {
     static validModule(module) {
         const PERMS = module.axon.library.enums.PERMISSIONS;
         const debug = module.axon.settings.debugMode;
@@ -67,7 +67,7 @@ class Validater {
      * @param {Command} command
      * @returns {Boolean} Whether the command is considered valid or not
      *
-     * @memberof Validater
+     * @memberof Validator
      */
     static validCommand(command) {
         const PERMS = command.axon.library.enums.PERMISSIONS;
@@ -156,7 +156,7 @@ class Validater {
      * @param {Object|String} content
      * @returns {Boolean} Returns true if the message is valid, otherwise throw an AxonError
      *
-     * @memberof Validater
+     * @memberof Validator
      */
     static checkMessageValidity(content) {
         if (content instanceof Object && content.embed) {
@@ -196,4 +196,4 @@ class Validater {
     }
 }
 
-export default Validater;
+export default Validator;

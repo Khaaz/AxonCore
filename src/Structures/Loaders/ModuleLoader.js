@@ -1,7 +1,7 @@
 import ALoader from './ALoader';
 import Module from '../Module';
 
-import Validater from '../Validater';
+import Validator from '../Validator';
 
 import AxonError from '../../Errors/AxonError';
 
@@ -60,7 +60,7 @@ class ModuleLoader extends ALoader {
             throw new AxonError('Module label may not have spaces!', 'MODULE-LOADER', module.label);
         }
         
-        if (!Validater.validModule(module) ) {
+        if (!Validator.validModule(module) ) {
             throw new AxonError(`[${module.label}] Invalid Module (enable debugMode)!`, 'MODULE-LOADER', module.label);
         }
 

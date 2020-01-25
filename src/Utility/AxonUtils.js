@@ -1,4 +1,4 @@
-import Validater from '../Structures/Validater';
+import Validator from '../Structures/Validator';
 
 /**
  * AxonCore Utility Class.
@@ -283,7 +283,7 @@ class AxonUtils {
             return Promise.resolve(false);
         }
 
-        if (!Validater.checkMessageValidity(content) ) { // will throw
+        if (!Validator.checkMessageValidity(content) ) { // will throw
             return Promise.resolve(false);
         }
 
@@ -317,7 +317,7 @@ class AxonUtils {
      * @memberof AxonUtils
      */
     editMessage(message, content) {
-        if (!Validater.checkMessageValidity(content) ) { // will throw
+        if (!Validator.checkMessageValidity(content) ) { // will throw
             return Promise.resolve(false);
         }
 
