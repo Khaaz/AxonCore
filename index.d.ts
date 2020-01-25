@@ -51,11 +51,9 @@ declare module 'axoncore' {
 
     export class AxonCommandError extends Error {
         public context: CommandContext;
-        readonly short: { value: string; writable: false };
-        /* Conflicting error property names
-        public message: { value: string, writable: false };
-        public stack: { value: string, writable: false };
-        */
+        readonly short: string;
+        public message: string;
+        public stack: string;
 
         constructor(commandContext: CommandContext, err: Error);
         readonly name: string;
@@ -63,18 +61,14 @@ declare module 'axoncore' {
 
     export class NoAbstractInstanceException extends Error {
         constructor(...args: any[] );
-        /* Conflicting error property names
-        readonly name: { value: string, writable: false };
-        readonly message: { value: string, writable: false };
-        */
+        readonly name: string;
+        readonly message: string;
     }
 
     class NotImplementedException extends Error {
         constructor(...args: any[] );
-        /* Conflicting error property names
-        readonly name: { value: string, writable: false };
-        readonly message: { value: string, writable: false };
-        */
+        readonly name: string;
+        readonly message: string;
     }
 
     interface ModuleInfo {
@@ -613,7 +607,7 @@ declare module 'axoncore' {
         private _handlers: Collection<AHandler>;
         constructor(axon: AxonClient, name: string, listeners: Listener[] );
         // GETTERS
-        readonly HANDLERS: Record<string, any>; // Replace with LibInterface
+        readonly HANDLERS: object;
         readonly handlers: Collection<AHandler>;
 
         public getListeners(eventName: string): Listener[];
