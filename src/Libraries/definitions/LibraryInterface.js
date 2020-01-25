@@ -15,14 +15,15 @@ import Guild from './Guild';
 class LibraryInterface {
     /**
      * Creates an instance of LibraryInterface.
+     *
      * @param {Object} botClient - The bot client (lib specific)
      * @param {Object} structs - Object with all structures to use in lib interface
-     * @param {Object} structs.User
-     * @param {Object} structs.Member
-     * @param {Object} structs.Message
-     * @param {Object} structs.Channel
-     * @param {Object} structs.Guild
-     * @param {Object} structs.resolver
+     * @param {User} structs.User
+     * @param {Member} structs.Member
+     * @param {Message} structs.Message
+     * @param {Chqnnel} structs.Channel
+     * @param {Guild} structs.Guild
+     * @param {Resolver} structs.resolver
      *
      * @memberof LibraryInterface
      */
