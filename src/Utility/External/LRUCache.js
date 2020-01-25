@@ -206,7 +206,7 @@ class LRUCache {
     }
 
     /**
-     * Test if all elements passe the test implemented by the provided function. Returns true if yes, or false if not.
+     * Test if all elements pass the test implemented by the provided function. Returns true if yes, or false if not.
      *
      * @param {Function} func - A function that takes an object and returns true if it matches
      * @returns {Boolean} An array containing all the objects that matched

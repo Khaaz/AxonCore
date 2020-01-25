@@ -1176,10 +1176,9 @@ declare module 'axoncore' {
         public utils: Utils;
         public DBProvider: ADBProvider
 
-        public modules: ModuleRegistry;
-        public commands: CommandRegistry;
-        // Conflicting EventEmitter property name
-        // public listeners: ListenerRegistry;
+        public moduleRegistry: ModuleRegistry;
+        public commandRegistry: CommandRegistry;
+        public listenerRegistry: ListenerRegistry;
         public eventManager: EventManager;
 
         public guildConfigs: GuildConfigCache;
@@ -1429,7 +1428,7 @@ declare module 'axoncore' {
         unregister(label: string, module?: Module): void;
     }
 
-    export class Validater {
+    export class Validator {
         static validModule(module: Module): boolean;
         static validCommand(command: Command): boolean;
         static checkValidPermissionName(PERMISSIONS: string[], perm: string): boolean;

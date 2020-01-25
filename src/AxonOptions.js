@@ -23,11 +23,11 @@ import defaultWebhooksConfig from './Configs/webhooksConfig.json';
  * // Settings
  * @prop {Object} settings - Bot settings
  * @prop {String} settings.lang - Default lang for the bot
- * @prop {Boolean} settings.debugMode - Whether to runthe bot in debugMode (additional info)
+ * @prop {Boolean} settings.debugMode - Whether to run the bot in debugMode (additional info)
  * @prop {Number<LIBRARY_TYPES>} settings.library - Library type
  * @prop {Number<LOGGER_TYPES>} setting.logger - Logger type
  * @prop {Number<DB_TYPES>} settings.db - DB type
- * @prop {Number} settings.guildConfigCache - max amount of guildConfigs cached at the sametime (LRUCache)
+ * @prop {Number} settings.guildConfigCache - max amount of guildConfigs cached at the same time (LRUCache)
  *
  * @prop {Object} lang - Translation file
  * @prop {Function} logo - Custom function that will log a custom logo on startup
@@ -41,7 +41,7 @@ import defaultWebhooksConfig from './Configs/webhooksConfig.json';
  * @prop {Array<Object>} staff.owners - The bot staff (owner, admins)
  * @prop {Array<Object>} staff.admins - The bot staff (owner, admins)
  * // Template
- * @prop {Object} template - Template information (cpropolors / formatting / emojis)
+ * @prop {Object} template - Template information (colours / formatting / emojis)
  * @prop {Object} template.embeds - Embeds colors
  * @prop {Object} template.emotes - Emotes
  *
@@ -82,11 +82,11 @@ class AxonOptions {
      * // Settings
      * @param {Object} data.settings - Bot settings
      * @param {String} data.settings.lang - Default lang for the bot
-     * @param {Boolean} data.settings.debugMode - Whether to runthe bot in debugMode (additional info)
+     * @param {Boolean} data.settings.debugMode - Whether to run the bot in debugMode (additional info)
      * @param {Number<LIBRARY_TYPES>} data.settings.library - Library type
      * @param {Number<LOGGER_TYPES>} data.setting.logger - Logger type
      * @param {Number<DB_TYPES>} data.settings.db - DB type
-     * @param {Number} data.settings.guildConfigCache - max amount of guildConfigs cached at the sametime (LRUCache)
+     * @param {Number} data.settings.guildConfigCache - max amount of guildConfigs cached at the same time (LRUCache)
      *
      * @param {Object} data.lang - Translation file
      * @param {Function} data.logo - Custom function that will log a custom logo on startup

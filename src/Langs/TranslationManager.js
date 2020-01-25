@@ -4,7 +4,7 @@ import defaultLang from '../Configs/lang.json';
  * Class dedicated to manage translations.
  * Holds all translations and get the message for the default lang or the specified lang.
  *
- * @autho KhaaZ
+ * @author KhaaZ
  *
  * @class TranslationManager
  *

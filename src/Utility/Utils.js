@@ -259,7 +259,7 @@ class Utils {
      *
      * @param {Member} member - Member object
      * @param {Array<String>} permissions - List of permissions to test
-     * @returns {Boolean} hether the member has permissions or not
+     * @returns {Boolean} Whether the member has permissions or not
      *
      * @memberof Utils
      */
@@ -346,7 +346,7 @@ class Utils {
     // **** GENERAL **** //
 
     /**
-     * Wait for a specified amount of miliseconds..
+     * Wait for a specified amount of milliseconds..
      *
      * @param {Number} ms
      * @returns {Promise} resolve after the delay is passed
@@ -383,7 +383,7 @@ class Utils {
 
     /**
      * Ensures that all property names of obj1 exists in obj2.
-     * Doesn't compare values. Exept if it is an object, then it checks for property names recursively.
+     * Doesn't compare values. Except if it is an object, then it checks for property names recursively.
      *
      * @param {Object} obj1 - Default config/object
      * @param {Object} obj2 - Custom config/Object (Config/Object to compare with)

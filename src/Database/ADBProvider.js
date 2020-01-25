@@ -8,9 +8,9 @@ import NotImplementedException from '../Errors/NotImplementedException';
 /**
  * Abstract class for all DB services.
  * Extend this class to create your own Database provider.
- * You just need to write these methods for the framewor to be able to interact with the database.
+ * You just need to write these methods for the framework to be able to interact with the database.
  *
- * The provider creates guildconfigs with DB datas.
+ * The provider creates guildconfigs with DB data.
  *
  * @author KhaaZ
  *
@@ -41,7 +41,7 @@ class ADBProvider {
 
     /**
      * Init the ADBProvider.
-     * Method calledjust after instantiation.Can be overrided with anything that willbe used by the provider.
+     * Method called just after instantiation. Can be overridden with anything that will be used by the provider.
      *
      * @param {AxonOptions}
      *
@@ -92,7 +92,7 @@ class ADBProvider {
     }
 
     /**
-     * Retreives the Guild config for the specified guild.
+     * Retrieves the Guild config for the specified guild.
      *
      * @param {String} gID - guild ID
      * @returns {Promise<GuildConfig|null>}
@@ -103,7 +103,7 @@ class ADBProvider {
         throw new NotImplementedException();
     }
 
-    // **** UPDATERS **** //
+    // **** UPDATES **** //
 
     /**
      * Update AxonConfig in the DB.
@@ -112,7 +112,7 @@ class ADBProvider {
      *
      * @param {String} key - The identifier in the Database
      * @param {Object|Array|String|Boolean} value - The value to update in the DB
-     * @returns {Promise<Boolean>} UWhether the request was successfull or not
+     * @returns {Promise<Boolean>} UWhether the request was successful or not
      *
      * @memberof ADBProvider
      */
@@ -129,7 +129,7 @@ class ADBProvider {
      * @param {String} key - The identifier in the Database
      * @param {String} gID - The guild ID to update
      * @param {Object|Array|String|Boolean} value - The value to update in the DB
-     * @returns {Promise<Boolean>} Whether the request was successfull or not
+     * @returns {Promise<Boolean>} Whether the request was successful or not
      *
      * @memberof ADBProvider
      */

@@ -152,7 +152,7 @@ class Base {
      * @param {Object/String} content - String or object (embed)
      * @param {Object} [options={}] - Options { disableEveryone: Boolean, delete: Boolean, delay: Number }
      * @param {Boolean} [options.disableEveryone=true] - Whether to allow mentioning everyone or not
-     * @param {Number} [options.delete=false] - Whether to deletethe message or not
+     * @param {Number} [options.delete=false] - Whether to delete the message or not
      * @param {Boolean} [options.delay=null] - Delay after which the message will be deleted
      * @returns {Promise<Message?>} Message Object
      *
@@ -171,7 +171,7 @@ class Base {
      * @param {Object/String} content - Message content, String or Embed Object
      * @param {Object} [options={}] - Options { disableEveryone: Boolean, delete: Boolean, delay: Number }
      * @param {Boolean} [options.disableEveryone=true] - Whether to allow mentioning everyone or not
-     * @param {Number} [options.delete=false] - Whether to deletethe message or not
+     * @param {Number} [options.delete=false] - Whether to delete the message or not
      * @param {Boolean} [options.delay=null] - Delay after which the message will be deleted
      * @returns {Promise<Message?>} Message Object
      *
@@ -196,7 +196,7 @@ class Base {
     }
 
     /**
-     * Send a success message. If the content is a string, suffixe the success emote to the content.
+     * Send a success message. If the content is a string, suffix the success emote to the content.
      * Check for sendMessage perms.
      * Await for sendMessage to throw correctly potential errors.
      *
@@ -204,9 +204,9 @@ class Base {
      * @param {Object|String} content - Success message content
      * @param {Object} [options={}] - Additional options
      * @param {Boolean} [options.disableEveryone=true] - Whether to allow mentioning everyone or not
-     * @param {Boolean} [options.delete=false] - Whether to deletethe message or not
+     * @param {Boolean} [options.delete=false] - Whether to delete the message or not
      * @param {Number} [options.delay=null] - Delay after which the message will be deleted
-     * @param {Boolean} [options.triggerCooldown=true] - Whether the command shoudl trigger cooldown or not
+     * @param {Boolean} [options.triggerCooldown=true] - Whether the command should trigger cooldown or not
      * @returns {Promise<CommandResponse>} The successful Command Response
      *
      * @memberof Base
@@ -222,7 +222,7 @@ class Base {
     }
 
     /**
-     * Send an error message. If the content is a string, suffixe the error emote to the content.
+     * Send an error message. If the content is a string, suffix the error emote to the content.
      * Check for sendMessage perms.
      * Await for sendMessage to throw correctly potential errors.
      *
@@ -230,10 +230,10 @@ class Base {
      * @param {Object|String} content - Success message content
      * @param {Object} [options={}] - Additional options
      * @param {Boolean} [options.disableEveryone=true] - Whether to allow mentioning everyone or not
-     * @param {Boolean} [options.delete=false] - Whether to deletethe message or not
+     * @param {Boolean} [options.delete=false] - Whether to delete the message or not
      * @param {Number} [options.delay=null] - Delay after which the message will be deleted
-     * @param {Boolean} [options.triggerCooldown=false] - Whether the command shoudl trigger cooldown or not
-     * @param {Object|String} [options.error=null] - Whether the command shoudl trigger cooldown or not
+     * @param {Boolean} [options.triggerCooldown=false] - Whether the command should trigger cooldown or not
+     * @param {Object|String} [options.error=null] - Whether the command should trigger cooldown or not
      * @returns {Promise<CommandResponse>} The non successful Command Response
      *
      * @memberof Base

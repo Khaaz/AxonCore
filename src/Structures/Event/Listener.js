@@ -16,7 +16,7 @@ import NotImplementedException from '../../Errors/NotImplementedException';
  * @prop {String} eventName - The discord event name
  * @prop {String} label - The listener name
  *
- * @prop {Boolean} load - Whether to load this event on startup or not
+ * @prop {Boolean} load - Whether to load this event on start up or not
  * @prop {Boolean} [enabled=module.enabled] - Whether the event is enabled or not
  * @prop {Boolean} [serverBypass=module.serverBypass] - Can the event be disabled?
  *
@@ -85,7 +85,7 @@ class Listener extends Base {
     }
 
     /**
-     * Main execute function, need to be overriden in child.
+     * Main execute function, need to be overridden in child.
      *
      * @param {Array} args - Array of the events arguments (as separate parameters)
      * @param {GuildConfig?} guildConfig - The guildConfig or undefined if not a guild event

@@ -1,7 +1,7 @@
 import ALoader from './ALoader';
 import Command from '../Command/Command';
 
-import Validater from '../Validater';
+import Validator from '../Validator';
 
 import AxonError from '../../Errors/AxonError';
 import CommandRegistry from './../Stores/CommandRegistry';
@@ -76,7 +76,7 @@ class CommandLoader extends ALoader {
             throw new AxonError(`[${command.label}] Command label may not have spaces!`, 'COMMAND-LOADER', this.module.label);
         }
 
-        if (!Validater.validCommand(command) ) {
+        if (!Validator.validCommand(command) ) {
             throw new AxonError(`[${command.label}] Invalid Command (enable debugMode)!`, 'COMMAND-LOADER', this.module.label);
         }
 
@@ -115,7 +115,7 @@ class CommandLoader extends ALoader {
     }
     
     /**
-     * Init and construct/instance all subcommands of the given parent comand
+     * Init and construct/instance all subcommands of the given parent command
      *
      * @param {Command} command - The command Object
      * @memberof Command

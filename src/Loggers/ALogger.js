@@ -107,10 +107,10 @@ class ALogger {
 
     _parseTime() {
         const current = new Date();
-        const formated = format('[ %s ]', `${current.getHours() < 10 ? `0${current.getHours()}` : current.getHours()}h`
+        const formatted = format('[ %s ]', `${current.getHours() < 10 ? `0${current.getHours()}` : current.getHours()}h`
             + `${current.getMinutes() < 10 ? `0${current.getMinutes()}` : current.getMinutes()}m`
             + `${current.getSeconds() < 10 ? `0${current.getSeconds()}` : current.getSeconds()}s`);
-        return formated;
+        return formatted;
     }
 }
 

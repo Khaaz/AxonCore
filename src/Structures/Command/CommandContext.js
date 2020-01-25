@@ -8,8 +8,8 @@ import { COMMAND_EXECUTION_TYPES, COMMAND_EXECUTION_STATE } from '../../Utility/
  * If it was not executed, we know the reason (onCooldown, invalidUsage, invalidBotPermissions, invalidUserPermissions)
  *
  * If the command was executed, it has the success flag. If it's true,it means the command worked until the end (aka normal execution).
- * Success being false can be the result of a regular stop ofthe execution flow (bad input for example, usage of this.sendError) or of catched error(usage of this.error).
- * The last possiblity is un cacthed errors.
+ * Success being false can be the result of a regular stop of the execution flow (bad input for example, usage of this.sendError) or of caught error(usage of this.error).
+ * The last possibility is uncaught errors.
  *
  * @author KhaaZ
  *
@@ -31,8 +31,8 @@ import { COMMAND_EXECUTION_TYPES, COMMAND_EXECUTION_STATE } from '../../Utility/
  * @prop {String} [guildName=null] - Context: guild where the command was executed name
  * @prop {String} [channelID=null] - Context: channel where the command was executed ID
  * @prop {String} [channelName=null] - Context: channel where the command was executed name
- * @prop {String} [callerID=null] - Context: user that called thecommand ID
- * @prop {String} [callerName=null] - Context: user that called thecommand name
+ * @prop {String} [callerID=null] - Context: user that called the command ID
+ * @prop {String} [callerName=null] - Context: user that called the command name
  * @prop {Date} [calledAt=Date.now()] - The execution time
  */
 class CommandContext {
@@ -80,7 +80,7 @@ class CommandContext {
 
     /**
      * Add the command response data to the command context object.
-     * Add the state of the command success and optionaly the error.
+     * Add the state of the command success and optionally the error.
      *
      * @param {CommandResponse} commandResponse - CommandResponse object obtained or created after the command execution
      * @returns {CommandContext}

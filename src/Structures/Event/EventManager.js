@@ -101,7 +101,7 @@ class EventManager extends Base {
         }
     }
 
-    // **** REGISTERERS **** //
+    // **** REGISTERS **** //
 
     /**
      * Register a listener for the given discord event.
@@ -175,7 +175,7 @@ class EventManager extends Base {
         return handler;
     }
 
-    // **** UNREGISTERERS **** //
+    // **** UNREGISTER **** //
     
     /**
      * Unregister a listener.

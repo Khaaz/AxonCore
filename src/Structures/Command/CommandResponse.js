@@ -10,7 +10,7 @@
 class CommandResponse {
     /**
      * Creates an instance of CommandResponse.
-     * Build the commandresponse from all options given in parameters
+     * Build the CommandResponse from all options given in parameters
      *
      * @param {Object} [data={}]
      * @param {Boolean} [data.success=true]

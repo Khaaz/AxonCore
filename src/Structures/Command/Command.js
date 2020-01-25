@@ -12,7 +12,7 @@ import AxonCommandError from '../../Errors/AxonCommandError';
 import { COMMAND_EXECUTION_STATE } from '../../Utility/Constants/AxonEnums';
 
 /**
- * AxonCore - Command contructor
+ * AxonCore - Command constructor
  *
  * @author KhaaZ
  *
@@ -50,7 +50,7 @@ class Command extends Base {
     /**
      * Creates a Command instance.
      * Handles execution of this command.
-     * Overrides the execute method. Execute method will be called everytime the command is called.
+     * Overrides the execute method. Execute method will be called every time the command is called.
      *
      * @param {Module} module
      * @param {Object} [data={}] - All command parameters
@@ -59,7 +59,7 @@ class Command extends Base {
      * @param {Boolean} [data.isSubcmd] - Whether the command IS a subcommand
      * @param {Boolean} [data.hasSubcmd] - Whether the command HAS subcommands
      * @param {Boolean} [data.enabled] - Whether the command is enabled
-     * @param {Boolean} [data.serverBypass] - Whether the ciommand can be server disabled
+     * @param {Boolean} [data.serverBypass] - Whether the command can be server disabled
      * @param {Array<String>} [data.subcmds] - List of subcommands class to be added in the Command
      * @param {Object} [data.infos]
      * @param {CommandOptions|Object} [data.options] - The command options
@@ -278,7 +278,7 @@ class Command extends Base {
 
     /**
      * Execute the command.
-     * Get the CommandResponse fromthe command execution or create it in case of errors.
+     * Get the CommandResponse from the command execution or create it in case of errors.
      * Create the CommandContext and returns it.
      *
      * @param {Object} { msg, args, guildConfig, isAdmin, isOwner }
@@ -296,13 +296,13 @@ class Command extends Base {
         } );
         
         return this.execute( { msg, args, guildConfig } )
-            /* Successful and failed execution + catched errors (this.error()) */
+            /* Successful and failed execution + caught errors (this.error()) */
             .then( (response) => {
                 this._cooldown.shouldSetCooldown(response) && this._cooldown.setCooldown(this.library.message.getAuthorID(msg) );
                 
                 return context.addResponseData(response);
             } )
-            /* UNEXPECTED ERRORS ONLY (non catched) */
+            /* UNEXPECTED ERRORS ONLY (non caught) */
             .catch(err => {
                 !isAdmin && this._cooldown.shouldSetCooldown() && this._cooldown.setCooldown(this.library.message.getAuthorID(msg) );
 
@@ -466,7 +466,7 @@ class Command extends Base {
     }
 
     /**
-     * Send an error message incase of invalid target permissions (serverMod/serverAdmin).
+     * Send an error message in case of invalid target permissions (serverMod/serverAdmin).
      * Uses the template message in config/template.
      *
      * @param {Channel} channel - The channel Object

@@ -30,7 +30,7 @@ class ADispatcher {
 
     /**
      * ADispatcher main method.
-     * Need to be overrided, any parameters can  be used.
+     * Needs to be overridden, any parameters can be used.
      *
      * @memberof ADispatcher
      */

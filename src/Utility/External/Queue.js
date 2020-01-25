@@ -1,7 +1,7 @@
 /**
  * This default Queue works in a synchronous fashion.
  * It will execute all synchronous functions sequentially.
- * Any error will be catched and unless specified otherwise won't break the queue execution.
+ * Any error will be caught and unless specified otherwise won't break the queue execution.
  * The queue can be auto executed on add or the execution can be delayed.
  *
  * @author KhaaZ

@@ -25,7 +25,7 @@ class MongoProvider extends ADBProvider {
     init(axonOptions = null) { // eslint-disable-line no-unused-vars
         // We use require to require the schema at runtime.
         // This will prevent the MongoProvider from DIRECTLY depending on mongoose and preventing to make it break the global export
-        // This will also only create the model at runtime, allowing to override the model if the MongoProvider is extended and the init method overrided
+        // This will also only create the model at runtime, allowing to override the model if the MongoProvider is extended and the init method overridden
         this.AxonSchema = require('./Mongo/AxonSchema').default;
         this.GuildSchema = require('./Mongo/GuildSchema').default;
     }
@@ -102,7 +102,7 @@ class MongoProvider extends ADBProvider {
     }
 
     /**
-     * Retreives the Guild config for the specified guild.
+     * Retrieves the Guild config for the specified guild.
      *
      * @param {String} gID - guild ID
      * @returns {Promise<GuildConfig|null>}
@@ -117,8 +117,8 @@ class MongoProvider extends ADBProvider {
     }
 
     /**
-     * Retreives the Guild **Schema** for the specified guild.
-     * Does not lean and return the actual mongoos Schema.
+     * Retrieves the Guild **Schema** for the specified guild.
+     * Does not lean and return the actual mongoose Schema.
      * MongoProvider specific method.
      *
      * @param {String} gID - guild ID
@@ -132,7 +132,7 @@ class MongoProvider extends ADBProvider {
         } );
     }
 
-    // **** UPDATERS **** //
+    // **** UPDATES **** //
 
     
     /**
@@ -142,7 +142,7 @@ class MongoProvider extends ADBProvider {
      *
      * @param {String} key - The identifier in the Database
      * @param {Object|Array|String|Boolean} value - The value to update in the DB
-     * @returns {Promise<Boolean>} Whether the request was successfull or not
+     * @returns {Promise<Boolean>} Whether the request was successful or not
      *
      * @memberof MongoProvider
      */
@@ -173,7 +173,7 @@ class MongoProvider extends ADBProvider {
      * @param {String} key - The identifier in the Database
      * @param {String} gID - The guild ID to update
      * @param {Object|Array|String|Boolean} value - The value to update in the DB
-     * @returns {Promise<Boolean>} Whether the request was successfull or not
+     * @returns {Promise<Boolean>} Whether the request was successful or not
      *
      * @memberof MongoProvider
      */

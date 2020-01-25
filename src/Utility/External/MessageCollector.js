@@ -4,9 +4,9 @@ import { EventEmitter } from 'eventemitter3';
 import Collection from '../Collection';
 
 /**
- * Collect bunch of message object according to choosen options
+ * Collect bunch of message object according to chosen options
  *
- * @author VoidNulll
+ * @author VoidNull
  *
  * @class MessageCollector
  * @extends EventEmitter
@@ -20,7 +20,7 @@ class MessageCollector extends EventEmitter {
      * @param {Number} [options.count=100] - The amount of messages to collect before automatically ending
      * @param {Boolean} [options.ignoreBots=true] - Whether or not to ignore bots
      * @param {String} [options.uID] - The user id to listen for (listens to all messages if not specified)
-     * @param {Boolean} [options.caseSensitive=false] - Whether or not to return messages with content lowercased. Default: content unchanged
+     * @param {Boolean} [options.caseSensitive=false] - Whether or not to return messages with lowercase content. Default: content unchanged
      *
      * @example
      * const collector = new MessageCollector(this.axon, { count: 10, ignoreBots: false });
@@ -63,7 +63,7 @@ class MessageCollector extends EventEmitter {
      * @param {Number} [options.count=100] The amount of messages to collect before automatically ending
      * @param {Boolean} [options.ignoreBots=true] Whether or not to ignore bots
      * @param {String} [options.uID] The user id to listen for (listens to all messages if not specified)
-     * @param {Boolean} [options.caseSensitive=true] Whether or not to return messages with content lowercased. Default: content not changed
+     * @param {Boolean} [options.caseSensitive=true] Whether or not to return messages with lowercase content. Default: content not changed
      *
      * @returns {Promise} Map of messages collected.
      *
@@ -154,7 +154,7 @@ class MessageCollector extends EventEmitter {
             return;
         }
         if (!this._actualOptions.caseSensitive) { // If caseSensitive
-            msg.content = msg.content.toLowerCase(); // Make the content lowercased
+            msg.content = msg.content.toLowerCase(); // Make the lowercase content
         }
         this.messages.add(msg.id, msg);
         this.emit('collect', msg);

@@ -14,7 +14,7 @@ import AxonError from '../../Errors/AxonError';
  *
  * @class CommandPermissions
  *
- * @prop {Array} [bot=[]] - Discord permissions that the bot needs to have in orderto execute the command
+ * @prop {Array} [bot=[]] - Discord permissions that the bot needs to have in order to execute the command
  * @prop {Boolean} [serverMod=false] - Axoncore server moderator
  * @prop {Boolean} [serverManager=false] - Discord server manager (manageServer)
  * @prop {Boolean} [serverAdmin=false] - Discord server administrator (administrator)
@@ -260,7 +260,7 @@ class CommandPermissions {
     /**
      * Set/unset the command to serverOwner only.
      *
-     * @param {Boolean} [boolean=true] - Whether to make the command serverOwnber only
+     * @param {Boolean} [boolean=true] - Whether to make the command serverOwner only
      * @returns {CommandPermissions}
      *
      * @memberof CommandPermissions

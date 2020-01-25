@@ -1,7 +1,7 @@
 /**
  * Default AxonConfig data structure used in AxonCore.
  * This class can be extended and changed as you want.
- * All methods flagged with "is used internally" can be overriden but need to keep the same name.
+ * All methods flagged with "is used internally" can be overridden but need to keep the same name.
  *
  * @author KhaaZ
  *
@@ -39,7 +39,7 @@ class AxonConfig {
     }
 
     // **** CHECKERS (used IN the framework) **** //
-    /* Can be overriden/changed but need to exists / keep the same name */
+    /* Can be overridden/changed but need to exists / keep the same name */
     //
 
     /**

@@ -19,7 +19,7 @@ import AxonError from '../../Errors/AxonError';
  * @prop {Boolean} [deleteCommand=false] - Whether to delete the command input after trigger
  * @prop {Boolean} [guildOnly=true] - Whether to allow executing this command outside of guilds
  * @prop {Boolean} [hidden=false] - Whether to hide this command from help command (general / subcommands)
- * @prop {Number} [cooldown=3000] - Cooldown betweeneach usage of this command for a specific user (in ms)
+ * @prop {Number} [cooldown=3000] - Cooldown between each usage of this command for a specific user (in ms)
  */
 class CommandOptions {
     /**

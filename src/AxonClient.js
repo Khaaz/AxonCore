@@ -51,7 +51,7 @@ import ALogger from './Loggers/ALogger';
  * @prop {Map<String>} commandAliases - All aliases in the client [key: alias, value: commandLabel]
  * @prop {EventManager} EventManager - The EventManager instance that handle all AxonCore events
  * @prop {GuildConfigCache} guildConfigs - The Manager that handles GuildConfigs (cache / DB etc)
- * @prop {AxonConfig} axonConfig - The AxonConfigobject that handles globally blacklisted users and guilds
+ * @prop {AxonConfig} axonConfig - The AxonConfig object that handles globally blacklisted users and guilds
  * @prop {CommandDispatcher} dispatcher - Dispatch commands onMessageCreate.
  * @prop {ModuleLoader} moduleLoader - Load, register, unregister modules.
  * @prop {MessageManager} messageManager - Message manager object accessible with `<AxonClient>.l`
@@ -62,7 +62,7 @@ import ALogger from './Loggers/ALogger';
  * @prop {Object} configs - configs (webhooks, template, custom)
  * @prop {Object} staff - Bot Staff (owners, admins, +...)
  * @prop {Array<String>} staff.owners - Array of user IDs with BotOwner permissions
- * @prop {Array<String>} staff.admins - Array of user IDs with BotAdmin permisions
+ * @prop {Array<String>} staff.admins - Array of user IDs with BotAdmin permissions
  * @prop {Object} settings - Bot settings
  * @prop {Boolean} settings.debugMode - Enable to show commands latency and debug informations
  * @prop {Array<String>} settings.prefixes - Default bot prefixes
@@ -203,7 +203,7 @@ class AxonClient extends EventEmitter {
     }
 
     /**
-     * Returns all registrered listeners for the discord event name
+     * Returns all registered listeners for the discord event name
      *
      * @param {String} eventName
      * @returns {Array}
@@ -216,7 +216,7 @@ class AxonClient extends EventEmitter {
 
     /**
      * Returns all the resolver for the default current library used.
-     * Can be easily overriden with a custom Resolver by overriding this getter.
+     * Can be easily overridden with a custom Resolver by overriding this getter.
      *
      * @readonly
      * @type {Resolver}
@@ -306,8 +306,8 @@ class AxonClient extends EventEmitter {
      * Start bot client.
      * Bind error listeners and event listeners.
      *
-     * Calls custom onStart() method atthe beginning.
-     * Calls custom onReady() methodwhen AxonClient is ready.
+     * Calls custom onStart() method at the beginning.
+     * Calls custom onReady() method when AxonClient is ready.
      *
      * @async
      *

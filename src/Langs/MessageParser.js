@@ -12,7 +12,7 @@ class MessageParser {
     }
 
     /**
-     * Generator function that will match all occurence of the regex and yield a Match structure
+     * Generator function that will match all occurrence of the regex and yield a Match structure
      *
      * @param {String} message
      * @yields {Object} Match
@@ -31,7 +31,7 @@ class MessageParser {
      * Parse the message by replacing the dynamic content.
      *
      * @param {String} message
-     * @param {Object} args - Custom object with all arguments that needs tobe inserted in the string
+     * @param {Object} args - Custom object with all arguments that needs to be inserted in the string
      * @returns {String} - The Parsed message
      *
      * @memberof MessageParser

@@ -3,7 +3,7 @@ import { EventEmitter } from 'eventemitter3';
 /**
  * Create a Prompt, waiting for specific input before resolving with the message Object
  *
- * @author VoidNulll
+ * @author VoidNull
  *
  * @class Prompt
  */
@@ -17,8 +17,8 @@ class Prompt {
      * @param {Object} [defaultOptions={}] The default options for the prompt.
      * @param {Array<String>} [defaultOptions.allowed=[]] A array of strings allow to pass as the prompt
      * @param {Boolean} [defaultOptions.wildcard=false] Whether or not the message content can contain allowed or must match allowed.
-     * @param {Boolean} [defaultOptions.caseSensitive=true] Makes it so the prompt is case insensitive, returns the message content lowercased.
-     * @param {Boolean} [defaultOptions.deletePrompt=true] Whether or not you dont want the prompt to be deleted
+     * @param {Boolean} [defaultOptions.caseSensitive=true] Makes it so the prompt is case insensitive, returns the message lowercase content.
+     * @param {Boolean} [defaultOptions.deletePrompt=true] Whether or not you want the prompt to be deleted
      * @param {Boolean} [defaultOptions.sendInvalid=true] Whether or not you want a message to be sent when invalid
      * @param {String} [defaultOptions.invalidMessage='Invalid Message!'] The message to send when a prompt is invalid
      * @param {Number|Boolean} [defaultOptions.deleteInvalidMessage=false] The time in milliseconds to wait before deleting the invalid message
@@ -83,8 +83,8 @@ class Prompt {
      * @param {Object} [options={}] The options for the prompt.
      * @param {Array<String>} [options.allowed=[]] A array of strings allow to pass as the prompt
      * @param {Boolean} [options.wildcard=false] Whether or not the message content can contain allowed or must match allowed.
-     * @param {Boolean} [options.caseSensitive=true] Makes it so the prompt is case insensitive, returns the message content lowercased.
-     * @param {Boolean} [options.deletePrompt=true] Whether or not you dont want the prompt to be deleted
+     * @param {Boolean} [options.caseSensitive=true] Makes it so the prompt is case insensitive, returns the message lowercase content.
+     * @param {Boolean} [options.deletePrompt=true] Whether or not you want the prompt to be deleted
      * @param {Boolean} [defaultOptions.sendInvalid=true] Whether or not you want a message to be sent when invalid
      * @param {String} [options.invalidMessage='Invalid Message!'] The message to send when a prompt is invalid
      * @param {Number} [options.deleteInvalidMessage=false] The time in milliseconds to wait before deleting the invalid message
@@ -98,7 +98,7 @@ class Prompt {
      * const output = await prompt.run('Who would you like to wave to?', { timeout: 10000 });
      * this.sendMessage(msg.channel, output.content);
      *
-     * @returns {Promise} The message object, or a reject error if timedout or message was invalid
+     * @returns {Promise} The message object, or a reject error if timed out or message was invalid
      */
     run(prompt, options = {} ) {
         this.ended = false;
@@ -125,7 +125,7 @@ class Prompt {
             this._actualOptions.invalidMessage = this._actualOptions.invalidMessage || `Invalid usage. You can say: \`\`\`\n${this._actualOptions.allowed.join(', ')}\`\`\``; // Default invalid message
 
             // listeners
-            this._emitter.once('ended', (msg) => resolve(this._onEnded(msg) ) ); // Incase it detects invalid usage, it ends the function
+            this._emitter.once('ended', (msg) => resolve(this._onEnded(msg) ) ); // In case it detects invalid usage, it ends the function
             this._emitter.once('timedOut', () => { // When the event timedOut is sent.
                 this._onTimeout();
                 reject('TIMEOUT');

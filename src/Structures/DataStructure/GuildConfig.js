@@ -1,7 +1,7 @@
 /**
  * Default GuildConfig data structure used in AxonCore.
  * This class can be extended and changed as you want.
- * All methods flagged with "is used internally" can be overriden but need to keep the same name.
+ * All methods flagged with "is used internally" can be overridden but need to keep the same name.
  *
  * @author KhaaZ
  *
@@ -15,7 +15,7 @@
  * @prop {Date} createdAt - Creation of the guild Config
  * @prop {date} updatedAt - Last update of the guild Config
  * @prop {Array<String>} ignoredUsers - Users that cannot use commands in this guild: Users ids
- * @prop {Array<String>} ignoredRoles - Roles that cannot use commmands in this guild: Roles ids
+ * @prop {Array<String>} ignoredRoles - Roles that cannot use commands in this guild: Roles ids
  * @prop {Array<String>} ignoredChannels - Channels where commands cannot be used in this guild: Channels ids
  * @prop {Boolean} modOnly - Whether the guild accept commands from only mods+ or everyone
  * @prop {Array<String>} modRoles - Roles able to execute mod commands: Roles ids
@@ -55,7 +55,7 @@ class GuildConfig {
 
     //
     // **** CHECKER - used IN the framework **** //
-    /* Can be overriden/changed but need to exists / keep the same name */
+    /* Can be overridden/changed but need to exists / keep the same name */
     //
 
     /**
@@ -88,7 +88,7 @@ class GuildConfig {
      * Check if the user/role/channel is ignored on the specified guild.
      *
      * @param {String} userID
-     * @returns {Boolean} True if the user is one ofthe ignored users
+     * @returns {Boolean} True if the user is one of the ignored users
      *
      * @memberof GuildConfig
      */

@@ -1,5 +1,5 @@
 /**
- * Custom error with better formatting + information about wherethe erroris originated from.
+ * Custom error with better formatting + information about where the error is originated from.
  * Used for errors thrown by the client (Object validity / internal). (general error)
  *
  * @author KhaaZ

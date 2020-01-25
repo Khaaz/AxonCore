@@ -37,7 +37,7 @@ class CommandCooldown {
      * Checks the command cooldown of the user
      *
      * @param {String} userID - The userID
-     * @returns {Array[Number,Boolean]} Empty array if no cooldowns / Array with the time left and whether we shouldsend a cooldown message or not
+     * @returns {Array[Number,Boolean]} Empty array if no cooldowns / Array with the time left and whether we should send a cooldown message or not
      *
      * @memberof CommandCooldown
      */

@@ -1,4 +1,4 @@
-import Validater from '../Structures/Validater';
+import Validator from '../Structures/Validator';
 
 /**
  * AxonCore Utility Class.
@@ -97,7 +97,7 @@ class AxonUtils {
     //
 
     /**
-     * Triger an Axon Webhook.
+     * Trigger an Axon Webhook.
      * Works directly with axon._configs._tokens. [GETTER: axon.webhooks]
      *
      * @param {String} type - Type of the webhook [status, loader, error, misc]
@@ -240,7 +240,7 @@ class AxonUtils {
      * @param {Object/String} content - String or object (embed)
      * @param {Object} [options={}] - Options { disableEveryone: Boolean, delete: Boolean, delay: Number }
      * @param {Object} [options.disableEveryone=true] - Whether to allow mentioning everyone or not
-     * @param {Object} [options.delete=false] - Whether to deletethe message or not
+     * @param {Object} [options.delete=false] - Whether to delete the message or not
      * @param {Object} [options.delay=null] - Delay after which the message will be deleted
      * @returns {Promise<Message?>} Message Object
      * @memberof AxonUtils
@@ -263,7 +263,7 @@ class AxonUtils {
      * @param {Object|String} content - Message content: String or Embed Object
      * @param {Object} [options={}] - Options { disableEveryone: Boolean, delete: Boolean, delay: Number }
      * @param {Boolean} [options.disableEveryone=true] - Whether to allow mentioning everyone or not
-     * @param {Boolean} [options.delete=false] - Whether to deletethe message or not
+     * @param {Boolean} [options.delete=false] - Whether to delete the message or not
      * @param {Number} [options.delay=null] - Delay after which the message will be deleted
      * @returns {Promise<Message?>} Message Object
      *
@@ -282,7 +282,7 @@ class AxonUtils {
             return Promise.resolve(false);
         }
 
-        if (!Validater.checkMessageValidity(content) ) { // will throw
+        if (!Validator.checkMessageValidity(content) ) { // will throw
             return Promise.resolve(false);
         }
 
@@ -316,7 +316,7 @@ class AxonUtils {
      * @memberof AxonUtils
      */
     editMessage(message, content) {
-        if (!Validater.checkMessageValidity(content) ) { // will throw
+        if (!Validator.checkMessageValidity(content) ) { // will throw
             return Promise.resolve(false);
         }
 

@@ -5,7 +5,7 @@ import GuildConfig from '../Structures/DataStructure/GuildConfig';
 /**
  * A schema designed use an InMemory solution in AxonCore
  *
- * @author VoidNulll
+ * @author VoidNull
  *
  * @class InMemoryProvider
  * @extends ADBProvider

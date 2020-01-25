@@ -24,7 +24,7 @@ import { EMBED_LIMITS } from '../Constants/DiscordEnums';
  * @prop {Object} footer
  * @prop {String} [footer.text]
  * @prop {String} [footer.icon_url]
- * @prop {String} timetamp
+ * @prop {String} timestamp
  * @prop {Object} file
  */
 class Embed {
@@ -48,7 +48,7 @@ class Embed {
      * @param {Object} [data.footer]
      * @param {String} [data.footer.text]
      * @param {String} [data.footer.icon_url]
-     * @param {String} [data.timetamp]
+     * @param {String} [data.timestamp]
      * @param {Object} [data.file]
      *
      * @memberof Embed

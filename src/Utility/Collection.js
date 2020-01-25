@@ -1,5 +1,5 @@
 /**
- * Extended Map with built in methods foreaseof data manipulation.
+ * Extended Map with built in methods for ease of data manipulation.
  * Based on Eris.Collection
  *
  * @author KhaaZ
@@ -198,7 +198,7 @@ class Collection extends Map {
     }
 
     /**
-     * Test if all elements passe the test implemented by the provided function. Returns true if yes, or false if not.
+     * Test if all elements pass the test implemented by the provided function. Returns true if yes, or false if not.
      *
      * @param {Function} func - A function that takes an object and returns true if it matches
      * @returns {Boolean} An array containing all the objects that matched
