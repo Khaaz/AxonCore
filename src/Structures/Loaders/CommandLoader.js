@@ -1,7 +1,7 @@
 import ALoader from './ALoader';
 import Command from '../Command/Command';
 
-import Validater from '../Validater';
+import Validator from '../Validator';
 
 import AxonError from '../../Errors/AxonError';
 import CommandRegistry from './../Stores/CommandRegistry';
@@ -34,18 +34,6 @@ class CommandLoader extends ALoader {
     }
 
     /**
-     * Returns the Module instance
-     *
-     * @readonly
-     * @type {Module}
-     *
-     * @memberof CommandLoader
-     */
-    get module() {
-        return this._module;
-    }
-
-    /**
      * Returns the Logger instance
      *
      * @readonly
@@ -54,7 +42,7 @@ class CommandLoader extends ALoader {
      * @memberof CommandLoader
      */
     get logger() {
-        return this.module.logger;
+        return this._module.logger;
     }
 
     /**
@@ -69,15 +57,15 @@ class CommandLoader extends ALoader {
      */
     load(command, parent = null) {
         if (!(command instanceof Command) ) {
-            throw new AxonError(`[${command.toString()}] Not a Command!`, 'COMMAND-LOADER', this.module.label);
+            throw new AxonError(`[${command.toString()}] Not a Command!`, 'COMMAND-LOADER', this._module.label);
         }
 
         if (command.label.includes(' ') ) {
-            throw new AxonError(`[${command.label}] Command label may not have spaces!`, 'COMMAND-LOADER', this.module.label);
+            throw new AxonError(`[${command.label}] Command label may not have spaces!`, 'COMMAND-LOADER', this._module.label);
         }
 
-        if (!Validater.validCommand(command) ) {
-            throw new AxonError(`[${command.label}] Invalid Command (enable debugMode)!`, 'COMMAND-LOADER', this.module.label);
+        if (!Validator.validCommand(command) ) {
+            throw new AxonError(`[${command.label}] Invalid Command (enable debugMode)!`, 'COMMAND-LOADER', this._module.label);
         }
 
         if (parent) {
@@ -99,11 +87,11 @@ class CommandLoader extends ALoader {
      */
     loadAll(commands) {
         if (commands.default) {
-            this.logger.error(`[Module(${this.module.label})] Commands: No commands found.`);
+            this.logger.error(`[Module(${this._module.label})] Commands: No commands found.`);
             return false;
         }
         for (const Value of Object.values(commands) ) {
-            const command = new Value(this.module);
+            const command = new Value(this._module);
             try {
                 this.load(command);
             } catch (err) {
@@ -123,14 +111,14 @@ class CommandLoader extends ALoader {
     loadSubCommands(parentCommand) {
         /* No subCommands */
         if (!parentCommand.subCommands || !parentCommand.subcmds.length) {
-            this.logger.error(`[Module(${this.module.label})] Command: ${parentCommand.fullLabel} - Couldn't init subcommands.`);
+            this.logger.error(`[Module(${this._module.label})] Command: ${parentCommand.fullLabel} - Couldn't init subcommands.`);
             return;
         }
 
         for (const Value of Object.values(parentCommand.subcmds) ) {
-            const subCommand = new Value(this.module);
+            const subCommand = new Value(this._module);
             if (!subCommand.isSubcmd) {
-                this.logger.error(`[Module(${this.module.label})] Command: ${subCommand.fullLabel} - Couldn't load subcommand: Not a subcommand.`);
+                this.logger.error(`[Module(${this._module.label})] Command: ${subCommand.fullLabel} - Couldn't load subcommand: Not a subcommand.`);
                 break;
             }
             this.load(subCommand, parentCommand);
@@ -146,7 +134,7 @@ class CommandLoader extends ALoader {
      * @memberof CommandLoader
      */
     unload(label) {
-        this.axon.commands.unregister(label);
+        this.axon.commandRegistry.unregister(label);
         this.logger.info(`Module: ${module.label} unregistered!`);
         return true;
     }
@@ -167,7 +155,7 @@ class CommandLoader extends ALoader {
         }
         delete command.subcmds;
        
-        this.axon.commands.register(command.label, command); // add the command to the Map of commands.
+        this.axon.commandRegistry.register(command.label, command); // add the command to the Map of commands.
         this.logger.info(command.hasSubcmd
             ? `[CMD] => Initialised! | SubCommands loaded -${command.subCommands.size}- | *${command.label}*`
             : `[CMD] => Initialised! | *${command.label}*`);
@@ -176,8 +164,8 @@ class CommandLoader extends ALoader {
     /**
      * Register a SubCommand.Register its subcommands if it has any
      *
-     * @param {Commands} command - The subcommand to register
-     * @param {Commands} parent - The parent command
+     * @param {Command} command - The subcommand to register
+     * @param {Command} parent - The parent command
      *
      * @memberof CommandLoader
      */
@@ -206,20 +194,20 @@ class CommandLoader extends ALoader {
      * @memberof CommandLoader
      */
     unregisterCommand(fullLabel) {
-        const command = this.module.getCommand(fullLabel);
+        const command = this._module.getCommand(fullLabel);
 
         if (!command) {
-            throw new AxonError(`Command: ${fullLabel} not registered!`, 'COMMAND-LOADER', this.module.label);
+            throw new AxonError(`Command: ${fullLabel} not registered!`, 'COMMAND-LOADER', this._module.label);
         }
 
         /* Unregister command */
         if (command.isSubcmd) {
             this.unregisterSubCommand(command.parentCommand, command);
         } else {
-            this.axon.commands.unregister(command.label, command);
+            this.axon.commandRegistry.unregister(command.label, command);
         }
 
-        this.logger.info(`[Module(${this.module.label})] Command: ${fullLabel} unregistered!`);
+        this.logger.info(`[Module(${this._module.label})] Command: ${fullLabel} unregistered!`);
         return true;
     }
 
