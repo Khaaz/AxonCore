@@ -98,7 +98,7 @@ class AxonUtils {
 
     /**
      * Trigger an Axon Webhook.
-     * Works directly with axon._configs._tokens. [GETTER: axon.webhooks]
+     * Works directly with axon._configs.webhooks.
      *
      * @param {String} type - Type of the webhook [status, loader, error, misc]
      * @param {Object} embed - Embed object
