@@ -46,7 +46,7 @@ declare module 'axoncore' {
         public apply(key: string, func: 'toObject'): Collection<T>;
     }
 
-    export class AxonError extends Error { // Clarify with Khaaz, incomplete?
+    export class AxonError extends Error {
         public module: string;
         public subMoule: string | null;
         constructor(message: string, module: Module | string, subModule?: string);
