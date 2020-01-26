@@ -1680,7 +1680,7 @@ declare module 'axoncore' {
         public getMember(guild: LibGuild): LibMember;
         public connect(): Promise<void | string>;
         public setPresence(status: string, game: object): Promise<LibUser | void>;
-        public triggerWebhook(id: string, token: string, data: ErisWebhookContent | DjsWebhookContent): Promise<Message | void>;
+        public triggerWebhook(id: string, token: string, data: ErisWebhookContent | DjsWebhookContent): Promise<WebhookResponse | null>;
         private _request(url: string, params: RequestOptions, postData: any): any;
     }
 
@@ -1768,6 +1768,42 @@ declare module 'axoncore' {
         name?: string;
         url?: string;
         type?: string | number;
+    }
+
+    interface RawAttachment {
+        url: string;
+        filename: string;
+        id: string;
+        size: number;
+        proxy_url: string;
+        height?: number;
+        width?: number;
+    }
+    interface RawUser {
+        id: string;
+        username: string;
+        avatar: string;
+        discriminator: string;
+    }
+
+    interface WebhookResponse {
+        id: string;
+        type: number;
+        content: string;
+        channel_id: string;
+        author: { bot: true; id: string; username: string; avatar: string | null; discriminator: '0000'; };
+        attachments: RawAttachment[];
+        embeds: djs.MessageEmbedOptions[];
+        mentions: RawUser[];
+        mention_roles: string[];
+        pinned: false;
+        mention_everyone: boolean;
+        tts: boolean;
+        timestamp: string;
+        edited_timestamp: null;
+        flags: number;
+        nonce: null;
+        webhook_id: string;
     }
 
     // Discord.JS
@@ -1990,7 +2026,7 @@ declare module 'axoncore' {
         getMember(guild: djs.Guild): djs.GuildMember;
         connect(): Promise<string>;
         setPresence(status: djs.PresenceStatus, game: DjsPresenceGame): Promise<djs.ClientUser>;
-        triggerWebhook(id: string, token: string, data: DjsWebhookContent): any; // Clarify with Khaaz
+        triggerWebhook(id: string, token: string, data: DjsWebhookContent): Promise<WebhookResponse>;
     }
 
     export class DjsInterface extends LibraryInterface {
@@ -2223,7 +2259,7 @@ declare module 'axoncore' {
         public getMember(guild: Eris.Guild): Eris.Member;
         public connect(): Promise<void>;
         public setPresence(status: 'online' | 'idle' | 'dnd' | 'invisible', game: ErisPresenceGame): Promise<void>;
-        public triggerWebhook(id: string, token: string, data: ErisWebhookContent): Promise<Message>;
+        public triggerWebhook(id: string, token: string, data: ErisWebhookContent): Promise<WebhookResponse>;
     }
 
     export class ErisInterface extends LibraryInterface {
