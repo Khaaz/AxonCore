@@ -13,6 +13,7 @@
         "no-magic-numbers": 0,
         "max-classes-per-file": 0,
         "lines-between-class-members": 0,
+        "linebreak-style": 0,
         "@typescript-eslint/no-explicit-any": 0,
         "@typescript-eslint/no-use-before-define": [ 2, { "classes": false} ],
         "@typescript-eslint/member-delimiter-style": [
