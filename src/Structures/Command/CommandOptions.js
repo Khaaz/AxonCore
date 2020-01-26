@@ -148,7 +148,7 @@ class CommandOptions {
      *
      * @param {Channel} channel - The guild channel
      * @param {Member} member - The guild member
-     *
+     * @param {String} permission - The missing permission
      * @returns {String}
      */
     getInvalidPermissionMessage(channel, member, permission) {
