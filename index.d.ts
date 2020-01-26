@@ -1234,7 +1234,7 @@ declare module 'axoncore' {
     }
 
     export class DBSelector extends ASelector {
-        static select(axonOptions: AxonOptions, axonClient: AxonClient): InMemoryProvider | JsonProvider | MongoProvider;
+        static select(axonClient: AxonClient, axonOptions: AxonOptions): InMemoryProvider | JsonProvider | MongoProvider;
     }
 
     export class MessageManager {

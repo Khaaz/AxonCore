@@ -4,6 +4,11 @@ import JsonProvider from './JsonProvider';
 import { DB_TYPES } from './../Utility/Constants/AxonEnums';
 
 /**
+ * @typedef {import('../AxonClient').default} AxonClient
+ * @typedef {import('../AxonOptions').default} AxonOptions
+ */
+
+/**
  * Database Selector
  * Use require to dynamically load a Database Provider depending on installed dependencies.
  *
@@ -13,6 +18,11 @@ import { DB_TYPES } from './../Utility/Constants/AxonEnums';
  * @extends ASelector
  */
 class DBSelector extends ASelector {
+    /**
+     * Select the DB to use
+     * @param {AxonClient} axonClient AxonClient
+     * @param {AxonOptions} axonOptions AxonOptions
+     */
     static select(axonClient, axonOptions) {
         let DBProvider;
 
@@ -25,7 +35,7 @@ class DBSelector extends ASelector {
             default: {
                 const InMemoryProvider = require('./InMemoryProvider').default;
                 DBProvider = new InMemoryProvider(axonClient);
-                axonClient.log('INFO', 'Selected Database: Database-Less');
+                axonClient.log('INFO', 'Selected Database: In-Memory');
                 axonClient.log('WARN', 'Configs will not change.');
                 break;
             }
