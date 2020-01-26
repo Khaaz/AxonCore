@@ -114,17 +114,17 @@ declare module 'axoncore' {
     export abstract class ADBProvider {
         public axon: AxonClient;
         constructor(axonClient: AxonClient);
-        public init(AxonOptions: AxonOptions): any; // Not Implemented
-        public initAxon(): any; // Promise<AxonConfig|null>; Not Implemented
-        public initGuild(gID: string): any; // Promise<GuildConfig|null>; // Not Implemented
+        public init(AxonOptions: AxonOptions): void; // Not Implemented
+        public initAxon(): Promise<AxonConfig>; // Not Implemented
+        public initGuild(gID: string): Promise<GuildConfig>; // Not Implemented
         
-        public fetchAxon(): any; // Promise<AxonConfig|null>; // Not Implemented
-        public fetchGuild(gID: string): any; // Promise<GuildConfig|null>; // Not Implemented
+        public fetchAxon(): Promise<AxonConfig | null>; // Not Implemented
+        public fetchGuild(gID: string): Promise<GuildConfig | null>; // Not Implemented
         
-        public updateAxon(key: string, value: updateDBVal): any; // Promise<boolean>; // Not Implemented
-        public updateGuild(key: string, gID: string, value: updateDBVal): any; // Promise<boolean>; // Not Implemented
-        public saveAxon(data: object): any; // Promise<AxonSchema | null>; // Not Implemented
-        public saveGuild(gID: string, data: object): any; // Promise<GuildSchema | null>;
+        public updateAxon(key: string, value: updateDBVal): Promise<AxonConfig | boolean>; // Not Implemented
+        public updateGuild(key: string, gID: string, value: updateDBVal): Promise<GuildConfig | boolean>; // Not Implemented
+        public saveAxon(data: object): Promise<AxonConfig | null>; // Not Implemented
+        public saveGuild(gID: string, data: object): Promise<GuildConfig | null>;
     }
 
     interface AxonJSON {
@@ -220,10 +220,10 @@ declare module 'axoncore' {
         public manager?: JsonManager;
 
         initAxon(): Promise<AxonConfig>;
-        initGuild(gID: string): Promise<GuildConfig|null>;
+        initGuild(gID: string): Promise<GuildConfig>;
 
-        fetchAxon(): Promise<AxonConfig|null>;
-        fetchGuild(gID: string): Promise<GuildConfig|null>;
+        fetchAxon(): Promise<AxonConfig>;
+        fetchGuild(gID: string): Promise<GuildConfig>;
 
         updateAxon(key: string, value: updateDBVal): Promise<boolean>;
         updateGuild(key: string, gID: string, value: updateDBVal): Promise<boolean>;
@@ -262,7 +262,7 @@ declare module 'axoncore' {
 
         init(AxonOptions?: AxonOptions): void;
         initAxon(): Promise<AxonConfig>;
-        initGuild(gID: string): Promise<GuildConfig|null>;
+        initGuild(gID: string): Promise<GuildConfig>;
 
         fetchAxon(): Promise<AxonConfig|null>;
         fetchGuild(gID: string): Promise<GuildConfig|null>;
@@ -271,7 +271,7 @@ declare module 'axoncore' {
         updateAxon(key: string, value: updateDBVal): Promise<boolean>;
         updateGuild(key: string, gID: string, value: updateDBVal): Promise<boolean>;
         saveAxon(data: AxonSchema): Promise<AxonConfig|null>;
-        saveGuild(gID: string, data: GuildSchema): Promise<AxonConfig|null>;
+        saveGuild(gID: string, data: GuildSchema): Promise<GuildConfig|null>;
     }
 
     export class AxonConfig {
@@ -387,7 +387,7 @@ declare module 'axoncore' {
         public shouldSendInvalidUsageMessage(args: string[] ): boolean;
         public shouldSendInvalidPermissionMessage(guildConfig: GuildConfig): boolean;
         public shouldDeleteCommand(): boolean;
-        public getInvalidPermissionMessage(channel: LibTextableChannel, member: LibMember, permission: any): string; // CommandPermissions?
+        public getInvalidPermissionMessage(channel: LibTextableChannel, member: LibMember, permission: string): string;
     }
 
     export class CommandCooldown {
@@ -449,7 +449,7 @@ declare module 'axoncore' {
 
         // METHODS
 
-        public canExecute(msg: LibMessage, guildConf: GuildConfig): [boolean, string | null]; // Ask Khaaz about inconsistency
+        public canExecute(msg: LibMessage, guildConf: GuildConfig): [false, string | null] | [true, null?];
 
         public setBot(array?: string[], toAdd?: boolean): CommandPermissions;
         public setServerMod(boolean?: boolean): CommandPermissions;
@@ -573,12 +573,12 @@ declare module 'axoncore' {
         private _postExecute(): void; // Blank function
 
         // External
-        public execute(object: { msg: LibMessage; args?: string[]; guildConfig?: GuildConfig; } ): any; // Promise<CommandResponse>; // Not implemented
+        public execute(object: { msg: LibMessage; args?: string[]; guildConfig?: GuildConfig; } ): Promise<CommandResponse>; // Not implemented
         public sendHelp(object: { msg: LibMessage; guildConf?: GuildConfig; isAdmin: boolean; isOwner: boolean; } ): Promise<CommandContext>;
         public sendBotPerms(channel: LibTextableChannel, permissions?: string[] ): Promise<CommandResponse>;
-        public sendUserPerms(channel: LibTextableChannel, member: LibMember, deleteTimeout?: number, missingPermission?: any): Promise<CommandResponse>; // CommandPermissions?
-        public sendTargetPerms(channel: LibTextableChannel): Promise<CommandContext>;
-        public sendCooldown(channel: LibTextableChannel, time: number): Promise<CommandContext>;
+        public sendUserPerms(channel: LibTextableChannel, member: LibMember, deleteTimeout?: number, missingPermission?: any): Promise<CommandResponse>;
+        public sendTargetPerms(channel: LibTextableChannel): Promise<CommandResponse>;
+        public sendCooldown(channel: LibTextableChannel, time: number): Promise<CommandResponse>;
     }
 
     export class Listener extends Base {
@@ -617,8 +617,8 @@ declare module 'axoncore' {
         public bindHandlers(): void;
 
         public registerListener(event: Listener): Listener[];
-        public registerHandler(event: string): object; // Each handler, this will become cumbersome
-        public registerEvent(event: string): object; // As above
+        public registerHandler(event: string): object;
+        public registerEvent(event: string): object;
         
         public unregisterListener(event: string, label: string): boolean;
         public unregisterHandler(event: string): boolean;
@@ -1238,7 +1238,7 @@ declare module 'axoncore' {
         public messages: Languages;
         public getMessages(lang?: string): AxonLanguageResponse;
         public getMessage(message: string, lang?: string): string;
-        public get(message: string, args: object, lang: string): string; // What's the structure of args?
+        public get(message: string, args: AxonLanguageResponse, lang: string): string;
     }
 
     export class MessageParser {
@@ -1670,7 +1670,7 @@ declare module 'axoncore' {
         public getMember(guild: LibGuild): LibMember;
         public connect(): Promise<void | string>;
         public setPresence(status: string, game: object): Promise<LibUser | void>;
-        public triggerWebhook(id: string, token: string, data: ErisWebhookContent | DjsWebhookContent): Promise<Message | void>; // data.embed should be data.embeds and type Embed[]
+        public triggerWebhook(id: string, token: string, data: ErisWebhookContent | DjsWebhookContent): Promise<Message | void>;
         private _request(url: string, params: RequestOptions, postData: any): any;
     }
 
