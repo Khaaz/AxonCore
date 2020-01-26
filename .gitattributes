@@ -1,3 +1,3 @@
 
 # this rule is supposed to fix the line break error when converting through git
-*.js text eol=lf
+*.js *.ts *.md text eol=lf
