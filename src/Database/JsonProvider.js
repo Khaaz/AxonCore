@@ -93,13 +93,13 @@ class JsonProvider extends ADBProvider {
      *
      * @param {String} key - The identifier in the Database
      * @param {Object|Array|String|Boolean} value - The value to update in the DB
-     * @returns {Promise<Boolean>} Whether the request was successfull or not
+     * @returns {Promise<GuildConfig|null>} Whether the request was successfull or not
      *
      * @memberof JsonProvider
      */
     async updateAxon(key, value) {
-        const data = await this.manager.updateAxonKey(key, value);
-        return !!data;
+        await this.manager.updateAxonKey(key, value);
+        return this.fetchAxon();
     }
 
     /**
@@ -111,13 +111,13 @@ class JsonProvider extends ADBProvider {
      * @param {String} key - The identifier in the Database
      * @param {String} gID - The guild ID to update
      * @param {Object|Array|String|Boolean} value - The value to update in the DB
-     * @returns {Promise<Boolean>} Whether the request was successfull or not
+     * @returns {Promise<GuildConfig|null>} Whether the request was successfull or not
      *
      * @memberof JsonProvider
      */
     async updateGuild(key, gID, value) {
-        const data = await this.manager.updateGuildKey(gID, key, value);
-        return !!data;
+        await this.manager.updateGuildKey(gID, key, value);
+        return this.fetchGuild(gID);
     }
 
     /**

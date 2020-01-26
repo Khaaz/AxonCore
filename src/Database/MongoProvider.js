@@ -142,12 +142,12 @@ class MongoProvider extends ADBProvider {
      *
      * @param {String} key - The identifier in the Database
      * @param {Object|Array|String|Boolean} value - The value to update in the DB
-     * @returns {Promise<Boolean>} Whether the request was successfull or not
+     * @returns {Promise<AxonConfig|null>} Whether the request was successfull or not
      *
      * @memberof MongoProvider
      */
     async updateAxon(key, value) {
-        const data = await this.AxonSchema.findOneAndUpdate( {
+        await this.AxonSchema.findOneAndUpdate( {
             id: '1',
         },
         {
@@ -161,7 +161,7 @@ class MongoProvider extends ADBProvider {
             upsert: true,
         } );
 
-        return !!data;
+        return this.fetchAxon();
     }
 
     /**
@@ -173,12 +173,12 @@ class MongoProvider extends ADBProvider {
      * @param {String} key - The identifier in the Database
      * @param {String} gID - The guild ID to update
      * @param {Object|Array|String|Boolean} value - The value to update in the DB
-     * @returns {Promise<Boolean>} Whether the request was successfull or not
+     * @returns {Promise<GuildConfig|null>} Whether the request was successfull or not
      *
      * @memberof MongoProvider
      */
     async updateGuild(key, gID, value) {
-        const data = await this.GuildSchema.findOneAndUpdate( {
+        await this.GuildSchema.findOneAndUpdate( {
             guildID: gID,
         },
         {
@@ -192,7 +192,7 @@ class MongoProvider extends ADBProvider {
             upsert: true,
         } );
 
-        return !!data;
+        return this.fetchGuild(gID);
     }
 
     /**
