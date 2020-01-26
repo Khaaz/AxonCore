@@ -626,7 +626,7 @@ declare module 'axoncore' {
     }
 
     interface APIAxonMSGCont {
-        embed?: Eris.EmbedBase;
+        embed?: Eris.EmbedOptions;
         content?: string;
     }
 
@@ -648,7 +648,7 @@ declare module 'axoncore' {
         readonly utils: Utils;
         readonly library: LibraryInterface;
 
-        public triggerWebhook(type: string, embed: Eris.EmbedBase, opt?: string): void;
+        public triggerWebhook(type: string, embed: Eris.EmbedOptions, opt?: string): void;
         public isBotOwner(uID: string): boolean;
         public isBotAdmin(uID: string): boolean;
         public isBotStaff(uID: string): boolean;
@@ -2155,12 +2155,12 @@ declare module 'axoncore' {
         content?: string;
         tts?: boolean;
         disableEveryone?: boolean;
-        embed?: Embed | Eris.EmbedBase;
+        embed?: Embed | Eris.EmbedOptions;
         file: Eris.MessageFile | Eris.MessageFile[];
     }
     interface ErisWebhookContent extends ErisContent {
         embed?: undefined;
-        embeds?: (Embed | Eris.EmbedBase)[];
+        embeds?: (Embed | Eris.EmbedOptions)[];
         username?: string;
         avatarURL?: string;
         wait?: boolean;
