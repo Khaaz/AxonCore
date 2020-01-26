@@ -113,7 +113,7 @@ declare module 'axoncore' {
         private _init(): void;
     }
 
-    type updateDBVal = object|any[]|string|boolean;
+    type updateDBVal = object|any[]|string|boolean|number|Date;
 
     export abstract class ADBProvider {
         public axon: AxonClient;
@@ -169,8 +169,8 @@ declare module 'axoncore' {
         readonly guildDefault: GuildJSON;
 
         public getExecutor(guildID: string): AsyncQueue;
-        public toJSON(string: string): string | object;
-        public toString(json: object): string | object;
+        public toJSON(string: string): string | object | any[];
+        public toString(json: object): string | object | any[];
 
         private _buildPath(gID: string): string;
 

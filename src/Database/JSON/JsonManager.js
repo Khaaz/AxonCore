@@ -9,6 +9,15 @@ const readFileAsync = util.promisify(fs.readFile);
 const writeFileAsync = util.promisify(fs.writeFile);
 
 /**
+ * @typedef {{id: String; prefix: String; createdAt: String; updatedAt: String; bannedGuilds: Array<String>; bannedUsers: Array<String>}} AxonJSON
+ * @typedef {{
+ * guildID: String; prefixes: Array<String>; modules: Array<String>; commands: Array<String>; eventListeners: Array<String>; createdAt: String; updatedAt: String;
+ * ignoredUsers: Array<String>; ignoredRoles: Array<String>; ignoredChannels: Array<String>; modOnly: Boolean; modRoles: Array<String>; modUsers: Array<String>;
+ * }} GuildJSON
+ * @typedef {String|Boolean|Object.<string, any>|Array<any>|Number|Date} updateDBVal
+ */
+
+/**
  * Manager class for handling Json database
  * @TODO Add a mutex / queue system per document/guild to reduce possibility of corruption
  *
@@ -26,7 +35,13 @@ class JsonManager {
      */
     constructor(basePath) {
         // default schemas values
+        /**
+         * @type {AxonJSON}
+         */
         this._axonDefault = axonDefault;
+        /**
+         * @type {GuildJSON}
+         */
         this._guildDefault = guildDefault;
 
         if (!fs.existsSync(basePath) ) {
@@ -39,6 +54,9 @@ class JsonManager {
         this._axonPath = `${basePath}axon.json` || `${__dirname}/Database/axon.json`;
 
         this.axonExecutor = new AsyncQueue();
+        /**
+         * @type {Object.<string, AsyncQueue>}
+         */
         this.guildExecutors = {};
     }
 
@@ -62,6 +80,11 @@ class JsonManager {
         return this._guildDefault;
     }
 
+    /**
+     * Get guild executor
+     * @param {String} guildID Guild ID
+     * @returns {AsyncQueue}
+     */
     getExecutor(guildID) {
         let executor = this.guildExecutors[guildID];
 
@@ -75,6 +98,11 @@ class JsonManager {
 
     // **** CORE **** //
 
+    /**
+     * Parse JSON string as object/array
+     * @param {String} string JSON string
+     * @returns {Object.<string, any>|Array<any>|String} Parsed array/object or input string if failed
+     */
     toJSON(string) {
         if (!string) {
             return null;
@@ -86,6 +114,11 @@ class JsonManager {
         }
     }
 
+    /**
+     * Parse object/array as JSON string
+     * @param {Object|Array} json Object/array to be parsed into JSON string
+     * @returns {String|Object.<string, any>|Array<any>} JSON string or parsed array/object if failed
+     */
     toString(json) {
         if (!json) {
             return null;
@@ -97,6 +130,10 @@ class JsonManager {
         }
     }
 
+    /**
+     * Get guild config path
+     * @param {String} gID Guild ID
+     */
     _buildPath(gID) {
         return `${this._basePath}${gID}.json`;
     }
@@ -121,10 +158,11 @@ class JsonManager {
     }
 
     /**
-     * Read a file and return the string of the file content or null
+     * Write a file
      *
      * @param {String} path
-     * @returns {Promise<String|null>}
+     * @param {String} [content='{}']
+     * @returns {Promise<Boolean>} Whether or not the task completed successfully
      *
      * @memberof JsonManager
      */
@@ -149,7 +187,8 @@ class JsonManager {
 
     /**
      * Create a file and schema for Axon global file.
-     * @returns {Promise<Object>} The newly created Schema || null
+     * @param {String} defaultPrefix Default prefix
+     * @returns {Promise<AxonJSON>} The newly created Schema || null
      *
      * @memberof JsonManager
      */
@@ -170,9 +209,9 @@ class JsonManager {
     /**
      * Create a file and schema for the given guild.
      *
-     * @param {String} gID
-     * @param {Array} prefixes
-     * @returns {Promise<Object>} The newly created Schema || null
+     * @param {Array<String>} prefixes Array of prefixes
+     * @param {String} gID Guild ID
+     * @returns {Promise<GuildJSON>} The newly created Schema || null
      *
      * @memberof JsonManager
      */
@@ -196,7 +235,7 @@ class JsonManager {
     /**
      * Fetch the axon schema
      *
-     * @returns {Promise<Object>} AxonSchema || null
+     * @returns {Promise<AxonJSON>} AxonSchema || null
      *
      * @memberof JsonManager
      */
@@ -211,8 +250,8 @@ class JsonManager {
     /**
      * Fetch the guild schema for the given guild
      *
-     * @param {String} gID
-     * @returns {Promise<Object>} GuildSchema || null
+     * @param {String} gID Guild ID
+     * @returns {Promise<GuildJSON>} GuildSchema || null
      *
      * @memberof JsonManager
      */
@@ -229,10 +268,10 @@ class JsonManager {
     /**
      * Update the schema with the given value for the given guild
      *
-     * @param {String} gID
-     * @param {String} key
-     * @param {Object} value - The value to update for the given key (can be anything)
-     * @returns {Promise<Object>} GuildSchema || null
+     * @param {String} gID Guild ID
+     * @param {String} key Value to update
+     * @param {updateDBVal} value - The value to update for the given key (can be anything)
+     * @returns {Promise<GuildJSON>} GuildSchema || null
      *
      * @memberof JsonManager
      */
@@ -250,9 +289,9 @@ class JsonManager {
     /**
      * Update the schema with the given value
      *
-     * @param {String} key
+     * @param {String} key Value to update
      * @param {Object} value - The value to update for the given key (can be anything)
-     * @returns {Promise<Object>} AxonSchema || null
+     * @returns {Promise<AxonJSON>} AxonSchema || null
      *
      * @memberof JsonManager
      */
@@ -272,8 +311,8 @@ class JsonManager {
     /**
      * Write the updated schema in the file.
      *
-     * @param {Object} schema
-     * @returns {Promise<Object>} AxonSchema || null
+     * @param {AxonJSON} schema AxonSchema
+     * @returns {Promise<AxonJSON>} AxonSchema || null
      *
      * @memberof JsonManager
      */
@@ -290,9 +329,9 @@ class JsonManager {
     /**
      * Write the updated schema in the file (for the given guild).
      *
-     * @param {String} gID
-     * @param {Object} schema
-     * @returns {Promise<Object>} GuildSchema || null
+     * @param {String} gID Guild ID
+     * @param {GuildJSON} schema GuildSchema
+     * @returns {Promise<GuildJSON>} GuildSchema || null
      *
      * @memberof JsonManager
      */
