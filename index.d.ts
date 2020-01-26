@@ -573,14 +573,14 @@ declare module 'axoncore' {
         // Internal
         private _process(object: { msg: LibMessage; args: string[]; guildConfig?: GuildConfig; isAdmin?: boolean; isOwner?: boolean; } ): Promise<CommandContext>;
         private _preExecute(): void; // Blank function
-        private _execute(message: { msg: LibMessage; args?: string[]; guildConfig?: GuildConfig; isAdmin?: boolean; isOwner?: boolean; } ): Promise<any>;
+        private _execute(message: { msg: LibMessage; args?: string[]; guildConfig?: GuildConfig; isAdmin?: boolean; isOwner?: boolean; } ): Promise<CommandContext>;
         private _postExecute(): void; // Blank function
 
         // External
         public execute(object: { msg: LibMessage; args?: string[]; guildConfig?: GuildConfig; } ): Promise<CommandResponse>; // Not implemented
         public sendHelp(object: { msg: LibMessage; guildConf?: GuildConfig; isAdmin: boolean; isOwner: boolean; } ): Promise<CommandContext>;
         public sendBotPerms(channel: LibTextableChannel, permissions?: string[] ): Promise<CommandResponse>;
-        public sendUserPerms(channel: LibTextableChannel, member: LibMember, deleteTimeout?: number, missingPermission?: any): Promise<CommandResponse>;
+        public sendUserPerms(channel: LibTextableChannel, member: LibMember, deleteTimeout?: number, missingPermission?: string): Promise<CommandResponse>;
         public sendTargetPerms(channel: LibTextableChannel): Promise<CommandResponse>;
         public sendCooldown(channel: LibTextableChannel, time: number): Promise<CommandResponse>;
     }
@@ -1220,6 +1220,12 @@ declare module 'axoncore' {
         public registerGuildPrefixes(gID: string, prefixArr: string[] ): Promise<GuildConfig>;
         toString(): string;
         toJSON(): object;
+
+        // events
+        on(event: 'commandExecution', listener: (status: boolean, commandFullLabel: string, data: { msg: LibMessage; command: Command; guildConfig: GuildConfig; context: CommandContext;} ) => void): this;
+        on(event: 'commandError', listener: (commandFullLabel: string, data: { msg: LibMessage; command: Command; guildConfig: GuildConfig; error: AxonCommandError; } ) => void): this;
+        on(event: 'listenerExecution', listener: (status: boolean, eventName: string, listenerName: string, data: { listener: Listener; guildConfig: GuildConfig; } ) => void): this;
+        on(event: 'listenerError', listener: (eventName: string, listenerName: string, data: { listener: Listener; guildConfig: GuildConfig; error: Error; } ) => void): this;
     }
 
     export abstract class ASelector {
