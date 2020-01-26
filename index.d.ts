@@ -127,8 +127,8 @@ declare module 'axoncore' {
         
         public updateAxon(key: string, value: updateDBVal): Promise<AxonConfig>; // Not Implemented
         public updateGuild(key: string, gID: string, value: updateDBVal): Promise<GuildConfig>; // Not Implemented
-        public saveAxon(data: object): Promise<AxonConfig | null>; // Not Implemented
-        public saveGuild(gID: string, data: object): Promise<GuildConfig | null>;
+        public saveAxon(data: AxonConfig): Promise<AxonConfig | null>; // Not Implemented
+        public saveGuild(gID: string, data: GuildConfig): Promise<GuildConfig | null>; // Not Implemented
     }
 
     interface AxonJSON {
@@ -274,8 +274,8 @@ declare module 'axoncore' {
 
         updateAxon(key: string, value: updateDBVal): Promise<AxonConfig>;
         updateGuild(key: string, gID: string, value: updateDBVal): Promise<GuildConfig>;
-        saveAxon(data: AxonSchema): Promise<AxonConfig|null>;
-        saveGuild(gID: string, data: GuildSchema): Promise<GuildConfig|null>;
+        saveAxon(data: AxonConfig): Promise<AxonConfig|null>;
+        saveGuild(gID: string, data: GuildConfig): Promise<GuildConfig|null>;
     }
 
     export class AxonConfig {

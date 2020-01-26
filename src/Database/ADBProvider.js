@@ -6,6 +6,13 @@ import NoAbstractInstanceException from '../Errors/NoAbstractInstanceException';
 import NotImplementedException from '../Errors/NotImplementedException';
 
 /**
+ * @typedef {String|Boolean|Object.<string, any>|Array<any>|Number|Date} updateDBVal
+ * @typedef {import('../AxonOptions').default} AxonOptions
+ * @typedef {import('../Structures/DataStructure/AxonConfig').default} AxonConfig
+ * @typedef {import('../Structures/DataStructure/GuildConfig').default} GuildConfig
+ */
+
+/**
  * Abstract class for all DB services.
  * Extend this class to create your own Database provider.
  * You just need to write these methods for the framework to be able to interact with the database.
@@ -23,7 +30,7 @@ class ADBProvider {
     /**
      * Creates an instance of ADBProvider.
      *
-     * @param {AxonClient} axon
+     * @param {AxonClient} axonClient
      *
      * @memberof ADBProvider
      */
@@ -43,7 +50,7 @@ class ADBProvider {
      * Init the ADBProvider.
      * Method called just after instantiation. Can be overridden with anything that will be used by the provider.
      *
-     * @param {AxonOptions}
+     * @param {AxonOptions} [axonOptions]
      *
      * @memberof ADBProvider
      */
@@ -94,7 +101,7 @@ class ADBProvider {
     /**
      * Retrieves the Guild config for the specified guild.
      *
-     * @param {String} gID - guild ID
+     * @param {String} gID - Guild ID
      * @returns {Promise<GuildConfig|null>}
      *
      * @memberof ADBProvider
@@ -111,8 +118,8 @@ class ADBProvider {
      * Generic method to update Database.
      *
      * @param {String} key - The identifier in the Database
-     * @param {Object|Array|String|Boolean} value - The value to update in the DB
-     * @returns {Promise<Boolean>} UWhether the request was successful or not
+     * @param {updateDBVal} value - The value to update in the DB
+     * @returns {Promise<AxonConfig>} The updated AxonConfig
      *
      * @memberof ADBProvider
      */
@@ -128,8 +135,8 @@ class ADBProvider {
      *
      * @param {String} key - The identifier in the Database
      * @param {String} gID - The guild ID to update
-     * @param {Object|Array|String|Boolean} value - The value to update in the DB
-     * @returns {Promise<Boolean>} Whether the request was successful or not
+     * @param {updateDBVal} value - The value to update in the DB
+     * @returns {Promise<GuildConfig>} The updated GuildConfig
      *
      * @memberof ADBProvider
      */
@@ -152,8 +159,8 @@ class ADBProvider {
     /**
      * Updates the given guild in the DB with a new schema object.
      *
-     * @param {String} gID - Guid id
-     * @param {Object} data - the schema object to update
+     * @param {String} gID - Guild ID
+     * @param {GuildConfig} data - The schema object to update
      * @returns {Promise<GuildConfig|null>} Updated GuildConfig from the DB
      *
      * @memberof ADBProvider
