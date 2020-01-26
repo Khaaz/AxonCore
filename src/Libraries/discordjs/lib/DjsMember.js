@@ -4,7 +4,7 @@ class DjsMember extends Member {
     // **** GETTERS / SETTERS **** //
 
     getRoles(member) {
-        return member.roles.keys();
+        return [...member.roles.keys()];
     }
 
     getRolesObject(member) {

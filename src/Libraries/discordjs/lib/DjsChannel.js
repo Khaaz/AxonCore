@@ -9,6 +9,10 @@ class DjsChannel extends Channel {
     // **** METHODS **** //
     
     sendMessage(channel, content) {
+        if (typeof content === 'object') {
+            const message = content.content || '';
+            return channel.send(message, content);
+        }
         return channel.send(content);
     }
 }
