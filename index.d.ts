@@ -125,8 +125,8 @@ declare module 'axoncore' {
         public fetchAxon(): Promise<AxonConfig | null>; // Not Implemented
         public fetchGuild(gID: string): Promise<GuildConfig | null>; // Not Implemented
         
-        public updateAxon(key: string, value: updateDBVal): Promise<AxonConfig | boolean>; // Not Implemented
-        public updateGuild(key: string, gID: string, value: updateDBVal): Promise<GuildConfig | boolean>; // Not Implemented
+        public updateAxon(key: string, value: updateDBVal): Promise<AxonConfig>; // Not Implemented
+        public updateGuild(key: string, gID: string, value: updateDBVal): Promise<GuildConfig>; // Not Implemented
         public saveAxon(data: object): Promise<AxonConfig | null>; // Not Implemented
         public saveGuild(gID: string, data: object): Promise<GuildConfig | null>;
     }
@@ -229,8 +229,8 @@ declare module 'axoncore' {
         fetchAxon(): Promise<AxonConfig>;
         fetchGuild(gID: string): Promise<GuildConfig>;
 
-        updateAxon(key: string, value: updateDBVal): Promise<boolean>;
-        updateGuild(key: string, gID: string, value: updateDBVal): Promise<boolean>;
+        updateAxon(key: string, value: updateDBVal): Promise<AxonConfig>;
+        updateGuild(key: string, gID: string, value: updateDBVal): Promise<GuildConfig>;
 
         saveAxon(data: AxonConfig): Promise<AxonConfig|null>;
         saveGuild(gID: string, data: GuildConfig): Promise<GuildConfig|null>;
@@ -272,8 +272,8 @@ declare module 'axoncore' {
         fetchGuild(gID: string): Promise<GuildConfig|null>;
         fetchGuildSchema(gID: string): Promise<Model<GuildSchema> | null>;
 
-        updateAxon(key: string, value: updateDBVal): Promise<boolean>;
-        updateGuild(key: string, gID: string, value: updateDBVal): Promise<boolean>;
+        updateAxon(key: string, value: updateDBVal): Promise<AxonConfig>;
+        updateGuild(key: string, gID: string, value: updateDBVal): Promise<GuildConfig>;
         saveAxon(data: AxonSchema): Promise<AxonConfig|null>;
         saveGuild(gID: string, data: GuildSchema): Promise<GuildConfig|null>;
     }
