@@ -23,7 +23,7 @@ class LibraryInterface {
      * @param {Message} structs.Message
      * @param {Channel} structs.Channel
      * @param {Guild} structs.Guild
-     * @param {Resolver} structs.resolver
+     * @param {Resolver} structs.Resolver
      *
      * @memberof LibraryInterface
      */

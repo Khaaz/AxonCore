@@ -116,7 +116,7 @@ class DjsResolver extends Resolver {
             || roles.find(m => m.name === args.all) // name
             || roles.find(m => m.name.toLowerCase() === args.lower) // name lower
             || roles.find(m => m.name.includes(args.all) ) // name includes
-            || roles.find(m => m.name.toLowerCase().includes(args.lower) ) // name loxer includes
+            || roles.find(m => m.name.toLowerCase().includes(args.lower) ) // name lower includes
             || null; // no role found
 
         return role;

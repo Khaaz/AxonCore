@@ -2,6 +2,7 @@ import { EventEmitter } from 'events';
 import * as Eris from 'eris';
 import * as djs from 'discord.js';
 import { Model, Document } from 'mongoose';
+import { RequestOptions } from 'http';
 type LibMessage = Eris.Message | djs.Message;
 type LibMember = Eris.Member | djs.GuildMember;
 type LibClient = Eris.Client | djs.Client;
@@ -10,6 +11,7 @@ type LibUser = Eris.User | djs.User;
 type LibTextableChannel = Eris.TextableChannel | djs.TextChannel;
 type LibRole = Eris.Role | djs.Role;
 type LibChannel = Eris.Channel | djs.Channel;
+type LibDMChannel = Eris.PrivateChannel | djs.DMChannel;
 type LibPermission = Eris.Permission | Eris.PermissionOverwrite | djs.PermissionOverwrites; // djs.Permissions; // No allow/deny properties
 
 declare module 'axoncore' {
@@ -65,7 +67,7 @@ declare module 'axoncore' {
         readonly message: string;
     }
 
-    class NotImplementedException extends Error {
+    export class NotImplementedException extends Error {
         constructor(...args: any[] );
         readonly name: string;
         readonly message: string;
@@ -443,7 +445,7 @@ declare module 'axoncore' {
         readonly axon: AxonClient;
         readonly utils: Utils;
         readonly axonUtils: AxonUtils;
-        readonly library: any; // Replace with Library class
+        readonly library: LibraryInterface;
 
         // METHODS
 
@@ -495,7 +497,7 @@ declare module 'axoncore' {
         public executionState: number;
         public executionType: number;
 
-        public library: any; // Replace with Library class
+        public library: LibraryInterface;
 
         public dm: boolean;
         public guildID: string;
@@ -559,7 +561,7 @@ declare module 'axoncore' {
         // GETTERS
         readonly module: Module;
         readonly template: AxonTemplate;
-        readonly library: any; // Replace from Library class
+        readonly library: LibraryInterface;
         readonly fullLabel: string;
 
         constructor(module: Module, data?: CommandData);
@@ -636,14 +638,6 @@ declare module 'axoncore' {
         delay?: number;
     }
 
-    export class Resolver {
-        public static user(client: LibClient, args: string[]|string): any; // LibUser|null; // Not implemented
-        public static member(guild: LibGuild, args: string[]|string): any; // LibMember|null; // Not implemented
-        public static role(guild: LibGuild, args: string[]|string): any; // LibRole|null; // Not implemented
-        public static channel(guild: LibGuild, args: string[]|string): any; // LibChannel|null; // Not implemented
-        public static guild(client: LibClient, args: string[] ): any; // LibGuild|null; // Not implemented
-    }
-
     export class AxonUtils {
         private _axon: AxonClient;
         constructor(axon: AxonClient);
@@ -652,7 +646,7 @@ declare module 'axoncore' {
         readonly template: AxonTemplate;
         readonly logger: ALogger;
         readonly utils: Utils;
-        readonly library: any; // Replace with LibraryInterface
+        readonly library: LibraryInterface;
 
         public triggerWebhook(type: string, embed: Eris.EmbedBase, opt?: string): void;
         public isBotOwner(uID: string): boolean;
@@ -724,7 +718,7 @@ declare module 'axoncore' {
 
         readonly axon: AxonClient;
         readonly bot: LibClient;
-        readonly library: any; // Replace with LibraryInterface
+        readonly library: LibraryInterface;
 
         public splitMessage(content: string): string[] | string;
         public getPrefix(msg: LibMessage): Promise<string>;
@@ -1067,7 +1061,7 @@ declare module 'axoncore' {
     interface AxonOptionsSettings {
         lang?: string;
         debugMode?: boolean;
-        library?: any; // Replace with Library class
+        library?: LibraryInterface;
         logger?: ALogger;
         db?: 0 | 1 | 2;
         guildConfigCache?: number;
@@ -1172,7 +1166,7 @@ declare module 'axoncore' {
         public axonUtils: AxonUtils;
 
         private _botClient: LibClient;
-        public library: any; // REPLACE "any" WITH Library CLASS
+        public library: LibraryInterface;
         public utils: Utils;
         public DBProvider: ADBProvider
 
@@ -1318,7 +1312,7 @@ declare module 'axoncore' {
     export class CommandDispatcher extends ADispatcher {
         mentionFormatter: RegExp;
         constructor(axon: AxonClient);
-        readonly library: any; // Replace with ErisInterface|DjsInterface
+        readonly library: LibraryInterface;
         public dispatch(msg: LibMessage): Promise<void>;
     }
 
@@ -1648,18 +1642,587 @@ declare module 'axoncore' {
     // ReactionCollector file is empty
 
     export class LibrarySelector extends ASelector {
-        static select(axon: AxonClient, axonOptions: AxonOptions): any; // Replace with ErisInterface | DjsInterface;
+        static select(axon: AxonClient, axonOptions: AxonOptions): ErisInterface | DjsInterface;
     }
 
     export class Channel {
-        public lib: any; // Replace with LibraryInterface;
-        constructor(lib: any); // Replace with LibraryInterface;
-        getID(channel: LibChannel): string;
-        getName(channel: LibChannel): string;
-        getGuild(channel: LibChannel): LibGuild;
-        getGuildID(channel: LibChannel): string | null;
-        getGuildName(channel: LibChannel): string | null;
-        hasPermission(channel: LibChannel, user: LibUser, perm: string): boolean; // Not Implemented
-        sendMessage(channel: LibChannel, content: AxonMSGCont): Promise<LibMessage>; // Not Implemented
+        public lib: LibraryInterface;
+        constructor(lib: LibraryInterface);
+        public getID(channel: LibChannel): string;
+        public getName(channel: LibChannel): string;
+        public getGuild(channel: LibChannel): LibGuild;
+        public getGuildID(channel: LibChannel): string | null;
+        public getGuildName(channel: LibChannel): string | null;
+        public hasPermission(channel: LibChannel, user: LibUser, perm: string): boolean; // Not Implemented
+        public sendMessage(channel: LibChannel, content: AxonMSGCont): Promise<LibMessage | LibMessage[]>; // Not Implemented // LibMessage[] is for Discord.JS
+    }
+
+    export class Client {
+        public lib: LibraryInterface;
+        public baseWebhookURL: 'https://discordapp.com/api/webhooks/';
+        constructor(lib: LibraryInterface);
+        public client: LibClient;
+        public getID(): string;
+        public getUsername(): string | null;
+        public getMention(): string;
+        public getAvatar(): string; // Not Implemented
+        public getUser(): LibUser;
+        public getMember(guild: LibGuild): LibMember;
+        public connect(): Promise<void | string>;
+        public setPresence(status: string, game: object): Promise<LibUser | void>;
+        public triggerWebhook(id: string, token: string, data: ErisWebhookContent | DjsWebhookContent): Promise<Message | void>; // data.embed should be data.embeds and type Embed[]
+        private _request(url: string, params: RequestOptions, postData: any): any;
+    }
+
+    export class Guild {
+        public lib: LibraryInterface
+        constructor(lib: LibraryInterface);
+        getID(guild: LibGuild): string;
+        getName(guild: LibGuild): string;
+        getOwnerID(guild: LibGuild): string;
+        getMember(guild: LibGuild, userID: string): LibMember;
+    }
+
+    export class Member {
+        public lib: LibraryInterface;
+        constructor(lib: LibraryInterface);
+        getID(member: LibMember): string;
+        getRoles(member: LibMember): string[]; // Not Implemented
+        getRolesObject(member: LibMember): LibRole[]; // Not Implemented
+        hasPermission(member: LibMember, permission: string): boolean; // Not Implemented
+    }
+
+    export class Message {
+        public lib: LibraryInterface;
+        constructor(lib: LibraryInterface);
+        getID(message: LibMessage): string;
+        getContent(message: LibMessage): string;
+        setContent(message: LibMessage, content: string): void;
+        getAuthor(message: LibMessage): LibUser;
+        getAuthorID(message: LibMessage): string;
+        getMember(message: LibMessage): LibMember;
+        getMemberID(message: LibMessage): string;
+        getChannel(message: LibMessage): LibTextableChannel;
+        getChannelID(message: LibMessage): string;
+        getChannelName(message: LibMessage): string;
+        getGuild(message: LibMessage): LibGuild;
+        getGuildID(message: LibMessage): string;
+        getGuildName(message: LibMessage): string;
+        delete(message: LibMessage): Promise<LibMessage | void>;
+        edit(message: LibMessage, content: AxonMSGCont): Promise<LibMessage>;
+    }
+
+    export class Resolver {
+        public static user(client: LibClient, args: string[]|string): LibUser|null; // Not implemented
+        public static member(guild: LibGuild, args: string[]|string): LibMember|null; // Not implemented
+        public static role(guild: LibGuild, args: string[]|string): LibRole|null; // Not implemented
+        public static channel(guild: LibGuild, args: string[]|string): LibChannel|null; // Not implemented
+        public static guild(client: LibClient, args: string[] ): LibGuild|null; // Not implemented
+    }
+
+    export class User {
+        public lib: LibraryInterface;
+        constructor(lib: LibraryInterface);
+        getID(user: LibUser): string;
+        getUsername(user: LibUser): string;
+        getDiscriminator(user: LibUser): string;
+        getTag(user: LibUser): string;
+        isBot(user: LibUser): boolean;
+        getDM(user: LibUser): Promise<LibDMChannel>;
+    }
+
+    interface LibraryInterfaceStructs {
+        User: User;
+        Member: Member;
+        Message: Message;
+        Channel: Channel;
+        Guild: Guild;
+        Resolver: Resolver;
+    }
+
+    export class LibraryInterface {
+        private _botClient: LibClient;
+        public user: User;
+        public member: Member;
+        public message: Message;
+        public channel: Channel;
+        public guild: Guild;
+        public resolver: Resolver;
+        constructor(botClient: LibClient, structs: LibraryInterfaceStructs);
+        public botClient: LibClient;
+        public onMessageCreate(func: (message: LibMessage) => void): void; // Not Implemented
+        public onceReady(func: () => void): void; // Not Implemented
+    }
+
+    interface PresenceGame {
+        name?: string;
+        url?: string;
+        type?: string | number;
+    }
+
+    // Discord.JS
+    interface DjsEnumsEvents {
+        RATE_LIMIT: 'rateLimit';
+        READY: 'ready';
+        RESUME: 'resume';
+        GUILD_CREATE: 'guildCreate';
+        GUILD_DELETE: 'guildDelete';
+        GUILD_UPDATE: 'guildUpdate';
+        GUILD_UNAVAILABLE: 'guildUnavailable';
+        GUILD_AVAILABLE: 'guildAvailable';
+        GUILD_MEMBER_ADD: 'guildMemberAdd';
+        GUILD_MEMBER_REMOVE: 'guildMemberRemove';
+        GUILD_MEMBER_UPDATE: 'guildMemberUpdate';
+        GUILD_MEMBER_AVAILABLE: 'guildMemberAvailable';
+        GUILD_MEMBER_SPEAKING: 'guildMemberSpeaking';
+        GUILD_MEMBERS_CHUNK: 'guildMembersChunk';
+        GUILD_INTEGRATIONS_UPDATE: 'guildIntegrationsUpdate';
+        GUILD_ROLE_CREATE: 'roleCreate';
+        GUILD_ROLE_DELETE: 'roleDelete';
+        GUILD_ROLE_UPDATE: 'roleUpdate';
+        GUILD_EMOJI_CREATE: 'emojiCreate';
+        GUILD_EMOJI_DELETE: 'emojiDelete';
+        GUILD_EMOJI_UPDATE: 'emojiUpdate';
+        GUILD_BAN_ADD: 'guildBanAdd';
+        GUILD_BAN_REMOVE: 'guildBanRemove';
+        CHANNEL_CREATE: 'channelCreate';
+        CHANNEL_DELETE: 'channelDelete';
+        CHANNEL_UPDATE: 'channelUpdate';
+        CHANNEL_PINS_UPDATE: 'channelPinsUpdate';
+        MESSAGE_CREATE: 'message';
+        MESSAGE_DELETE: 'messageDelete';
+        MESSAGE_UPDATE: 'messageUpdate';
+        MESSAGE_BULK_DELETE: 'messageDeleteBulk';
+        MESSAGE_REACTION_ADD: 'messageReactionAdd';
+        MESSAGE_REACTION_REMOVE: 'messageReactionRemove';
+        MESSAGE_REACTION_REMOVE_ALL: 'messageReactionRemoveAll';
+        USER_UPDATE: 'userUpdate';
+        USER_NOTE_UPDATE: 'userNoteUpdate';
+        USER_SETTINGS_UPDATE: 'clientUserSettingsUpdate';
+        USER_GUILD_SETTINGS_UPDATE: 'clientUserGuildSettingsUpdate';
+        PRESENCE_UPDATE: 'presenceUpdate';
+        VOICE_STATE_UPDATE: 'voiceStateUpdate';
+        TYPING_START: 'typingStart';
+        TYPING_STOP: 'typingStop';
+        WEBHOOKS_UPDATE: 'webhookUpdate';
+        DISCONNECT: 'disconnect';
+        RECONNECTING: 'reconnecting';
+        ERROR: 'error';
+        WARN: 'warn';
+        DEBUG: 'debug';
+    }
+    interface DjsEnumsDiscordLibPermissions {
+        CREATE_INSTANT_INVITE: 'CREATE_INSTANT_INVITE';
+        KICK_MEMBERS: 'KICK_MEMBERS';
+        BAN_MEMBERS: 'BAN_MEMBERS';
+        ADMINISTRATOR: 'ADMINISTRATOR';
+        MANAGE_CHANNELS: 'MANAGE_CHANNELS';
+        MANAGE_GUILD: 'MANAGE_GUILD';
+        ADD_REACTIONS: 'ADD_REACTIONS';
+        VIEW_AUDIT_LOG: 'VIEW_AUDIT_LOG';
+        PRIORITY_SPEAKER: 'PRIORITY_SPEAKER';
+        STREAM: 'STREAM';
+        VIEW_CHANNEL: 'VIEW_CHANNEL';
+        SEND_MESSAGES: 'SEND_MESSAGES';
+        SEND_TTS_MESSAGES: 'SEND_TTS_MESSAGES';
+        MANAGE_MESSAGES: 'MANAGE_MESSAGES';
+        EMBED_LINKS: 'EMBED_LINKS';
+        ATTACH_FILES: 'ATTACH_FILES';
+        READ_MESSAGE_HISTORY: 'READ_MESSAGE_HISTORY';
+        MENTION_EVERYONE: 'MENTION_EVERYONE';
+        USE_EXTERNAL_EMOJIS: 'USE_EXTERNAL_EMOJIS';
+        CONNECT: 'CONNECT';
+        SPEAK: 'SPEAK';
+        MUTE_MEMBERS: 'MUTE_MEMBERS';
+        DEAFEN_MEMBERS: 'DEAFEN_MEMBERS';
+        MOVE_MEMBERS: 'MOVE_MEMBERS';
+        USE_VAD: 'USE_VAD';
+        CHANGE_NICKNAME: 'CHANGE_NICKNAME';
+        MANAGE_NICKNAMES: 'MANAGE_NICKNAMES';
+        MANAGE_ROLES: 'MANAGE_ROLES';
+        MANAGE_WEBHOOKS: 'MANAGE_WEBHOOKS';
+        MANAGE_EMOJIS: 'MANAGE_EMOJIS';
+    }
+    type DjsEnumsPermissions = [
+        'CREATE_INSTANT_INVITE',
+        'KICK_MEMBERS',
+        'BAN_MEMBERS',
+        'ADMINISTRATOR',
+        'MANAGE_CHANNELS',
+        'MANAGE_GUILD',
+        'ADD_REACTIONS',
+        'VIEW_AUDIT_LOG',
+        'PRIORITY_SPEAKER',
+        'STREAM',
+        'VIEW_CHANNEL',
+        'SEND_MESSAGES',
+        'SEND_TTS_MESSAGES',
+        'MANAGE_MESSAGES',
+        'EMBED_LINKS',
+        'ATTACH_FILES',
+        'READ_MESSAGE_HISTORY',
+        'MENTION_EVERYONE',
+        'USE_EXTERNAL_EMOJIS',
+        'CONNECT',
+        'SPEAK',
+        'MUTE_MEMBERS',
+        'DEAFEN_MEMBERS',
+        'MOVE_MEMBERS',
+        'USE_VAD',
+        'CHANGE_NICKNAME',
+        'MANAGE_NICKNAMES',
+        'MANAGE_ROLES',
+        'MANAGE_WEBHOOKS',
+        'MANAGE_EMOJIS',
+    ];
+    type DjsEnumsPermissionList = 'CREATE_INSTANT_INVITE' | 'KICK_MEMBERS' | 'BAN_MEMBERS' | 'ADMINISTRATOR' | 'MANAGE_CHANNELS' |
+    'MANAGE_GUILD' | 'ADD_REACTIONS' | 'VIEW_AUDIT_LOG' | 'PRIORITY_SPEAKER' | 'STREAM' | 'VIEW_CHANNEL' | 'SEND_MESSAGES' |
+    'SEND_TTS_MESSAGES' | 'MANAGE_MESSAGES' | 'EMBED_LINKS' | 'ATTACH_FILES' | 'READ_MESSAGE_HISTORY' | 'MENTION_EVERYONE' |
+    'USE_EXTERNAL_EMOJIS' | 'CONNECT' | 'SPEAK' | 'MUTE_MEMBERS' | 'DEAFEN_MEMBERS' | 'MOVE_MEMBERS' | 'USE_VAD' | 'CHANGE_NICKNAME' |
+    'MANAGE_NICKNAMES' | 'MANAGE_ROLES' | 'MANAGE_WEBHOOKS' | 'MANAGE_EMOJIS';
+    interface DjsEnumsPermissionNames {
+        CREATE_INSTANT_INVITE: 'Create Instant Invite';
+        KICK_MEMBERS: 'Kick Members';
+        BAN_MEMBERS: 'Ban Members';
+        ADMINISTRATOR: 'Administrator';
+        MANAGE_CHANNELS: 'Manage Channels';
+        MANAGE_GUILD: 'Manage Guild';
+        ADD_REACTIONS: 'Add Reactions';
+        VIEW_AUDIT_LOG: 'View Audit Log';
+        PRIORITY_SPEAKER: 'Priority Speaker';
+        STREAM: 'stream';
+        VIEW_CHANNEL: 'Read Messages';
+        SEND_MESSAGES: 'Send Messages';
+        SEND_TTS_MESSAGES: 'Send TTS Messages';
+        MANAGE_MESSAGES: 'Manage Messages';
+        EMBED_LINKS: 'Embed Links';
+        ATTACH_FILES: 'Attach Files';
+        READ_MESSAGE_HISTORY: 'Read Message History';
+        MENTION_EVERYONE: 'Mention Everyone';
+        USE_EXTERNAL_EMOJIS: 'External Emojis';
+        CONNECT: 'Voice Connect';
+        SPEAK: 'Voice Speak';
+        MUTE_MEMBERS: 'Voice Mute Members';
+        DEAFEN_MEMBERS: 'Voice Deafen Members';
+        MOVE_MEMBERS: 'Voice Move Members';
+        USE_VAD: 'Voice Use VAD';
+        CHANGE_NICKNAME: 'Change Nickname';
+        MANAGE_NICKNAMES: 'Manage Nicknames';
+        MANAGE_ROLES: 'Manage Roles';
+        MANAGE_WEBHOOKS: 'Manage Webhooks';
+        MANAGE_EMOJIS: 'Manage Emojis';
+    }
+    interface DjsContent {
+        content?: string;
+        tts?: boolean;
+        nonce?: string;
+        embed?: Embed | djs.RichEmbed | djs.RichEmbedOptions;
+        disableEveryone?: boolean;
+        files?: (djs.FileOptions | djs.BufferResolvable | djs.MessageAttachment)[];
+        code?: string | boolean;
+        split?: boolean | djs.SplitOptions;
+        reply?: djs.UserResolvable;
+    }
+    interface DjsWebhookContent extends DjsContent {
+        username?: string;
+        avatarURL?: string;
+        embed?: undefined;
+        embeds?: (Embed | djs.RichEmbed | djs.RichEmbedOptions)[];
+        reply?: undefined;
+    }
+    interface DjsPresenceGame extends PresenceGame {
+        type: djs.ActivityType | 0 | 1 | 2 | 3 | 4;
+    }
+    
+    export class DjsChannel extends Channel {
+        hasPermission(channel: djs.Channel, user: djs.User, perm: string): boolean;
+        sendMessage(channel: djs.Channel, content: string | DjsContent): Promise<djs.Message | djs.Message[]>
+    }
+
+    export interface DjsEnums {
+        EVENTS: DjsEnumsEvents;
+        DISCORD_LIB_PERMISSIONS: DjsEnumsDiscordLibPermissions;
+        PERMISSIONS: DjsEnumsPermissions;
+        PERMISSION_NAMES: DjsEnumsPermissionNames;
+    }
+
+    export class DjsGuild extends Guild {
+        getMember(guild: djs.Guild, userID: string): djs.GuildMember;
+    }
+
+    export class DjsMember extends Member {
+        getRoles(member: djs.GuildMember): string[];
+        getRolesObject(member: djs.GuildMember): djs.Role[];
+        hasPermission(member: djs.GuildMember, permission: DjsEnumsPermissionList): boolean;
+    }
+
+    export class DjsMessage extends Message {
+        delete(message: djs.Message): Promise<djs.Message>;
+        edit(message: djs.Message, content: string | DjsContent): Promise<djs.Message>
+    }
+
+    export class DjsResolver extends Resolver {
+        static user(client: djs.Client, args: string | string[] ): djs.User;
+        static member(guild: djs.Guild, args: string | string[] ): djs.GuildMember;
+        static role(guild: djs.Guild, args: string | string[] ): djs.Role;
+        static channel(guild: djs.Guild, args: string | string[] ): djs.GuildChannel;
+        static guild(client: djs.Client, args: string[] ): djs.Guild;
+    }
+
+    export class DjsUser extends User {
+        getDM(user: djs.User): Promise<djs.DMChannel>;
+    }
+
+    export class DjsClient extends Client {
+        private _token: string;
+        constructor(lib: DjsInterface, token: string);
+        public client: djs.Client;
+        getMember(guild: djs.Guild): djs.GuildMember;
+        connect(): Promise<string>;
+        setPresence(status: djs.PresenceStatus, game: DjsPresenceGame): Promise<djs.ClientUser>;
+        triggerWebhook(id: string, token: string, data: DjsWebhookContent): any; // Clarify with Khaaz
+    }
+
+    export class DjsInterface extends LibraryInterface {
+        public client: djs.Client;
+        public type: 1;
+        constructor(botClient: djs.Client, token: string);
+        public enums: DjsEnums;
+        public HANDLERS: object; // Not going to list them all
+        public onMessageCreate(func: (message: djs.Message) => void): void;
+    }
+
+    // Eris
+    interface ErisEnumsEvents {
+        GUILD_CREATE: 'guildCreate';
+        GUILD_DELETE: 'guildDelete';
+        GUILD_UPDATE: 'guildUpdate';
+        GUILD_UNAVAILABLE: 'guildUnavailable';
+        GUILD_AVAILABLE: 'guildAvailable';
+        GUILD_MEMBER_ADD: 'guildMemberAdd';
+        GUILD_MEMBER_REMOVE: 'guildMemberRemove';
+        GUILD_MEMBER_UPDATE: 'guildMemberUpdate';
+        GUILD_MEMBER_AVAILABLE: 'guildMemberAvailable';
+        GUILD_MEMBER_SPEAKING: 'guildMemberSpeaking';
+        GUILD_MEMBERS_CHUNK: 'guildMembersChunk';
+        GUILD_ROLE_CREATE: 'roleCreate';
+        GUILD_ROLE_DELETE: 'roleDelete';
+        GUILD_ROLE_UPDATE: 'roleUpdate';
+        GUILD_EMOJIS_UPDATE: 'guildEmojisUpdate';
+        GUILD_BAN_ADD: 'guildBanAdd';
+        GUILD_BAN_REMOVE: 'guildBanRemove';
+        UNAVAILABLE_GUILD_CREATE: 'unavailableGuildCreate';
+        CHANNEL_CREATE: 'channelCreate';
+        CHANNEL_DELETE: 'channelDelete';
+        CHANNEL_UPDATE: 'channelUpdate';
+        CHANNEL_PIN_UPDATE: 'channelPinUpdate';
+        MESSAGE_CREATE: 'messageCreate';
+        MESSAGE_DELETE: 'messageDelete';
+        MESSAGE_UPDATE: 'messageUpdate';
+        MESSAGE_DELETE_BULK: 'messageDeleteBulk';
+        MESSAGE_REACTION_ADD: 'messageReactionAdd';
+        MESSAGE_REACTION_REMOVE: 'messageReactionRemove';
+        MESSAGE_REACTION_REMOVE_ALL: 'messageReactionRemoveAll';
+        TYPING_START: 'typingStart';
+        USER_UPDATE: 'userUpdate';
+        PRESENCE_UPDATE: 'presenceUpdate';
+        VOICE_CHANNEL_JOIN: 'voicecChannelJoin';
+        VOICE_CHANNEL_LEAVE: 'voiceChannelLeave';
+        VOICE_CHANNEL_SWITCH: 'voiceChannelSwitch';
+        VOICE_STATE_UPDATE: 'voiceStateUpdate';
+        WEBHOOKS_UPDATE: 'webhookUpdate';
+        SHARD_DISCONNECT: 'shardDisconnect';
+        SHARD_PRE_READY: 'shardPreReady';
+        SHARD_READY: 'shardReady';
+        SHARD_RESUME: 'shardResume';
+        UNKNOWN: 'unknown';
+        CONNECT: 'connect';
+        DISCONNECT: 'disconnect';
+        ERROR: 'error';
+        WARN: 'warn';
+        DEBUG: 'debug';
+        READY: 'ready';
+        HELLO: 'hello';
+        RATE_LIMIT: 'rateLimit';
+        RAW_WS: 'rawWS';
+    }
+
+    interface ErisEnumsDiscordLibPermissions {
+        CREATE_INSTANT_INVITE: 'createInstantInvite';
+        KICK_MEMBERS: 'kickMembers';
+        BAN_MEMBERS: 'banMembers';
+        ADMINISTRATOR: 'administrator';
+        MANAGE_CHANNELS: 'manageChannels';
+        MANAGE_GUILD: 'manageGuild';
+        ADD_REACTIONS: 'addReactions';
+        VIEW_AUDIT_LOG: 'viewAuditLog';
+        PRIORITY_SPEAKER: 'voicePrioritySpeaker';
+        STREAM: 'stream';
+        VIEW_CHANNEL: 'readMessages';
+        SEND_MESSAGES: 'sendMessages';
+        SEND_TTS_MESSAGES: 'sendTTSMessages';
+        MANAGE_MESSAGES: 'manageMessages';
+        EMBED_LINKS: 'embedLinks';
+        ATTACH_FILES: 'attachFiles';
+        READ_MESSAGE_HISTORY: 'readMessageHistory';
+        MENTION_EVERYONE: 'mentionEveryone';
+        USE_EXTERNAL_EMOJIS: 'externalEmojis';
+        CONNECT: 'voiceConnect';
+        SPEAK: 'voiceSpeak';
+        MUTE_MEMBERS: 'voiceMuteMembers';
+        DEAFEN_MEMBERS: 'voiceDeafenMembers';
+        MOVE_MEMBERS: 'voiceMoveMembers';
+        USE_VAD: 'voiceUseVAD';
+        CHANGE_NICKNAME: 'changeNickname';
+        MANAGE_NICKNAMES: 'manageNicknames';
+        MANAGE_ROLES: 'manageRoles';
+        MANAGE_WEBHOOKS: 'manageWebhooks';
+        MANAGE_EMOJIS: 'manageEmojis';
+    }
+
+    type ErisEnumsPermissions = [
+        'createInstantInvite',
+        'kickMembers',
+        'banMembers',
+        'administrator',
+        'manageChannels',
+        'manageGuild',
+        'addReactions',
+        'viewAuditLog',
+        'voicePrioritySpeaker',
+        'stream',
+        'readMessages',
+        'sendMessages',
+        'sendTTSMessages',
+        'manageMessages',
+        'embedLinks',
+        'attachFiles',
+        'readMessageHistory',
+        'mentionEveryone',
+        'externalEmojis',
+        'voiceConnect',
+        'voiceSpeak',
+        'voiceMuteMembers',
+        'voiceDeafenMembers',
+        'voiceMoveMembers',
+        'voiceUseVAD',
+        'changeNickname',
+        'manageNicknames',
+        'manageRoles',
+        'manageWebhooks',
+        'manageEmojis',
+    ]
+
+    type ErisEnumsPermissionList = 'createInstantInvite' | 'kickMembers' | 'banMembers' | 'administrator' | 'manageChannels' | 'manageGuild' |
+    'addReactions' | 'viewAuditLog' | 'voicePrioritySpeaker' | 'stream' | 'readMessages' | 'sendMessages' | 'sendTTSMessages' | 'manageMessages' |
+    'embedLinks' | 'attachFiles' | 'readMessageHistory' | 'mentionEveryone' | 'externalEmojis' | 'voiceConnect' | 'voiceSpeak' | 'voiceMuteMembers' |
+    'voiceDeafenMembers' | 'voiceMoveMembers' | 'voiceUseVAD' | 'changeNickname' | 'manageNicknames' | 'manageRoles' | 'manageWebhooks' | 'manageEmojis';
+
+    interface ErisEnumsPermissionsNames {
+        createInstantInvite: 'Create Instant Invite';
+        kickMembers: 'Kick Members';
+        banMembers: 'Ban Members';
+        administrator: 'Administrator';
+        manageChannels: 'Manage Channels';
+        manageGuild: 'Manage Guild';
+        addReactions: 'Add Reactions';
+        viewAuditLog: 'View Audit Log';
+        voicePrioritySpeaker: 'Priority Speaker';
+        stream: 'Stream';
+        readMessages: 'Read Messages';
+        sendMessages: 'Send Messages';
+        sendTTSMessages: 'Send TTS Messages';
+        manageMessages: 'Manage Messages';
+        embedLinks: 'Embed Links';
+        attachFiles: 'Attach Files';
+        readMessageHistory: 'Read Message History';
+        mentionEveryone: 'Mention Everyone';
+        externalEmojis: 'External Emojis';
+        voiceConnect: 'Voice Connect';
+        voiceSpeak: 'Voice Speak';
+        voiceMuteMembers: 'Voice Mute Members';
+        voiceDeafenMembers: 'Voice Deafen Members';
+        voiceMoveMembers: 'Voice Move Members';
+        voiceUseVAD: 'Voice Use VAD';
+        changeNickname: 'Change Nickname';
+        manageNicknames: 'Manage Nicknames';
+        manageRoles: 'Manage Roles';
+        manageWebhooks: 'Manage Webhooks';
+        manageEmojis: 'Manage Emojis';
+    }
+
+    interface ErisContent {
+        content?: string;
+        tts?: boolean;
+        disableEveryone?: boolean;
+        embed?: Embed | Eris.EmbedBase;
+        file: Eris.MessageFile | Eris.MessageFile[];
+    }
+    interface ErisWebhookContent extends ErisContent {
+        embed?: undefined;
+        embeds?: (Embed | Eris.EmbedBase)[];
+        username?: string;
+        avatarURL?: string;
+        wait?: boolean;
+    }
+    interface ErisPresenceGame extends PresenceGame {
+        type: 0 | 1 | 2 | 3 | 4;
+    }
+
+    export class ErisChannel extends Channel {
+        public hasPermission(channel: Eris.Channel, user: Eris.User, perm: ErisEnumsPermissionList): boolean;
+        public sendMessage(channel: Eris.Channel, content: ErisContent): Promise<Eris.Message>;
+    }
+
+    export interface ErisEnums {
+        EVENTS: ErisEnumsEvents;
+        DISCORD_LIB_PERMISSIONS: ErisEnumsDiscordLibPermissions;
+        PERMISSIONS: ErisEnumsPermissions;
+        PERMISSIONS_NAMES: ErisEnumsPermissionsNames;
+    }
+
+    export class ErisGuild extends Guild {
+        public getMember(guild: Eris.Guild, userID: string): Eris.Member;
+    }
+
+    export class ErisMember extends Member {
+        getRoles(member: Eris.Member): string[];
+        getRolesObject(member: Eris.Member): Eris.Role[];
+        hasPermission(member: Eris.Member, permission: ErisEnumsPermissionList): boolean;
+    }
+
+    export class ErisMessage extends Message {
+        delete(message: Eris.Message): Promise<void>;
+        edit(message: Eris.Message, content: ErisContent): Promise<Eris.Message>;
+    }
+
+    export class ErisResolver extends Resolver {
+        static user(client: Eris.Client, args: string | string[] ): Eris.User | null;
+        static member(guild: Eris.Guild, args: string | string[] ): Eris.Member | null;
+        static role(guild: Eris.Guild, args: string | string[] ): Eris.Role | null;
+        static channel(guild: Eris.Guild, args: string | string[] ): Eris.GuildChannel;
+        static guild(client: Eris.Client, args: string[] ): Eris.Guild;
+    }
+
+    export class ErisUser extends User {
+        getDM(user: Eris.User): Promise<Eris.PrivateChannel>;
+    }
+
+    export class ErisClient extends Client {
+        public client: Eris.Client;
+        public getMember(guild: Eris.Guild): Eris.Member;
+        public connect(): Promise<void>;
+        public setPresence(status: 'online' | 'idle' | 'dnd' | 'invisible', game: ErisPresenceGame): Promise<void>;
+        public triggerWebhook(id: string, token: string, data: ErisWebhookContent): Promise<Message>;
+    }
+
+    export class ErisInterface extends LibraryInterface {
+        public client: ErisClient;
+        public type: 0;
+        constructor(botClient: Eris.Client);
+        public enums: ErisEnums;
+        public HANDLERS: object;
+        public onMessageCreate(func: (message: Eris.Message) => void): void;
+        public onceReady(func: () => void): void;
     }
 }
