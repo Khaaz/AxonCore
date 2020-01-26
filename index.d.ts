@@ -1916,7 +1916,7 @@ declare module 'axoncore' {
         content?: string;
         tts?: boolean;
         nonce?: string;
-        embed?: Embed | djs.RichEmbed | djs.RichEmbedOptions;
+        embed?: Embed | djs.MessageEmbed | djs.MessageEmbedOptions;
         disableEveryone?: boolean;
         files?: (djs.FileOptions | djs.BufferResolvable | djs.MessageAttachment)[];
         code?: string | boolean;
@@ -1927,7 +1927,7 @@ declare module 'axoncore' {
         username?: string;
         avatarURL?: string;
         embed?: undefined;
-        embeds?: (Embed | djs.RichEmbed | djs.RichEmbedOptions)[];
+        embeds?: (Embed | djs.MessageEmbed | djs.MessageEmbedOptions)[];
         reply?: undefined;
     }
     interface DjsPresenceGame extends PresenceGame {
