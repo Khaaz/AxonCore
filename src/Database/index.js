@@ -21,7 +21,7 @@ class DBSelector extends ASelector {
 
         switch (db) {
             // No database
-            case DB_TYPES.DBLESS:
+            case DB_TYPES.IN_MEMORY:
             default: {
                 const InMemoryProvider = require('./InMemoryProvider').default;
                 DBProvider = new InMemoryProvider(axonClient);

@@ -47,7 +47,11 @@ declare module 'axoncore' {
     }
 
     export class AxonError extends Error { // Clarify with Khaaz, incomplete?
-        constructor(message: string, module: Module, subModule?: Module);
+        public module: string;
+        public subMoule: string | null;
+        constructor(message: string, module: Module | string, subModule?: string);
+        readonly short: string;
+        readonly message: string;
         readonly name: string;
     }
 
@@ -870,7 +874,7 @@ declare module 'axoncore' {
 
     interface LibraryTypes { ERIS: 0; DISCORDJS: 1; }
     interface LoggerTypes { DEFAULT: 0; CHALK: 1; SIGNALE: 2; WINSTON: 3; }
-    interface DBTypes { InMemory: 0; JSON: 1; MONGO: 2; }
+    interface DBTypes { IN_MEMORY: 0; JSON: 1; MONGO: 2; }
     interface CommandExecutionTypes {
         REGULAR: 0;
         ADMIN: 1;
