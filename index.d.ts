@@ -200,9 +200,9 @@ declare module 'axoncore' {
         updateBlacklistUser(blacklistedUsers: string[] ): Promise<AxonConfig>;
         updateBlacklistGuild(blacklistedGuilds: string[] ): Promise<AxonConfig>;
         updateGuildPrefix(gID: string, prefixArr: string[] ): Promise<GuildConfig>;
-        updateModule(gID: string, modulesArr: Module[] ): Promise<GuildConfig>;
-        updateCommand(gID: string, commandArr: Command[] ): Promise<GuildConfig>;
-        updateEvent(gID: string, eventArr: Listener[] ): Promise<GuildConfig>;
+        updateModule(gID: string, modulesArr: string[] ): Promise<GuildConfig>;
+        updateCommand(gID: string, commandArr: string[] ): Promise<GuildConfig>;
+        updateEvent(gID: string, eventArr: string[] ): Promise<GuildConfig>;
         
         // Ask Null about inconsistency
         saveAxonSchema(axonSchema: AxonConfig): AxonConfig;
