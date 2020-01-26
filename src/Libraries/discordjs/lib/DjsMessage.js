@@ -8,6 +8,10 @@ class DjsMessage extends Message {
     }
 
     edit(message, content) {
+        if (typeof content === 'object') {
+            const msg = content.content || '';
+            return message.edit(msg, content);
+        }
         return message.edit(content);
     }
 }
