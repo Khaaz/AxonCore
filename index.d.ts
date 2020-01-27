@@ -594,7 +594,7 @@ declare module 'axoncore' {
         public enabled?: boolean;
         public serverBypass?: boolean;
 
-        public Infos?: {
+        public infos?: {
             owners?: string[];
             description?: string;
         };
