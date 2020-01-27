@@ -752,10 +752,10 @@ declare module 'axoncore' {
         public readonly axon: AxonClient;
         public readonly bot: LibClient;
         public readonly logger: ALogger;
-        public readonly Resolver?: Resolver;
-        public readonly axonUtils?: AxonUtils;
-        public readonly utils?: Utils;
-        public readonly l?: MessageManager;
+        public readonly Resolver: Resolver;
+        public readonly axonUtils: AxonUtils;
+        public readonly utils: Utils;
+        public readonly l: MessageManager;
         constructor(axonClient: AxonClient);
 
         // Methods
