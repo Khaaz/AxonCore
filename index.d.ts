@@ -1110,12 +1110,12 @@ declare module 'axoncore' {
     }
 
     interface AxonOptionsExtensions {
-        utils: Utils;
-        logger: ALogger;
-        DBProvider: ADBProvider;
-        DBLocation: string;
-        axonConfig: AxonConfig;
-        guildConfig: GuildConfig;
+        utils?: Utils;
+        logger?: ALogger;
+        DBProvider?: ADBProvider;
+        DBLocation?: string;
+        axonConfig?: AxonConfig;
+        guildConfig?: GuildConfig;
     }
     class AxonOptions {
         private _token?: string;
