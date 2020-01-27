@@ -553,7 +553,7 @@ declare module 'axoncore' {
         public enabled: boolean;
         public serverBypass: boolean;
         public subcmds?: Command[] | null;
-        public Infos: CommandInfo;
+        public infos: CommandInfo;
         public options: CommandOptions;
         public permissions: CommandPermissions;
 
