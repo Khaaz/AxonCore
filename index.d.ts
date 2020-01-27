@@ -109,7 +109,7 @@ declare module 'axoncore' {
         public commands: Collection<Command>;
         public listeners?: Collection<Listener>;
 
-        public init(): { commands: {[key: string]: new (...args: any[] ) => Command;}; listeners: {[key: string]: new (...args: any[] ) => Listener;}; };
+        public init(): { commands?: {[key: string]: new (...args: any[] ) => Command;}; listeners?: {[key: string]: new (...args: any[] ) => Listener;}; };
         private _init(): void;
     }
 
