@@ -418,23 +418,23 @@ declare module 'axoncore' {
         serverAdmin?: boolean;
         serverOwner?: boolean;
         user?: {
-            needed: string[];
+            needed?: string[];
             bypass?: string[];
         };
         usersIDs?: {
-            needed: string[];
+            needed?: string[];
             bypass?: string[];
         };
         rolesIDs?: {
-            needed: string[];
+            needed?: string[];
             bypass?: string[];
         };
         channelsIDs?: {
-            needed: string[];
+            needed?: string[];
             bypass?: string[];
         };
         staff?: {
-            needed: string[];
+            needed?: string[];
             bypass?: string[];
         };
         custom?(func: (i: LibMessage) => true): true;
