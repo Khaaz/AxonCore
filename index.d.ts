@@ -927,7 +927,7 @@ declare module 'axoncore' {
         UNKNOWN: 'Unexpected error';
     }
 
-    export interface AxonEnums {
+    export const AxonEnums: {
         HTTP_CODE: HttpCode;
         HTTP_MESSAGES: HttpMessages;
         LIBRARY_TYPES: LibraryTypes;
@@ -942,7 +942,7 @@ declare module 'axoncore' {
         LOG_LEVELS: LogLevels;
         WEBHOOK_TO_COLOR: WebhookToColor;
         TYPE_ERRORS: TypeErrors;
-    }
+    };
 
     interface FieldComp {
         name: string;
@@ -1591,7 +1591,7 @@ declare module 'axoncore' {
         CUSTOM: 4;
     }
 
-    export interface DiscordEnums {
+    export const DiscordEnums: {
         DISCORD_GATEWAY_EVENTS: DISCORD_GATEWAY_EVENTS;
         DISCORD_PERMISSIONS: DISCORD_PERMISSIONS;
         PERMISSION_NUMBERS: PERMISSIONS_NUMBERS;
@@ -1599,7 +1599,7 @@ declare module 'axoncore' {
         CHANNEL_TYPES: CHANNEL_TYPES;
         MESSAGE_TYPES: MESSAGE_TYPES;
         CLIENT_STATUS_TYPES: CLIENT_STATUS_TYPES;
-    }
+    };
 
     export class Queue {
         private _functions: Function[];
