@@ -437,13 +437,13 @@ declare module 'axoncore' {
             needed?: string[];
             bypass?: string[];
         };
-        custom?(func: (i: LibMessage) => true): true;
+        custom?: (i: LibMessage) => true;
     }
 
     export class CommandPermissions implements CommandPerms {
         private _command: Command;
 
-        public custom(func: (msg: LibMessage) => true): true;
+        public custom?: (msg: LibMessage) => true;
         constructor(command: Command, override?: CommandPerms, userModuleDefault?: boolean);
         // GETTERS
         readonly axon: AxonClient;
