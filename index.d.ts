@@ -355,10 +355,10 @@ declare module 'axoncore' {
         guildOnly?: boolean;
         argsMin?: number;
 
-        invalidUsageMessage: boolean;
+        invalidUsageMessage?: boolean;
         invalidPermissionMessage?: ( (channel: LibTextableChannel, member: LibMember) => string) | null;
-        sendPermissionMessage: boolean;
-        invalidPermissionMessageTimeout: number;
+        sendPermissionMessage?: boolean;
+        invalidPermissionMessageTimeout?: number;
 
         deleteCommand?: boolean;
         hidden?: boolean;
