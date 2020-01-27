@@ -1278,13 +1278,13 @@ declare module 'axoncore' {
          * @param out Can be Console, Winston or Signale. Chalk will go as Console
          */
         constructor(out: any);
-        public fatal(input: string, opt: Context): void;
-        public error(input: string, opt: Context): void;
-        public warn(input: string, opt: Context): void;
-        public debug(input: string, opt: Context): void;
-        public notice(input: string, opt: Context): void;
-        public info(input: string, opt: Context): void;
-        public verbose(input: string, opt: Context): void;
+        public fatal(input: string, opt?: Context): void;
+        public error(input: string, opt?: Context): void;
+        public warn(input: string, opt?: Context): void;
+        public debug(input: string, opt?: Context): void;
+        public notice(input: string, opt?: Context): void;
+        public info(input: string, opt?: Context): void;
+        public verbose(input: string, opt?: Context): void;
         private _parseTime(): string;
     }
 
