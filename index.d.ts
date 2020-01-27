@@ -437,7 +437,7 @@ declare module 'axoncore' {
             needed: string[];
             bypass?: string[];
         };
-        custom(func: (i: LibMessage) => true): true;
+        custom?(func: (i: LibMessage) => true): true;
     }
 
     export class CommandPermissions implements CommandPerms {
