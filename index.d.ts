@@ -80,7 +80,7 @@ declare module 'axoncore' {
     interface ModuleInfo {
         name: string;
         description: string;
-        category: string;
+        category?: string;
     }
     interface ModuleData {
         label?: string;
