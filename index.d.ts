@@ -532,7 +532,7 @@ declare module 'axoncore' {
         enabled: boolean;
         serverBypass: boolean;
         subcmds?: Command[] | null;
-        Infos: CommandInfo;
+        infos: CommandInfo;
         options: CommandOptions;
         permissions: CommandPermissions;
     }
