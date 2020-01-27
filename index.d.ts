@@ -1065,8 +1065,8 @@ declare module 'axoncore' {
     interface AxonOptionsSettings {
         lang?: string;
         debugMode?: boolean;
-        library?: LibraryInterface;
-        logger?: ALogger;
+        library?: LibraryInterface | number;
+        logger?: ALogger | number;
         db?: 0 | 1 | 2;
         guildConfigCache?: number;
     }
