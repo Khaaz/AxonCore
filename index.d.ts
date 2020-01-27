@@ -381,7 +381,7 @@ declare module 'axoncore' {
 
         public cooldown?: number;
 
-        constructor(command: Command, override: ACommandOptions, useModuleDefault: boolean);
+        constructor(command: Command, override: ACommandOptions, useModuleDefault?: boolean);
 
         readonly l: MessageManager;
 
