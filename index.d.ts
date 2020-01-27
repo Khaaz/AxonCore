@@ -1067,7 +1067,7 @@ declare module 'axoncore' {
         debugMode?: boolean;
         library?: LibraryInterface | number;
         logger?: ALogger | number;
-        db?: 0 | 1 | 2;
+        db?: number;
         guildConfigCache?: number;
     }
 
