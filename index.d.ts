@@ -109,7 +109,7 @@ declare module 'axoncore' {
         public commands: Collection<Command>;
         public listeners?: Collection<Listener>;
 
-        public init(): {[key: string]: Command | Listener;};
+        public init(): { commands: {[key: string]: new (...args: any[] ) => Command;}; listeners: {[key: string]: new (...args: any[] ) => Listener;}; };
         private _init(): void;
     }
 
@@ -531,7 +531,7 @@ declare module 'axoncore' {
         hasSubcmd: boolean;
         enabled: boolean;
         serverBypass: boolean;
-        subcmds?: Command[] | null;
+        subcmds?: (new (...args: any[] ) => Command)[] | null;
         infos: CommandInfo;
         options: CommandOptions;
         permissions: CommandPermissions;
@@ -552,7 +552,7 @@ declare module 'axoncore' {
         public hasSubcmd: boolean;
         public enabled: boolean;
         public serverBypass: boolean;
-        public subcmds?: Command[] | null;
+        public subcmds?: (new (...args: any[] ) => Command)[] | null;
         public infos: CommandInfo;
         public options: CommandOptions;
         public permissions: CommandPermissions;
