@@ -99,7 +99,7 @@ declare module 'axoncore' {
         public options: CommandOptions;
         public permissions: CommandPermissions;
 
-        public Infos: ModuleInfo;
+        public infos: ModuleInfo;
 
         public commandLoader: CommandLoader;
         public listenerLoader: ListenerLoader;
