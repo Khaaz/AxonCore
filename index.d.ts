@@ -444,7 +444,7 @@ declare module 'axoncore' {
         private _command: Command;
 
         public custom?: (msg: LibMessage) => boolean;
-        constructor(command: Command, override?: CommandPerms, userModuleDefault?: boolean);
+        constructor(command: Command|Module, override?: CommandPerms, userModuleDefault?: boolean);
         // GETTERS
         readonly axon: AxonClient;
         readonly utils: Utils;
