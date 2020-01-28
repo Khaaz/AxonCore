@@ -104,7 +104,7 @@ declare module 'axoncore' {
         public commandLoader: CommandLoader;
         public listenerLoader: ListenerLoader;
 
-        constructor(client: AxonClient, data?: ModuleData);
+        constructor(client: AxonClient<Utils>, data?: ModuleData);
 
         public commands: Collection<Command>;
         public listeners?: Collection<Listener>;
@@ -116,8 +116,8 @@ declare module 'axoncore' {
     type updateDBVal = object|any[]|string|boolean|number|Date;
 
     export abstract class ADBProvider {
-        public axon: AxonClient;
-        constructor(axonClient: AxonClient);
+        public axon: AxonClient<Utils>;
+        constructor(axonClient: AxonClient<Utils>);
         public init(AxonOptions: AxonOptions): void; // Not Implemented
         public initAxon(): Promise<AxonConfig>; // Not Implemented
         public initGuild(gID: string): Promise<GuildConfig>; // Not Implemented
@@ -279,7 +279,7 @@ declare module 'axoncore' {
     }
 
     export class AxonConfig {
-        private _axon: AxonClient;
+        private _axon: AxonClient<Utils>;
 
         public id: string;
         public prefix: string;
@@ -290,7 +290,7 @@ declare module 'axoncore' {
         public bannedUsers: string[];
         public bannedGuilds: string[];
 
-        constructor(axon: AxonClient, values: AxonConfig);
+        constructor(axon: AxonClient<Utils>, values: AxonConfig);
 
         public isBlacklistedUser(userID: string): boolean;
         public isBlacklistedGuild(guildID: string): boolean;
@@ -300,7 +300,7 @@ declare module 'axoncore' {
     }
 
     export class GuildConfig {
-        private _axon: AxonClient;
+        private _axon: AxonClient<Utils>;
         public guildID: string;
         public prefixes: string[];
 
@@ -319,7 +319,7 @@ declare module 'axoncore' {
         public modRoles: string[];
         public modUsers: string[];
 
-        constructor(axon: AxonClient, values: GuildConfig);
+        constructor(axon: AxonClient<Utils>, values: GuildConfig);
 
         public getPrefixes(): string[];
         public isIgnored(msg: LibMessage): boolean;
@@ -446,7 +446,7 @@ declare module 'axoncore' {
         public custom?: (msg: LibMessage) => boolean;
         constructor(command: Command|Module, override?: CommandPerms, userModuleDefault?: boolean);
         // GETTERS
-        readonly axon: AxonClient;
+        readonly axon: AxonClient<Utils>;
         readonly utils: Utils;
         readonly axonUtils: AxonUtils;
         readonly library: LibraryInterface;
@@ -611,7 +611,7 @@ declare module 'axoncore' {
     class EventManager extends Base {
         private _events: {[EventName: string]: Listener[];};
         private _handlers: Collection<AHandler>;
-        constructor(axon: AxonClient, name: string, listeners: Listener[] );
+        constructor(axon: AxonClient<Utils>, name: string, listeners: Listener[] );
         // GETTERS
         readonly HANDLERS: object;
         readonly handlers: Collection<AHandler>;
@@ -643,9 +643,9 @@ declare module 'axoncore' {
     }
 
     export class AxonUtils {
-        private _axon: AxonClient;
-        constructor(axon: AxonClient);
-        readonly axon: AxonClient;
+        private _axon: AxonClient<Utils>;
+        constructor(axon: AxonClient<Utils>);
+        readonly axon: AxonClient<Utils>;
         readonly bot: LibClient;
         readonly template: AxonTemplate;
         readonly logger: ALogger;
@@ -704,7 +704,7 @@ declare module 'axoncore' {
     }
 
     export class Utils {
-        private _axon: AxonClient;
+        private _axon: AxonClient<Utils>;
 
         public userMention: RegExp;
         public roleMention: RegExp;
@@ -718,9 +718,9 @@ declare module 'axoncore' {
         static readonly id: RegExp;
         static readonly hexCode: RegExp;
 
-        constructor(client: AxonClient);
+        constructor(client: AxonClient<Utils>);
 
-        readonly axon: AxonClient;
+        readonly axon: AxonClient<Utils>;
         readonly bot: LibClient;
         readonly library: LibraryInterface;
 
@@ -747,16 +747,16 @@ declare module 'axoncore' {
     interface Ctx { guild: LibGuild; cmd: Command; user: LibUser; }
 
     export class Base {
-        public _axon: AxonClient;
+        public _axon: AxonClient<Utils>;
 
-        public readonly axon: AxonClient;
+        public readonly axon: AxonClient<Utils>;
         public readonly bot: LibClient;
         public readonly logger: ALogger;
         public readonly Resolver: Resolver;
         public readonly axonUtils: AxonUtils;
         public readonly utils: Utils;
         public readonly l: MessageManager;
-        constructor(axonClient: AxonClient);
+        constructor(axonClient: AxonClient<Utils>);
 
         // Methods
         public getModule(module: string): Module | null;
@@ -923,7 +923,7 @@ declare module 'axoncore' {
     interface TypeErrors {
         DAPI: 'DAPI error - failed to retrieve from Discord';
         DB: 'DB error - failed to retrieve from the DB';
-        INTERNAL: 'Internal error - AxonClient/internal methods';
+        INTERNAL: 'Internal error - AxonClient<Utils>/internal methods';
         UNKNOWN: 'Unexpected error';
     }
 
@@ -1005,7 +1005,7 @@ declare module 'axoncore' {
     }
 
     export class Prompt {
-        private _axon: AxonClient;
+        private _axon: AxonClient<Utils>;
         public userID: string;
         public channel: LibTextableChannel;
         private _prompt: string;
@@ -1015,8 +1015,8 @@ declare module 'axoncore' {
         public timedOut: boolean;
         public ended: boolean;
         private _boundEvent(): void;
-        constructor(client: AxonClient, uID: string, channel: LibTextableChannel, defaultOptions?: PromptOptions);
-        readonly axon: AxonClient;
+        constructor(client: AxonClient<Utils>, uID: string, channel: LibTextableChannel, defaultOptions?: PromptOptions);
+        readonly axon: AxonClient<Utils>;
         readonly client: LibClient;
 
         public run(prompt: AxonMSGCont, options?: PromptOptions): Promise<LibMessage>;
@@ -1038,7 +1038,7 @@ declare module 'axoncore' {
 
     export class MessageCollector extends EventEmitter {
         private _options: CollectorOptions;
-        private _axon: AxonClient;
+        private _axon: AxonClient<Utils>;
         private _actualOptions: CollectorOptions;
         private _boundMsgEvent: void;
         private _boundDelEvent: void;
@@ -1046,9 +1046,9 @@ declare module 'axoncore' {
         private _boundCollectEvent: void;
         public messages: Collection<LibMessage>;
 
-        constructor(client: AxonClient, options?: CollectorOptions);
+        constructor(client: AxonClient<Utils>, options?: CollectorOptions);
 
-        readonly axon: AxonClient;
+        readonly axon: AxonClient<Utils>;
         readonly client: LibClient;
 
         public run(channel: LibTextableChannel, options: CollectorOptions): Promise<Collection<LibMessage> >;
@@ -1161,7 +1161,7 @@ declare module 'axoncore' {
         github: string;
     }
 
-    export class AxonClient extends EventEmitter {
+    export class AxonClient<T extends Utils> extends EventEmitter {
         private _configs: AxonConfs;
         public settings: AxonParams;
         public infos: Infos;
@@ -1171,7 +1171,7 @@ declare module 'axoncore' {
 
         private _botClient: LibClient;
         public library: LibraryInterface;
-        public utils: Utils;
+        public utils: T;
         public DBProvider: ADBProvider
 
         public moduleRegistry: ModuleRegistry;
@@ -1234,16 +1234,16 @@ declare module 'axoncore' {
     }
 
     export class DBSelector extends ASelector {
-        static select(axonClient: AxonClient, axonOptions: AxonOptions): InMemoryProvider | JsonProvider | MongoProvider;
+        static select(axonClient: AxonClient<Utils>, axonOptions: AxonOptions): InMemoryProvider | JsonProvider | MongoProvider;
     }
 
     export class MessageManager {
-        private _axon: AxonClient;
+        private _axon: AxonClient<Utils>;
         private _messages: Languages;
         public translation: TranslationManager;
         public parser: MessageParser;
         
-        constructor(axonClient: AxonClient, messages: Languages, baseLang: string)
+        constructor(axonClient: AxonClient<Utils>, messages: Languages, baseLang: string)
 
         public messages: Languages;
         public getMessages(lang?: string): AxonLanguageResponse;
@@ -1314,23 +1314,23 @@ declare module 'axoncore' {
     }
 
     export class ADispatcher {
-        private _axon: AxonClient;
-        constructor(axon: AxonClient);
+        private _axon: AxonClient<Utils>;
+        constructor(axon: AxonClient<Utils>);
         public dispatch(msg: any): any; // Not implemented
     }
 
     export class CommandDispatcher extends ADispatcher {
         mentionFormatter: RegExp;
-        constructor(axon: AxonClient);
+        constructor(axon: AxonClient<Utils>);
         readonly library: LibraryInterface;
         public dispatch(msg: LibMessage): Promise<void>;
     }
 
     export class AHandler {
-        private _axon: AxonClient;
+        private _axon: AxonClient<Utils>;
         public name: string;
         private _listeners: Listener[];
-        constructor(axon: AxonClient, name: string, listeners: Listener[] );
+        constructor(axon: AxonClient<Utils>, name: string, listeners: Listener[] );
         public size: number;
         private _handle(...args: any[] ): Promise<void>;
         public handle(...args: any[] ): string | null;
@@ -1346,13 +1346,13 @@ declare module 'axoncore' {
 
     export class ClientInitialiser {
         static initStaff(staffConfig: { [key: string]: string[];}, logger: ALogger): { [key: string]: string[]; };
-        static initAxon(axon: AxonClient): Promise<void>;
+        static initAxon(axon: AxonClient<Utils>): Promise<void>;
     }
 
     export class CommandLoader extends ALoader {
         private _module: Module;
         constructor(module: Module);
-        readonly axon: AxonClient;
+        readonly axon: AxonClient<Utils>;
         readonly logger: ALogger;
         load(command: Command, parent?: Command): boolean;
         loadAll(commands: { [key: string]: Command; } ): boolean;
@@ -1367,7 +1367,7 @@ declare module 'axoncore' {
     export class ListenerLoader extends ALoader {
         private _module: Module;
         constructor(module: Module);
-        readonly axon: AxonClient;
+        readonly axon: AxonClient<Utils>;
         readonly module: Module;
         readonly logger: ALogger;
         load(listener: Listener): boolean;
@@ -1376,8 +1376,8 @@ declare module 'axoncore' {
     }
 
     export class ModuleLoader extends ALoader {
-        constructor(axonClient: AxonClient);
-        readonly axon: AxonClient;
+        constructor(axonClient: AxonClient<Utils>);
+        readonly axon: AxonClient<Utils>;
         readonly logger: ALogger;
         load(module: Module): boolean;
         loadAll(modules: { [key: string]: Module; } ): boolean;
@@ -1385,10 +1385,10 @@ declare module 'axoncore' {
     }
 
     export class ARegistry<T> {
-        private _axon: AxonClient;
+        private _axon: AxonClient<Utils>;
         public registry: Collection<T>;
-        constructor(axon: AxonClient, base: T);
-        readonly axon: AxonClient;
+        constructor(axon: AxonClient<Utils>, base: T);
+        readonly axon: AxonClient<Utils>;
         readonly size: number;
         has(key: string): boolean;
         get(key: string): T | null;
@@ -1402,7 +1402,7 @@ declare module 'axoncore' {
 
     export class CommandRegistry extends ARegistry<Command> {
         public aliases: Map<string | number, string>;
-        constructor(axon: AxonClient);
+        constructor(axon: AxonClient<Utils>);
         get(cmd: string): Command | null;
         getFull(splitLabel: string[] ): Command | null;
         register(label: string, command: Command): void;
@@ -1411,7 +1411,7 @@ declare module 'axoncore' {
     }
 
     export class GuildConfigCache {
-        private _axon: AxonClient;
+        private _axon: AxonClient<Utils>;
         public guildConfigs: LRUCache<GuildConfig>;
         get(key: string): GuildConfig;
         set(key: string, value: GuildConfig): void;
@@ -1421,13 +1421,13 @@ declare module 'axoncore' {
     }
 
     export class ListenerRegistry extends ARegistry<Listener> {
-        constructor(axon: AxonClient);
+        constructor(axon: AxonClient<Utils>);
         register(label: string, listener: Listener): void;
         unregister(label: string, listener?: Listener): void;
     }
 
     export class ModuleRegistry extends ARegistry<Module> {
-        constructor(axon: AxonClient);
+        constructor(axon: AxonClient<Utils>);
         register(label: string, module: Module): void;
         unregister(label: string, module?: Module): void;
     }
@@ -1652,7 +1652,7 @@ declare module 'axoncore' {
     // ReactionCollector file is empty
 
     export class LibrarySelector extends ASelector {
-        static select(axon: AxonClient, axonOptions: AxonOptions): ErisInterface | DjsInterface;
+        static select(axon: AxonClient<Utils>, axonOptions: AxonOptions): ErisInterface | DjsInterface;
     }
 
     export class Channel {
