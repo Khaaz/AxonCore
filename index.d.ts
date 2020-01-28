@@ -1046,7 +1046,7 @@ declare module 'axoncore' {
         private _boundCollectEvent: void;
         public messages: Collection<LibMessage>;
 
-        constructor(client: AxonClient, options: CollectorOptions);
+        constructor(client: AxonClient, options?: CollectorOptions);
 
         readonly axon: AxonClient;
         readonly client: LibClient;
