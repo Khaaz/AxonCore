@@ -1345,7 +1345,7 @@ declare module 'axoncore' {
     }
 
     export class ClientInitialiser {
-        static initStaff(staffConfig: { [key: string]: { name: string; id: string; }[];}, logger: ALogger): { [key: string]: string[]; };
+        static initStaff(staffConfig: { [key: string]: string[];}, logger: ALogger): { [key: string]: string[]; };
         static initAxon(axon: AxonClient): Promise<void>;
     }
 
