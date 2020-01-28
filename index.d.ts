@@ -1185,7 +1185,7 @@ declare module 'axoncore' {
         public dispatcher: CommandDispatcher;
         private _messageManager: MessageManager;
 
-        public staff: { [key: string]: { name: string; id: string; }[];};
+        public staff: { [key: string]: string[];};
 
         constructor(botClient: LibClient, AxonOptions: AxonOptions, modules: object);
 
