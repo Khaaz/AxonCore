@@ -1036,7 +1036,7 @@ declare module 'axoncore' {
         caseSensitive?: boolean;
     }
 
-    export class MessageCollector {
+    export class MessageCollector extends EventEmitter {
         private _options: CollectorOptions;
         private _axon: AxonClient;
         private _actualOptions: CollectorOptions;
