@@ -6,6 +6,12 @@ import GuildConfig from '../Structures/DataStructure/GuildConfig';
 import JsonManager from './JSON/JsonManager';
 
 /**
+ * @typedef {import('../AxonOptions').default} AxonOptions
+ * @typedef {import('../AxonClient').default} AxonClient
+ * @typedef {String|Boolean|Object.<string, any>|Array<any>|Number|Date} updateDBVal
+ */
+
+/**
  * DB interface to interact with a Json Database.
  *
  * @author Olybear, KhaaZ
@@ -46,7 +52,6 @@ class JsonProvider extends ADBProvider {
      * Use default AxonClient prefix settings when creating the new guild config.
      *
      * @param {String} gID - Guild ID
-     * @param {AxonClient} axonClient
      *
      * @returns {Promise<GuildConfig|null>} Newly created Guild config from the DB
      *
@@ -92,7 +97,7 @@ class JsonProvider extends ADBProvider {
      * Generic method to update Database.
      *
      * @param {String} key - The identifier in the Database
-     * @param {Object|Array|String|Boolean} value - The value to update in the DB
+     * @param {updateDBVal} value - The value to update in the DB
      * @returns {Promise<Boolean>} Whether the request was successful or not
      *
      * @memberof JsonProvider
@@ -110,7 +115,7 @@ class JsonProvider extends ADBProvider {
      *
      * @param {String} key - The identifier in the Database
      * @param {String} gID - The guild ID to update
-     * @param {Object|Array|String|Boolean} value - The value to update in the DB
+     * @param {updateDBVal} value - The value to update in the DB
      * @returns {Promise<Boolean>} Whether the request was successful or not
      *
      * @memberof JsonProvider
@@ -123,7 +128,7 @@ class JsonProvider extends ADBProvider {
     /**
     * Updates the Axon config in the DB with a new Axon config object.
     *
-    * @param {Object} data - the schema object to update
+    * @param {AxonConfig} data - the schema object to update
     * @returns {Promise<AxonConfig|null>} Updated AxonConfig from the DB
     *
     * @memberof JsonProvider
@@ -136,8 +141,8 @@ class JsonProvider extends ADBProvider {
     /**
      * Updates the given guild in the DB with a new schema object.
      *
-     * @param {String} gID - Guid id
-     * @param {Object} data - the schema object to update
+     * @param {String} gID - Guild id
+     * @param {GuildConfig} data - the schema object to update
      * @returns {Promise<GuildConfig|null>} Updated GuildConfig from the DB
      *
      * @memberof JsonProvider
