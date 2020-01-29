@@ -93,7 +93,7 @@ class JsonProvider extends ADBProvider {
      *
      * @param {String} key - The identifier in the Database
      * @param {Object|Array|String|Boolean} value - The value to update in the DB
-     * @returns {Promise<GuildConfig|null>} Whether the request was successfull or not
+     * @returns {Promise<boolean>} Whether the request was successfull or not
      *
      * @memberof JsonProvider
      */
