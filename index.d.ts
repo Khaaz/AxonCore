@@ -125,8 +125,8 @@ declare module 'axoncore' {
         public fetchAxon(): Promise<AxonConfig<T> | null>; // Not Implemented
         public fetchGuild(gID: string): Promise<GuildConfig<T> | null>; // Not Implemented
         
-        public updateAxon(key: string, value: updateDBVal): Promise<AxonConfig<T>>; // Not Implemented
-        public updateGuild(key: string, gID: string, value: updateDBVal): Promise<GuildConfig<T>>; // Not Implemented
+        public updateAxon(key: string, value: updateDBVal): Promise<boolean>; // Not Implemented
+        public updateGuild(key: string, gID: string, value: updateDBVal): Promise<boolean>; // Not Implemented
         public saveAxon(data: AxonConfig<T>): Promise<AxonConfig<T> | null>; // Not Implemented
         public saveGuild(gID: string, data: GuildConfig<T>): Promise<GuildConfig<T> | null>; // Not Implemented
     }
@@ -208,16 +208,16 @@ declare module 'axoncore' {
         saveAxonSchema(axonSchema: AxonConfig<T>): AxonConfig<T>;
         saveGuildSchema(gID: string, guildSchema: GuildConfig<T>): void;
 
-        updateAxon(key: 'id' | 'prefix', value: string): Promise<AxonConfig<T>>;
-        updateAxon(key: 'createdAt' | 'updatedAt', value: Date): Promise<AxonConfig<T>>;
-        updateAxon(key: 'bannedUsers' | 'bannedGuilds', value: string[] ): Promise<AxonConfig<T>>;
+        updateAxon(key: 'id' | 'prefix', value: string): Promise<boolean>;
+        updateAxon(key: 'createdAt' | 'updatedAt', value: Date): Promise<boolean>;
+        updateAxon(key: 'bannedUsers' | 'bannedGuilds', value: string[] ): Promise<boolean>;
 
-        updateGuild(key: 'prefixes' | 'ignoredUsers' | 'ignoredRoles' | 'ignoredChannels' | 'modRoles' | 'modUsers', gID: string, value: string[] ): Promise<GuildConfig<T>>;
-        updateGuild(key: 'createdAt' | 'updatedAt', gID: string, value: Date): Promise<GuildConfig<T>>;
-        updateGuild(key: 'modules', gID: string, value: Module<T>[] ): Promise<GuildConfig<T>>;
-        updateGuild(key: 'commands', gID: string, value: Command<T>[] ): Promise<GuildConfig<T>>;
-        updateGuild(key: 'listeners', gID: string, value: Listener<T>[] ): Promise<GuildConfig<T>>;
-        updateGuild(key: 'modOnly', gID: string, value: boolean): Promise<GuildConfig<T>>;
+        updateGuild(key: 'prefixes' | 'ignoredUsers' | 'ignoredRoles' | 'ignoredChannels' | 'modRoles' | 'modUsers', gID: string, value: string[] ): Promise<boolean>;
+        updateGuild(key: 'createdAt' | 'updatedAt', gID: string, value: Date): Promise<boolean>;
+        updateGuild(key: 'modules', gID: string, value: Module<T>[] ): Promise<boolean>;
+        updateGuild(key: 'commands', gID: string, value: Command<T>[] ): Promise<boolean>;
+        updateGuild(key: 'listeners', gID: string, value: Listener<T>[] ): Promise<boolean>;
+        updateGuild(key: 'modOnly', gID: string, value: boolean): Promise<boolean>;
     }
 
     class JsonProvider<T extends Utils<T>> extends ADBProvider<T> {
@@ -229,8 +229,8 @@ declare module 'axoncore' {
         fetchAxon(): Promise<AxonConfig<T>>;
         fetchGuild(gID: string): Promise<GuildConfig<T>>;
 
-        updateAxon(key: string, value: updateDBVal): Promise<AxonConfig<T>>;
-        updateGuild(key: string, gID: string, value: updateDBVal): Promise<GuildConfig<T>>;
+        updateAxon(key: string, value: updateDBVal): Promise<boolean>;
+        updateGuild(key: string, gID: string, value: updateDBVal): Promise<boolean>;
 
         saveAxon(data: AxonConfig<T>): Promise<AxonConfig<T>|null>;
         saveGuild(gID: string, data: GuildConfig<T>): Promise<GuildConfig<T>|null>;
@@ -272,8 +272,8 @@ declare module 'axoncore' {
         fetchGuild(gID: string): Promise<GuildConfig<T>|null>;
         fetchGuildSchema(gID: string): Promise<Model<GuildSchema> | null>;
 
-        updateAxon(key: string, value: updateDBVal): Promise<AxonConfig<T>>;
-        updateGuild(key: string, gID: string, value: updateDBVal): Promise<GuildConfig<T>>;
+        updateAxon(key: string, value: updateDBVal): Promise<boolean>;
+        updateGuild(key: string, gID: string, value: updateDBVal): Promise<boolean>;
         saveAxon(data: AxonConfig<T>): Promise<AxonConfig<T>|null>;
         saveGuild(gID: string, data: GuildConfig<T>): Promise<GuildConfig<T>|null>;
     }
