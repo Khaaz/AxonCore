@@ -25,8 +25,8 @@
 
 # **AxonCore**
 
->__**Stable, Fast, Powerful**__  
-> The power of a fully featured framework, the simplicity of a predictable API.
+>__**Complete, Stable, Fast, Universal**__  
+> The best all-in-one framework for discord bots. The power of a fully featured framework, the simplicity of a predictable API.
 
 AxonCore is an all in one framework, built to make bot deveopment fast and easy. Focus only on what matters: creating commands for your users. AxonCore handles all the hard and annoying work for you. Take advantage of its stability and robustness to fasten your development.  
 AxonCore is opiniated to enforce good code practice and has all features you could possibly want in a framework, from command and event handlers, to full Database support, more details further down.  
@@ -46,19 +46,19 @@ AxonCore is lib agnostic, which mean you can use it indifferently with [Eris](ht
 
 ## Main Features
 
-- **Client** - Extendable custom client with an advanced permission and options system.
-- **Command Handler** - Easy and fast command creation.
-- **Event Handler** - Setup and react to events.
-- **Library agnostic** - Work with either Eris or Discord.js.
+- **Client** - Extendable custom client with an advanced permission system.
+- **Command Handler** - Easy and fast fully customisable command creation with advanced permission and options system, command throttling and subcommands.
+- **Event Handler** - Setup and react to discord events.
+- **Library agnostic** - Work with any javascript discord library (eris, discordjs, detritusjs).
 - **Modular** - Separate your bot into several modules to entirely encapsulate your application.
 - **Extendable** - Extend anything that you want on top of the framework.
 - **Controlable execution flow** - Control every step from client initialisation to command execution.
 - **Database** - Built in database support (extendable to any database type - SQL, NoSQL).
-- **Advanced error management** - Advanced context management and error tracking for easy bughunting.
-- **Hooks** - Execute functions and actions on events (inhibitor hooks, pre/post-run hooks, finalizers hooks). [TODO]
-- **Translations** - Built-in support for a translation system.
+- **Advanced error management** - Advanced context management and error tracking for easy bug-hunting.
+- **Hooks** - Execute functions and actions on events (inhibitor hooks, pre/post-execute hooks, finalizers hooks). [TODO]
+- **Translations** - Built-in support for translation and message management system.
 - **Logging** - Built-in custom logging.
-- **Statistic** - Easily track command usage, events and errors with custom events emitted by AxonCore.
+- **Tracking** - Easily track and debug command usage, events and errors with custom events emitted by AxonCore.
 
 ## Philosophy
 
@@ -66,7 +66,8 @@ AxonCore was built with specific aims. At it's core, it makes developing a bot f
 
 Primarily designed to work with [Eris](https://github.com/abalabahaha/eris), all the library implementation was abstracted to make the framework library agnostic, which means you can use it with other existing JS libraries, like [Discord.js](https://github.com/discordjs/discord.js), [Eris](https://github.com/abalabahaha/eris) or [Detritusjs](https://github.com/detritusjs/client)).
 
-It was built with an OOP approach and uses predictable abstraction while keeping the power and speed of javascript prototypal nature. Separation of concerns makes sure everything is correctly encapsulated, maintainable and extendable. The framework is fully modular. A bot written with AxonCore is created from a set of modules. Each Module has a set of commands, events, etc... It also comes with a lot of features for all possible usages and needs. AxonCore will handle everything, leaving only one job to you: creating the bot. It does however still allow you to edit and customise anything you want with a full extendable approach and total control over the initialisation and execution flow.
+It was built with an OOP approach and uses predictable abstraction while keeping the power and speed of javascript prototypal nature. Separation of concerns makes sure everything is correctly encapsulated, maintainable and extendable. The framework is fully modular (AxonCore uses Modules that holds set of commands, events, etc...).
+It also comes with a lot of features for all possible usages and needs. AxonCore will handle everything, leaving only one job to you: creating the bot. It does however still allow you to edit and customise anything you want with a full extendable approach and total control over the initialisation and execution flow.
 
 ## Setup
 
@@ -139,23 +140,22 @@ A command should return a Promise. It should either be a [CommandResponse](src/S
 The framework will build a [CommandContext](src/Structures/Command/CommandContext.js) object after each command execution.  
 Three type of events will then be emitted, depending on the scenario:
 
-- The command was executed entirely and successfully. A **commandSuccess** event is emitted by AxonClient.
-- The command was called but something blocked the execution and it was not successfully executed. This can be due to a missing permission, invalid usage, or even a condition in the `command.execute` method (via the `sendError` method for instance). In this case a **commandFailure** event is emitted.
+- The command was executed entirely and successfully. A **commandExecution** event is emitted by AxonClient with `status = true`.
+- The command was called but something blocked the execution and it was not successfully executed. This can be due to a missing permission, invalid usage, or even a condition in the `command.execute` method (via the `sendError` method for instance). In this case a **commandExecution** event is emitted with `status = false`.
 - The command was executed but an error occured in the execution (API error, code error...). A **commandError** event is then emitted.
 
 You can listen to these events according to the following example.
 
 ```js
-axonClient.on('commandSuccess', ({ msg: Message, guildConfig: GuildConfig, context: CommandContext }) => {} );
-axonClient.on('commandFailure', ({ msg: Message, guildConfig: GuildConfig, context: CommandContext }) => {} );
-axonClient.on('commandError', ({ msg: Message, guildConfig: GuildConfig, err: AxonCommandError }) => {} ); // err.context = CommandContext
+axonClient.on('commandExecution', (status: Boolean, commandLabel: String, { msg: Message, command: Command, guildConfig: GuildConfig, context: CommandContext }) => {} );
+axonClient.on('commandError', (commandLabel: String, { msg: Message, command: Command, guildConfig: GuildConfig, err: AxonCommandError }) => {} ); // err.context = CommandContext
 ```
 
-For listener execution, **eventSuccess** and **eventError** events are also emitted by AxonClient.
+For listener execution, **listenerExecution** and **listenerError** events are also emitted by AxonClient.
 
 ```js
-axonClient.on('eventSuccess', { event: String, listener: Listener, guildConfig: GuildConfig } ); // event: the event name, listener: the Listener object
-axonClient.on('eventError', { event: String, listener: Listener, guildConfig: GuildConfig, err: Error } );
+axonClient.on('listenerExecution', (status: Boolean, eventName: String, listenerName: String, { listener: Listener, guildConfig: GuildConfig }) => {} ); // event: the event name, listener: the Listener object
+axonClient.on('listenerError', (eventName: String, listenerName: String, { listener: Listener, guildConfig: GuildConfig, err: Error }) => {} );
 ```
 
 ### Utilities
