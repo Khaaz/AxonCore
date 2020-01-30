@@ -1,5 +1,14 @@
 import TranslationManager from './TranslationManager';
 import MessageParser from './MessageParser';
+/**
+ * @typedef {import('../AxonClient').default} AxonClient
+ * @typedef {Object.<string, AxonLanguageResponse>} Languages
+ * @typedef {{
+ * ERR_BOT_PERM?: String, ERR_CALLER_PERM?: String, ERR_DESTINATION_PERM?: String,
+ * ERR_COOLDOWN?: String, ERR_GENERAL?: String, [key: String]: String|undefined
+ * }} AxonLanguageResponse
+ * @typedef {import('../Langs/TranslationManager').default} TranslationManager
+ */
 
 /**
  * Holds all messages.
@@ -10,7 +19,7 @@ import MessageParser from './MessageParser';
  * @class MessageManager
  *
  * @prop {AxonClient} _axon
- * @prop {Object} _message - All messages (all langs)
+ * @prop {Languages} _message - All messages (all langs)
  * @prop {TranslationManager} translation
  * @prop {MessageParser} parser
  */
@@ -20,7 +29,8 @@ class MessageManager {
      * Dynamically create one method for each message so we can use <this>.MESSAGE_CONSTANT() directly. It will actually call the get method.
      *
      * @param {AxonClient} axonClient
-     * @param {Object} messages
+     * @param {Languages} messages
+     * @param {String} baseLang
      *
      * @memberof MessageManager
      */
@@ -42,7 +52,7 @@ class MessageManager {
      * Returns all messages (all langs)
      *
      * @readonly
-     * @type {Object}
+     * @type {Languages}
      * @memberof MessageManager
      */
     get messages() {
@@ -53,7 +63,7 @@ class MessageManager {
      * All message from the given lang (or default lang)
      *
      * @param {String} lang
-     * @returns {Object} Object with all messages
+     * @returns {AxonLanguageResponse} Object with all messages
      * @memberof MessageManager
      */
     getMessages(lang) {
@@ -76,7 +86,7 @@ class MessageManager {
      * Get the message in the correct lang, parsed to replace {{key}} with the correct argument
      *
      * @param {String} message
-     * @param {Object} args
+     * @param {AxonLanguageResponse} args
      * @param {String} lang
      * @returns {String} The actual message
      * @memberof MessageManager
