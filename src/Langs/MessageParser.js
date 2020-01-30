@@ -1,4 +1,11 @@
 /**
+ * @typedef {{
+ * ERR_BOT_PERM?: String, ERR_CALLER_PERM?: String, ERR_DESTINATION_PERM?: String,
+ * ERR_COOLDOWN?: String, ERR_GENERAL?: String, [key: String]: String|undefined
+ * }} AxonLanguageResponse
+ */
+
+/**
  * Parse a message and replace custom variable with arguments
  *
  * @author KhaaZ
@@ -31,7 +38,7 @@ class MessageParser {
      * Parse the message by replacing the dynamic content.
      *
      * @param {String} message
-     * @param {Object} args - Custom object with all arguments that needs to be inserted in the string
+     * @param {AxonLanguageResponse} args - Custom object with all arguments that needs to be inserted in the string
      * @returns {String} - The Parsed message
      *
      * @memberof MessageParser
@@ -51,7 +58,7 @@ class MessageParser {
      * Same as above but arguments are unnamed and passed as parameters instead of inside one object.
      *
      * @param {String} message
-     * @param {*} args
+     * @param {Array<String>} args
      * @returns {String} - The Parsed message
      *
      * @memberof MessageParser
