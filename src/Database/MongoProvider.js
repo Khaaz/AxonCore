@@ -4,6 +4,13 @@ import AxonConfig from '../Structures/DataStructure/AxonConfig';
 import GuildConfig from '../Structures/DataStructure/GuildConfig';
 
 /**
+ * @typedef {import('../AxonOptions').default} AxonOptions
+ * @typedef {import('./Mongo/AxonSchema').default} AxonSchema
+ * @typedef {import('./Mongo/GuildSchema').default} GuildSchema
+ * @typedef {String|Boolean|Object.<string, any>|Array<any>|Number|Date} updateDBVal
+ */
+
+/**
  * DB interface to interact with a MongoDB Database.
  *
  * @author KhaaZ
@@ -11,14 +18,14 @@ import GuildConfig from '../Structures/DataStructure/GuildConfig';
  * @class MongoProvider
  * @extends ADBProvider
  *
- * @prop {Object} AxonSchema
- * @prop {Object} GuildSchema
+ * @prop {AxonSchema} AxonSchema
+ * @prop {GuildSchema} GuildSchema
  */
 class MongoProvider extends ADBProvider {
     /**
      * Override init method.
      *
-     * @param {AxonOptions}
+     * @param {AxonOptions} axonOptions
      *
      * @memberof MongoProvider
      */
@@ -104,7 +111,7 @@ class MongoProvider extends ADBProvider {
     /**
      * Retrieves the Guild config for the specified guild.
      *
-     * @param {String} gID - guild ID
+     * @param {String} gID - Guild ID
      * @returns {Promise<GuildConfig|null>}
      *
      * @memberof MongoProvider
@@ -121,7 +128,7 @@ class MongoProvider extends ADBProvider {
      * Does not lean and return the actual mongoose Schema.
      * MongoProvider specific method.
      *
-     * @param {String} gID - guild ID
+     * @param {String} gID - Guild ID
      * @returns {Promise<Object|null>} GuildSchema or null
      *
      * @memberof MongoProvider
@@ -141,7 +148,7 @@ class MongoProvider extends ADBProvider {
      * Generic method to update Database.
      *
      * @param {String} key - The identifier in the Database
-     * @param {Object|Array|String|Boolean} value - The value to update in the DB
+     * @param {updateDBVal} value - The value to update in the DB
      * @returns {Promise<Boolean>} Whether the request was successful or not
      *
      * @memberof MongoProvider
@@ -172,7 +179,7 @@ class MongoProvider extends ADBProvider {
      *
      * @param {String} key - The identifier in the Database
      * @param {String} gID - The guild ID to update
-     * @param {Object|Array|String|Boolean} value - The value to update in the DB
+     * @param {updateDBVal} value - The value to update in the DB
      * @returns {Promise<Boolean>} Whether the request was successful or not
      *
      * @memberof MongoProvider
@@ -198,7 +205,7 @@ class MongoProvider extends ADBProvider {
     /**
      * Updates the Axon config in the DB with a new Axon config object.
      *
-     * @param {Object} data - the schema object to update
+     * @param {AxonConfig} data - the schema object to update
      * @returns {Promise<AxonConfig|null>} Updated AxonConfig from the DB
      *
      * @memberof MongoProvider
@@ -223,7 +230,7 @@ class MongoProvider extends ADBProvider {
      * Updates the given guild in the DB with a new schema object.
      *
      * @param {String} gID - Guid id
-     * @param {Object} data - the schema object to update
+     * @param {GuildConfig} data - the schema object to update
      * @returns {Promise<GuildConfig|null>} Updated GuildConfig from the DB
      *
      * @memberof MongoProvider
