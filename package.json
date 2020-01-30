@@ -9,8 +9,7 @@
     "node": ">=8.0.0"
   },
   "dependencies": {
-    "esm": "^3.2.25",
-    "eventemitter3": "^4.0.0"
+    "esm": "^3.2.25"
   },
   "optionalDependencies": {
     "mongoose": "^5.7.7"
