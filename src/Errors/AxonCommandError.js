@@ -1,4 +1,8 @@
 /**
+ * @typedef {import('../Structures/Command/CommandContext').default} CommandContext
+ */
+
+/**
  * Custom error with better formatting and context informations.
  * Used for errors thrown by AxonCore commands.
  *

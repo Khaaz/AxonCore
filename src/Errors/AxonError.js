@@ -1,4 +1,8 @@
 /**
+ * @typedef {import('../Structures/Module').default} Module
+ */
+
+/**
  * Custom error with better formatting + information about where the error is originated from.
  * Used for errors thrown by the client (Object validity / internal). (general error)
  *
