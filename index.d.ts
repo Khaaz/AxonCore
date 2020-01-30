@@ -1265,7 +1265,7 @@ declare module 'axoncore' {
         constructor(manager: MessageManager<T>, lang: string);
 
         readonly messages: Languages;
-        public getMessages(lang: string): Languages;
+        public getMessages(lang: string): AxonLanguageResponse;
         public getMessage(message: string, lang: string): string;
     }
 
