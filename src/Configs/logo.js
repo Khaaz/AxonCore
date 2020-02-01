@@ -1,4 +1,4 @@
-export default () => {
+export default (v) => {
     console.log('  ___                  _____                ');
     console.log(' / _ \\                /  __ \\               ');
     console.log('/ /_\\ __  _____  _ __ | /  \\/ ___  _ __ ___ ');
@@ -6,5 +6,6 @@ export default () => {
     console.log('| | | |>  | (_) | | | | \\__/| (_) | | |  __/');
     console.log('\\_| |_/_/\\_\\___/|_| |_|\\____/\\___/|_|  \\___|');
     console.log(' ');
+    console.log(`VERSION: ${v}`);
     console.log(' ');
 };
