@@ -122,8 +122,6 @@ class CommandDispatcher {
         if (!command) { // command doesn't exist or not globally enabled
             return;
         }
-        /* msg.command doesn't exist. Adding it as reference */
-        msg.command = command; // eslint-disable-line require-atomic-updates
 
         /* Send help for the resolved command */
         if (onHelp) {
