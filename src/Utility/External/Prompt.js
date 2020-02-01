@@ -1,4 +1,4 @@
-import { EventEmitter } from 'eventemitter3';
+import { EventEmitter } from 'events';
 
 /**
  * Create a Prompt, waiting for specific input before resolving with the message Object
