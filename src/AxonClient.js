@@ -25,6 +25,8 @@ import ADBProvider from './Database/ADBProvider'; // default DBProvider
 import AxonUtils from './Utility/AxonUtils';
 import Utils from './Utility/Utils';
 
+import ALogger from './Loggers/ALogger';
+
 // Selector
 import LibrarySelector from './Libraries/index';
 import LoggerSelector from './Loggers/index';
@@ -35,7 +37,6 @@ import logo from './Configs/logo';
 import packageJSON from '../package.json';
 import { EMBED_LIMITS } from './Utility/Constants/DiscordEnums';
 import { WEBHOOK_TYPES, LOG_LEVELS, WEBHOOK_TO_COLOR } from './Utility/Constants/AxonEnums';
-import ALogger from './Loggers/ALogger';
 
 /**
  * AxonCore - Client constructor
@@ -93,7 +94,7 @@ class AxonClient extends EventEmitter {
      */
     constructor(botClient, axonOptions = {}, modules = {} ) {
         super();
-        axonOptions.logo ? axonOptions.logo() : logo();
+        axonOptions.logo ? axonOptions.logo() : logo(packageJSON.version);
 
         this._configs = {
             webhooks: axonOptions.webhooks,
