@@ -6,7 +6,7 @@ import util from 'util';
 import Base from './Structures/Base';
 
 import EventManager from './Structures/Event/EventManager';
-import CommandDispatcher from './Structures/Dispatchers/CommandDispatcher';
+import CommandDispatcher from './Structures/CommandDispatcher';
 // Registries
 import ModuleRegistry from './Structures/Stores/ModuleRegistry';
 import CommandRegistry from './Structures/Stores/CommandRegistry';
