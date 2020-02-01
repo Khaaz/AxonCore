@@ -1,5 +1,3 @@
-import ADispatcher from './ADispatcher';
-
 /**
  * Class responsible to call the correct command and correct execution flow when needed.
  * Dispatch to the correct command on message create event.
@@ -7,22 +5,20 @@ import ADispatcher from './ADispatcher';
  *
  * @author KhaaZ
  *
- * @class Dispatcher
- * @extends Dispatcher
+ * @class CommandDispatcher
  *
  * @prop {RegExp} mentionFormatter
  */
-class CommandDispatcher extends ADispatcher {
+class CommandDispatcher {
     /**
      * Creates an instance of CommandDispatcher.
      *
      * @param {Object<AxonClient>} axon
      *
-     * @memberof Dispatcher
+     * @memberof CommandDispatcher
      */
     constructor(axon) {
-        super(axon);
-
+        this._axon = axon;
         this.mentionFormater = /<@!/g;
     }
 
