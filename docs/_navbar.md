@@ -50,12 +50,12 @@
 * **[Enums](Enums/index.md)**
   * [AxonEnums](Enums/AxonEnums.md)
   * [DiscordEnums](Enums/DiscordEnums.md)
+  * [ErisEnums](Enums/ErisEnums.md)
+  * [DjsEnums](Enums/DjsEnums.md)
   * [AxonCommandError](Errors/AxonCommandError.md)
   * [AxonError](Errors/AxonError.md)
   * [NoAbstractInstanceException](Errors/NoAbstractInstanceException.md)
   * [NotImplementedException](Errors/NotImplementedException.md)
-  * [ErisEnums]()
-  * [DjsEnums]()
 
 * **[Database](Database/index.md)**
   * [AxonConfig](Structures/AxonConfig.md)
