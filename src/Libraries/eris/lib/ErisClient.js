@@ -24,7 +24,9 @@ class ErisClient extends Client {
     }
 
     triggerWebhook(id, token, data) {
-        return this.client.executeWebhook(id, token, data);
+        return this.client
+            ? this.client.executeWebhook(id, token, data)
+            : super.triggerWebhook(id, token, data);
     }
 }
 

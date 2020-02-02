@@ -31,11 +31,13 @@ class DjsClient extends Client {
     }
 
     triggerWebhook(id, token, data) {
-        return this.client.api.webhooks(id, token).post( {
-            data,
-            query: { wait: true },
-            auth: false,
-        } );
+        return this.client
+            ? this.client.api.webhooks(id, token).post( {
+                data,
+                query: { wait: true },
+                auth: false,
+            } )
+            : super.triggerWebhook(id, token, data);
     }
 }
 
