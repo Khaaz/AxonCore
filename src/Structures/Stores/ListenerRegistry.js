@@ -31,6 +31,7 @@ class ListenerRegistry extends ARegistry {
 
         this.add(label, listener);
         this.axon.eventManager.registerListener(listener);
+        this.axon.logger.info(`[EVT] => Registered: [${listener.module.label}(${listener.label})] for ${listener.eventName}`);
     }
 
     /**
@@ -45,12 +46,12 @@ class ListenerRegistry extends ARegistry {
             listener = this.get(label);
         }
         if (!listener) {
-            throw new AxonError(`Unregister: Not registered!`, 'LISTENER-REGISTRY', listener.module.label);
+            throw new AxonError(`Unregister [${label}]: Not registered!`, 'LISTENER-REGISTRY', listener.module.label);
         }
         this.remove(label);
         this.axon.eventManager.unregisterListener(listener.eventName, listener.label);
         
-        this.axon.log('INFO', `LISTENER-REGISTRY - [Module(${listener.module.label})] Listener: ${label} unregistered!`);
+        this.axon.logger.info(`[EVT] => Unregistered: [${listener.module.label}(${label})] for ${listener.eventName}`);
     }
 }
 

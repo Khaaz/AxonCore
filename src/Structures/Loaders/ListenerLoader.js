@@ -71,7 +71,7 @@ class ListenerLoader extends ALoader {
      */
     loadAll(listeners) {
         if (listeners.default) {
-            this.logger.error(`[Module(${this._module.label})] Listeners: No listeners found.`);
+            this.logger.error(`[${this._module.label}] Listeners: No listeners found.`);
             return false;
         }
         for (const Value of Object.values(listeners) ) {

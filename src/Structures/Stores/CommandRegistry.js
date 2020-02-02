@@ -78,6 +78,9 @@ class CommandRegistry extends ARegistry {
                 this.aliases.set(alias, label);
             }
         }
+        this.axon.logger.info(command.hasSubcmd
+            ? `[CMD] => Registered: [${command.module.label}(${command.label})] | SubCommands loaded -${command.subCommands.size}-`
+            : `[CMD] => Registered: [${command.module.label}(${command.label})]`);
     }
 
     /**
@@ -101,7 +104,7 @@ class CommandRegistry extends ARegistry {
         }
         this.remove(label);
 
-        this.axon.log('INFO', `COMMAND-REGISTRY - [Module(${command.module.label})] Command: ${label} unregistered!`);
+        this.axon.logger.info(`[CMD] => Unregistered: [${command.module.label}(${label})]!`);
     }
 
     /**
