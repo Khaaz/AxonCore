@@ -1313,13 +1313,7 @@ declare module 'axoncore' {
         public static testLogger(Logger: ALogger): void;
     }
 
-    export class ADispatcher<T extends Utils<T>> {
-        private _axon: AxonClient<T>;
-        constructor(axon: AxonClient<T>);
-        public dispatch(msg: any): any; // Not implemented
-    }
-
-    export class CommandDispatcher<T extends Utils<T>> extends ADispatcher<T> {
+    export class CommandDispatcher<T extends Utils<T>> {
         mentionFormatter: RegExp;
         constructor(axon: AxonClient<T>);
         readonly library: LibraryInterface;
