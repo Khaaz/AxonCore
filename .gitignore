@@ -74,3 +74,6 @@ typings/
 
 # next.js build output
 .next
+
+# This is temporary
+types/
