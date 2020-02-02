@@ -87,7 +87,7 @@ class CommandLoader extends ALoader {
      */
     loadAll(commands) {
         if (commands.default) {
-            this.logger.error(`[Module(${this._module.label})] Commands: No commands found.`);
+            this.logger.error(`[${this._module.label}] Commands: No commands found.`);
             return false;
         }
         for (const Value of Object.values(commands) ) {
@@ -95,7 +95,7 @@ class CommandLoader extends ALoader {
             try {
                 this.load(command);
             } catch (err) {
-                this.logger(err);
+                this.logger.error(err);
             }
         }
 
@@ -135,7 +135,6 @@ class CommandLoader extends ALoader {
      */
     unload(label) {
         this.axon.commandRegistry.unregister(label);
-        this.logger.info(`Module: ${module.label} unregistered!`);
         return true;
     }
 
@@ -156,9 +155,6 @@ class CommandLoader extends ALoader {
         delete command.subcmds;
        
         this.axon.commandRegistry.register(command.label, command); // add the command to the Map of commands.
-        this.logger.info(command.hasSubcmd
-            ? `[CMD] => Initialised! | SubCommands loaded -${command.subCommands.size}- | *${command.label}*`
-            : `[CMD] => Initialised! | *${command.label}*`);
     }
 
     /**
@@ -180,9 +176,6 @@ class CommandLoader extends ALoader {
         command.parentCommand = parent;
 
         parent.subCommands.register(command.label, command);
-        this.logger.info(command.hasSubcmd
-            ? `[SUB] => Initialised! | SubCommands loaded -${command.subCommands.size}- | ${command.label}`
-            : `[SUB] => Initialised! | ${command.label}`);
     }
 
     /**
@@ -206,8 +199,6 @@ class CommandLoader extends ALoader {
         } else {
             this.axon.commandRegistry.unregister(command.label, command);
         }
-
-        this.logger.info(`[Module(${this._module.label})] Command: ${fullLabel} unregistered!`);
         return true;
     }
 

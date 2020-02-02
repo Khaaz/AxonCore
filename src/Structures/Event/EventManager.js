@@ -60,6 +60,7 @@ class EventManager extends Base {
      *
      * @param {String} eventName - The library event name
      * @returns {Array} Array of the functions bound to the event
+     *
      * @memberof EventManager
      */
     getListeners(eventName) {
@@ -125,7 +126,6 @@ class EventManager extends Base {
         }
         // Add Listener
         this._events[listener.eventName].push(listener);
-        this.logger.info(`[EVT] => Registered ${listener.label} for ${listener.eventName}`);
         return this._events[listener.eventName];
     }
 
