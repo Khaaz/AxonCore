@@ -155,6 +155,10 @@ class AxonClient extends EventEmitter {
             this.DBProvider = DBSelector.select(axonOptions, this);
         }
 
+        if (this.settings.debugMode) {
+            this.on('debug', (m) => this.logger.verbose(m) );
+        }
+
         /* Structures */
         this.moduleRegistry = new ModuleRegistry(this);
         this.commandRegistry = new CommandRegistry(this);
@@ -487,6 +491,13 @@ class AxonClient extends EventEmitter {
     }
 
     // **** EXECUTOR **** //
+    /**
+     * Fired when a debug message need to be sent
+     * @event AxonClient#debug
+     * @prop {String} debugMessage - debug message with information about the situation
+     * @memberof AxonClient
+     */
+
     /**
      * Fired when a command is successfully ran
      * @event AxonClient#commandExecution
