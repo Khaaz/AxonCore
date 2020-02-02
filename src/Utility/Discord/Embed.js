@@ -50,7 +50,6 @@ class Embed {
      * @param {String} [data.footer.icon_url]
      * @param {String} [data.timetamp]
      * @param {Object} [data.file]
-     *
      * @memberof Embed
      */
     constructor(data = {} ) {
@@ -83,7 +82,6 @@ class Embed {
      * @param {String} title - The title
      * @returns {Embed} This embed
      * @example Embed.setTitle('My New Embed');
-     *
      * @memberof Embed
      */
     setTitle(title) {
@@ -101,7 +99,6 @@ class Embed {
      * @param {String} description -The description
      * @returns {Embed} This embed
      * @example Embed.setDescription('Hi, this is my description!!!');
-     *
      * @memberof Embed
      */
     setDescription(description) {
@@ -117,7 +114,6 @@ class Embed {
      * @description Sets the URL of this embed.
      * @param {String} url The URL
      * @returns {Embed} This embed
-     *
      * @memberof Embed
      */
     setURL(url) {
@@ -131,7 +127,6 @@ class Embed {
      * @param {Number} color - The color of the embed
      * @returns {Embed} This embed
      * @example Embed.setColor(0xFFFFF);
-     *
      * @memberof Embed
      */
     setColor(color) {
@@ -147,7 +142,6 @@ class Embed {
      * @param {String} url - The URL of the author
      * @returns {Embed} This embed
      * @example Embed.setAuthor('KhaaZ', 'khaaz.png');
-     *
      * @memberof Embed
      */
     setAuthor(name, icon, url) {
@@ -166,7 +160,6 @@ class Embed {
      *
      * @param {Date} [timestamp=new Date()] - The timestamp
      * @returns {Embed} This embed
-     *
      * @memberof Embed
      */
     setTimestamp(timestamp = new Date() ) {
@@ -182,7 +175,6 @@ class Embed {
      * @param {Boolean} [inline=false] - Set the field to display inline
      * @returns {Embed} This embed
      * @example Embed.addField('My Field', 'This is a new field!', true);
-     *
      * @memberof Embed
      */
     addField(name, value, inline = false) {
@@ -214,7 +206,6 @@ class Embed {
      *
      * @param {String} url - The URL of the thumbnail
      * @returns {Embed} This embed
-     *
      * @memberof Embed
      */
     setThumbnail(url) {
@@ -228,7 +219,6 @@ class Embed {
      * @param {String} url - The URL of the image
      * @returns {Embed} This embed
      * @example Embed.setImage('myImageUrl.png');
-     *
      * @memberof Embed
      */
     setImage(url) {
@@ -243,7 +233,6 @@ class Embed {
      * @param {String} [icon] - The icon URL of the footer
      * @returns {Embed} This embed
      * @example Embed.setFooter('My Footer', 'footer.png');
-     *
      * @memberof Embed
      */
     setFooter(text, icon) {
@@ -262,7 +251,6 @@ class Embed {
      *
      * @param {string} file Local path or URL to the file to attach, or valid FileOptions for a file to attach
      * @returns {Embed} This embed
-     *
      * @memberof Embed
      */
     attachFile(file) {

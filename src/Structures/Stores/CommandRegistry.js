@@ -25,7 +25,6 @@ class CommandRegistry extends ARegistry {
      *
      * @param {String} cmd - The command label
      * @returns {Command} The found command
-     *
      * @memberof CommandRegistry
      */
     get(cmd) {
@@ -41,7 +40,6 @@ class CommandRegistry extends ARegistry {
      *
      * @param {Array<String>} splitLabel - Full command (or subcommand) label
      * @returns {Command|null}
-     *
      * @memberof CommandRegistry
      */
     getFull(splitLabel) {
@@ -62,7 +60,6 @@ class CommandRegistry extends ARegistry {
      *
      * @param {String} label - The command label
      * @param {Command} command - The command object
-     *
      * @memberof CommandRegistry
      */
     register(label, command) {
@@ -115,7 +112,6 @@ class CommandRegistry extends ARegistry {
      * @param {Array<String>} args - Array of arguments
      * @param {GuildConfig} [guildConfig=null] - GuildConfig
      * @returns {Command|null} The command object or null if the command doesn't exist or is not enabled
-     *
      * @memberof CommandRegistry
      */
     resolve(label, args, guildConfig = null) {

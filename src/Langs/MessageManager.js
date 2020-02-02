@@ -21,7 +21,6 @@ class MessageManager {
      *
      * @param {AxonClient} axonClient
      * @param {Object} messages
-     *
      * @memberof MessageManager
      */
     constructor(axonClient, messages, baseLang) {

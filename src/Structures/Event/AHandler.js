@@ -21,7 +21,6 @@ class AHandler {
      * @param {AxonClient} axon
      * @param {String} name
      * @param {Array<Listener>} listeners
-     *
      * @memberof AHandler
      */
     constructor(axon, name, listeners) {
@@ -76,7 +75,6 @@ class AHandler {
      *
      * @param {Object} args - All parameters for this event
      * @returns {String|null} The guild ID
-     *
      * @memberof AHandler
      */
     handle(...args) { // eslint-disable-line no-unused-vars

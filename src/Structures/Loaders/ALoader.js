@@ -18,7 +18,6 @@ class ALoader {
      * Creates an instance of ALoader.
      *
      * @param {Object} loadIn
-     *
      * @memberof ALoader
      */
     constructor(loadIn) {
@@ -32,7 +31,6 @@ class ALoader {
      * Loads the object given in parameter.
      *
      * @param {Object} toLoad - The Object to load
-     *
      * @memberof ALoader
      */
     load(toLoad) {
@@ -43,7 +41,6 @@ class ALoader {
      * Loads all objects given in parameters.
      *
      * @param {Object|Array} toLoad - All Objects to load
-     *
      * @memberof ALoader
      */
     // eslint-disable-next-line no-unused-vars
@@ -55,7 +52,6 @@ class ALoader {
      * Unload the object given in parameter.
      *
      * @param {String} toUnload
-     *
      * @memberof ALoader
      */
     unload(toUnload) {

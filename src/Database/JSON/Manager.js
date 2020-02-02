@@ -21,7 +21,6 @@ class Manager {
      * Creates an instance of Manager.
      *
      * @param {String} basePath - The path / location where to create and use the database
-     *
      * @memberof Manager
      */
     constructor(basePath) {
@@ -106,7 +105,6 @@ class Manager {
      *
      * @param {String} path
      * @returns {Promise<String|null>}
-     *
      * @memberof Manager
      */
     async readFile(path) {
@@ -125,7 +123,6 @@ class Manager {
      *
      * @param {String} path
      * @returns {Promise<String|null>}
-     *
      * @memberof Manager
      */
     async writeFile(path, content = '{}') {
@@ -150,7 +147,6 @@ class Manager {
     /**
      * Create a file and schema for Axon global file.
      * @returns {Promise<Object>} The newly created Schema || null
-     *
      * @memberof Manager
      */
     async createAxonSchema(defaultPrefix) {
@@ -173,7 +169,6 @@ class Manager {
      * @param {String} gID
      * @param {Array} prefixes
      * @returns {Promise<Object>} The newly created Schema || null
-     *
      * @memberof Manager
      */
     async createGuildSchema(prefixes, gID) {
@@ -197,7 +192,6 @@ class Manager {
      * Fetch the axon schema
      *
      * @returns {Promise<Object>} AxonSchema || null
-     *
      * @memberof Manager
      */
     async fetchAxonSchema() {
@@ -213,7 +207,6 @@ class Manager {
      *
      * @param {String} gID
      * @returns {Promise<Object>} GuildSchema || null
-     *
      * @memberof Manager
      */
     async fetchGuildSchema(gID) {
@@ -233,7 +226,6 @@ class Manager {
      * @param {String} key
      * @param {Object} value - The value to update for the given key (can be anything)
      * @returns {Promise<Object>} GuildSchema || null
-     *
      * @memberof Manager
      */
     updateGuildKey(gID, key, value) {
@@ -253,7 +245,6 @@ class Manager {
      * @param {String} key
      * @param {Object} value - The value to update for the given key (can be anything)
      * @returns {Promise<Object>} AxonSchema || null
-     *
      * @memberof Manager
      */
     updateAxonKey(key, value) {
@@ -274,7 +265,6 @@ class Manager {
      *
      * @param {Object} schema
      * @returns {Promise<Object>} AxonSchema || null
-     *
      * @memberof Manager
      */
     async writeAxonSchema(schema) {
@@ -293,7 +283,6 @@ class Manager {
      * @param {String} gID
      * @param {Object} schema
      * @returns {Promise<Object>} GuildSchema || null
-     *
      * @memberof Manager
      */
     async writeGuildSchema(gID, schema) {

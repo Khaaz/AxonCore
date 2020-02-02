@@ -21,7 +21,6 @@ class ListenerRegistry extends ARegistry {
      *
      * @param {String} label - The listener label
      * @param {Listener} listener - The listener object
-     *
      * @memberof ListenerRegistry
      */
     register(label, listener) {

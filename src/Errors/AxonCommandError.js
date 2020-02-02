@@ -15,7 +15,6 @@ class AxonCommandError extends Error {
      *
      * @param {CommandContext} commandContext - The command context that contains all information about the command execution
      * @param {Error} err - Discord Error (given by library/discord/other)
-     *
      * @memberof AxonCommandError
      */
     constructor(commandContext, err) {

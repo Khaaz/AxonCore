@@ -13,7 +13,6 @@ class CommandCooldown {
      * Creates an instance of CommandCooldown.
      *
      * @param {Command} command
-     *
      * @memberof CommandCooldown
      */
     constructor(command) {
@@ -38,7 +37,6 @@ class CommandCooldown {
      *
      * @param {String} userID - The userID
      * @returns {Array[Number,Boolean]} Empty array if no cooldowns / Array with the time left and whether we shouldsend a cooldown message or not
-     *
      * @memberof CommandCooldown
      */
     shouldCooldown(userID) {

@@ -66,7 +66,6 @@ class Validator {
      * @static
      * @param {Command} command
      * @returns {Boolean} Whether the command is considered valid or not
-     *
      * @memberof Validator
      */
     static validCommand(command) {
@@ -155,7 +154,6 @@ class Validator {
      * @static
      * @param {Object|String} content
      * @returns {Boolean} Returns true if the message is valid, otherwise throw an AxonError
-     *
      * @memberof Validator
      */
     static checkMessageValidity(content) {

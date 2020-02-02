@@ -18,7 +18,6 @@ class Base {
      * Creates an instance of Base.
      *
      * @param {AxonClient} axonClient
-     *
      * @memberof Base
      */
     constructor(axonClient) {
@@ -136,7 +135,6 @@ class Base {
      * @param {String} ctx.cmd
      * @param {Object|String} ctx.user
      * @param {Boolean} [execWebhook=true] - Whether to execute the webhook
-     *
      * @memberof AxonClient
      */
     log(level, content, ctx = null, execWebhook = true) {
@@ -155,7 +153,6 @@ class Base {
      * @param {Number} [options.delete=false] - Whether to deletethe message or not
      * @param {Boolean} [options.delay=null] - Delay after which the message will be deleted
      * @returns {Promise<Message?>} Message Object
-     *
      * @memberof Base
      */
     sendDM(user, content) {
@@ -174,7 +171,6 @@ class Base {
      * @param {Number} [options.delete=false] - Whether to deletethe message or not
      * @param {Boolean} [options.delay=null] - Delay after which the message will be deleted
      * @returns {Promise<Message?>} Message Object
-     *
      * @memberof Base
      */
     sendMessage(channel, content, options = {} ) {
@@ -188,7 +184,6 @@ class Base {
      * @param {Message} message - The message object to edit
      * @param {Object/String} content - Object (embed) or String
      * @returns {Promise<Message?>} Message Object
-     *
      * @memberof Base
      */
     editMessage(message, content) {
@@ -208,7 +203,6 @@ class Base {
      * @param {Number} [options.delay=null] - Delay after which the message will be deleted
      * @param {Boolean} [options.triggerCooldown=true] - Whether the command shoudl trigger cooldown or not
      * @returns {Promise<CommandResponse>} The successful Command Response
-     *
      * @memberof Base
      */
     async sendSuccess(channel, content, options = {} ) {
@@ -235,7 +229,6 @@ class Base {
      * @param {Boolean} [options.triggerCooldown=false] - Whether the command shoudl trigger cooldown or not
      * @param {Object|String} [options.error=null] - Whether the command shoudl trigger cooldown or not
      * @returns {Promise<CommandResponse>} The non successful Command Response
-     *
      * @memberof Base
      */
     async sendError(channel, content, options = {} ) {
@@ -257,7 +250,6 @@ class Base {
      * @param {String} type - Type of error (api, db, internal)
      * @param {String} errMsg - Optional error message
      * @returns {Promise<CommandResponse>} The non successful Command Response
-     *
      * @memberof Base
      */
     error(msg, err, type, errMsg) {
@@ -280,7 +272,6 @@ class Base {
      * Custom toString method.
      *
      * @returns {String}
-     *
      * @memberof Base
      */
     toString() {
@@ -292,7 +283,6 @@ class Base {
      * (Based of Eris')
      *
      * @returns {Object} JSON-like Object
-     *
      * @memberof Base
      */
     toJSON() {
@@ -321,7 +311,6 @@ class Base {
      * (Based of Eris')
      *
      * @returns {Object} Object to inspect without prefixed property and undefined property
-     *
      * @memberof Base
      */
     [util.inspect.custom]() {

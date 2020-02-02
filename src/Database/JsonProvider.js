@@ -20,7 +20,6 @@ class JsonProvider extends ADBProvider {
      * Override init method.
      *
      * @param {AxonOptions}
-     *
      * @memberof JsonProvider
      */
     init(axonOptions = {} ) { // eslint-disable-next-line no-unused-vars
@@ -33,7 +32,6 @@ class JsonProvider extends ADBProvider {
      * Initialises a default Axon config.
      *
      * @returns {Promise<AxonConfig>} Newly created Axon config from the DB
-     *
      * @memberof JsonProvider
      */
     async initAxon() {
@@ -49,7 +47,6 @@ class JsonProvider extends ADBProvider {
      * @param {AxonClient} axonClient
      *
      * @returns {Promise<GuildConfig|null>} Newly created Guild config from the DB
-     *
      * @memberof JsonProvider
      */
     async initGuild(gID) {
@@ -63,7 +60,6 @@ class JsonProvider extends ADBProvider {
      * Retrieves the axon config from the DB
      *
      * @returns {Promise<AxonConfig|null>} AxonSchema Object or null
-     *
      * @memberof JsonProvider
      */
     async fetchAxon() {
@@ -76,7 +72,6 @@ class JsonProvider extends ADBProvider {
      *
      * @param {String} gID - guild ID
      * @returns {Promise<GuildConfig|null>}
-     *
      * @memberof JsonProvider
      */
     async fetchGuild(gID) {
@@ -94,7 +89,6 @@ class JsonProvider extends ADBProvider {
      * @param {String} key - The identifier in the Database
      * @param {Object|Array|String|Boolean} value - The value to update in the DB
      * @returns {Promise<Boolean>} Whether the request was successfull or not
-     *
      * @memberof JsonProvider
      */
     async updateAxon(key, value) {
@@ -112,7 +106,6 @@ class JsonProvider extends ADBProvider {
      * @param {String} gID - The guild ID to update
      * @param {Object|Array|String|Boolean} value - The value to update in the DB
      * @returns {Promise<Boolean>} Whether the request was successfull or not
-     *
      * @memberof JsonProvider
      */
     async updateGuild(key, gID, value) {
@@ -139,7 +132,6 @@ class JsonProvider extends ADBProvider {
      * @param {String} gID - Guid id
      * @param {Object} data - the schema object to update
      * @returns {Promise<GuildConfig|null>} Updated GuildConfig from the DB
-     *
      * @memberof JsonProvider
      */
     async saveGuild(gID, data) {

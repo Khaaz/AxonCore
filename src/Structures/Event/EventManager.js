@@ -20,7 +20,6 @@ class EventManager extends Base {
      * Creates an EventManager instance.
      *
      * @param {AxonClient} axon
-     *
      * @memberof EventManager
      */
     constructor(axon) {
@@ -60,7 +59,6 @@ class EventManager extends Base {
      *
      * @param {String} eventName - The library event name
      * @returns {Array} Array of the functions bound to the event
-     *
      * @memberof EventManager
      */
     getListeners(eventName) {
@@ -75,7 +73,6 @@ class EventManager extends Base {
      * Create and register a handler for each event.
      * Called by AxonClient in start method.
      * If the bot is ready, also call bindHandlers()
-     *
      * @memberof EventManager
      */
     bindListeners() {
@@ -91,7 +88,6 @@ class EventManager extends Base {
 
     /**
      * Bind every handler to the correct Discord event and start listening to this event.
-     *
      * @memberof EventManager
      */
     bindHandlers() {
@@ -110,7 +106,6 @@ class EventManager extends Base {
      * Called by ModuleLoader when registering an event.
      *
      * @param {Listener} listener - The Listener Object
-     *
      * @memberof EventManager
      */
     registerListener(listener) {
@@ -136,7 +131,6 @@ class EventManager extends Base {
      *
      * @param {String} event - The Discord event name
      * @returns {AHandler} The new Handler created
-     *
      * @memberof EventManager
      */
     registerHandler(event) {
@@ -165,7 +159,6 @@ class EventManager extends Base {
      *
      * @param {String} event - The Discord event name to register
      * @returns {AHandler} The Handler Object
-     *
      * @memberof EventManager
      */
     registerEvent(event) {
