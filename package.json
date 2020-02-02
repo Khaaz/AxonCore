@@ -9,8 +9,7 @@
     "node": ">=8.0.0"
   },
   "dependencies": {
-    "esm": "^3.2.25",
-    "eventemitter3": "^4.0.0"
+    "esm": "^3.2.25"
   },
   "optionalDependencies": {
     "mongoose": "^5.7.7"
@@ -36,7 +35,7 @@
   "scripts": {
     "lint": "yarn run lint:js && yarn run lint:ts",
     "lint:js": "eslint src examples *.js",
-    "lint:ts": "eslint index.d.ts",
+    "lint:ts": "eslint index.d.ts types *.ts",
     "test": "yarn run lint",
     "test:push": "eslint src examples *.js",
     "test:publish": "eslint src *.js",

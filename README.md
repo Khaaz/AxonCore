@@ -135,10 +135,10 @@ TODO
 
 ### Execution context, error management, usage tracking
 
-A command should return a Promise. It should either be a [CommandResponse](src/Structures/Command/CommandResponse.js) instance or the promise returned by [`sendMessage`](a), [`sendSuccess`](a), [`sendError`](a).  
+A Command always should returns a Promise wrapping a [CommandResponse](src/Structures/Command/CommandResponse.js). Either explicitely by creating a CommandResponse and wrapping it in a Promise (`CommandResponse.resolve()`), or implicitely via [`sendMessage`](a), [`sendSuccess`](a) or [`sendError`](a). CommandResponse in these last cases is filled with appropriate information regarding command execution.  
 
-The framework will build a [CommandContext](src/Structures/Command/CommandContext.js) object after each command execution.  
-Three type of events will then be emitted, depending on the scenario:
+The framework will then build a [CommandContext](src/Structures/Command/CommandContext.js) object after each command execution.  
+Two types of events will then be emitted, depending on the scenario:
 
 - The command was executed entirely and successfully. A **commandExecution** event is emitted by AxonClient with `status = true`.
 - The command was called but something blocked the execution and it was not successfully executed. This can be due to a missing permission, invalid usage, or even a condition in the `command.execute` method (via the `sendError` method for instance). In this case a **commandExecution** event is emitted with `status = false`.

@@ -11,8 +11,8 @@ class ErisChannel extends Channel {
     
     sendMessage(channel, content) {
         if (typeof content === 'object') {
-            const file  = content.file || {};
-            return channel.send(content, file);
+            const file = content.file || null;
+            return channel.createMessage(content, file);
         }
         return channel.createMessage(content);
     }

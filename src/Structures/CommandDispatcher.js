@@ -1,5 +1,3 @@
-import ADispatcher from './ADispatcher';
-
 /**
  * Class responsible to call the correct command and correct execution flow when needed.
  * Dispatch to the correct command on message create event.
@@ -7,23 +5,22 @@ import ADispatcher from './ADispatcher';
  *
  * @author KhaaZ
  *
- * @class Dispatcher
- * @extends Dispatcher
+ * @class CommandDispatcher
  *
  * @prop {RegExp} mentionFormatter
  */
-class CommandDispatcher extends ADispatcher {
+class CommandDispatcher {
     /**
      * Creates an instance of CommandDispatcher.
      *
      * @param {Object<AxonClient>} axon
      *
-     * @memberof Dispatcher
+     * @memberof CommandDispatcher
      */
     constructor(axon) {
-        super(axon);
-
         this.mentionFormatter = /<@!/g;
+        this._axon = axon;
+        this.mentionFormater = /<@!/g;
     }
 
     /**
@@ -126,8 +123,6 @@ class CommandDispatcher extends ADispatcher {
         if (!command) { // command doesn't exist or not globally enabled
             return;
         }
-        /* msg.command doesn't exist. Adding it as reference */
-        msg.command = command; // eslint-disable-line require-atomic-updates
 
         /* Send help for the resolved command */
         if (onHelp) {
