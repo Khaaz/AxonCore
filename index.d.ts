@@ -46,22 +46,22 @@ declare module 'axoncore' {
         public apply(key: string, func: 'toObject'): Collection<T>;
     }
 
-    export class AxonError<T extends Utils<T>> extends Error {
+    export class AxonError extends Error {
         public module: string;
         public subMoule: string | null;
-        constructor(message: string, module: Module<T> | string, subModule?: string);
+        constructor(message: string, module: Module | string, subModule?: string);
         readonly short: string;
         readonly message: string;
         readonly name: string;
     }
 
-    export class AxonCommandError<T extends Utils<T>> extends Error {
-        public context: CommandContext<T>;
+    export class AxonCommandError extends Error {
+        public context: CommandContext;
         readonly short: string;
         public message: string;
         public stack: string;
 
-        constructor(commandContext: CommandContext<T>, err: Error);
+        constructor(commandContext: CommandContext, err: Error);
         readonly name: string;
     }
 
@@ -82,53 +82,53 @@ declare module 'axoncore' {
         description: string;
         category?: string;
     }
-    interface ModuleData<T extends Utils<T>> {
+    interface ModuleData {
         label?: string;
         enabled?: boolean;
         serverBypass?: boolean;
         Infos?: ModuleInfo;
-        options?: CommandOptions<T>;
-        permissions?: CommandPermissions<T>;
+        options?: CommandOptions;
+        permissions?: CommandPermissions;
     }
 
-    export class Module<T extends Utils<T>> extends Base<T> {
+    export class Module extends Base {
         public label: string;
         public enabled: boolean;
         public serverBypass: boolean;
         
-        public options: CommandOptions<T>;
-        public permissions: CommandPermissions<T>;
+        public options: CommandOptions;
+        public permissions: CommandPermissions;
 
         public infos: ModuleInfo;
 
-        public commandLoader: CommandLoader<T>;
-        public listenerLoader: ListenerLoader<T>;
+        public commandLoader: CommandLoader;
+        public listenerLoader: ListenerLoader;
 
-        constructor(client: AxonClient<T>, data?: ModuleData<T>);
+        constructor(client: AxonClient, data?: ModuleData);
 
-        public commands: Collection<Command<T>>;
-        public listeners?: Collection<Listener<T>>;
+        public commands: Collection<Command>;
+        public listeners?: Collection<Listener>;
 
-        public init(): { commands?: {[key: string]: new (...args: any[] ) => Command<T>;}; listeners?: {[key: string]: new (...args: any[] ) => Listener<T>;}; };
+        public init(): { commands?: {[key: string]: new (...args: any[] ) => Command;}; listeners?: {[key: string]: new (...args: any[] ) => Listener;}; };
         private _init(): void;
     }
 
     type updateDBVal = object|any[]|string|boolean|number|Date;
 
-    export abstract class ADBProvider<T extends Utils<T>> {
-        public axon: AxonClient<T>;
-        constructor(axonClient: AxonClient<T>);
-        public init(AxonOptions: AxonOptions<T>): void; // Not Implemented
-        public initAxon(): Promise<AxonConfig<T>>; // Not Implemented
-        public initGuild(gID: string): Promise<GuildConfig<T>>; // Not Implemented
+    export abstract class ADBProvider {
+        public axon: AxonClient;
+        constructor(axonClient: AxonClient);
+        public init(AxonOptions: AxonOptions): void; // Not Implemented
+        public initAxon(): Promise<AxonConfig>; // Not Implemented
+        public initGuild(gID: string): Promise<GuildConfig>; // Not Implemented
         
-        public fetchAxon(): Promise<AxonConfig<T> | null>; // Not Implemented
-        public fetchGuild(gID: string): Promise<GuildConfig<T> | null>; // Not Implemented
+        public fetchAxon(): Promise<AxonConfig | null>; // Not Implemented
+        public fetchGuild(gID: string): Promise<GuildConfig | null>; // Not Implemented
         
         public updateAxon(key: string, value: updateDBVal): Promise<boolean>; // Not Implemented
         public updateGuild(key: string, gID: string, value: updateDBVal): Promise<boolean>; // Not Implemented
-        public saveAxon(data: AxonConfig<T>): Promise<AxonConfig<T> | null>; // Not Implemented
-        public saveGuild(gID: string, data: GuildConfig<T>): Promise<GuildConfig<T> | null>; // Not Implemented
+        public saveAxon(data: AxonConfig): Promise<AxonConfig | null>; // Not Implemented
+        public saveGuild(gID: string, data: GuildConfig): Promise<GuildConfig | null>; // Not Implemented
     }
 
     interface AxonJSON {
@@ -190,23 +190,23 @@ declare module 'axoncore' {
         public writeGuildSchema(gID: string, schema: object): Promise<GuildJSON>;
     }
 
-    class InMemoryProvider<T extends Utils<T>> extends ADBProvider<T> {
-        public fetchAxon(): Promise<AxonConfig<T>>;
-        public fetchGuild(gID: string): Promise<GuildConfig<T>>;
+    class InMemoryProvider extends ADBProvider {
+        public fetchAxon(): Promise<AxonConfig>;
+        public fetchGuild(gID: string): Promise<GuildConfig>;
 
-        initAxon(): Promise<AxonConfig<T>>;
-        initGuild(gID: string): Promise<GuildConfig<T>>;
+        initAxon(): Promise<AxonConfig>;
+        initGuild(gID: string): Promise<GuildConfig>;
 
-        updateBlacklistUser(blacklistedUsers: string[] ): Promise<AxonConfig<T>>;
-        updateBlacklistGuild(blacklistedGuilds: string[] ): Promise<AxonConfig<T>>;
-        updateGuildPrefix(gID: string, prefixArr: string[] ): Promise<GuildConfig<T>>;
-        updateModule(gID: string, modulesArr: string[] ): Promise<GuildConfig<T>>;
-        updateCommand(gID: string, commandArr: string[] ): Promise<GuildConfig<T>>;
-        updateEvent(gID: string, eventArr: string[] ): Promise<GuildConfig<T>>;
+        updateBlacklistUser(blacklistedUsers: string[] ): Promise<AxonConfig>;
+        updateBlacklistGuild(blacklistedGuilds: string[] ): Promise<AxonConfig>;
+        updateGuildPrefix(gID: string, prefixArr: string[] ): Promise<GuildConfig>;
+        updateModule(gID: string, modulesArr: string[] ): Promise<GuildConfig>;
+        updateCommand(gID: string, commandArr: string[] ): Promise<GuildConfig>;
+        updateEvent(gID: string, eventArr: string[] ): Promise<GuildConfig>;
         
         // Ask Null about inconsistency
-        saveAxonSchema(axonSchema: AxonConfig<T>): AxonConfig<T>;
-        saveGuildSchema(gID: string, guildSchema: GuildConfig<T>): void;
+        saveAxonSchema(axonSchema: AxonConfig): AxonConfig;
+        saveGuildSchema(gID: string, guildSchema: GuildConfig): void;
 
         updateAxon(key: 'id' | 'prefix', value: string): Promise<boolean>;
         updateAxon(key: 'createdAt' | 'updatedAt', value: Date): Promise<boolean>;
@@ -214,26 +214,26 @@ declare module 'axoncore' {
 
         updateGuild(key: 'prefixes' | 'ignoredUsers' | 'ignoredRoles' | 'ignoredChannels' | 'modRoles' | 'modUsers', gID: string, value: string[] ): Promise<boolean>;
         updateGuild(key: 'createdAt' | 'updatedAt', gID: string, value: Date): Promise<boolean>;
-        updateGuild(key: 'modules', gID: string, value: Module<T>[] ): Promise<boolean>;
-        updateGuild(key: 'commands', gID: string, value: Command<T>[] ): Promise<boolean>;
-        updateGuild(key: 'listeners', gID: string, value: Listener<T>[] ): Promise<boolean>;
+        updateGuild(key: 'modules', gID: string, value: Module[] ): Promise<boolean>;
+        updateGuild(key: 'commands', gID: string, value: Command[] ): Promise<boolean>;
+        updateGuild(key: 'listeners', gID: string, value: Listener[] ): Promise<boolean>;
         updateGuild(key: 'modOnly', gID: string, value: boolean): Promise<boolean>;
     }
 
-    class JsonProvider<T extends Utils<T>> extends ADBProvider<T> {
+    class JsonProvider extends ADBProvider {
         public manager?: JsonManager;
 
-        initAxon(): Promise<AxonConfig<T>>;
-        initGuild(gID: string): Promise<GuildConfig<T>>;
+        initAxon(): Promise<AxonConfig>;
+        initGuild(gID: string): Promise<GuildConfig>;
 
-        fetchAxon(): Promise<AxonConfig<T>>;
-        fetchGuild(gID: string): Promise<GuildConfig<T>>;
+        fetchAxon(): Promise<AxonConfig>;
+        fetchGuild(gID: string): Promise<GuildConfig>;
 
         updateAxon(key: string, value: updateDBVal): Promise<boolean>;
         updateGuild(key: string, gID: string, value: updateDBVal): Promise<boolean>;
 
-        saveAxon(data: AxonConfig<T>): Promise<AxonConfig<T>|null>;
-        saveGuild(gID: string, data: GuildConfig<T>): Promise<GuildConfig<T>|null>;
+        saveAxon(data: AxonConfig): Promise<AxonConfig|null>;
+        saveGuild(gID: string, data: GuildConfig): Promise<GuildConfig|null>;
     }
 
     interface GuildSchema extends Document {
@@ -260,26 +260,26 @@ declare module 'axoncore' {
         bannedUsers: string[];
     }
 
-    class MongoProvider<T extends Utils<T>> extends ADBProvider<T> {
-        public AxonSchema?: AxonConfig<T>;
-        public GuildSchema?: GuildConfig<T>;
+    class MongoProvider extends ADBProvider {
+        public AxonSchema?: AxonConfig;
+        public GuildSchema?: GuildConfig;
 
-        init(AxonOptions?: AxonOptions<T>): void;
-        initAxon(): Promise<AxonConfig<T>>;
-        initGuild(gID: string): Promise<GuildConfig<T>>;
+        init(AxonOptions?: AxonOptions): void;
+        initAxon(): Promise<AxonConfig>;
+        initGuild(gID: string): Promise<GuildConfig>;
 
-        fetchAxon(): Promise<AxonConfig<T>|null>;
-        fetchGuild(gID: string): Promise<GuildConfig<T>|null>;
+        fetchAxon(): Promise<AxonConfig|null>;
+        fetchGuild(gID: string): Promise<GuildConfig|null>;
         fetchGuildSchema(gID: string): Promise<Model<GuildSchema> | null>;
 
         updateAxon(key: string, value: updateDBVal): Promise<boolean>;
         updateGuild(key: string, gID: string, value: updateDBVal): Promise<boolean>;
-        saveAxon(data: AxonConfig<T>): Promise<AxonConfig<T>|null>;
-        saveGuild(gID: string, data: GuildConfig<T>): Promise<GuildConfig<T>|null>;
+        saveAxon(data: AxonConfig): Promise<AxonConfig|null>;
+        saveGuild(gID: string, data: GuildConfig): Promise<GuildConfig|null>;
     }
 
-    export class AxonConfig<T extends Utils<T>> {
-        private _axon: AxonClient<T>;
+    export class AxonConfig {
+        private _axon: AxonClient;
 
         public id: string;
         public prefix: string;
@@ -290,26 +290,26 @@ declare module 'axoncore' {
         public bannedUsers: string[];
         public bannedGuilds: string[];
 
-        constructor(axon: AxonClient<T>, values: AxonConfig<T>);
+        constructor(axon: AxonClient, values: AxonConfig);
 
         public isBlacklistedUser(userID: string): boolean;
         public isBlacklistedGuild(guildID: string): boolean;
-        public updateBlacklistUser(userID: string, boolean: boolean): Promise<AxonConfig<T>|null>;
-        public updateBlacklistGuild(guildID: string, boolean: boolean): Promise<AxonConfig<T>|null>;
-        private _req(key: string, value: updateDBVal): Promise<AxonConfig<T>|null>;
+        public updateBlacklistUser(userID: string, boolean: boolean): Promise<AxonConfig|null>;
+        public updateBlacklistGuild(guildID: string, boolean: boolean): Promise<AxonConfig|null>;
+        private _req(key: string, value: updateDBVal): Promise<AxonConfig|null>;
     }
 
-    export class GuildConfig<T extends Utils<T>> {
-        private _axon: AxonClient<T>;
+    export class GuildConfig {
+        private _axon: AxonClient;
         public guildID: string;
         public prefixes: string[];
 
         public createdAt: Date;
         public updatedAt: Date;
 
-        public modules: Module<T>[];
-        public commands: Command<T>[];
-        public listeners: Listener<T>[];
+        public modules: Module[];
+        public commands: Command[];
+        public listeners: Listener[];
 
         public ignoredUsers: string[];
         public ignoredRoles: string[];
@@ -319,28 +319,28 @@ declare module 'axoncore' {
         public modRoles: string[];
         public modUsers: string[];
 
-        constructor(axon: AxonClient<T>, values: GuildConfig<T>);
+        constructor(axon: AxonClient, values: GuildConfig);
 
         public getPrefixes(): string[];
         public isIgnored(msg: LibMessage): boolean;
         public isUserIgnored(userID: string): boolean
         public isRoleIgnored(member: LibMember): boolean;
         public isChannelIgnored(channelID: string): boolean;
-        public isModuleDisabled(module: Module<T>): boolean;
-        public isCommandDisabled(command: Command<T>): boolean;
-        public isListenerDisabled(listener: Listener<T>): boolean;
+        public isModuleDisabled(module: Module): boolean;
+        public isCommandDisabled(command: Command): boolean;
+        public isListenerDisabled(listener: Listener): boolean;
         public isModOnly(): boolean;
         public isModRole(roleID: string): boolean;
         public isModUser(userID: string): boolean;
-        public update(guildConfig: GuildConfig<T>): Promise<Model<GuildSchema> | null>;
-        public updatePrefixes(prefixArr: string[] ): Promise<GuildConfig<T>|null>;
-        public updateStateModule(label: string, boolean: boolean): Promise<GuildConfig<T>|null>;
-        public updateStateCommand(label: string, boolean: boolean): Promise<GuildConfig<T>|null>;
-        public updateStateListener(label: string, boolean: boolean): Promise<GuildConfig<T>|null>;
-        public updateStateModRole(roleID: string, boolean: boolean): Promise<GuildConfig<T>|null>;
-        public updateStateModUser(userID: string, boolean: boolean): Promise<GuildConfig<T>|null>;
+        public update(guildConfig: GuildConfig): Promise<Model<GuildSchema> | null>;
+        public updatePrefixes(prefixArr: string[] ): Promise<GuildConfig|null>;
+        public updateStateModule(label: string, boolean: boolean): Promise<GuildConfig|null>;
+        public updateStateCommand(label: string, boolean: boolean): Promise<GuildConfig|null>;
+        public updateStateListener(label: string, boolean: boolean): Promise<GuildConfig|null>;
+        public updateStateModRole(roleID: string, boolean: boolean): Promise<GuildConfig|null>;
+        public updateStateModUser(userID: string, boolean: boolean): Promise<GuildConfig|null>;
 
-        private _req(key: string, value: updateDBVal): Promise<GuildConfig<T>|null>
+        private _req(key: string, value: updateDBVal): Promise<GuildConfig|null>
     }
 
     export interface CommandInfo {
@@ -366,8 +366,8 @@ declare module 'axoncore' {
         cooldown?: number;
     }
 
-    export class CommandOptions<T extends Utils<T>> implements ACommandOptions {
-        private _command: Command<T>;
+    export class CommandOptions implements ACommandOptions {
+        private _command: Command;
         public guildOnly?: boolean;
         public argsMin?: number;
 
@@ -381,24 +381,24 @@ declare module 'axoncore' {
 
         public cooldown?: number;
 
-        constructor(command: Command<T>, override: ACommandOptions, useModuleDefault?: boolean);
+        constructor(command: Command, override: ACommandOptions, useModuleDefault?: boolean);
 
-        readonly l: MessageManager<T>;
+        readonly l: MessageManager;
 
         public isGuildOnly(): boolean;
         public isHidden(): boolean;
 
         public shouldSendInvalidUsageMessage(args: string[] ): boolean;
-        public shouldSendInvalidPermissionMessage(guildConfig: GuildConfig<T>): boolean;
+        public shouldSendInvalidPermissionMessage(guildConfig: GuildConfig): boolean;
         public shouldDeleteCommand(): boolean;
         public getInvalidPermissionMessage(channel: LibTextableChannel, member: LibMember, permission: string): string;
     }
 
-    export class CommandCooldown<T extends Utils<T>> {
-        private _command: Command<T>;
+    export class CommandCooldown {
+        private _command: Command;
         private _cooldowns: Map<string, { time: Date; post: boolean; }>;
 
-        constructor(command: Command<T>);
+        constructor(command: Command);
 
         // GETTERS
 
@@ -440,31 +440,31 @@ declare module 'axoncore' {
         custom?: (i: LibMessage) => boolean;
     }
 
-    export class CommandPermissions<T extends Utils<T>> implements CommandPerms {
-        private _command: Command<T>;
+    export class CommandPermissions implements CommandPerms {
+        private _command: Command;
 
         public custom?: (msg: LibMessage) => boolean;
-        constructor(command: Command<T>|Module<T>, override?: CommandPerms, userModuleDefault?: boolean);
+        constructor(command: Command|Module, override?: CommandPerms, userModuleDefault?: boolean);
         // GETTERS
-        readonly axon: AxonClient<T>;
-        readonly utils: Utils<T>;
-        readonly axonUtils: AxonUtils<T>;
+        readonly axon: AxonClient;
+        readonly utils: Utils;
+        readonly axonUtils: AxonUtils;
         readonly library: LibraryInterface;
 
         // METHODS
 
-        public canExecute(msg: LibMessage, guildConf: GuildConfig<T>): [false, string | null] | [true, null?];
+        public canExecute(msg: LibMessage, guildConf: GuildConfig): [false, string | null] | [true, null?];
 
-        public setBot(array?: string[], toAdd?: boolean): CommandPermissions<T>;
-        public setServerMod(boolean?: boolean): CommandPermissions<T>;
-        public setServerManager(boolean?: boolean): CommandPermissions<T>;
-        public setServerAdmin(boolean?: boolean): CommandPermissions<T>;
-        public setServerOwner(boolean?: boolean): CommandPermissions<T>;
-        public setUser(object?: { bypass?: string[]; needed?: string[]; }, toAdd?: boolean): CommandPermissions<T>;
-        public setUserIDs(object?: { bypass?: string[]; needed?: string[]; }, toAdd?: boolean): CommandPermissions<T>;
-        public setRoleIDs(object?: { bypass?: string[]; needed?: string[]; }, toAdd?: boolean): CommandPermissions<T>;
-        public setChannelIDs(object?: { bypass?: string[]; needed?: string[]; }, toAdd?: boolean): CommandPermissions<T>;
-        public setStaff(object?: { bypass?: string[]; needed?: string[]; }, toAdd?: boolean): CommandPermissions<T>;
+        public setBot(array?: string[], toAdd?: boolean): CommandPermissions;
+        public setServerMod(boolean?: boolean): CommandPermissions;
+        public setServerManager(boolean?: boolean): CommandPermissions;
+        public setServerAdmin(boolean?: boolean): CommandPermissions;
+        public setServerOwner(boolean?: boolean): CommandPermissions;
+        public setUser(object?: { bypass?: string[]; needed?: string[]; }, toAdd?: boolean): CommandPermissions;
+        public setUserIDs(object?: { bypass?: string[]; needed?: string[]; }, toAdd?: boolean): CommandPermissions;
+        public setRoleIDs(object?: { bypass?: string[]; needed?: string[]; }, toAdd?: boolean): CommandPermissions;
+        public setChannelIDs(object?: { bypass?: string[]; needed?: string[]; }, toAdd?: boolean): CommandPermissions;
+        public setStaff(object?: { bypass?: string[]; needed?: string[]; }, toAdd?: boolean): CommandPermissions;
 
         // CHECK FOR IF PERMISSIONS ARE MET
 
@@ -491,7 +491,7 @@ declare module 'axoncore' {
         public resolveSync(): CommandResponse;
     }
 
-    export class CommandContext<T extends Utils<T>> {
+    export class CommandContext {
         public raw: string;
         public commandLabel: string;
         public moduleLabel: string;
@@ -515,26 +515,26 @@ declare module 'axoncore' {
 
         public calledAt: Date;
 
-        constructor(command: Command<T>, triggerMessage: LibMessage, data?: { executed?: boolean; helpExecution?: string; executionState?: number; executionType?: object; } );
+        constructor(command: Command, triggerMessage: LibMessage, data?: { executed?: boolean; helpExecution?: string; executionState?: number; executionType?: object; } );
 
-        public addResponseData(commandResponse?: CommandResponse): CommandContext<T>;
+        public addResponseData(commandResponse?: CommandResponse): CommandContext;
         public static getExecutionType(isAdmin: boolean, isOwner: boolean): number;
-        public resolve(): Promise<CommandContext<T>>;
-        public resolveAsync(): Promise<CommandContext<T>>;
-        public resolveSync(): CommandContext<T>;
+        public resolve(): Promise<CommandContext>;
+        public resolveAsync(): Promise<CommandContext>;
+        public resolveSync(): CommandContext;
     }
 
-    export interface CommandData<T extends Utils<T>> {
+    export interface CommandData {
         label: string;
         aliases: string[];
         isSubcmd: boolean;
         hasSubcmd: boolean;
         enabled: boolean;
         serverBypass: boolean;
-        subcmds?: (new (...args: any[] ) => Command<T>)[] | null;
+        subcmds?: (new (...args: any[] ) => Command)[] | null;
         infos: CommandInfo;
-        options: CommandOptions<T>;
-        permissions: CommandPermissions<T>;
+        options: CommandOptions;
+        permissions: CommandPermissions;
     }
 
     export interface AxonTemplate {
@@ -542,9 +542,9 @@ declare module 'axoncore' {
         emotes: {[key: string]: string;};
     }
 
-    export class Command<T extends Utils<T>> extends Base<T> implements CommandData<T> {
-        private _module: Module<T>;
-        private _cooldown: CommandCooldown<T>;
+    export class Command extends Base implements CommandData {
+        private _module: Module;
+        private _cooldown: CommandCooldown;
 
         public label: string;
         public aliases: string[];
@@ -552,41 +552,41 @@ declare module 'axoncore' {
         public hasSubcmd: boolean;
         public enabled: boolean;
         public serverBypass: boolean;
-        public subcmds?: (new (...args: any[] ) => Command<T>)[] | null;
+        public subcmds?: (new (...args: any[] ) => Command)[] | null;
         public infos: CommandInfo;
-        public options: CommandOptions<T>;
-        public permissions: CommandPermissions<T>;
+        public options: CommandOptions;
+        public permissions: CommandPermissions;
 
-        public parentCommand: Command<T> | null;
+        public parentCommand: Command | null;
 
-        public subCommands: Collection<Command<T>> | null;
+        public subCommands: Collection<Command> | null;
         public subCommandAliases?: Map<string, string>;
 
         // GETTERS
-        readonly module: Module<T>;
+        readonly module: Module;
         readonly template: AxonTemplate;
         readonly library: LibraryInterface;
         readonly fullLabel: string;
 
-        constructor(module: Module<T>, data?: CommandData<T>);
+        constructor(module: Module, data?: CommandData);
 
         // Internal
-        private _process(object: { msg: LibMessage; args: string[]; guildConfig?: GuildConfig<T>; isAdmin?: boolean; isOwner?: boolean; } ): Promise<CommandContext<T>>;
+        private _process(object: { msg: LibMessage; args: string[]; guildConfig?: GuildConfig; isAdmin?: boolean; isOwner?: boolean; } ): Promise<CommandContext>;
         private _preExecute(): void; // Blank function
-        private _execute(message: { msg: LibMessage; args?: string[]; guildConfig?: GuildConfig<T>; isAdmin?: boolean; isOwner?: boolean; } ): Promise<CommandContext<T>>;
+        private _execute(message: { msg: LibMessage; args?: string[]; guildConfig?: GuildConfig; isAdmin?: boolean; isOwner?: boolean; } ): Promise<CommandContext>;
         private _postExecute(): void; // Blank function
 
         // External
-        public execute(object: { msg: LibMessage; args?: string[]; guildConfig?: GuildConfig<T>; } ): Promise<CommandResponse>; // Not implemented
-        public sendHelp(object: { msg: LibMessage; guildConf?: GuildConfig<T>; isAdmin: boolean; isOwner: boolean; } ): Promise<CommandContext<T>>;
+        public execute(object: { msg: LibMessage; args?: string[]; guildConfig?: GuildConfig; } ): Promise<CommandResponse>; // Not implemented
+        public sendHelp(object: { msg: LibMessage; guildConf?: GuildConfig; isAdmin: boolean; isOwner: boolean; } ): Promise<CommandContext>;
         public sendBotPerms(channel: LibTextableChannel, permissions?: string[] ): Promise<CommandResponse>;
         public sendUserPerms(channel: LibTextableChannel, member: LibMember, deleteTimeout?: number, missingPermission?: string): Promise<CommandResponse>;
         public sendTargetPerms(channel: LibTextableChannel): Promise<CommandResponse>;
         public sendCooldown(channel: LibTextableChannel, time: number): Promise<CommandResponse>;
     }
 
-    export class Listener<T extends Utils<T>> extends Base<T> {
-        private _module: Module<T>;
+    export class Listener extends Base {
+        private _module: Module;
         public eventName: string;
         public label: string;
 
@@ -599,28 +599,28 @@ declare module 'axoncore' {
             description?: string;
         };
 
-        readonly module: Module<T>;
+        readonly module: Module;
 
-        constructor(module: Module<T>, data?: Listener<T>);
+        constructor(module: Module, data?: Listener);
 
-        private _execute(guildConf?: GuildConfig<T>, ...args: any[] ): Promise<any>;
+        private _execute(guildConf?: GuildConfig, ...args: any[] ): Promise<any>;
 
-        public execute(args: any, guildConf?: GuildConfig<T>): Promise<any>;
+        public execute(args: any, guildConf?: GuildConfig): Promise<any>;
     }
 
-    class EventManager<T extends Utils<T>> extends Base<T> {
-        private _events: {[EventName: string]: Listener<T>[];};
-        private _handlers: Collection<AHandler<T>>;
-        constructor(axon: AxonClient<T>, name: string, listeners: Listener<T>[] );
+    class EventManager extends Base {
+        private _events: {[EventName: string]: Listener[];};
+        private _handlers: Collection<AHandler>;
+        constructor(axon: AxonClient, name: string, listeners: Listener[] );
         // GETTERS
         readonly HANDLERS: object;
-        readonly handlers: Collection<AHandler<T>>;
+        readonly handlers: Collection<AHandler>;
 
-        public getListeners(eventName: string): Listener<T>[];
+        public getListeners(eventName: string): Listener[];
         public bindListeners(): void;
         public bindHandlers(): void;
 
-        public registerListener(event: Listener<T>): Listener<T>[];
+        public registerListener(event: Listener): Listener[];
         public registerHandler(event: string): object;
         public registerEvent(event: string): object;
         
@@ -642,21 +642,21 @@ declare module 'axoncore' {
         delay?: number;
     }
 
-    export class AxonUtils<T extends Utils<T>> {
-        private _axon: AxonClient<T>;
-        constructor(axon: AxonClient<T>);
-        readonly axon: AxonClient<T>;
+    export class AxonUtils {
+        private _axon: AxonClient;
+        constructor(axon: AxonClient);
+        readonly axon: AxonClient;
         readonly bot: LibClient;
         readonly template: AxonTemplate;
         readonly logger: ALogger;
-        readonly utils: T;
+        readonly utils: Utils;
         readonly library: LibraryInterface;
 
         public triggerWebhook(type: string, embed: Eris.EmbedOptions, opt?: string): void;
         public isBotOwner(uID: string): boolean;
         public isBotAdmin(uID: string): boolean;
         public isBotStaff(uID: string): boolean;
-        public isServerMod(member: LibMember, guildConfig: GuildConfig<T>): boolean;
+        public isServerMod(member: LibMember, guildConfig: GuildConfig): boolean;
         public isServerManager(member: LibMember): boolean;
         public isServerAdmin(member: LibMember): boolean;
         public isServerOwner(member: LibMember, guild: LibGuild): boolean;
@@ -703,8 +703,8 @@ declare module 'axoncore' {
         MANAGE_EMOJIS?: boolean;
     }
 
-    export class Utils<T extends Utils<T>> {
-        private _axon: AxonClient<T>;
+    export class Utils {
+        private _axon: AxonClient;
 
         public userMention: RegExp;
         public roleMention: RegExp;
@@ -718,9 +718,9 @@ declare module 'axoncore' {
         static readonly id: RegExp;
         static readonly hexCode: RegExp;
 
-        constructor(client: AxonClient<T>);
+        constructor(client: AxonClient);
 
-        readonly axon: AxonClient<T>;
+        readonly axon: AxonClient;
         readonly bot: LibClient;
         readonly library: LibraryInterface;
 
@@ -744,25 +744,25 @@ declare module 'axoncore' {
 
     export type LOG_LEVEL_TYPES = 'FATAL' | 'ERROR' | 'WARN' | 'DEBUG' | 'NOTICE' | 'INFO' | 'VERBOSE';
 
-    interface Ctx<T extends Utils<T>> { guild: LibGuild; cmd: Command<T>; user: LibUser; }
+    interface Ctx { guild: LibGuild; cmd: Command; user: LibUser; }
 
-    export class Base<T extends Utils<T>> {
-        public _axon: AxonClient<T>;
+    export class Base {
+        public _axon: AxonClient;
 
-        public readonly axon: AxonClient<T>;
+        public readonly axon: AxonClient;
         public readonly bot: LibClient;
         public readonly logger: ALogger;
         public readonly Resolver: Resolver;
-        public readonly axonUtils: AxonUtils<T>;
-        public readonly utils: T;
-        public readonly l: MessageManager<T>;
-        constructor(axonClient: AxonClient<T>);
+        public readonly axonUtils: AxonUtils;
+        public readonly utils: Utils;
+        public readonly l: MessageManager;
+        constructor(axonClient: AxonClient);
 
         // Methods
-        public getModule(module: string): Module<T> | null;
-        public getCommand(fullLabel: string): Command<T> | null;
+        public getModule(module: string): Module | null;
+        public getCommand(fullLabel: string): Command | null;
 
-        public log(level: LOG_LEVEL_TYPES, content: string | Error, ctx?: Ctx<T>, execWebhook?: boolean): void;
+        public log(level: LOG_LEVEL_TYPES, content: string | Error, ctx?: Ctx, execWebhook?: boolean): void;
 
         public sendDM(user: LibUser, content: AxonMSGCont): Promise<LibMessage|void>;
         public sendMessage(channel: LibTextableChannel, content: AxonMSGCont, options?: AxonMSGOpt): Promise<LibMessage>;
@@ -1004,8 +1004,8 @@ declare module 'axoncore' {
         resendWhenInvalid?: boolean;
     }
 
-    export class Prompt<T extends Utils<T>> {
-        private _axon: AxonClient<T>;
+    export class Prompt {
+        private _axon: AxonClient;
         public userID: string;
         public channel: LibTextableChannel;
         private _prompt: string;
@@ -1015,8 +1015,8 @@ declare module 'axoncore' {
         public timedOut: boolean;
         public ended: boolean;
         private _boundEvent(): void;
-        constructor(client: AxonClient<T>, uID: string, channel: LibTextableChannel, defaultOptions?: PromptOptions);
-        readonly axon: AxonClient<T>;
+        constructor(client: AxonClient, uID: string, channel: LibTextableChannel, defaultOptions?: PromptOptions);
+        readonly axon: AxonClient;
         readonly client: LibClient;
 
         public run(prompt: AxonMSGCont, options?: PromptOptions): Promise<LibMessage>;
@@ -1036,9 +1036,9 @@ declare module 'axoncore' {
         caseSensitive?: boolean;
     }
 
-    export class MessageCollector<T extends Utils<T>> extends EventEmitter {
+    export class MessageCollector extends EventEmitter {
         private _options: CollectorOptions;
-        private _axon: AxonClient<T>;
+        private _axon: AxonClient;
         private _actualOptions: CollectorOptions;
         private _boundMsgEvent: void;
         private _boundDelEvent: void;
@@ -1046,9 +1046,9 @@ declare module 'axoncore' {
         private _boundCollectEvent: void;
         public messages: Collection<LibMessage>;
 
-        constructor(client: AxonClient<T>, options?: CollectorOptions);
+        constructor(client: AxonClient, options?: CollectorOptions);
 
-        readonly axon: AxonClient<T>;
+        readonly axon: AxonClient;
         readonly client: LibClient;
 
         public run(channel: LibTextableChannel, options: CollectorOptions): Promise<Collection<LibMessage> >;
@@ -1109,15 +1109,15 @@ declare module 'axoncore' {
         [key: string]: WebhookConfig;
     }
 
-    interface AxonOptionsExtensions<T extends Utils<T>> {
-        utils?: new (...args: any[] ) => Utils<T>;
+    interface AxonOptionsExtensions {
+        utils?: new (...args: any[] ) => Utils;
         logger?: new (...args: any[] ) => ALogger;
-        DBProvider?: new (...args: any[] ) => ADBProvider<T>;
+        DBProvider?: new (...args: any[] ) => ADBProvider;
         DBLocation?: string;
-        axonConfig?: new (...args: any[] ) => AxonConfig<T>;
-        guildConfig?: new (...args: any[] ) => GuildConfig<T>;
+        axonConfig?: new (...args: any[] ) => AxonConfig;
+        guildConfig?: new (...args: any[] ) => GuildConfig;
     }
-    class AxonOptions<T extends Utils<T>> {
+    class AxonOptions {
         private _token?: string;
         public prefixes: { general: string; admin: string; owner: string; };
         public settings: AxonOptionsSettings;
@@ -1128,8 +1128,8 @@ declare module 'axoncore' {
         public template: AxonTemplate;
         public custom: object | null;
         public webhooks: Webhooks;
-        public extensions: AxonOptionsExtensions<T>;
-        constructor(data?: AxonOptionsBase | {}, webhooks?: Webhooks | {}, extensions?: AxonOptionsExtensions<T> | {} )
+        public extensions: AxonOptionsExtensions;
+        constructor(data?: AxonOptionsBase | {}, webhooks?: Webhooks | {}, extensions?: AxonOptionsExtensions | {} )
     }
 
     interface AxonConfs {
@@ -1161,71 +1161,71 @@ declare module 'axoncore' {
         github: string;
     }
 
-    export class AxonClient<T extends Utils<T>> extends EventEmitter {
+    export class AxonClient extends EventEmitter {
         private _configs: AxonConfs;
         public settings: AxonParams;
         public infos: Infos;
         public axoncore: AxonInfos;
         public logger: ALogger;
-        public axonUtils: AxonUtils<T>;
+        public axonUtils: AxonUtils;
 
         private _botClient: LibClient;
         public library: LibraryInterface;
-        public utils: T;
-        public DBProvider: ADBProvider<T>
+        public utils: Utils;
+        public DBProvider: ADBProvider
 
-        public moduleRegistry: ModuleRegistry<T>;
-        public commandRegistry: CommandRegistry<T>;
-        public listenerRegistry: ListenerRegistry<T>;
-        public eventManager: EventManager<T>;
+        public moduleRegistry: ModuleRegistry;
+        public commandRegistry: CommandRegistry;
+        public listenerRegistry: ListenerRegistry;
+        public eventManager: EventManager;
 
-        public guildConfigs: GuildConfigCache<T>;
+        public guildConfigs: GuildConfigCache;
 
-        public moduleLoader: ModuleLoader<T>;
-        public dispatcher: CommandDispatcher<T>;
-        private _messageManager: MessageManager<T>;
+        public moduleLoader: ModuleLoader;
+        public dispatcher: CommandDispatcher;
+        private _messageManager: MessageManager;
 
         public staff: { [key: string]: string[];};
 
-        constructor(botClient: LibClient, AxonOptions: AxonOptions<T>, modules: object);
+        constructor(botClient: LibClient, AxonOptions: AxonOptions, modules: object);
 
         readonly botClient: LibClient;
-        readonly handlers: Collection<AHandler<T>>;
-        getListeners(eventName: string): Listener<T>[];
+        readonly handlers: Collection<AHandler>;
+        getListeners(eventName: string): Listener[];
         readonly Resolver: Resolver;
         readonly webhooks: Webhooks;
         readonly template: AxonTemplate;
         readonly custom: object | null;
-        readonly l: MessageManager<T>;
+        readonly l: MessageManager;
 
-        getModule(module: string): Module<T> | null;
-        getCommand(fullLabel: string): Command<T> | null;
+        getModule(module: string): Module | null;
+        getCommand(fullLabel: string): Command | null;
 
         public start(): Promise<void>;
         public onInit(): true;
         public onStart(): Promise<true>;
         public onReady(): Promise<true>;
-        public log(level: LOG_LEVEL_TYPES, content: Error | string, ctx?: Ctx<T>, execWebhook?: boolean): void;
+        public log(level: LOG_LEVEL_TYPES, content: Error | string, ctx?: Ctx, execWebhook?: boolean): void;
         private _onMessageCreate(msg: LibMessage): void;
 
         private _onReady(): void;
         public initErrorListeners(): void;
         public initStatus(): void;
 
-        public _execCommand(msg: LibMessage, args: string[], command: Command<T>, guildConfig: GuildConfig<T>, optionals: { isAdmin: boolean; isOwner: boolean; } ): void;
-        public _execHelp(msg: LibMessage, args: string[], command: Command<T>, guildConfig: GuildConfig<T>, optionals: { isAdmin: boolean; isOwner: boolean; } ): void;
-        public _execListener(listener: Listener<T>, guildConfig: GuildConfig<T>, ...args: any[] ): void;
+        public _execCommand(msg: LibMessage, args: string[], command: Command, guildConfig: GuildConfig, optionals: { isAdmin: boolean; isOwner: boolean; } ): void;
+        public _execHelp(msg: LibMessage, args: string[], command: Command, guildConfig: GuildConfig, optionals: { isAdmin: boolean; isOwner: boolean; } ): void;
+        public _execListener(listener: Listener, guildConfig: GuildConfig, ...args: any[] ): void;
 
-        public sendFullHelp(msg: LibMessage, guildConfig?: GuildConfig<T>): Promise<void>;
-        public registerGuildPrefixes(gID: string, prefixArr: string[] ): Promise<GuildConfig<T>>;
+        public sendFullHelp(msg: LibMessage, guildConfig?: GuildConfig): Promise<void>;
+        public registerGuildPrefixes(gID: string, prefixArr: string[] ): Promise<GuildConfig>;
         toString(): string;
         toJSON(): object;
 
         // events
-        on(event: 'commandExecution', listener: (status: boolean, commandFullLabel: string, data: { msg: LibMessage; command: Command<T>; guildConfig: GuildConfig<T>; context: CommandContext<T>;} ) => void): this;
-        on(event: 'commandError', listener: (commandFullLabel: string, data: { msg: LibMessage; command: Command<T>; guildConfig: GuildConfig<T>; error: AxonCommandError<T>; } ) => void): this;
-        on(event: 'listenerExecution', listener: (status: boolean, eventName: string, listenerName: string, data: { listener: Listener<T>; guildConfig: GuildConfig<T>; } ) => void): this;
-        on(event: 'listenerError', listener: (eventName: string, listenerName: string, data: { listener: Listener<T>; guildConfig: GuildConfig<T>; error: Error; } ) => void): this;
+        on(event: 'commandExecution', listener: (status: boolean, commandFullLabel: string, data: { msg: LibMessage; command: Command; guildConfig: GuildConfig; context: CommandContext;} ) => void): this;
+        on(event: 'commandError', listener: (commandFullLabel: string, data: { msg: LibMessage; command: Command; guildConfig: GuildConfig; error: AxonCommandError; } ) => void): this;
+        on(event: 'listenerExecution', listener: (status: boolean, eventName: string, listenerName: string, data: { listener: Listener; guildConfig: GuildConfig; } ) => void): this;
+        on(event: 'listenerError', listener: (eventName: string, listenerName: string, data: { listener: Listener; guildConfig: GuildConfig; error: Error; } ) => void): this;
     }
 
     export abstract class ASelector {
@@ -1233,17 +1233,17 @@ declare module 'axoncore' {
         static select(...args: any[] ): any; // Not Implemented
     }
 
-    export class DBSelector<T extends Utils<T>> extends ASelector {
-        select(axonClient: AxonClient<T>, axonOptions: AxonOptions<T>): InMemoryProvider<T> | JsonProvider<T> | MongoProvider<T>;
+    export class DBSelector extends ASelector {
+        select(axonClient: AxonClient, axonOptions: AxonOptions): InMemoryProvider | JsonProvider | MongoProvider;
     }
 
-    export class MessageManager<T extends Utils<T>> {
-        private _axon: AxonClient<T>;
+    export class MessageManager {
+        private _axon: AxonClient;
         private _messages: Languages;
-        public translation: TranslationManager<T>;
+        public translation: TranslationManager;
         public parser: MessageParser;
         
-        constructor(axonClient: AxonClient<T>, messages: Languages, baseLang: string)
+        constructor(axonClient: AxonClient, messages: Languages, baseLang: string)
 
         public messages: Languages;
         public getMessages(lang?: string): AxonLanguageResponse;
@@ -1259,10 +1259,10 @@ declare module 'axoncore' {
         public parse2(message: string, args: string[] ): string;
     }
 
-    export class TranslationManager<T extends Utils<T>> {
-        private _manager: MessageManager<T>;
+    export class TranslationManager {
+        private _manager: MessageManager;
         public lang: string;
-        constructor(manager: MessageManager<T>, lang: string);
+        constructor(manager: MessageManager, lang: string);
 
         readonly messages: Languages;
         public getMessages(lang: string): AxonLanguageResponse;
@@ -1308,23 +1308,23 @@ declare module 'axoncore' {
         public get(): string;
     }
 
-    export class LoggerSelector<T extends Utils<T>> extends ASelector {
-        public select(axonConfig: AxonConfig<T>): ALogger;
+    export class LoggerSelector extends ASelector {
+        public select(axonConfig: AxonConfig): ALogger;
         public static testLogger(Logger: ALogger): void;
     }
 
-    export class CommandDispatcher<T extends Utils<T>> {
+    export class CommandDispatcher {
         mentionFormatter: RegExp;
-        constructor(axon: AxonClient<T>);
+        constructor(axon: AxonClient);
         readonly library: LibraryInterface;
         public dispatch(msg: LibMessage): Promise<void>;
     }
 
-    export class AHandler<T extends Utils<T>> {
-        private _axon: AxonClient<T>;
+    export class AHandler {
+        private _axon: AxonClient;
         public name: string;
-        private _listeners: Listener<T>[];
-        constructor(axon: AxonClient<T>, name: string, listeners: Listener<T>[] );
+        private _listeners: Listener[];
+        constructor(axon: AxonClient, name: string, listeners: Listener[] );
         public size: number;
         private _handle(...args: any[] ): Promise<void>;
         public handle(...args: any[] ): string | null;
@@ -1338,51 +1338,51 @@ declare module 'axoncore' {
         unload(toUnload: any): any; // Not implemented
     }
 
-    export class ClientInitialiser<T extends Utils<T>> {
+    export class ClientInitialiser {
         static initStaff(staffConfig: { [key: string]: string[];}, logger: ALogger): { [key: string]: string[]; };
-        initAxon(axon: AxonClient<T>): Promise<void>;
+        initAxon(axon: AxonClient): Promise<void>;
     }
 
-    export class CommandLoader<T extends Utils<T>> extends ALoader {
-        private _module: Module<T>;
-        constructor(module: Module<T>);
-        readonly axon: AxonClient<T>;
+    export class CommandLoader extends ALoader {
+        private _module: Module;
+        constructor(module: Module);
+        readonly axon: AxonClient;
         readonly logger: ALogger;
-        load(command: Command<T>, parent?: Command<T>): boolean;
-        loadAll(commands: { [key: string]: Command<T>; } ): boolean;
-        loadSubCommands(parentCommand: Command<T>): void;
+        load(command: Command, parent?: Command): boolean;
+        loadAll(commands: { [key: string]: Command; } ): boolean;
+        loadSubCommands(parentCommand: Command): void;
         unload(label: string): true;
-        registerCommand(command: Command<T>): void;
-        registerSubCommand(command: Command<T>, parent: Command<T>): void;
+        registerCommand(command: Command): void;
+        registerSubCommand(command: Command, parent: Command): void;
         unregisterCommand(fullLabel: string): boolean;
-        unregisterSubCommand(command: Command<T>, subCommand: Command<T>): void;
+        unregisterSubCommand(command: Command, subCommand: Command): void;
     }
 
-    export class ListenerLoader<T extends Utils<T>> extends ALoader {
-        private _module: Module<T>;
-        constructor(module: Module<T>);
-        readonly axon: AxonClient<T>;
-        readonly module: Module<T>;
+    export class ListenerLoader extends ALoader {
+        private _module: Module;
+        constructor(module: Module);
+        readonly axon: AxonClient;
+        readonly module: Module;
         readonly logger: ALogger;
-        load(listener: Listener<T>): boolean;
-        loadAll(listeners: { [key: string]: Listener<T>; } ): boolean;
+        load(listener: Listener): boolean;
+        loadAll(listeners: { [key: string]: Listener; } ): boolean;
         unload(label: string): true;
     }
 
-    export class ModuleLoader<T extends Utils<T>> extends ALoader {
-        constructor(axonClient: AxonClient<T>);
-        readonly axon: AxonClient<T>;
+    export class ModuleLoader extends ALoader {
+        constructor(axonClient: AxonClient);
+        readonly axon: AxonClient;
         readonly logger: ALogger;
-        load(module: Module<T>): boolean;
-        loadAll(modules: { [key: string]: Module<T>; } ): boolean;
+        load(module: Module): boolean;
+        loadAll(modules: { [key: string]: Module; } ): boolean;
         unload(label: string): true;
     }
 
-    export class ARegistry<T, U extends Utils<U>> {
-        private _axon: AxonClient<Utils<U>>;
+    export class ARegistry<T> {
+        private _axon: AxonClient;
         public registry: Collection<T>;
-        constructor(axon: AxonClient<Utils<U>>, base: T);
-        readonly axon: AxonClient<Utils<U>>;
+        constructor(axon: AxonClient, base: T);
+        readonly axon: AxonClient;
         readonly size: number;
         has(key: string): boolean;
         get(key: string): T | null;
@@ -1394,41 +1394,41 @@ declare module 'axoncore' {
         public unregister(key: string, value: T): any; // Not implemented
     }
 
-    export class CommandRegistry<T extends Utils<T>> extends ARegistry<Command<T>, T> {
+    export class CommandRegistry extends ARegistry<Command> {
         public aliases: Map<string | number, string>;
-        constructor(axon: AxonClient<T>);
-        get(cmd: string): Command<T> | null;
-        getFull(splitLabel: string[] ): Command<T> | null;
-        register(label: string, command: Command<T>): void;
-        unregister(label: string, command?: Command<T>): void;
-        resolve(label: string, args: string[], guildConfig?: GuildConfig<T>): Command<T> | null;
+        constructor(axon: AxonClient);
+        get(cmd: string): Command | null;
+        getFull(splitLabel: string[] ): Command | null;
+        register(label: string, command: Command): void;
+        unregister(label: string, command?: Command): void;
+        resolve(label: string, args: string[], guildConfig?: GuildConfig): Command | null;
     }
 
-    export class GuildConfigCache<T extends Utils<T>> {
-        private _axon: AxonClient<T>;
-        public guildConfigs: LRUCache<GuildConfig<T>>;
-        get(key: string): GuildConfig<T>;
-        set(key: string, value: GuildConfig<T>): void;
-        public [Symbol.iterator](): [string|number, GuildConfig<T>];
-        public getOrFetch(key: string): Promise<GuildConfig<T>|null>;
-        public fetchGuildConf(gID: string): Promise<GuildConfig<T>|null>;
+    export class GuildConfigCache {
+        private _axon: AxonClient;
+        public guildConfigs: LRUCache<GuildConfig>;
+        get(key: string): GuildConfig;
+        set(key: string, value: GuildConfig): void;
+        public [Symbol.iterator](): [string|number, GuildConfig];
+        public getOrFetch(key: string): Promise<GuildConfig|null>;
+        public fetchGuildConf(gID: string): Promise<GuildConfig|null>;
     }
 
-    export class ListenerRegistry<T extends Utils<T>> extends ARegistry<Listener<T>, T> {
-        constructor(axon: AxonClient<T>);
-        register(label: string, listener: Listener<T>): void;
-        unregister(label: string, listener?: Listener<T>): void;
+    export class ListenerRegistry extends ARegistry<Listener> {
+        constructor(axon: AxonClient);
+        register(label: string, listener: Listener): void;
+        unregister(label: string, listener?: Listener): void;
     }
 
-    export class ModuleRegistry<T extends Utils<T>> extends ARegistry<Module<T>, T> {
-        constructor(axon: AxonClient<T>);
-        register(label: string, module: Module<T>): void;
-        unregister(label: string, module?: Module<T>): void;
+    export class ModuleRegistry extends ARegistry<Module> {
+        constructor(axon: AxonClient);
+        register(label: string, module: Module): void;
+        unregister(label: string, module?: Module): void;
     }
 
-    export class Validator<T extends Utils<T>> {
-        validModule(module: Module<T>): boolean;
-        validCommand(command: Command<T>): boolean;
+    export class Validator {
+        validModule(module: Module): boolean;
+        validCommand(command: Command): boolean;
         static checkValidPermissionName(PERMISSIONS: string[], perm: string): boolean;
         static checkMessageValidity(content: LibMessage | string): boolean;
     }
@@ -1608,7 +1608,7 @@ declare module 'axoncore' {
     export class AsyncQueue extends Queue {
         public exec(): Promise<void>;
         public add(func: Function, toExec?: boolean, ...args: any[] ): Promise<void>;
-        public createClosure<T>(fn: Function, resolve: (value: unknown) => void, reject: (reason: Error) => void, ...args: any[] ): Promise<void>;
+        public createClosure(fn: Function, resolve: (value: unknown) => void, reject: (reason: Error) => void, ...args: any[] ): Promise<void>;
     }
 
     export class AutoQueue extends Queue {
@@ -1645,8 +1645,8 @@ declare module 'axoncore' {
 
     // ReactionCollector file is empty
 
-    export class LibrarySelector<T extends Utils<T>> extends ASelector {
-        select(axon: AxonClient<T>, axonOptions: AxonOptions<T>): ErisInterface | DjsInterface;
+    export class LibrarySelector extends ASelector {
+        select(axon: AxonClient, axonOptions: AxonOptions): ErisInterface | DjsInterface;
     }
 
     export class Channel {
