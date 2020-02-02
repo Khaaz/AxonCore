@@ -20,7 +20,6 @@ class GuildConfigsCache {
      * Creates an instance of GuildConfigsCache.
      *
      * @param {AxonClient} axonClient
-     *
      * @memberof GuildConfigsCache
      */
     constructor(axonClient) {
@@ -34,7 +33,6 @@ class GuildConfigsCache {
      *
      * @param {String} key
      * @returns {GuildConfig}
-     *
      * @memberof GuildConfigsCache
      */
     get(key) {
@@ -46,7 +44,6 @@ class GuildConfigsCache {
      *
      * @param {String} key
      * @param {GuildConfig} value
-     *
      * @memberof GuildConfigsCache
      */
     set(key, value) {
@@ -63,7 +60,6 @@ class GuildConfigsCache {
      *
      * @param {String} key
      * @returns {Promise<GuildConfig|null>}
-     *
      * @memberof GuildConfigsCache
      */
     async getOrFetch(key) {
@@ -84,7 +80,6 @@ class GuildConfigsCache {
      *
      * @param {String} gID - The guild ID to fetch the DB
      * @returns {Promise<GuildConfig|null>} Guild schema from the DB / Error
-     *
      * @memberof GuildConfigsCache
      */
     async fetchGuildConf(gID) {

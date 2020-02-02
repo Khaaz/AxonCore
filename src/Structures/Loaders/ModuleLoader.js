@@ -48,7 +48,6 @@ class ModuleLoader extends ALoader {
      *
      * @param {Module} module - The module to load
      * @returns {Boolean}
-     *
      * @memberof ModuleLoader
      */
     load(module) {
@@ -74,7 +73,6 @@ class ModuleLoader extends ALoader {
      *
      * @param {Module} modules
      * @returns {Boolean}
-     *
      * @memberof ModuleLoader
      */
     loadAll(modules) {
@@ -100,7 +98,6 @@ class ModuleLoader extends ALoader {
      *
      * @param {String} label - The Module label to unload
      * @returns {Boolean} Whether it worked
-     *
      * @memberof ModuleLoader
      */
     unload(label) {

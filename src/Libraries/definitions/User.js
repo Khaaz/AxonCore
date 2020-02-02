@@ -36,7 +36,6 @@ class User {
      *
      * @param {User} user
      * @returns {Promise<Channel>} - The DM channel
-     *
      * @memberof User
      */
     getDM(user) {

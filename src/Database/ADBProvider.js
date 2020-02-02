@@ -24,7 +24,6 @@ class ADBProvider {
      * Creates an instance of DBProvider.
      *
      * @param {AxonClient} axon
-     *
      * @memberof DBProvider
      */
     constructor(axonClient) {
@@ -44,7 +43,6 @@ class ADBProvider {
      * Method calledjust after instantiation.Can be overrided with anything that willbe used by the provider.
      *
      * @param {AxonOptions}
-     *
      * @memberof DBProvider
      */
     init(axonOptions = null) {
@@ -57,7 +55,6 @@ class ADBProvider {
      * Initialises a default Axon config.
      *
      * @returns {Promise<AxonConfig>} Newly created Axon config from the DB
-     *
      * @memberof DBProvider
      */
     initAxon() {
@@ -71,7 +68,6 @@ class ADBProvider {
      * @param {String} gID - Guild ID
      *
      * @returns {Promise<GuildConfig|null>} Newly created Guild config from the DB
-     *
      * @memberof DBProvider
      */
     initGuild(gID) {
@@ -84,7 +80,6 @@ class ADBProvider {
      * Retrieves the axon config from the DB
      *
      * @returns {Promise<AxonConfig|null>} AxonSchema Object or null
-     *
      * @memberof DBProvider
      */
     fetchAxon() {
@@ -96,7 +91,6 @@ class ADBProvider {
      *
      * @param {String} gID - guild ID
      * @returns {Promise<GuildConfig|null>}
-     *
      * @memberof DBProvider
      */
     fetchGuild(gID) {
@@ -113,7 +107,6 @@ class ADBProvider {
      * @param {String} key - The identifier in the Database
      * @param {Object|Array|String|Boolean} value - The value to update in the DB
      * @returns {Promise<Boolean>} UWhether the request was successfull or not
-     *
      * @memberof DBProvider
      */
     updateAxon(key, value) {
@@ -130,7 +123,6 @@ class ADBProvider {
      * @param {String} gID - The guild ID to update
      * @param {Object|Array|String|Boolean} value - The value to update in the DB
      * @returns {Promise<Boolean>} Whether the request was successfull or not
-     *
      * @memberof DBProvider
      */
     updateGuild(key, gID, value) {
@@ -142,7 +134,6 @@ class ADBProvider {
      *
      * @param {Object} data - the schema object to update
      * @returns {Promise<AxonConfig|null>} Updated AxonConfig from the DB
-     *
      * @memberof DBProvider
      */
     saveAxon(data) {
@@ -155,7 +146,6 @@ class ADBProvider {
      * @param {String} gID - Guid id
      * @param {Object} data - the schema object to update
      * @returns {Promise<GuildConfig|null>} Updated GuildConfig from the DB
-     *
      * @memberof DBProvider
      */
     saveGuild(gID, data) {

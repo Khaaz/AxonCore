@@ -24,7 +24,6 @@ class LibraryInterface {
      * @param {Chqnnel} structs.Channel
      * @param {Guild} structs.Guild
      * @param {Resolver} structs.resolver
-     *
      * @memberof LibraryInterface
      */
     constructor(botClient, structs) {

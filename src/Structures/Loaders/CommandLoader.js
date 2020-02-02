@@ -26,7 +26,6 @@ class CommandLoader extends ALoader {
      *
      * @readonly
      * @type {AxonClient}
-     *
      * @memberof CommandLoader
      */
     get axon() {
@@ -38,7 +37,6 @@ class CommandLoader extends ALoader {
      *
      * @readonly
      * @type {Logger}
-     *
      * @memberof CommandLoader
      */
     get logger() {
@@ -52,7 +50,6 @@ class CommandLoader extends ALoader {
      * @param {Command} command - The command to load
      * @param {Command} [parent=null] - The optional parent command
      * @returns {Boolean}
-     *
      * @memberof CommandLoader
      */
     load(command, parent = null) {
@@ -82,7 +79,6 @@ class CommandLoader extends ALoader {
      *
      * @param {Command} commands
      * @returns {Boolean}
-     *
      * @memberof CommandLoader
      */
     loadAll(commands) {
@@ -130,7 +126,6 @@ class CommandLoader extends ALoader {
      *
      * @param {String} label - The Command label to unload
      * @returns {Boolean} Whether it worked
-     *
      * @memberof CommandLoader
      */
     unload(label) {
@@ -144,7 +139,6 @@ class CommandLoader extends ALoader {
      * Register a Command. Register its subcommands if it has any.
      *
      * @param {Command} command - Command object
-     *
      * @memberof CommandLoader
      */
     registerCommand(command) {
@@ -162,7 +156,6 @@ class CommandLoader extends ALoader {
      *
      * @param {Command} command - The subcommand to register
      * @param {Command} parent - The parent command
-     *
      * @memberof CommandLoader
      */
     registerSubCommand(command, parent) {
@@ -183,7 +176,6 @@ class CommandLoader extends ALoader {
      *
      * @param {String} fullLabel - Full command label
      * @returns {Boolean} True if successful / Error otherwise
-     *
      * @memberof CommandLoader
      */
     unregisterCommand(fullLabel) {
@@ -207,7 +199,6 @@ class CommandLoader extends ALoader {
      *
      * @param {Command} command - The parent Command
      * @param {Command} subCommand - The Subcommand to unregister
-     *
      * @memberof CommandLoader
      */
     unregisterSubCommand(command, subCommand) {

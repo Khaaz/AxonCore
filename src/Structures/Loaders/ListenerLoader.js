@@ -44,7 +44,6 @@ class ListenerLoader extends ALoader {
      *
      * @param {Listener} listener - The event to load
      * @returns {Boolean}
-     *
      * @memberof ListenerLoader
      */
     load(listener) {
@@ -66,7 +65,6 @@ class ListenerLoader extends ALoader {
      *
      * @param {Listener} listeners
      * @returns {Boolean}
-     *
      * @memberof ListenerLoader
      */
     loadAll(listeners) {
@@ -90,7 +88,6 @@ class ListenerLoader extends ALoader {
      *
      * @param {String} label - The Listener label to unload
      * @returns {Boolean} Whether it worked
-     *
      * @memberof ListenerLoader
      */
     unload(label) {

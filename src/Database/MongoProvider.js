@@ -19,7 +19,6 @@ class MongoProvider extends ADBProvider {
      * Override init method.
      *
      * @param {AxonOptions}
-     *
      * @memberof MongoProvider
      */
     init(axonOptions = null) { // eslint-disable-line no-unused-vars
@@ -36,7 +35,6 @@ class MongoProvider extends ADBProvider {
      * Initialises a default Axon config.
      *
      * @returns {Promise<AxonConfig>} Newly created Axon config from the DB
-     *
      * @memberof MongoProvider
      */
     async initAxon() {
@@ -64,7 +62,6 @@ class MongoProvider extends ADBProvider {
      * @param {String} gID - Guild ID
      *
      * @returns {Promise<GuildConfig|null>} Newly created Guild config from the DB
-     *
      * @memberof MongoProvider
      */
     async initGuild(gID) {
@@ -91,7 +88,6 @@ class MongoProvider extends ADBProvider {
      * Retrieves the axon config from the DB
      *
      * @returns {Promise<AxonConfig|null>} AxonSchema Object or null
-     *
      * @memberof MongoProvider
      */
     async fetchAxon() {
@@ -106,7 +102,6 @@ class MongoProvider extends ADBProvider {
      *
      * @param {String} gID - guild ID
      * @returns {Promise<GuildConfig|null>}
-     *
      * @memberof MongoProvider
      */
     async fetchGuild(gID) {
@@ -123,7 +118,6 @@ class MongoProvider extends ADBProvider {
      *
      * @param {String} gID - guild ID
      * @returns {Promise<Object|null>} GuildSchema or null
-     *
      * @memberof MongoProvider
      */
     fetchGuildSchema(gID) {
@@ -143,7 +137,6 @@ class MongoProvider extends ADBProvider {
      * @param {String} key - The identifier in the Database
      * @param {Object|Array|String|Boolean} value - The value to update in the DB
      * @returns {Promise<Boolean>} Whether the request was successfull or not
-     *
      * @memberof MongoProvider
      */
     async updateAxon(key, value) {
@@ -174,7 +167,6 @@ class MongoProvider extends ADBProvider {
      * @param {String} gID - The guild ID to update
      * @param {Object|Array|String|Boolean} value - The value to update in the DB
      * @returns {Promise<Boolean>} Whether the request was successfull or not
-     *
      * @memberof MongoProvider
      */
     async updateGuild(key, gID, value) {
@@ -200,7 +192,6 @@ class MongoProvider extends ADBProvider {
      *
      * @param {Object} data - the schema object to update
      * @returns {Promise<AxonConfig|null>} Updated AxonConfig from the DB
-     *
      * @memberof MongoProvider
      */
     async saveAxon(data) {
@@ -225,7 +216,6 @@ class MongoProvider extends ADBProvider {
      * @param {String} gID - Guid id
      * @param {Object} data - the schema object to update
      * @returns {Promise<GuildConfig|null>} Updated GuildConfig from the DB
-     *
      * @memberof MongoProvider
      */
     async saveGuild(gID, data) {

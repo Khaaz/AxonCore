@@ -89,7 +89,6 @@ class AxonClient extends EventEmitter {
      * @param {BotClient} botClient - Eris or Discordjs Client instance
      * @param {AxonOptions} [axonOptions={}] - Axon options
      * @param {Object} [modules={}] - Object with all modules to add in the bot
-     *
      * @memberof AxonClient
      */
     constructor(botClient, axonOptions = {}, modules = {} ) {
@@ -193,7 +192,6 @@ class AxonClient extends EventEmitter {
      *
      * @readonly
      * @type {BotClient}
-     *
      * @memberof AxonClient
      */
     get botClient() {
@@ -205,7 +203,6 @@ class AxonClient extends EventEmitter {
      *
      * @readonly
      * @type {Collection<Object>}
-     *
      * @memberof AxonClient
      */
     get handlers() {
@@ -217,7 +214,6 @@ class AxonClient extends EventEmitter {
      *
      * @param {String} eventName
      * @returns {Array}
-     *
      * @memberof AxonClient
      */
     getListeners(eventName) {
@@ -230,7 +226,6 @@ class AxonClient extends EventEmitter {
      *
      * @readonly
      * @type {Resolver}
-     *
      * @memberof AxonClient
      */
     get Resolver() {
@@ -242,7 +237,6 @@ class AxonClient extends EventEmitter {
      *
      * @readonly
      * @type {MessageManager}
-     *
      * @memberof AxonClient
      */
     get l() {
@@ -254,7 +248,6 @@ class AxonClient extends EventEmitter {
      *
      * @readonly
      * @type {Object}
-     *
      * @memberof AxonClient
      */
     get webhooks() {
@@ -266,7 +259,6 @@ class AxonClient extends EventEmitter {
      *
      * @readonly
      * @type {Object}
-     *
      * @memberof AxonClient
      */
     get template() {
@@ -278,7 +270,6 @@ class AxonClient extends EventEmitter {
      *
      * @readonly
      * @type {Object}
-     *
      * @memberof AxonClient
      */
     get custom() {
@@ -290,7 +281,6 @@ class AxonClient extends EventEmitter {
      *
      * @param {String} module - Module label
      * @returns {Module|null}
-     *
      * @memberof AxonClient
      */
     getModule(module) {
@@ -302,7 +292,6 @@ class AxonClient extends EventEmitter {
      *
      * @param {String} fullLabel - Full command (or subcommand) label
      * @returns {Command|null}
-     *
      * @memberof AxonClient
      */
     getCommand(fullLabel) {
@@ -320,7 +309,6 @@ class AxonClient extends EventEmitter {
      * Calls custom onReady() methodwhen AxonClient is ready.
      *
      * @async
-     *
      * @memberof AxonClient
      */
     async start() {
@@ -357,7 +345,6 @@ class AxonClient extends EventEmitter {
      * Method executed after the object is finished to be constructed (in the constructor)
      *
      * @returns {*}
-     *
      * @memberof AxonClient
      */
     onInit() {
@@ -369,7 +356,6 @@ class AxonClient extends EventEmitter {
      * Method executed at the beginning of the start method.
      *
      * @returns {Promise}
-     *
      * @memberof AxonClient
      */
     onStart() {
@@ -381,7 +367,6 @@ class AxonClient extends EventEmitter {
      * Method executed at the end of the start method (when the AxonClient is ready).
      *
      * @returns {Promise}
-     *
      * @memberof AxonClient
      */
     onReady() {
@@ -398,7 +383,6 @@ class AxonClient extends EventEmitter {
      * @param {String} ctx.cmd
      * @param {Object|String} ctx.user
      * @param {Boolean} [execWebhook=true] - Whether to execute the webhook
-     *
      * @memberof AxonClient
      */
     log(level, content, ctx = null, execWebhook = true) {
@@ -434,7 +418,6 @@ class AxonClient extends EventEmitter {
      * Function executed on the global messageCreate event and dispatch to the correct command and execution
      *
      * @param {Message} msg
-     *
      * @memberof AxonClient
      */
     _onMessageCreate(msg) {
@@ -452,7 +435,6 @@ class AxonClient extends EventEmitter {
     /**
      * Function executed when the bot client is ready.
      * Bind events and initialise client status/game.
-     *
      * @memberof AxonClient
      */
     _onReady() {
@@ -470,7 +452,6 @@ class AxonClient extends EventEmitter {
     /**
      * Initialize error listeners and webhooks.
      * Override this method to setup your own error listeners.
-     *
      * @memberof AxonClient
      */
     initErrorListeners() {
@@ -496,7 +477,6 @@ class AxonClient extends EventEmitter {
     /**
      * Set the bot status. Override to setup your own status.
      * Called after the client ready event.
-     *
      * @memberof AxonClient
      */
     initStatus() {
@@ -638,7 +618,6 @@ class AxonClient extends EventEmitter {
      *
      * @param {Message} msg - The message object
      * @returns {Promise<Message>} Message Object
-     *
      * @memberof AxonClient
      */
     async sendFullHelp(msg, guildConfig) {
@@ -702,7 +681,6 @@ class AxonClient extends EventEmitter {
      * @param {String} gID - The guild ID
      * @param {Array<String>} prefixArr - The array of prefixes
      * @returns {Promise<Object>} The guild Schema from the DB / Error if error
-     *
      * @memberof AxonClient
      */
     async registerGuildPrefixes(gID, prefixArr) {
@@ -718,7 +696,6 @@ class AxonClient extends EventEmitter {
      * Custom toString method.
      *
      * @returns {String}
-     *
      * @memberof AxonClient
      */
     toString() {
@@ -730,7 +707,6 @@ class AxonClient extends EventEmitter {
      * (Based of Eris')
      *
      * @returns {Object} JSON-like Object
-     *
      * @memberof AxonClient
      */
     toJSON() {
@@ -743,7 +719,6 @@ class AxonClient extends EventEmitter {
      * (Based of Eris')
      *
      * @returns {Object} Object to inspect
-     *
      * @memberof AxonClient
      */
     [util.inspect.custom]() {

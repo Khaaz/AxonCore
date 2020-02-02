@@ -47,7 +47,6 @@ class CommandContext {
      * @param {Number<COMMAND_EXECUTION_STATE>} [data.executionState=0] - no error, cooldown, invalid usage, invalid permissions...
      * @param {Number<COMMAND_EXECUTION_TYPES>} [data.executionType={}] - Regular, admin,owner execution
      * @param {Boolean} [data.dm=false]
-     *
      * @memberof CommandContext
      */
     constructor(command, triggerMessage, data = {} ) {
@@ -84,7 +83,6 @@ class CommandContext {
      *
      * @param {CommandResponse} commandResponse - CommandResponse object obtained or created after the command execution
      * @returns {CommandContext}
-     *
      * @memberof CommandContext
      */
     addResponseData(commandResponse = {} ) {
@@ -104,7 +102,6 @@ class CommandContext {
      * @param {Boolean} isAdmin
      * @param {Boolean} isOwner
      * @returns {Number<COMMAND_EXECUTION_TYPES>}
-     *
      * @memberof CommandContext
      */
     static getExecutionType(isAdmin, isOwner) {
@@ -120,7 +117,6 @@ class CommandContext {
      * By default returns the Command Context asynchronously.
      *
      * @returns {Promise<CommandContext>}
-     *
      * @memberof CommandContext
      */
     resolve() {
@@ -131,7 +127,6 @@ class CommandContext {
      * Returns the Command Context wrapped in a Promise (asynchronously)
      *
      * @returns {Promise<CommandContext>}
-     *
      * @memberof CommandContext
      */
     resolveAsync() {
@@ -142,7 +137,6 @@ class CommandContext {
      * Returns the Command Context (synchronously)
      *
      * @returns {CommandContext}
-     *
      * @memberof CommandContext
      */
     resolveSync() {

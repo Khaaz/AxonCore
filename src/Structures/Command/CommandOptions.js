@@ -28,7 +28,6 @@ class CommandOptions {
      * @param {Command} command - The base command
      * @param {Object} [override={}] - - The specific options for this command (format - CommandOptions)
      * @param {Boolean} [useModuleDefault=false] - Whether to use or not the module's base options before applying override permissions
-     *
      * @memberof CommandOptions
      */
     constructor(command, override = {}, useModuleDefault = false) {
@@ -90,7 +89,6 @@ class CommandOptions {
      * Whether the command is guild only or not
      *
      * @returns {Boolean}
-     *
      * @memberof CommandOptions
      */
     isGuildOnly() {
@@ -101,7 +99,6 @@ class CommandOptions {
      * Whether the command is hidden or not
      *
      * @returns {Boolean}
-     *
      * @memberof CommandOptions
      */
     isHidden() {
@@ -113,7 +110,6 @@ class CommandOptions {
      *
      * @param {Array} args
      * @returns {Boolean}
-     *
      * @memberof CommandOptions
      */
     shouldSendInvalidUsageMessage(args) {
@@ -125,7 +121,6 @@ class CommandOptions {
      *
      * @param {GuildConfig} guildConfig
      * @returns {Boolean}
-     *
      * @memberof CommandOptions
      */
     shouldSendInvalidPermissionMessage(guildConfig) {
@@ -136,7 +131,6 @@ class CommandOptions {
      * Whether we should delete the command or not
      *
      * @returns {Boolean}
-     *
      * @memberof CommandOptions
      */
     shouldDeleteCommand() {
