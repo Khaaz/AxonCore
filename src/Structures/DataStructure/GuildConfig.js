@@ -101,7 +101,7 @@ class GuildConfig {
      */
     isRoleIgnored(member) {
         const roles = this._axon.library.member.getRoles(member);
-        if (!roles || !(roles instanceof Array) ) {
+        if (!roles || !(Array.isArray(roles) ) ) {
             return false;
         }
         return !!this.ignoredRoles.find(r => roles.includes(r) ); // Role is ignored
