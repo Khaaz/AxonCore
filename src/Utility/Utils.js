@@ -381,7 +381,7 @@ class Utils {
             if (obj2[key] === undefined) {
                 return false;
             }
-            if (typeof obj1[key] === 'object' && !(obj1[key] instanceof Array) ) {
+            if (typeof obj1[key] === 'object' && !Array.isArray(obj1[key] ) ) {
                 if (!this.compareObject(obj1[key], obj2[key] ) ) {
                     return false;
                 }

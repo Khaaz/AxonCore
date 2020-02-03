@@ -20,7 +20,7 @@ class Collection extends Map {
      */
     constructor(options = {} ) {
         const { base: baseObject = null, iterable } = options;
-        if (iterable && iterable instanceof Array) {
+        if (iterable && Array.isArray(iterable) ) {
             super(iterable);
         } else if (iterable && iterable instanceof Object) {
             super(Object.entries(iterable) );

@@ -70,7 +70,7 @@ class Embed {
         if (typeof data === 'string') {
             return data;
         }
-        if (data instanceof Array) {
+        if (Array.isArray(data) ) {
             return data.join('\n');
         }
         return String(data);

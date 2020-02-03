@@ -46,7 +46,7 @@ class LRUCache {
         
         this._cache = new Collection( { base: options.base } );
         
-        if (iterable && iterable instanceof Array) {
+        if (iterable && Array.isArray(iterable) ) {
             for (const elem of iterable) {
                 this.set(elem[0], elem[1] );
             }
