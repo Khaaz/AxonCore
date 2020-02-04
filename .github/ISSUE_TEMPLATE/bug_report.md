@@ -8,15 +8,17 @@ Issue general overview/description.
 
 **Issue state:**
 
-- [ ] I know how to fix it and I will open a PR to do so
+- [ ] I know how to fix this and I will open a PR to do so
 - [ ] I am just reporting the issue
 
 **Details:**  
+This issue is about:
 
 - [ ] Typings
 - [ ] Documentation
 - [ ] Bug in existing feature
 - [ ] Missing feature / breaking change
+- [ ] API / library update
 - [ ] None of the above (don't know what the issue is about)
 
 **Additional information:**
