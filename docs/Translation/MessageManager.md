@@ -7,10 +7,10 @@
 
 | Name | Type | Description |
 | --- | --- | --- |
-| _axon | <code>Object.&lt;AxonClient&gt;</code> |  |
+| _axon | <code>AxonClient</code> |  |
 | _message | <code>Object</code> | All messages (all langs) |
-| translation | <code>Object.&lt;TranslationManager&gt;</code> |  |
-| parser | <code>Object.&lt;MessageParser&gt;</code> |  |
+| translation | <code>TranslationManager</code> |  |
+| parser | <code>MessageParser</code> |  |
 
 
 * [MessageManager](#MessageManager)
@@ -89,6 +89,6 @@ Dynamically create one method for each message so we can use <this>.MESSAGE_CONS
 
 | Param | Type |
 | --- | --- |
-| axonClient | <code>Object.&lt;AxonClient&gt;</code> | 
+| axonClient | <code>AxonClient</code> | 
 | messages | <code>Object</code> | 
 

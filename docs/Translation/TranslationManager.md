@@ -7,7 +7,7 @@
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| _manager | <code>Object.&lt;MessageManager&gt;</code> |  |  |
+| _manager | <code>MessageManager</code> |  |  |
 | [lang] | <code>String</code> | <code>&#x27;english&#x27;</code> | The default lang |
 
 
@@ -69,5 +69,5 @@ Creates an instance of TranslationManager.
 
 | Param | Type |
 | --- | --- |
-| manager | <code>Object.&lt;MessageManager&gt;</code> | 
+| manager | <code>MessageManager</code> | 
 

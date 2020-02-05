@@ -1,8 +1,7 @@
-<a name="Dispatcher"></a>
+<a name="CommandDispatcher"></a>
 
-## Dispatcher ⇐ [<code>Dispatcher</code>](#Dispatcher)
+## CommandDispatcher
 **Kind**: global class  
-**Extends**: [<code>Dispatcher</code>](#Dispatcher)  
 **Author**: KhaaZ  
 **Properties**
 
@@ -11,23 +10,102 @@
 | mentionFormatter | <code>RegExp</code> | 
 
 
-* [Dispatcher](#Dispatcher) ⇐ [<code>Dispatcher</code>](#Dispatcher)
-    * [new Dispatcher()](#new_Dispatcher_new)
-    * [.CommandDispatcher](#Dispatcher.CommandDispatcher)
-        * [new CommandDispatcher(axon)](#new_Dispatcher.CommandDispatcher_new)
+* [CommandDispatcher](#CommandDispatcher)
+    * [new CommandDispatcher()](#new_CommandDispatcher_new)
+    * _instance_
+        * [.library](#CommandDispatcher+library) : <code>Object.&lt;LibraryInterface&gt;</code>
+        * [.dispatch(msg)](#CommandDispatcher+dispatch) ⇒ <code>Promise</code>
+        * [.getExecutionType(msg)](#CommandDispatcher+getExecutionType) ⇒ <code>Object</code>
+        * [.resolvePrefix(msg, guildConfig, [isAdmin], [isOwner])](#CommandDispatcher+resolvePrefix) ⇒ <code>String</code>
+        * [.resolveGuildPrefix(msg, guildConfig)](#CommandDispatcher+resolveGuildPrefix) ⇒ <code>String</code>
+    * _static_
+        * [.CommandDispatcher](#CommandDispatcher.CommandDispatcher)
+            * [new CommandDispatcher(axon)](#new_CommandDispatcher.CommandDispatcher_new)
 
-<a name="new_Dispatcher_new"></a>
+<a name="new_CommandDispatcher_new"></a>
 
-### new Dispatcher()
+### new CommandDispatcher()
 Class responsible to call the correct command and correct execution flow when needed.
 Dispatch to the correct command on message create event.
 Handles prefix resolving and command resolving.
 
-<a name="Dispatcher.CommandDispatcher"></a>
+<a name="CommandDispatcher+library"></a>
 
-### Dispatcher.CommandDispatcher
-**Kind**: static class of [<code>Dispatcher</code>](#Dispatcher)  
-<a name="new_Dispatcher.CommandDispatcher_new"></a>
+### commandDispatcher.library : <code>Object.&lt;LibraryInterface&gt;</code>
+Returns the LibraryInterface instance
+
+**Kind**: instance property of [<code>CommandDispatcher</code>](#CommandDispatcher)  
+**Read only**: true  
+<a name="CommandDispatcher+dispatch"></a>
+
+### commandDispatcher.dispatch(msg) ⇒ <code>Promise</code>
+Dispatches the messageCreate event to:
+- end of execution if:
+     - no prefix
+     - no command
+     - no permissions
+- command execution with different execution flow:
+     - Owner execution
+     - Admin execution
+     - Regular execution
+     - DM execution
+
+**Kind**: instance method of [<code>CommandDispatcher</code>](#CommandDispatcher)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| msg | <code>Object.&lt;Message&gt;</code> | Message Object from Eris |
+
+<a name="CommandDispatcher+getExecutionType"></a>
+
+### commandDispatcher.getExecutionType(msg) ⇒ <code>Object</code>
+Give the execution type: Owner or Admin execution.
+It uses the global admin and owner prefixes and checks for the BotStaff rank of the caller.
+
+**Kind**: instance method of [<code>CommandDispatcher</code>](#CommandDispatcher)  
+**Returns**: <code>Object</code> - { isAdmin: Boolean, isOwner: Boolean }  
+
+| Param | Type |
+| --- | --- |
+| msg | <code>Object.&lt;Message&gt;</code> | 
+
+<a name="CommandDispatcher+resolvePrefix"></a>
+
+### commandDispatcher.resolvePrefix(msg, guildConfig, [isAdmin], [isOwner]) ⇒ <code>String</code>
+Resolves the prefix for the guild of the message.
+Will resolve the owner or admin prefix if it's an owner or admin execution.
+It will otherwise regularly resolve the prefix for this particular guild.
+
+**Kind**: instance method of [<code>CommandDispatcher</code>](#CommandDispatcher)  
+**Returns**: <code>String</code> - The prefix if found / Undefined if not  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| msg | <code>Object.&lt;Message&gt;</code> |  | The message object |
+| guildConfig | <code>Object.&lt;GuildConfig&gt;</code> |  | The guildConfig Object |
+| [isAdmin] | <code>Boolean</code> | <code>false</code> | The guildConfig Object |
+| [isOwner] | <code>Boolean</code> | <code>false</code> | The guildConfig Object |
+
+<a name="CommandDispatcher+resolveGuildPrefix"></a>
+
+### commandDispatcher.resolveGuildPrefix(msg, guildConfig) ⇒ <code>String</code>
+Resolves the prefix for the guild of the message.
+If the message starts with one of the guild prefixes it returns the prefix, otherwise it returns undefined.
+Global prefixes will only take over if no prefix are specified in this guild.
+
+**Kind**: instance method of [<code>CommandDispatcher</code>](#CommandDispatcher)  
+**Returns**: <code>String</code> - The prefix if found / Undefined if not  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| msg | <code>Object.&lt;Message&gt;</code> | The message object |
+| guildConfig | <code>Object.&lt;GuildConfig&gt;</code> | The guildConfig Object |
+
+<a name="CommandDispatcher.CommandDispatcher"></a>
+
+### CommandDispatcher.CommandDispatcher
+**Kind**: static class of [<code>CommandDispatcher</code>](#CommandDispatcher)  
+<a name="new_CommandDispatcher.CommandDispatcher_new"></a>
 
 #### new CommandDispatcher(axon)
 Creates an instance of CommandDispatcher.

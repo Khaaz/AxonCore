@@ -27,7 +27,7 @@ Resolve a user within all the users the bot has.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| client | <code>Object.&lt;Eris.Client&gt;</code> | The bot client |
+| client | <code>Object.&lt;Client&gt;</code> | The bot client |
 | args | <code>Array</code> \| <code>String</code> | Array of arguments resolved by the command. |
 
 <a name="Resolver.member"></a>
@@ -79,6 +79,6 @@ Resolve a guild within all guilds the bot is in.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| client | <code>Object.&lt;Eris.Client&gt;</code> | The bot client |
+| client | <code>Object.&lt;Client&gt;</code> | The bot client |
 | args | <code>Array</code> | Array with guild name/ID |
 
