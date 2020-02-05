@@ -15,8 +15,8 @@
 <a name="new_ListenerLoader_new"></a>
 
 ### new ListenerLoader()
-Load listeners in a Module.
-Validate the listener validity entirely.
+Load listeners in AxonClient.
+Validate the listener entirely.
 
 <a name="ListenerLoader+axon"></a>
 

@@ -8,7 +8,7 @@
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
 | raw | <code>String</code> |  | Raw input |
-| commandLabel | <code>String</code> |  | The command name |
+| commandLabel | <code>String</code> |  | The command full label |
 | moduleLabel | <code>String</code> |  | The module name STATUS |
 | [executed] | <code>Boolean</code> | <code>true</code> | Whether the command was actually executed or not |
 | [data.helpExecution] | <code>Boolean</code> | <code>false</code> |  |

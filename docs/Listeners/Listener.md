@@ -24,6 +24,7 @@
     * _instance_
         * [.module](#Listener+module) : <code>Module</code>
         * [._execute(guildConfig, ...args)](#Listener+_execute) ⇒ <code>Promise</code>
+        * [.execute(args, guildConfig)](#Listener+execute) ⇒ <code>Promise</code>
     * _static_
         * [.Listener](#Listener.Listener)
             * [new Listener(module, [data])](#new_Listener.Listener_new)
@@ -52,6 +53,18 @@ Promisify the return execute return to prevent promise issue
 | --- | --- | --- |
 | guildConfig | <code>Object</code> | the guildConfig or undefined if not a guild event |
 | ...args | <code>Array</code> | Array of the events arguments |
+
+<a name="Listener+execute"></a>
+
+### listener.execute(args, guildConfig) ⇒ <code>Promise</code>
+Main execute function, need to be overriden in child.
+
+**Kind**: instance method of [<code>Listener</code>](#Listener)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| args | <code>Array</code> | Array of the events arguments (as separate parameters) |
+| guildConfig | <code>GuildConfig</code> | The guildConfig or undefined if not a guild event |
 
 <a name="Listener.Listener"></a>
 
