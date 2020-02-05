@@ -92,15 +92,15 @@
     
     {
         "input": "Langs/MessageManager.js",
-        "output": "Translations/MessageManager.md"
+        "output": "Translation/MessageManager.md"
     },
     {
         "input": "Langs/TranslationManager.js",
-        "output": "Translations/TranslationManager.md"
+        "output": "Translation/TranslationManager.md"
     },
     {
         "input": "Langs/MessageParser.js",
-        "output": "Translations/MessageParser.md"
+        "output": "Translation/MessageParser.md"
     },
 
 
