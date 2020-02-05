@@ -9,7 +9,7 @@
 | Name | Type | Description |
 | --- | --- | --- |
 | _eve,ts | <code>Object</code> | Object that links an event name to an array of Listener objects { eventName: [Listener, Listener] } |
-| _handlers | <code>Collection.&lt;Object&gt;</code> | Collection of handler keyed to the event name [key: eventName, value: AHandler] |
+| _handlers | <code>Collection.&lt;AHandler&gt;</code> | Collection of handler keyed to the event name [key: eventName, value: AHandler] |
 
 
 * [EventManager](#EventManager) ⇐ <code>Base</code>
@@ -21,8 +21,8 @@
         * [.bindListeners()](#EventManager+bindListeners)
         * [.bindHandlers()](#EventManager+bindHandlers)
         * [.registerListener(listener)](#EventManager+registerListener)
-        * [.registerHandler(event)](#EventManager+registerHandler) ⇒ <code>Object</code>
-        * [.registerEvent(event)](#EventManager+registerEvent) ⇒ <code>Object</code>
+        * [.registerHandler(event)](#EventManager+registerHandler) ⇒ <code>AHandler</code>
+        * [.registerEvent(event)](#EventManager+registerEvent) ⇒ <code>AHandler</code>
         * [.unregisterListener(event, label)](#EventManager+unregisterListener) ⇒ <code>Boolean</code>
         * [.unregisterHandler(event)](#EventManager+unregisterHandler) ⇒ <code>Boolean</code>
         * [.unregisterEvent(event)](#EventManager+unregisterEvent) ⇒ <code>Boolean</code>
@@ -91,13 +91,13 @@ Called by ModuleLoader when registering an event.
 
 <a name="EventManager+registerHandler"></a>
 
-### eventManager.registerHandler(event) ⇒ <code>Object</code>
+### eventManager.registerHandler(event) ⇒ <code>AHandler</code>
 Register a handler.
 Remove the current event listener if the handler already exists.
 Create a new handler from the array of listeners for the given event.
 
 **Kind**: instance method of [<code>EventManager</code>](#EventManager)  
-**Returns**: <code>Object</code> - The new Handler created  
+**Returns**: <code>AHandler</code> - The new Handler created  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -105,12 +105,12 @@ Create a new handler from the array of listeners for the given event.
 
 <a name="EventManager+registerEvent"></a>
 
-### eventManager.registerEvent(event) ⇒ <code>Object</code>
+### eventManager.registerEvent(event) ⇒ <code>AHandler</code>
 Register an event handler and start listen to this event.
 Recreate a handler and bind it to the event emitter.
 
 **Kind**: instance method of [<code>EventManager</code>](#EventManager)  
-**Returns**: <code>Object</code> - The Handler Object  
+**Returns**: <code>AHandler</code> - The Handler Object  
 
 | Param | Type | Description |
 | --- | --- | --- |

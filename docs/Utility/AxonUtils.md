@@ -87,7 +87,7 @@ Returns the LibraryInterface instance
 
 ### axonUtils.triggerWebhook(type, embed, opt)
 Triger an Axon Webhook.
-Works directly with axon._configs._tokens. [GETTER: axon.webhooks]
+Works directly with axon._configs.webhooks.
 
 **Kind**: instance method of [<code>AxonUtils</code>](#AxonUtils)  
 

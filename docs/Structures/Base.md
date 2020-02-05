@@ -16,7 +16,7 @@
         * [.axon](#Base+axon) : <code>AxonClient</code>
         * [.bot](#Base+bot) : <code>Client</code>
         * [.logger](#Base+logger) : <code>Logger</code>
-        * ~~[.Resolver](#Base+Resolver) : <code>Resolver</code>~~
+        * [.Resolver](#Base+Resolver) : <code>Resolver</code>
         * [.axonUtils](#Base+axonUtils) : <code>AxonUtils</code>
         * [.utils](#Base+utils) : <code>Utils</code>
         * [.l](#Base+l) : <code>MessageManager</code>
@@ -62,10 +62,8 @@ Returns the Logger instance
 **Read only**: true  
 <a name="Base+Resolver"></a>
 
-### ~~base.Resolver : <code>Resolver</code>~~
-***Deprecated***
-
-Returns the Resolver class
+### base.Resolver : <code>Resolver</code>
+Returns the Resolver class (Based on AxonClient.Resolver (default: use the current library Resolver))
 
 **Kind**: instance property of [<code>Base</code>](#Base)  
 **Read only**: true  
