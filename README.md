@@ -7,6 +7,7 @@
     <a href="https://github.com/Khaazz/AxonCore/releases"> <img src="https://img.shields.io/github/release/Khaazz/AxonCore.svg?style=flat" alt="Release" /> </a>
     <a href="https://www.npmjs.com/package/axoncore"> <img src="https://img.shields.io/npm/v/axoncore.svg?maxAge=3600" alt="NPM version" /> </a>
     <a href="https://www.npmjs.com/package/axoncore"><img src="https://img.shields.io/npm/dt/axoncore.svg?maxAge=3600" alt="NPM downloads" /></a>
+    <a href="https://discord.gg/QZ6B5US"> <img src="https://discordapp.com/api/guilds/365236789855649814/embed.png" alt="Discord server" /> </a>
   </p>
   <p>
     <a href="https://github.com/Khaazz/AxonCore/actions"> <img src="https://github.com/Khaazz/AxonCore/workflows/Test/badge.svg" alt="Test status" /> </a>
@@ -14,9 +15,6 @@
     <a href="https://github.com/Khaazz/AxonCore/deployments"> <img alt="GitHub deployments" src="https://img.shields.io/github/deployments/khaazz/axoncore/github-pages?label=gh-pages" /> </a>
     <a href="https://www.codefactor.io/repository/github/khaazz/axoncore"><img src="https://www.codefactor.io/repository/github/khaazz/axoncore/badge" alt="CodeFactor" /></a>
     <a href="https://david-dm.org/khaazz/khaazz"><img src="https://img.shields.io/david/khaazz/axoncore.svg?maxAge=3600" alt="Dependencies" /></a>
-  </p>
-  <p>
-    <a href="https://discord.gg/QZ6B5US"> <img src="https://discordapp.com/api/guilds/365236789855649814/embed.png" alt="Discord server" /> </a>
   </p>
   <p>
     <a href="https://nodei.co/npm/axoncore/"> <img src="https://nodei.co/npm/axoncore.png?downloads=true&stars=true" alt="NPM info" /> </a>
