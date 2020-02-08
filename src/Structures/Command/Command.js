@@ -259,10 +259,12 @@ class Command extends Base {
             
             isAdmin && this._cooldown.shouldSetCooldown() && this._cooldown.setCooldown(userID);
             if (this.options.shouldSendInvalidUsageMessage(args) ) {
-                return this.sendHelp( {
-                    msg, args, guildConfig, isAdmin, isOwner,
-                } )
-                    .then( () => ctx.resolveSync() );
+                return (this.options.getInvalidUsageMessage()
+                    ? this.sendMessage(msg.channel, this.options.getInvalidUsageMessage() )
+                    : this.sendHelp( {
+                        msg, args, guildConfig, isAdmin, isOwner,
+                    } )
+                ).then( () => ctx.resolveSync() );
             }
             return ctx.resolveAsync();
         }

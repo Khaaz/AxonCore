@@ -11,11 +11,12 @@ import AxonError from '../../Errors/AxonError';
  *
  * @class CommandOptions
  *
- * @prop {Number} [argsMin=0] - Minimum arguments required to execute the command
- * @prop {Boolean} [invalidUsageMessage=true] - Whether to trigger the help command on invalid usage (not enough arguments)
- * @prop {Boolean} [sendPermissionMessage=false] - Whether to trigger an error message on invalid permission (bot / user / custom etc)
  * @prop {Function | String} [invalidPermissionMessage=null] - What the invalid permission message should be
+ * @prop {Boolean} [sendPermissionMessage=false] - Whether to trigger an error message on invalid permission (bot / user / custom etc)
  * @prop {Number} [invalidPermissionMessageTimeout=9000] - What the invalid permission message deletion timeout should be
+ * @prop {Number} [argsMin=0] - Minimum arguments required to execute the command
+ * @prop {String} [invalidUsageMessage=null] - What the invalid usage message should be
+ * @prop {Boolean} [sendUsageMessage=true] - Whether to trigger the help command on invalid usage (not enough arguments)
  * @prop {Boolean} [deleteCommand=false] - Whether to delete the command input after trigger
  * @prop {Boolean} [guildOnly=true] - Whether to allow executing this command outside of guilds
  * @prop {Boolean} [hidden=false] - Whether to hide this command from help command (general / subcommands)
@@ -31,7 +32,8 @@ class CommandOptions {
      * @param {Boolean} override.sendPermissionMessage - Whether to trigger an error message on invalid permission (bot / user / custom etc)
      * @param {Number} override.invalidPermissionMessageTimeout - What the invalid permission message deletion timeout should be
      * @param {Number} override.argsMin - Minimum arguments required to execute the command
-     * @param {Boolean} override.invalidUsageMessage - Whether to trigger the help command on invalid usage (not enough arguments)
+     * @param {String} override.invalidUsageMessage - What the invalid usage message should be
+     * @param {Boolean} override.sendUsageMessage - Whether to trigger the help command on invalid usage (not enough arguments)
      * @param {Boolean} override.deleteCommand - Whether to delete the command input after trigger
      * @param {Boolean} override.guildOnly - Whether to allow executing this command outside of guilds
      * @param {Boolean} override.hidden - Whether to hide this command from help command (general / subcommands)
@@ -60,6 +62,7 @@ class CommandOptions {
             base = override;
         }
 
+        // invalid permissions
         if (typeof base.invalidPermissionMessage === 'string') {
             this.invalidPermissionMessage = () => base.invalidPermissionMessage;
         } else if (typeof base.invalidPermissionMessage === 'function') {
@@ -67,14 +70,13 @@ class CommandOptions {
         } else {
             this.invalidPermissionMessage = null;
         }
-
-        this.argsMin = base.argsMin || 0;
-        this.invalidUsageMessage = base.invalidUsageMessage !== false;
-
-        // invalid permissions
         this.sendPermissionMessage = !!base.sendPermissionMessage;
         this.invalidPermissionMessageTimeout = base.invalidPermissionMessageTimeout !== undefined ? base.invalidPermissionMessageTimeout : 9000; // eslint-disable-line no-magic-numbers
-        
+ 
+        this.argsMin = base.argsMin || 0;
+        this.invalidUsageMessage = base.invalidUsageMessage !== undefined ? base.invalidUsageMessage : null;
+        this.sendUsageMessage = base.sendUsageMessage !== false;
+  
         this.deleteCommand = !!base.deleteCommand;
         this.guildOnly = base.guildOnly !== false;
         this.hidden = !!base.hidden;
@@ -131,7 +133,7 @@ class CommandOptions {
      * @memberof CommandOptions
      */
     shouldSendInvalidUsageMessage(args) {
-        return (args.length < this.argsMin && this.invalidUsageMessage && !this.hidden);
+        return (args.length < this.argsMin && this.sendUsageMessage && !this.hidden);
     }
 
     /**
@@ -169,6 +171,15 @@ class CommandOptions {
             : this.l.getMessage('ERR_CALLER_PERM');
 
         return this.l.parser.parse(message, { permissions: permission || 'Custom' } );
+    }
+
+    /**
+     * Get the invalid usage message
+     *
+     * @returns {String}
+     */
+    getInvalidUsageMessage() {
+        return this.invalidUsageMessage;
     }
 }
 
