@@ -61,8 +61,7 @@ class CommandOptions {
         }
 
         if (typeof base.invalidPermissionMessage === 'string') {
-            // eslint-disable-next-line no-unused-vars
-            this.invalidPermissionMessage = (channel, member) => base.invalidPermissionMessage;
+            this.invalidPermissionMessage = () => base.invalidPermissionMessage;
         } else if (typeof base.invalidPermissionMessage === 'function') {
             this.invalidPermissionMessage = base.invalidPermissionMessage;
         } else {
@@ -73,7 +72,6 @@ class CommandOptions {
         this.invalidUsageMessage = base.invalidUsageMessage !== false;
 
         // invalid permissions
-        this.invalidPermissionMessage = !!base.invalidPermissionMessage;
         this.sendPermissionMessage = !!base.sendPermissionMessage;
         this.invalidPermissionMessageTimeout = base.invalidPermissionMessageTimeout !== undefined ? base.invalidPermissionMessageTimeout : 9000; // eslint-disable-line no-magic-numbers
         
