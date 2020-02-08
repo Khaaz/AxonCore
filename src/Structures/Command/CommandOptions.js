@@ -106,6 +106,17 @@ class CommandOptions {
     }
     
     /**
+     * Whether args for this command are correct or not (enough args).
+     *
+     * @param {Array} args
+     * @returns {Boolean}
+     * @memberof CommandOptions
+     */
+    hasCorrectArgs(args) {
+        return (args.length >= this.argsMin);
+    }
+
+    /**
      * Whether we should send an invalid usage message or not (help command)
      *
      * @param {Array} args
