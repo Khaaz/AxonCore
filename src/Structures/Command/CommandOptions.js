@@ -19,7 +19,7 @@ import AxonError from '../../Errors/AxonError';
  * @prop {Boolean} [deleteCommand=false] - Whether to delete the command input after trigger
  * @prop {Boolean} [guildOnly=true] - Whether to allow executing this command outside of guilds
  * @prop {Boolean} [hidden=false] - Whether to hide this command from help command (general / subcommands)
- * @prop {Number} [cooldown=3000] - Cooldown betweeneach usage of this command for a specific user (in ms)
+ * @prop {Number} [cooldown=3000] - Cooldown between each usage of this command for a specific user (in ms)
  */
 class CommandOptions {
     /**
@@ -27,6 +27,15 @@ class CommandOptions {
      *
      * @param {Command} command - The base command
      * @param {Object} [override={}] - - The specific options for this command (format - CommandOptions)
+     * @param {Function | String} override.invalidPermissionMessage - What the invalid permission message should be
+     * @param {Boolean} override.sendPermissionMessage - Whether to trigger an error message on invalid permission (bot / user / custom etc)
+     * @param {Number} override.invalidPermissionMessageTimeout - What the invalid permission message deletion timeout should be
+     * @param {Number} override.argsMin - Minimum arguments required to execute the command
+     * @param {Boolean} override.invalidUsageMessage - Whether to trigger the help command on invalid usage (not enough arguments)
+     * @param {Boolean} override.deleteCommand - Whether to delete the command input after trigger
+     * @param {Boolean} override.guildOnly - Whether to allow executing this command outside of guilds
+     * @param {Boolean} override.hidden - Whether to hide this command from help command (general / subcommands)
+     * @param {Number} override.cooldown - Cooldown between each usage of this command for a specific user (in ms)
      * @param {Boolean} [useModuleDefault=false] - Whether to use or not the module's base options before applying override permissions
      * @memberof CommandOptions
      */
@@ -124,7 +133,7 @@ class CommandOptions {
      * @memberof CommandOptions
      */
     shouldSendInvalidUsageMessage(args) {
-        return (args.length < this.argsMin && this.invalidUsage && !this.hidden);
+        return (args.length < this.argsMin && this.invalidUsageMessage && !this.hidden);
     }
 
     /**
