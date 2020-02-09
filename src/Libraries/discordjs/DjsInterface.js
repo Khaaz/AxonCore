@@ -12,7 +12,16 @@ import DjsChannel from './lib/DjsChannel';
 import DjsGuild from './lib/DjsGuild';
 import DjsResolver from './lib/DjsResolver';
 
+/**
+ * @typedef {import('discord.js').Client} Client
+ * @typedef {import('discord.js').Message} Message
+ */
+
 class DjsInterface extends LibraryInterface {
+    /**
+     * @param {Client} botClient
+     * @param {String} token
+     */
     constructor(botClient, token) {
         super(botClient, {
             User: DjsUser,
@@ -35,12 +44,18 @@ class DjsInterface extends LibraryInterface {
         return HANDLERS;
     }
 
+    /**
+     * @param {(msg: Message) => void} func
+     */
     onMessageCreate(func) {
         this.botClient.on(this.enums.EVENTS.MESSAGE_CREATE, (msg) => {
             func(msg);
         } );
     }
 
+    /**
+     * @param {() => void} func
+     */
     onceReady(func) {
         this.botClient.once(this.enums.EVENTS.READY, () => {
             func();

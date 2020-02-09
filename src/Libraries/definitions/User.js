@@ -2,7 +2,14 @@
 import NoAbstractInstanceException from '../../Errors/NoAbstractInstanceException';
 import NotImplementedException from '../../Errors/NotImplementedException';
 
+/**
+ * @typedef {import('./LibraryInterface').default} LibraryInterface
+ */
+
 class User {
+    /**
+     * @param {LibraryInterface} lib
+     */
     constructor(lib) {
         this.lib = lib;
         if (this.constructor === 'User') {
@@ -11,22 +18,47 @@ class User {
     }
     // **** GETTERS / SETTERS **** //
     
+    /**
+     * User ID
+     * @returns {String}
+     * @memberof User
+     */
     getID(user) {
         return user.id;
     }
 
+    /**
+     * User's username
+     * @return {String}
+     * @memberof User
+     */
     getUsername(user) {
         return user.username;
     }
 
+    /**
+     * User's discrim
+     * @return {String}
+     * @memberof User
+     */
     getDiscriminator(user) {
         return user.discriminator;
     }
 
+    /**
+     * User's username+discrim
+     * @returns {String}
+     * @memberof User
+     */
     getTag(user) {
         return `${user.username}#${user.discriminator}`;
     }
 
+    /**
+     * If user is a bot
+     * @returns {Boolean}
+     * @memberof User
+     */
     isBot(user) {
         return user.bot;
     }

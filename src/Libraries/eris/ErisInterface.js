@@ -12,7 +12,15 @@ import ErisChannel from './lib/ErisChannel';
 import ErisGuild from './lib/ErisGuild';
 import ErisResolver from './lib/ErisResolver';
 
+/**
+ * @typedef {import('eris').Client} Client
+ * @typedef {import('eris').Message} Message
+ */
+
 class ErisInterface extends LibraryInterface {
+    /**
+     * @param {Client} botClient
+     */
     constructor(botClient) {
         super(botClient, {
             User: ErisUser,
@@ -35,12 +43,18 @@ class ErisInterface extends LibraryInterface {
         return HANDLERS;
     }
 
+    /**
+     * @param {(msg: Message) => void} func
+     */
     onMessageCreate(func) {
         this.botClient.on(this.enums.EVENTS.MESSAGE_CREATE, (msg) => {
             func(msg);
         } );
     }
 
+    /**
+     * @param {() => void} func
+     */
     onceReady(func) {
         this.botClient.once(this.enums.EVENTS.READY, () => {
             func();

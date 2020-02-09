@@ -6,6 +6,11 @@ import Channel from './Channel';
 import Guild from './Guild';
 
 /**
+ * @typedef {import('./Resolver').default} Resolver
+ * @typedef {import('./LibraryInterface').default} LibraryInterface
+ */
+
+/**
  * Base class that handle any interaction with the library.
  *
  * @author KhaaZ
@@ -18,11 +23,11 @@ class LibraryInterface {
      *
      * @param {Object} botClient - The bot client (lib specific)
      * @param {Object} structs - Object with all structures to use in lib interface
-     * @param {User} structs.User
-     * @param {Member} structs.Member
-     * @param {Message} structs.Message
-     * @param {Channel} structs.Channel
-     * @param {Guild} structs.Guild
+     * @param {new (...args: Array<any>) => User} structs.User
+     * @param {new (...args: Array<any>) => Member} structs.Member
+     * @param {new (...args: Array<any>) => Message} structs.Message
+     * @param {new (...args: Array<any>) => Channel} structs.Channel
+     * @param {new (...args: Array<any>) => Guild} structs.Guild
      * @param {Resolver} structs.Resolver
      *
      * @memberof LibraryInterface
@@ -58,15 +63,27 @@ class LibraryInterface {
         this.resolver = structs.Resolver;
     }
 
+    /**
+     * Bot client
+     * @memberof LibraryInterface
+     */
     get botClient() {
         return this._botClient;
     }
 
+    /**
+     * @returns {void}
+     * @memberof LibraryInterface
+     */
     // eslint-disable-next-line no-unused-vars
     onMessageCreate(func) {
         throw new NotImplementedException();
     }
 
+    /**
+     * @returns {void}
+     * @memberof LibraryInterface
+     */
     // eslint-disable-next-line no-unused-vars
     onceReady(func) {
         throw new NotImplementedException();
