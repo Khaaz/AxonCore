@@ -2,6 +2,10 @@ import { Signale } from 'signale';
 import figures from 'figures';
 import Context from './Context';
 
+/**
+ * @typedef {import('signale').SignaleOptions} SignaleOptions
+ */
+
 const logOptions = {
     types: {
         verbose: {
@@ -20,6 +24,9 @@ const logOptions = {
  * @extends Signale
  */
 class SignaleLogger extends Signale {
+    /**
+     * @param {SignaleOptions} options
+     */
     constructor(options) {
         super(new Signale(options) );
 

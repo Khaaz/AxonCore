@@ -5,6 +5,10 @@ import DefaultLogger from './DefLogger';
 import { LOGGER_TYPES } from '../Utility/Constants/AxonEnums';
 
 /**
+ * @typedef {import('../Structures/DataStructure/AxonConfig').default} AxonConfig
+ */
+
+/**
  * Logger Handler
  * Use require to dynamically load a Logger depending on installed dependencies.
  *
@@ -14,6 +18,9 @@ import { LOGGER_TYPES } from '../Utility/Constants/AxonEnums';
  * @extends ASelector
  */
 class LoggerSelector extends ASelector {
+    /**
+     * @param {AxonConfig} axonConfig
+     */
     static select(axonConfig) {
         let Logger;
 

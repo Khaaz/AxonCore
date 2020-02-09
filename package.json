@@ -19,6 +19,7 @@
     "@axonteam/eslint-config": "^2.2.0",
     "@types/mongoose": "^5.5.32",
     "@types/node": "^12.12.14",
+    "@types/signale": "^1.2.1",
     "@typescript-eslint/eslint-plugin": "^2.16.0",
     "@typescript-eslint/parser": "^2.16.0",
     "chalk": "^2.4.2",
@@ -26,6 +27,7 @@
     "eris": "abalabahaha/eris#dev",
     "eslint": "^6.8.0",
     "mongoose": "^5.7.7",
+    "signale": "^1.4.0",
     "superagent": "^5.2.1",
     "typescript": "^3.7.5",
     "yarn": "^1.21.1"
@@ -35,7 +37,7 @@
   "scripts": {
     "lint": "yarn run lint:js && yarn run lint:ts",
     "lint:js": "eslint src examples *.js",
-    "lint:ts": "eslint index.d.ts types *.ts",
+    "lint:ts": "eslint index.d.ts types/** *.ts",
     "test": "yarn run lint",
     "test:push": "eslint src examples *.js",
     "test:publish": "eslint src *.js",

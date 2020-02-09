@@ -3,6 +3,7 @@ import * as Eris from 'eris';
 import * as djs from 'discord.js';
 import { Model, Document } from 'mongoose';
 import { RequestOptions } from 'http';
+import { Signale, SignaleOptions } from 'signale';
 type LibMessage = Eris.Message | djs.Message;
 type LibMember = Eris.Member | djs.GuildMember;
 type LibClient = Eris.Client | djs.Client;
@@ -1288,13 +1289,18 @@ declare module 'axoncore' {
         private _parseTime(): string;
     }
 
-    // I won't include class extensions for Winston and Signale for now
+    // I won't include class extensions for Winston for now
     export class ChalkLogger extends ALogger {
         public out: Console;
     }
 
     export class DefLogger extends ALogger {
         public out: Console;
+    }
+
+    export class SignaleLogger extends ALogger {
+        public out: Signale;
+        constructor(options: SignaleOptions);
     }
 
     export class Context {
