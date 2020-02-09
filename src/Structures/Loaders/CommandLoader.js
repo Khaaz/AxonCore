@@ -26,7 +26,6 @@ class CommandLoader extends ALoader {
      *
      * @readonly
      * @type {AxonClient}
-     *
      * @memberof CommandLoader
      */
     get axon() {
@@ -38,7 +37,6 @@ class CommandLoader extends ALoader {
      *
      * @readonly
      * @type {Logger}
-     *
      * @memberof CommandLoader
      */
     get logger() {
@@ -52,7 +50,6 @@ class CommandLoader extends ALoader {
      * @param {Command} command - The command to load
      * @param {Command} [parent=null] - The optional parent command
      * @returns {Boolean}
-     *
      * @memberof CommandLoader
      */
     load(command, parent = null) {
@@ -82,12 +79,11 @@ class CommandLoader extends ALoader {
      *
      * @param {Command} commands
      * @returns {Boolean}
-     *
      * @memberof CommandLoader
      */
     loadAll(commands) {
         if (commands.default) {
-            this.logger.error(`[Module(${this._module.label})] Commands: No commands found.`);
+            this.logger.error(`[${this._module.label}] Commands: No commands found.`);
             return false;
         }
         for (const Value of Object.values(commands) ) {
@@ -95,7 +91,7 @@ class CommandLoader extends ALoader {
             try {
                 this.load(command);
             } catch (err) {
-                this.logger(err);
+                this.logger.error(err);
             }
         }
 
@@ -130,12 +126,10 @@ class CommandLoader extends ALoader {
      *
      * @param {String} label - The Command label to unload
      * @returns {Boolean} Whether it worked
-     *
      * @memberof CommandLoader
      */
     unload(label) {
         this.axon.commandRegistry.unregister(label);
-        this.logger.info(`Module: ${module.label} unregistered!`);
         return true;
     }
 
@@ -145,7 +139,6 @@ class CommandLoader extends ALoader {
      * Register a Command. Register its subcommands if it has any.
      *
      * @param {Command} command - Command object
-     *
      * @memberof CommandLoader
      */
     registerCommand(command) {
@@ -156,9 +149,6 @@ class CommandLoader extends ALoader {
         delete command.subcmds;
        
         this.axon.commandRegistry.register(command.label, command); // add the command to the Map of commands.
-        this.logger.info(command.hasSubcmd
-            ? `[CMD] => Initialised! | SubCommands loaded -${command.subCommands.size}- | *${command.label}*`
-            : `[CMD] => Initialised! | *${command.label}*`);
     }
 
     /**
@@ -166,7 +156,6 @@ class CommandLoader extends ALoader {
      *
      * @param {Command} command - The subcommand to register
      * @param {Command} parent - The parent command
-     *
      * @memberof CommandLoader
      */
     registerSubCommand(command, parent) {
@@ -180,9 +169,6 @@ class CommandLoader extends ALoader {
         command.parentCommand = parent;
 
         parent.subCommands.register(command.label, command);
-        this.logger.info(command.hasSubcmd
-            ? `[SUB] => Initialised! | SubCommands loaded -${command.subCommands.size}- | ${command.label}`
-            : `[SUB] => Initialised! | ${command.label}`);
     }
 
     /**
@@ -190,7 +176,6 @@ class CommandLoader extends ALoader {
      *
      * @param {String} fullLabel - Full command label
      * @returns {Boolean} True if successful / Error otherwise
-     *
      * @memberof CommandLoader
      */
     unregisterCommand(fullLabel) {
@@ -206,8 +191,6 @@ class CommandLoader extends ALoader {
         } else {
             this.axon.commandRegistry.unregister(command.label, command);
         }
-
-        this.logger.info(`[Module(${this._module.label})] Command: ${fullLabel} unregistered!`);
         return true;
     }
 
@@ -216,7 +199,6 @@ class CommandLoader extends ALoader {
      *
      * @param {Command} command - The parent Command
      * @param {Command} subCommand - The Subcommand to unregister
-     *
      * @memberof CommandLoader
      */
     unregisterSubCommand(command, subCommand) {

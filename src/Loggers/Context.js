@@ -15,7 +15,6 @@ class Context {
      * @param {Object|String} guild
      * @param {String} cmd
      * @param {Object|String} user
-     *
      * @memberof Context
      */
     constructor(guild, cmd, user) {
@@ -43,7 +42,6 @@ class Context {
      * @param {String} ctx.cmd
      * @param {Object|String} ctx.user
      * @returns {Context} A new instance of Context
-     *
      * @memberof Context
      */
     static from(ctx = {} ) {

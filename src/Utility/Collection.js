@@ -21,7 +21,7 @@ class Collection extends Map {
      */
     constructor(options = {} ) {
         const { base: baseObject = null, iterable } = options;
-        if (iterable && iterable instanceof Array) {
+        if (iterable && Array.isArray(iterable) ) {
             super(iterable);
         } else if (iterable && iterable instanceof Object) {
             super(Object.entries(iterable) );
@@ -49,7 +49,6 @@ class Collection extends Map {
      * [ value, value, value ]
      *
      * @returns {Array<Class>}
-     *
      * @memberof Collection
      */
     toArray() {
@@ -60,8 +59,12 @@ class Collection extends Map {
      * Map to object
      * { key: value, key: value }
      *
+<<<<<<< HEAD
      * @returns {{[key:string]: Class}}
      *
+=======
+     * @returns {Object<key:value>}
+>>>>>>> df1c543b5be3024686489612fe5c8cd6870a900c
      * @memberof Collection
      */
     toObject() {
@@ -94,7 +97,6 @@ class Collection extends Map {
      * @param {Object} value - The object data
      * @param {Boolean} replace - Whether to replace an existing object with the same ID
      * @returns {Class} The existing or newly created object
-     *
      * @memberof Collection
      */
     add(key, value, replace) {
@@ -115,7 +117,6 @@ class Collection extends Map {
      *
      * @param {Function} func - A function that takes an object and returns true if it matches
      * @returns {Class} The first matching object, or null if no match
-     *
      * @memberof Collection
      */
     find(func) {
@@ -132,7 +133,6 @@ class Collection extends Map {
      *
      * @param {Function} func - A function that takes an object and returns something
      * @returns {Array} An array containing the results
-     *
      * @memberof Collection
      */
     map(func) {
@@ -148,7 +148,6 @@ class Collection extends Map {
      *
      * @param {Function} func - A function that takes an object and returns true if it matches
      * @returns {Array<Class>} An array containing all the objects that matched
-     *
      * @memberof Collection
      */
     filter(func) {
@@ -167,7 +166,6 @@ class Collection extends Map {
      * @param {Function} callbackFn - Function to execute on each element in the array
      * @param {Number} [initialValue=0] - Value to use as the first argument to the first call of the callback
      * @returns accumulator
-     *
      * @memberof Collection
 	 */
     reduce(func, initialValue = 0) {
@@ -185,7 +183,6 @@ class Collection extends Map {
      *
      * @param {Function} func - A function that takes an object and returns true if it matches
      * @returns {Boolean} An array containing all the objects that matched
-     *
      * @memberof Collection
      */
     some(func) {
@@ -202,7 +199,6 @@ class Collection extends Map {
      *
      * @param {Function} func - A function that takes an object and returns true if it matches
      * @returns {Boolean} An array containing all the objects that matched
-     *
      * @memberof Collection
      */
     every(func) {
@@ -221,7 +217,6 @@ class Collection extends Map {
      * @param {Object} value - The updated object data
      * @param {Boolean} replace - Whether to replace an existing object with the same ID
      * @returns {Class} The updated object
-     *
      * @memberof Collection
      */
     update(key, value) {
@@ -249,7 +244,6 @@ class Collection extends Map {
      * Get a random object from the Collection
      *
      * @returns {Class?} The random object, or null if there is no match
-     *
      * @memberof Collection
      */
     random() {

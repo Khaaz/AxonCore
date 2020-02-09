@@ -17,7 +17,6 @@ class AxonUtils {
      * Creates an AxonUtils instance.
      *
      * @param {AxonClient} axon
-     *
      * @memberof AxonUtils
      */
     constructor(axon) {
@@ -103,7 +102,6 @@ class AxonUtils {
      * @param {String} type - Type of the webhook [status, loader, error, misc]
      * @param {Object} embed - Embed object
      * @param {String} opt - Optional string to use as bot username
-     *
      * @memberof AxonUtils
      */
     triggerWebhook(type, embed, opt) {
@@ -130,7 +128,6 @@ class AxonUtils {
      *
      * @param {String} uID - the user ID
      * @returns {Boolean}
-     *
      * @memberof AxonUtils
      */
     isBotOwner(uID) {
@@ -142,7 +139,6 @@ class AxonUtils {
      *
      * @param {String} uID - the user ID
      * @returns {Boolean}
-     *
      * @memberof AxonUtils
      */
     isBotAdmin(uID) {
@@ -154,7 +150,6 @@ class AxonUtils {
      *
      * @param {String} uID - the user ID
      * @returns {Boolean}
-     *
      * @memberof AxonUtils
      */
     isBotStaff(uID) {
@@ -175,7 +170,6 @@ class AxonUtils {
      * @param {Member} member - The member object
      * @param {Object} guildConfig - The guild Config from the DB
      * @returns {Boolean} True if user is a mod / False if not
-     *
      * @memberof AxonUtils
      */
     isServerMod(member, guildConfig) {
@@ -199,7 +193,6 @@ class AxonUtils {
      *
      * @param {Member} member - The member object
      * @returns {Boolean} True if admin / False if not
-     *
      * @memberof AxonUtils
      */
     isServerManager(member) {
@@ -212,7 +205,6 @@ class AxonUtils {
      *
      * @param {Member} member - The member object
      * @returns {Boolean} True if admin / False if not
-     *
      * @memberof AxonUtils
      */
     isServerAdmin(member) {
@@ -224,7 +216,6 @@ class AxonUtils {
      *
      * @param {Member} member - The member object
      * @returns {Boolean} True if admin / False if not
-     *
      * @memberof AxonUtils
      */
     isServerOwner(member, guild) {
@@ -267,7 +258,6 @@ class AxonUtils {
      * @param {Boolean} [options.delete=false] - Whether to delete the message or not
      * @param {Number} [options.delay=null] - Delay after which the message will be deleted
      * @returns {Promise<Message?>} Message Object
-     *
      * @memberof AxonUtils
      */
     sendMessage(channel, content, options = {} ) {
@@ -313,7 +303,6 @@ class AxonUtils {
      * @param {Message} message - The message object to edit
      * @param {Object/String} content - Object (embed) or String
      * @returns {Promise<Message?>} Message Object
-     *
      * @memberof AxonUtils
      */
     editMessage(message, content) {

@@ -43,7 +43,6 @@ class MongoProvider extends ADBProvider {
      * Initialises a default Axon config.
      *
      * @returns {Promise<AxonConfig>} Newly created Axon config from the DB
-     *
      * @memberof MongoProvider
      */
     async initAxon() {
@@ -71,7 +70,6 @@ class MongoProvider extends ADBProvider {
      * @param {String} gID - Guild ID
      *
      * @returns {Promise<GuildConfig|null>} Newly created Guild config from the DB
-     *
      * @memberof MongoProvider
      */
     async initGuild(gID) {
@@ -98,7 +96,6 @@ class MongoProvider extends ADBProvider {
      * Retrieves the axon config from the DB
      *
      * @returns {Promise<AxonConfig|null>} AxonSchema Object or null
-     *
      * @memberof MongoProvider
      */
     async fetchAxon() {
@@ -113,7 +110,6 @@ class MongoProvider extends ADBProvider {
      *
      * @param {String} gID - Guild ID
      * @returns {Promise<GuildConfig|null>}
-     *
      * @memberof MongoProvider
      */
     async fetchGuild(gID) {
@@ -130,7 +126,6 @@ class MongoProvider extends ADBProvider {
      *
      * @param {String} gID - Guild ID
      * @returns {Promise<Object|null>} GuildSchema or null
-     *
      * @memberof MongoProvider
      */
     fetchGuildSchema(gID) {
@@ -207,7 +202,6 @@ class MongoProvider extends ADBProvider {
      *
      * @param {AxonConfig} data - the schema object to update
      * @returns {Promise<AxonConfig|null>} Updated AxonConfig from the DB
-     *
      * @memberof MongoProvider
      */
     async saveAxon(data) {
@@ -232,7 +226,6 @@ class MongoProvider extends ADBProvider {
      * @param {String} gID - Guid id
      * @param {GuildConfig} data - the schema object to update
      * @returns {Promise<GuildConfig|null>} Updated GuildConfig from the DB
-     *
      * @memberof MongoProvider
      */
     async saveGuild(gID, data) {

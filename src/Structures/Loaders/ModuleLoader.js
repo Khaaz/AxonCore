@@ -48,7 +48,6 @@ class ModuleLoader extends ALoader {
      *
      * @param {Module} module - The module to load
      * @returns {Boolean}
-     *
      * @memberof ModuleLoader
      */
     load(module) {
@@ -64,10 +63,7 @@ class ModuleLoader extends ALoader {
             throw new AxonError(`[${module.label}] Invalid Module (enable debugMode)!`, 'MODULE-LOADER', module.label);
         }
 
-        /* Register the module */
         this.axon.moduleRegistry.register(module.label, module);
-        
-        this.logger.info(`[MOD] => Initialised! | Commands loaded -${module.commands.size}- | [${module.label}]`);
         return true;
     }
 
@@ -77,12 +73,11 @@ class ModuleLoader extends ALoader {
      *
      * @param {Module} modules
      * @returns {Boolean}
-     *
      * @memberof ModuleLoader
      */
     loadAll(modules) {
         if (Object.keys(modules).length === 0) {
-            this.logger.error('Modules: No modules found.');
+            this.logger.error('[AxonClient] Modules: No modules found.');
             return false;
         }
 
@@ -94,7 +89,7 @@ class ModuleLoader extends ALoader {
                 this.logger.error(err);
             }
         }
-        this.axon.log('INFO', `Initialised! | [AxonClient] | Modules loaded -${this.axon.moduleRegistry.size}-`);
+        this.axon.log('INFO', `Initialised: [AxonClient] | Modules loaded -${this.axon.moduleRegistry.size}-`);
         return true;
     }
 
@@ -103,7 +98,6 @@ class ModuleLoader extends ALoader {
      *
      * @param {String} label - The Module label to unload
      * @returns {Boolean} Whether it worked
-     *
      * @memberof ModuleLoader
      */
     unload(label) {

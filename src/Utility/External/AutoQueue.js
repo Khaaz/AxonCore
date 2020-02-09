@@ -15,7 +15,6 @@ import Queue from './Queue';
 class AutoQueue extends Queue {
     /**
      * Execute the queue.
-     *
      * @memberof AutoQueue
      */
     async exec() {

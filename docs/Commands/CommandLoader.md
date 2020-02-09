@@ -8,7 +8,6 @@
 * [CommandLoader](#CommandLoader) ⇐ <code>ALoader</code>
     * [new CommandLoader()](#new_CommandLoader_new)
     * [.axon](#CommandLoader+axon) : <code>AxonClient</code>
-    * [.module](#CommandLoader+module) : <code>Module</code>
     * [.logger](#CommandLoader+logger) : <code>Logger</code>
     * [.load(command, [parent])](#CommandLoader+load) ⇒ <code>Boolean</code>
     * [.loadAll(commands)](#CommandLoader+loadAll) ⇒ <code>Boolean</code>
@@ -28,13 +27,6 @@ Validate the command validity entirely.
 
 ### commandLoader.axon : <code>AxonClient</code>
 Returns the AxonClient instance
-
-**Kind**: instance property of [<code>CommandLoader</code>](#CommandLoader)  
-**Read only**: true  
-<a name="CommandLoader+module"></a>
-
-### commandLoader.module : <code>Module</code>
-Returns the Module instance
 
 **Kind**: instance property of [<code>CommandLoader</code>](#CommandLoader)  
 **Read only**: true  
@@ -102,8 +94,8 @@ Register a SubCommand.Register its subcommands if it has any
 
 | Param | Type | Description |
 | --- | --- | --- |
-| command | <code>Commands</code> | The subcommand to register |
-| parent | <code>Commands</code> | The parent command |
+| command | <code>Command</code> | The subcommand to register |
+| parent | <code>Command</code> | The parent command |
 
 <a name="CommandLoader+unregisterCommand"></a>
 

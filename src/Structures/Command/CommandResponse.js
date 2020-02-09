@@ -29,7 +29,6 @@ class CommandResponse {
      * By default returns the Command Response asynchronously.
      *
      * @returns {Promise<CommandResponse>}
-     *
      * @memberof CommandResponse
      */
     resolve() {
@@ -40,7 +39,6 @@ class CommandResponse {
      * Returns the Command Response in a Promise (asynchronously)
      *
      * @returns {Promise<CommandResponse>}
-     *
      * @memberof CommandResponse
      */
     resolveAsync() {
@@ -51,7 +49,6 @@ class CommandResponse {
      * Returns the Command Response (synchronously)
      *
      * @returns {CommandResponse}
-     *
      * @memberof CommandResponse
      */
     resolveSync() {

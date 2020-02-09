@@ -33,6 +33,7 @@ class ModuleRegistry extends ARegistry {
         module._init();
 
         this.add(label, module);
+        this.axon.logger.info(`[MOD] => Registered: [${module.label}] | Commands loaded -${module.commands.size}-`);
     }
 
     /**
@@ -61,8 +62,7 @@ class ModuleRegistry extends ARegistry {
         }
 
         this.remove(label);
-
-        this.axon.log('INFO', `MODULE-REGISTRY - [Module(${module.label})] Module: ${label} unregistered!`);
+        this.axon.logger.info(`[MOD] => Unregistered: [${module.label}]`);
     }
 }
 

@@ -15,7 +15,6 @@ class Queue {
      * Creates an instance of Queue.
      *
      * @param {boolean} [stopOnError=false]
-     *
      * @memberof Queue
      */
     constructor(stopOnError = false) {
@@ -27,7 +26,6 @@ class Queue {
 
     /**
      * Execute the Queue
-     *
      * @memberof Queue
      */
     exec() {
@@ -57,7 +55,6 @@ class Queue {
      * @param {Function} func - The function to run
      * @param {Boolean} [toExec=true] - Whether to auto exec the queue on add or not.
      * @param {*} args - All arguments the function needs
-     *
      * @memberof Queue
      */
     add(func, toExec = true, ...args) {

@@ -31,7 +31,7 @@ Create a Prompt, waiting for specific input before resolving with the message Ob
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| client | <code>Object</code> |  | The Axon client |
+| client | <code>AxonClient</code> |  | The Axon client |
 | uID | <code>String</code> |  | The user ID |
 | channel | <code>Object</code> |  | The channel object |
 | [defaultOptions] | <code>Object</code> | <code>{}</code> | The default options for the prompt. |
@@ -137,7 +137,7 @@ Create a Prompt, waiting for specific input before resolving with the message Ob
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| client | <code>Object</code> |  | The Axon client |
+| client | <code>AxonClient</code> |  | The Axon client |
 | uID | <code>String</code> |  | The user ID |
 | channel | <code>Object</code> |  | The channel object |
 | [defaultOptions] | <code>Object</code> | <code>{}</code> | The default options for the prompt. |

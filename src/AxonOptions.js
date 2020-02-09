@@ -125,7 +125,6 @@ class AxonOptions {
      * @param {String} extensions.DBLocation - Path to use as default location for usage of the JSONProvider
      * @param {AxonConfig} extensions.axonConfig - Custom AxonConfig object to use instead of default AxonConfig
      * @param {GuildConfig} extensions.guildConfig - Custom GuildConfig object to use instead of default GuildConfig
-     *
      * @memberof AxonOptions
      */
     constructor(data = {}, webhooks = {}, extensions = {} ) {

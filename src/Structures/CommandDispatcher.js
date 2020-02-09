@@ -14,7 +14,6 @@ class CommandDispatcher {
      * Creates an instance of CommandDispatcher.
      *
      * @param {Object<AxonClient>} axon
-     *
      * @memberof CommandDispatcher
      */
     constructor(axon) {
@@ -48,7 +47,6 @@ class CommandDispatcher {
      *
      * @param {Object<Message>} msg - Message Object from Eris
      * @returns {Promise}
-     *
      * @memberof CommandDispatcher
      */
     async dispatch(msg) {
@@ -143,7 +141,6 @@ class CommandDispatcher {
      *
      * @param {Object<Message>} msg
      * @returns {Object} { isAdmin: Boolean, isOwner: Boolean }
-     *
      * @memberof CommandDispatcher
      */
     getExecutionType(msg) {
@@ -173,7 +170,6 @@ class CommandDispatcher {
      * @param {Boolean} [isAdmin=false] - The guildConfig Object
      * @param {Boolean} [isOwner=false] - The guildConfig Object
      * @returns {String?} The prefix if found / Undefined if not
-     *
      * @memberof CommandDispatcher
      */
     resolvePrefix(msg, guildConfig, isAdmin = false, isOwner = false) {
@@ -190,7 +186,6 @@ class CommandDispatcher {
      * @param {Object<Message>} msg - The message object
      * @param {Object<GuildConfig>} guildConfig - The guildConfig Object
      * @returns {String?} The prefix if found / Undefined if not
-     *
      * @memberof CommandDispatcher
      */
     resolveGuildPrefix(msg, guildConfig) {

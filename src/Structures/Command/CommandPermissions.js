@@ -38,7 +38,6 @@ class CommandPermissions {
      * @param {Command} command - The base command
      * @param {Object} [override={}] - The specific permissions for this command (format - CommandPermissions)
      * @param {Boolean} [useModuleDefault=false] - Whether to use or not the module's base permissions before applying override permissions
-     *
      * @memberof CommandPermissions
      */
     constructor(command, override = {}, useModuleDefault = false) {
@@ -147,7 +146,6 @@ class CommandPermissions {
      * @param {Message} msg - The Message Object
      * @param {Object} guildConf - GuildConfig
      * @returns {Array<Boolean, String|null>} True if the user can execute command / False if not. Second element is the missing permission || null
-     *
      * @memberof Command
      */
     canExecute(msg, guildConf) {
@@ -206,7 +204,6 @@ class CommandPermissions {
      * @param {Array} [array=[]] - Array of permissions
      * @param {Boolean} [toAdd=false] - Whether to add the permissions to the existing permissions
      * @returns {CommandPermissions}
-     *
      * @memberof CommandPermissions
      */
     setBot(array = [], toAdd = false) {
@@ -223,7 +220,6 @@ class CommandPermissions {
      *
      * @param {Boolean} [boolean=true] - Whether to make the command serverMod only
      * @returns {CommandPermissions}
-     *
      * @memberof CommandPermissions
      */
     setServerMod(boolean = true) {
@@ -236,7 +232,6 @@ class CommandPermissions {
      *
      * @param {Boolean} [boolean=true] - Whether to make the command serverManager only
      * @returns {CommandPermissions}
-     *
      * @memberof CommandPermissions
      */
     setServerManager(boolean = true) {
@@ -249,7 +244,6 @@ class CommandPermissions {
      *
      * @param {Boolean} [boolean=true] - Whether to make the command serverAdmin only
      * @returns {CommandPermissions}
-     *
      * @memberof CommandPermissions
      */
     setServerAdmin(boolean = true) {
@@ -262,7 +256,6 @@ class CommandPermissions {
      *
      * @param {Boolean} [boolean=true] - Whether to make the command serverOwner only
      * @returns {CommandPermissions}
-     *
      * @memberof CommandPermissions
      */
     setServerOwner(boolean = true) {
@@ -276,7 +269,6 @@ class CommandPermissions {
      * @param {Object} [object={ bypass: [], needed: [] }] - Object of permissions
      * @param {boolean} [toAdd=false] - Whether to add the permissions to the existing permissions
      * @returns {CommandPermissions}
-     *
      * @memberof CommandPermissions
      */
     setUser(object = { bypass: [], needed: [] }, toAdd = false) {
@@ -304,7 +296,6 @@ class CommandPermissions {
      * @param {Object} [object={ bypass: [], needed: [] }] - Object of permissions
      * @param {boolean} [toAdd=false] - Whether to add the permissions to the existing permissions
      * @returns {CommandPermissions}
-     *
      * @memberof CommandPermissions
      */
     setUserIDs(object = { bypass: [], needed: [] }, toAdd = false) {
@@ -332,7 +323,6 @@ class CommandPermissions {
      * @param {Object} [object={ bypass: [], needed: [] }] - Object of permissions
      * @param {boolean} [toAdd=false] - Whether to add the permissions to the existing permissions
      * @returns {CommandPermissions}
-     *
      * @memberof CommandPermissions
      */
     setRoleIDs(object = { bypass: [], needed: [] }, toAdd = false) {
@@ -360,7 +350,6 @@ class CommandPermissions {
      * @param {Object} [object={ bypass: [], needed: [] }] - Object of permissions
      * @param {boolean} [toAdd=false] - Whether to add the permissions to the existing permissions
      * @returns {CommandPermissions}
-     *
      * @memberof CommandPermissions
      */
     setChannelIDs(object = { bypass: [], needed: [] }, toAdd = false) {
@@ -388,7 +377,6 @@ class CommandPermissions {
      * @param {Object} [object={ bypass: [], needed: [] }] - Object of permissions
      * @param {boolean} [toAdd=false] - Whether to add the permissions to the existing permissions
      * @returns {CommandPermissions}
-     *
      * @memberof CommandPermissions
      */
     setStaff(object = { bypass: [], needed: [] }, toAdd = false) {
@@ -418,7 +406,6 @@ class CommandPermissions {
      *
      * @param {Channel} channel
      * @returns {Boolean}
-     *
      * @memberof CommandPermissions
      */
     _checkPermsBot(channel) {
@@ -433,7 +420,6 @@ class CommandPermissions {
      *
      * @param {Member} member
      * @returns {Boolean}
-     *
      * @memberof CommandPermissions
      */
     _checkPermsUserBypass(member) {
@@ -474,7 +460,6 @@ class CommandPermissions {
      *
      * @param {Member} member
      * @returns {Boolean}
-     *
      * @memberof CommandPermissions
      */
     _checkUserBypass(member) {
@@ -489,7 +474,6 @@ class CommandPermissions {
      *
      * @param {Member} member
      * @returns {Boolean}
-     *
      * @memberof CommandPermissions
      */
     _checkUserNeeded(member) {
@@ -504,7 +488,6 @@ class CommandPermissions {
      *
      * @param {Member} member
      * @returns {Boolean}
-     *
      * @memberof CommandPermissions
      */
     _checkRoleBypass(member) {
@@ -525,7 +508,6 @@ class CommandPermissions {
      *
      * @param {Member} member
      * @returns {Boolean}
-     *
      * @memberof CommandPermissions
      */
     _checkRoleNeeded(member) {
@@ -546,7 +528,6 @@ class CommandPermissions {
      *
      * @param {Channel} channel
      * @returns {Boolean}
-     *
      * @memberof CommandPermissions
      */
     _checkChannelBypass(channel) {
@@ -561,7 +542,6 @@ class CommandPermissions {
      *
      * @param {Channel} channel
      * @returns {Boolean}
-     *
      * @memberof CommandPermissions
      */
     _checkChannelNeeded(channel) {
@@ -576,7 +556,6 @@ class CommandPermissions {
      *
      * @param {Member} member
      * @returns {Boolean} True if Staff / False if not
-     *
      * @memberof CommandPermissions
      */
     _checkStaffBypass(member) {
@@ -591,7 +570,6 @@ class CommandPermissions {
      *
      * @param {Member} member
      * @returns {Boolean} True if Staff / False if not
-     *
      * @memberof CommandPermissions
      */
     _checkStaffNeeded(member) {

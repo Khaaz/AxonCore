@@ -40,7 +40,6 @@ class MessageParser {
      * @param {String} message
      * @param {AxonLanguageResponse} args - Custom object with all arguments that needs to be inserted in the string
      * @returns {String} - The Parsed message
-     *
      * @memberof MessageParser
      */
     parse(message, args) {
@@ -60,7 +59,6 @@ class MessageParser {
      * @param {String} message
      * @param {Array<String>} args
      * @returns {String} - The Parsed message
-     *
      * @memberof MessageParser
      */
     parse2(message, ...args) {

@@ -36,7 +36,6 @@ class Listener extends Base {
      * @param {Boolean} [data.enabled]
      * @param {Boolean} [data.serverBypass]
      * @param {Object} [data.infos]
-     *
      * @memberof Listener
      */
     constructor(module, data = {} ) {
@@ -77,7 +76,6 @@ class Listener extends Base {
      * @param {GuildConfig} guildConfig - the guildConfig or undefined if not a guild event
      * @param {Array} args - Array of the events arguments
      * @returns {Promise}
-     *
      * @memberof Listener
      */
     async _execute(guildConfig, ...args) {
@@ -90,7 +88,6 @@ class Listener extends Base {
      * @param {Array} args - Array of the events arguments (as separate parameters)
      * @param {GuildConfig?} guildConfig - The guildConfig or undefined if not a guild event
      * @returns {Promise}
-     *
      * @memberof Listener
      */
     // eslint-disable-next-line no-unused-vars

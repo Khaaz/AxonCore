@@ -13,7 +13,6 @@ class CommandCooldown {
      * Creates an instance of CommandCooldown.
      *
      * @param {Command} command
-     *
      * @memberof CommandCooldown
      */
     constructor(command) {

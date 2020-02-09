@@ -30,9 +30,14 @@ class ADBProvider {
     /**
      * Creates an instance of ADBProvider.
      *
+<<<<<<< HEAD
      * @param {AxonClient} axonClient
      *
      * @memberof ADBProvider
+=======
+     * @param {AxonClient} axon
+     * @memberof DBProvider
+>>>>>>> df1c543b5be3024686489612fe5c8cd6870a900c
      */
     constructor(axonClient) {
         if (this.constructor === 'ADBProvider') {
@@ -50,9 +55,14 @@ class ADBProvider {
      * Init the ADBProvider.
      * Method called just after instantiation. Can be overridden with anything that will be used by the provider.
      *
+<<<<<<< HEAD
      * @param {AxonOptions} [axonOptions]
      *
      * @memberof ADBProvider
+=======
+     * @param {AxonOptions}
+     * @memberof DBProvider
+>>>>>>> df1c543b5be3024686489612fe5c8cd6870a900c
      */
     init(axonOptions = null) {
         throw new NotImplementedException();
@@ -64,8 +74,12 @@ class ADBProvider {
      * Initialises a default Axon config.
      *
      * @returns {Promise<AxonConfig>} Newly created Axon config from the DB
+<<<<<<< HEAD
      *
      * @memberof ADBProvider
+=======
+     * @memberof DBProvider
+>>>>>>> df1c543b5be3024686489612fe5c8cd6870a900c
      */
     initAxon() {
         throw new NotImplementedException();
@@ -78,8 +92,12 @@ class ADBProvider {
      * @param {String} gID - Guild ID
      *
      * @returns {Promise<GuildConfig|null>} Newly created Guild config from the DB
+<<<<<<< HEAD
      *
      * @memberof ADBProvider
+=======
+     * @memberof DBProvider
+>>>>>>> df1c543b5be3024686489612fe5c8cd6870a900c
      */
     initGuild(gID) {
         throw new NotImplementedException();
@@ -91,8 +109,12 @@ class ADBProvider {
      * Retrieves the axon config from the DB
      *
      * @returns {Promise<AxonConfig|null>} AxonSchema Object or null
+<<<<<<< HEAD
      *
      * @memberof ADBProvider
+=======
+     * @memberof DBProvider
+>>>>>>> df1c543b5be3024686489612fe5c8cd6870a900c
      */
     fetchAxon() {
         throw new NotImplementedException();

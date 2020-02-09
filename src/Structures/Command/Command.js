@@ -64,7 +64,6 @@ class Command extends Base {
      * @param {Object} [data.infos]
      * @param {CommandOptions|Object} [data.options] - The command options
      * @param {CommandPermissions|Object} [data.permissions] - The command permissions
-     *
      * @memberof Command
      */
     constructor(module, data = {} ) {
@@ -180,7 +179,6 @@ class Command extends Base {
      *
      * @param {Object} params - { msg, args, guildConfig, isAdmin, isOwner }
      * @returns {Promise<CommandContext>} Return a CommandContext or throw an AxonCommandError.
-     *
      * @memberof Command
      */
     _process(params) {
@@ -265,7 +263,8 @@ class Command extends Base {
             } );
         }
 
-        if (this.options.shouldDeleteCommand() ) { // delete input
+        /** Doesn't delete the input if any other condition didn't pass through. */
+        if (this.options.shouldDeleteCommand() ) {
             this.library.message.delete(msg).catch(this.logger.warn);
         }
 
@@ -283,7 +282,6 @@ class Command extends Base {
      *
      * @param {Object} { msg, args, guildConfig, isAdmin, isOwner }
      * @returns {CommandContext}
-     *
      * @memberof Command
      */
     _execute( {
@@ -321,7 +319,6 @@ class Command extends Base {
      * @param {GuildConfig} [object.guildConfig] - The guildConfig if it exists
      *
      * @returns {Promise<CommandResponse>} Returns a CommandResponse that will be used to create the CommandContext
-     *
      * @memberof Command
      */
     async execute({ msg, args, guildConfig }) { // eslint-disable-line

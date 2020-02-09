@@ -22,7 +22,6 @@ class AxonConfig {
      * @param {AxonClient} axon
      *
      * @param {Object} values DB values for the current Guild
-     *
      * @memberof AxonConfig
      */
     constructor(axon, values) {
@@ -48,7 +47,6 @@ class AxonConfig {
      *
      * @param {String} userID
      * @returns {Boolean}
-     *
      * @memberof AxonConfig
      */
     isBlacklistedUser(userID) {
@@ -80,7 +78,6 @@ class AxonConfig {
      * @param {String} userID - The guild ID
      * @param {Boolean} [boolean=true] - Whether to add (true) the user or remove (false) it.
      * @returns {Promise<AxonConfig|null>} Updated axonConfig / Error
-     *
      * @memberof AxonConfig
      */
     async updateBlacklistUser(userID, boolean = true) {
@@ -101,7 +98,6 @@ class AxonConfig {
      * @param {String} guildID - The guild ID
      * @param {Boolean} [boolean=true] - Whether to add (true) the guild or remove (false) it.
      * @returns {Promise<AxonConfig|null>} Updated axonConfig / Error
-     *
      * @memberof AxonConfig
      */
     async updateBlacklistGuild(guildID, boolean = true) {

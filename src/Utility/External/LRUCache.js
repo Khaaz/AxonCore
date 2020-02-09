@@ -34,7 +34,6 @@ class LRUCache {
      * @param {Object} options - Options used to construct the Collection
      * @param {Class} [options.base=null]
      * @param {Array|Object} [options.iterable=null]
-     *
      * @memberof LRUCache
      */
     constructor(limit, options = {} ) {
@@ -47,7 +46,7 @@ class LRUCache {
         
         this._cache = new Collection( { base: options.base } );
         
-        if (iterable && iterable instanceof Array) {
+        if (iterable && Array.isArray(iterable) ) {
             for (const elem of iterable) {
                 this.set(elem[0], elem[1] );
             }
@@ -63,7 +62,6 @@ class LRUCache {
      *
      * @param {String} key
      * @param {*} value
-     *
      * @memberof LRUCache
      */
     set(key, value) {
@@ -85,7 +83,6 @@ class LRUCache {
      *
      * @param {String} key
      * @returns {*} value
-     *
      * @memberof LRUCache
      */
     get(key) {
@@ -106,7 +103,6 @@ class LRUCache {
      * Remove an element from the LRUCache
      *
      * @param {String} key
-     *
      * @memberof LRUCache
      */
     remove(key) {
@@ -130,7 +126,6 @@ class LRUCache {
 
     /**
      * Empty the LRUCache entirely
-     *
      * @memberof LRUCache
      */
     clear() {
@@ -150,7 +145,6 @@ class LRUCache {
      * Execute a function against every element of the Collection
      *
      * @param {Function} fn
-     *
      * @memberof LRUCache
      */
     forEach(fn) {
@@ -162,7 +156,6 @@ class LRUCache {
      *
      * @param {Function} func - A function that takes an object and returns true if it matches
      * @returns {Class} The first matching object, or null if no match
-     *
      * @memberof LRUCache
      */
     find(func) {
@@ -174,7 +167,6 @@ class LRUCache {
      *
      * @param {Function} func - A function that takes an object and returns something
      * @returns {Array} An array containing the results
-     *
      * @memberof LRUCache
      */
     map(func) {
@@ -186,7 +178,6 @@ class LRUCache {
      *
      * @param {Function} func - A function that takes an object and returns true if it matches
      * @returns {Array<Class>} An array containing all the objects that matched
-     *
      * @memberof LRUCache
      */
     filter(func) {
@@ -198,7 +189,6 @@ class LRUCache {
      *
      * @param {Function} func - A function that takes an object and returns true if it matches
      * @returns {Boolean} An array containing all the objects that matched
-     *
      * @memberof LRUCache
      */
     some(func) {
@@ -210,7 +200,6 @@ class LRUCache {
      *
      * @param {Function} func - A function that takes an object and returns true if it matches
      * @returns {Boolean} An array containing all the objects that matched
-     *
      * @memberof LRUCache
      */
     every(func) {
