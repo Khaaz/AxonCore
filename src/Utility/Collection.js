@@ -59,12 +59,8 @@ class Collection extends Map {
      * Map to object
      * { key: value, key: value }
      *
-<<<<<<< HEAD
      * @returns {{[key:string]: Class}}
      *
-=======
-     * @returns {Object<key:value>}
->>>>>>> df1c543b5be3024686489612fe5c8cd6870a900c
      * @memberof Collection
      */
     toObject() {

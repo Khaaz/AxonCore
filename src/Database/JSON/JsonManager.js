@@ -143,12 +143,8 @@ class JsonManager {
      *
      * @param {String} path
      * @returns {Promise<String|null>}
-<<<<<<< HEAD:src/Database/JSON/JsonManager.js
      *
      * @memberof JsonManager
-=======
-     * @memberof Manager
->>>>>>> df1c543b5be3024686489612fe5c8cd6870a900c:src/Database/JSON/Manager.js
      */
     async readFile(path) {
         if (!path) {
@@ -165,15 +161,10 @@ class JsonManager {
      * Write a file
      *
      * @param {String} path
-<<<<<<< HEAD:src/Database/JSON/JsonManager.js
      * @param {String} [content='{}']
      * @returns {Promise<Boolean>} Whether or not the task completed successfully
      *
      * @memberof JsonManager
-=======
-     * @returns {Promise<String|null>}
-     * @memberof Manager
->>>>>>> df1c543b5be3024686489612fe5c8cd6870a900c:src/Database/JSON/Manager.js
      */
     async writeFile(path, content = '{}') {
         if (!path) {
@@ -196,15 +187,10 @@ class JsonManager {
 
     /**
      * Create a file and schema for Axon global file.
-<<<<<<< HEAD:src/Database/JSON/JsonManager.js
      * @param {String} defaultPrefix Default prefix
      * @returns {Promise<AxonJSON>} The newly created Schema || null
      *
      * @memberof JsonManager
-=======
-     * @returns {Promise<Object>} The newly created Schema || null
-     * @memberof Manager
->>>>>>> df1c543b5be3024686489612fe5c8cd6870a900c:src/Database/JSON/Manager.js
      */
     async createAxonSchema(defaultPrefix) {
         // create schema with default / basic values
@@ -223,18 +209,11 @@ class JsonManager {
     /**
      * Create a file and schema for the given guild.
      *
-<<<<<<< HEAD:src/Database/JSON/JsonManager.js
      * @param {Array<String>} prefixes Array of prefixes
      * @param {String} gID Guild ID
      * @returns {Promise<GuildJSON>} The newly created Schema || null
      *
      * @memberof JsonManager
-=======
-     * @param {String} gID
-     * @param {Array} prefixes
-     * @returns {Promise<Object>} The newly created Schema || null
-     * @memberof Manager
->>>>>>> df1c543b5be3024686489612fe5c8cd6870a900c:src/Database/JSON/Manager.js
      */
     async createGuildSchema(prefixes, gID) {
         // create schema with default / basic values
@@ -256,14 +235,9 @@ class JsonManager {
     /**
      * Fetch the axon schema
      *
-<<<<<<< HEAD:src/Database/JSON/JsonManager.js
      * @returns {Promise<AxonJSON>} AxonSchema || null
      *
      * @memberof JsonManager
-=======
-     * @returns {Promise<Object>} AxonSchema || null
-     * @memberof Manager
->>>>>>> df1c543b5be3024686489612fe5c8cd6870a900c:src/Database/JSON/Manager.js
      */
     async fetchAxonSchema() {
         const res = await this.readFile(this._axonPath);
@@ -276,16 +250,10 @@ class JsonManager {
     /**
      * Fetch the guild schema for the given guild
      *
-<<<<<<< HEAD:src/Database/JSON/JsonManager.js
      * @param {String} gID Guild ID
      * @returns {Promise<GuildJSON>} GuildSchema || null
      *
      * @memberof JsonManager
-=======
-     * @param {String} gID
-     * @returns {Promise<Object>} GuildSchema || null
-     * @memberof Manager
->>>>>>> df1c543b5be3024686489612fe5c8cd6870a900c:src/Database/JSON/Manager.js
      */
     async fetchGuildSchema(gID) {
         const res = await this.readFile(this._buildPath(gID) );
@@ -300,20 +268,12 @@ class JsonManager {
     /**
      * Update the schema with the given value for the given guild
      *
-<<<<<<< HEAD:src/Database/JSON/JsonManager.js
      * @param {String} gID Guild ID
      * @param {String} key Value to update
      * @param {updateDBVal} value - The value to update for the given key (can be anything)
      * @returns {Promise<GuildJSON>} GuildSchema || null
      *
      * @memberof JsonManager
-=======
-     * @param {String} gID
-     * @param {String} key
-     * @param {Object} value - The value to update for the given key (can be anything)
-     * @returns {Promise<Object>} GuildSchema || null
-     * @memberof Manager
->>>>>>> df1c543b5be3024686489612fe5c8cd6870a900c:src/Database/JSON/Manager.js
      */
     updateGuildKey(gID, key, value) {
         return this.getExecutor(gID).add(async() => {
@@ -331,14 +291,9 @@ class JsonManager {
      *
      * @param {String} key Value to update
      * @param {Object} value - The value to update for the given key (can be anything)
-<<<<<<< HEAD:src/Database/JSON/JsonManager.js
      * @returns {Promise<AxonJSON>} AxonSchema || null
      *
      * @memberof JsonManager
-=======
-     * @returns {Promise<Object>} AxonSchema || null
-     * @memberof Manager
->>>>>>> df1c543b5be3024686489612fe5c8cd6870a900c:src/Database/JSON/Manager.js
      */
     updateAxonKey(key, value) {
         return this.axonExecutor.add(async() => {
@@ -356,16 +311,10 @@ class JsonManager {
     /**
      * Write the updated schema in the file.
      *
-<<<<<<< HEAD:src/Database/JSON/JsonManager.js
      * @param {AxonJSON} schema AxonSchema
      * @returns {Promise<AxonJSON>} AxonSchema || null
      *
      * @memberof JsonManager
-=======
-     * @param {Object} schema
-     * @returns {Promise<Object>} AxonSchema || null
-     * @memberof Manager
->>>>>>> df1c543b5be3024686489612fe5c8cd6870a900c:src/Database/JSON/Manager.js
      */
     async writeAxonSchema(schema) {
         schema.updatedAt = new Date();
@@ -380,18 +329,11 @@ class JsonManager {
     /**
      * Write the updated schema in the file (for the given guild).
      *
-<<<<<<< HEAD:src/Database/JSON/JsonManager.js
      * @param {String} gID Guild ID
      * @param {GuildJSON} schema GuildSchema
      * @returns {Promise<GuildJSON>} GuildSchema || null
      *
      * @memberof JsonManager
-=======
-     * @param {String} gID
-     * @param {Object} schema
-     * @returns {Promise<Object>} GuildSchema || null
-     * @memberof Manager
->>>>>>> df1c543b5be3024686489612fe5c8cd6870a900c:src/Database/JSON/Manager.js
      */
     async writeGuildSchema(gID, schema) {
         schema.updatedAt = new Date();
