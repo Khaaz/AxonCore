@@ -21,6 +21,9 @@ class MessageCreateLog extends Listener {
         if (!message.channel.guild) {
             return Promise.resolve();
         }
+        if (message.author.discriminator === '0000') {
+            return Promise.resolve();
+        }
         console.log(`Msg ${message.channel.guild.id}`);
         return Promise.resolve();
     }
