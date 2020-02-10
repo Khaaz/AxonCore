@@ -1,8 +1,13 @@
 import Client from '../../definitions/Client';
 
+import AxonError from '../../../Errors/AxonError';
+
 class DjsClient extends Client {
     constructor(lib, token) {
         super(lib);
+        if (!token) {
+            throw new AxonError('No token provided! Please provide a token through AxonOptions!', 'DjsClient');
+        }
         this._token = token;
     }
 
