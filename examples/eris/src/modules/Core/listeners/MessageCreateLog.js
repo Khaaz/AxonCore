@@ -21,7 +21,7 @@ class MessageCreateLog extends Listener {
         if (!message.channel.guild) {
             return Promise.resolve();
         }
-        if (message.author.discriminator === '0000') {
+        if (message.webhookID !== undefined) {
             return Promise.resolve();
         }
         console.log(`Msg ${message.channel.guild.id}`);
