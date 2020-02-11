@@ -12,6 +12,14 @@ import AxonCommandError from '../../Errors/AxonCommandError';
 import { COMMAND_EXECUTION_STATE } from '../../Utility/Constants/AxonEnums';
 
 /**
+ * @typedef {import('../Module').default} Module
+ * @typedef {import('../../Utility/Collection').default<Command>} CommandCollection
+ * @typedef {{embeds: Object.<string, number>, emotes: Object.<string, string>}} AxonTemplate
+ * @typedef {import('../../Libraries/definitions/LibraryInterface').default} LibraryInterface
+ * @typedef {import('../DataStructure/GuildConfig').default} GuildConfig
+ */
+
+/**
  * AxonCore - Command constructor
  *
  * @author KhaaZ
@@ -33,12 +41,12 @@ import { COMMAND_EXECUTION_STATE } from '../../Utility/Constants/AxonEnums';
  * @prop {Command} [parentCommand=null] - Reference to the parent command (if isSubcmd = true)
  * @prop {Boolean} [hasSubcmd=false] - Whether the command HAS subcommands
  * @prop {Array<Object>} subcmds - Array of subcommand objects (deleted after init)
- * @prop {Collection<Command>} [subCommands=null] - Collection of subcommands
+ * @prop {CommandCollection} [subCommands=null] - Collection of subcommands
  * @prop {Map} [subCommandsAliases=null] - Map of subcommand aliases
  *
  * @prop {Object} infos - Default info about the command
  * @prop {Array<String>} [infos.owners] - Command authors
- * @prop {String} [infos.cmdName] - Full command name
+ * @prop {String} [infos.name] - Full command name
  * @prop {String} [infos.description] - Command description
  * @prop {String} [infos.usage] - Command usage
  * @prop {Array<String>} [infos.example] - Array of command examples
@@ -60,8 +68,13 @@ class Command extends Base {
      * @param {Boolean} [data.hasSubcmd] - Whether the command HAS subcommands
      * @param {Boolean} [data.enabled] - Whether the command is enabled
      * @param {Boolean} [data.serverBypass] - Whether the command can be server disabled
-     * @param {Array<String>} [data.subcmds] - List of subcommands class to be added in the Command
+     * @param {Array<new (...args[]: any) => Command>} [data.subcmds] - List of subcommands class to be added in the Command
      * @param {Object} [data.infos]
+     * @param {Array<String>} [data.infos.owners] - Who created the command
+     * @param {String} [data.infos.description] - The command description
+     * @param {Array<String>} [data.infos.examples] - Command examples
+     * @param {String} [data.infos.usage] - The command usage
+     * @param {String} [data.infos.name] - The full command name
      * @param {CommandOptions|Object} [data.options] - The command options
      * @param {CommandPermissions|Object} [data.permissions] - The command permissions
      * @memberof Command
@@ -85,11 +98,15 @@ class Command extends Base {
         // temp var used to init subcommands
         this.subcmds = data.subcmds || []; // Array of imported commands - deleted after init
 
-        /*
-         * Initiated if there are subcommands
+        /**
+         * @type {CommandCollection}
          */
+        /* Inited if there are subcommands */
         this.subCommands = null; // Collection of subcommands
 
+        /**
+         * @type {AxonTemplate}
+         */
         /* Bypass all perms - true = prevent the command to be disabled */
         this.serverBypass = data.serverBypass !== undefined ? data.serverBypass : module.serverBypass; // Default to module state
 
@@ -140,7 +157,7 @@ class Command extends Base {
      * Returns the template object
      *
      * @readonly
-     * @type {Object}
+     * @type {AxonTemplate}
      * @memberof Command
      */
     get template() {
@@ -159,7 +176,7 @@ class Command extends Base {
     }
 
     /**
-     * Returns the ful label for this command (label + all parent labels)
+     * Returns the full label for this command (label + all parent labels)
      *
      * @readonly
      * @type {String}
@@ -280,7 +297,12 @@ class Command extends Base {
      * Get the CommandResponse from the command execution or create it in case of errors.
      * Create the CommandContext and returns it.
      *
-     * @param {Object} { msg, args, guildConfig, isAdmin, isOwner }
+     * @param {Object} object { msg, args, guildConfig, isAdmin, isOwner }
+     * @param {Message} object.msg
+     * @param {Array<String>} object.args
+     * @param {GuildConfig} object.guildConfig
+     * @param {Boolean} object.isAdmin
+     * @param {Boolean} object.isOwner
      * @returns {CommandContext}
      * @memberof Command
      */
@@ -335,7 +357,11 @@ class Command extends Base {
      * Send help message in the current channel with perm checks done before.
      * Call a custom sendHelp method if it exists, use the default one if it doesn't.
      *
-     * @param {Message} { msg, guildConfig, isAdmin, isOwner } - The message object
+     * @param {Object} object { msg, guildConfig, isAdmin, isOwner }
+     * @param {Message} object.msg
+     * @param {GuildConfig} object.guildConfig
+     * @param {Boolean} object.isAdmin
+     * @param {Boolean} object.isOwner
      * @returns {Promise<CommandContext>} Message Object
      * @memberof Command
      */
@@ -424,7 +450,6 @@ class Command extends Base {
      *
      * @param {Channel} channel - The channel Object
      * @param {Array<String>} [permissions=[]] - Optional array of permissions string
-     * @returns {Promise<CommandResponse>} Message Object
      * @memberof Command
      */
     sendBotPerms(channel, permissions = [] ) {
@@ -449,7 +474,7 @@ class Command extends Base {
      * @param {Channel} channel - The channel object
      * @param {Member} member - The member object
      * @param {Number} [deleteTimeout] - The permission message deletion timeout, if `null` the the message will not delete
-     * @returns {Promise<CommandContext>} Message Object
+     * @param {String} [missingPermission] - The missing permission
      * @memberof Command
      */
     // eslint-disable-next-line no-magic-numbers
@@ -467,7 +492,6 @@ class Command extends Base {
      * Uses the template message in config/template.
      *
      * @param {Channel} channel - The channel Object
-     * @returns {Promise<CommandContext>} Message Object
      * @memberof Command
      */
     sendTargetPerms(channel) {
@@ -479,7 +503,6 @@ class Command extends Base {
      * Send an error message in case of invalid cooldown, delete it automatically after a delay.
      *
      * @param {Channel} channel - The channel Object
-     * @returns {Promise<CommandContext>} Message Object
      * @memberof Command
      */
     sendCooldown(channel, time) {

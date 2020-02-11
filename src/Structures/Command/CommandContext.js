@@ -1,6 +1,11 @@
 import { COMMAND_EXECUTION_TYPES, COMMAND_EXECUTION_STATE } from '../../Utility/Constants/AxonEnums';
 
 /**
+ * @typedef {import('./Command').default} Command
+ * @typedef {import('./CommandResponse').default} CommandResponse
+ */
+
+/**
  * CommandContext object that encapsulates entirely the command execution data.
  * Status, context etc...
  *
@@ -50,6 +55,9 @@ class CommandContext {
      * @memberof CommandContext
      */
     constructor(command, triggerMessage, data = {} ) {
+        /**
+         * @type {String}
+         */
         this.raw = triggerMessage.content;
         this.commandLabel = command.fullLabel;
         this.moduleLabel = command.module.label;
@@ -70,6 +78,9 @@ class CommandContext {
         this.channelID = lib.message.getChannelID(triggerMessage);
         this.channelName = lib.message.getChannelName(triggerMessage);
 
+        /**
+         * @type {Author}
+         */
         const author = lib.message.getAuthor(triggerMessage) || null;
         this.callerID = author && lib.user.getID(author);
         this.callerName = author && lib.user.getTag(author);

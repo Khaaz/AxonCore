@@ -486,7 +486,7 @@ declare module 'axoncore' {
         public success: boolean;
         public triggerCooldown: boolean;
         public error?: Error;
-        constructor(data: { success: boolean; triggerCooldown?: boolean; error?: Error; } );
+        constructor(data: { success?: boolean; triggerCooldown?: boolean; error?: Error; } );
         public resolve(): Promise<CommandResponse>;
         public resolveAsync(): Promise<CommandResponse>;
         public resolveSync(): CommandResponse;

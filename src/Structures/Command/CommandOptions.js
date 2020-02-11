@@ -4,6 +4,11 @@ import Module from '../Module';
 import AxonError from '../../Errors/AxonError';
 
 /**
+ * @typedef {import('../../Langs/MessageManager').default} MessageManager
+ * @typedef {import('../DataStructure/GuildConfig').default} GuildConfig
+ */
+
+/**
  * CommandOptions.
  * Holds options for a command and all necessary checkers.
  *
@@ -52,6 +57,9 @@ class CommandOptions {
         }
         this._command = command;
 
+        /**
+         * @type {CommandOptions}
+         */
         let base;
         if (useModuleDefault && !isModule && command.module.options) {
             base = Object.assign( {}, command.module.options);
@@ -64,22 +72,52 @@ class CommandOptions {
 
         // invalid permissions
         if (typeof base.invalidPermissionMessage === 'string') {
+            /**
+             * @type {() => String}
+             */
             this.invalidPermissionMessage = () => base.invalidPermissionMessage;
         } else if (typeof base.invalidPermissionMessage === 'function') {
             this.invalidPermissionMessage = base.invalidPermissionMessage;
         } else {
             this.invalidPermissionMessage = null;
         }
+        /**
+         * @type {Boolean}
+         */
         this.sendPermissionMessage = !!base.sendPermissionMessage;
+        /**
+         * @type {Number}
+         */
         this.invalidPermissionMessageTimeout = base.invalidPermissionMessageTimeout !== undefined ? base.invalidPermissionMessageTimeout : 9000; // eslint-disable-line no-magic-numbers
  
+        /**
+         * @type {Number}
+         */
         this.argsMin = base.argsMin || 0;
+        /**
+         * @type {String}
+         */
         this.invalidUsageMessage = base.invalidUsageMessage !== undefined ? base.invalidUsageMessage : null;
+        /**
+         * @type {Boolean}
+         */
         this.sendUsageMessage = base.sendUsageMessage !== false;
   
+        /**
+         * @type {Boolean}
+         */
         this.deleteCommand = !!base.deleteCommand;
+        /**
+         * @type {Boolean}
+         */
         this.guildOnly = base.guildOnly !== false;
+        /**
+         * @type {Boolean}
+         */
         this.hidden = !!base.hidden;
+        /**
+         * @type {Number}
+         */
         this.cooldown = (base.cooldown === 0 || base.cooldown === null) ? 0 : (base.cooldown || 3000); // eslint-disable-line no-magic-numbers
     }
 
@@ -117,7 +155,7 @@ class CommandOptions {
     /**
      * Whether args for this command are correct or not (enough args).
      *
-     * @param {Array} args
+     * @param {Array<String>} args
      * @returns {Boolean}
      * @memberof CommandOptions
      */
@@ -128,7 +166,7 @@ class CommandOptions {
     /**
      * Whether we should send an invalid usage message or not (help command)
      *
-     * @param {Array} args
+     * @param {Array<String>} args
      * @returns {Boolean}
      * @memberof CommandOptions
      */

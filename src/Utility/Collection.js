@@ -7,6 +7,7 @@
  * @class Collection
  * @extends Map
  *
+ * @template T
  * @prop {Class} baseObject - The base class for all items
  */
 class Collection extends Map {
@@ -14,8 +15,8 @@ class Collection extends Map {
      * Creates an instance of Collection.
      *
      * @param {Object} options
-     * @param {Class} [options.base=null]
-     * @param {Array<[string, Class]> | {[key: string]: Class}} options.iterable
+     * @param {T} [options.base=null]
+     * @param {Array<[string, T]> | {[key: string]: T}} options.iterable
      *
      * @memberof Collection
      */
@@ -35,9 +36,9 @@ class Collection extends Map {
      * Creates a collection from an array
      *
      * @static
-     * @param {Array<Class>} array - The array of object
+     * @param {Array<T>} array - The array of object
      * @param {String} key - The property to use as key
-     * @returns {Collection<Class>} A newly created Collection
+     * @returns {Collection<T>} A newly created Collection
      * @memberof Collection
      */
     static from(array, key) {
@@ -48,7 +49,7 @@ class Collection extends Map {
      * Map to array
      * [ value, value, value ]
      *
-     * @returns {Array<Class>}
+     * @returns {Array<T>}
      * @memberof Collection
      */
     toArray() {
@@ -59,7 +60,7 @@ class Collection extends Map {
      * Map to object
      * { key: value, key: value }
      *
-     * @returns {{[key:string]: Class}}
+     * @returns {{[key:string]: T}}
      *
      * @memberof Collection
      */
@@ -77,7 +78,7 @@ class Collection extends Map {
      * @param {String} key - The property to use as key for the new Collection
      * @param {String} func - The function name to apply to the Collection
      * @param {Array} args - All the argument that need to be applied to the Collection
-     * @returns {Collection} A new Collection modified by the apply call
+     * @returns {Collection<T>} A new Collection modified by the apply call
      * @memberof Collection
      */
     apply(key, func, ...args) {
@@ -92,7 +93,7 @@ class Collection extends Map {
      * @param {String} key - The ID of the object
      * @param {Object} value - The object data
      * @param {Boolean} replace - Whether to replace an existing object with the same ID
-     * @returns {Class} The existing or newly created object
+     * @returns {T} The existing or newly created object
      * @memberof Collection
      */
     add(key, value, replace) {
@@ -112,7 +113,7 @@ class Collection extends Map {
      * Return the first object to make the function evaluate true
      *
      * @param {Function} func - A function that takes an object and returns true if it matches
-     * @returns {Class} The first matching object, or null if no match
+     * @returns {T} The first matching object, or null if no match
      * @memberof Collection
      */
     find(func) {
@@ -143,7 +144,7 @@ class Collection extends Map {
      * Return all the objects that make the function evaluate true
      *
      * @param {Function} func - A function that takes an object and returns true if it matches
-     * @returns {Array<Class>} An array containing all the objects that matched
+     * @returns {Array<T>} An array containing all the objects that matched
      * @memberof Collection
      */
     filter(func) {
@@ -212,7 +213,7 @@ class Collection extends Map {
      * @param {String} key - The ID of the object
      * @param {Object} value - The updated object data
      * @param {Boolean} replace - Whether to replace an existing object with the same ID
-     * @returns {Class} The updated object
+     * @returns {T} The updated object
      * @memberof Collection
      */
     update(key, value) {
@@ -223,7 +224,7 @@ class Collection extends Map {
     * Remove an object
     *
     * @param {String} key - The ID of the object
-    * @returns {Class} The removed object, or null if nothing was removed
+    * @returns {T} The removed object, or null if nothing was removed
     *
     * @memberof Collection
     */
@@ -239,7 +240,7 @@ class Collection extends Map {
     /**
      * Get a random object from the Collection
      *
-     * @returns {Class?} The random object, or null if there is no match
+     * @returns {T?} The random object, or null if there is no match
      * @memberof Collection
      */
     random() {
