@@ -4,6 +4,10 @@ import GuildConfig from '../DataStructure/GuildConfig'; // eslint-disable-line
 import NotImplementedException from '../../Errors/NotImplementedException';
 
 /**
+ * @typedef {import('../Module').default} Module
+ */
+
+/**
  * Default Listener class
  * Extends Listener to create an event
  *
@@ -36,6 +40,8 @@ class Listener extends Base {
      * @param {Boolean} [data.enabled]
      * @param {Boolean} [data.serverBypass]
      * @param {Object} [data.infos]
+     * @param {Array<String>} [data.infos.owners]
+     * @param {String} [data.infos.description]
      * @memberof Listener
      */
     constructor(module, data = {} ) {

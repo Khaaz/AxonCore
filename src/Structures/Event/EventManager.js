@@ -4,6 +4,11 @@ import Collection from '../../Utility/Collection';
 import AHandler from './AHandler';
 
 /**
+ * @typedef {import('../../AxonClient').default} AxonClient
+ * @typedef {import('./Listener').default} Listener
+ */
+
+/**
  * Event Manager class
  *
  * @author KhaaZ
@@ -25,8 +30,14 @@ class EventManager extends Base {
     constructor(axon) {
         super(axon);
         // For each eventName => Array of Listener Obj
+        /**
+         * @type {Object.<string, Array<Listener>}
+         */
         this._events = {};
         // For each eventName => One Function
+        /**
+         * @type {Collection<AHandler>}
+         */
         this._handlers = new Collection( { base: AHandler } );
     }
 
@@ -47,7 +58,7 @@ class EventManager extends Base {
      * Returns Collection of every handlers for every discord event
      *
      * @readonly
-     * @type {Collection<Object>}
+     * @type {Collection<AHandler>}
      * @memberof EventManager
      */
     get handlers() {
@@ -58,7 +69,7 @@ class EventManager extends Base {
      * Get all functions bound to the event passed in parameters.
      *
      * @param {String} eventName - The library event name
-     * @returns {Array} Array of the functions bound to the event
+     * @returns {Array<Listener>} Array of the functions bound to the event
      * @memberof EventManager
      */
     getListeners(eventName) {
@@ -106,7 +117,7 @@ class EventManager extends Base {
      * Called by ModuleLoader when registering an event.
      *
      * @param {Listener} listener - The Listener Object
-     * @returns {Array} Array of the functions bound to the event
+     * @returns {Array<Listener>} Array of the functions bound to the event
      *
      * @memberof EventManager
      */
