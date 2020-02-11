@@ -1,4 +1,11 @@
 /**
+ * @typedef {import('../../AxonClient').default} AxonClient
+ * @typedef {{
+ * id?: String, prefix?: String, createdAt?: Date, updatedAt?: Date, bannedUsers?: Array<String>, bannedGuilds?: Array<String>
+ * }} AConfig
+ */
+
+/**
  * Default AxonConfig data structure used in AxonCore.
  * This class can be extended and changed as you want.
  * All methods flagged with "is used internally" can be overridden but need to keep the same name.
@@ -21,7 +28,7 @@ class AxonConfig {
      *
      * @param {AxonClient} axon
      *
-     * @param {Object} values DB values for the current Guild
+     * @param {AConfig} values DB values for the current Guild
      * @memberof AxonConfig
      */
     constructor(axon, values) {
@@ -33,7 +40,13 @@ class AxonConfig {
         this.createdAt = values.createdAt || new Date();
         this.updatedAt = values.updatedAt || new Date();
 
+        /**
+         * @type {Array<String>}
+         */
         this.bannedUsers = values.bannedUsers || [];
+        /**
+         * @type {Array<String>}
+         */
         this.bannedGuilds = values.bannedGuilds || [];
     }
 
