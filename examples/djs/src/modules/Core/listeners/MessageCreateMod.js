@@ -21,6 +21,9 @@ class MessageCreateMod extends Listener {
         if (guildConfig) {
             console.log(`Prefix: ${guildConfig.prefixes}`);
         }
+        if (message.webhookID !== null) {
+            return Promise.resolve();
+        }
         return Promise.resolve();
     }
 }

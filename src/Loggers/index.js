@@ -48,7 +48,6 @@ class LoggerSelector extends ASelector {
             }
 
             // Signale Logger
-            /** @TODO incompatibility with full logging */
             case LOGGER_TYPES.SIGNALE: {
                 try {
                     Logger = require('./SignaleLogger').default;
@@ -62,7 +61,6 @@ class LoggerSelector extends ASelector {
             }
 
             // Winston Logger
-            /** @TODO incompatibility with full logging */
             case LOGGER_TYPES.WINSTON: {
                 try {
                     Logger = require('./WinstonLogger').default;
