@@ -130,7 +130,7 @@ class ARegistry {
      * Unregister correctly an item from the registry.
      *
      * @param {String} key
-     * @param {T} value // https://canary.discordapp.com/channels/412348024526995457/608416765327835144/677145170323570718
+     * @param {T} value
      * @memberof ARegistry
      */
     unregister(key, value) {
