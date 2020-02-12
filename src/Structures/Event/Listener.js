@@ -92,7 +92,7 @@ class Listener extends Base {
      * Main execute function, need to be overridden in child.
      *
      * @param {Array} args - Array of the events arguments (as separate parameters)
-     * @param {GuildConfig?} guildConfig - The guildConfig or undefined if not a guild event
+     * @param {GuildConfig} [guildConfig] - The guildConfig or undefined if not a guild event
      * @returns {Promise}
      * @memberof Listener
      */
