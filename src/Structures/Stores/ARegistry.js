@@ -5,12 +5,18 @@ import NotImplementedException from '../../Errors/NotImplementedException';
 import Collection from '../../Utility/Collection';
 
 /**
+ * @typedef {import('../../AxonClient').default} AxonClient
+ */
+
+/**
  * Abstract class to hold and manage a set of items.
  *
  * @author KhaaZ
  *
+ * @template T
+ *
  * @prop {AxonClient} _axon - The AxonClient
- * @prop {Collection<*>} registry - The collection of items hold by the registry
+ * @prop {Collection<T>} registry - The collection of items hold by the registry
  *
  * @abstract
  * @class ARegistry
@@ -20,7 +26,7 @@ class ARegistry {
      * Creates an instance of ARegistry.
      *
      * @param {AxonClient} axon - The AxonClient
-     * @param {Object} base - The base definition to use for the registry
+     * @param {T} base - The base definition to use for the registry
      * @memberof ARegistry
      */
     constructor(axon, base) {
@@ -66,7 +72,7 @@ class ARegistry {
      * Get an item from the registry
      *
      * @param {String} key
-     * @returns {Object} - The item
+     * @returns {T} - The item
      * @memberof ARegistry
      */
     get(key) {
@@ -76,7 +82,7 @@ class ARegistry {
     /**
      * Get the registry
      *
-     * @returns {Collection} - The current registry
+     * @returns {Collection<T>} - The current registry
      * @memberof CommandRegistry
      */
     getAll() {
@@ -87,8 +93,8 @@ class ARegistry {
      * Add an item to the registry
      *
      * @param {String} key
-     * @param {Object} value
-     * @param {Collection} - The registry
+     * @param {T} value
+     * @param {Collection<T>} - The registry
      */
     add(key, value) {
         return this.registry.set(key.toLowerCase(), value);
@@ -113,7 +119,7 @@ class ARegistry {
      * Register correctly an item in the registry.
      *
      * @param {String} key
-     * @param {Object} value
+     * @param {T} value
      * @memberof ARegistry
      */
     register(key, value) {
@@ -124,7 +130,7 @@ class ARegistry {
      * Unregister correctly an item from the registry.
      *
      * @param {String} key
-     * @param {Object} value
+     * @param {T} value // https://canary.discordapp.com/channels/412348024526995457/608416765327835144/677145170323570718
      * @memberof ARegistry
      */
     unregister(key, value) {

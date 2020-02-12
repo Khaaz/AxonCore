@@ -4,6 +4,11 @@ import Command from '../Command/Command';
 import AxonError from '../../Errors/AxonError';
 
 /**
+ * @typedef {import('../../AxonClient').default} AxonClient
+ * @typedef {import('../DataStructure/GuildConfig').default} GuildConfig
+ */
+
+/**
  * Registry that holds all Commands.
  *
  * @author KhaaZ
@@ -11,12 +16,18 @@ import AxonError from '../../Errors/AxonError';
  * @prop {Map} aliases - All commands aliases.
  *
  * @class CommandRegistry
- * @extends ARegistry
+ * @extends ARegistry<Command>
  */
 class CommandRegistry extends ARegistry {
+    /**
+     * @param {AxonClient} axon
+     */
     constructor(axon) {
         super(axon, Command);
 
+        /**
+         * @type {Map<String|Number, String>}
+         */
         this.aliases = new Map();
     }
 
@@ -84,7 +95,7 @@ class CommandRegistry extends ARegistry {
      * Unregister a Command from the CommandRegistry
      *
      * @param {String} label - The command label
-     * @param {Commands} [command=null] - The command object
+     * @param {Command} [command=null] - The command object
      * @memberof CommandRegistry
      */
     unregister(label, command = null) {

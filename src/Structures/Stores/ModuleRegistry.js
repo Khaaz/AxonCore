@@ -4,6 +4,10 @@ import Module from '../Module';
 import AxonError from '../../Errors/AxonError';
 
 /**
+ * @typedef {import('../../AxonClient').default} AxonClient
+ */
+
+/**
  * Registry that holds all Modules.
  *
  * @author KhaaZ
@@ -12,6 +16,9 @@ import AxonError from '../../Errors/AxonError';
  * @extends ARegistry
  */
 class ModuleRegistry extends ARegistry {
+    /**
+     * @param {AxonClient} axon
+     */
     constructor(axon) {
         super(axon, Module);
     }

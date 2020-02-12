@@ -20,11 +20,13 @@ class Node {
  *
  * @class LRUCache
  *
+ * @template T
+ *
  * @prop {Number} limit - Maximum size of the LRU
  * @prop {Number} size - Current size of the LRU
  * @prop {Node} head
  * @prop {Node} tail
- * @prop {Collection<*>} _cache - The Collection holding the cache (private, handled by the LRU structure)
+ * @prop {Collection<T>} _cache - The Collection holding the cache (private, handled by the LRU structure)
  */
 class LRUCache {
     /**
@@ -32,8 +34,8 @@ class LRUCache {
      *
      * @param {Number} limit - Max number of element in the Collection
      * @param {Object} options - Options used to construct the Collection
-     * @param {Class} [options.base=null]
-     * @param {Array|Object} [options.iterable=null]
+     * @param {new (...args: Array<any> ) => T} [options.base=null]
+     * @param {Object.<string, T>|Array<[string, T]>} [options.iterable=null]
      * @memberof LRUCache
      */
     constructor(limit, options = {} ) {
@@ -41,9 +43,18 @@ class LRUCache {
         this.limit = limit;
         this.size = 0;
         
+        /**
+         * @type {Node}
+         */
         this.head = null;
+        /**
+         * @type {Node}
+         */
         this.queue = null;
         
+        /**
+         * @type {Collection<T>}
+         */
         this._cache = new Collection( { base: options.base } );
         
         if (iterable && Array.isArray(iterable) ) {
@@ -61,7 +72,7 @@ class LRUCache {
      * Add a value in the LRU cache.
      *
      * @param {String} key
-     * @param {*} value
+     * @param {T} value
      * @memberof LRUCache
      */
     set(key, value) {
@@ -82,7 +93,7 @@ class LRUCache {
      * Retrieve a value from the LRU cache
      *
      * @param {String} key
-     * @returns {*} value
+     * @returns {T} value
      * @memberof LRUCache
      */
     get(key) {
@@ -144,7 +155,9 @@ class LRUCache {
     /**
      * Execute a function against every element of the Collection
      *
-     * @param {Function} fn
+     * @template K
+     *
+     * @param {(value: T, key: K, map: Map<K, T>) => void} fn
      * @memberof LRUCache
      */
     forEach(fn) {
@@ -154,8 +167,8 @@ class LRUCache {
     /**
      * Return the first object to make the function evaluate true
      *
-     * @param {Function} func - A function that takes an object and returns true if it matches
-     * @returns {Class} The first matching object, or null if no match
+     * @param {(i: T) => boolean} func - A function that takes an object and returns true if it matches
+     * @returns {T} The first matching object, or null if no match
      * @memberof LRUCache
      */
     find(func) {
@@ -165,8 +178,10 @@ class LRUCache {
     /**
      * Return an array with the results of applying the given function to each element
      *
-     * @param {Function} func - A function that takes an object and returns something
-     * @returns {Array} An array containing the results
+     * @template R
+     *
+     * @param {(i: T) => R} func - A function that takes an object and returns something
+     * @returns {Array<R>} An array containing the results
      * @memberof LRUCache
      */
     map(func) {
@@ -176,8 +191,8 @@ class LRUCache {
     /**
      * Return all the objects that make the function evaluate true
      *
-     * @param {Function} func - A function that takes an object and returns true if it matches
-     * @returns {Array<Class>} An array containing all the objects that matched
+     * @param {(i: T) => boolean} func - A function that takes an object and returns true if it matches
+     * @returns {Array<T>} An array containing all the objects that matched
      * @memberof LRUCache
      */
     filter(func) {
@@ -187,7 +202,7 @@ class LRUCache {
     /**
      * Test if at least one element passes the test implemented by the provided function. Returns true if yes, or false if not.
      *
-     * @param {Function} func - A function that takes an object and returns true if it matches
+     * @param {(i: T) => boolean} func - A function that takes an object and returns true if it matches
      * @returns {Boolean} An array containing all the objects that matched
      * @memberof LRUCache
      */
@@ -198,7 +213,7 @@ class LRUCache {
     /**
      * Test if all elements pass the test implemented by the provided function. Returns true if yes, or false if not.
      *
-     * @param {Function} func - A function that takes an object and returns true if it matches
+     * @param {(i: T) => boolean} func - A function that takes an object and returns true if it matches
      * @returns {Boolean} An array containing all the objects that matched
      * @memberof LRUCache
      */

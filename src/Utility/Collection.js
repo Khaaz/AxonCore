@@ -5,7 +5,7 @@
  * @author KhaaZ
  *
  * @class Collection
- * @extends Map
+ * @extends Map<string|number,T>
  *
  * @template T
  * @prop {Class} baseObject - The base class for all items

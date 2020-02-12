@@ -4,14 +4,21 @@ import Listener from '../Event/Listener';
 import AxonError from '../../Errors/AxonError';
 
 /**
+ * @typedef {import('../../AxonClient').default} AxonClient
+ */
+
+/**
  * Registry that holds all Commands.
  *
  * @author KhaaZ
  *
  * @class ListenerRegistry
- * @extends ARegistry
+ * @extends ARegistry<Listener>
  */
 class ListenerRegistry extends ARegistry {
+    /**
+     * @param {AxonClient} axon
+     */
     constructor(axon) {
         super(axon, Listener);
     }

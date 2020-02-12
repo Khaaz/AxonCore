@@ -1640,9 +1640,9 @@ declare module 'axoncore' {
         public remove(key: string): void;
         public clear(): void;
         private _ensureLimit(): void;
-        public forEach<K>(fn: (value: T, key: K, map: Map<K, T>) => void, thisArg?: any): void;
+        public forEach<K>(fn: (value: T, key: K, map: Map<K, T>) => void): void;
         public find(func: (i: T) => boolean): T;
-        public map<R>(func: (i: T) => R): R;
+        public map<R>(func: (i: T) => R): R[];
         public filter(func: (i: T) => boolean): T[];
         public some(func: (i: T) => boolean): boolean;
         public every(func: (i: T) => boolean): boolean;
