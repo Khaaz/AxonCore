@@ -7,15 +7,23 @@ import AxonError from '../../Errors/AxonError';
 import CommandRegistry from './../Stores/CommandRegistry';
 
 /**
+ * @typedef {import('../Module').default} Module
+ * @typedef {import('../../AxonClient').default} AxonClient
+ */
+
+/**
  * Load commands in a Module.
  * Validate the command validity entirely.
  *
  * @author KhaaZ
  *
  * @class CommandLoader
- * @extends ALoader
+ * @extends ALoader<Module>
  */
 class CommandLoader extends ALoader {
+    /**
+     * @param {Module} module
+     */
     constructor(module) {
         super(module.axon);
         this._module = module;
@@ -77,7 +85,7 @@ class CommandLoader extends ALoader {
      * Load all commands in the module.
      * Instantiate all commands.
      *
-     * @param {Command} commands
+     * @param {Object.<string, Command>} commands
      * @returns {Boolean}
      * @memberof CommandLoader
      */
@@ -101,7 +109,7 @@ class CommandLoader extends ALoader {
     /**
      * Init and construct/instance all subcommands of the given parent command
      *
-     * @param {Command} command - The command Object
+     * @param {Command} parentCommand - The command Object
      * @memberof Command
      */
     loadSubCommands(parentCommand) {

@@ -1336,20 +1336,20 @@ declare module 'axoncore' {
         public handle(...args: any[] ): string | null;
     }
 
-    export class ALoader {
-        public loadIn: any;
-        constructor(loadIn: any);
-        load(toLoad: any): any; // Not implemented
-        loadAll(toLoad: any): any; // Not implemented
-        unload(toUnload: any): any; // Not implemented
+    export class ALoader<T> {
+        public loadIn: T;
+        constructor(loadIn: T);
+        load(toLoad: any): boolean; // Not implemented
+        loadAll(toLoad: any): boolean; // Not implemented
+        unload(toUnload: any): boolean; // Not implemented
     }
 
     export class ClientInitialiser {
-        static initStaff(staffConfig: { [key: string]: string[];}, logger: ALogger): { [key: string]: string[]; };
+        static initStaff(staffConfig: { [key: string]: {id: string; name: string;}[];}, logger: ALogger): { [key: string]: string[]; };
         initAxon(axon: AxonClient): Promise<void>;
     }
 
-    export class CommandLoader extends ALoader {
+    export class CommandLoader extends ALoader<Module> {
         private _module: Module;
         constructor(module: Module);
         readonly axon: AxonClient;
@@ -1364,7 +1364,7 @@ declare module 'axoncore' {
         unregisterSubCommand(command: Command, subCommand: Command): void;
     }
 
-    export class ListenerLoader extends ALoader {
+    export class ListenerLoader extends ALoader<AxonClient> {
         private _module: Module;
         constructor(module: Module);
         readonly axon: AxonClient;
@@ -1375,7 +1375,7 @@ declare module 'axoncore' {
         unload(label: string): true;
     }
 
-    export class ModuleLoader extends ALoader {
+    export class ModuleLoader extends ALoader<AxonClient> {
         constructor(axonClient: AxonClient);
         readonly axon: AxonClient;
         readonly logger: ALogger;
