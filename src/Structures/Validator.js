@@ -27,7 +27,7 @@ import AxonError from '../Errors/AxonError';
 class Validator {
     /**
      * @param {Module} module
-     * @returns Whether the module is considered valid or not
+     * @returns {Boolean} Whether the module is considered valid or not
      */
     static validModule(module) {
         const PERMS = module.axon.library.enums.PERMISSIONS;
@@ -80,7 +80,7 @@ class Validator {
      *
      * @static
      * @param {Command} command
-     * @returns Whether the command is considered valid or not
+     * @returns {Boolean} Whether the command is considered valid or not
      * @memberof Validator
      */
     static validCommand(command) {
