@@ -267,17 +267,21 @@ class Command extends Base {
         }
 
         /* Sends invalid usage message in case of invalid usage (not enough argument) [option enabled] */
-        if (this.options.shouldSendInvalidUsageMessage(args) ) {
-            return this.sendHelp( {
-                msg, args, guildConfig, isAdmin, isOwner,
-            } ).then( () => {
-                isAdmin && this._cooldown.shouldSetCooldown() && this._cooldown.setCooldown(userID);
-                return new CommandContext(this, msg, {
-                    executed: false,
-                    executionType: CommandContext.getExecutionType(isAdmin, isOwner),
-                    executionState: COMMAND_EXECUTION_STATE.INVALID_USAGE,
-                } ).resolveAsync();
+        if (!this.options.hasCorrectArgs(args) ) {
+            const ctx = new CommandContext(this, msg, {
+                executed: false,
+                executionType: CommandContext.getExecutionType(isAdmin, isOwner),
+                executionState: COMMAND_EXECUTION_STATE.INVALID_USAGE,
             } );
+            
+            isAdmin && this._cooldown.shouldSetCooldown() && this._cooldown.setCooldown(userID);
+            if (this.options.shouldSendInvalidUsageMessage(args) ) {
+                return this.sendHelp( {
+                    msg, args, guildConfig, isAdmin, isOwner,
+                } )
+                    .then( () => ctx.resolveSync() );
+            }
+            return ctx.resolveAsync();
         }
 
         /** Doesn't delete the input if any other condition didn't pass through. */
