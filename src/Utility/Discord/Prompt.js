@@ -1,18 +1,23 @@
 import { EventEmitter } from 'events';
 
 /**
+ * @typedef {import('../../AxonClient').default} AxonClient
+ */
+
+/**
  * Create a Prompt, waiting for specific input before resolving with the message Object
  *
  * @author VoidNull
  *
  * @class Prompt
+ * @example let prompt = new Prompt(this.axon, msg.author.id, msg.channel, { timeoutMessage: 'Be quicker next time' });
  */
 class Prompt {
     /**
      *
      * @param {AxonClient} client The Axon client
      * @param {String} uID The user ID
-     * @param {Object} channel The channel object
+     * @param {Channel} channel The channel object
      *
      * @param {Object} [defaultOptions={}] The default options for the prompt.
      * @param {Array<String>} [defaultOptions.allowed=[]] A array of strings allow to pass as the prompt
@@ -27,22 +32,29 @@ class Prompt {
      * @param {String} [defaultOptions.timeoutMessage='Prompt timed out!'] The message to send when the prompt times out.
      * @param {Number} [defaultOptions.deleteTimeoutMsg=false] The time to wait in milliseconds before deleting the timeout message
      * @param {Boolean} [defaultOptions.resendWhenInvalid=false] Whether or not to resend when the prompt got a invalid returned message, does not send invalid message
-     *
-     * @prop {String} userID - The user ID that is bound to the current prompt
-     * @prop {Channel} channel - The channel where the prompt is running
-     * @prop {Boolean} timedOut - Whether the Prompt timed out
-     * @prop {Boolean} ended - Whether the prompt ended
-     *
-     * @example
-     * let prompt = new Prompt(this.axon, msg.author.id, msg.channel, { timeoutMessage: 'Be quicker next time' });
      */
     constructor(client, uID, channel, defaultOptions = {} ) {
         this._axon = client;
+        /**
+         * The user ID that is bound to the current prompt
+         * @type {String}
+         */
         this.userID = uID;
+        /**
+         * The channel where the prompt is running
+         * @type {Channel}
+         */
         this.channel = channel;
 
         this._prompt = '';
 
+        /**
+         * @type {{
+         * allowed: Array<String>, wildcard: Boolean, caseSensitive: Boolean, deletePrompt: Boolean, sendInvalid: Boolean,
+         * invalidMessage: String, deleteInvalidMessage: Number|Boolean, timeoutTime: Number, sendTimeout: Boolean,
+         * timeoutMessage: String, deleteTimeoutMsg: Number|Boolean, resendWhenInvalid: Boolean
+         * }}
+         */
         this._options = {
             allowed: [],
             wildcard: !!defaultOptions.wildcard, // false
@@ -58,12 +70,28 @@ class Prompt {
             resendWhenInvalid: !!defaultOptions.resendWhenInvalid, // false
         };
 
+        /**
+         * @type {{
+         * allowed: Array<String>, wildcard: Boolean, caseSensitive: Boolean, deletePrompt: Boolean, sendInvalid: Boolean,
+         * invalidMessage: String, deleteInvalidMessage: Number|Boolean, timeoutTime: Number, sendTimeout: Boolean,
+         * timeoutMessage: String, deleteTimeoutMsg: Number|Boolean, resendWhenInvalid: Boolean
+         * }}
+         */
         this._actualOptions = {};
 
         this._emitter = new EventEmitter();
+        /**
+         * Whether the Prompt timed out
+         */
         this.timedOut = false;
+        /**
+         * Whether the prompt ended
+         */
         this.ended = false;
 
+        /**
+         * @type {(msg: Message) => void}
+         */
         this._boundEvent = this._onMsgCreate.bind(this);
     }
 
@@ -71,6 +99,9 @@ class Prompt {
         return this._axon;
     }
 
+    /**
+     * @type {BotClient}
+     */
     get client() {
         return this._axon.botClient;
     }
@@ -98,7 +129,7 @@ class Prompt {
      * const output = await prompt.run('Who would you like to wave to?', { timeout: 10000 });
      * this.sendMessage(msg.channel, output.content);
      *
-     * @returns {Promise} The message object, or a reject error if timed out or message was invalid
+     * @returns {Promise<Message>} The message object, or a reject error if timed out or message was invalid
      */
     run(prompt, options = {} ) {
         this.ended = false;
@@ -191,6 +222,9 @@ class Prompt {
         return 'INVALID';
     }
 
+    /**
+     * @param {Message} msg
+     */
     _onEnded(msg) {
         this.ended = true;
 
@@ -221,7 +255,7 @@ class Prompt {
      * Message event for prompt
      * When a message is created
      *
-     * @param {Object} msg The message object
+     * @param {Message} msg The message object
      */
     async _onMsgCreate(msg) {
         if (this.ended || this.timedOut) { // If the prompt ended or timed out

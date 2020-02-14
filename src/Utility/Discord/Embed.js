@@ -18,7 +18,7 @@ import { EMBED_LIMITS } from '../Constants/DiscordEnums';
  * @prop {String} [author.icon_url]
  * @prop {Object} thumbnail
  * @prop {String} [thumbnail.url]
- * @prop {Array<Object>} fields - { name: "string", value: "string", inline: boolean }
+ * @prop {Array<{ name: String, value: String, inline?: Boolean }>} fields
  * @prop {Object} image
  * @prop {String} [image.url]
  * @prop {Object} footer
@@ -37,19 +37,18 @@ class Embed {
      * @param {String} [data.description]
      * @param {String} [data.color]
      * @param {Object} [data.author]
-     * @param {String} [data.author.name]
+     * @param {String} data.author.name
      * @param {String} [data.author.url]
      * @param {String} [data.author.icon_url]
      * @param {Object} [data.thumbnail]
-     * @param {String} [data.thumbnail.url]
-     * @param {Array<Object>} [data.fields] - { name: "string", value: "string", inline: boolean }
+     * @param {String} data.thumbnail.url
+     * @param {Array<{ name: String, value: String, inline?: Boolean }} [data.fields]
      * @param {Object} [data.image]
-     * @param {String} [data.image.url]
+     * @param {String} data.image.url
      * @param {Object} [data.footer]
-     * @param {String} [data.footer.text]
+     * @param {String} data.footer.text
      * @param {String} [data.footer.icon_url]
      * @param {String} [data.timestamp]
-     * @param {Object} [data.file]
      * @memberof Embed
      */
     constructor(data = {} ) {
@@ -63,7 +62,6 @@ class Embed {
         this.image = data.image;
         this.footer = data.footer;
         this.timestamp = data.timestamp;
-        this.file = data.file;
     }
 
     _resolveString(data) {
@@ -241,20 +239,6 @@ class Embed {
             throw new AxonError('Embed footer text may not exceed 2048 characters.');
         }
         this.footer = { text, icon_url: icon };
-        return this;
-    }
-
-    /**
-     * Sets the file to upload alongside the embed.
-     * This file can be accessed via `attachment://fileName.extension` when setting an embed image or author/footer icons.
-     * Only one file may be attached.
-     *
-     * @param {string} file Local path or URL to the file to attach, or valid FileOptions for a file to attach
-     * @returns {Embed} This embed
-     * @memberof Embed
-     */
-    attachFile(file) {
-        this.file = file;
         return this;
     }
 }

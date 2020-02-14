@@ -4,6 +4,10 @@ import { EventEmitter } from 'events';
 import Collection from '../Collection';
 
 /**
+ * @typedef {import('../../AxonClient').default} AxonClient
+ */
+
+/**
  * Collect bunch of message object according to chosen options
  *
  * @author VoidNull
@@ -35,13 +39,31 @@ class MessageCollector extends EventEmitter {
         };
         this._axon = client;
 
+        /**
+         * @type {{timeout?: Number, count?: Number, ignoreBots?: Boolean, uID?: String, caseSensitive?: Boolean}}
+         */
         this._actualOptions = {};
 
+        /**
+         * @type {(msg: Message) => void}
+         */
         this._boundMsgEvent = this._onMsgCreate.bind(this);
+        /**
+         * @type {(msg: Message) => void}
+         */
         this._boundDelEvent = this._onMsgDelete.bind(this);
+        /**
+         * @type {(msg: Message, oldMsg: Message) => void}
+         */
         this._boundEditEvent = this._onMsgEdit.bind(this);
+        /**
+         * @type {() => void}
+         */
         this._boundCollectEvent = this._onCollectEvent.bind(this);
 
+        /**
+         * @type {Collection<Message>}
+         */
         this.messages = new Collection();
     }
 
@@ -49,6 +71,9 @@ class MessageCollector extends EventEmitter {
         return this._axon;
     }
 
+    /**
+     * @type {BotClient}
+     */
     get client() {
         return this._axon.botClient;
     }
@@ -65,7 +90,7 @@ class MessageCollector extends EventEmitter {
      * @param {String} [options.uID] The user id to listen for (listens to all messages if not specified)
      * @param {Boolean} [options.caseSensitive=true] Whether or not to return messages with lowercase content. Default: content not changed
      *
-     * @returns {Promise} Map of messages collected.
+     * @returns {Promise<Message>} Map of messages collected.
      *
      * @example
      * const messages = await collector.run(msg.channel, { caseInsensitive: false });
@@ -166,7 +191,7 @@ class MessageCollector extends EventEmitter {
      *
      * @param {String} mID The id of the message you want to remove
      *
-     * @returns {Collection} Collection of messages collected, now excluding the removed message.
+     * @returns {Collection<Message>} Collection of messages collected, now excluding the removed message.
      *
      * @example
      *
