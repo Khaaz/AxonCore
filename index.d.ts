@@ -2,6 +2,7 @@ import { EventEmitter } from "events";
 import * as Eris from "eris";
 import * as djs from 'discord.js';
 type Message = Eris.Message | djs.Message;
+type Reaction = Eris.Emoji | djs.MessageReaction;
 type Member = Eris.Member | djs.GuildMember;
 type Client = Eris.Client | djs.Client;
 type Guild = Eris.Guild | djs.Guild;
@@ -53,7 +54,7 @@ declare module "axoncore" {
         constructor(...args: any[]);
     }
 
-        // OK
+    // OK
     interface ModuleInfo {
         name?: string;
         description?: string;
@@ -83,7 +84,7 @@ declare module "axoncore" {
         public init(commands: Command[], events: Listener[], schema: object): void;
     }
 
-    type updateDBVal = object|any[]|string|boolean;
+    type updateDBVal = object | any[] | string | boolean;
 
     // OK
     export abstract class DBProvider {
@@ -119,16 +120,16 @@ declare module "axoncore" {
 
         private _buildPath(gID: string): string;
 
-        public readFile(path: string): Promise<string|null>;
-        public writeFile(path: string, content: string): Promise<boolean|void>;
-        public createAxonSchema(defaultPrefix: string): Promise<object|void>;
-        public createGuildSchema(prefixes: string[], gID: string): Promise<object|void>;
-        public fetchAxonSchema(): Promise<object|void>;
-        public fetchGuildSchema(gID: string): Promise<object|void>;
-        public updateGuildKey(gID: string, key: string, value: updateDBVal): Promise<object|void>;
-        public updateAxonKey(key: string, value: updateDBVal): Promise<object|void>;
-        public writeAxonSchema(schema: object): Promise<object|void>;
-        public writeGuildSchema(gID: string, schema: object): Promise<object|void>;
+        public readFile(path: string): Promise<string | null>;
+        public writeFile(path: string, content: string): Promise<boolean | void>;
+        public createAxonSchema(defaultPrefix: string): Promise<object | void>;
+        public createGuildSchema(prefixes: string[], gID: string): Promise<object | void>;
+        public fetchAxonSchema(): Promise<object | void>;
+        public fetchGuildSchema(gID: string): Promise<object | void>;
+        public updateGuildKey(gID: string, key: string, value: updateDBVal): Promise<object | void>;
+        public updateAxonKey(key: string, value: updateDBVal): Promise<object | void>;
+        public writeAxonSchema(schema: object): Promise<object | void>;
+        public writeGuildSchema(gID: string, schema: object): Promise<object | void>;
     }
 
     // OK
@@ -163,9 +164,9 @@ declare module "axoncore" {
 
         public isBlacklistedUser(userID: string): boolean;
         public isBlacklistedGuild(guildID: string): boolean;
-        public updateBlacklistUser(userID: string, boolean: boolean): Promise<AxonConfig|null>;
-        public updateBlacklistGuild(guildID: string, boolean: boolean): Promise<AxonConfig|null>;
-        private _req(key: string, value: updateDBVal): Promise<AxonConfig|null>;
+        public updateBlacklistUser(userID: string, boolean: boolean): Promise<AxonConfig | null>;
+        public updateBlacklistGuild(guildID: string, boolean: boolean): Promise<AxonConfig | null>;
+        private _req(key: string, value: updateDBVal): Promise<AxonConfig | null>;
     }
 
     // OK
@@ -203,12 +204,12 @@ declare module "axoncore" {
         public isModRole(roleID: string): boolean;
         public isModUser(userID: string): boolean;
         public update(guildConfig: object): Promise<object>;
-        public updatePrefixes(prefixArr: string[]): Promise<GuildConfig|null>;
-        public updateStateModule(label: string, boolean: boolean): Promise<GuildConfig|null>;
-        public updateStateCommand(label: string, boolean: boolean): Promise<GuildConfig|null>;
-        public updateStateListener(label: string, boolean: boolean): Promise<GuildConfig|null>;
-        public updateStateModRole(roleID: string, boolean: boolean): Promise<GuildConfig|null>;
-        public updateStateModUser(userID: string, boolean: boolean): Promise<GuildConfig|null>;
+        public updatePrefixes(prefixArr: string[]): Promise<GuildConfig | null>;
+        public updateStateModule(label: string, boolean: boolean): Promise<GuildConfig | null>;
+        public updateStateCommand(label: string, boolean: boolean): Promise<GuildConfig | null>;
+        public updateStateListener(label: string, boolean: boolean): Promise<GuildConfig | null>;
+        public updateStateModRole(roleID: string, boolean: boolean): Promise<GuildConfig | null>;
+        public updateStateModUser(userID: string, boolean: boolean): Promise<GuildConfig | null>;
     }
 
     // OK
@@ -360,8 +361,8 @@ declare module "axoncore" {
     export class CommandResponse {
         public success: boolean;
         public triggerCooldown: boolean;
-        public error?: object|string;
-        constructor(data: { success: boolean; triggerCooldown: boolean; error?: object|string });
+        public error?: object | string;
+        constructor(data: { success: boolean; triggerCooldown: boolean; error?: object | string });
         public resolve(): Promise<CommandResponse>;
         public resolveAsync(): Promise<CommandResponse>;
         public resolveSync(): CommandResponse;
@@ -491,7 +492,7 @@ declare module "axoncore" {
         public createHandler(events: Listener[], ...args: any[]): void;
 
         private _rootHandler(...args: any[]): Promise<object>;
-        private _isEventDisabled(label: string, guildConf: object): boolean|undefined;
+        private _isEventDisabled(label: string, guildConf: object): boolean | undefined;
 
         public unregisterListener(event: string, label: string): boolean;
         public unregisterHandler(event: string): boolean;
@@ -513,11 +514,11 @@ declare module "axoncore" {
 
     // OK
     export class Resolver {
-        public static user(client: Client, args: string[]|string): object|null;
-        public static member(guild: Guild, args: string[]|string): object|null;
-        public static role(guild: Guild, args: string[]|string): object|null;
-        public static channel(guild: Guild, args: string[]|string): object|null;
-        public static guild(client: Client, args: string[]): object|null;
+        public static user(client: Client, args: string[] | string): object | null;
+        public static member(guild: Guild, args: string[] | string): object | null;
+        public static role(guild: Guild, args: string[] | string): object | null;
+        public static channel(guild: Guild, args: string[] | string): object | null;
+        public static guild(client: Client, args: string[]): object | null;
     }
 
     export class AxonUtils {
@@ -601,7 +602,7 @@ declare module "axoncore" {
         public getCommand(fullLabel: string): Command | void;
 
         public sendMessage(channel: TextableChannel, content: AxonMSGCont, options?: AxonMSGOpt): Promise<Message>;
-        public sendDM(user: User, content: AxonMSGCont): Promise<Message|void>;
+        public sendDM(user: User, content: AxonMSGCont): Promise<Message | void>;
         public editMessage(message: Message, content: AxonMSGCont): Promise<Message>;
         public sendError(channel: TextableChannel, content: AxonMSGCont, options?: AxonMSGOpt): Promise<CommandResponse>;
         public sendSuccess(channel: TextableChannel, content: AxonMSGCont, options?: AxonMSGOpt): Promise<CommandResponse>;
@@ -872,6 +873,13 @@ declare module "axoncore" {
         caseSensitive?: boolean;
     }
 
+    interface rCollectorOptions {
+        filteredReactions?: object[];
+        count?: number;
+        timeout?: number;
+        ignoreBots?: boolean;
+    }
+
     // OK
     export class MessageCollector {
         private _options: mCollectorOptions;
@@ -884,7 +892,7 @@ declare module "axoncore" {
         readonly axon: AxonClient;
         readonly client: Client;
 
-        public run(channel: TextableChannel, options: mCollectorOptions): Promise<Collection<Message> >;
+        public run(channel: TextableChannel, options: mCollectorOptions): Promise<Collection<Message>>;
         private _onEnd(): void;
         private _startTimeout(): void;
         private _onMsgDelete(msg: Message): void;
@@ -892,6 +900,27 @@ declare module "axoncore" {
         private _onCollectEvent(): void;
         public end(): void;
         private _onMsgCreate(msg: Message): void;
+        public delete(mID: string): Collection<Message>;
+    }
+
+    export class ReactionCollector {
+        private _options: rCollectorOptions;
+        private _axon: AxonClient;
+        public reactions: Collection<Reaction>;
+
+        constructor(client: AxonClient, options: rCollectorOptions);
+
+        readonly axon: AxonClient;
+        readonly client: Client;
+
+        public run(channel: TextableChannel, options: mCollectorOptions): Promise<Collection<Reaction>>;
+        private _onEnd(): void;
+        private _startTimeout(): void;
+        private _onReactionAdd(msg: Message, emoji: Reaction, userId: string): void;
+        private _onReactionRemove(msg: Message, emoji: Reaction, userId: string): Promise<void>;
+        private _onCollectEvent(): void;
+        public end(): void;
+        private _onReactionRemoveAll(msg: Message): void;
         public delete(mID: string): Collection<Message>;
     }
 
@@ -966,7 +995,7 @@ declare module "axoncore" {
         public infos: infos;
         public axoncore: axonInfos;
 
-        constructor(botClient: Client, axonOptions: axonOptions, modules: object );
+        constructor(botClient: Client, axonOptions: axonOptions, modules: object);
         readonly botClient: Client;
         readonly events: Collection<Listener>;
         getListeners(eventName: string): Listener[];
