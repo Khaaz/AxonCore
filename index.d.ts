@@ -871,7 +871,7 @@ declare module "axoncore" {
         ignoreBots?: boolean;
         caseSensitive?: boolean;
     }
-
+    
     // OK
     export class MessageCollector {
         private _options: mCollectorOptions;
@@ -895,6 +895,34 @@ declare module "axoncore" {
         public delete(mID: string): Collection<Message>;
     }
 
+    interface rCollectorOptions {
+        filteredReactions?: object[];
+        count?: number;
+        timeout?: number;
+        ignoreBots?: boolean;
+    }
+    
+    export class ReactionCollector {
+        private _options: rCollectorOptions;
+        private _axon: AxonClient;
+        public reactions: Collection<Reaction>;
+
+        constructor(client: AxonClient, options: rCollectorOptions);
+
+        readonly axon: AxonClient;
+        readonly client: Client;
+
+        public run(channel: TextableChannel, options: mCollectorOptions): Promise<Collection<Reaction>>;
+        private _onEnd(): void;
+        private _startTimeout(): void;
+        private _onReactionAdd(msg: Message, emoji: Reaction, userId: string): void;
+        private _onReactionRemove(msg: Message, emoji: Reaction, userId: string): Promise<void>;
+        private _onCollectEvent(): void;
+        public end(): void;
+        private _onReactionRemoveAll(msg: Message): void;
+        public delete(mID: string): Collection<Message>;
+    }
+ 
     interface axonOptions {
         botConfig?: object;
         lang?: object;
