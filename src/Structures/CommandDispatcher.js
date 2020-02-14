@@ -1,4 +1,10 @@
 /**
+ * @typedef {import('../AxonClient').default} AxonClient
+ * @typedef {import('../Libraries/definitions/LibraryInterface').default} LibraryInterface
+ * @typedef {import('./DataStructure/GuildConfig').default} GuildConfig
+ */
+
+/**
  * Class responsible to call the correct command and correct execution flow when needed.
  * Dispatch to the correct command on message create event.
  * Handles prefix resolving and command resolving.
@@ -13,7 +19,7 @@ class CommandDispatcher {
     /**
      * Creates an instance of CommandDispatcher.
      *
-     * @param {Object<AxonClient>} axon
+     * @param {AxonClient} axon
      * @memberof CommandDispatcher
      */
     constructor(axon) {
@@ -26,7 +32,7 @@ class CommandDispatcher {
      * Returns the LibraryInterface instance
      *
      * @readonly
-     * @type {Object<LibraryInterface>}
+     * @type {LibraryInterface}
      * @memberof CommandDispatcher
      */
     get library() {
@@ -45,8 +51,8 @@ class CommandDispatcher {
      *      - Regular execution
      *      - DM execution
      *
-     * @param {Object<Message>} msg - Message Object from Eris
-     * @returns {Promise}
+     * @param {Message} msg - Message Object from Eris
+     * @returns {Promise<void>}
      * @memberof CommandDispatcher
      */
     async dispatch(msg) {
@@ -139,8 +145,8 @@ class CommandDispatcher {
      * Give the execution type: Owner or Admin execution.
      * It uses the global admin and owner prefixes and checks for the BotStaff rank of the caller.
      *
-     * @param {Object<Message>} msg
-     * @returns {Object} { isAdmin: Boolean, isOwner: Boolean }
+     * @param {Message} msg
+     * @returns {{isAdmin: Boolean, isOwner: Boolean}} { isAdmin: Boolean, isOwner: Boolean }
      * @memberof CommandDispatcher
      */
     getExecutionType(msg) {
@@ -165,8 +171,8 @@ class CommandDispatcher {
      * Will resolve the owner or admin prefix if it's an owner or admin execution.
      * It will otherwise regularly resolve the prefix for this particular guild.
      *
-     * @param {Object<Message>} msg - The message object
-     * @param {Object<GuildConfig>} guildConfig - The guildConfig Object
+     * @param {Message} msg - The message object
+     * @param {GuildConfig} guildConfig - The guildConfig Object
      * @param {Boolean} [isAdmin=false] - The guildConfig Object
      * @param {Boolean} [isOwner=false] - The guildConfig Object
      * @returns {String?} The prefix if found / Undefined if not
@@ -183,8 +189,8 @@ class CommandDispatcher {
      * If the message starts with one of the guild prefixes it returns the prefix, otherwise it returns undefined.
      * Global prefixes will only take over if no prefix are specified in this guild.
      *
-     * @param {Object<Message>} msg - The message object
-     * @param {Object<GuildConfig>} guildConfig - The guildConfig Object
+     * @param {Message} msg - The message object
+     * @param {GuildConfig} guildConfig - The guildConfig Object
      * @returns {String?} The prefix if found / Undefined if not
      * @memberof CommandDispatcher
      */

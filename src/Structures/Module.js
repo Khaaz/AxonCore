@@ -9,6 +9,14 @@ import CommandOptions from './Command/CommandOptions';
 import NotImplementedException from '../Errors/NotImplementedException';
 
 /**
+ * @typedef {import('../AxonClient').default} AxonClient
+ * @typedef {import('./Command/CommandOptions').default} CommandOptions
+ * @typedef {import('./Command/CommandPermissions').default} CommandPermissions
+ * @typedef {import('./Command/Command').default} Command
+ * @typedef {import('./Event/Listener').default} Listener
+ */
+
+/**
  * AxonCore Module.
  * A Module holds commands and listeners.
  * It also has default CommandOptions and CommandPermissions that can potentially be used as base when creating a Command.
@@ -44,8 +52,8 @@ class Module extends Base {
      * @param {String} data.infos.name - The module name
      * @param {String} data.infos.description - The module description
      * @param {String} data.infos.category - The module category
-     * @param {CommandOptions|Object} [data.options] - The default options for all commands in this module
-     * @param {CommandPermissions|Object} [data.permissions] - The default permissions for all commands in this module
+     * @param {CommandOptions} [data.options] - The default options for all commands in this module
+     * @param {CommandPermissions} [data.permissions] - The default permissions for all commands in this module
      * @memberof Module
      */
     constructor(client, data = {} ) {
@@ -129,7 +137,7 @@ class Module extends Base {
     /**
      * Override this method to returns { commands, listeners }
      *
-     * @returns {Object<{Commands, Listeners}>} An object containing commands and listeners to initialise. { commands, listeners}
+     * @returns {Object.<string, Command|Listener>} An object containing commands and listeners to initialise. { commands, listeners}
      * @memberof Module
      */
     init() {
