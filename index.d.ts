@@ -393,6 +393,7 @@ declare module 'axoncore' {
         public shouldSendInvalidPermissionMessage(guildConfig: GuildConfig): boolean;
         public shouldDeleteCommand(): boolean;
         public getInvalidPermissionMessage(channel: LibTextableChannel, member: LibMember, permission: string): string;
+        public getInvalidUsageMessage(): string;
     }
 
     export class CommandCooldown {
