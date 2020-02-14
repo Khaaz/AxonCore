@@ -1,10 +1,10 @@
 import Base from '../Base';
-import GuildConfig from '../DataStructure/GuildConfig'; // eslint-disable-line
 
 import NotImplementedException from '../../Errors/NotImplementedException';
 
 /**
  * @typedef {import('../Module').default} Module
+ * @typedef {import('../DataStructure/GuildConfig').default} GuildConfig
  */
 
 /**
