@@ -25,7 +25,6 @@ class CommandDispatcher {
     constructor(axon) {
         this.mentionFormatter = /<@!/g;
         this._axon = axon;
-        this.mentionFormater = /<@!/g;
     }
 
     /**
