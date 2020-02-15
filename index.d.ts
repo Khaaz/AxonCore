@@ -1437,8 +1437,8 @@ declare module 'axoncore' {
     }
 
     export class Validator {
-        validModule(module: Module): boolean;
-        validCommand(command: Command): boolean;
+        static validModule(module: Module): boolean;
+        static validCommand(command: Command): boolean;
         static checkValidPermissionName(PERMISSIONS: string[], perm: string): boolean;
         static checkMessageValidity(content: LibMessage | string): boolean;
     }
@@ -1656,7 +1656,7 @@ declare module 'axoncore' {
     // ReactionCollector file is empty
 
     export class LibrarySelector extends ASelector {
-        select(axon: AxonClient, axonOptions: AxonOptions): ErisInterface | DjsInterface;
+        static select(axon: AxonClient, axonOptions: AxonOptions): ErisInterface | DjsInterface;
     }
 
     export class Channel {
