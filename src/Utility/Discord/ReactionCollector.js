@@ -124,7 +124,7 @@ class ReactionCollector extends EventEmitter {
 
         if (this.options.filteredReactions && !this.filteredReactions.prototype.some(r => r.id == emoji.id)) return;
 
-        const users = this.reactions.get(emoji);
+        let users = this.reactions.get(emoji);
 
         if (users)
             users.add(userId);
