@@ -40,6 +40,8 @@
  * * 'VOICE_STATE_UPDATE'
  * * 'VOICE_SERVER_UPDATE'
  * * 'WEBHOOKS_UPDATE'
+ * @readonly
+ * @enum {String}
  */
 export const DISCORD_GATEWAY_EVENTS = [
     'HELLO',
@@ -110,6 +112,8 @@ export const DISCORD_GATEWAY_EVENTS = [
  * * 'MANAGE_ROLES'
  * * 'MANAGE_WEBHOOKS'
  * * 'MANAGE_EMOJIS'
+ * @readonly
+ * @enum {String}
  */
 export const DISCORD_PERMISSIONS = [
     'CREATE_INSTANT_INVITE',
@@ -179,6 +183,8 @@ export const DISCORD_PERMISSIONS = [
  * MANAGE_EMOJIS: 1073741824
  * ALL: 2147483647
  * }}
+ * @readonly
+ * @enum {Number}
  */
 const PERMISSIONS_NUMBERS = {
     CREATE_INSTANT_INVITE: 1 << 0,
@@ -230,6 +236,8 @@ export { PERMISSIONS_NUMBERS };
  * LIMIT_FOOTER_TEXT: 2048
  * LIMIT_AUTHOR_NAME: 256
  * }}
+ * @readonly
+ * @enum {Number}
  */
 export const EMBED_LIMITS = {
     LIMIT_CONTENT: 2000,
@@ -253,6 +261,8 @@ export const EMBED_LIMITS = {
  * GUILD_NEWS: 5
  * GUILD_STORE: 6
  * }}
+ * @readonly
+ * @enum {Number}
  */
 export const CHANNEL_TYPES = {
     GUILD_TEXT: 0,
@@ -279,6 +289,8 @@ export const CHANNEL_TYPES = {
  * USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_2: 10
  * USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_3: 11
  * }}
+ * @readonly
+ * @enum {Number}
  */
 export const MESSAGE_TYPES = {
     DEFAULT: 0,
@@ -303,6 +315,8 @@ export const MESSAGE_TYPES = {
  * WATCHING: 3
  * CUSTOM: 4
  * }}
+ * @readonly
+ * @enum {Number}
  */
 export const CLIENT_STATUS_TYPES = {
     PLAYING: 0,

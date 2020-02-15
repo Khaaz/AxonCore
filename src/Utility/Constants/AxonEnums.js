@@ -31,6 +31,8 @@
  * SERVICE_UNAVAILABLE: 503
  * GATEWAY_TIMEOUT: 504
  * }}
+ * @readonly
+ * @enum {Number}
  */
 export const HTTP_CODE = {
     CONTINUE: 100,
@@ -129,6 +131,8 @@ export const HTTP_CODE = {
  * 509: 'Bandwidth Limit Exceeded'
  * 510: 'Not Extended'
  * 511: 'Network Authentication Required'
+ * @readonly
+ * @enum {String}
  * }}
  */
 export const HTTP_MESSAGES = {
@@ -200,6 +204,8 @@ export const HTTP_MESSAGES = {
 // Types - Selector
 /**
  * @type {{ ERIS: 0, DISCORDJS: 1 }}
+ * @readonly
+ * @enum {Number}
  */
 export const LIBRARY_TYPES = {
     ERIS: 0,
@@ -208,6 +214,8 @@ export const LIBRARY_TYPES = {
 
 /**
  * @type {{ DEFAULT: 0, CHALK: 1, SIGNALE: 2, WINSTON: 3 }}
+ * @readonly
+ * @enum {Number}
  */
 export const LOGGER_TYPES = {
     DEFAULT: 0,
@@ -218,6 +226,8 @@ export const LOGGER_TYPES = {
 
 /**
  * @type {{ IN_MEMORY: 0, JSON: 1, MONGO: 2 }}
+ * @readonly
+ * @enum {Number}
  */
 export const DB_TYPES = {
     IN_MEMORY: 0,
@@ -228,6 +238,8 @@ export const DB_TYPES = {
 // Execution
 /**
  * @type {{ REGULAR: 0, ADMIN: 1, OWNER: 2 }}
+ * @readonly
+ * @enum {Number}
  */
 export const COMMAND_EXECUTION_TYPES = {
     REGULAR: 0,
@@ -243,6 +255,8 @@ export const COMMAND_EXECUTION_TYPES = {
  * INVALID_PERMISSIONS_BOT: 3
  * INVALID_PERMISSIONS_USER: 4
  * }}
+ * @readonly
+ * @enum {Number}
  */
 export const COMMAND_EXECUTION_STATE = {
     NO_ERROR: 0,
@@ -260,6 +274,8 @@ export const COMMAND_EXECUTION_STATE = {
  * MANAGER: 2
  * MODERATOR: 3
  * }}
+ * @readonly
+ * @enum {Number}
  */
 export const AXON_PERMISSIONS_LEVELS = {
     OWNER: 0,
@@ -269,10 +285,14 @@ export const AXON_PERMISSIONS_LEVELS = {
 };
 /**
  * @type {String} ***PERMISSION_ADMIN** 'Administrator'
+ * @readonly
+ * @enum {String}
  */
 export const PERMISSION_ADMIN = 'ADMINISTRATOR';
 /**
  * @type {String} ***PERMISSION_MANAGER** 'MANAGE_GUILD'
+ * @readonly
+ * @enum {String}
  */
 export const PERMISSION_MANAGER = 'MANAGE_GUILD';
 
@@ -287,6 +307,8 @@ export const PERMISSION_MANAGER = 'MANAGE_GUILD';
  * INFO: 'INFO'
  * VERBOSE: 'VERBOSE'
  * }}
+ * @readonly
+ * @enum {String}
  */
 export const WEBHOOK_TYPES = {
     FATAL: 'FATAL',
@@ -308,6 +330,8 @@ export const WEBHOOK_TYPES = {
  * INFO: 'info'
  * VERBOSE: 'verbose'
  * }}
+ * @readonly
+ * @enum {String}
  */
 export const LOG_LEVELS = {
     FATAL: 'fatal',
@@ -329,6 +353,8 @@ export const LOG_LEVELS = {
  * INFO: 0x00FF00
  * VERBOSE: 0x808080
  * }}
+ * @readonly
+ * @enum {Number}
  */
 export const WEBHOOK_TO_COLOR = {
     FATAL: 0xFF0000,
@@ -347,6 +373,8 @@ export const WEBHOOK_TO_COLOR = {
  * INTERNAL: 'Internal error - AxonClient/internal methods'
  * UNKNOWN: 'Unexpected error'
  * }}
+ * @readonly
+ * @enum {String}
  */
 export const TYPE_ERRORS = {
     DAPI: 'DAPI error - failed to retrieve from Discord',
