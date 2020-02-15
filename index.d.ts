@@ -1,8 +1,9 @@
-import { EventEmitter } from "events";
+import { EventEmitter } from 'events';
 import * as Eris from "eris";
 import * as djs from 'discord.js';
 type Message = Eris.Message | djs.Message;
 type Member = Eris.Member | djs.GuildMember;
+type Reaction = Eris.Emoji | djs.MessageReaction;
 type Client = Eris.Client | djs.Client;
 type Guild = Eris.Guild | djs.Guild;
 type User = Eris.User | djs.User;

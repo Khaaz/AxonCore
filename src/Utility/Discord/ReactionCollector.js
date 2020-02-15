@@ -1,6 +1,6 @@
 import { EventEmitter } from 'events';
 
-import { Collection } from '../Collection';
+import Collection  from '../Collection';
 
 /**
  * Collects reaction objects from a message.
@@ -96,11 +96,11 @@ class ReactionCollector extends EventEmitter {
     * collector.delete('542164538347225118');
     */
     delete(reaction) {
-        const reaction = this.reactions.find(r => r.id == reaction.id || r.name == reaction.name);
-        if (!reaction) {
+        const found = this.reactions.find(r => r.id == reaction.id || r.name == reaction.name);
+        if (!found) {
             throw new Error(`REACTION ${rID} NOT FOUND`);
         }
-        this.reactions.remove(reaction); // Remove the reaction
+        this.reactions.remove(found); // Remove the reaction
         return this.reactions; // Return the new map
     }
 
