@@ -67,12 +67,17 @@ class MessageCollector extends EventEmitter {
         this.messages = new Collection();
     }
 
+    /**
+     * @type {AxonClient}
+     * @readonly
+     */
     get axon() {
         return this._axon;
     }
 
     /**
      * @type {BotClient}
+     * @readonly
      */
     get client() {
         return this._axon.botClient;

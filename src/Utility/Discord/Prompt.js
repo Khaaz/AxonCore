@@ -95,12 +95,17 @@ class Prompt {
         this._boundEvent = this._onMsgCreate.bind(this);
     }
 
+    /**
+     * @type {AxonClient}
+     * @readonly
+     */
     get axon() {
         return this._axon;
     }
 
     /**
      * @type {BotClient}
+     * @readonly
      */
     get client() {
         return this._axon.botClient;
