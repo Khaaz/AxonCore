@@ -64,11 +64,11 @@ class InMemoryProvider extends ADBProvider {
         return this.updateGuild('listeners', gID, eventArr);
     }
 
-    saveAxonSchema(axonSchema) {
-        return new AxonConfig(axonSchema);
+    async saveAxon(axonSchema) {
+        return new AxonConfig(this.axon, axonSchema);
     }
 
-    saveGuildSchema(gID, guildSchema) {
+    async saveGuild(gID, guildSchema) {
         const guildConfig = new GuildConfig(this.axon, guildSchema);
         return guildConfig;
     }
