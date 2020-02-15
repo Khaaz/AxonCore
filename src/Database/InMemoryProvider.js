@@ -19,6 +19,10 @@ class InMemoryProvider extends ADBProvider {
         return Promise.resolve(axon);
     }
 
+    init() {
+        return;
+    }
+
     async fetchGuild(gID) {
         let guild = this.axon.guildConfigs.get(gID);
         if (!guild) {
