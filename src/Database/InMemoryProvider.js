@@ -66,7 +66,9 @@ class InMemoryProvider extends ADBProvider {
     }
 
     saveGuildSchema(gID, guildSchema) {
-        return this.axon.guildConfigs.set(gID, guildSchema);
+        const guildConfig = new GuildConfig(this.axon, guildSchema);
+        this.axon.guildConfigs.set(gID, guildConfig);
+        return guildConfig;
     }
 
     async updateGuild(key, gID, value) {
