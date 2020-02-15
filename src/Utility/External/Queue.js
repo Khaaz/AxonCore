@@ -18,6 +18,9 @@ class Queue {
      * @memberof Queue
      */
     constructor(stopOnError = false) {
+        /**
+         * @type {Array<Function>}
+         */
         this._functions = [];
         this._running = false;
 
@@ -54,7 +57,7 @@ class Queue {
      *
      * @param {Function} func - The function to run
      * @param {Boolean} [toExec=true] - Whether to auto exec the queue on add or not.
-     * @param {*} args - All arguments the function needs
+     * @param {...any} args - All arguments the function needs
      * @memberof Queue
      */
     add(func, toExec = true, ...args) {
@@ -67,6 +70,11 @@ class Queue {
         }
     }
 
+    /**
+     * @param {Function} fn
+     * @param  {...any} args
+     * @returns {unknown}
+     */
     createClosure(fn, ...args) {
         return () => fn(...args);
     }

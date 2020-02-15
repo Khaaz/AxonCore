@@ -1614,8 +1614,8 @@ declare module 'axoncore' {
 
     export class AsyncQueue extends Queue {
         public exec(): Promise<void>;
-        public add(func: Function, toExec?: boolean, ...args: any[] ): Promise<void>;
-        public createClosure(fn: Function, resolve: (value: unknown) => void, reject: (reason: Error) => void, ...args: any[] ): Promise<void>;
+        public add(func: Function, toExec?: boolean, ...args: any[] ): Promise<any>;
+        public createClosure(fn: Function, resolve: (value: unknown) => void, reject: (reason: Error) => void, ...args: any[] ): Promise<any>;
     }
 
     export class AutoQueue extends Queue {
