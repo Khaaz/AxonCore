@@ -38,10 +38,11 @@ class Collection extends Map {
     /**
      * Creates a collection from an array
      *
+     * @template R
      * @static
-     * @param {Array<T>} array - The array of object
+     * @param {Array<R>} array - The array of object
      * @param {String} key - The property to use as key
-     * @returns {Collection<T>} A newly created Collection
+     * @returns {Collection<R>} A newly created Collection
      * @memberof Collection
      */
     static from(array, key) {
