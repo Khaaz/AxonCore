@@ -39,6 +39,18 @@ import { EMBED_LIMITS } from './Utility/Constants/DiscordEnums';
 import { WEBHOOK_TYPES, LOG_LEVELS, WEBHOOK_TO_COLOR } from './Utility/Constants/AxonEnums';
 
 /**
+ * @typedef {import('./AxonOptions').default} AxonOptions
+ * @typedef {import('./Structures/Module').default} Module
+ * @typedef {import('./Structures/Event/AHandler').default} AHandler
+ * @typedef {import('./Utility/Collection').default<AHandler>} HandlerCollection
+ * @typedef {import('./Structures/Event/Listener').default} Listener
+ * @typedef {import('./Libraries/definitions/Resolver').default} Resolver
+ * @typedef {import('./Structures/Command/Command').default} Command
+ * @typedef {import('./Loggers/Context').default} Context
+ * @typedef {import('./Structures/DataStructure/GuildConfig').default} GuildConfig
+ */
+
+/**
  * AxonCore - Client constructor
  *
  * @author KhaaZ
@@ -61,9 +73,9 @@ import { WEBHOOK_TYPES, LOG_LEVELS, WEBHOOK_TO_COLOR } from './Utility/Constants
  * @prop {Utils} utils - Utils methods (general)
  * @prop {ADBProvider} DBProvider - The DBProvider instance
  * @prop {Object} configs - configs (webhooks, template, custom)
- * @prop {Object} configs.webhooks - Webhooks configs with all webhooks id and tokens
- * @prop {Object} configs.template - Template config
- * @prop {Object} configs.custom - Custom config object optionally passed via AxonOptions
+ * @prop {Object.<string, {id: String, token: String}>} configs.webhooks - Webhooks configs with all webhooks id and tokens
+ * @prop {{ embeds: Object.<string, Number>, emotes: Object.<string, String> }} configs.template - Template config
+ * @prop {AxonOptions} configs.custom - Custom config object optionally passed via AxonOptions
  * @prop {Object} staff - Bot Staff (owners, admins, +...)
  * @prop {Array<String>} staff.owners - Array of user IDs with BotOwner permissions
  * @prop {Array<String>} staff.admins - Array of user IDs with BotAdmin permissions
@@ -88,7 +100,7 @@ class AxonClient extends EventEmitter {
      *
      * @param {BotClient} botClient - Eris or Discordjs Client instance
      * @param {AxonOptions} [axonOptions={}] - Axon options
-     * @param {Object} [modules={}] - Object with all modules to add in the bot
+     * @param {Object.<string, Module>} [modules={}] - Object with all modules to add in the bot
      * @memberof AxonClient
      */
     constructor(botClient, axonOptions = {}, modules = {} ) {
@@ -120,6 +132,9 @@ class AxonClient extends EventEmitter {
         };
 
         /* Client specification */
+        /**
+         * @type {{version: String, author: String, github: String}}
+         */
         this.axoncore = {
             version: packageJSON.version,
             author: packageJSON.author,
@@ -138,18 +153,27 @@ class AxonClient extends EventEmitter {
         /*
          * Initialise Bot Client and LibraryInterface
          */
+        /**
+         * @type {BotClient}
+         */
         this._botClient = botClient;
         this.library = LibrarySelector.select(this, axonOptions);
         this.log('NOTICE', `Library Interface ready. [TYPE: ${this.library.type}]`);
 
         /* Utils */
         if (axonOptions.extensions.utils && axonOptions.extensions.utils.prototype instanceof Utils) {
+            /**
+             * @type {Utils}
+             */
             this.utils = new axonOptions.extensions.utils(this); // eslint-disable-line new-cap
         } else {
             this.utils = new Utils(this);
         }
         /* ADBProvider */
         if (axonOptions.extensions.DBProvider && axonOptions.extensions.DBProvider.prototype instanceof ADBProvider) {
+            /**
+             * @type {ADBProvider}
+             */
             this.DBProvider = new axonOptions.extensions.DBProvider(this);
         } else {
             this.DBProvider = DBSelector.select(this, axonOptions);
@@ -206,7 +230,7 @@ class AxonClient extends EventEmitter {
      * Returns all event handlers in eventManager
      *
      * @readonly
-     * @type {Collection<Object>}
+     * @type {HandlerCollection}
      * @memberof AxonClient
      */
     get handlers() {
@@ -217,7 +241,7 @@ class AxonClient extends EventEmitter {
      * Returns all registered listeners for the discord event name
      *
      * @param {String} eventName
-     * @returns {Array}
+     * @returns {Array<Listener>}
      * @memberof AxonClient
      */
     getListeners(eventName) {
@@ -251,7 +275,10 @@ class AxonClient extends EventEmitter {
      * Return the webhooks config
      *
      * @readonly
-     * @type {Object}
+     * @type {{
+     * FATAL: {id: String, token: String}, ERROR: {id: String, token: String}, WARN: {id: String, token: String}, DEBUG: {id: String, token: String},
+     * NOTICE: {id: String, token: String}, INFO: {id: String, token: String}, VERBOSE: {id: String, token: String}
+     * }}
      * @memberof AxonClient
      */
     get webhooks() {
@@ -262,7 +289,7 @@ class AxonClient extends EventEmitter {
      * Returns the template config
      *
      * @readonly
-     * @type {Object}
+     * @type {{embeds: Object.<string, Number>, emotes: Object.<string, String>}}
      * @memberof AxonClient
      */
     get template() {
@@ -273,7 +300,7 @@ class AxonClient extends EventEmitter {
      * Returns the custom config
      *
      * @readonly
-     * @type {Object}
+     * @type {Object.<string, any>}
      * @memberof AxonClient
      */
     get custom() {
@@ -348,7 +375,7 @@ class AxonClient extends EventEmitter {
      * Override this method.
      * Method executed after the object is finished to be constructed (in the constructor)
      *
-     * @returns {*}
+     * @returns {Boolean}
      * @memberof AxonClient
      */
     onInit() {
@@ -359,7 +386,7 @@ class AxonClient extends EventEmitter {
      * Override this method.
      * Method executed at the beginning of the start method.
      *
-     * @returns {Promise}
+     * @returns {Promise<Boolean>}
      * @memberof AxonClient
      */
     onStart() {
@@ -370,7 +397,7 @@ class AxonClient extends EventEmitter {
      * Override this method.
      * Method executed at the end of the start method (when the AxonClient is ready).
      *
-     * @returns {Promise}
+     * @returns {Promise<Boolean>}
      * @memberof AxonClient
      */
     onReady() {
@@ -380,12 +407,9 @@ class AxonClient extends EventEmitter {
     /**
      * Log both to console and to the correct webhook
      *
-     * @param {LOG_LEVELS} level - The LOG-LEVEL
+     * @param {'FATAL'|'ERROR'|'WARN'|'DEBUG'|'NOTICE'|'INFO'|'VERBOSE'} level - The LOG-LEVEL
      * @param {String|Error} content - The content or the error to log
-     * @param {Object} [ctx=null] - Additional context to be passed to logger
-     * @param {Object|String} ctx.guild
-     * @param {String} ctx.cmd
-     * @param {Object|String} ctx.user
+     * @param {Context} [ctx=null] - Additional context to be passed to logger
      * @param {Boolean} [execWebhook=true] - Whether to execute the webhook
      * @memberof AxonClient
      */
@@ -523,6 +547,15 @@ class AxonClient extends EventEmitter {
      * @memberof AxonClient
      */
 
+    /**
+      * @param {Message} msg
+      * @param {Array<String>} args
+      * @param {Command} command
+      * @param {GuildConfig} guildConfig
+      * @param {Object} permissions
+      * @param {Boolean} permissions.isAdmin
+      * @param {Boolean} permissions.isOwner
+      */
     _execCommand(msg, args, command, guildConfig, { isAdmin, isOwner } ) {
         if (this.settings.debugMode) {
             this.log('VERBOSE', `${guildConfig ? '[GUILD]' : '[DM]'} ${isAdmin ? 'Admin' : 'Regular'} execution of ${command.fullLabel}`);
@@ -550,6 +583,15 @@ class AxonClient extends EventEmitter {
         }
     }
 
+    /**
+      * @param {Message} msg
+      * @param {Array<String>} args
+      * @param {Command} command
+      * @param {GuildConfig} guildConfig
+      * @param {Object} permissions
+      * @param {Boolean} permissions.isAdmin
+      * @param {Boolean} permissions.isOwner
+      */
     _execHelp(msg, args, command, guildConfig, { isAdmin, isOwner } ) {
         if (!command) {
             this.sendFullHelp(msg, guildConfig);
@@ -605,6 +647,11 @@ class AxonClient extends EventEmitter {
      * @memberof AxonClient
      */
 
+    /**
+     * @param {Listener} listener
+     * @param {GuildConfig} guildConfig
+     * @param {...any} args
+     */
     _execListener(listener, guildConfig, ...args) {
         listener._execute(guildConfig, ...args)
             .then( () => {
@@ -628,6 +675,7 @@ class AxonClient extends EventEmitter {
      * This method can be overridden in child.
      *
      * @param {Message} msg - The message object
+     * @param {GuildConfig} guildConfig
      *
      * @memberof AxonClient
      */

@@ -194,7 +194,12 @@ class Command extends Base {
     /**
      * Process the command, and executes it if it can (permissions, options etc..).
      *
-     * @param {Object} params - { msg, args, guildConfig, isAdmin, isOwner }
+     * @param {Object} params
+     * @param {Message} params.msg
+     * @param {Array<String>} params.args
+     * @param {GuildConfig} params.guildConfig
+     * @param {Boolean} params.isAdmin
+     * @param {Boolean} params.isOwner
      * @returns {Promise<CommandContext>} Return a CommandContext or throw an AxonCommandError.
      * @memberof Command
      */

@@ -7,6 +7,15 @@ import defaultLang from './Configs/lang.json';
 import defaultWebhooksConfig from './Configs/webhooksConfig.json';
 
 /**
+ * @typedef {Object.<string, AxonLanguageResponse>} Languages
+ * @typedef {import('./Langs/TranslationManager').AxonLanguageResponse} AxonLanguageResponse
+ * @typedef {import('./Loggers/ALogger').default} ALogger
+ * @typedef {import('./Database/ADBProvider').default} ADBProvider
+ * @typedef {import('./Structures/DataStructure/AxonConfig').default} AxonConfig
+ * @typedef {import('./Structures/DataStructure/GuildConfig').default} GuildConfig
+ */
+
+/**
  * AxonOptions definition.
  * Options passed when creating an AxonClient instance.
  *
@@ -24,12 +33,12 @@ import defaultWebhooksConfig from './Configs/webhooksConfig.json';
  * @prop {Object} settings - Bot settings
  * @prop {String} settings.lang - Default lang for the bot
  * @prop {Boolean} settings.debugMode - Whether to run the bot in debugMode (additional info)
- * @prop {Number<LIBRARY_TYPES>} settings.library - Library type
- * @prop {Number<LOGGER_TYPES>} setting.logger - Logger type
- * @prop {Number<DB_TYPES>} settings.db - DB type
+ * @prop {LIBRARY_TYPES} settings.library - Library type
+ * @prop {LOGGER_TYPES} settings.logger - Logger type
+ * @prop {DB_TYPES} settings.db - DB type
  * @prop {Number} settings.guildConfigCache - max amount of guildConfigs cached at the same time (LRUCache)
  *
- * @prop {Object} lang - Translation file
+ * @prop {Languages} lang - Translation file
  * @prop {Function} logo - Custom function that will log a custom logo on startup
  * // Info
  * @prop {Object} info - General info about the bot
@@ -42,26 +51,26 @@ import defaultWebhooksConfig from './Configs/webhooksConfig.json';
  * @prop {Array<Object>} staff.admins - The bot staff (owner, admins)
  * // Template
  * @prop {Object} template - Template information (colours / formatting / emojis)
- * @prop {Object} template.embeds - Embeds colors
- * @prop {Object} template.emotes - Emotes
+ * @prop {Object.<string, Number>} template.embeds - Embeds colors
+ * @prop {Object.<string, String>} template.emotes - Emotes
  *
  * // Custom
- * @prop {Object} data.custom - Custom configs that can be provided
+ * @prop {Object.<string, any>} data.custom - Custom configs that can be provided
  *
  * // Webhooks
  * @prop {Object} webhooks - Webhooks tokens / id
- * @prop {Object} webhooks.FATAL
- * @prop {Object} webhooks.ERROR
- * @prop {Object} webhooks.WARN
- * @prop {Object} webhooks.DEBUG
- * @prop {Object} webhooks.NOTICE
- * @prop {Object} webhooks.INFO
- * @prop {Object} webhooks.VERBOSE
+ * @prop {{id: String, token: String}} webhooks.FATAL
+ * @prop {{id: String, token: String}} webhooks.ERROR
+ * @prop {{id: String, token: String}} webhooks.WARN
+ * @prop {{id: String, token: String}} webhooks.DEBUG
+ * @prop {{id: String, token: String}} webhooks.NOTICE
+ * @prop {{id: String, token: String}} webhooks.INFO
+ * @prop {{id: String, token: String}} webhooks.VERBOSE
  *
  * // Extensions
  * @prop {Object} extensions - Classes overrides
  * @prop {Utils} extensions.utils - Custom utils. Needs to be an instance of AxonCore.Utils
- * @prop {Object} extensions.logger - Custom logger
+ * @prop {ALogger} extensions.logger - Custom logger
  * @prop {DBProvider} extensions.DBProvider - DBProvider. Needs to be an instance of DBProvider
  * @prop {String} extensions.DBLocation - Path to use as default location for usage of the JSONProvider
  * @prop {AxonConfig} extensions.axonConfig - Custom AxonConfig object to use instead of default AxonConfig
@@ -83,13 +92,22 @@ class AxonOptions {
      * @param {Object} data.settings - Bot settings
      * @param {String} data.settings.lang - Default lang for the bot
      * @param {Boolean} data.settings.debugMode - Whether to run the bot in debugMode (additional info)
-     * @param {Number<LIBRARY_TYPES>} data.settings.library - Library type
-     * @param {Number<LOGGER_TYPES>} data.setting.logger - Logger type
-     * @param {Number<DB_TYPES>} data.settings.db - DB type
+     * @param {0|1} data.settings.library - Library type
+     * * `0` - Eris
+     * * `1` - Discord.JS
+     * @param {0|1|2|3} data.settings.logger - Logger type
+     * * `0` - Default
+     * * `1` - Chalk
+     * * `2` - Signale
+     * * `3` - Winston
+     * @param {0|1|2} data.settings.db - DB type
+     * * `0` - In memory
+     * * `1` - JSON
+     * * `2` - Mongo
      * @param {Number} data.settings.guildConfigCache - max amount of guildConfigs cached at the same time (LRUCache)
      *
-     * @param {Object} data.lang - Translation file
-     * @param {Function} data.logo - Custom function that will log a custom logo on startup
+     * @param {Languages} data.lang - Translation file
+     * @param {() => void} data.logo - Custom function that will log a custom logo on startup
      * // Info
      * @param {Object} data.info - General info about the bot
      * @param {String} data.info.name - The application name
@@ -97,30 +115,30 @@ class AxonOptions {
      * @param {String} data.info.version - The application version
      * // Staff
      * @param {Object} data.staff - The bot staff (owner, admins)
-     * @param {Array<Object>} data.staff.owners - The bot staff (owner, admins)
-     * @param {Array<Object>} data.staff.admins - The bot staff (owner, admins)
+     * @param {Array<{name: String, id: String}>} data.staff.owners - The bot staff (owner, admins)
+     * @param {Array<{name: String, id: String}>} data.staff.admins - The bot staff (owner, admins)
      * // Template
      * @param {Object} data.template - Template information (colors / formatting / emojis)
-     * @param {Object} data.template.embeds - Embeds colors
-     * @param {Object} data.template.emotes - Emotes
+     * @param {Object.<string, Number>} data.template.embeds - Embeds colors
+     * @param {Object.<string, String>} data.template.emotes - Emotes
      *
      * // Custom
-     * @param {Object} data.custom - Custom configs that can be provided
+     * @param {Object.<string, any>} data.custom - Custom configs that can be provided
      *
      * // Webhooks
      * @param {Object} [webhooks={}] - Webhooks tokens / id
-     * @param {Object} webhooks.FATAL
-     * @param {Object} webhooks.ERROR
-     * @param {Object} webhooks.WARN
-     * @param {Object} webhooks.DEBUG
-     * @param {Object} webhooks.NOTICE
-     * @param {Object} webhooks.INFO
-     * @param {Object} webhooks.VERBOSE
+     * @param {{id: String, token: String}} webhooks.FATAL
+     * @param {{id: String, token: String}} webhooks.ERROR
+     * @param {{id: String, token: String}} webhooks.WARN
+     * @param {{id: String, token: String}} webhooks.DEBUG
+     * @param {{id: String, token: String}} webhooks.NOTICE
+     * @param {{id: String, token: String}} webhooks.INFO
+     * @param {{id: String, token: String}} webhooks.VERBOSE
      *
      * // Extensions
      * @param {Object} [extensions={}] - Classes overrides
      * @param {Utils} extensions.utils - Custom utils. Needs to be an instance of AxonCore.Utils
-     * @param {Object} extensions.logger - Custom logger
+     * @param {ALogger} extensions.logger - Custom logger
      * @param {ADBProvider} extensions.DBProvider - DBProvider. Needs to be an instance of DBProvider
      * @param {String} extensions.DBLocation - Path to use as default location for usage of the JSONProvider
      * @param {AxonConfig} extensions.axonConfig - Custom AxonConfig object to use instead of default AxonConfig
@@ -130,11 +148,19 @@ class AxonOptions {
     constructor(data = {}, webhooks = {}, extensions = {} ) {
         this._token = data.token || null; // DJS token to login
 
+        /**
+         * @type {{general: String, owner: String, admin: String}}
+         */
         this.prefixes = Utils.compareObject(defaultConfig.prefixes, data.prefixes)
             ? data.prefixes
             : defaultConfig.prefixes;
 
         const settings = data.settings || {};
+        /**
+         * @type {{
+         * lang: String, debugMode: Boolean, library: Number, logger: Number, db: Number, guildConfigCache: Number
+         * }}
+         */
         this.settings = {
             lang: settings.lang || 'english',
             debugMode: !!settings.debugMode,
@@ -144,17 +170,29 @@ class AxonOptions {
             guildConfigCache: settings.guildConfigCache || 10000,
         };
 
+        /**
+         * @type {Languages}
+         */
         this.lang = Utils.compareObject(defaultLang, data.lang)
             ? data.lang
             : defaultLang;
 
         this.logo = data.logo || null;
+        /**
+         * @type {{name: String, description: String, version: String}}
+         */
         this.info = Utils.compareObject(defaultConfig.info, data.info)
             ? data.info
             : defaultConfig.info;
+        /**
+         * @type {{owners: Array<{name: String, id: String}>, admins: Array<{name: String, id: String}>}}
+         */
         this.staff = Utils.compareObject(defaultConfig.staff, data.staff)
             ? data.staff
             : defaultConfig.staff;
+        /**
+         * @type {{embeds: Object.<string, Number>, emotes: Object.<string, String>}}
+         */
         this.template = Utils.compareObject(defaultConfig.template, data.template)
             ? data.template
             : defaultConfig.template;
@@ -163,6 +201,12 @@ class AxonOptions {
         this.custom = data.custom || null;
 
         // webhooks
+        /**
+         * @type {{
+         * FATAL: {id: String, token: String}, ERROR: {id: String, token: String}, WARN: {id: String, token: String}, DEBUG: {id: String, token: String},
+         * NOTICE: {id: String, token: String}, INFO: {id: String, token: String}, VERBOSE: {id: String, token: String}
+         * }}
+         */
         this.webhooks = Utils.compareObject(defaultWebhooksConfig, webhooks)
             ? webhooks
             : defaultWebhooksConfig;
