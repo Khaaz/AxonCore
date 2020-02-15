@@ -33,9 +33,18 @@ import defaultWebhooksConfig from './Configs/webhooksConfig.json';
  * @prop {Object} settings - Bot settings
  * @prop {String} settings.lang - Default lang for the bot
  * @prop {Boolean} settings.debugMode - Whether to run the bot in debugMode (additional info)
- * @prop {LIBRARY_TYPES} settings.library - Library type
- * @prop {LOGGER_TYPES} settings.logger - Logger type
- * @prop {DB_TYPES} settings.db - DB type
+ * @prop {0|1} settings.library - Library type
+ * * `0` - Eris
+ * * `1` - Discord.JS
+ * @prop {0|1|2|3} settings.logger - Logger type
+ * * `0` - Default
+ * * `1` - Chalk
+ * * `2` - Signale
+ * * `3` - Winston
+ * @prop {0|1|2} settings.db - DB type
+ * * `0` - In memory
+ * * `1` - JSON
+ * * `2` - Mongo
  * @prop {Number} settings.guildConfigCache - max amount of guildConfigs cached at the same time (LRUCache)
  *
  * @prop {Languages} lang - Translation file

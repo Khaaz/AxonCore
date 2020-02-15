@@ -44,7 +44,7 @@ class AsyncQueue extends Queue {
      * @param {Function} func - The function to run
      * @param {Boolean} [toExec=true] - Whether to auto exec the queue on add or not.
      * @param {...any} args - All arguments the function needs
-     * @returns {Promise}
+     * @returns {Promise<any>}
      * @memberof AsyncQueue
      */
     add(func, toExec = true, ...args) {
@@ -64,6 +64,7 @@ class AsyncQueue extends Queue {
      * @param {(value: unknown) => void} resolve
      * @param {(reason: Error) => void} reject
      * @param {...any} args
+     * @returns {Promise<Function>}
      */
     createClosure(fn, resolve, reject, ...args) {
         return async() => {

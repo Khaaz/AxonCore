@@ -21,7 +21,7 @@ declare module 'axoncore' {
         public baseObject: new (...args: any[] ) => T;
         public constructor(base: { base?: new (...args: any[] ) => T; iterable?: {[key: string]: T;} | [string, T][]; } );
 
-        // static from(array: T[], key: string): Collection<T>;
+        static from<R>(array: R[], key: string): Collection<R>;
 
         public add(key: string, value: T, replace?: boolean): T;
         public find(func: (i: T) => boolean): T;
@@ -1618,7 +1618,7 @@ declare module 'axoncore' {
     export class AsyncQueue extends Queue {
         public exec(): Promise<void>;
         public add(func: Function, toExec?: boolean, ...args: any[] ): Promise<any>;
-        public createClosure(fn: Function, resolve: (value: unknown) => void, reject: (reason: Error) => void, ...args: any[] ): Promise<any>;
+        public createClosure(fn: Function, resolve: (value: unknown) => void, reject: (reason: Error) => void, ...args: any[] ): Promise<Function>;
     }
 
     export class AutoQueue extends Queue {
