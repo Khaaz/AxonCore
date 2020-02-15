@@ -20,12 +20,15 @@ declare module 'axoncore' {
     export class Collection<T> extends Map<string | number, T> {
         public baseObject: new (...args: any[] ) => T;
         public constructor(base: { base?: new (...args: any[] ) => T; iterable?: {[key: string]: T;} | [string, T][]; } );
+
+        // static from(array: T[], key: string): Collection<T>;
+
         public add(key: string, value: T, replace?: boolean): T;
         public find(func: (i: T) => boolean): T;
         public random(): T;
         public filter(func: (i: T) => boolean): T[];
         public map<R>(func: (i: T) => R): R[];
-        public reduce<U>(func: (accumulator: U, val: T) => U, initialValue?: U): U;
+        public reduce<U>(func: (accumulator: U, val: T) => U, initialValue?: number): U;
         public every(func: (i: T) => boolean): boolean;
         public some(func: (i: T) => boolean): boolean;
         public update(key: string, value: T): T;
