@@ -28,7 +28,7 @@
     "mongoose": "^5.7.7",
     "superagent": "^5.2.1",
     "typescript": "^3.7.5",
-    "yarn": "^1.21.1"
+    "yarn": "^1.22.0"
   },
   "main": "./index.js",
   "types": "./index.d.ts",
