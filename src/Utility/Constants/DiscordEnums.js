@@ -262,7 +262,7 @@ export const EMBED_LIMITS = {
  * GUILD_STORE: 6
  * }}
  * @readonly
- * @enum {Number}
+ * @enum {0|1|2|3|4|5|6}
  */
 export const CHANNEL_TYPES = {
     GUILD_TEXT: 0,
@@ -290,7 +290,7 @@ export const CHANNEL_TYPES = {
  * USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_3: 11
  * }}
  * @readonly
- * @enum {Number}
+ * @enum {0|1|2|3|4|5|6|7|8|9|10|11}
  */
 export const MESSAGE_TYPES = {
     DEFAULT: 0,
@@ -316,7 +316,7 @@ export const MESSAGE_TYPES = {
  * CUSTOM: 4
  * }}
  * @readonly
- * @enum {Number}
+ * @enum {0|1|2|3|4}
  */
 export const CLIENT_STATUS_TYPES = {
     PLAYING: 0,

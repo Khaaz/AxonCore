@@ -32,7 +32,7 @@
  * GATEWAY_TIMEOUT: 504
  * }}
  * @readonly
- * @enum {Number}
+ * @enum {100|200|201|202|204|300|301|302|400|401|402|403|404|405|408|409|410|415|423|429|500|501|502|503|504}
  */
 export const HTTP_CODE = {
     CONTINUE: 100,
@@ -205,7 +205,7 @@ export const HTTP_MESSAGES = {
 /**
  * @type {{ ERIS: 0, DISCORDJS: 1 }}
  * @readonly
- * @enum {Number}
+ * @enum {0|1}
  */
 export const LIBRARY_TYPES = {
     ERIS: 0,
@@ -215,7 +215,7 @@ export const LIBRARY_TYPES = {
 /**
  * @type {{ DEFAULT: 0, CHALK: 1, SIGNALE: 2, WINSTON: 3 }}
  * @readonly
- * @enum {Number}
+ * @enum {0|1|2|3}
  */
 export const LOGGER_TYPES = {
     DEFAULT: 0,
@@ -227,7 +227,7 @@ export const LOGGER_TYPES = {
 /**
  * @type {{ IN_MEMORY: 0, JSON: 1, MONGO: 2 }}
  * @readonly
- * @enum {Number}
+ * @enum {0|1|2}
  */
 export const DB_TYPES = {
     IN_MEMORY: 0,
@@ -239,7 +239,7 @@ export const DB_TYPES = {
 /**
  * @type {{ REGULAR: 0, ADMIN: 1, OWNER: 2 }}
  * @readonly
- * @enum {Number}
+ * @enum {0|1|2}
  */
 export const COMMAND_EXECUTION_TYPES = {
     REGULAR: 0,
@@ -256,7 +256,7 @@ export const COMMAND_EXECUTION_TYPES = {
  * INVALID_PERMISSIONS_USER: 4
  * }}
  * @readonly
- * @enum {Number}
+ * @enum {0|1|2|3|4}
  */
 export const COMMAND_EXECUTION_STATE = {
     NO_ERROR: 0,
@@ -275,7 +275,7 @@ export const COMMAND_EXECUTION_STATE = {
  * MODERATOR: 3
  * }}
  * @readonly
- * @enum {Number}
+ * @enum {0|1|2|3}
  */
 export const AXON_PERMISSIONS_LEVELS = {
     OWNER: 0,
@@ -286,13 +286,13 @@ export const AXON_PERMISSIONS_LEVELS = {
 /**
  * @type {String} ***PERMISSION_ADMIN** 'Administrator'
  * @readonly
- * @enum {String}
+ * @enum {'ADMINISTRATOR'}
  */
 export const PERMISSION_ADMIN = 'ADMINISTRATOR';
 /**
  * @type {String} ***PERMISSION_MANAGER** 'MANAGE_GUILD'
  * @readonly
- * @enum {String}
+ * @enum {'MANAGE_GUILD'}
  */
 export const PERMISSION_MANAGER = 'MANAGE_GUILD';
 
@@ -308,7 +308,7 @@ export const PERMISSION_MANAGER = 'MANAGE_GUILD';
  * VERBOSE: 'VERBOSE'
  * }}
  * @readonly
- * @enum {String}
+ * @enum {'FATAL'|'ERROR'|'WARN'|'DEBUG'|'NOTICE'|'INFO'|'VERBOSE'}
  */
 export const WEBHOOK_TYPES = {
     FATAL: 'FATAL',
@@ -331,7 +331,7 @@ export const WEBHOOK_TYPES = {
  * VERBOSE: 'verbose'
  * }}
  * @readonly
- * @enum {String}
+ * @enum {'fatal'|'error'|'warn'|'debug'|'notice'|'info'|'verbose'}
  */
 export const LOG_LEVELS = {
     FATAL: 'fatal',
@@ -354,7 +354,7 @@ export const LOG_LEVELS = {
  * VERBOSE: 0x808080
  * }}
  * @readonly
- * @enum {Number}
+ * @enum {0xFF0000|0xFF4500|0x0000FF|0x00FF00|0x808080}
  */
 export const WEBHOOK_TO_COLOR = {
     FATAL: 0xFF0000,

@@ -13,6 +13,9 @@ import defaultWebhooksConfig from './Configs/webhooksConfig.json';
  * @typedef {import('./Database/ADBProvider').default} ADBProvider
  * @typedef {import('./Structures/DataStructure/AxonConfig').default} AxonConfig
  * @typedef {import('./Structures/DataStructure/GuildConfig').default} GuildConfig
+ * @typedef {import('./Utility/Constants/AxonEnums').LIBRARY_TYPES} LIBRARY_TYPES
+ * @typedef {import('./Utility/Constants/AxonEnums').LOGGER_TYPES} LOGGER_TYPES
+ * @typedef {import('./Utility/Constants/AxonEnums').DB_TYPES} DB_TYPES
  */
 
 /**
@@ -33,18 +36,9 @@ import defaultWebhooksConfig from './Configs/webhooksConfig.json';
  * @prop {Object} settings - Bot settings
  * @prop {String} settings.lang - Default lang for the bot
  * @prop {Boolean} settings.debugMode - Whether to run the bot in debugMode (additional info)
- * @prop {0|1} settings.library - Library type
- * * `0` - Eris
- * * `1` - Discord.JS
- * @prop {0|1|2|3} settings.logger - Logger type
- * * `0` - Default
- * * `1` - Chalk
- * * `2` - Signale
- * * `3` - Winston
- * @prop {0|1|2} settings.db - DB type
- * * `0` - In memory
- * * `1` - JSON
- * * `2` - Mongo
+ * @prop {LIBRARY_TYPES} settings.library - Library type
+ * @prop {LOGGER_TYPES} settings.logger - Logger type
+ * @prop {DB_TYPES} settings.db - DB type
  * @prop {Number} settings.guildConfigCache - max amount of guildConfigs cached at the same time (LRUCache)
  *
  * @prop {Languages} lang - Translation file
@@ -101,18 +95,9 @@ class AxonOptions {
      * @param {Object} data.settings - Bot settings
      * @param {String} data.settings.lang - Default lang for the bot
      * @param {Boolean} data.settings.debugMode - Whether to run the bot in debugMode (additional info)
-     * @param {0|1} data.settings.library - Library type
-     * * `0` - Eris
-     * * `1` - Discord.JS
-     * @param {0|1|2|3} data.settings.logger - Logger type
-     * * `0` - Default
-     * * `1` - Chalk
-     * * `2` - Signale
-     * * `3` - Winston
-     * @param {0|1|2} data.settings.db - DB type
-     * * `0` - In memory
-     * * `1` - JSON
-     * * `2` - Mongo
+     * @param {LIBRARY_TYPES} data.settings.library - Library type
+     * @param {LOGGER_TYPES} data.settings.logger - Logger type
+     * @param {DB_TYPES} data.settings.db - DB type
      * @param {Number} data.settings.guildConfigCache - max amount of guildConfigs cached at the same time (LRUCache)
      *
      * @param {Languages} data.lang - Translation file
