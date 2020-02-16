@@ -345,7 +345,7 @@ class Command extends Base {
      * Main method - command logic being executed when the command is actually ran.
      *
      * @param {Object} object - An Object with all arguments to use execute
-     * @param {Message} [object.message] - The Eris message Object
+     * @param {Message} [object.message] - The message Object
      * @param {Array<String>} [object.args] - The Array of arguments
      * @param {GuildConfig} [object.guildConfig] - The guildConfig if it exists
      *
@@ -371,7 +371,7 @@ class Command extends Base {
      * @param {GuildConfig} object.guildConfig
      * @param {Boolean} object.isAdmin
      * @param {Boolean} object.isOwner
-     * @returns {Promise<CommandContext>} Message Object
+     * @returns {Promise<CommandContext>}
      * @memberof Command
      */
     sendHelp( { msg, guildConfig, isAdmin, isOwner } ) {
@@ -512,6 +512,7 @@ class Command extends Base {
      * Send an error message in case of invalid cooldown, delete it automatically after a delay.
      *
      * @param {Channel} channel - The channel Object
+     * @param {Number} time - How long since the last command
      * @memberof Command
      */
     sendCooldown(channel, time) {

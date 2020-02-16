@@ -141,7 +141,7 @@ class CommandPermissions {
     }
 
     /**
-     *
+     * Return the Utils instance
      *
      * @readonly
      * @type {Utils}

@@ -3,6 +3,8 @@ import { COMMAND_EXECUTION_TYPES, COMMAND_EXECUTION_STATE } from '../../Utility/
 /**
  * @typedef {import('./Command').default} Command
  * @typedef {import('./CommandResponse').default} CommandResponse
+ * @typedef {import('../../Utility/Constants/AxonEnums').COMMAND_EXECUTION_STATE} COMMAND_EXECUTION_STATE
+ * @typedef {import('../../Utility/Constants/AxonEnums').COMMAND_EXECUTION_TYPES} COMMAND_EXECUTION_TYPES
  */
 
 /**
@@ -26,8 +28,8 @@ import { COMMAND_EXECUTION_TYPES, COMMAND_EXECUTION_STATE } from '../../Utility/
  * STATUS
  * @prop {Boolean} [executed=true] - Whether the command was actually executed or not
  * @prop {Boolean} [data.helpExecution=false]
- * @prop {Number<COMMAND_EXECUTION_STATE>} executionState - The state of execution (no error, cooldown, invalid usage, invalid permission)
- * @prop {Number<COMMAND_EXECUTION_TYPES>} executionType - The type of execution (Owner, Admin, Regular)
+ * @prop {COMMAND_EXECUTION_STATE} executionState - The state of execution (no error, cooldown, invalid usage, invalid permission)
+ * @prop {COMMAND_EXECUTION_TYPES} executionType - The type of execution (Owner, Admin, Regular)
  * @prop {Boolean} [success=true] - Whether the command was successfully executed or not
  * @prop {Object|String} [error=null] - Optional error object in case of bad command execution
  * CONTEXT
@@ -49,8 +51,8 @@ class CommandContext {
      * @param {Object} [data={}]
      * @param {Boolean} [data.executed=true]
      * @param {Boolean} [data.helpExecution=false]
-     * @param {Number<COMMAND_EXECUTION_STATE>} [data.executionState=0] - no error, cooldown, invalid usage, invalid permissions...
-     * @param {Number<COMMAND_EXECUTION_TYPES>} [data.executionType={}] - Regular, admin,owner execution
+     * @param {COMMAND_EXECUTION_STATE} [data.executionState=0] - no error, cooldown, invalid usage, invalid permissions...
+     * @param {COMMAND_EXECUTION_TYPES} [data.executionType=0] - Regular, admin, owner execution
      * @param {Boolean} [data.dm=false]
      * @memberof CommandContext
      */
@@ -112,7 +114,7 @@ class CommandContext {
      * @static
      * @param {Boolean} isAdmin
      * @param {Boolean} isOwner
-     * @returns {Number<COMMAND_EXECUTION_TYPES>}
+     * @returns {COMMAND_EXECUTION_TYPES}
      * @memberof CommandContext
      */
     static getExecutionType(isAdmin, isOwner) {

@@ -25,7 +25,7 @@ import NotImplementedException from '../../Errors/NotImplementedException';
  * @prop {Boolean} [serverBypass=module.serverBypass] - Can the event be disabled?
  *
  * @prop {Object} infos - Default infos about the event
- * @prop {Array} infos.owners - Listener owners/authors
+ * @prop {Array<String>} infos.owners - Listener owners/authors
  * @prop {String} infos.description - Listener description
  */
 class Listener extends Base {
@@ -80,7 +80,7 @@ class Listener extends Base {
      * Promisify the return execute return to prevent promise issue
      *
      * @param {GuildConfig} guildConfig - the guildConfig or undefined if not a guild event
-     * @param {Array} args - Array of the events arguments
+     * @param {...any} args - Array of the events arguments
      * @returns {Promise}
      * @memberof Listener
      */
@@ -91,7 +91,7 @@ class Listener extends Base {
     /**
      * Main execute function, need to be overridden in child.
      *
-     * @param {Array} args - Array of the events arguments (as separate parameters)
+     * @param {Array<any>} args - Array of the events arguments (as separate parameters)
      * @param {GuildConfig} [guildConfig] - The guildConfig or undefined if not a guild event
      * @returns {Promise}
      * @memberof Listener

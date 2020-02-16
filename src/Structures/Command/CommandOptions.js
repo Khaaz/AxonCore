@@ -16,7 +16,7 @@ import AxonError from '../../Errors/AxonError';
  *
  * @class CommandOptions
  *
- * @prop {Function | String} [invalidPermissionMessage=null] - What the invalid permission message should be
+ * @prop {(channel: Channel, member: Member) => String | String} [invalidPermissionMessage=null] - What the invalid permission message should be
  * @prop {Boolean} [sendPermissionMessage=false] - Whether to trigger an error message on invalid permission (bot / user / custom etc)
  * @prop {Number} [invalidPermissionMessageTimeout=9000] - What the invalid permission message deletion timeout should be
  * @prop {Number} [argsMin=0] - Minimum arguments required to execute the command
@@ -33,7 +33,7 @@ class CommandOptions {
      *
      * @param {Command} command - The base command
      * @param {Object} [override={}] - - The specific options for this command (format - CommandOptions)
-     * @param {Function | String} override.invalidPermissionMessage - What the invalid permission message should be
+     * @param {(channel: Channel, member: Member) => String | String} override.invalidPermissionMessage - What the invalid permission message should be
      * @param {Boolean} override.sendPermissionMessage - Whether to trigger an error message on invalid permission (bot / user / custom etc)
      * @param {Number} override.invalidPermissionMessageTimeout - What the invalid permission message deletion timeout should be
      * @param {Number} override.argsMin - Minimum arguments required to execute the command

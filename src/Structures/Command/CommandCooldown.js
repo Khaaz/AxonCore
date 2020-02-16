@@ -22,6 +22,9 @@ class CommandCooldown {
     constructor(command) {
         this._command = command;
 
+        /**
+         * @type {Map<string, {time: Date, post: Boolean}>}
+         */
         this._cooldowns = new Map();
     }
 

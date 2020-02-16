@@ -28,7 +28,7 @@ declare module 'axoncore' {
      *
      * @prop {Class} baseObject - The base class for all items
      */
-    export class Collection<T> extends Map<string | number, T> {
+    class Collection<T> extends Map<string | number, T> {
         public baseObject: new (...args: any[] ) => T;
         /**
          * Creates an instance of Collection.
@@ -215,7 +215,7 @@ declare module 'axoncore' {
      *
      * @prop {CommandContext} context - Command Context containing all informations about the command execution
      */
-    export class AxonCommandError extends Error {
+    class AxonCommandError extends Error {
         public context: CommandContext;
         readonly short: string;
         public message: string;
@@ -301,7 +301,7 @@ declare module 'axoncore' {
      * @class Module
      * @extends Base
      */
-    export class Module extends Base {
+    class Module extends Base {
         /**
          * Module label (name/id)
          */
@@ -399,7 +399,7 @@ declare module 'axoncore' {
      * @abstract
      * @class ADBProvider
      */
-    export abstract class ADBProvider {
+    abstract class ADBProvider {
         /**
          * The AxonClient
          */
@@ -900,6 +900,14 @@ declare module 'axoncore' {
         bannedUsers: string[];
     }
 
+    /**
+     * DB interface to interact with a MongoDB Database.
+     *
+     * @author KhaaZ
+     *
+     * @class MongoProvider
+     * @extends ADBProvider
+     */
     class MongoProvider extends ADBProvider {
         public AxonSchema?: AxonConfig;
         public GuildSchema?: GuildConfig;
@@ -1000,7 +1008,31 @@ declare module 'axoncore' {
         saveGuild(gID: string, data: GuildConfig): Promise<GuildConfig|null>;
     }
 
-    export class AxonConfig {
+    interface AConfig {
+        id?: string;
+        prefix?: string;
+        createdAt?: Date;
+        updatedAt?: Date;
+        /**
+         * Array of users that can't use bot commands
+         */
+        bannedUsers?: string[];
+        /**
+         * Array of guilds where bot commands cannot be used
+         */
+        bannedGuilds?: string[];
+    }
+
+    /**
+     * Default AxonConfig data structure used in AxonCore.
+     * This class can be extended and changed as you want.
+     * All methods flagged with "is used internally" can be overridden but need to keep the same name.
+     *
+     * @author KhaaZ
+     *
+     * @class AxonConfig
+     */
+    class AxonConfig implements AConfig {
         private _axon: AxonClient;
 
         public id: string;
@@ -1012,16 +1044,119 @@ declare module 'axoncore' {
         public bannedUsers: string[];
         public bannedGuilds: string[];
 
-        constructor(axon: AxonClient, values: AxonConfig);
+        /**
+         * Creates an instance of AxonConfig.
+         *
+         * @param values DB values for the current Guild
+         *
+         * @memberof AxonConfig
+         */
+        constructor(axon: AxonClient, values: AConfig);
 
+        /**
+         * Whether the user is blacklisted or not
+         *
+         * *used internally*
+         * @memberof AxonConfig
+         */
         public isBlacklistedUser(userID: string): boolean;
+        /**
+         * Whether the guild is blacklisted or not
+         *
+         * *used internally*
+         * @memberof AxonConfig
+         */
         public isBlacklistedGuild(guildID: string): boolean;
+        /**
+         * Updates the state of a blacklisted user.
+         *
+         * *not used internally*
+         *
+         * @param userID - The guild ID
+         * @param boolean - Whether to add (true) the user or remove (false) it.
+         * @returns Updated axonConfig / Error
+         * @memberof AxonConfig
+         */
         public updateBlacklistUser(userID: string, boolean: boolean): Promise<AxonConfig|null>;
+        /**
+         * Updates the state of a blacklisted guild.
+         *
+         * *not used internally*
+         *
+         * @param guildID - The guild ID
+         * @param boolean - Whether to add (true) the guild or remove (false) it.
+         * @returns Updated axonConfig / Error
+         * @memberof AxonConfig
+         */
         public updateBlacklistGuild(guildID: string, boolean: boolean): Promise<AxonConfig|null>;
         private _req(key: string, value: updateDBVal): Promise<AxonConfig|null>;
     }
 
-    export class GuildConfig {
+    interface GConfig {
+        /**
+         * Guild ID
+         */
+        guildID?: string;
+        /**
+         * Array of prefixes
+         */
+        prefixes?: string[];
+        /**
+         * Creation of the guild Config
+         */
+        createdAt?: Date;
+        /**
+         * Last update of the guild Config
+         */
+        updatedAt?: Date;
+        /**
+         * Guild disabled modules: Array of modules labels
+         */
+        modules?: string[];
+        /**
+         * Guild disabled commands: Array of commands labels
+         */
+        commands?: string[];
+        /**
+         * Guild disabled listeners: Array of listeners labels
+         */
+        listeners?: string[];
+        /**
+         * Users that cannot use commands in this guild: Users ids
+         */
+        ignoredUsers?: string[];
+        /**
+         * Roles that cannot use commands in this guild: Roles ids
+         */
+        ignoredRoles?: string[];
+        /**
+         * Channels where commands cannot be used in this guild: Channels ids
+         */
+        ignoredChannels?: string[];
+        /**
+         * Whether the guild accept commands from only mods+ or everyone
+         */
+        modOnly?: boolean;
+        /**
+         * Roles able to execute mod commands: Roles ids
+         */
+        modRoles?: string[];
+        /**
+         * Users able to execute mod commands: Users ids
+         */
+        modUsers?: string[];
+    }
+
+    /**
+     * Default GuildConfig data structure used in AxonCore.
+     * This class can be extended and changed as you want.
+     * All methods flagged with "is used internally" can be overridden but need to keep the same name.
+     *
+     * @author KhaaZ
+     *
+     * @class GuildConfig
+     */
+    class GuildConfig implements GConfig {
         private _axon: AxonClient;
         public guildID: string;
         public prefixes: string[];
@@ -1029,9 +1164,9 @@ declare module 'axoncore' {
         public createdAt: Date;
         public updatedAt: Date;
 
-        public modules: Module[];
-        public commands: Command[];
-        public listeners: Listener[];
+        public modules: string[];
+        public commands: string[];
+        public listeners: string[];
 
         public ignoredUsers: string[];
         public ignoredRoles: string[];
@@ -1041,59 +1176,265 @@ declare module 'axoncore' {
         public modRoles: string[];
         public modUsers: string[];
 
-        constructor(axon: AxonClient, values: GuildConfig);
+        /**
+         * Creates an instance of GuildConfig.
+         *
+         * @param values - DB values for the current guild
+         * @memberof GuildConfig
+         */
+        constructor(axon: AxonClient, values: GConfig);
 
+        /**
+         * Get guild prefixes for this guild.
+         *
+         * @memberof GuildConfig
+         */
         public getPrefixes(): string[];
+        /**
+         * Check if the user/role/channel is ignored on the specified guild.
+         * *used internally*
+         *
+         * @returns True if either one of the three is ignored
+         * @memberof GuildConfig
+         */
         public isIgnored(msg: LibMessage): boolean;
+        /**
+         * Check if the user/role/channel is ignored on the specified guild.
+         *
+         * @returns True if the user is one of the ignored users
+         *
+         * @memberof GuildConfig
+         */
         public isUserIgnored(userID: string): boolean
+        /**
+         * Check if the user/role/channel is ignored on the specified guild.
+         *
+         * @returns True if the member has one of the ignored roles
+         * @memberof GuildConfig
+         */
         public isRoleIgnored(member: LibMember): boolean;
+        /**
+         * Check if the user/role/channel is ignored on the specified guild.
+         *
+         * @returns True if the channel is one of the ignored channels
+         * @memberof GuildConfig
+         */
         public isChannelIgnored(channelID: string): boolean;
+        /**
+         * Check if the module is disabled on the specified guild.
+         *
+         * *used internally*
+         *
+         * @param module - The command object
+         * @returns Whether the module is disabled or not
+         * @memberof GuildConfig
+         */
         public isModuleDisabled(module: Module): boolean;
+        /**
+         * Check if the command is disabled on the specified guild.
+         *
+         * *used internally*
+         *
+         * @param command - The command object
+         * @returns Whether the command is disabled or not
+         * @memberof GuildConfig
+         */
         public isCommandDisabled(command: Command): boolean;
+        /**
+         * Check if the listener is disabled on the specified guild.
+         *
+         * *used internally*
+         *
+         * @param listener - The listener object
+         * @returns Whether the listener is disabled or not
+         * @memberof GuildConfig
+         */
         public isListenerDisabled(listener: Listener): boolean;
+        /**
+         * Whether the guild is set up to mod only or not.
+         *
+         * *used internally*
+         * @memberof GuildConfig
+         */
         public isModOnly(): boolean;
+        /**
+         * Whether the role ID is in the guild mod roles.
+         *
+         * *used internally*
+         *
+         * @memberof GuildConfig
+         */
         public isModRole(roleID: string): boolean;
+        /**
+         * Whether the user ID is in the guild mod users.
+         *
+         * *used internally*
+         *
+         * @memberof GuildConfig
+         */
         public isModUser(userID: string): boolean;
-        public update(guildConfig: GuildConfig): Promise<Model<GuildSchema> | null>;
+        /**
+         * Update the guild config in the cache and DB.
+         *
+         * *not used internally*
+         *
+         * @param guildConfig - Guild schema Object
+         * @returns Updated guildSchema
+         * @memberof GuildConfig
+         */
+        public update(guildConfig: GuildConfig): Promise<GuildSchema | null>;
+        /**
+         * Register prefixes for this guild.
+         *
+         * *not used internally*
+         *
+         * @param prefixArr - The array of prefix
+         * @returns Updated guildConfig / error
+         * @memberof GuildConfig
+         */
         public updatePrefixes(prefixArr: string[] ): Promise<GuildConfig|null>;
+        /**
+         * Updates the state of a module.
+         *
+         * *not used internally*
+         *
+         * @param label - The module label
+         * @param boolean - Whether to enable (true) the module or disable (false) it.
+         * @returns Updated guildConfig / Error
+         * @memberof GuildConfig
+         */
         public updateStateModule(label: string, boolean: boolean): Promise<GuildConfig|null>;
+        /**
+         * Updates the state of a command.
+         *
+         * *not used internally*
+         *
+         * @param label - The command label
+         * @param boolean - Whether to enable (true) the command or disable (false) it.
+         * @returns Updated guildConfig / Error
+         * @memberof GuildConfig
+         */
         public updateStateCommand(label: string, boolean: boolean): Promise<GuildConfig|null>;
+        /**
+         * Updates the state of a listener.
+         *
+         * *not used internally*
+         *
+         * @param label - The listener label
+         * @param boolean - Whether to enable (true) the listener or disable (false) it.
+         * @returns Updated guildConfig / Error
+         * @memberof GuildConfig
+         */
         public updateStateListener(label: string, boolean: boolean): Promise<GuildConfig|null>;
+        /**
+         * Updates the state of a mod role.
+         *
+         * *not used internally*
+         *
+         * @param roleID - The role ID
+         * @param boolean - Whether to add (true) the role or remove (false) it.
+         * @returns Updated guildConfig / Error
+         * @memberof GuildConfig
+         */
         public updateStateModRole(roleID: string, boolean: boolean): Promise<GuildConfig|null>;
+        /**
+         * Updates the state of a mod user.
+         *
+         * *not used internally*
+         *
+         * @param userID - The user ID
+         * @param boolean - Whether to add (true) the user or remove (false) it.
+         * @returns Updated guildConfig / Error
+         * @memberof GuildConfig
+         */
         public updateStateModUser(userID: string, boolean: boolean): Promise<GuildConfig|null>;
 
         private _req(key: string, value: updateDBVal): Promise<GuildConfig|null>
     }
 
-    export interface CommandInfo {
+    interface CommandInfo {
+        /**
+         * Command authors
+         */
         owners?: string[];
+        /**
+         * Command description
+         */
         description?: string;
+        /**
+         * Array of command examples
+         */
         examples?: string[];
+        /**
+         * Command usage
+         */
         usage?: string;
+        /**
+         * Full command name
+         */
         name?: string;
     }
 
-    export interface ACommandOptions {
+    interface ACommandOptions {
+        /**
+         * Whether to allow executing this command outside of guilds
+         */
         guildOnly?: boolean;
+        /**
+         * Minimum arguments required to execute the command
+         */
         argsMin?: number;
 
-        invalidUsageMessage?: boolean;
+        /**
+         * What the invalid usage message should be
+         */
+        invalidUsageMessage?: string;
+        /**
+         * Whether to trigger the help command on invalid usage (not enough arguments)
+         */
+        sendUsageMessage?: boolean;
+        /**
+         * What the invalid permission message should be
+         */
         invalidPermissionMessage?: ( (channel: LibTextableChannel, member: LibMember) => string) | null;
+        /**
+         * Whether to trigger an error message on invalid permission (bot / user / custom etc)
+         */
         sendPermissionMessage?: boolean;
+        /**
+         * What the invalid permission message deletion timeout should be
+         */
         invalidPermissionMessageTimeout?: number;
 
+        /**
+         * Whether to delete the command input after trigger
+         */
         deleteCommand?: boolean;
+        /**
+         * Whether to hide this command from help command (general / subcommands)
+         */
         hidden?: boolean;
 
+        /**
+         * Cooldown between each usage of this command for a specific user (in ms)
+         */
         cooldown?: number;
     }
 
-    export class CommandOptions implements ACommandOptions {
+    /**
+     * CommandOptions.
+     * Holds options for a command and all necessary checkers.
+     *
+     * @author KhaaZ
+     *
+     * @class CommandOptions
+     */
+    class CommandOptions implements ACommandOptions {
         private _command: Command;
         public guildOnly?: boolean;
         public argsMin?: number;
 
-        public invalidUsageMessage: boolean;
+        public invalidUsageMessage: string;
         public invalidPermissionMessage: ( (channel: LibTextableChannel, member: LibMember) => string) | null;
         public sendPermissionMessage: boolean;
         public invalidPermissionMessageTimeout: number;
@@ -1103,170 +1444,677 @@ declare module 'axoncore' {
 
         public cooldown?: number;
 
+        /**
+         * Creates an instance of CommandOptions.
+         *
+         * @param command - The base command
+         * @param override - The specific options for this command (format - CommandOptions)
+         * @param useModuleDefault - Whether to use or not the module's base options before applying override permissions
+         * @memberof CommandOptions
+         */
         constructor(command: Command, override: ACommandOptions, useModuleDefault?: boolean);
 
+        /**
+         * Returns the MessageManager instance
+         *
+         * @readonly
+         * @memberof CommandOptions
+         */
         readonly l: MessageManager;
 
+        /**
+         * Whether the command is guild only or not
+         *
+         * @memberof CommandOptions
+         */
         public isGuildOnly(): boolean;
+        /**
+         * Whether the command is hidden or not
+         *
+         * @memberof CommandOptions
+         */
         public isHidden(): boolean;
 
+        /**
+         * Whether args for this command are correct or not (enough args).
+         *
+         * @memberof CommandOptions
+         */
+        public hasCorrectArgs(args: string[] ): boolean;
+        /**
+         * Whether we should send an invalid usage message or not (help command)
+         *
+         * @memberof CommandOptions
+         */
         public shouldSendInvalidUsageMessage(args: string[] ): boolean;
+        /**
+         * Whether we should send the invalid permission message or not
+         *
+         * @memberof CommandOptions
+         */
         public shouldSendInvalidPermissionMessage(guildConfig: GuildConfig): boolean;
+        /**
+         * Whether we should delete the command or not
+         *
+         * @memberof CommandOptions
+         */
         public shouldDeleteCommand(): boolean;
+        /**
+         * Get the invalid permission message
+         *
+         * @param channel - The guild channel
+         * @param member - The guild member
+         * @param permission - The missing permission
+         */
         public getInvalidPermissionMessage(channel: LibTextableChannel, member: LibMember, permission: string): string;
+        /**
+         * Get the invalid usage message
+         */
         public getInvalidUsageMessage(): string;
     }
 
-    export class CommandCooldown {
+    /**
+     * CommandCooldown. Handles cooldowns for a command.
+     *
+     * @author KhaaZ
+     *
+     * @class CommandCooldown
+     */
+    class CommandCooldown {
+        /**
+         * The base command
+         */
         private _command: Command;
+        /**
+         * Map of cooldowns
+         */
         private _cooldowns: Map<string, { time: Date; post: boolean; }>;
 
+        /**
+         * Creates an instance of CommandCooldown.
+         *
+         * @memberof CommandCooldown
+         */
         constructor(command: Command);
 
         // GETTERS
 
+        /**
+         * Returns the cooldown for this command
+         *
+         * @readonly
+         * @memberof CommandCooldown
+         */
         readonly cooldown: number;
 
         // METHODS
+        /**
+         * Checks the command cooldown of the user
+         *
+         * @param userID - The userID
+         * @returns Empty array if no cooldowns / Array with the time left and whether we should send a cooldown message or not
+         *
+         * @memberof CommandCooldown
+         */
         public shouldCooldown(userID: string): [number, boolean] | [];
+        /**
+         * Checks if the cooldown message should be sent
+         *
+         * @memberof CommandCooldown
+         */
         public shouldSendCooldownMessage(cooldown: { time: Date; post: boolean; } ): boolean;
+        /**
+         * @memberof CommandCooldown
+         */
         public shouldSetCooldown(response: { triggerCooldown: boolean; } | null): boolean;
+        /**
+         * Set the cooldown for a user for this command.
+         *
+         * @memberof CommandCooldown
+         */
         public setCooldown(userID: string): void;
     }
 
-    export interface CommandPerms {
+    interface CommandPerms {
+        /**
+         * Discord permissions that the bot needs to have in order to execute the command
+         */
         bot?: string[];
+        /**
+         * Axoncore server moderator
+         */
         serverMod?: boolean;
+        /**
+         * Discord server manager (manageServer)
+         */
         serverManager?: boolean;
+        /**
+         * Discord server administrator (administrator)
+         */
         serverAdmin?: boolean;
+        /**
+         * Discord server owner
+         */
         serverOwner?: boolean;
+        /**
+         * Discord permissions for the user
+         */
         user?: {
+            /**
+             * Discord permissions that the user needs to have in order to execute the command
+             */
             needed?: string[];
+            /**
+             * Discord permissions that will allow the user to execute the command no matter what
+             */
             bypass?: string[];
         };
+        /**
+         * User IDs
+         */
         usersIDs?: {
+            /**
+             * Discord user ids that the user needs to have in order to execute the command
+             */
             needed?: string[];
+            /**
+             * Discord user ids that will allow the user to execute the command no matter what
+             */
             bypass?: string[];
         };
+        /**
+         * Role IDs for the user
+         */
         rolesIDs?: {
+            /**
+             * Discord role ids that the user needs to have in order to execute the command
+             */
             needed?: string[];
+            /**
+             * Discord role ids that will allow the user to execute the command no matter what
+             */
             bypass?: string[];
         };
+        /**
+         * Channel IDs
+         */
         channelsIDs?: {
+            /**
+             * Discord channel ids that the user needs to have in order to execute the command
+             */
             needed?: string[];
+            /**
+             * Discord channel ids that will allow the user to execute the command no matter what
+             */
             bypass?: string[];
         };
+        /**
+         * AxonCore staff
+         */
         staff?: {
+            /**
+             * Axoncore staff ids that the user needs to have in order to execute the command
+             */
             needed?: string[];
+            /**
+             * Axoncore staff ids that will allow the user to execute the command no matter what
+             */
             bypass?: string[];
         };
+        /**
+         * Custom function that returns a boolean. True will let the command execute, False will prevent the command from executing
+         */
         custom?: (i: LibMessage) => boolean;
     }
 
-    export class CommandPermissions implements CommandPerms {
+    /**
+     * CommandPermissions.
+     * Holds permissions for a command and all necessary checkers.
+     *
+     * needed => needed to have **ALL** <NEEDED> permissions to execute the command
+     *
+     * bypass => needed to have **ONE** <BYPASS> permission to execute the command
+     *
+     * @author KhaaZ
+     *
+     * @class CommandPermissions
+     */
+    class CommandPermissions implements CommandPerms {
         private _command: Command;
 
-        public custom?: (msg: LibMessage) => boolean;
+        public bot: string[]
+        public serverMod: boolean;
+        public serverManager: boolean;
+        public serverAdmin: boolean;
+        public serverOwner: boolean;
+        public user: { needed: string[]; bypass: string[]; };
+        public usersIDs: { needed: string[]; bypass: string[]; };
+        public rolesIDs: { needed: string[]; bypass: string[]; };
+        public channelsIDs: { needed: string[]; bypass: string[]; };
+        public staff: { needed: string[]; bypass: string[]; };
+        public custom: (msg: LibMessage) => boolean;
+        /**
+         * Creates an instance of CommandPermissions.
+         *
+         * @param command - The base command/module
+         * @param override - The specific permissions for this command/module (format - CommandPermissions)
+         * @param useModuleDefault - Whether to use or not the module's base permissions before applying override permissions
+         * @memberof CommandPermissions
+         */
         constructor(command: Command|Module, override?: CommandPerms, userModuleDefault?: boolean);
         // GETTERS
+        /**
+         * Returns the AxonClient instance
+         *
+         * @readonly
+         * @memberof CommandPermissions
+         */
         readonly axon: AxonClient;
+        /**
+         * Return the Utils instance
+         *
+         * @readonly
+         * @memberof CommandPermissions
+         */
         readonly utils: Utils;
+        /**
+         * Returns the AxonUtils instance
+         *
+         * @readonly
+         * @memberof CommandPermissions
+         */
         readonly axonUtils: AxonUtils;
+        /**
+         * Returns the LibraryInterface instance
+         *
+         * @readonly
+         * @memberof CommandPermissions
+         */
         readonly library: LibraryInterface;
 
         // METHODS
 
+        /**
+         * Permission checker - Does the user have permission to use the command or not?
+         *
+         * Bypass - Only needs of of these permissions, doesn't check for other permissions
+         *
+         * Needed - Needs all specified permissions => Goes through other checkers
+         *
+         * ServerMod
+         *
+         * @param msg - The Message Object
+         * @param guildConf - GuildConfig
+         * @returns True if the user can execute command / False if not. Second element is the missing permission || null
+         * @memberof Command
+         */
         public canExecute(msg: LibMessage, guildConf: GuildConfig): [false, string | null] | [true, null?];
 
+        /**
+         * Set the permissions the bot needs to have to execute this command.
+         *
+         * @param array - Array of permissions
+         * @param toAdd - Whether to add the permissions to the existing permissions
+         * @memberof CommandPermissions
+         */
         public setBot(array?: string[], toAdd?: boolean): CommandPermissions;
+        /**
+         * Set/unset the command to serverMod only.
+         *
+         * @param boolean - Whether to make the command serverMod only
+         * @memberof CommandPermissions
+         */
         public setServerMod(boolean?: boolean): CommandPermissions;
+        /**
+         * Set/unset the command to serverManager only.
+         *
+         * @param boolean - Whether to make the command serverManager only
+         * @memberof CommandPermissions
+         */
         public setServerManager(boolean?: boolean): CommandPermissions;
+        /**
+         * Set/unset the command to serverAdmin only.
+         *
+         * @param boolean - Whether to make the command serverAdmin only
+         * @memberof CommandPermissions
+         */
         public setServerAdmin(boolean?: boolean): CommandPermissions;
+        /**
+         * Set/unset the command to serverOwner only.
+         *
+         * @param boolean - Whether to make the command serverOwner only
+         * @memberof CommandPermissions
+         */
         public setServerOwner(boolean?: boolean): CommandPermissions;
+        /**
+         * Set the permissions the user needs to have to execute this command.
+         *
+         * @param object - Object of permissions
+         * @param toAdd - Whether to add the permissions to the existing permissions
+         * @memberof CommandPermissions
+         */
         public setUser(object?: { bypass?: string[]; needed?: string[]; }, toAdd?: boolean): CommandPermissions;
+        /**
+         * Set the user IDs the user needs to have to execute this command.
+         *
+         * @param object - Object of permissions
+         * @param toAdd - Whether to add the permissions to the existing permissions
+         * @memberof CommandPermissions
+         */
         public setUserIDs(object?: { bypass?: string[]; needed?: string[]; }, toAdd?: boolean): CommandPermissions;
+        /**
+         * Set the role IDs the user needs to have to execute this command.
+         *
+         * @param object - Object of permissions
+         * @param toAdd - Whether to add the permissions to the existing permissions
+         * @memberof CommandPermissions
+         */
         public setRoleIDs(object?: { bypass?: string[]; needed?: string[]; }, toAdd?: boolean): CommandPermissions;
+        /**
+         * Set the channel IDs needed to be in to execute this command.
+         *
+         * @param object - Object of permissions
+         * @param toAdd - Whether to add the permissions to the existing permissions
+         * @memberof CommandPermissions
+         */
         public setChannelIDs(object?: { bypass?: string[]; needed?: string[]; }, toAdd?: boolean): CommandPermissions;
+        /**
+         * Set the AxonCore staff members that can execute this command.
+         *
+         * @param object - Object of permissions
+         * @param toAdd - Whether to add the permissions to the existing permissions
+         * @memberof CommandPermissions
+         */
         public setStaff(object?: { bypass?: string[]; needed?: string[]; }, toAdd?: boolean): CommandPermissions;
 
         // CHECK FOR IF PERMISSIONS ARE MET
 
+        /**
+         * Check bot permission
+         *
+         * @memberof CommandPermissions
+         */
         private _checkPermsBot(channel: LibTextableChannel): boolean;
+        /**
+         * Check user permissions [bypass]
+         *
+         * @memberof CommandPermissions
+         */
         private _checkPermsUserBypass(member: LibMember): boolean;
+        /**
+         * Check user permissions [needed]
+         *
+         * @memberof CommandPermissions
+         */
         private _checkPermsUserNeeded(member: LibMember): [true] | [false, string];
+        /**
+         * Check userIDs [bypass]
+         *
+         * @memberof CommandPermissions
+         */
         private _checkUserBypass(member: LibMember): boolean;
+        /**
+         * Check userIDs [needed]
+         *
+         * @memberof CommandPermissions
+         */
         private _checkUserNeeded(member: LibMember): boolean;
+        /**
+         * Check roleIDs [bypass]
+         *
+         * @memberof CommandPermissions
+         */
         private _checkRoleBypass(member: LibMember): boolean;
+        /**
+         * Check roleIDs [needed]
+         *
+         * @memberof CommandPermissions
+         */
         private _checkRoleNeeded(member: LibMember): boolean;
+        /**
+         * Check channelIDs [bypass]
+         *
+         * @memberof CommandPermissions
+         */
         private _checkChannelBypass(channel: LibTextableChannel): boolean;
+        /**
+         * Check channelIDs [needed]
+         *
+         * @memberof CommandPermissions
+         */
         private _checkChannelNeeded(channel: LibTextableChannel): boolean;
+        /**
+         * Check if the user is bot staff [bypass]
+         *
+         * @returns True if Staff / False if not
+         * @memberof CommandPermissions
+         */
         private _checkStaffBypass(member: LibMember): boolean;
+        /**
+         * Check if the user is bot staff [needed]
+         *
+         * @returns True if Staff / False if not
+         * @memberof CommandPermissions
+         */
         private _checkStaffNeeded(member: LibMember): boolean;
     }
-
-    export class CommandResponse {
+    /**
+     * Build a Command Response - the formatted object used internally by the framework to resolve context.
+     *
+     * @class CommandResponse
+     */
+    class CommandResponse {
         public success: boolean;
         public triggerCooldown: boolean;
         public error?: Error;
+        /**
+         * Creates an instance of CommandResponse.
+         * Build the CommandResponse from all options given in parameters
+         *
+         * @memberof CommandResponse
+         */
         constructor(data: { success?: boolean; triggerCooldown?: boolean; error?: Error; } );
+        /**
+         * By default returns the Command Response asynchronously.
+         *
+         * @memberof CommandResponse
+         */
         public resolve(): Promise<CommandResponse>;
+        /**
+         * Returns the Command Response in a Promise (asynchronously)
+         *
+         * @memberof CommandResponse
+         */
         public resolveAsync(): Promise<CommandResponse>;
+        /**
+         * Returns the Command Response (synchronously)
+         *
+         * @memberof CommandResponse
+         */
         public resolveSync(): CommandResponse;
     }
 
-    export class CommandContext {
+    class CommandContext {
+        /**
+         * Raw input
+         */
         public raw: string;
+        /**
+         * The command full label
+         */
         public commandLabel: string;
+        /**
+         * The module name
+         */
         public moduleLabel: string;
 
+        /**
+         * Whether the command was actually executed or not
+         */
         public execute: boolean;
         public helpExecution: boolean;
+        /**
+         * The state of execution (no error, cooldown, invalid usage, invalid permission)
+         */
         public executionState: number;
+        /**
+         * The type of execution (Owner, Admin, Regular)
+         */
         public executionType: number;
+        /**
+         * Whether the command was successfully executed or not
+         */
+        public succes: boolean;
+        /**
+         * Optional error object in case of bad command execution
+         */
+        public error: string|Error;
 
-        public library: LibraryInterface;
-
+        /**
+         * Whether the command was executed in DM or not
+         */
         public dm: boolean;
+        /**
+         * Context: guild where the command was executed ID
+         */
         public guildID: string;
+        /**
+         * Context: guild where the command was executed name
+         */
         public guildName: string;
 
+        /**
+         * Context: channel where the command was executed ID
+         */
         public channelID: string;
+        /**
+         * Context: channel where the command was executed name
+         */
         public channelName: string;
 
+        /**
+         * Context: user that called the command ID
+         */
         public callerID: string;
+        /**
+         * Context: user that called the command name
+         */
         public callerName: string;
 
+        /**
+         * The execution time
+         */
         public calledAt: Date;
 
-        constructor(command: Command, triggerMessage: LibMessage, data?: { executed?: boolean; helpExecution?: string; executionState?: number; executionType?: object; } );
+        /**
+         * Creates an instance of CommandContext.
+         *
+         * @param data.executionState - no error, cooldown, invalid usage, invalid permissions...
+         * @param data.executionType - Regular, admin, owner execution
+         * @memberof CommandContext
+         */
+        constructor(command: Command, triggerMessage: LibMessage, data?: { executed?: boolean; helpExecution?: string; executionState?: COMMAND_EXECUTION_STATE; executionType?: COMMAND_EXECUTION_TYPES; } );
 
+        /**
+         * Add the command response data to the command context object.
+         * Add the state of the command success and optionally the error.
+         *
+         * @param commandResponse - CommandResponse object obtained or created after the command execution
+         * @memberof CommandContext
+         */
         public addResponseData(commandResponse?: CommandResponse): CommandContext;
-        public static getExecutionType(isAdmin: boolean, isOwner: boolean): number;
+        /**
+         * Return the type of command execution based of the execution context.
+         * Admin, Owner or Regular execution.
+         *
+         * @static
+         * @memberof CommandContext
+         */
+        static getExecutionType(isAdmin: boolean, isOwner: boolean): COMMAND_EXECUTION_TYPES;
+        /**
+         * By default returns the Command Context asynchronously.
+         *
+         * @memberof CommandContext
+         */
         public resolve(): Promise<CommandContext>;
+        /**
+         * Returns the Command Context wrapped in a Promise (asynchronously)
+         *
+         * @memberof CommandContext
+         */
         public resolveAsync(): Promise<CommandContext>;
+        /**
+         * Returns the Command Context (synchronously)
+         *
+         * @memberof CommandContext
+         */
         public resolveSync(): CommandContext;
     }
 
-    export interface CommandData {
-        label: string;
-        aliases: string[];
-        isSubcmd: boolean;
-        hasSubcmd: boolean;
-        enabled: boolean;
-        serverBypass: boolean;
+    interface CommandData {
+        /**
+         * Command label (name/id)
+         */
+        label?: string;
+        /**
+         * Array of commands aliases (including the command label)
+         */
+        aliases?: string[];
+        /**
+         * Whether the command IS a subcommand
+         */
+        isSubcmd?: boolean;
+        /**
+         * Whether the command HAS subcommands
+         */
+        hasSubcmd?: boolean;
+        /**
+         * Whether the command is enabled
+         */
+        enabled?: boolean;
+        /**
+         * Whether the command can be disabled
+         */
+        serverBypass?: boolean;
+        /**
+         * Array of subcommand objects (deleted after init)
+         */
         subcmds?: (new (...args: any[] ) => Command)[] | null;
-        infos: CommandInfo;
-        options: CommandOptions;
-        permissions: CommandPermissions;
+        /**
+         * Default info about the command
+         */
+        infos?: CommandInfo;
+        /**
+         * Options Object for the command (manage all command options)
+         */
+        options?: CommandOptions;
+        /**
+         * Permissions Object for the command (manage all command permissions)
+         */
+        permissions?: CommandPermissions;
     }
 
-    export interface AxonTemplate {
+    interface AxonTemplate {
         embeds: {[key: string]: number;};
         emotes: {[key: string]: string;};
     }
 
-    export class Command extends Base implements CommandData {
+    /**
+     * AxonCore - Command constructor
+     *
+     * @author KhaaZ
+     *
+     * @class Command
+     * @extends Base
+     */
+    class Command extends Base implements CommandData {
+        /**
+         * Module object
+         */
         private _module: Module;
+        /**
+         * Cooldown Object for the command (manage all command cooldowns)
+         */
         private _cooldown: CommandCooldown;
 
         public label: string;
@@ -1282,52 +2130,218 @@ declare module 'axoncore' {
 
         public parentCommand: Command | null;
 
+        /**
+         * Collection of subcommands
+         */
         public subCommands: Collection<Command> | null;
+        /**
+         * Map of subcommand aliases
+         */
         public subCommandAliases?: Map<string, string>;
 
         // GETTERS
+        /**
+         * Returns the parent module instance
+         *
+         * @readonly
+         * @memberof Command
+         */
         readonly module: Module;
+        /**
+         * Returns the template object
+         *
+         * @readonly
+         * @memberof Command
+         */
         readonly template: AxonTemplate;
+        /**
+         * Returns the library Interface instance
+         *
+         * @readonly
+         * @memberof Command
+         */
         readonly library: LibraryInterface;
+        /**
+         * Returns the full label for this command (label + all parent labels)
+         *
+         * @readonly
+         * @memberof Command
+         */
         readonly fullLabel: string;
 
+        /**
+         * Creates a Command instance.
+         * Handles execution of this command.
+         * Overrides the execute method. Execute method will be called every time the command is called.
+         *
+         * @param data - All command parameters
+         * @memberof Command
+         */
         constructor(module: Module, data?: CommandData);
 
         // Internal
+        /**
+         * Process the command, and executes it if it can (permissions, options etc..).
+         *
+         * @returns Return a CommandContext or throw an AxonCommandError.
+         * @memberof Command
+         */
         private _process(object: { msg: LibMessage; args: string[]; guildConfig?: GuildConfig; isAdmin?: boolean; isOwner?: boolean; } ): Promise<CommandContext>;
         private _preExecute(): void; // Blank function
+        /**
+         * Execute the command.
+         * Get the CommandResponse from the command execution or create it in case of errors.
+         * Create the CommandContext and returns it.
+         * @memberof Command
+         */
         private _execute(message: { msg: LibMessage; args?: string[]; guildConfig?: GuildConfig; isAdmin?: boolean; isOwner?: boolean; } ): Promise<CommandContext>;
         private _postExecute(): void; // Blank function
 
         // External
+        /**
+         * Override this method in all Command child.
+         * Main method - command logic being executed when the command is actually ran.
+         *
+         * @param object - An Object with all arguments to use execute
+         * @param object.message - The message Object
+         * @param object.args - The Array of arguments
+         * @param object.guildConfig - The guildConfig if it exists
+         *
+         * @returns Returns a CommandResponse that will be used to create the CommandContext
+         * @memberof Command
+         */
         public execute(object: { msg: LibMessage; args?: string[]; guildConfig?: GuildConfig; } ): Promise<CommandResponse>; // Not implemented
+        /**
+         * Send help message in the current channel with perm checks done before.
+         * Call a custom sendHelp method if it exists, use the default one if it doesn't.
+         *
+         * @memberof Command
+         */
         public sendHelp(object: { msg: LibMessage; guildConf?: GuildConfig; isAdmin: boolean; isOwner: boolean; } ): Promise<CommandContext>;
+        /**
+         * Send an error message in case of invalid bot permissions, delete it automatically after a delay.
+         *
+         * @param channel - The channel Object
+         * @param permissions - Optional array of permissions string
+         * @memberof Command
+         */
         public sendBotPerms(channel: LibTextableChannel, permissions?: string[] ): Promise<CommandResponse>;
+        /**
+         * Send an error message in case of invalid user permissions, delete it automatically after a delay.
+         * Uses the template message in config/template.
+         *
+         * @param channel - The channel object
+         * @param member - The member object
+         * @param deleteTimeout - The permission message deletion timeout, if `null` the the message will not delete
+         * @param missingPermission - The missing permission
+         * @memberof Command
+         */
         public sendUserPerms(channel: LibTextableChannel, member: LibMember, deleteTimeout?: number, missingPermission?: string): Promise<CommandResponse>;
+        /**
+         * Send an error message in case of invalid target permissions (serverMod/serverAdmin).
+         * Uses the template message in config/template.
+         *
+         * @param channel - The channel Object
+         * @memberof Command
+         */
         public sendTargetPerms(channel: LibTextableChannel): Promise<CommandResponse>;
+        /**
+         * Send an error message in case of invalid cooldown, delete it automatically after a delay.
+         *
+         * @param channel - The channel Object
+         * @param time - How long since the last command
+         * @memberof Command
+         */
         public sendCooldown(channel: LibTextableChannel, time: number): Promise<CommandResponse>;
     }
 
-    export class Listener extends Base {
+    interface ListenerInfo {
+        /**
+         * Listener owners/authors
+         */
+        owners?: string[];
+        /**
+         * Listener description
+         */
+        description?: string;
+    }
+
+    interface ListenerData {
+        /**
+         * The Discord event name
+         */
+        eventName?: string;
+        /**
+         * The listener name
+         */
+        label?: string;
+        /**
+         * Whether to load this event on start up or not
+         */
+        load?: boolean;
+        /**
+         * Whether the event is enabled or not
+         */
+        enabled?: boolean;
+        /**
+         * Can the event be disabled?
+         */
+        serverBypass?: boolean;
+        /**
+         * Default infos about the event
+         */
+        infos?: ListenerInfo;
+    }
+
+    class Listener extends Base implements ListenerData {
+        /**
+         * Module instance
+         */
         private _module: Module;
         public eventName: string;
         public label: string;
 
-        public load?: boolean;
-        public enabled?: boolean;
-        public serverBypass?: boolean;
+        public load: boolean;
+        public enabled: boolean;
+        public serverBypass: boolean;
 
-        public infos?: {
-            owners?: string[];
-            description?: string;
+        public infos: {
+            owners: string[];
+            description: string;
         };
 
+        /**
+         * Returns the parent Module instance
+         *
+         * @readonly
+         * @memberof Listener
+         */
         readonly module: Module;
 
-        constructor(module: Module, data?: Listener);
+        /**
+         * Creates an Listener instance.
+         *
+         * @param data - All events parameters
+         * @memberof Listener
+         */
+        constructor(module: Module, data?: ListenerData);
 
+        /**
+         * Promisify the return execute return to prevent promise issue
+         *
+         * @param guildConfig - the guildConfig or undefined if not a guild event
+         * @param args - Array of the events arguments
+         * @memberof Listener
+         */
         private _execute(guildConf?: GuildConfig, ...args: any[] ): Promise<any>;
 
+        /**
+         * Main execute function, need to be overridden in child.
+         *
+         * @param args - Array of the events arguments (as separate parameters)
+         * @param guildConfig - The guildConfig or undefined if not a guild event
+         * @memberof Listener
+         */
         public execute(args: any, guildConf?: GuildConfig): Promise<any>;
     }
 
@@ -1365,7 +2379,7 @@ declare module 'axoncore' {
         delay?: number;
     }
 
-    export class AxonUtils {
+    class AxonUtils {
         private _axon: AxonClient;
         constructor(axon: AxonClient);
         readonly axon: AxonClient;
@@ -1426,7 +2440,7 @@ declare module 'axoncore' {
         MANAGE_EMOJIS?: boolean;
     }
 
-    export class Utils {
+    class Utils {
         private _axon: AxonClient;
 
         public userMention: RegExp;
@@ -1465,11 +2479,11 @@ declare module 'axoncore' {
         public static compareObject(obj1: object, obj2: object): boolean;
     }
 
-    export type LOG_LEVEL_TYPES = 'FATAL' | 'ERROR' | 'WARN' | 'DEBUG' | 'NOTICE' | 'INFO' | 'VERBOSE';
+    type LOG_LEVEL_TYPES = 'FATAL' | 'ERROR' | 'WARN' | 'DEBUG' | 'NOTICE' | 'INFO' | 'VERBOSE';
 
     interface Ctx { guild: LibGuild; cmd: Command; user: LibUser; }
 
-    export class Base {
+    class Base {
         public _axon: AxonClient;
 
         public readonly axon: AxonClient;
@@ -1650,7 +2664,7 @@ declare module 'axoncore' {
         UNKNOWN = 'Unexpected error',
     }
 
-    export const AxonEnums: {
+    const AxonEnums: {
         HTTP_CODE: HTTP_CODE;
         HTTP_MESSAGES: HttpMessages;
         LIBRARY_TYPES: LIBRARY_TYPES;
@@ -1673,7 +2687,7 @@ declare module 'axoncore' {
         inline?: boolean;
     }
 
-    export class Embed {
+    class Embed {
         public title?: string;
         public url?: string;
         public description?: string;
@@ -1884,7 +2898,7 @@ declare module 'axoncore' {
         github: string;
     }
 
-    export class AxonClient extends EventEmitter {
+    class AxonClient extends EventEmitter {
         private _configs: AxonConfs;
         public settings: AxonParams;
         public infos: Infos;
@@ -1951,7 +2965,7 @@ declare module 'axoncore' {
         on(event: 'listenerError', listener: (eventName: string, listenerName: string, data: { listener: Listener; guildConfig: GuildConfig; error: Error; } ) => void): this;
     }
 
-    export abstract class ASelector {
+    abstract class ASelector {
         constructor();
         static select(...args: any[] ): any; // Not Implemented
     }
@@ -1960,7 +2974,7 @@ declare module 'axoncore' {
         select(axonClient: AxonClient, axonOptions: AxonOptions): InMemoryProvider | JsonProvider | MongoProvider;
     }
 
-    export class MessageManager {
+    class MessageManager {
         private _axon: AxonClient;
         private _messages: Languages;
         public translation: TranslationManager;
@@ -1974,7 +2988,7 @@ declare module 'axoncore' {
         public get(message: string, args: AxonLanguageResponse, lang: string): string;
     }
 
-    export class MessageParser {
+    class MessageParser {
         public match: RegExp;
         constructor();
         public matchAll(message: string): Generator<RegExpExecArray, void, unknown>;
@@ -1982,7 +2996,7 @@ declare module 'axoncore' {
         public parse2(message: string, args: string[] ): string;
     }
 
-    export class TranslationManager {
+    class TranslationManager {
         private _manager: MessageManager;
         public lang: string;
         constructor(manager: MessageManager, lang: string);
@@ -1992,7 +3006,7 @@ declare module 'axoncore' {
         public getMessage(message: string, lang: string): string;
     }
 
-    export class ALogger {
+    class ALogger {
         /**
          * Can be Console, Winston or Signale. Chalk will go as Console
          */
@@ -2025,7 +3039,7 @@ declare module 'axoncore' {
         constructor(options: SignaleOptions);
     }
 
-    export class Context {
+    class Context {
         public guild: string;
         public cmd: string;
         public user: string;
@@ -2041,14 +3055,14 @@ declare module 'axoncore' {
         public static testLogger(Logger: ALogger): void;
     }
 
-    export class CommandDispatcher {
+    class CommandDispatcher {
         mentionFormatter: RegExp;
         constructor(axon: AxonClient);
         readonly library: LibraryInterface;
         public dispatch(msg: LibMessage): Promise<void>;
     }
 
-    export class AHandler {
+    class AHandler {
         private _axon: AxonClient;
         public name: string;
         private _listeners: Listener[];
@@ -2058,7 +3072,7 @@ declare module 'axoncore' {
         public handle(...args: any[] ): string | null;
     }
 
-    export class ALoader<T> {
+    class ALoader<T> {
         public loadIn: T;
         constructor(loadIn: T);
         load(toLoad: any): boolean; // Not implemented
@@ -2071,7 +3085,7 @@ declare module 'axoncore' {
         initAxon(axon: AxonClient): Promise<void>;
     }
 
-    export class CommandLoader extends ALoader<Module> {
+    class CommandLoader extends ALoader<Module> {
         private _module: Module;
         constructor(module: Module);
         readonly axon: AxonClient;
@@ -2086,7 +3100,7 @@ declare module 'axoncore' {
         unregisterSubCommand(command: Command, subCommand: Command): void;
     }
 
-    export class ListenerLoader extends ALoader<AxonClient> {
+    class ListenerLoader extends ALoader<AxonClient> {
         private _module: Module;
         constructor(module: Module);
         readonly axon: AxonClient;
@@ -2097,7 +3111,7 @@ declare module 'axoncore' {
         unload(label: string): true;
     }
 
-    export class ModuleLoader extends ALoader<AxonClient> {
+    class ModuleLoader extends ALoader<AxonClient> {
         constructor(axonClient: AxonClient);
         readonly axon: AxonClient;
         readonly logger: ALogger;
@@ -2106,7 +3120,7 @@ declare module 'axoncore' {
         unload(label: string): true;
     }
 
-    export class ARegistry<T> {
+    class ARegistry<T> {
         private _axon: AxonClient;
         public registry: Collection<T>;
         constructor(axon: AxonClient, base: T);
@@ -2122,7 +3136,7 @@ declare module 'axoncore' {
         public unregister(key: string, value: T): any; // Not implemented
     }
 
-    export class CommandRegistry extends ARegistry<Command> {
+    class CommandRegistry extends ARegistry<Command> {
         public aliases: Map<string | number, string>;
         constructor(axon: AxonClient);
         get(cmd: string): Command | null;
@@ -2132,7 +3146,7 @@ declare module 'axoncore' {
         resolve(label: string, args: string[], guildConfig?: GuildConfig): Command | null;
     }
 
-    export class GuildConfigCache {
+    class GuildConfigCache {
         private _axon: AxonClient;
         public guildConfigs: LRUCache<GuildConfig>;
         get(key: string): GuildConfig;
@@ -2142,13 +3156,13 @@ declare module 'axoncore' {
         public fetchGuildConf(gID: string): Promise<GuildConfig|null>;
     }
 
-    export class ListenerRegistry extends ARegistry<Listener> {
+    class ListenerRegistry extends ARegistry<Listener> {
         constructor(axon: AxonClient);
         register(label: string, listener: Listener): void;
         unregister(label: string, listener?: Listener): void;
     }
 
-    export class ModuleRegistry extends ARegistry<Module> {
+    class ModuleRegistry extends ARegistry<Module> {
         constructor(axon: AxonClient);
         register(label: string, module: Module): void;
         unregister(label: string, module?: Module): void;
@@ -2313,7 +3327,7 @@ declare module 'axoncore' {
         CUSTOM: 4;
     }
 
-    export const DiscordEnums: {
+    const DiscordEnums: {
         DISCORD_GATEWAY_EVENTS: DISCORD_GATEWAY_EVENTS;
         DISCORD_PERMISSIONS: DISCORD_PERMISSIONS;
         PERMISSION_NUMBERS: PERMISSIONS_NUMBERS;
@@ -2323,7 +3337,7 @@ declare module 'axoncore' {
         CLIENT_STATUS_TYPES: CLIENT_STATUS_TYPES;
     };
 
-    export class Queue {
+    class Queue {
         private _functions: Function[];
         private _running: boolean;
         public stopOnError: boolean;
@@ -2333,7 +3347,7 @@ declare module 'axoncore' {
         public createClosure(fn: Function, ...args: any[] ): unknown;
     }
 
-    export class AsyncQueue extends Queue {
+    class AsyncQueue extends Queue {
         public exec(): Promise<void>;
         public add(func: Function, toExec?: boolean, ...args: any[] ): Promise<any>;
         public createClosure(fn: Function, resolve: (value: unknown) => void, reject: (reason: Error) => void, ...args: any[] ): Promise<Function>;
@@ -2350,7 +3364,7 @@ declare module 'axoncore' {
         public prev: any;
     }
 
-    export class LRUCache<T> {
+    class LRUCache<T> {
         public limit: number;
         public size: number;
         public head: Node | null;
@@ -2377,7 +3391,7 @@ declare module 'axoncore' {
         static select(axon: AxonClient, axonOptions: AxonOptions): ErisInterface | DjsInterface;
     }
 
-    export class Channel {
+    class Channel {
         public lib: LibraryInterface;
         constructor(lib: LibraryInterface);
         public getID(channel: LibChannel): string;
@@ -2389,7 +3403,7 @@ declare module 'axoncore' {
         public sendMessage(channel: LibChannel, content: AxonMSGCont): Promise<LibMessage | LibMessage[]>; // Not Implemented // LibMessage[] is for Discord.JS
     }
 
-    export class Client {
+    class Client {
         public lib: LibraryInterface;
         public baseWebhookURL: 'https://discordapp.com/api/webhooks/';
         constructor(lib: LibraryInterface);
@@ -2406,7 +3420,7 @@ declare module 'axoncore' {
         private _request(url: string, params: RequestOptions, postData: any): any;
     }
 
-    export class Guild {
+    class Guild {
         public lib: LibraryInterface
         constructor(lib: LibraryInterface);
         getID(guild: LibGuild): string;
@@ -2415,7 +3429,7 @@ declare module 'axoncore' {
         getMember(guild: LibGuild, userID: string): LibMember;
     }
 
-    export class Member {
+    class Member {
         public lib: LibraryInterface;
         constructor(lib: LibraryInterface);
         getID(member: LibMember): string;
@@ -2424,7 +3438,7 @@ declare module 'axoncore' {
         hasPermission(member: LibMember, permission: string): boolean; // Not Implemented
     }
 
-    export class Message {
+    class Message {
         public lib: LibraryInterface;
         constructor(lib: LibraryInterface);
         getID(message: LibMessage): string;
@@ -2444,7 +3458,7 @@ declare module 'axoncore' {
         edit(message: LibMessage, content: AxonMSGCont): Promise<LibMessage>;
     }
 
-    export class Resolver {
+    class Resolver {
         public static user(client: LibClient, args: string[]|string): LibUser|null; // Not implemented
         public static member(guild: LibGuild, args: string[]|string): LibMember|null; // Not implemented
         public static role(guild: LibGuild, args: string[]|string): LibRole|null; // Not implemented
@@ -2452,7 +3466,7 @@ declare module 'axoncore' {
         public static guild(client: LibClient, args: string[] ): LibGuild|null; // Not implemented
     }
 
-    export class User {
+    class User {
         public lib: LibraryInterface;
         constructor(lib: LibraryInterface);
         getID(user: LibUser): string;
@@ -2472,7 +3486,7 @@ declare module 'axoncore' {
         Resolver: Resolver;
     }
 
-    export class LibraryInterface {
+    class LibraryInterface {
         private _botClient: LibClient;
         public user: User;
         public member: Member;
@@ -2702,34 +3716,34 @@ declare module 'axoncore' {
         type: djs.ActivityType | 0 | 1 | 2 | 3 | 4;
     }
     
-    export class DjsChannel extends Channel {
+    class DjsChannel extends Channel {
         hasPermission(channel: djs.Channel, user: djs.User, perm: string): boolean;
         sendMessage(channel: djs.Channel, content: string | DjsContent): Promise<djs.Message | djs.Message[]>
     }
 
-    export interface DjsEnums {
+    interface DjsEnums {
         EVENTS: DjsEnumsEvents;
         DISCORD_LIB_PERMISSIONS: DjsEnumsDiscordLibPermissions;
         PERMISSIONS: DjsEnumsPermissions;
         PERMISSION_NAMES: DjsEnumsPermissionNames;
     }
 
-    export class DjsGuild extends Guild {
+    class DjsGuild extends Guild {
         getMember(guild: djs.Guild, userID: string): djs.GuildMember;
     }
 
-    export class DjsMember extends Member {
+    class DjsMember extends Member {
         getRoles(member: djs.GuildMember): string[];
         getRolesObject(member: djs.GuildMember): djs.Role[];
         hasPermission(member: djs.GuildMember, permission: DjsEnumsPermissionList): boolean;
     }
 
-    export class DjsMessage extends Message {
+    class DjsMessage extends Message {
         delete(message: djs.Message): Promise<djs.Message>;
         edit(message: djs.Message, content: string | DjsContent): Promise<djs.Message>
     }
 
-    export class DjsResolver extends Resolver {
+    class DjsResolver extends Resolver {
         static user(client: djs.Client, args: string | string[] ): djs.User;
         static member(guild: djs.Guild, args: string | string[] ): djs.GuildMember;
         static role(guild: djs.Guild, args: string | string[] ): djs.Role;
@@ -2737,11 +3751,11 @@ declare module 'axoncore' {
         static guild(client: djs.Client, args: string[] ): djs.Guild;
     }
 
-    export class DjsUser extends User {
+    class DjsUser extends User {
         getDM(user: djs.User): Promise<djs.DMChannel>;
     }
 
-    export class DjsClient extends Client {
+    class DjsClient extends Client {
         private _token: string;
         constructor(lib: DjsInterface, token: string);
         public client: djs.Client;
@@ -2751,8 +3765,14 @@ declare module 'axoncore' {
         triggerWebhook(id: string, token: string, data: DjsWebhookContent): Promise<WebhookResponse>;
     }
 
-    export class DjsInterface extends LibraryInterface {
-        public client: djs.Client;
+    class DjsInterface extends LibraryInterface {
+        public user: DjsUser;
+        public member: DjsMember;
+        public message: DjsMessage;
+        public channel: DjsChannel;
+        public guild: DjsGuild;
+        public resolver: DjsResolver;
+        public client: DjsClient;
         public type: 1;
         constructor(botClient: djs.Client, token: string);
         public enums: DjsEnums;
@@ -2937,34 +3957,34 @@ declare module 'axoncore' {
         type: 0 | 1 | 2 | 3 | 4;
     }
 
-    export class ErisChannel extends Channel {
+    class ErisChannel extends Channel {
         public hasPermission(channel: Eris.Channel, user: Eris.User, perm: ErisEnumsPermissionList): boolean;
         public sendMessage(channel: Eris.Channel, content: ErisContent): Promise<Eris.Message>;
     }
 
-    export interface ErisEnums {
+    interface ErisEnums {
         EVENTS: ErisEnumsEvents;
         DISCORD_LIB_PERMISSIONS: ErisEnumsDiscordLibPermissions;
         PERMISSIONS: ErisEnumsPermissions;
         PERMISSIONS_NAMES: ErisEnumsPermissionsNames;
     }
 
-    export class ErisGuild extends Guild {
+    class ErisGuild extends Guild {
         public getMember(guild: Eris.Guild, userID: string): Eris.Member;
     }
 
-    export class ErisMember extends Member {
+    class ErisMember extends Member {
         getRoles(member: Eris.Member): string[];
         getRolesObject(member: Eris.Member): Eris.Role[];
         hasPermission(member: Eris.Member, permission: ErisEnumsPermissionList): boolean;
     }
 
-    export class ErisMessage extends Message {
+    class ErisMessage extends Message {
         delete(message: Eris.Message): Promise<void>;
         edit(message: Eris.Message, content: ErisContent): Promise<Eris.Message>;
     }
 
-    export class ErisResolver extends Resolver {
+    class ErisResolver extends Resolver {
         static user(client: Eris.Client, args: string | string[] ): Eris.User | null;
         static member(guild: Eris.Guild, args: string | string[] ): Eris.Member | null;
         static role(guild: Eris.Guild, args: string | string[] ): Eris.Role | null;
@@ -2972,11 +3992,11 @@ declare module 'axoncore' {
         static guild(client: Eris.Client, args: string[] ): Eris.Guild;
     }
 
-    export class ErisUser extends User {
+    class ErisUser extends User {
         getDM(user: Eris.User): Promise<Eris.PrivateChannel>;
     }
 
-    export class ErisClient extends Client {
+    class ErisClient extends Client {
         public client: Eris.Client;
         public getMember(guild: Eris.Guild): Eris.Member;
         public connect(): Promise<void>;
@@ -2984,7 +4004,13 @@ declare module 'axoncore' {
         public triggerWebhook(id: string, token: string, data: ErisWebhookContent): Promise<WebhookResponse>;
     }
 
-    export class ErisInterface extends LibraryInterface {
+    class ErisInterface extends LibraryInterface {
+        public user: ErisUser;
+        public member: ErisMember;
+        public guild: ErisGuild;
+        public channel: ErisChannel;
+        public message: ErisMessage;
+        public resolver: ErisResolver
         public client: ErisClient;
         public type: 0;
         constructor(botClient: Eris.Client);

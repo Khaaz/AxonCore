@@ -4,8 +4,8 @@
  * @typedef {import('../Command/Command').default} Command
  * @typedef {import('../Event/Listener').default} Listener
  * @typedef {{
- * guildID?: String, prefixes?: Array<String>, createdAt?: Date, updatedAt?: Date, modules?: Array<Module>
- * commands: Array<Command>, listeners: Array<Listener>, ignoredUsers: Array<String>, ignoredRoles: Array<String>,
+ * guildID?: String, prefixes?: Array<String>, createdAt?: Date, updatedAt?: Date, modules?: Array<String>
+ * commands: Array<String>, listeners: Array<String>, ignoredUsers: Array<String>, ignoredRoles: Array<String>,
  * ignoredChannels: Array<String>, modOnly: Boolean, modRoles: Array<String>, modUsers: Array<String>
  * }} GConfig
  */
