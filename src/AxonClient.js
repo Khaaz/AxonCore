@@ -316,10 +316,6 @@ class AxonClient extends EventEmitter {
      * @memberof AxonClient
      */
     async start() {
-        if (this._configs.webhooks.bot.token) {
-            this.log('FATAL', new Error('Bot token not supplied') );
-            process.exit(1);
-        }
         await this.onStart();
 
         this.library.client.connect()
