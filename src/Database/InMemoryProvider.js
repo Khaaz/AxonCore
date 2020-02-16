@@ -81,10 +81,7 @@ class InMemoryProvider extends ADBProvider {
     }
 
     async updateAxon(key, value) {
-        let axonConf = this.axon.axonConfig;
-        if (!axonConf) {
-            axonConf = await this.fetchAxon();
-        }
+        const axonConf = await this.fetchAxon();
         axonConf[key] = value;
         this.axon.axonConfig = axonConf;
         return true;
