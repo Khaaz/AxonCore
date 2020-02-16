@@ -81,7 +81,7 @@ class InMemoryProvider extends ADBProvider {
      * Update a guild's prefix
      * @param {String} gID Guild ID
      * @param {Array<String>} prefixArr Array of prefixes
-     * @returns {Promise<AxonConfig>}
+     * @returns {Promise<Boolean>} Whether the request was successful or not
      */
     async updateGuildPrefix(gID, prefixArr) {
         return this.updateGuild('prefixes', gID, prefixArr);
@@ -91,7 +91,7 @@ class InMemoryProvider extends ADBProvider {
      * Update list of disabled modules
      * @param {String} gID Guild ID
      * @param {Array<String>} modulesArr Array of disabled modules
-     * @returns {Promise<AxonConfig>}
+     * @returns {Promise<Boolean>} Whether the request was successful or not
      */
     updateModule(gID, modulesArr) {
         return this.updateGuild('modules', gID, modulesArr);
@@ -101,7 +101,7 @@ class InMemoryProvider extends ADBProvider {
      * Update list of disabled commands
      * @param {String} gID Guild ID
      * @param {Array<String>} commandArr Array of disabled commands
-     * @returns {Promise<AxonConfig>}
+     * @returns {Promise<Boolean>} Whether the request was successful or not
      */
     updateCommand(gID, commandArr) {
         return this.updateGuild('commands', gID, commandArr);
@@ -111,7 +111,7 @@ class InMemoryProvider extends ADBProvider {
      * Update list of disabled events
      * @param {String} gID Guild ID
      * @param {Array<String>} eventArr Array of disabled events
-     * @returns {Promise<AxonConfig>}
+     * @returns {Promise<Boolean>} Whether the request was successful or not
      */
     async updateEvent(gID, eventArr) {
         return this.updateGuild('listeners', gID, eventArr);
@@ -139,7 +139,7 @@ class InMemoryProvider extends ADBProvider {
      * @param {String} key Value to update
      * @param {String} gID Guild ID
      * @param {updateDBVal} value What the value should be updated to
-     * @returns {Promise<GuildConfig>}
+     * @returns {Promise<Boolean>} Whether the request was successful or not
      */
     async updateGuild(key, gID, value) {
         const guild = await this.fetchGuild(gID);
@@ -151,7 +151,7 @@ class InMemoryProvider extends ADBProvider {
      * Update Axon config
      * @param {String} key Value to update
      * @param {updateDBVal} value What the value should be updated to
-     * @returns {Promise<AxonConfig>}
+     * @returns {Promise<Boolean>} Whether the request was successful or not
      */
     async updateAxon(key, value) {
         let axonConf = this.axon.axonConfig;

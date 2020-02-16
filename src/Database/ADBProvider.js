@@ -119,7 +119,7 @@ class ADBProvider {
      *
      * @param {String} key - The identifier in the Database
      * @param {updateDBVal} value - The value to update in the DB
-     * @returns {Promise<AxonConfig>} The updated AxonConfig
+     * @returns {Promise<Boolean>} Whether the request was successful or not
      *
      * @memberof ADBProvider
      */
@@ -136,7 +136,7 @@ class ADBProvider {
      * @param {String} key - The identifier in the Database
      * @param {String} gID - The guild ID to update
      * @param {updateDBVal} value - The value to update in the DB
-     * @returns {Promise<GuildConfig>} The updated GuildConfig
+     * @returns {Promise<Boolean>} Whether the request was successful or not
      *
      * @memberof ADBProvider
      */

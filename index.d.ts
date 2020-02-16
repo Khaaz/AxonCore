@@ -461,7 +461,7 @@ declare module 'axoncore' {
          *
          * @param key - The identifier in the Database
          * @param value - The value to update in the DB
-         * @returns Whether the update was successful or not
+         * @returns Whether the request was successful or not
          *
          * @memberof ADBProvider
          */
@@ -475,7 +475,7 @@ declare module 'axoncore' {
          * @param key - The identifier in the Database
          * @param gID - The guild ID to update
          * @param value - The value to update in the DB
-         * @returns The updated GuildConfig
+         * @returns Whether the request was successful or not
          *
          * @memberof ADBProvider
          */
@@ -722,35 +722,39 @@ declare module 'axoncore' {
          * Update a guild's prefix
          * @param gID Guild ID
          * @param prefixArr Array of prefixes
+         * @returns Whether the request was successful or not
          */
-        updateGuildPrefix(gID: string, prefixArr: string[] ): Promise<GuildConfig>;
+        updateGuildPrefix(gID: string, prefixArr: string[] ): Promise<boolean>;
         /**
          * Update list of disabled modules
          * @param gID Guild ID
          * @param modulesArr Array of disabled modules
+         * @returns Whether the request was successful or not
          */
-        updateModule(gID: string, modulesArr: string[] ): Promise<GuildConfig>;
+        updateModule(gID: string, modulesArr: string[] ): Promise<boolean>;
         /**
          * Update list of disabled commands
          * @param gID Guild ID
          * @param commandArr Array of disabled commands
+         * @returns Whether the request was successful or not
          */
-        updateCommand(gID: string, commandArr: string[] ): Promise<GuildConfig>;
+        updateCommand(gID: string, commandArr: string[] ): Promise<boolean>;
         /**
          * Update list of disabled events
          * @param gID Guild ID
          * @param eventArr Array of disabled events
+         * @returns Whether the request was successful or not
          */
-        updateEvent(gID: string, eventArr: string[] ): Promise<GuildConfig>;
+        updateEvent(gID: string, eventArr: string[] ): Promise<boolean>;
         
-        saveAxon(axonSchema: AxonConfig): AxonConfig;
-        saveGuild(gID: string, guildSchema: GuildConfig): GuildConfig;
+        saveAxon(axonSchema: AxonConfig): Promise<AxonConfig>;
+        saveGuild(gID: string, guildSchema: GuildConfig): Promise<GuildConfig>;
 
         /**
          * Update Axon config
          * @param key Value to update
          * @param value What the value should be updated to
-         * @returns Whether the update was successful or not
+         * @returns Whether the request was successful or not
          */
         public updateAxon(key: 'id' | 'prefix', value: string): Promise<boolean>;
         public updateAxon(key: 'createdAt' | 'updatedAt', value: Date): Promise<boolean>;
@@ -761,13 +765,14 @@ declare module 'axoncore' {
          * @param key Value to update
          * @param gID Guild ID
          * @param value What the value should be updated to
+         * @return Whether the request was successful or not
          */
-        updateGuild(key: 'prefixes' | 'ignoredUsers' | 'ignoredRoles' | 'ignoredChannels' | 'modRoles' | 'modUsers', gID: string, value: string[] ): Promise<GuildConfig>;
-        updateGuild(key: 'createdAt' | 'updatedAt', gID: string, value: Date): Promise<GuildConfig>;
-        updateGuild(key: 'modules', gID: string, value: Module[] ): Promise<GuildConfig>;
-        updateGuild(key: 'commands', gID: string, value: Command[] ): Promise<GuildConfig>;
-        updateGuild(key: 'listeners', gID: string, value: Listener[] ): Promise<GuildConfig>;
-        updateGuild(key: 'modOnly', gID: string, value: boolean): Promise<GuildConfig>;
+        updateGuild(key: 'prefixes' | 'ignoredUsers' | 'ignoredRoles' | 'ignoredChannels' | 'modRoles' | 'modUsers', gID: string, value: string[] ): Promise<boolean>;
+        updateGuild(key: 'createdAt' | 'updatedAt', gID: string, value: Date): Promise<boolean>;
+        updateGuild(key: 'modules', gID: string, value: Module[] ): Promise<boolean>;
+        updateGuild(key: 'commands', gID: string, value: Command[] ): Promise<boolean>;
+        updateGuild(key: 'listeners', gID: string, value: Listener[] ): Promise<boolean>;
+        updateGuild(key: 'modOnly', gID: string, value: boolean): Promise<boolean>;
     }
 
     /**
