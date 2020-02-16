@@ -27,10 +27,17 @@ class InMemoryProvider extends ADBProvider {
         return Promise.resolve(axon);
     }
 
+<<<<<<< HEAD
     /**
      * @param {String} gID Guild ID
      * @returns {Promise<GuildConfig>}
      */
+=======
+    init() {
+        return;
+    }
+
+>>>>>>> 169905b9e339cb7f287257a289151bef721ec131
     async fetchGuild(gID) {
         let guild = this.axon.guildConfigs.get(gID);
         if (!guild) {
@@ -115,20 +122,19 @@ class InMemoryProvider extends ADBProvider {
 
     /**
      * @param {AxonConfig} axonSchema
-     * @returns {AxonConfig}
+     * @returns {Promise<AxonConfig>}
      */
-    saveAxonSchema(axonSchema) {
-        this.axon.axonConfig = axonSchema;
-        return axonSchema;
+    async saveAxon(axonSchema) {
+        return new AxonConfig(this.axon, axonSchema);
     }
 
     /**
      * @param {String} gID Guild ID
      * @param {GuildConfig} guildSchema
-     * @returns {null} **CONFIRM WITH NULL*
      */
-    saveGuildSchema(gID, guildSchema) {
-        return this.axon.guildConfigs.set(gID, guildSchema);
+    async saveGuild(gID, guildSchema) {
+        const guildConfig = new GuildConfig(this.axon, guildSchema);
+        return guildConfig;
     }
 
     /**
@@ -141,8 +147,7 @@ class InMemoryProvider extends ADBProvider {
     async updateGuild(key, gID, value) {
         const guild = await this.fetchGuild(gID);
         guild[key] = value;
-        this.saveGuildSchema(gID, guild);
-        return guild;
+        return this.saveGuild(gID, guild);
     }
 
     /**
@@ -157,7 +162,7 @@ class InMemoryProvider extends ADBProvider {
             axonConf = await this.initAxon();
         }
         axonConf[key] = value;
-        return axonConf;
+        return this.saveAxon(axonConf);
     }
 }
 

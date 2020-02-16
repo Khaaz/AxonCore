@@ -13,6 +13,6 @@ PR description/overview (changes introduced, implementation justification if nee
 
 - [ ] This PR introduces *BREAKING* changes.
 - [ ] This PR adds new features, improve the code and implies minimal changes.
-- [ ] This PR fixes a bug and references the relevant issue or documentation.
+- [ ] This PR fixes a bug, if needed it also references the relevant issue or documentation.
 - [ ] This PR improve performance or code refactor without API changes.
 - [ ] This PR **only** includes non-code changes (documentation, CI, tools...).
