@@ -76,7 +76,7 @@ class InMemoryProvider extends ADBProvider {
     async updateGuild(key, gID, value) {
         const guild = await this.fetchGuild(gID);
         guild[key] = value;
-        return this.saveGuildSchema(gID, guild);
+        return this.saveGuild(gID, guild);
     }
 
     async updateAxon(key, value) {
@@ -85,7 +85,7 @@ class InMemoryProvider extends ADBProvider {
             axonConf = await this.initAxon();
         }
         axonConf[key] = value;
-        return this.saveAxonSchema(axonConf);
+        return this.saveAxon(axonConf);
     }
 }
 
