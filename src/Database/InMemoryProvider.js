@@ -65,7 +65,7 @@ class InMemoryProvider extends ADBProvider {
     }
 
     /**
-     * Update the blacklist user list
+     * Update the blacklist guild list
      * @param {Array<String>} blacklistedGuilds Array of blacklisted guild IDs
      * @returns {Promise<AxonConfig>}
      */

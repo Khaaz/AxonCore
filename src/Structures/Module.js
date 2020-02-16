@@ -29,12 +29,12 @@ import NotImplementedException from '../Errors/NotImplementedException';
  * @prop {String} label - Module label (name/id)
  * @prop {Boolean} [enabled=true] - Whether the module is enabled or not
  * @prop {Boolean} [serverBypass=false] - Whether the module can be disabled or not (will bypass guild disabled)
- * @prop {Object} info - Default info about the module
- * @prop {String} [info.name]
- * @prop {String} [info.category]
- * @prop {String} [info.description]
+ * @prop {Object} infos - Default info about the module
+ * @prop {String} [infos.name]
+ * @prop {String} [infos.category]
+ * @prop {String} [infos.description]
  * @prop {CommandPermissions} permissions - Default values potentially used for CommandPermissions
- * @prop {CommandOptions} options - Default values potentially used  for CommandOptions
+ * @prop {CommandOptions} options - Default values potentially used for CommandOptions
  *
  * @prop {CommandLoader} commandLoader - Load all commands in the module / register / unregister
  * @prop {ListenerLoader} listenerLoader - Load all events in the module / register / unregister

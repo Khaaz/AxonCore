@@ -17,26 +17,154 @@ type LibPermission = Eris.Permission | Eris.PermissionOverwrite | djs.Permission
 
 declare module 'axoncore' {
 
+    /**
+     * Extended Map with built in methods for ease of data manipulation.
+     * Based on Eris.Collection
+     *
+     * @author KhaaZ
+     *
+     * @class Collection
+     * @extends
+     *
+     * @prop {Class} baseObject - The base class for all items
+     */
     export class Collection<T> extends Map<string | number, T> {
         public baseObject: new (...args: any[] ) => T;
+        /**
+         * Creates an instance of Collection.
+         * @memberof Collection
+         */
         public constructor(base: { base?: new (...args: any[] ) => T; iterable?: {[key: string]: T;} | [string, T][]; } );
 
+        /**
+         * Creates a collection from an array
+         * @static
+         * @param array - The array of object
+         * @param key - The property to use as key
+         * @returns A newly created Collection
+         * @memberof Collection
+         */
         static from<R>(array: R[], key: string): Collection<R>;
 
+        /**
+         * Add an object
+         * If baseObject, add only if instance of baseObject
+         * If no baseObject, add
+         *
+         * @param key - The ID of the object
+         * @param value - The object data
+         * @param replace - Whether to replace an existing object with the same ID
+         * @returns The existing or newly created object
+         * @memberof Collection
+         */
         public add(key: string, value: T, replace?: boolean): T;
+
+        /**
+         * Return the first object to make the function evaluate true
+         *
+         * @param func - A function that takes an object and returns true if it matches
+         * @returns The first matching object, or null if no match
+         * @memberof Collection
+         */
         public find(func: (i: T) => boolean): T;
+
+        /**
+         * Get a random object from the Collection
+         *
+         * @returns The random object, or null if there is no match
+         * @memberof Collection
+         */
         public random(): T;
+
+        /**
+         * Return all the objects that make the function evaluate true
+         *
+         * @param func - A function that takes an object and returns true if it matches
+         * @returns An array containing all the objects that matched
+         * @memberof Collection
+         */
         public filter(func: (i: T) => boolean): T[];
+
+        /**
+         * Return an array with the results of applying the given function to each element
+         *
+         * @param func - A function that takes an object and returns something
+         * @returns An array containing the results
+         * @memberof Collection
+         */
         public map<R>(func: (i: T) => R): R[];
+
+        /**
+    	 * Reduce values by function
+         *
+         * @param func - Function to execute on each element in the array
+         * @param initialValue - Value to use as the first argument to the first call of the callback
+         * @returns Accumulator
+         * @memberof Collection
+	     */
         public reduce<U>(func: (accumulator: U, val: T) => U, initialValue?: number): U;
+
+        /**
+         * Test if all elements pass the test implemented by the provided function. Returns true if yes, or false if not.
+         *
+         * @param func - A function that takes an object and returns true if it matches
+         * @returns An array containing all the objects that matched
+         * @memberof Collection
+         */
         public every(func: (i: T) => boolean): boolean;
+
+        /**
+         * Test if at least one element passes the test implemented by the provided function. Returns true if yes, or false if not.
+         *
+         * @param func - A function that takes an object and returns true if it matches
+         * @returns An array containing all the objects that matched
+         * @memberof Collection
+         */
         public some(func: (i: T) => boolean): boolean;
+
+        /**
+         * Update an object
+         *
+         * @param key - The ID of the object
+         * @param value - The updated object data
+         * @returns The updated object
+         * @memberof Collection
+         */
         public update(key: string, value: T): T;
+
+        /**
+         * Remove an object
+         *
+         * @param {String} key - The ID of the object
+         * @returns {T} The removed object, or null if nothing was removed
+         *
+         * @memberof Collection
+         */
         public remove(key: string): T | null;
+
+        /**
+         * Map to array
+         * [ value, value, value ]
+         * @memberof Collection
+         */
         public toArray(): T[];
+
+        /**
+         * Map to object
+         * { key: value, key: value }
+         * @memberof Collection
+         */
         public toObject(): {[key: string]: T;};
+
         public toString(): `[Collection<Name>]`;
 
+        /**
+         * Apply a function to the Collection and returns a new Collection
+         * @param key - The property to use as key for the new Collection
+         * @param func - The function name to apply to the Collection
+         * @param args - All the argument that need to be applied to the Collection
+         * @returns A new Collection modified by the apply call
+         */
         public apply<R>(key: string, func: 'from', args: [Array<R>, string] ): Collection<R>;
         public apply(key: string, func: 'add', args: [string, T, boolean?] ): Collection<T>;
         public apply(key: string, func: 'find', args: [(i: T) => boolean] ): Collection<T>;
@@ -49,16 +177,44 @@ declare module 'axoncore' {
         public apply(key: string, func: 'toArray'): Collection<T>;
         public apply(key: string, func: 'toObject'): Collection<T>;
     }
-
+    
+    /**
+     * Custom error with better formatting + information about where the error is originated from.
+     * Used for errors thrown by the client (Object validity / internal). (general error)
+     *
+     * @author KhaaZ
+     *
+     * @class AxonError
+     * @extends Error
+     */
     export class AxonError extends Error {
         public module: string;
         public subMoule: string | null;
+        /**
+         * Creates an instance of AxonError.
+         *
+         * @param message - custom error message
+         * @param module Module in which the error originated from
+         * @param subModule Module in which the error originated from
+         * @memberof AxonError
+         */
         constructor(message: string, module: Module | string, subModule?: string);
         readonly short: string;
         readonly message: string;
         readonly name: string;
     }
 
+    /**
+     * Custom error with better formatting and context informations.
+     * Used for errors thrown by AxonCore commands.
+     *
+     * @author KhaaZ
+     *
+     * @class AxonCommandError
+     * @extends Error
+     *
+     * @prop {CommandContext} context - Command Context containing all informations about the command execution
+     */
     export class AxonCommandError extends Error {
         public context: CommandContext;
         readonly short: string;
@@ -69,12 +225,28 @@ declare module 'axoncore' {
         readonly name: string;
     }
 
+    /**
+     * Error thrown when an abstract class is instantiated.
+     *
+     * @author KhaaZ
+     *
+     * @class NoAbstractInstanceException
+     * @extends Error
+     */
     export class NoAbstractInstanceException extends Error {
         constructor(...args: any[] );
         readonly name: string;
         readonly message: string;
     }
 
+    /**
+     * Error thrown when a method not implemented (not overridden) is used.
+     *
+     * @author KhaaZ
+     *
+     * @class NotImplementedException
+     * @extends Error
+     */
     export class NotImplementedException extends Error {
         constructor(...args: any[] );
         readonly name: string;
@@ -82,56 +254,250 @@ declare module 'axoncore' {
     }
 
     interface ModuleInfo {
+        /**
+         * The module name
+         */
         name: string;
+        /**
+         * The module description
+         */
         description: string;
+        /**
+         * The module category
+         */
         category?: string;
     }
     interface ModuleData {
+        /**
+         * The module label
+         */
         label?: string;
+        /**
+         * Whether the module is enabled or not
+         */
         enabled?: boolean;
+        /**
+         * Whether the module can be disabled in a server or not
+         */
         serverBypass?: boolean;
-        Infos?: ModuleInfo;
+        infos?: ModuleInfo;
+        /**
+         * The default options for all commands in this module
+         */
         options?: CommandOptions;
+        /**
+         * The default poermissions for all commands in this module
+         */
         permissions?: CommandPermissions;
     }
 
+    /**
+     * AxonCore Module.
+     * A Module holds commands and listeners.
+     * It also has default CommandOptions and CommandPermissions that can potentially be used as base when creating a Command.
+     *
+     * @author KhaaZ
+     *
+     * @class Module
+     * @extends Base
+     */
     export class Module extends Base {
+        /**
+         * Module label (name/id)
+         */
         public label: string;
+        /**
+         * Whether the module is enabled or not
+         */
         public enabled: boolean;
+        /**
+         * Whether the module can be disabled or not (will bypass guild disabled)
+         */
         public serverBypass: boolean;
         
+        /**
+         * Default values potentially used for CommandOptions
+         */
         public options: CommandOptions;
+        /**
+         * Default values potentially used for CommandPermissions
+         */
         public permissions: CommandPermissions;
 
+        /**
+         * Default info about the module
+         */
         public infos: ModuleInfo;
 
+        /**
+         * Load all commands in the module / register / unregister
+         */
         public commandLoader: CommandLoader;
+        /**
+         * Load all events in the module / register / unregister
+         */
         public listenerLoader: ListenerLoader;
 
+        /**
+         * Creates a Module instance.
+         *
+         * @param client
+         * @param data - All module parameters
+         * @param data.label - The module label
+         * @param data.enabled - Whether the module is enabled or not
+         * @param data.serverBypass - Whether the module can be disabled in a server or not
+         * @param data.infos
+         * @param data.infos.name - The module name
+         * @param data.infos.description - The module description
+         * @param data.infos.category - The module category
+         * @param data.options - The default options for all commands in this module
+         * @param data.permissions - The default permissions for all commands in this module
+         * @memberof Module
+         */
         constructor(client: AxonClient, data?: ModuleData);
 
-        public commands: Collection<Command>;
-        public listeners?: Collection<Listener>;
+        /**
+         * A Collection of all commands the module holds
+         *
+         * @readonly
+         * @memberof Module
+         */
+        readonly commands: Collection<Command>;
+        /**
+         * A Collection of all listeners the module holds
+         *
+         * @readonly
+         * @memberof Module
+         */
+        readonly listeners?: Collection<Listener>;
 
+        /**
+         * Override this method to returns { commands, listeners }
+         *
+         * @returns {Object.<string, Command|Listener>} An object containing commands and listeners to initialise. { commands, listeners}
+         * @memberof Module
+         */
         public init(): { commands?: {[key: string]: new (...args: any[] ) => Command;}; listeners?: {[key: string]: new (...args: any[] ) => Listener;}; };
+        /**
+         * Init a module with all commands and listeners.
+         * @memberof Module
+         */
         private _init(): void;
     }
 
     type updateDBVal = object|any[]|string|boolean|number|Date;
 
+    /**
+     * Abstract class for all DB services.
+     * Extend this class to create your own Database provider.
+     * You just need to write these methods for the framework to be able to interact with the database.
+     *
+     * The provider creates guildconfigs with DB data.
+     *
+     * @author KhaaZ
+     *
+     * @abstract
+     * @class ADBProvider
+     */
     export abstract class ADBProvider {
+        /**
+         * The AxonClient
+         */
         public axon: AxonClient;
+        /**
+         * Creates an instance of ADBProvider.
+         *
+         * @memberof ADBProvider
+         */
         constructor(axonClient: AxonClient);
-        public init(AxonOptions: AxonOptions): void; // Not Implemented
+        /**
+         * Init the ADBProvider.
+         * Method called just after instantiation. Can be overridden with anything that will be used by the provider.
+         *
+         * @memberof ADBProvider
+         */
+        public init(AxonOptions?: AxonOptions): void; // Not Implemented
+        /**
+         * Initialises a default Axon config.
+         *
+         * @returns Newly created Axon config from the DB
+         *
+         * @memberof ADBProvider
+         */
         public initAxon(): Promise<AxonConfig>; // Not Implemented
+        /**
+         * Initialises a default Guild config.
+         * Use default AxonClient prefix settings when creating the new guild config.
+         *
+         * @param gID - Guild ID
+         *
+         * @returns Newly created Guild config from the DB
+         *
+         * @memberof ADBProvider
+         */
         public initGuild(gID: string): Promise<GuildConfig>; // Not Implemented
         
+        /**
+         * Retrieves the axon config from the DB
+         *
+         * @returns AxonSchema Object or null
+         *
+         * @memberof ADBProvider
+         */
         public fetchAxon(): Promise<AxonConfig | null>; // Not Implemented
+        /**
+         * Retrieves the Guild config for the specified guild.
+         *
+         * @param gID - Guild ID
+         *
+         * @memberof ADBProvider
+         */
         public fetchGuild(gID: string): Promise<GuildConfig | null>; // Not Implemented
         
+        /**
+         * Update AxonConfig in the DB.
+         * Update the specific key with the value given as second parameters.
+         * Generic method to update Database.
+         *
+         * @param key - The identifier in the Database
+         * @param value - The value to update in the DB
+         * @returns Whether the update was successful or not
+         *
+         * @memberof ADBProvider
+         */
         public updateAxon(key: string, value: updateDBVal): Promise<boolean>; // Not Implemented
+        /**
+         * Update GuildConfig in the DB.
+         * Update the specific key with the value given as third parameters.
+         * Specify the guild with the guild ID.
+         * Generic method to update Database.
+         *
+         * @param key - The identifier in the Database
+         * @param gID - The guild ID to update
+         * @param value - The value to update in the DB
+         * @returns The updated GuildConfig
+         *
+         * @memberof ADBProvider
+         */
         public updateGuild(key: string, gID: string, value: updateDBVal): Promise<boolean>; // Not Implemented
+        /**
+         * Updates the Axon config in the DB with a new Axon config object.
+         *
+         * @param data - the schema object to update
+         * @returns Updated AxonConfig from the DB
+         *
+         * @memberof ADBProvider
+         */
         public saveAxon(data: AxonConfig): Promise<AxonConfig | null>; // Not Implemented
+        /**
+         * Updates the given guild in the DB with a new schema object.
+         *
+         * @param gID - Guild ID
+         * @param data - The schema object to update
+         * @returns Updated GuildConfig from the DB
+         *
+         * @memberof ADBProvider
+         */
         public saveGuild(gID: string, data: GuildConfig): Promise<GuildConfig | null>; // Not Implemented
     }
 
@@ -158,6 +524,14 @@ declare module 'axoncore' {
         modRoles: string[];
         modUsers: string[];
     }
+
+    /**
+     * Manager class for handling Json database
+     *
+     * @author KhaaZ, Olybear
+     *
+     * @class JsonManager
+     */
     class JsonManager {
         private _axonDefault: AxonJSON;
         private _guildDefault: GuildJSON;
@@ -166,77 +540,334 @@ declare module 'axoncore' {
         public axonExecutor: AsyncQueue;
         public guildExecutors: {[guildID: string]: AsyncQueue;};
 
+        /**
+         * Creates an instance of JsonManager.
+         *
+         * @param basePath - The path / location where to create and use the database
+         *
+         * @memberof JsonManager
+         */
         constructor(basePath: string);
 
         // GETTERS
+        /**
+         * Returns default data structure for axon
+         *
+         * @readonly
+         * @memberof JsonManager
+         */
         readonly axonDefault: AxonJSON;
+        /**
+         * Returns default data structure for guild
+         *
+         * @readonly
+         * @memberof JsonManager
+         */
         readonly guildDefault: GuildJSON;
 
+        /**
+         * Get guild executor
+         * @param guildID Guild ID
+         */
         public getExecutor(guildID: string): AsyncQueue;
+        /**
+         * Parse JSON string as object/array
+         * @param string JSON string
+         * @returns Parsed array/object or input string if failed
+         */
         public toJSON(string: string): string | object | any[];
+        /**
+         * Parse object/array as JSON string
+         * @param json Object/array to be parsed into JSON string
+         * @returns JSON string or parsed array/object if failed
+         */
         public toString(json: object): string | object | any[];
 
+        /**
+         * Get guild config path
+         * @param gID Guild ID
+         */
         private _buildPath(gID: string): string;
 
+        /**
+         * Read a file and return the string of the file content or null
+         *
+         * @param path
+         *
+         * @memberof JsonManager
+         */
         public readFile(path: string): Promise<string>;
+        /**
+         * Write a file
+         *
+         * @returns Whether or not the task completed successfully
+         *
+         * @memberof JsonManager
+         */
         public writeFile(path: string, content: string): Promise<boolean>;
 
+        /**
+         * Create a file and schema for Axon global file.
+         * @param defaultPrefix Default prefix
+         * @returns The newly created Schema || null
+         *
+         * @memberof JsonManager
+         */
         public createAxonSchema(defaultPrefix: string): Promise<AxonJSON>;
+        /**
+         * Create a file and schema for the given guild.
+         *
+         * @param prefixes Array of prefixes
+         * @param gID Guild ID
+         * @returns The newly created Schema || null
+         *
+         * @memberof JsonManager
+         */
         public createGuildSchema(prefixes: string[], gID: string): Promise<GuildJSON>;
 
+        /**
+         * Fetch the axon schema
+         *
+         * @returns AxonSchema || null
+         *
+         * @memberof JsonManager
+         */
         public fetchAxonSchema(): Promise<AxonJSON>;
+        /**
+         * Fetch the guild schema for the given guild
+         *
+         * @param gID Guild ID
+         * @returns GuildSchema || null
+         *
+         * @memberof JsonManager
+         */
         public fetchGuildSchema(gID: string): Promise<GuildJSON>;
 
+        /**
+         * Update the schema with the given value for the given guild
+         *
+         * @param gID Guild ID
+         * @param key Value to update
+         * @param value - The value to update for the given key (can be anything)
+         * @returns GuildSchema || null
+         *
+         * @memberof JsonManager
+         */
         public updateGuildKey(gID: string, key: string, value: updateDBVal): Promise<GuildJSON>;
+        /**
+         * Update the schema with the given value
+         *
+         * @param key Value to update
+         * @param value - The value to update for the given key (can be anything)
+         * @returns AxonSchema || null
+         *
+         * @memberof JsonManager
+         */
         public updateAxonKey(key: string, value: updateDBVal): Promise<AxonJSON>;
 
+        /**
+         * Write the updated schema in the file.
+         *
+         * @param schema AxonSchema
+         * @returns AxonSchema || null
+         *
+         * @memberof JsonManager
+         */
         public writeAxonSchema(schema: object): Promise<AxonJSON>;
+        /**
+         * Write the updated schema in the file (for the given guild).
+         *
+         * @param gID Guild ID
+         * @param schema GuildSchema
+         * @returns GuildSchema || null
+         *
+         * @memberof JsonManager
+         */
         public writeGuildSchema(gID: string, schema: object): Promise<GuildJSON>;
     }
 
+    /**
+     * A schema designed use an InMemory solution in AxonCore
+     *
+     * @author VoidNull
+     *
+     * @class InMemoryProvider
+     * @extends ADBProvider
+     */
     class InMemoryProvider extends ADBProvider {
         public fetchAxon(): Promise<AxonConfig>;
+        public init(): void;
+        /**
+         * @param gID Guild ID
+         */
         public fetchGuild(gID: string): Promise<GuildConfig>;
 
         initAxon(): Promise<AxonConfig>;
+        /**
+         * @param gID Guild ID
+         */
         initGuild(gID: string): Promise<GuildConfig>;
 
+        /**
+         * Update the blacklist user list
+         * @param blacklistedUsers Array of blacklisted user IDs
+         */
         updateBlacklistUser(blacklistedUsers: string[] ): Promise<AxonConfig>;
+        /**
+         * Update the blacklist guild list
+         * @param blacklistedGuilds Array of blacklisted guild IDs
+         */
         updateBlacklistGuild(blacklistedGuilds: string[] ): Promise<AxonConfig>;
+        /**
+         * Update a guild's prefix
+         * @param gID Guild ID
+         * @param prefixArr Array of prefixes
+         */
         updateGuildPrefix(gID: string, prefixArr: string[] ): Promise<GuildConfig>;
+        /**
+         * Update list of disabled modules
+         * @param gID Guild ID
+         * @param modulesArr Array of disabled modules
+         */
         updateModule(gID: string, modulesArr: string[] ): Promise<GuildConfig>;
+        /**
+         * Update list of disabled commands
+         * @param gID Guild ID
+         * @param commandArr Array of disabled commands
+         */
         updateCommand(gID: string, commandArr: string[] ): Promise<GuildConfig>;
+        /**
+         * Update list of disabled events
+         * @param gID Guild ID
+         * @param eventArr Array of disabled events
+         */
         updateEvent(gID: string, eventArr: string[] ): Promise<GuildConfig>;
         
-        // Ask Null about inconsistency
-        saveAxonSchema(axonSchema: AxonConfig): AxonConfig;
-        saveGuildSchema(gID: string, guildSchema: GuildConfig): void;
+        saveAxon(axonSchema: AxonConfig): AxonConfig;
+        saveGuild(gID: string, guildSchema: GuildConfig): GuildConfig;
 
-        updateAxon(key: 'id' | 'prefix', value: string): Promise<boolean>;
-        updateAxon(key: 'createdAt' | 'updatedAt', value: Date): Promise<boolean>;
-        updateAxon(key: 'bannedUsers' | 'bannedGuilds', value: string[] ): Promise<boolean>;
+        /**
+         * Update Axon config
+         * @param key Value to update
+         * @param value What the value should be updated to
+         * @returns Whether the update was successful or not
+         */
+        public updateAxon(key: 'id' | 'prefix', value: string): Promise<boolean>;
+        public updateAxon(key: 'createdAt' | 'updatedAt', value: Date): Promise<boolean>;
+        public updateAxon(key: 'bannedUsers' | 'bannedGuilds', value: string[] ): Promise<boolean>;
 
-        updateGuild(key: 'prefixes' | 'ignoredUsers' | 'ignoredRoles' | 'ignoredChannels' | 'modRoles' | 'modUsers', gID: string, value: string[] ): Promise<boolean>;
-        updateGuild(key: 'createdAt' | 'updatedAt', gID: string, value: Date): Promise<boolean>;
-        updateGuild(key: 'modules', gID: string, value: Module[] ): Promise<boolean>;
-        updateGuild(key: 'commands', gID: string, value: Command[] ): Promise<boolean>;
-        updateGuild(key: 'listeners', gID: string, value: Listener[] ): Promise<boolean>;
-        updateGuild(key: 'modOnly', gID: string, value: boolean): Promise<boolean>;
+        /**
+         * Update guild config
+         * @param key Value to update
+         * @param gID Guild ID
+         * @param value What the value should be updated to
+         */
+        updateGuild(key: 'prefixes' | 'ignoredUsers' | 'ignoredRoles' | 'ignoredChannels' | 'modRoles' | 'modUsers', gID: string, value: string[] ): Promise<GuildConfig>;
+        updateGuild(key: 'createdAt' | 'updatedAt', gID: string, value: Date): Promise<GuildConfig>;
+        updateGuild(key: 'modules', gID: string, value: Module[] ): Promise<GuildConfig>;
+        updateGuild(key: 'commands', gID: string, value: Command[] ): Promise<GuildConfig>;
+        updateGuild(key: 'listeners', gID: string, value: Listener[] ): Promise<GuildConfig>;
+        updateGuild(key: 'modOnly', gID: string, value: boolean): Promise<GuildConfig>;
     }
 
+    /**
+     * DB interface to interact with a Json Database.
+     *
+     * @author Olybear, KhaaZ
+     *
+     * @class JsonProvider
+     * @extends ADBProvider
+     */
     class JsonProvider extends ADBProvider {
+        /**
+         * Class responsible to read / write data to the DB as json.
+         */
         public manager?: JsonManager;
-
+        
+        /**
+         * Override init method.
+         *
+         * @param {AxonOptions}
+         * @memberof JsonProvider
+         */
+        init(axonOptions?: AxonOptions): void
+        /**
+         * Initialises a default Axon config.
+         *
+         * @returns Newly created Axon config from the DB
+         * @memberof JsonProvider
+         */
         initAxon(): Promise<AxonConfig>;
+        /**
+         * Initialises a default Guild config.
+         * Use default AxonClient prefix settings when creating the new guild config.
+         *
+         * @param gID - Guild ID
+         *
+         * @returns Newly created Guild config from the DB
+         * @memberof JsonProvider
+         */
         initGuild(gID: string): Promise<GuildConfig>;
 
+        /**
+         * Retrieves the axon config from the DB
+         *
+         * @returns AxonSchema Object or null
+         * @memberof JsonProvider
+         */
         fetchAxon(): Promise<AxonConfig>;
+        /**
+         * Retrieves the Guild config for the specified guild.
+         *
+         * @param gID - guild ID
+         * @memberof JsonProvider
+         */
         fetchGuild(gID: string): Promise<GuildConfig>;
 
+        /**
+         * Update AxonConfig in the DB.
+         * Update the specific key with the value given as second parameters.
+         * Generic method to update Database.
+         *
+         * @param key - The identifier in the Database
+         * @param value - The value to update in the DB
+         * @returns Whether the request was successful or not
+         *
+         * @memberof JsonProvider
+         */
         updateAxon(key: string, value: updateDBVal): Promise<boolean>;
+        /**
+         * Update GuildConfig in the DB.
+         * Update the specific key with the value given as third parameters.
+         * Specify the guild with the guild ID.
+         * Generic method to update Database.
+         *
+         * @param key - The identifier in the Database
+         * @param gID - The guild ID to update
+         * @param value - The value to update in the DB
+         * @returns Whether the request was successful or not
+         *
+         * @memberof JsonProvider
+         */
         updateGuild(key: string, gID: string, value: updateDBVal): Promise<boolean>;
 
+        /**
+         * Updates the Axon config in the DB with a new Axon config object.
+         *
+         * @param data - the schema object to update
+         * @returns Updated AxonConfig from the DB
+         *
+         * @memberof JsonProvider
+         */
         saveAxon(data: AxonConfig): Promise<AxonConfig|null>;
+        /**
+         * Updates the given guild in the DB with a new schema object.
+         *
+         * @param gID - Guild id
+         * @param data - the schema object to update
+         * @returns Updated GuildConfig from the DB
+         * @memberof JsonProvider
+         */
         saveGuild(gID: string, data: GuildConfig): Promise<GuildConfig|null>;
     }
 
@@ -268,17 +899,99 @@ declare module 'axoncore' {
         public AxonSchema?: AxonConfig;
         public GuildSchema?: GuildConfig;
 
+        /**
+         * Override init method.
+         *
+         * @param axonOptions
+         *
+         * @memberof MongoProvider
+         */
         init(AxonOptions?: AxonOptions): void;
+        /**
+         * Initialises a default Axon config.
+         *
+         * @returns Newly created Axon config from the DB
+         * @memberof MongoProvider
+         */
         initAxon(): Promise<AxonConfig>;
+        /**
+         * Initialises a default Guild config.
+         * Use default AxonClient prefix settings when creating the new guild config.
+         *
+         * @param gID - Guild ID
+         *
+         * @returns Newly created Guild config from the DB
+         * @memberof MongoProvider
+         */
         initGuild(gID: string): Promise<GuildConfig>;
 
+        /**
+         * Retrieves the axon config from the DB
+         *
+         * @returns AxonSchema Object or null
+         * @memberof MongoProvider
+         */
         fetchAxon(): Promise<AxonConfig|null>;
+        /**
+         * Retrieves the Guild config for the specified guild.
+         *
+         * @param gID - Guild ID
+         * @memberof MongoProvider
+         */
         fetchGuild(gID: string): Promise<GuildConfig|null>;
+        /**
+         * Retrieves the Guild **Schema** for the specified guild.
+         * Does not lean and return the actual mongoose Schema.
+         * MongoProvider specific method.
+         *
+         * @param gID - Guild ID
+         * @returns GuildSchema or null
+         * @memberof MongoProvider
+         */
         fetchGuildSchema(gID: string): Promise<Model<GuildSchema> | null>;
 
+        /**
+         * Update AxonConfig in the DB.
+         * Update the specific key with the value given as second parameters.
+         * Generic method to update Database.
+         *
+         * @param key - The identifier in the Database
+         * @param value - The value to update in the DB
+         * @returns Whether the request was successful or not
+         *
+         * @memberof MongoProvider
+         */
         updateAxon(key: string, value: updateDBVal): Promise<boolean>;
+        /**
+         * Update GuildConfig in the DB.
+         * Update the specific key with the value given as third parameters.
+         * Specify the guild with the guild ID.
+         * Generic method to update Database.
+         *
+         * @param key - The identifier in the Database
+         * @param gID - The guild ID to update
+         * @param value - The value to update in the DB
+         * @returns Whether the request was successful or not
+         *
+         * @memberof MongoProvider
+         */
         updateGuild(key: string, gID: string, value: updateDBVal): Promise<boolean>;
+        /**
+         * Updates the Axon config in the DB with a new Axon config object.
+         *
+         * @param data - the schema object to update
+         * @returns Updated AxonConfig from the DB
+         * @memberof MongoProvider
+         */
         saveAxon(data: AxonConfig): Promise<AxonConfig|null>;
+        /**
+         * Updates the given guild in the DB with a new schema object.
+         *
+         * @param gID - Guid id
+         * @param data - the schema object to update
+         * @returns Updated GuildConfig from the DB
+         * @memberof MongoProvider
+         */
         saveGuild(gID: string, data: GuildConfig): Promise<GuildConfig|null>;
     }
 
@@ -780,37 +1493,37 @@ declare module 'axoncore' {
         public toJSON(): object;
     }
 
-    interface HttpCode {
-        CONTINUE: 100;
-
-        OK: 200;
-        CREATED: 201;
-        ACCEPTED: 202;
-        NO_CONTENT: 204;
-
-        MULTIPLE_CHOICES: 300;
-        MOVED_PERMANENTLY: 301;
-        FOUND: 302;
-
-        BAD_REQUEST: 400;
-        UNAUTHORIZED: 401;
-        PAYMENT_REQUIRED: 402;
-        FORBIDDEN: 403;
-        NOT_FOUND: 404;
-        METHOD_NOT_ALLOWED: 405;
-        REQUEST_TIMEOUT: 408;
-        CONFLICT: 409;
-        GONE: 410;
-        UNSUPPORTED_MEDIA_TYPE: 415;
-        LOCKED: 423;
-        TOO_MANY_REQUESTS: 429;
-
-        INTERNAL_SERVER_ERROR: 500;
-        NOT_IMPLEMENTED: 501;
-        BAD_GATEWAY: 502;
-        SERVICE_UNAVAILABLE: 503;
-        GATEWAY_TIMEOUT: 504;
-    }
+    enum HTTP_CODE {
+        CONTINUE = 100,
+       
+        OK = 200,
+        CREATED = 201,
+        ACCEPTED = 202,
+        NO_CONTENT = 204,
+       
+        MULTIPLE_CHOICES = 300,
+        MOVED_PERMANENTLY = 301,
+        FOUND = 302,
+       
+        BAD_REQUEST = 400,
+        UNAUTHORIZED = 401,
+        PAYMENT_REQUIRED = 402,
+        FORBIDDEN = 403,
+        NOT_FOUND = 404,
+        METHOD_NOT_ALLOWED = 405,
+        REQUEST_TIMEOUT = 408,
+        CONFLICT = 409,
+        GONE = 410,
+        UNSUPPORTED_MEDIA_TYPE = 415,
+        LOCKED = 423,
+        TOO_MANY_REQUESTS = 429,
+       
+        INTERNAL_SERVER_ERROR = 500,
+        NOT_IMPLEMENTED = 501,
+        BAD_GATEWAY = 502,
+        SERVICE_UNAVAILABLE = 503,
+        GATEWAY_TIMEOUT = 504,
+        }
 
     interface HttpMessages {
         100: 'Continue';
@@ -877,76 +1590,76 @@ declare module 'axoncore' {
         510: 'Not Extended';
     }
 
-    interface LibraryTypes { ERIS: 0; DISCORDJS: 1; }
-    interface LoggerTypes { DEFAULT: 0; CHALK: 1; SIGNALE: 2; WINSTON: 3; }
-    interface DBTypes { IN_MEMORY: 0; JSON: 1; MONGO: 2; }
-    interface CommandExecutionTypes {
-        REGULAR: 0;
-        ADMIN: 1;
-        OWNER: 2;
+    enum LIBRARY_TYPES { ERIS = 0, DISCORDJS = 1 }
+    enum LOGGER_TYPES { DEFAULT = 0, CHALK = 1, SIGNALE = 2, WINSTON = 3, }
+    enum DB_TYPES { IN_MEMORY = 0, JSON = 1, MONGO = 2, } // eslint-disable-line no-shadow
+    enum COMMAND_EXECUTION_TYPES {
+        REGULAR = 0,
+        ADMIN = 1,
+        OWNER = 2,
     }
-    interface CommandExecutionState {
-        NO_ERROR: 0;
-        COOLDOWN: 1;
-        INVALID_USAGE: 2;
-        INVALID_PERMISSIONS_BOT: 3;
-        INVALID_PERMISSIONS_USER: 4;
+    enum COMMAND_EXECUTION_STATE {
+        NO_ERROR = 0,
+        COOLDOWN = 1,
+        INVALID_USAGE = 2,
+        INVALID_PERMISSIONS_BOT = 3,
+        INVALID_PERMISSIONS_USER = 4,
     }
-    interface AxonPermissionLevels {
-        OWNER: 0;
-        ADMINISTRATOR: 1;
-        MANAGER: 2;
-        MODERATOR: 3;
+    enum AXON_PERMISSION_LEVELS {
+        OWNER = 0,
+        ADMINISTRATOR = 1,
+        MANAGER = 2,
+        MODERATOR = 3,
     }
-    interface WebhookTypes {
-        FATAL: 'FATAL';
-        ERROR: 'ERROR';
-        WARN: 'WARN';
-        DEBUG: 'DEBUG';
-        NOTICE: 'NOTICE';
-        INFO: 'INFO';
-        VERBOSE: 'VERBOSE';
+    enum WEBHOOK_TYPES {
+        FATAL = 'FATAL',
+        ERROR = 'ERROR',
+        WARN = 'WARN',
+        DEBUG = 'DEBUG',
+        NOTICE = 'NOTICE',
+        INFO = 'INFO',
+        VERBOSE = 'VERBOSE',
     }
-    interface LogLevels {
-        FATAL: 'fatal';
-        ERROR: 'error';
-        WARN: 'warn';
-        DEBUG: 'debug';
-        NOTICE: 'notice';
-        INFO: 'info';
-        VERBOSE: 'verbose';
+    enum LOG_LEVELS {
+        FATAL = 'fatal',
+        ERROR = 'error',
+        WARN = 'warn',
+        DEBUG = 'debug',
+        NOTICE = 'notice',
+        INFO = 'info',
+        VERBOSE = 'verbose',
     }
-    interface WebhookToColor {
-        FATAL: 0xFF0000;
-        ERROR: 0xFF0000;
-        WARN: 0xFF4500;
-        DEBUG: 0x0000FF;
-        NOTICE: 0x00FF00;
-        INFO: 0x00FF00;
-        VERBOSE: 0x808080;
+    enum WEBHOOK_TO_COLOR {
+        FATAL = 0xFF0000,
+        ERROR = 0xFF0000,
+        WARN = 0xFF4500,
+        DEBUG = 0x0000FF,
+        NOTICE = 0x00FF00,
+        INFO = 0x00FF00,
+        VERBOSE = 0x808080,
     }
-    interface TypeErrors {
-        DAPI: 'DAPI error - failed to retrieve from Discord';
-        DB: 'DB error - failed to retrieve from the DB';
-        INTERNAL: 'Internal error - AxonClient/internal methods';
-        UNKNOWN: 'Unexpected error';
+    enum TYPE_ERRORS {
+        DAPI = 'DAPI error - failed to retrieve from Discord',
+        DB = 'DB error - failed to retrieve from the DB',
+        INTERNAL = 'Internal error - AxonClient/internal methods',
+        UNKNOWN = 'Unexpected error',
     }
 
     export const AxonEnums: {
-        HTTP_CODE: HttpCode;
+        HTTP_CODE: HTTP_CODE;
         HTTP_MESSAGES: HttpMessages;
-        LIBRARY_TYPES: LibraryTypes;
-        LOGGER_TYPES: LoggerTypes;
-        DB_TYPES: DBTypes;
-        COMMAND_EXECUTION_TYPES: CommandExecutionTypes;
-        COMMAND_EXECUTION_STATE: CommandExecutionState;
-        AXON_PERMISSION_LEVELS: AxonPermissionLevels;
+        LIBRARY_TYPES: LIBRARY_TYPES;
+        LOGGER_TYPES: LOGGER_TYPES;
+        DB_TYPES: DB_TYPES;
+        COMMAND_EXECUTION_TYPES: COMMAND_EXECUTION_TYPES;
+        COMMAND_EXECUTION_STATE: COMMAND_EXECUTION_STATE;
+        AXON_PERMISSION_LEVELS: AXON_PERMISSION_LEVELS;
         PERMISSION_ADMIN: 'ADMINISTRATOR';
         PERMISSION_MANAGER: 'MANAGE_GUILD';
-        WEBHOOK_TYPES: WebhookTypes;
-        LOG_LEVELS: LogLevels;
-        WEBHOOK_TO_COLOR: WebhookToColor;
-        TYPE_ERRORS: TypeErrors;
+        WEBHOOK_TYPES: WEBHOOK_TYPES;
+        LOG_LEVELS: LOG_LEVELS;
+        WEBHOOK_TO_COLOR: WEBHOOK_TO_COLOR;
+        TYPE_ERRORS: TYPE_ERRORS;
     };
 
     interface FieldComp {

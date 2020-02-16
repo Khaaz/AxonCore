@@ -121,13 +121,13 @@ class JsonProvider extends ADBProvider {
     }
 
     /**
-    * Updates the Axon config in the DB with a new Axon config object.
-    *
-    * @param {AxonConfig} data - the schema object to update
-    * @returns {Promise<AxonConfig|null>} Updated AxonConfig from the DB
-    *
-    * @memberof JsonProvider
-    */
+     * Updates the Axon config in the DB with a new Axon config object.
+     *
+     * @param {AxonConfig} data - the schema object to update
+     * @returns {Promise<AxonConfig|null>} Updated AxonConfig from the DB
+     *
+     * @memberof JsonProvider
+     */
     async saveAxon(data) {
         const res = await this.manager.writeAxonSchema(data);
         return res && new AxonConfig(this.axon, res);

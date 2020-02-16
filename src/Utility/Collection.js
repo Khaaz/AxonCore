@@ -226,13 +226,13 @@ class Collection extends Map {
     }
 
     /**
-    * Remove an object
-    *
-    * @param {String} key - The ID of the object
-    * @returns {T} The removed object, or null if nothing was removed
-    *
-    * @memberof Collection
-    */
+     * Remove an object
+     *
+     * @param {String} key - The ID of the object
+     * @returns {T} The removed object, or null if nothing was removed
+     *
+     * @memberof Collection
+     */
     remove(key) {
         const item = this.get(key);
         if (!item) {
