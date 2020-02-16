@@ -71,7 +71,6 @@ class Message {
      *
      * @param {Message} message
      * @returns {Promise}
-     *
      * @memberof Message
      */
     delete(message) {
@@ -84,7 +83,6 @@ class Message {
      * @param {Message} message
      * @param {String|Object} content
      * @returns {Promise<Message>}
-     *
      * @memberof Message
      */
     edit(message, content) {

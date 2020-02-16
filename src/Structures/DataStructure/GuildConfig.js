@@ -27,7 +27,6 @@ class GuildConfig {
      *
      * @param {AxonClient} axon
      * @param {Object} values - DB values for the current guild
-     *
      * @memberof GuildConfig
      */
     constructor(axon, values) {
@@ -62,7 +61,6 @@ class GuildConfig {
      * Get guild prefixes for this guild.
      *
      * @returns {Array<String>}
-     *
      * @memberof GuildConfig
      */
     getPrefixes() {
@@ -75,7 +73,6 @@ class GuildConfig {
      *
      * @param {Message} msg
      * @returns {Boolean} True if either one of the three is ignored
-     *
      * @memberof GuildConfig
      */
     isIgnored(msg) {
@@ -89,7 +86,6 @@ class GuildConfig {
      *
      * @param {String} userID
      * @returns {Boolean} True if the user is one ofthe ignored users
-     *
      * @memberof GuildConfig
      */
     isUserIgnored(userID) {
@@ -101,12 +97,11 @@ class GuildConfig {
      *
      * @param {Member} member
      * @returns {Boolean} True if the member has one of the ignored roles
-     *
      * @memberof GuildConfig
      */
     isRoleIgnored(member) {
         const roles = this._axon.library.member.getRoles(member);
-        if (!roles || !(roles instanceof Array) ) {
+        if (!roles || !(Array.isArray(roles) ) ) {
             return false;
         }
         return !!this.ignoredRoles.find(r => roles.includes(r) ); // Role is ignored
@@ -117,7 +112,6 @@ class GuildConfig {
      *
      * @param {String} channelID
      * @returns {Boolean} True if the channel is one of the ignored channels
-     *
      * @memberof GuildConfig
      */
     isChannelIgnored(channelID) {
@@ -130,7 +124,6 @@ class GuildConfig {
      *
      * @param {Command} command - The command object
      * @returns {Boolean} Whether the module is disabled or not
-     *
      * @memberof GuildConfig
      */
     isModuleDisabled(module) {
@@ -143,7 +136,6 @@ class GuildConfig {
      *
      * @param {Command} command - The command object
      * @returns {Boolean} Whether the command is disabled or not
-     *
      * @memberof GuildConfig
      */
     isCommandDisabled(command) {
@@ -156,7 +148,6 @@ class GuildConfig {
      *
      * @param {Listener} listener - The listener object
      * @returns {Boolean} Whether the listener is disabled or not
-     *
      * @memberof GuildConfig
      */
     isListenerDisabled(listener) {
@@ -168,7 +159,6 @@ class GuildConfig {
      * *used internally*
      *
      * @returns {Boolean}
-     *
      * @memberof GuildConfig
      */
     isModOnly() {
@@ -181,7 +171,6 @@ class GuildConfig {
      *
      * @param {String} roleID
      * @returns {Boolean}
-     *
      * @memberof GuildConfig
      */
     isModRole(roleID) {
@@ -211,7 +200,6 @@ class GuildConfig {
      *
      * @param {Object} guildConfig - Guild schema Object
      * @returns {Promise<Object>} Updated guildSchema
-     *
      * @memberof GuildConfig
      */
     async update(guildConfig) {
@@ -233,7 +221,6 @@ class GuildConfig {
      *
      * @param {Array<String>} prefixArr - The array of prefix
      * @returns {Promise<GuildConfig|null>} Updated guildConfig / error
-     *
      * @memberof GuildConfig
      */
     updatePrefixes(prefixArr) {
@@ -249,7 +236,6 @@ class GuildConfig {
      * @param {String} label - The module label
      * @param {Boolean} [boolean=true] - Whether to enable (true) the module or disable (false) it.
      * @returns {Promise<GuildConfig|null>} Updated guildConfig / Error
-     *
      * @memberof GuildConfig
      */
     updateStateModule(label, boolean = true) {
@@ -268,7 +254,6 @@ class GuildConfig {
      * @param {String} label - The command label
      * @param {Boolean} [boolean=true] - Whether to enable (true) the command or disable (false) it.
      * @returns {Promise<GuildConfig|null>} Updated guildConfig / Error
-     *
      * @memberof GuildConfig
      */
     updateStateCommand(label, boolean = true) {
@@ -287,7 +272,6 @@ class GuildConfig {
      * @param {String} label - The listener label
      * @param {Boolean} [boolean=true] - Whether to enable (true) the listener or disable (false) it.
      * @returns {Promise<GuildConfig|null>} Updated guildConfig / Error
-     *
      * @memberof GuildConfig
      */
     updateStateListener(label, boolean = true) {
@@ -306,7 +290,6 @@ class GuildConfig {
      * @param {String} roleID - The role ID
      * @param {Boolean} [boolean=true] - Whether to add (true) the role or remove (false) it.
      * @returns {Promise<GuildConfig|null>} Updated guildConfig / Error
-     *
      * @memberof GuildConfig
      */
     updateStateModRole(roleID, boolean = true) {
@@ -325,7 +308,6 @@ class GuildConfig {
      * @param {String} userID - The user ID
      * @param {Boolean} [boolean=true] - Whether to add (true) the user or remove (false) it.
      * @returns {Promise<GuildConfig|null>} Updated guildConfig / Error
-     *
      * @memberof GuildConfig
      */
     updateStateModUser(userID, boolean = true) {

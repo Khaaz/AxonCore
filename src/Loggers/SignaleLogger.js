@@ -1,5 +1,7 @@
 import { Signale } from 'signale';
 import figures from 'figures';
+
+import ALogger from './ALogger';
 import Context from './Context';
 
 const logOptions = {
@@ -16,14 +18,16 @@ const logOptions = {
  * A different Logger that uses Signale to format console output. See DefLogger for documentation.
  * https://github.com/klauscfhq/signale
  *
+ * @author KhaaZ, Eleos
+ *
  * @class SignaleLogger
- * @extends Signale
+ * @extends ALogger
  */
-class SignaleLogger extends Signale {
-    constructor(options) {
-        super(new Signale(options) );
+class SignaleLogger extends ALogger {
+    constructor() {
+        super(new Signale(logOptions) );
 
-        this.config( {
+        this.out.config( {
             displayTimestamp: true,
         } );
     }
@@ -34,7 +38,7 @@ class SignaleLogger extends Signale {
      *
      * @param {String} input
      * @param {Context} opt - context object
-     * @memberof WinstonLogger
+     * @memberof SignaleLogger
      */
     fatal(input, opt) {
         this.out.fatal(`${Context.from(opt).get()}${input}`);
@@ -45,7 +49,7 @@ class SignaleLogger extends Signale {
      *
      * @param {String} input
      * @param {Context} opt - context object
-     * @memberof WinstonLogger
+     * @memberof SignaleLogger
      */
     error(input, opt) {
         this.out.error(`${Context.from(opt).get()}${input}`);
@@ -56,7 +60,7 @@ class SignaleLogger extends Signale {
      *
      * @param {String} input
      * @param {Context} opt - context object
-     * @memberof WinstonLogger
+     * @memberof SignaleLogger
      */
     warn(input, opt) {
         this.out.warn(`${Context.from(opt).get()}${input}`);
@@ -67,7 +71,7 @@ class SignaleLogger extends Signale {
      *
      * @param {String} input
      * @param {Context} opt - context object
-     * @memberof WinstonLogger
+     * @memberof SignaleLogger
      */
     debug(input, opt) {
         this.out.debug(`${Context.from(opt).get()}${input}`);
@@ -78,7 +82,7 @@ class SignaleLogger extends Signale {
      *
      * @param {String} input
      * @param {Context} opt - context object
-     * @memberof WinstonLogger
+     * @memberof SignaleLogger
      */
     notice(input, opt) {
         this.out.note(`${Context.from(opt).get()}${input}`);
@@ -89,7 +93,7 @@ class SignaleLogger extends Signale {
      *
      * @param {String} input
      * @param {Context} opt - context object
-     * @memberof WinstonLogger
+     * @memberof SignaleLogger
      */
     info(input, opt) {
         this.out.info(`${Context.from(opt).get()}${input}`);
@@ -100,11 +104,11 @@ class SignaleLogger extends Signale {
      *
      * @param {String} input
      * @param {Context} opt - context object
-     * @memberof WinstonLogger
+     * @memberof SignaleLogger
      */
     verbose(input, opt) {
         this.out.verbose(`${Context.from(opt).get()}${input}`);
     }
 }
 
-export default new SignaleLogger(logOptions);
+export default new SignaleLogger();

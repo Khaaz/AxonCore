@@ -43,7 +43,6 @@ class Module extends Base {
      * @param {Object} [data.infos]
      * @param {CommandOptions|Object} [data.options] - The default options for all commands in this module
      * @param {CommandPermissions|Object} [data.permissions] - The default permissions for all commands in this module
-     *
      * @memberof Module
      */
     constructor(client, data = {} ) {
@@ -98,7 +97,6 @@ class Module extends Base {
      * A Collection of all commands the module holds
      *
      * @readonly
-     *
      * @memberof Module
      */
     get commands() {
@@ -109,7 +107,6 @@ class Module extends Base {
      * A Collection of all listeners the module holds
      *
      * @readonly
-     *
      * @memberof Module
      */
     get listeners() {
@@ -118,7 +115,6 @@ class Module extends Base {
 
     /**
      * Init a module with all commands and listeners.
-     *
      * @memberof Module
      */
     _init() {
@@ -131,7 +127,6 @@ class Module extends Base {
      * Override this method to returns { commands, listeners }
      *
      * @returns {Object<{Commands, Listeners}>} An object containing commands and listeners to initialise. { commands, listeners}
-     *
      * @memberof Module
      */
     init() {

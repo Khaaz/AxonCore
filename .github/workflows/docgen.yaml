@@ -1,6 +1,6 @@
 name: Docgen
 
-on: 
+on:
   push:
     branches:
     - master

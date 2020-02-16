@@ -27,7 +27,7 @@
         * [.shouldSendInvalidUsageMessage(args)](#CommandOptions+shouldSendInvalidUsageMessage) ⇒ <code>Boolean</code>
         * [.shouldSendInvalidPermissionMessage(guildConfig)](#CommandOptions+shouldSendInvalidPermissionMessage) ⇒ <code>Boolean</code>
         * [.shouldDeleteCommand()](#CommandOptions+shouldDeleteCommand) ⇒ <code>Boolean</code>
-        * [.getInvalidPermissionMessage(channel, member)](#CommandOptions+getInvalidPermissionMessage) ⇒ <code>String</code>
+        * [.getInvalidPermissionMessage(channel, member, permission)](#CommandOptions+getInvalidPermissionMessage) ⇒ <code>String</code>
     * _static_
         * [.CommandOptions](#CommandOptions.CommandOptions)
             * [new CommandOptions(command, [override], [useModuleDefault])](#new_CommandOptions.CommandOptions_new)
@@ -87,7 +87,7 @@ Whether we should delete the command or not
 **Kind**: instance method of [<code>CommandOptions</code>](#CommandOptions)  
 <a name="CommandOptions+getInvalidPermissionMessage"></a>
 
-### commandOptions.getInvalidPermissionMessage(channel, member) ⇒ <code>String</code>
+### commandOptions.getInvalidPermissionMessage(channel, member, permission) ⇒ <code>String</code>
 Get the invalid permission message
 
 **Kind**: instance method of [<code>CommandOptions</code>](#CommandOptions)  
@@ -96,6 +96,7 @@ Get the invalid permission message
 | --- | --- | --- |
 | channel | <code>Channel</code> | The guild channel |
 | member | <code>Member</code> | The guild member |
+| permission | <code>String</code> | The missing permission |
 
 <a name="CommandOptions.CommandOptions"></a>
 

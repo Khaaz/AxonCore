@@ -52,7 +52,6 @@ class Client {
      * Connect the client to the gateway
      *
      * @returns {Promise}
-     *
      * @memberof Client
      */
     connect() {
@@ -65,7 +64,6 @@ class Client {
      * @param {String} status
      * @param {Object} game
      * @returns {Promise}
-     *
      * @memberof Client
      */
     setPresence(status, game) {
@@ -79,7 +77,6 @@ class Client {
      * @param {String} token
      * @param {Object} data
      * @returns {Promise}
-     *
      * @memberof Client
      */
     triggerWebhook(id, token, data) {

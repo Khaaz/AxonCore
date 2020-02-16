@@ -21,7 +21,6 @@ class Member {
      *
      * @param {Member} member
      * @returns {Array<String>} - Array of roles IDs
-     *
      * @memberof Member
      */
     getRoles(member) {
@@ -33,7 +32,6 @@ class Member {
      *
      * @param {Member} member
      * @returns {Array<Role>} - Array of Roles object
-     *
      * @memberof Member
      */
     getRolesObject(member) {
@@ -46,7 +44,6 @@ class Member {
      * @param {Member} member
      * @param {String} permission
      * @returns {Boolean}
-     *
      * @memberof Member
      */
     hasPermission(member, permission) {

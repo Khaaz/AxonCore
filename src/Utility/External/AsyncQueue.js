@@ -15,7 +15,6 @@ import Queue from './Queue';
 class AsyncQueue extends Queue {
     /**
      * Execute the queue.
-     *
      * @memberof AsyncQueue
      */
     async exec() {
@@ -46,7 +45,6 @@ class AsyncQueue extends Queue {
      * @param {Boolean} [toExec=true] - Whether to auto exec the queue on add or not.
      * @param {*} args - All arguments the function needs
      * @returns {Promise}
-     *
      * @memberof AsyncQueue
      */
     add(func, toExec = true, ...args) {

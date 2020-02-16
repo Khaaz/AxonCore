@@ -33,7 +33,6 @@ class MessageParser {
      * @param {Sring} message
      * @param {Object} args - Custom object with all arguments that needs tobe inserted in the string
      * @returns {String} - The Parsed message
-     *
      * @memberof MessageParser
      */
     parse(message, args) {
@@ -53,7 +52,6 @@ class MessageParser {
      * @param {String} message
      * @param {*} args
      * @returns {String} - The Parsed message
-     *
      * @memberof MessageParser
      */
     parse2(message, ...args) {

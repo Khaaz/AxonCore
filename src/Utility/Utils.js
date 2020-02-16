@@ -35,7 +35,6 @@ class Utils {
      * Creates an instance of Utils.
      *
      * @param {AxonClient} client
-     *
      * @memberof Utils
      */
     constructor(client) {
@@ -150,7 +149,6 @@ class Utils {
      *
      * @param {String} content
      * @returns {Array<String>|String} The array of content string splitted or the original String
-     *
      * @memberof Utils
      */
     splitMessage(content) {
@@ -162,7 +160,6 @@ class Utils {
      *
      * @param {Object} msg - Message object given at the command.
      * @returns {Promise<String>} The prefix as string.
-     *
      * @memberof Utils
      */
     async getPrefix(msg) {
@@ -179,7 +176,6 @@ class Utils {
      * @param {Guild} guild
      * @param {Member} member
      * @returns {Array<Role>} Array of roles object
-     *
      * @memberof Utils
      */
     getRoles(guild, member) {
@@ -195,7 +191,6 @@ class Utils {
      * @param {Guild} guild
      * @param {Member} member
      * @returns {Role} Role Object
-     *
      * @memberof Utils
      */
     getHighestRole(guild, member) {
@@ -208,7 +203,6 @@ class Utils {
      *
      * @param {Array<Role>} array - The roles to sort
      * @returns {Array<Role>} Sorted array (per position) of Role Object
-     *
      * @memberof Utils
      */
     sortRoles(roles) {
@@ -221,7 +215,6 @@ class Utils {
      * @param {Role} role1
      * @param {Role} role2
      * @returns {Boolean}
-     *
      * @memberof Utils
      */
     isRoleHigher(role1, role2) {
@@ -243,7 +236,6 @@ class Utils {
      * @param {Member} first
      * @param {Member} second
      * @returns {Boolean}
-     *
      * @memberof Utils
      */
     isHigherRole(guild, first, second) {
@@ -260,7 +252,6 @@ class Utils {
      * @param {Member} member - Member object
      * @param {Array<String>} permissions - List of permissions to test
      * @returns {Boolean} hether the member has permissions or not
-     *
      * @memberof Utils
      */
     hasPerms(member, permissions = [] ) {
@@ -279,7 +270,6 @@ class Utils {
      * @param {Array<String>} permissions - List of permissions to test
      * @param {User} [user=this.bot.user] - User to test
      * @returns {Boolean} Whether the member has permissions or not
-     *
      * @memberof Utils
      */
     hasChannelPerms(channel, permissions, user = this.bot.user) {
@@ -297,7 +287,6 @@ class Utils {
      * @param {Member} member
      * @param {Array<String>} [permissions=[]] - List of permissions to test
      * @returns {Array<String>} An array of missing permissions
-     *
      * @memberof Utils
      */
     missingPerms(member, permissions = [] ) {
@@ -315,7 +304,6 @@ class Utils {
      *
      * @param {Object} data - The permissions to calculate for
      * @returns {Object} Object containing the perms denied & allowed
-     *
      * @memberof Utils
      */
     calculatePerms(data) {
@@ -361,7 +349,6 @@ class Utils {
      *
      * @param {String} path
      * @returns {Promise<String>} content
-     *
      * @memberof Utils
      */
     readFileAsync(path) {
@@ -374,7 +361,6 @@ class Utils {
      * @param {String} path
      * @param {String} content
      * @returns {Promise}
-     *
      * @memberof Utils
      */
     writeFileAsync(path, content) {
@@ -388,7 +374,6 @@ class Utils {
      * @param {Object} obj1 - Default config/object
      * @param {Object} obj2 - Custom config/Object (Config/Object to compare with)
      * @returns {Boolean} True: obj2 has at least all prop of obj1
-     *
      * @memberof Utils
      */
     static compareObject(obj1, obj2) {
@@ -396,7 +381,7 @@ class Utils {
             if (obj2[key] === undefined) {
                 return false;
             }
-            if (typeof obj1[key] === 'object' && !(obj1[key] instanceof Array) ) {
+            if (typeof obj1[key] === 'object' && !Array.isArray(obj1[key] ) ) {
                 if (!this.compareObject(obj1[key], obj2[key] ) ) {
                     return false;
                 }

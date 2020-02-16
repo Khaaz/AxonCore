@@ -5,18 +5,15 @@ class ErisMember extends Member {
 
     getRoles(member) {
         return member.roles;
-        // djs return member.roles.keys()
     }
 
     getRolesObject(member) {
         const { guild } = member;
-        return member.map(r => guild.roles.get(r) );
-        // djs return [...member.roles.values()]
+        return member.roles.map(r => guild.roles.get(r) );
     }
 
     hasPermission(member, permission) {
         return member.permission.has(permission);
-        // djs return member.hasPermission(permission)
     }
 }
 

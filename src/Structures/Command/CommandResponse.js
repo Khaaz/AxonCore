@@ -16,7 +16,6 @@ class CommandResponse {
      * @param {Boolean} [data.success=true]
      * @param {Boolean} [data.triggerCooldown=true]
      * @param {Object|String} [data.error=null]
-     *
      * @memberof CommandResponse
      */
     constructor(data = {} ) {
@@ -29,7 +28,6 @@ class CommandResponse {
      * By default returns the Command Response asynchronously.
      *
      * @returns {Promise<CommandResponse>}
-     *
      * @memberof CommandResponse
      */
     resolve() {
@@ -40,7 +38,6 @@ class CommandResponse {
      * Returns the Command Response in a Promise (asynchronously)
      *
      * @returns {Promise<CommandResponse>}
-     *
      * @memberof CommandResponse
      */
     resolveAsync() {
@@ -51,7 +48,6 @@ class CommandResponse {
      * Returns the Command Response (synchronously)
      *
      * @returns {CommandResponse}
-     *
      * @memberof CommandResponse
      */
     resolveSync() {

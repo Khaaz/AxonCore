@@ -1,8 +1,13 @@
 import Client from '../../definitions/Client';
 
+import AxonError from '../../../Errors/AxonError';
+
 class DjsClient extends Client {
     constructor(lib, token) {
         super(lib);
+        if (!token) {
+            throw new AxonError('No token provided! Please provide a token through AxonOptions!', 'DjsClient');
+        }
         this._token = token;
     }
 
@@ -31,11 +36,13 @@ class DjsClient extends Client {
     }
 
     triggerWebhook(id, token, data) {
-        return this.client.api.webhooks(id, token).post( {
-            data,
-            query: { wait: true },
-            auth: false,
-        } );
+        return this.client
+            ? this.client.api.webhooks(id, token).post( {
+                data,
+                query: { wait: true },
+                auth: false,
+            } )
+            : super.triggerWebhook(id, token, data);
     }
 }
 

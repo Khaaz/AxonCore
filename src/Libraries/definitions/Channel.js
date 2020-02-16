@@ -39,7 +39,6 @@ class Channel {
      * @param {User} user
      * @param {String} perm
      * @returns {Boolean}
-     *
      * @memberof Channel
      */
     hasPermission(channel, user, perm) {
@@ -54,7 +53,6 @@ class Channel {
      * @param {Channel} channel
      * @param {String|Object} content
      * @returns {Promise<Message>}
-     *
      * @memberof Channel
      */
     sendMessage(channel, content) {

@@ -21,7 +21,6 @@ class ARegistry {
      *
      * @param {AxonClient} axon - The AxonClient
      * @param {Object} base - The base definition to use for the registry
-     *
      * @memberof ARegistry
      */
     constructor(axon, base) {

@@ -1,6 +1,25 @@
 # BUG REPORT
 
-Issue description.
+## **Overview**
+
+Issue general overview/description.
+
+## **Description**
+
+**Issue state:**
+
+- [ ] I know how to fix this and I will open a PR to do so
+- [ ] I am just reporting the issue
+
+**Details:**  
+This issue is about:
+
+- [ ] Typings
+- [ ] Documentation
+- [ ] Bug in existing feature
+- [ ] Missing feature / breaking change
+- [ ] API / library update
+- [ ] None of the above (don't know what the issue is about)
 
 **Additional information:**
 
@@ -9,3 +28,7 @@ Issue description.
 - Library used: (eris, discordjs, detritus...)
 - Library version:
 - DB engine used: (json, mongoose, sequelise...)
+
+## **Implementation / fix proposal (if any)**
+
+Fix proposal.

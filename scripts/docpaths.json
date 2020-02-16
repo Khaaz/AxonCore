@@ -55,7 +55,7 @@
         "output": "Commands/CommandContext.md"
     },
     {
-        "input": "Structures/Dispatchers/CommandDispatcher.js",
+        "input": "Structures/CommandDispatcher.js",
         "output": "Commands/CommandDispatcher.md"
     },
     {
@@ -92,15 +92,15 @@
     
     {
         "input": "Langs/MessageManager.js",
-        "output": "Translations/MessageManager.md"
+        "output": "Translation/MessageManager.md"
     },
     {
         "input": "Langs/TranslationManager.js",
-        "output": "Translations/TranslationManager.md"
+        "output": "Translation/TranslationManager.md"
     },
     {
         "input": "Langs/MessageParser.js",
-        "output": "Translations/MessageParser.md"
+        "output": "Translation/MessageParser.md"
     },
 
 
@@ -117,19 +117,19 @@
         "output": "Utility/Collection.md"
     },
     {
-        "input": "Utility/Resolver.js",
+        "input": "Libraries/definitions/Resolver.js",
         "output": "Utility/Resolver.md"
     },
     {
-        "input": "Utility/External/Embed.js",
+        "input": "Utility/Discord/Embed.js",
         "output": "Utility/Embed.md"
     },
     {
-        "input": "Utility/External/MessageCollector.js",
+        "input": "Utility/Discord/MessageCollector.js",
         "output": "Utility/MessageCollector.md"
     },
     {
-        "input": "Utility/External/Prompt.js",
+        "input": "Utility/Discord/Prompt.js",
         "output": "Utility/Prompt.md"
     },
     {
@@ -157,6 +157,14 @@
     {
         "input": "Utility/Constants/DiscordEnums.js",
         "output": "Enums/DiscordEnums.md"
+    },
+    {
+        "input": "Libraries/eris/lib/ErisEnums.js",
+        "output": "Enums/ErisEnums.md"
+    },
+    {
+        "input": "Libraries/discordjs/lib/DjsEnums.js",
+        "output": "Enums/DjsEnums.md"
     },
 
     {
