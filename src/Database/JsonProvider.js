@@ -89,7 +89,6 @@ class JsonProvider extends ADBProvider {
      * @param {String} key - The identifier in the Database
      * @param {Object|Array|String|Boolean} value - The value to update in the DB
      * @returns {Promise<Boolean>} Whether the request was successful or not
-     *
      * @memberof JsonProvider
      */
     async updateAxon(key, value) {
@@ -107,7 +106,6 @@ class JsonProvider extends ADBProvider {
      * @param {String} gID - The guild ID to update
      * @param {Object|Array|String|Boolean} value - The value to update in the DB
      * @returns {Promise<Boolean>} Whether the request was successful or not
-     *
      * @memberof JsonProvider
      */
     async updateGuild(key, gID, value) {
