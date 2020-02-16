@@ -86,7 +86,7 @@ class InMemoryProvider extends ADBProvider {
             axonConf = await this.fetchAxon();
         }
         axonConf[key] = value;
-        this.axon.axonConfig.set(axonConf);
+        this.axon.axonConfig = axonConf;
         return true;
     }
 }
