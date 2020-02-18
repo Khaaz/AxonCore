@@ -68,10 +68,11 @@ typings/
 
 # Yarn Integrity file
 .yarn-integrity
-yarn.lock
 
 # dotenv environment variables file
 .env
 
 # next.js build output
 .next
+
+types/
