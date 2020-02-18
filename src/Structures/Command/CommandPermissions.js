@@ -84,6 +84,10 @@ class CommandPermissions {
             needed: (base.channelIDs && base.channelIDs.needed) || [],
             bypass: (base.channelIDs && base.channelIDs.bypass) || [],
         };
+        this.guildIDs = {
+            needed: (base.guildIDs && base.guildIDs.needed) || [],
+            bypass: (base.guildIDs && base.guildIDs.bypass) || [],
+        };
         
         this.staff = {
             needed: (base.staff && base.staff.needed) ? [...base.staff.needed] : [], // creates a new array to prevent using a reference
@@ -151,12 +155,14 @@ class CommandPermissions {
     canExecute(msg, guildConf) {
         const member = this.library.message.getMember(msg);
         const channel = this.library.message.getChannel(msg);
-        
+        const guild = this.library.channel.getGuild(channel);
+
         // Bypass: if one of the perm is true => Exec the command
         if (this._checkPermsUserBypass(member)
             || this._checkUserBypass(member)
             || this._checkRoleBypass(member)
             || this._checkChannelBypass(channel)
+            || this._checkGuildBypass(guild)
             || this._checkStaffBypass(member) ) {
             return [true];
         }
@@ -182,7 +188,8 @@ class CommandPermissions {
         }
         if (!this._checkUserNeeded(member) // ids
             || !this._checkRoleNeeded(member)
-            || !this._checkChannelNeeded(channel) ) {
+            || !this._checkChannelNeeded(channel)
+            || !this._checkGuildNeeded(guild) ) {
             return [false, null];
         }
         if (!this._checkStaffNeeded(member) ) { // bot staff
@@ -548,6 +555,34 @@ class CommandPermissions {
             return true;
         }
         return this.channelIDs.needed.includes(this.library.channel.getID(channel) );
+    }
+
+    /**
+     * Check channelIDs [bypass]
+     *
+     * @param {Channel} channel
+     * @returns {Boolean}
+     * @memberof CommandPermissions
+     */
+    _checkGuildBypass(guild) {
+        if (!guild || !this.guildIDs.bypass.length) {
+            return false;
+        }
+        return this.guildIDs.bypass.includes(this.library.guild.getID(guild) );
+    }
+
+    /**
+     * Check channelIDs [needed]
+     *
+     * @param {Channel} channel
+     * @returns {Boolean}
+     * @memberof CommandPermissions
+     */
+    _checkGuildNeeded(guild) {
+        if (!guild || !this.guildIDs.needed.length) {
+            return true;
+        }
+        return this.guildIDs.needed.includes(this.library.guild.getID(guild) );
     }
 
     /**
