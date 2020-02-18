@@ -4176,6 +4176,7 @@ declare module 'axoncore' {
         constructor();
         static select(...args: any[] ): any; // Not Implemented
     }
+
     /**
      * Database Selector
      * Use require to dynamically load a Database Provider depending on installed dependencies.
@@ -4193,6 +4194,7 @@ declare module 'axoncore' {
          */
         select(axonClient: AxonClient, axonOptions: AxonOptions): InMemoryProvider | JsonProvider | MongoProvider;
     }
+
     /**
      * Holds all messages.
      * Used as an interface to get the message in the correct lang and parse arguments from the message.
