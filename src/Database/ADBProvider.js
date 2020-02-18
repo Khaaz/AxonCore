@@ -57,7 +57,7 @@ class ADBProvider {
      * @returns {Promise<AxonConfig>} Newly created Axon config from the DB
      * @memberof DBProvider
      */
-    initAxon() {
+    async initAxon() {
         throw new NotImplementedException();
     }
 
@@ -70,7 +70,7 @@ class ADBProvider {
      * @returns {Promise<GuildConfig|null>} Newly created Guild config from the DB
      * @memberof DBProvider
      */
-    initGuild(gID) {
+    async initGuild(gID) {
         throw new NotImplementedException();
     }
 
@@ -82,7 +82,7 @@ class ADBProvider {
      * @returns {Promise<AxonConfig|null>} AxonSchema Object or null
      * @memberof DBProvider
      */
-    fetchAxon() {
+    async fetchAxon() {
         throw new NotImplementedException();
     }
 
@@ -93,7 +93,7 @@ class ADBProvider {
      * @returns {Promise<GuildConfig|null>}
      * @memberof DBProvider
      */
-    fetchGuild(gID) {
+    async fetchGuild(gID) {
         throw new NotImplementedException();
     }
 
@@ -109,7 +109,7 @@ class ADBProvider {
      * @returns {Promise<Boolean>} UWhether the request was successfull or not
      * @memberof DBProvider
      */
-    updateAxon(key, value) {
+    async updateAxon(key, value) {
         throw new NotImplementedException();
     }
 
@@ -125,7 +125,7 @@ class ADBProvider {
      * @returns {Promise<Boolean>} Whether the request was successfull or not
      * @memberof DBProvider
      */
-    updateGuild(key, gID, value) {
+    async updateGuild(key, gID, value) {
         throw new NotImplementedException();
     }
 
@@ -136,7 +136,7 @@ class ADBProvider {
      * @returns {Promise<AxonConfig|null>} Updated AxonConfig from the DB
      * @memberof DBProvider
      */
-    saveAxon(data) {
+    async saveAxon(data) {
         throw new NotImplementedException();
     }
 
@@ -148,7 +148,7 @@ class ADBProvider {
      * @returns {Promise<GuildConfig|null>} Updated GuildConfig from the DB
      * @memberof DBProvider
      */
-    saveGuild(gID, data) {
+    async saveGuild(gID, data) {
         throw new NotImplementedException();
     }
 }
