@@ -32,11 +32,20 @@ class InMemoryProvider extends ADBProvider {
     }
 
     async initAxon() {
-        return new AxonConfig(this.axon, {} );
+        return new AxonConfig(this.axon, {
+            prefix: this.axon.settings.prefixes[0],
+            createdAt: new Date(),
+            updatedAt: new Date(),
+        } );
     }
 
     async initGuild(gID) {
-        return new GuildConfig(this.axon, { guildID: gID } );
+        return new GuildConfig(this.axon, {
+            guildID: gID,
+            prefixes: [this.axon.settings.prefixes[0]],
+            createAt: new Date(),
+            updatedAt: new Date(),
+        } );
     }
 
     async saveAxon(axonSchema) {
@@ -48,15 +57,17 @@ class InMemoryProvider extends ADBProvider {
     }
 
     async updateGuild(key, gID, value) {
-        const guild = await this.fetchGuild(gID);
-        guild[key] = value;
-        this.axon.guildConfigs.set(gID, guild);
+        const guildConf = await this.fetchGuild(gID);
+        guildConf[key] = value;
+        guildConf.updatedAt = new Date();
+        this.axon.guildConfigs.set(gID, guildConf);
         return true;
     }
 
     async updateAxon(key, value) {
         const axonConf = await this.fetchAxon();
         axonConf[key] = value;
+        axonConf.updatedAt = new Date();
         this.axon.axonConfig = axonConf;
         return true;
     }
