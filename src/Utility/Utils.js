@@ -33,7 +33,7 @@ const HEX_CODE = /^#?([0-9A-Fa-f]{6})$/;
  * @prop {RegExp} roleMention - Regular Expression to match a roleMention
  * @prop {RegExp} channelMention - Regular Expression to match a channelMention
  * @prop {RegExp} id - Regular Expression to match an id
- * @prop {RegExp} hexCode - Regular Expression to match an hexCode
+ * @prop {RegExp} hexCode - Regular Expression to match a hexCode
  */
 class Utils {
     /**

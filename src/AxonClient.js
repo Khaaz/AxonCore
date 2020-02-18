@@ -59,31 +59,33 @@ import { WEBHOOK_TYPES, LOG_LEVELS, WEBHOOK_TO_COLOR } from './Utility/Constants
  * @extends EventEmitter
  *
  * @prop {BotClient} _botClient - Discord library Client
- * @prop {ModuleRegistry} modules - Registry holding all modules
- * @prop {CommandRegistry} commands - Registry holding all commands
- * @prop {ListenerRegistry} listeners - Registry holding all listeners
- * @prop {EventManager} EventManager - The EventManager instance that handle all AxonCore listeners
+ * @prop {ModuleRegistry} moduleRegistry - Registry holding all modules
+ * @prop {CommandRegistry} commandRegistry - Registry holding all commands
+ * @prop {ListenerRegistry} listenerRegistry - Registry holding all listeners
+ * @prop {EventManager} eventManager - The EventManager instance that handle all AxonCore listeners
  * @prop {GuildConfigCache} guildConfigs - The Manager that handles GuildConfigs (cache / DB etc)
- * @prop {AxonConfig} axonConfig - The AxonConfig object that handles globally blacklisted users and guilds
+ * @prop {AxonConfig} [axonConfig] - The AxonConfig object that handles globally blacklisted users and guilds
  * @prop {CommandDispatcher} dispatcher - Dispatch commands onMessageCreate.
  * @prop {ModuleLoader} moduleLoader - Load, unload modules.
- * @prop {MessageManager} messageManager - Message manager object accessible with `<AxonClient>.l`
+ * @prop {MessageManager} _messageManager - Message manager object accessible with `<AxonClient>.l`
  * @prop {ALogger} logger - The Logger instance
  * @prop {AxonUtils} axonUtils - Util methods (AxonCore)
  * @prop {Utils} utils - Utils methods (general)
  * @prop {ADBProvider} DBProvider - The DBProvider instance
- * @prop {Object} configs - configs (webhooks, template, custom)
- * @prop {Object.<string, {id: String, token: String}>} configs.webhooks - Webhooks configs with all webhooks id and tokens
- * @prop {{ embeds: Object.<string, Number>, emotes: Object.<string, String> }} configs.template - Template config
- * @prop {AxonOptions} configs.custom - Custom config object optionally passed via AxonOptions
+ * @prop {Object} _configs - configs (webhooks, template, custom)
+ * @prop {Object.<string, {id: String, token: String}>} _configs.webhooks - Webhooks configs with all webhooks id and tokens
+ * @prop {{ embeds: Object.<string, Number>, emotes: Object.<string, String> }} _configs.template - Template config
+ * @prop {AxonOptions} _configs.custom - Custom config object optionally passed via AxonOptions
  * @prop {Object} staff - Bot Staff (owners, admins, +...)
  * @prop {Array<String>} staff.owners - Array of user IDs with BotOwner permissions
  * @prop {Array<String>} staff.admins - Array of user IDs with BotAdmin permissions
  * @prop {Object} settings - Bot settings
  * @prop {Boolean} settings.debugMode - Enable to show commands latency and debug informations
  * @prop {Array<String>} settings.prefixes - Default bot prefixes
- * @prop {String} settings.adminPrefix- Admins prefix : override perms/cd except Owner
+ * @prop {String} settings.adminPrefix - Admins prefix : override perms/cd except Owner
  * @prop {String} settings.ownerPrefix - Owner prefix : override perms/cd
+ * @prop {String} settings.lang - Default lang for the bot
+ * @prop {Number} settings.guildConfigCache - Max amount of guildConfigs cached at the same time (LRUCache)
  * @prop {Object} infos - General infos about the current application
  * @prop {String} infos.name - Bot name
  * @prop {String} infos.description - Bot description
@@ -407,7 +409,7 @@ class AxonClient extends EventEmitter {
     /**
      * Log both to console and to the correct webhook
      *
-     * @param {'FATAL'|'ERROR'|'WARN'|'DEBUG'|'NOTICE'|'INFO'|'VERBOSE'} level - The LOG-LEVEL
+     * @param {LOG_LEVELS} level - The LOG-LEVEL
      * @param {String|Error} content - The content or the error to log
      * @param {Context} [ctx=null] - Additional context to be passed to logger
      * @param {Boolean} [execWebhook=true] - Whether to execute the webhook
@@ -525,7 +527,7 @@ class AxonClient extends EventEmitter {
     /**
      * Fired when a command is successfully ran
      * @event AxonClient#commandExecution
-     * @prop {Boolean} status - Whereas the command was successfully executed or not
+     * @prop {Boolean} status - If the command was successfully executed or not
      * @prop {String} commandFullLabel - The command fullLabel
      * @prop {Object} data
      * @prop {Message} data.msg - The message that triggered the command
@@ -548,14 +550,14 @@ class AxonClient extends EventEmitter {
      */
 
     /**
-      * @param {Message} msg
-      * @param {Array<String>} args
-      * @param {Command} command
-      * @param {GuildConfig} guildConfig
-      * @param {Object} permissions
-      * @param {Boolean} permissions.isAdmin
-      * @param {Boolean} permissions.isOwner
-      */
+     * @param {Message} msg
+     * @param {Array<String>} args
+     * @param {Command} command
+     * @param {GuildConfig} guildConfig
+     * @param {Object} permissions
+     * @param {Boolean} permissions.isAdmin
+     * @param {Boolean} permissions.isOwner
+     */
     _execCommand(msg, args, command, guildConfig, { isAdmin, isOwner } ) {
         if (this.settings.debugMode) {
             this.log('VERBOSE', `${guildConfig ? '[GUILD]' : '[DM]'} ${isAdmin ? 'Admin' : 'Regular'} execution of ${command.fullLabel}`);

@@ -8,6 +8,7 @@ import NotImplementedException from '../../Errors/NotImplementedException';
 
 class Channel {
     /**
+     * Creates an instance of Channel
      * @param {LibraryInterface} lib
      */
     constructor(lib) {

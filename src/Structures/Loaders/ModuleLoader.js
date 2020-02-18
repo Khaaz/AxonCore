@@ -20,6 +20,7 @@ import AxonError from '../../Errors/AxonError';
  */
 class ModuleLoader extends ALoader {
     /**
+     * Creates an instance of ModuleLoader
      * @param {AxonClient} axonClient
      */
     // eslint-disable-next-line no-useless-constructor

@@ -1,7 +1,19 @@
 /* eslint-disable max-classes-per-file */
 import Collection from '../Collection';
 
+/**
+ * @template T
+ * @author KhaaZ
+ * @class Node
+ */
 class Node {
+    /**
+     * Creates an instance of Node
+     * @param {String} key
+     * @param {T} [value]
+     * @param {Node<T>} [next]
+     * @param {Node<T>} [prev]
+     */
     constructor(key, value, next = null, prev = null) {
         this.key = key;
         this.value = value;
@@ -24,8 +36,8 @@ class Node {
  *
  * @prop {Number} limit - Maximum size of the LRU
  * @prop {Number} size - Current size of the LRU
- * @prop {Node} head
- * @prop {Node} tail
+ * @prop {Node<T>} head
+ * @prop {Node<T>} tail
  * @prop {Collection<T>} _cache - The Collection holding the cache (private, handled by the LRU structure)
  */
 class LRUCache {
@@ -44,11 +56,11 @@ class LRUCache {
         this.size = 0;
         
         /**
-         * @type {Node}
+         * @type {Node<T>}
          */
         this.head = null;
         /**
-         * @type {Node}
+         * @type {Node<T>}
          */
         this.queue = null;
         

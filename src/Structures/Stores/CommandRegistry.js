@@ -20,6 +20,7 @@ import AxonError from '../../Errors/AxonError';
  */
 class CommandRegistry extends ARegistry {
     /**
+     * Creates an instance of CommandRegistry
      * @param {AxonClient} axon
      */
     constructor(axon) {

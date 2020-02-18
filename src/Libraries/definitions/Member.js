@@ -8,6 +8,7 @@ import NotImplementedException from '../../Errors/NotImplementedException';
 
 class Member {
     /**
+     * Creates an instance of Member
      * @param {LibraryInterface} lib
      */
     constructor(lib) {

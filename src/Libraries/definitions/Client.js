@@ -12,6 +12,7 @@ import { HTTP_CODE } from '../../Utility/Constants/AxonEnums';
 
 class Client {
     /**
+     * Creates an instance of Client
      * @param {LibraryInterface} lib
      */
     constructor(lib) {

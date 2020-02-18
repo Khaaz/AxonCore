@@ -22,6 +22,7 @@ import CommandRegistry from './../Stores/CommandRegistry';
  */
 class CommandLoader extends ALoader {
     /**
+     * Creates an instance of CommandLoader
      * @param {Module} module
      */
     constructor(module) {

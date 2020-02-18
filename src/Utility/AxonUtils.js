@@ -13,6 +13,7 @@ import Validator from '../Structures/Validator';
  * @typedef {import('./Utils').default} Utils
  * @typedef {import('../Libraries/definitions/LibraryInterface').default} LibraryInterface
  * @typedef {import('../Structures/DataStructure/GuildConfig').default} GuildConfig
+ * @typedef {import('../Loggers/ALogger').default} ALogger
  */
 
 /**
@@ -77,7 +78,7 @@ class AxonUtils {
      * Returns the Logger instance
      *
      * @readonly
-     * @type {Logger}
+     * @type {ALogger}
      * @memberof AxonUtils
      */
     get logger() {

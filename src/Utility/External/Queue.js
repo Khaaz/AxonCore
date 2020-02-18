@@ -14,7 +14,7 @@ class Queue {
     /**
      * Creates an instance of Queue.
      *
-     * @param {boolean} [stopOnError=false]
+     * @param {Boolean} [stopOnError=false]
      * @memberof Queue
      */
     constructor(stopOnError = false) {
@@ -53,7 +53,7 @@ class Queue {
 
     /**
      * Adds a function to the queue.
-     * Automatically wil wrap the function in a closure to keep the function context.
+     * Automatically will wrap the function in a closure to keep the function context.
      *
      * @param {Function} func - The function to run
      * @param {Boolean} [toExec=true] - Whether to auto exec the queue on add or not.

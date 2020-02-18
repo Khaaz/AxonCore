@@ -8,6 +8,7 @@ import NotImplementedException from '../../Errors/NotImplementedException';
 
 class Message {
     /**
+     * Creates an instance of Message
      * @param {LibraryInterface} lib
      */
     constructor(lib) {

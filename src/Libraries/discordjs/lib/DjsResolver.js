@@ -5,6 +5,15 @@ import Utils from '../../../Utility/Utils';
 import AxonError from '../../../Errors/AxonError';
 
 /**
+ * @typedef {import('discord.js').Client} Client
+ * @typedef {import('discord.js').User} User
+ * @typedef {import('discord.js').GuildMember} Member
+ * @typedef {import('discord.js').Role} Role
+ * @typedef {import('discord.js').Channel} Channel
+ * @typedef {import('discord.js').Guild} Guild
+ */
+
+/**
  * Static Resolver class for Djs.AxonCore
  *
  * @author KhaaZ
@@ -16,9 +25,9 @@ class DjsResolver extends Resolver {
     /**
      * Resolve a user within all the users the bot has.
      *
-     * @param {Object<Djs.Client>} client - The bot client
-     * @param {Array|String} args - Array of arguments resolved by the command.
-     * @returns {Object|null} The user object / Null if not found / Error
+     * @param {Client} client - The bot client
+     * @param {Array<String>|String} args - Array of arguments resolved by the command.
+     * @returns {User} The user object / Null if not found / Error
      */
     static user(client, args) {
         // Checking if all the arguments are supplied.
@@ -52,8 +61,8 @@ class DjsResolver extends Resolver {
      * Resolve a member within a guild.
      *
      * @param {Guild} guild - Object Guild resolved by the command.
-     * @param {Array|String} args - Array of arguments resolved by the command.
-     * @returns {Object|null} The member object / Null if not found / Error
+     * @param {Array<String>|String} args - Array of arguments resolved by the command.
+     * @returns {Member} The member object / Null if not found / Error
      */
     static member(guild, args) {
         // Checking if all the arguments are supplied.
@@ -91,8 +100,8 @@ class DjsResolver extends Resolver {
      * Resolve a role within a guild.
      *
      * @param {Guild} guild - Object Guild resolved by the command.
-     * @param {Array|String} args - Array of arguments resolved by the command.
-     * @returns {Object|null} The role object / Null if not found / Error
+     * @param {Array<String>|String} args - Array of arguments resolved by the command.
+     * @returns {Role|null} The role object / Null if not found / Error
      */
     static role(guild, args) {
         // Checking if all the arguments are supplied.
@@ -126,8 +135,8 @@ class DjsResolver extends Resolver {
      * Resolve a channel within a guild.
      *
      * @param {Guild} guild - Object Guild resolved by the command.
-     * @param {Array|String} args - Array of arguments resolved by the command.
-     * @returns {Object|null} The channel object / Null if not found / Error
+     * @param {Array<String>|String} args - Array of arguments resolved by the command.
+     * @returns {Channel|null} The channel object / Null if not found / Error
      */
     static channel(guild, args) {
         // Checking if all the arguments are supplied.
@@ -160,9 +169,9 @@ class DjsResolver extends Resolver {
     /**
      * Resolve a guild within all guilds the bot is in.
      *
-     * @param {Object<Djs.Client>} client - The bot client
-     * @param {Array} args - Array with guild name/ID
-     * @returns {Object|null} The guild object / Null if not found / Error
+     * @param {Client} client - The bot client
+     * @param {Array<String>} args - Array with guild name/ID
+     * @returns {Guild|null} The guild object / Null if not found / Error
      */
     static guild(client, args) {
         // Checking if all the arguments are supplied.

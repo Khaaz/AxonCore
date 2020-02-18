@@ -13,6 +13,11 @@ import Context from './Context';
  * @class ALogger
  */
 class ALogger {
+    /**
+     * Creates an instance of ALogger
+     * @param out Can be Console, Winston or Signale. Chalk will go as Console
+     * @memberof ALogger
+     */
     constructor(out) {
         this.out = out;
         if (this.constructor === 'ALogger') {
@@ -26,7 +31,7 @@ class ALogger {
      *
      * @param {String} input
      * @param {Context} opt - context object
-     * @memberof DefLogger
+     * @memberof ALogger
      */
     fatal(input, opt) {
         const mess = `${this._parseTime()} - [ FATAL ] => ${Context.from(opt).get()}${input}`;
@@ -38,7 +43,7 @@ class ALogger {
      *
      * @param {String} input
      * @param {Context} opt - context object
-     * @memberof DefLogger
+     * @memberof ALogger
      */
     error(input, opt) {
         const mess = `${this._parseTime()} - [ ERROR ] => ${Context.from(opt).get()}${input}`;
@@ -50,7 +55,7 @@ class ALogger {
      *
      * @param {String} input
      * @param {Context} opt - context object
-     * @memberof DefLogger
+     * @memberof ALogger
      */
     warn(input, opt) {
         const mess = `${this._parseTime()} - [ WARN  ] => ${Context.from(opt).get()}${input}`;
@@ -62,7 +67,7 @@ class ALogger {
      *
      * @param {String} input
      * @param {Context} opt - context object
-     * @memberof DefLogger
+     * @memberof ALogger
      */
     debug(input, opt) {
         const mess = `${this._parseTime()} - [ DEBUG ] => ${Context.from(opt).get()}${input}`;
@@ -74,7 +79,7 @@ class ALogger {
      *
      * @param {String} input
      * @param {Context} opt - context object
-     * @memberof DefLogger
+     * @memberof ALogger
      */
     notice(input, opt) {
         const mess = `${this._parseTime()} - [NOTICE ] => ${Context.from(opt).get()}${input}`;
@@ -86,7 +91,7 @@ class ALogger {
      *
      * @param {String} input
      * @param {Context} opt - context object
-     * @memberof DefLogger
+     * @memberof ALogger
      */
     info(input, opt) {
         const mess = `${this._parseTime()} - [ INFO  ] => ${Context.from(opt).get()}${input}`;
@@ -98,7 +103,7 @@ class ALogger {
      *
      * @param {String} input
      * @param {Context} opt - context object
-     * @memberof DefLogger
+     * @memberof ALogger
      */
     verbose(input, opt) {
         const mess = `${this._parseTime()} - [VERBOSE] => ${Context.from(opt).get()}${input}`;

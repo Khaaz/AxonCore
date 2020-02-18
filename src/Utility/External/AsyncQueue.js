@@ -38,7 +38,7 @@ class AsyncQueue extends Queue {
 
     /**
      * Adds a function to the queue.
-     * Automatically wil wrap the function in a closure to keep the function context.
+     * Automatically will wrap the function in a closure to keep the function context.
      * Will also create a Promise that will be returned and will be resolved with the actual data.
      *
      * @param {Function} func - The function to run

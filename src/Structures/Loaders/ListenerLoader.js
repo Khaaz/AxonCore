@@ -17,6 +17,7 @@ import AxonError from '../../Errors/AxonError';
  */
 class ListenerLoader extends ALoader {
     /**
+     * Creates an instance of ListenerLoader
      * @param {Module} module
      */
     constructor(module) {

@@ -34,8 +34,6 @@ class Context {
     }
 
     /**
-     *
-     *
      * @static
      * @param {Object} [ctx={}]
      * @param {{name: String, id: String}|String} ctx.guild

@@ -17,6 +17,7 @@ import AxonError from '../../Errors/AxonError';
  */
 class ModuleRegistry extends ARegistry {
     /**
+     * Creates an instance of ModuleRegistry
      * @param {AxonClient} axon
      */
     constructor(axon) {

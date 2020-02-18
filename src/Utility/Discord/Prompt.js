@@ -20,7 +20,7 @@ class Prompt {
      * @param {Channel} channel The channel object
      *
      * @param {Object} [defaultOptions={}] The default options for the prompt.
-     * @param {Array<String>} [defaultOptions.allowed=[]] A array of strings allow to pass as the prompt
+     * @param {Array<String>} [defaultOptions.allowed=[]] An array of strings allow to pass as the prompt
      * @param {Boolean} [defaultOptions.wildcard=false] Whether or not the message content can contain allowed or must match allowed.
      * @param {Boolean} [defaultOptions.caseSensitive=true] Makes it so the prompt is case insensitive, returns the message lowercase content.
      * @param {Boolean} [defaultOptions.deletePrompt=true] Whether or not you want the prompt to be deleted

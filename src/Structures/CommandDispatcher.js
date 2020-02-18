@@ -172,8 +172,8 @@ class CommandDispatcher {
      *
      * @param {Message} msg - The message object
      * @param {GuildConfig} guildConfig - The guildConfig Object
-     * @param {Boolean} [isAdmin=false] - The guildConfig Object
-     * @param {Boolean} [isOwner=false] - The guildConfig Object
+     * @param {Boolean} [isAdmin=false] - Whether admin prefix was used
+     * @param {Boolean} [isOwner=false] - Whether owner prefix was used
      * @returns {String?} The prefix if found / Undefined if not
      * @memberof CommandDispatcher
      */

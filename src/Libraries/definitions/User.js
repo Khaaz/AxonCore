@@ -8,6 +8,7 @@ import NotImplementedException from '../../Errors/NotImplementedException';
 
 class User {
     /**
+     * Creates an instance of User
      * @param {LibraryInterface} lib
      */
     constructor(lib) {

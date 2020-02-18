@@ -61,7 +61,7 @@ class ARegistry {
      * Check whether the item exist in the registry
      *
      * @param {String} key
-     * @returns {Boolean} - Whether the item exist
+     * @returns {Boolean} - Whether the item exists
      * @memberof ARegistry
      */
     has(key) {
@@ -94,7 +94,7 @@ class ARegistry {
      *
      * @param {String} key
      * @param {T} value
-     * @param {Collection<T>} - The registry
+     * @returns {Collection<T>} - The registry
      */
     add(key, value) {
         return this.registry.set(key.toLowerCase(), value);
@@ -104,7 +104,7 @@ class ARegistry {
      * Remove an item from the registry
      *
      * @param {String} key
-     * @param {Boolean} - Whether it could remove the item or not
+     * @returns {Boolean} - Whether it could remove the item or not
      */
     remove(key) {
         return this.registry.delete(key);

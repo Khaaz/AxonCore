@@ -8,6 +8,7 @@ import NotImplementedException from '../../Errors/NotImplementedException';
 
 class Guild {
     /**
+     * Creates an instance of Guild
      * @param {LibraryInterface} lib
      */
     constructor(lib) {

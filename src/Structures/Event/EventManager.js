@@ -16,7 +16,7 @@ import AHandler from './AHandler';
  * @class EventManager
  * @extends Base
  *
- * @prop {Object} _events - Object that links an event name to an array of Listener objects { eventName: [Listener, Listener] }
+ * @prop {Object.<string, Array<Listener>} _events - Object that links an event name to an array of Listener objects { eventName: [Listener, Listener] }
  * @prop {Collection<AHandler>} _handlers - Collection of handler keyed to the event name [key: eventName, value: AHandler]
  */
 
@@ -55,7 +55,7 @@ class EventManager extends Base {
     }
 
     /**
-     * Returns Collection of every handlers for every discord event
+     * Returns Collection of every handlers for every Discord event
      *
      * @readonly
      * @type {Collection<AHandler>}

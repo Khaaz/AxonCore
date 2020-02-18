@@ -21,7 +21,7 @@ class LibraryInterface {
     /**
      * Creates an instance of LibraryInterface.
      *
-     * @param {Object} botClient - The bot client (lib specific)
+     * @param {BotClient} botClient - The bot client (lib specific)
      * @param {Object} structs - Object with all structures to use in lib interface
      * @param {new (...args: Array<any>) => User} structs.User
      * @param {new (...args: Array<any>) => Member} structs.Member
