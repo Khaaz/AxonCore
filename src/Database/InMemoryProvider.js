@@ -11,57 +11,32 @@ import GuildConfig from '../Structures/DataStructure/GuildConfig';
  * @extends ADBProvider
  */
 class InMemoryProvider extends ADBProvider {
-    async fetchAxon() {
-        let axon = this.axon.axonConfig;
-        if (!axon) {
-            axon = await this.initAxon();
-        }
-        return Promise.resolve(axon);
-    }
-
     init() {
         return;
     }
 
-    async fetchGuild(gID) {
-        let guild = this.axon.guildConfigs.get(gID);
-        if (!guild) {
-            guild = await this.initGuild(gID);
+    async fetchAxon() {
+        let { axonConfig } = this.axon;
+        if (!axonConfig) {
+            axonConfig = await this.initAxon();
         }
-        return guild;
+        return axonConfig;
     }
 
-    initAxon() {
-        this.axon.axonConfig = new AxonConfig(this.axon, {} );
-        return Promise.resolve(this.axon.axonConfig);
+    async fetchGuild(gID) {
+        let guildConfig = this.axon.guildConfigs.get(gID);
+        if (!guildConfig) {
+            guildConfig = await this.initGuild(gID);
+        }
+        return guildConfig;
     }
 
-    initGuild(gID) {
-        return Promise.resolve(new GuildConfig(this.axon, { guildID: gID } ) );
+    async initAxon() {
+        return new AxonConfig(this.axon, {} );
     }
 
-    async updateBlacklistUser(blacklistedUsers) {
-        return this.updateAxon('bannedUsers', blacklistedUsers);
-    }
-
-    async updateBlacklistGuild(blacklistedGuilds) {
-        return this.updateAxon('bannedGuilds', blacklistedGuilds);
-    }
-
-    async updateGuildPrefix(gID, prefixArr) {
-        return this.updateGuild('prefixes', gID, prefixArr);
-    }
-
-    updateModule(gID, modulesArr) {
-        return this.updateGuild('modules', gID, modulesArr);
-    }
-
-    updateCommand(gID, commandArr) {
-        return this.updateGuild('commands', gID, commandArr);
-    }
-
-    async updateEvent(gID, eventArr) {
-        return this.updateGuild('listeners', gID, eventArr);
+    async initGuild(gID) {
+        return new GuildConfig(this.axon, { guildID: gID } );
     }
 
     async saveAxon(axonSchema) {
@@ -69,8 +44,7 @@ class InMemoryProvider extends ADBProvider {
     }
 
     async saveGuild(gID, guildSchema) {
-        const guildConfig = new GuildConfig(this.axon, guildSchema);
-        return guildConfig;
+        return new GuildConfig(this.axon, guildSchema);
     }
 
     async updateGuild(key, gID, value) {
