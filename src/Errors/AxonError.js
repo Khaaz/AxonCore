@@ -22,7 +22,7 @@ class AxonError extends Error {
         this.module = (typeof module === 'string') ? module : module.label;
         this.subModule = subModule;
 
-        const short = `[${this.module}] ${subModule.length ? `| ${subModule} ` : ''}- ${message}`;
+        const short = `[${this.module}] ${subModule && subModule.length ? `| ${subModule} ` : ''}- ${message}`;
         
         Object.defineProperty(this, 'short', {
             value: short,
