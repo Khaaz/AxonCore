@@ -9,6 +9,7 @@ class DjsUser extends User {
     /**
      * @param {djsUser} user
      * @returns {Promise<DMChannel>}
+     * @memberof DjsUser
      */
     getDM(user) {
         return Promise.resolve(user.DMChannel);

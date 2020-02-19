@@ -74,6 +74,7 @@ class LibraryInterface {
     }
 
     /**
+     * @param {(msg: Message) => void}
      * @returns {void}
      * @memberof LibraryInterface
      */
@@ -83,6 +84,7 @@ class LibraryInterface {
     }
 
     /**
+     * @param {() => void}
      * @returns {void}
      * @memberof LibraryInterface
      */

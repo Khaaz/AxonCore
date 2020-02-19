@@ -45,6 +45,8 @@ class ErisInterface extends LibraryInterface {
 
     /**
      * @param {(msg: Message) => void} func
+     * @returns {void}
+     * @memberof ErisInterface
      */
     onMessageCreate(func) {
         this.botClient.on(this.enums.EVENTS.MESSAGE_CREATE, (msg) => {
@@ -54,6 +56,8 @@ class ErisInterface extends LibraryInterface {
 
     /**
      * @param {() => void} func
+     * @returns {void}
+     * @memberof ErisInterface
      */
     onceReady(func) {
         this.botClient.once(this.enums.EVENTS.READY, () => {

@@ -21,6 +21,7 @@ class User {
     
     /**
      * User ID
+     * @param {User} user
      * @returns {String}
      * @memberof User
      */
@@ -30,6 +31,7 @@ class User {
 
     /**
      * User's username
+     * @param {User} user
      * @return {String}
      * @memberof User
      */
@@ -39,6 +41,7 @@ class User {
 
     /**
      * User's discrim
+     * @param {User} user
      * @return {String}
      * @memberof User
      */
@@ -48,6 +51,7 @@ class User {
 
     /**
      * User's username+discrim
+     * @param {User} user
      * @returns {String}
      * @memberof User
      */
@@ -57,6 +61,7 @@ class User {
 
     /**
      * If user is a bot
+     * @param {User} user
      * @returns {Boolean}
      * @memberof User
      */

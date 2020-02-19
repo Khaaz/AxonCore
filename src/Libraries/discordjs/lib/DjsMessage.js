@@ -15,6 +15,8 @@ class DjsMessage extends Message {
 
     /**
      * @param {message} message
+     * @returns {Promise<message>}
+     * @memberof DjsMessage
      */
     delete(message) {
         return message.delete();
@@ -24,6 +26,7 @@ class DjsMessage extends Message {
      * @param {message} message
      * @param {String|DjsContent} content
      * @returns {Promise<message>}
+     * @memberof DjsMessage
      */
     edit(message, content) {
         if (typeof content === 'object') {

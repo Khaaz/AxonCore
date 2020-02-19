@@ -22,6 +22,7 @@ class Channel {
     
     /**
      * Gets the channel ID
+     * @param {Channel} channel
      * @returns {String}
      * @memberof Channel
      */
@@ -31,6 +32,7 @@ class Channel {
 
     /**
      * Gets the channel name
+     * @param {Channel} channel
      * @returns {String}
      * @memberof Channel
      */
@@ -40,6 +42,7 @@ class Channel {
 
     /**
      * Gets the guild the channel belongs to
+     * @param {Channel} channel
      * @returns {Guild}
      * @memberof Channel
      */
@@ -49,6 +52,7 @@ class Channel {
 
     /**
      * Gets the guild ID the channel belongs to
+     * @param {Channel} channel
      * @returns {String|null}
      * @memberof Channel
      */
@@ -58,6 +62,7 @@ class Channel {
 
     /**
      * Gets the guild name the channel belongs to
+     * @param {Channel} channel
      * @returns {String|null}
      * @memberof Channel
      */

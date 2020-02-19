@@ -22,6 +22,7 @@ class Member {
 
     /**
      * Guild member ID
+     * @param {Member} member
      * @returns {String}
      * @memberof Member
      */

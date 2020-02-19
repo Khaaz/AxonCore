@@ -26,6 +26,8 @@ class ErisChannel extends Channel {
      * @param {gchannel} channel
      * @param {User} user
      * @param {ErisPermissions} perm
+     * @returns {Boolean}
+     * @memberof ErisChannel
      */
     hasPermission(channel, user, perm) {
         return channel.permissionsOf(user.id).has(perm);
@@ -36,6 +38,8 @@ class ErisChannel extends Channel {
     /**
      * @param {channel} channel
      * @param {ErisContent} content
+     * @returns {Promise<Message>}
+     * @memberof ErisChannel
      */
     sendMessage(channel, content) {
         if (typeof content === 'object') {

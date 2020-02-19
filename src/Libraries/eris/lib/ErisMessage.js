@@ -14,6 +14,8 @@ class ErisMessage extends Message {
 
     /**
      * @param {message} message
+     * @returns {Promise<void>}
+     * @memberof ErisMessage
      */
     delete(message) {
         return message.delete();
@@ -22,6 +24,8 @@ class ErisMessage extends Message {
     /**
      * @param {message} message
      * @param {ErisContent} content
+     * @returns {Promise<message>}
+     * @memberof ErisMessage
      */
     edit(message, content) {
         return message.edit(content);

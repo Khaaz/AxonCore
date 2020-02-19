@@ -9,6 +9,7 @@ class ErisUser extends User {
     /**
      * @param {user} user
      * @returns {PrivateChannel}
+     * @memberof ErisUser
      */
     getDM(user) {
         return this.lib.botClient.getDMChannel(user.id);

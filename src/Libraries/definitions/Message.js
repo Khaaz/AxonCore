@@ -22,6 +22,7 @@ class Message {
 
     /**
      * Message ID
+     * @param {Message} message
      * @returns {String}
      * @memberof Message
      */
@@ -31,6 +32,7 @@ class Message {
 
     /**
      * Message content
+     * @param {Message} message
      * @returns {String}
      * @memberof Message
      */
@@ -40,7 +42,9 @@ class Message {
 
     /**
      * Sets the message content
+     * @param {Message} message
      * @param {String} content Updated message content
+     * @returns {void}
      * @memberof Message
      */
     setContent(message, content) {
@@ -49,6 +53,8 @@ class Message {
 
     /**
      * Message author
+     * @param {Message} message
+     * @returns {User}
      * @memberof Message
      */
     getAuthor(message) {
@@ -57,6 +63,7 @@ class Message {
 
     /**
      * Message author ID
+     * @param {Message} message
      * @returns {String}
      * @memberof Message
      */
@@ -66,6 +73,8 @@ class Message {
 
     /**
      * Member who sent the message
+     * @param {Message} message
+     * @returns {Member}
      * @memberof Message
      */
     getMember(message) {
@@ -74,6 +83,7 @@ class Message {
 
     /**
      * Member ID who sent the message
+     * @param {Message} message
      * @returns {String}
      * @memberof Message
      */
@@ -83,6 +93,8 @@ class Message {
 
     /**
      * Message channel
+     * @param {Message} message
+     * @returns {Channel}
      * @memberof Message
      */
     getChannel(message) {
@@ -91,6 +103,7 @@ class Message {
 
     /**
      * Message channel ID
+     * @param {Message} message
      * @returns {String}
      * @memberof Message
      */
@@ -100,6 +113,7 @@ class Message {
 
     /**
      * Message channel name
+     * @param {Message} message
      * @returns {String}
      * @memberof Message
      */
@@ -109,6 +123,8 @@ class Message {
 
     /**
      * Guild the message belongs to
+     * @param {Message} message
+     * @returns {Guild}
      * @memberof Message
      */
     getGuild(message) {
@@ -117,6 +133,7 @@ class Message {
 
     /**
      * Guild ID the message belongs to
+     * @param {Message} message
      * @returns {String}
      * @memberof Message
      */
@@ -126,6 +143,7 @@ class Message {
 
     /**
      * Guild name the message belongs to
+     * @param {Message} message
      * @returns {String}
      * @memberof Message
      */

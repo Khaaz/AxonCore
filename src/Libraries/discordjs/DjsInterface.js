@@ -47,6 +47,8 @@ class DjsInterface extends LibraryInterface {
 
     /**
      * @param {(msg: Message) => void} func
+     * @returns {void}
+     * @memberof DjsInterface
      */
     onMessageCreate(func) {
         this.botClient.on(this.enums.EVENTS.MESSAGE_CREATE, (msg) => {
@@ -56,6 +58,8 @@ class DjsInterface extends LibraryInterface {
 
     /**
      * @param {() => void} func
+     * @returns {void}
+     * @memberof DjsInterface
      */
     onceReady(func) {
         this.botClient.once(this.enums.EVENTS.READY, () => {

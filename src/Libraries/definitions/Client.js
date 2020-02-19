@@ -75,6 +75,7 @@ class Client {
     /**
      * Bot user
      * @memberof Client
+     * @returns {User}
      */
     getUser() {
         return this.client.user;
@@ -82,6 +83,8 @@ class Client {
 
     /**
      * Bot guild member
+     * @param {Guild} guild
+     * @returns {Member}
      * @memberof Client
      */
     getMember(guild) {

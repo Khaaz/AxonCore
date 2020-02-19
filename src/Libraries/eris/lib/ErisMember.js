@@ -8,6 +8,7 @@ import Member from '../../definitions/Member';
     'embedLinks' | 'attachFiles' | 'readMessageHistory' | 'mentionEveryone' | 'externalEmojis' | 'voiceConnect' | 'voiceSpeak' | 'voiceMuteMembers' |
     'voiceDeafenMembers' | 'voiceMoveMembers' | 'voiceUseVAD' | 'changeNickname' | 'manageNicknames' | 'manageRoles' | 'manageWebhooks' | 'manageEmojis'
     } ErisPermissions
+    @typedef {import('eris').Role} Role
  */
 
 class ErisMember extends Member {
@@ -15,6 +16,8 @@ class ErisMember extends Member {
 
     /**
      * @param {member} member
+     * @returns {Array<String>}
+     * @memberof ErisMember
      */
     getRoles(member) {
         return member.roles;
@@ -22,6 +25,8 @@ class ErisMember extends Member {
 
     /**
      * @param {member} member
+     * @returns {Array<Role>}
+     * @memberof ErisMember
      */
     getRolesObject(member) {
         const { guild } = member;
@@ -31,6 +36,8 @@ class ErisMember extends Member {
     /**
      * @param {member} member
      * @param {ErisPermissions} permission
+     * @returns {Boolean}
+     * @memberof ErisMember
      */
     hasPermission(member, permission) {
         return member.permission.has(permission);

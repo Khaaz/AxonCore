@@ -22,6 +22,7 @@ class Guild {
     
     /**
      * Guild ID
+     * @param {Guild} guild
      * @returns {String}
      * @memberof Guild
      */
@@ -31,6 +32,7 @@ class Guild {
 
     /**
      * Guild name
+     * @param {Guild} guild
      * @returns {String}
      * @memberof Guild
      */
@@ -40,6 +42,7 @@ class Guild {
 
     /**
      * Guild owner ID
+     * @param {Guild} guild
      * @returns {String}
      * @memberof Guild
      */
@@ -49,6 +52,7 @@ class Guild {
 
     /**
      * Guild member
+     * @param {Guild} guild
      * @param {String} userID
      * @memberof Guild
      */

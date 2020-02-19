@@ -18,12 +18,14 @@ import Client from '../../definitions/Client';
  * @typedef {{
  * id: String, username: String, avatar: String, discriminator: String
  * }} RawUser
+ * @typedef {import('eris').Member} Member
  */
 
 class ErisClient extends Client {
     /**
      * @readonly
      * @type {client}
+     * @memberof ErisClient
      */
     get client() {
         return this.lib.botClient;
@@ -31,6 +33,7 @@ class ErisClient extends Client {
 
     /**
      * @returns {String}
+     * @memberof ErisClient
      */
     getAvatar() {
         return this.getUser() ? this.getUser().avatarURL : null;
@@ -38,6 +41,8 @@ class ErisClient extends Client {
 
     /**
      * @param {Guild} guild
+     * @returns {Member}
+     * @memberof ErisClient
      */
     getMember(guild) {
         return guild.members.get(this.client.user.id);
@@ -45,6 +50,10 @@ class ErisClient extends Client {
 
     // **** METHODS **** //
 
+    /**
+     * @returns {Promise<void>}
+     * @memberof ErisClient
+     */
     connect() {
         return this.client.connect();
     }
@@ -52,6 +61,8 @@ class ErisClient extends Client {
     /**
      * @param {status} status
      * @param {ErisPresenceGame} game
+     * @returns {void}
+     * @memberof ErisClient
      */
     setPresence(status, game) {
         return this.client.editStatus(status, game);
@@ -61,6 +72,8 @@ class ErisClient extends Client {
      * @param {String} id
      * @param {String} token
      * @param {WebhookResponse} data
+     * @returns {Promise<void>}
+     * @memberof ErisClient
      */
     triggerWebhook(id, token, data) {
         return this.client

@@ -28,6 +28,7 @@ class DjsResolver extends Resolver {
      * @param {Client} client - The bot client
      * @param {Array<String>|String} args - Array of arguments resolved by the command.
      * @returns {User} The user object / Null if not found / Error
+     * @memberof DjsResolver
      */
     static user(client, args) {
         // Checking if all the arguments are supplied.
@@ -63,6 +64,7 @@ class DjsResolver extends Resolver {
      * @param {Guild} guild - Object Guild resolved by the command.
      * @param {Array<String>|String} args - Array of arguments resolved by the command.
      * @returns {Member} The member object / Null if not found / Error
+     * @memberof DjsResolver
      */
     static member(guild, args) {
         // Checking if all the arguments are supplied.
@@ -102,6 +104,7 @@ class DjsResolver extends Resolver {
      * @param {Guild} guild - Object Guild resolved by the command.
      * @param {Array<String>|String} args - Array of arguments resolved by the command.
      * @returns {Role|null} The role object / Null if not found / Error
+     * @memberof DjsResolver
      */
     static role(guild, args) {
         // Checking if all the arguments are supplied.
@@ -137,6 +140,7 @@ class DjsResolver extends Resolver {
      * @param {Guild} guild - Object Guild resolved by the command.
      * @param {Array<String>|String} args - Array of arguments resolved by the command.
      * @returns {Channel|null} The channel object / Null if not found / Error
+     * @memberof DjsResolver
      */
     static channel(guild, args) {
         // Checking if all the arguments are supplied.
@@ -172,6 +176,7 @@ class DjsResolver extends Resolver {
      * @param {Client} client - The bot client
      * @param {Array<String>} args - Array with guild name/ID
      * @returns {Guild|null} The guild object / Null if not found / Error
+     * @memberof DjsResolver
      */
     static guild(client, args) {
         // Checking if all the arguments are supplied.

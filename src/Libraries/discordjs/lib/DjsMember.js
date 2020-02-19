@@ -2,6 +2,7 @@ import Member from '../../definitions/Member';
 
 /**
  * @typedef {import('discord.js').GuildMember} GuildMember
+ * @typedef {import('discord.js').Role} Role
  */
 
 class DjsMember extends Member {
@@ -9,6 +10,8 @@ class DjsMember extends Member {
 
     /**
      * @param {GuildMember} member
+     * @returns {Array<String>}
+     * @memberof DjsMember
      */
     getRoles(member) {
         return [...member.roles.keys()];
@@ -16,6 +19,8 @@ class DjsMember extends Member {
 
     /**
      * @param {GuildMember} member
+     * @returns {Array<Role>}
+     * @memberof DjsMember
      */
     getRolesObject(member) {
         return [...member.roles.values()];
@@ -24,6 +29,8 @@ class DjsMember extends Member {
     /**
      * @param {GuildMember} member
      * @param {String|Number|Array<String|Number>} permission
+     * @returns {Boolean}
+     * @memberof DjsMember
      */
     hasPermission(member, permission) {
         return member.hasPermission(permission);

@@ -27,6 +27,8 @@ import AxonError from '../../../Errors/AxonError';
  * @typedef {{
  * id: String, username: String, avatar: String, discriminator: String
  * }} RawUser
+ * @typedef {import('discord.js').GuildMember} GuildMember
+ * @typedef {import('discord.js').Presence} Presence
  */
 
 class DjsClient extends Client {
@@ -60,6 +62,7 @@ class DjsClient extends Client {
 
     /**
      * @param {Guild} guild
+     * @returns {GuildMember}
      */
     getMember(guild) {
         return guild.me;
@@ -76,6 +79,7 @@ class DjsClient extends Client {
     /**
      * @param {PresenceStatus} status
      * @param {DjsPresenceGame} game
+     * @returns {Promise<Presence>}
      */
     setPresence(status, game) {
         return this.client.user.setPresence( {

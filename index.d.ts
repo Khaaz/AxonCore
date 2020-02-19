@@ -5568,6 +5568,7 @@ declare module 'axoncore' {
         public lib: LibraryInterface;
         /**
          * Creates an instance of Channel
+         * @memberof Channel
          */
         constructor(lib: LibraryInterface);
         /**
@@ -5612,6 +5613,7 @@ declare module 'axoncore' {
         public baseWebhookURL: 'https://discordapp.com/api/webhooks/';
         /**
          * Creates an instance of Client
+         * @memberof Client
          */
         constructor(lib: LibraryInterface);
         /**
@@ -5672,6 +5674,7 @@ declare module 'axoncore' {
         public lib: LibraryInterface
         /**
          * Creates an instance of Guild
+         * @memberof Guild
          */
         constructor(lib: LibraryInterface);
         /**
@@ -5700,6 +5703,7 @@ declare module 'axoncore' {
         public lib: LibraryInterface;
         /**
          * Creates an instance of Member
+         * @memberof Member
          */
         constructor(lib: LibraryInterface);
         /**
@@ -5732,6 +5736,7 @@ declare module 'axoncore' {
         public lib: LibraryInterface;
         /**
          * Creates an instance of Message
+         * @memberof Message
          */
         constructor(lib: LibraryInterface);
         /**
@@ -5827,6 +5832,7 @@ declare module 'axoncore' {
          * @param client - The bot client
          * @param args - Array of arguments resolved by the command.
          * @returns The user object / Null if not found / Error
+         * @memberof Resolver
          */
         static user(client: LibClient, args: string[]|string): LibUser|null; // Not implemented
         /**
@@ -5835,6 +5841,7 @@ declare module 'axoncore' {
          * @param guild - Object Guild resolved by the command.
          * @param args - Array of arguments resolved by the command.
          * @returns The member object / Null if not found / Error
+         * @memberof Resolver
          */
         static member(guild: LibGuild, args: string[]|string): LibMember|null; // Not implemented
         /**
@@ -5843,6 +5850,7 @@ declare module 'axoncore' {
          * @param guild - Object Guild resolved by the command.
          * @param args - Array of arguments resolved by the command.
          * @returns The role object / Null if not found / Error
+         * @memberof Resolver
          */
         static role(guild: LibGuild, args: string[]|string): LibRole|null; // Not implemented
         /**
@@ -5851,6 +5859,7 @@ declare module 'axoncore' {
          * @param guild - Object Guild resolved by the command.
          * @param args - Array of arguments resolved by the command.
          * @returns The channel object / Null if not found / Error
+         * @memberof Resolver
          */
         static channel(guild: LibGuild, args: string[]|string): LibChannel|null; // Not implemented
         /**
@@ -5859,6 +5868,7 @@ declare module 'axoncore' {
          * @param client - The bot client
          * @param args - Array with guild name/ID
          * @returns The guild object / Null if not found / Error
+         * @memberof Resolver
          */
         static guild(client: LibClient, args: string[] ): LibGuild|null; // Not implemented
     }
@@ -5867,6 +5877,7 @@ declare module 'axoncore' {
         public lib: LibraryInterface;
         /**
          * Creates an instance of User
+         * @memberof User
          */
         constructor(lib: LibraryInterface);
         /**
@@ -5927,6 +5938,10 @@ declare module 'axoncore' {
         public channel: Channel;
         public guild: Guild;
         public resolver: Resolver;
+        /**
+         * Creates an instance of LibraryInterface
+         * @memberof LibraryInterface
+         */
         constructor(botClient: LibClient, structs: LibraryInterfaceStructs);
         /**
          * Bot client
@@ -6159,7 +6174,13 @@ declare module 'axoncore' {
     }
     
     class DjsChannel extends Channel {
+        /**
+         * @memberof DjsChannel
+         */
         hasPermission(channel: djs.Channel, user: djs.User, perm: DJS_ENUMS_DISCORD_LIB_PERMISSIONS): boolean;
+        /**
+         * @memberof DjsChannel
+         */
         sendMessage(channel: djs.Channel, content: string | DjsContent): Promise<djs.Message | djs.Message[]>
     }
 
@@ -6178,13 +6199,28 @@ declare module 'axoncore' {
     }
 
     class DjsMember extends Member {
+        /**
+         * @memberof DjsMember
+         */
         getRoles(member: djs.GuildMember): string[];
+        /**
+         * @memberof DjsMember
+         */
         getRolesObject(member: djs.GuildMember): djs.Role[];
+        /**
+         * @memberof DjsMember
+         */
         hasPermission(member: djs.GuildMember, permission: DJS_ENUMS_DISCORD_LIB_PERMISSIONS): boolean;
     }
 
     class DjsMessage extends Message {
+        /**
+         * @memberof DjsMessage
+         */
         delete(message: djs.Message): Promise<djs.Message>;
+        /**
+         * @memberof DjsMessage
+         */
         edit(message: djs.Message, content: string | DjsContent): Promise<djs.Message>
     }
 
@@ -6195,6 +6231,7 @@ declare module 'axoncore' {
          * @param client - The bot client
          * @param args - Array of arguments resolved by the command.
          * @returns The user object / Null if not found / Error
+         * @memberof DjsResolver
          */
         static user(client: djs.Client, args: string | string[] ): djs.User;
         /**
@@ -6203,6 +6240,7 @@ declare module 'axoncore' {
          * @param guild - Object Guild resolved by the command.
          * @param args - Array of arguments resolved by the command.
          * @returns The member object / Null if not found / Error
+         * @memberof DjsResolver
          */
         static member(guild: djs.Guild, args: string | string[] ): djs.GuildMember;
         /**
@@ -6211,6 +6249,7 @@ declare module 'axoncore' {
          * @param guild - Object Guild resolved by the command.
          * @param args - Array of arguments resolved by the command.
          * @returns The role object / Null if not found / Error
+         * @memberof DjsResolver
          */
         static role(guild: djs.Guild, args: string | string[] ): djs.Role;
         /**
@@ -6219,6 +6258,7 @@ declare module 'axoncore' {
          * @param guild - Object Guild resolved by the command.
          * @param args - Array of arguments resolved by the command.
          * @returns The channel object / Null if not found / Error
+         * @memberof DjsResolver
          */
         static channel(guild: djs.Guild, args: string | string[] ): djs.GuildChannel;
         /**
@@ -6227,17 +6267,22 @@ declare module 'axoncore' {
          * @param client - The bot client
          * @param args - Array with guild name/ID
          * @returns The guild object / Null if not found / Error
+         * @memberof DjsResolver
          */
         static guild(client: djs.Client, args: string[] ): djs.Guild;
     }
 
     class DjsUser extends User {
+        /**
+         * @memberof DjsUser
+         */
         getDM(user: djs.User): Promise<djs.DMChannel>;
     }
 
     class DjsClient extends Client {
         private _token: string;
         /**
+         * Creates an instance of DjsClient
          * @memberof DjsClient
          */
         constructor(lib: DjsInterface, token: string);
@@ -6246,9 +6291,21 @@ declare module 'axoncore' {
          * @memberof DjsClient
          */
         readonly client: djs.Client;
+        /**
+         * @memberof DjsClient
+         */
         public getMember(guild: djs.Guild): djs.GuildMember;
+        /**
+         * @memberof DjsClient
+         */
         public connect(): Promise<string>;
+        /**
+         * @memberof DjsClient
+         */
         public setPresence(status: djs.PresenceStatus, game: DjsPresenceGame): Promise<djs.ClientUser>;
+        /**
+         * @memberof DjsClient
+         */
         public triggerWebhook(id: string, token: string, data: DjsWebhookContent): Promise<WebhookResponse>;
     }
 
@@ -6262,6 +6319,7 @@ declare module 'axoncore' {
         public client: DjsClient;
         public type: 1;
         /**
+         * Creats an instance of DjsInterface
          * @memberof DjsInterface
          */
         constructor(botClient: djs.Client, token: string);
@@ -6445,7 +6503,13 @@ declare module 'axoncore' {
     }
 
     class ErisChannel extends Channel {
+        /**
+         * @memberof ErisChannel
+         */
         public hasPermission(channel: Eris.Channel, user: Eris.User, perm: ERIS_ENUMS_DISCORD_LIB_PERMISSIONS): boolean;
+        /**
+         * @memberof ErisChannel
+         */
         public sendMessage(channel: Eris.Channel, content: ErisContent): Promise<Eris.Message>;
     }
 
@@ -6457,17 +6521,35 @@ declare module 'axoncore' {
     }
 
     class ErisGuild extends Guild {
+        /**
+         * @memberof ErisGuild
+         */
         public getMember(guild: Eris.Guild, userID: string): Eris.Member;
     }
 
     class ErisMember extends Member {
+        /**
+         * @memberof ErisMember
+         */
         public getRoles(member: Eris.Member): string[];
+        /**
+         * @memberof ErisMember
+         */
         public getRolesObject(member: Eris.Member): Eris.Role[];
+        /**
+         * @memberof ErisMember
+         */
         public hasPermission(member: Eris.Member, permission: ERIS_ENUMS_DISCORD_LIB_PERMISSIONS): boolean;
     }
 
     class ErisMessage extends Message {
+        /**
+         * @memberof ErisMessage
+         */
         public delete(message: Eris.Message): Promise<void>;
+        /**
+         * @memberof ErisMessage
+         */
         public edit(message: Eris.Message, content: ErisContent): Promise<Eris.Message>;
     }
 
@@ -6486,6 +6568,7 @@ declare module 'axoncore' {
          * @param client - The bot client
          * @param args - Array of arguments resolved by the command.
          * @returns The user object / Null if not found / Error
+         * @memberof ErisResolver
          */
         static user(client: Eris.Client, args: string | string[] ): Eris.User | null;
         /**
@@ -6494,6 +6577,7 @@ declare module 'axoncore' {
          * @param guild - Object Guild resolved by the command.
          * @param args - Array of arguments resolved by the command.
          * @returns The member object / Null if not found / Error
+         * @memberof ErisResolver
          */
         static member(guild: Eris.Guild, args: string | string[] ): Eris.Member | null;
         /**
@@ -6502,6 +6586,7 @@ declare module 'axoncore' {
          * @param guild - Object Guild resolved by the command.
          * @param args - Array of arguments resolved by the command.
          * @returns The role object / Null if not found / Error
+         * @memberof ErisResolver
          */
         static role(guild: Eris.Guild, args: string | string[] ): Eris.Role | null;
         /**
@@ -6510,6 +6595,7 @@ declare module 'axoncore' {
          * @param guild - Object Guild resolved by the command.
          * @param args - Array of arguments resolved by the command.
          * @returns The channel object / Null if not found / Error
+         * @memberof ErisResolver
          */
         static channel(guild: Eris.Guild, args: string | string[] ): Eris.GuildChannel;
         /**
@@ -6518,22 +6604,39 @@ declare module 'axoncore' {
          * @param client - The bot client
          * @param args - Array with guild name/ID
          * @returns The guild object / Null if not found / Error
+         * @memberof ErisResolver
          */
         static guild(client: Eris.Client, args: string[] ): Eris.Guild;
     }
 
     class ErisUser extends User {
+        /**
+         * @memberof ErisUser
+         */
         public getDM(user: Eris.User): Promise<Eris.PrivateChannel>;
     }
 
     class ErisClient extends Client {
         /**
          * @readonly
+         * @memberof ErisClient
          */
         readonly client: Eris.Client;
+        /**
+         * @memberof ErisClient
+         */
         public getMember(guild: Eris.Guild): Eris.Member;
+        /**
+         * @memberof ErisClient
+         */
         public connect(): Promise<void>;
+        /**
+         * @memberof ErisClient
+         */
         public setPresence(status: 'online' | 'idle' | 'dnd' | 'invisible', game: ErisPresenceGame): Promise<void>;
+        /**
+         * @memberof ErisClient
+         */
         public triggerWebhook(id: string, token: string, data: ErisWebhookContent): Promise<WebhookResponse>;
     }
 
@@ -6546,10 +6649,26 @@ declare module 'axoncore' {
         public resolver: ErisResolver
         public client: ErisClient;
         public type: 0;
+        /**
+         * Creates an instance of ErisInterface
+         * @memberof ErisInterface
+         */
         constructor(botClient: Eris.Client);
+        /**
+         * @memberof ErisInterface
+         */
         public enums: ErisEnums;
+        /**
+         * @memberof ErisInterface
+         */
         public HANDLERS: object;
+        /**
+         * @memberof ErisInterface
+         */
         public onMessageCreate(func: (message: Eris.Message) => void): void;
+        /**
+         * @memberof ErisInterface
+         */
         public onceReady(func: () => void): void;
     }
 }
