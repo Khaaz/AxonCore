@@ -40,7 +40,7 @@ jobs:
         yarn lint:ts
       env:
         CI: true
-  
+
   tsc:
     runs-on: ubuntu-latest
     strategy:
