@@ -11,6 +11,11 @@ import { EventEmitter } from 'events';
  *
  * @class Prompt
  * @example let prompt = new Prompt(this.axon, msg.author.id, msg.channel, { timeoutMessage: 'Be quicker next time' });
+ *
+ * @prop {String} userID - The user ID that is bound to the current prompt
+ * @prop {Channel} channel - The channel where the prompt is running
+ * @prop {Boolean} timedOut - Whether the Prompt timed out
+ * @prop {Boolean} ended - Whether the Prompt ended
  */
 class Prompt {
     /**

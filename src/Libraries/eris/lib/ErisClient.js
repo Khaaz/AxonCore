@@ -22,7 +22,8 @@ import Client from '../../definitions/Client';
 
 class ErisClient extends Client {
     /**
-     * @returns {client}
+     * @readonly
+     * @type {client}
      */
     get client() {
         return this.lib.botClient;

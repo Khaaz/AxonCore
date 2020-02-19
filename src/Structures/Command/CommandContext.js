@@ -80,9 +80,6 @@ class CommandContext {
         this.channelID = lib.message.getChannelID(triggerMessage);
         this.channelName = lib.message.getChannelName(triggerMessage);
 
-        /**
-         * @type {Author}
-         */
         const author = lib.message.getAuthor(triggerMessage) || null;
         this.callerID = author && lib.user.getID(author);
         this.callerName = author && lib.user.getTag(author);

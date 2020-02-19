@@ -44,7 +44,7 @@ class Message {
      * @memberof Message
      */
     setContent(message, content) {
-        message.content = content; // Shouldn't this be returned?
+        message.content = content;
     }
 
     /**

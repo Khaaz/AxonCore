@@ -5,7 +5,11 @@ import DefaultLogger from './DefLogger';
 import { LOGGER_TYPES } from '../Utility/Constants/AxonEnums';
 
 /**
- * @typedef {import('../Structures/DataStructure/AxonConfig').default} AxonConfig
+ * @typedef {{
+ * lang: String, debugMode: Boolean, library: LIBRARY_TYPES, logger: LOGGER_TYPES, db: DB_TYPES, guildConfigCache: Number
+ * }} AOptionsSettings
+ * @typedef {import('../Utility/Constants/AxonEnums').LIBRARY_TYPES} LIBRARY_TYPES
+ * @typedef {import('../Utility/Constants/AxonEnums').DB_TYPES} DB_TYPES
  */
 
 /**
@@ -19,12 +23,12 @@ import { LOGGER_TYPES } from '../Utility/Constants/AxonEnums';
  */
 class LoggerSelector extends ASelector {
     /**
-     * @param {AxonConfig} axonConfig
+     * @param {AOptionsSettings} axonOptionsSettings
      */
-    static select(axonConfig) {
+    static select(axonOptionsSettings) {
         let Logger;
 
-        switch (axonConfig.logger) {
+        switch (axonOptionsSettings.logger) {
             // Default Logger
             case LOGGER_TYPES.DEFAULT:
             default: {
@@ -75,7 +79,7 @@ class LoggerSelector extends ASelector {
         }
         
         try {
-            axonConfig.debugMode && this.testLogger(Logger);
+            axonOptionsSettings.debugMode && this.testLogger(Logger);
         } catch (err) {
             /** Fallback to DefLogger */
             Logger = DefaultLogger;

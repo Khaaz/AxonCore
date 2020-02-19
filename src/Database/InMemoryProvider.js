@@ -5,6 +5,13 @@ import GuildConfig from '../Structures/DataStructure/GuildConfig';
 /**
  * @typedef {String|Boolean|Object.<string, any>|Array<any>|Number|Date} updateDBVal
  * @typedef {import('../Structures/DataStructure/AxonConfig')} AxonConfig
+ * @typedef {{
+ * id: String, prefix: String, createdAt: Date, updatedAt: Date, bannedUsers: Array<String>, bannedGuilds: Array<String>
+ * }} AxonConfigRaw
+ * @typedef {{
+ * guildID: string, prefixes: Array<String>, createdAt: Date, updatedAt: Date, modules: Array<String>, commands: Array<String>, listeners: Array<String>,
+ * ignoredUsers: Array<String>, ignoredRoles: Array<String>, ignoredChannels: Array<String>, modOnly: Boolean, modRoles: Array<String>, modUsers: Array<String>
+ * }} GuildConfigRaw
  */
 
 /**
@@ -118,7 +125,7 @@ class InMemoryProvider extends ADBProvider {
     }
 
     /**
-     * @param {AxonConfig} axonSchema
+     * @param {AxonConfig|AxonCOnfigRaw} axonSchema
      * @returns {Promise<AxonConfig>}
      */
     async saveAxon(axonSchema) {
@@ -127,7 +134,8 @@ class InMemoryProvider extends ADBProvider {
 
     /**
      * @param {String} gID Guild ID
-     * @param {GuildConfig} guildSchema
+     * @param {GuildConfig|GuildConfigRaw} guildSchema
+     * @returns {Promise<GuildConfig>}
      */
     async saveGuild(gID, guildSchema) {
         const guildConfig = new GuildConfig(this.axon, guildSchema);

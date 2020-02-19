@@ -33,6 +33,7 @@ class DjsClient extends Client {
     /**
      * @param {LibraryInterface} lib
      * @param {String} token
+     * @memberof DjsClient
      */
     constructor(lib, token) {
         super(lib);
@@ -43,7 +44,8 @@ class DjsClient extends Client {
     }
 
     /**
-     * @returns {botClient}
+     * @readonly
+     * @type {botClient}
      */
     get client() {
         return this.lib.botClient;

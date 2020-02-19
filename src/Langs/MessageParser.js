@@ -57,7 +57,7 @@ class MessageParser {
      * Same as above but arguments are unnamed and passed as parameters instead of inside one object.
      *
      * @param {String} message
-     * @param {Array<String>} args
+     * @param {...String} args
      * @returns {String} - The Parsed message
      * @memberof MessageParser
      */

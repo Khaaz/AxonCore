@@ -18,7 +18,7 @@ import CommandRegistry from './../Stores/CommandRegistry';
  * @author KhaaZ
  *
  * @class CommandLoader
- * @extends ALoader<Module>
+ * @extends ALoader<Command>
  */
 class CommandLoader extends ALoader {
     /**

@@ -40,6 +40,7 @@ class Channel {
 
     /**
      * Gets the guild the channel belongs to
+     * @returns {Guild}
      * @memberof Channel
      */
     getGuild(channel) {

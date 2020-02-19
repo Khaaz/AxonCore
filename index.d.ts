@@ -488,7 +488,7 @@ declare module 'axoncore' {
          *
          * @memberof ADBProvider
          */
-        public saveAxon(data: AxonConfig): Promise<AxonConfig | null>; // Not Implemented
+        public saveAxon(data: AxonConfig|AxonConfigRaw): Promise<AxonConfig | null>; // Not Implemented
         /**
          * Updates the given guild in the DB with a new schema object.
          *
@@ -498,7 +498,7 @@ declare module 'axoncore' {
          *
          * @memberof ADBProvider
          */
-        public saveGuild(gID: string, data: GuildConfig): Promise<GuildConfig | null>; // Not Implemented
+        public saveGuild(gID: string, data: GuildConfig|GuildConfigRaw): Promise<GuildConfig | null>; // Not Implemented
     }
 
     interface AxonJSON {
@@ -568,18 +568,21 @@ declare module 'axoncore' {
         /**
          * Get guild executor
          * @param guildID Guild ID
+         * @memberof JsonManager
          */
         public getExecutor(guildID: string): AsyncQueue;
         /**
          * Parse JSON string as object/array
          * @param string JSON string
          * @returns Parsed array/object or input string if failed
+         * @memberof JsonManager
          */
         public toJSON(string: string): string | object | any[];
         /**
          * Parse object/array as JSON string
          * @param json Object/array to be parsed into JSON string
          * @returns JSON string or parsed array/object if failed
+         * @memberof JsonManager
          */
         public toString(json: object): string | object | any[];
 
@@ -747,8 +750,8 @@ declare module 'axoncore' {
          */
         updateEvent(gID: string, eventArr: string[] ): Promise<boolean>;
         
-        saveAxon(axonSchema: AxonConfig): Promise<AxonConfig>;
-        saveGuild(gID: string, guildSchema: GuildConfig): Promise<GuildConfig>;
+        saveAxon(axonSchema: AxonConfig|AxonConfigRaw): Promise<AxonConfig>;
+        saveGuild(gID: string, guildSchema: GuildConfig|GuildConfigRaw): Promise<GuildConfig>;
 
         /**
          * Update Axon config
@@ -864,7 +867,7 @@ declare module 'axoncore' {
          *
          * @memberof JsonProvider
          */
-        saveAxon(data: AxonConfig): Promise<AxonConfig|null>;
+        saveAxon(data: AxonConfig|AxonConfigRaw): Promise<AxonConfig|null>;
         /**
          * Updates the given guild in the DB with a new schema object.
          *
@@ -873,7 +876,7 @@ declare module 'axoncore' {
          * @returns Updated GuildConfig from the DB
          * @memberof JsonProvider
          */
-        saveGuild(gID: string, data: GuildConfig): Promise<GuildConfig|null>;
+        saveGuild(gID: string, data: GuildConfig|GuildConfigRaw): Promise<GuildConfig|null>;
     }
 
     interface GuildSchema extends Document {
@@ -996,7 +999,7 @@ declare module 'axoncore' {
          * @returns Updated AxonConfig from the DB
          * @memberof MongoProvider
          */
-        saveAxon(data: AxonConfig): Promise<AxonConfig|null>;
+        saveAxon(data: AxonConfig|AxonConfigRaw): Promise<AxonConfig|null>;
         /**
          * Updates the given guild in the DB with a new schema object.
          *
@@ -1005,7 +1008,7 @@ declare module 'axoncore' {
          * @returns Updated GuildConfig from the DB
          * @memberof MongoProvider
          */
-        saveGuild(gID: string, data: GuildConfig): Promise<GuildConfig|null>;
+        saveGuild(gID: string, data: GuildConfig|GuildConfigRaw): Promise<GuildConfig|null>;
     }
 
     interface AConfig {
@@ -1023,6 +1026,15 @@ declare module 'axoncore' {
         bannedGuilds?: string[];
     }
 
+    interface AxonConfigRaw extends AConfig {
+        id: string;
+        prefix: string;
+        createdAt: Date;
+        updatedAt: Date;
+        bannedUsers: string[];
+        bannedGuilds: string[];
+    }
+
     /**
      * Default AxonConfig data structure used in AxonCore.
      * This class can be extended and changed as you want.
@@ -1032,7 +1044,7 @@ declare module 'axoncore' {
      *
      * @class AxonConfig
      */
-    class AxonConfig implements AConfig {
+    class AxonConfig implements AxonConfigRaw {
         private _axon: AxonClient;
 
         public id: string;
@@ -1147,6 +1159,22 @@ declare module 'axoncore' {
         modUsers?: string[];
     }
 
+    interface GuildConfigRaw extends GConfig {
+        guildID: string;
+        prefixes: string[];
+        createdAt: Date;
+        updatedAt: Date;
+        modules: string[];
+        commands: string[];
+        listeners: string[];
+        ignoredUsers: string[];
+        ignoredRoles: string[];
+        ignoredChannels: string[];
+        modOnly: boolean;
+        modRoles: string[];
+        modUsers: string[];
+    }
+
     /**
      * Default GuildConfig data structure used in AxonCore.
      * This class can be extended and changed as you want.
@@ -1156,7 +1184,7 @@ declare module 'axoncore' {
      *
      * @class GuildConfig
      */
-    class GuildConfig implements GConfig {
+    class GuildConfig implements GuildConfigRaw {
         private _axon: AxonClient;
         public guildID: string;
         public prefixes: string[];
@@ -1225,7 +1253,7 @@ declare module 'axoncore' {
          *
          * *used internally*
          *
-         * @param module - The command object
+         * @param module - The module object
          * @returns Whether the module is disabled or not
          * @memberof GuildConfig
          */
@@ -1964,7 +1992,7 @@ declare module 'axoncore' {
         /**
          * Whether the command was successfully executed or not
          */
-        public succes: boolean;
+        public success: boolean;
         /**
          * Optional error object in case of bad command execution
          */
@@ -2934,7 +2962,7 @@ declare module 'axoncore' {
         public static compareObject(obj1: object, obj2: object): boolean;
     }
 
-    interface Ctx { guild: LibGuild; cmd: Command; user: LibUser; }
+    interface Ctx { guild: LibGuild|string; cmd: string; user: LibUser|string; }
 
     /**
      * Base Class with default properties and utility methods used by all Commands / Modules / Events.
@@ -2955,49 +2983,49 @@ declare module 'axoncore' {
          * @readonly
          * @memberof Base
          */
-        public readonly axon: AxonClient;
+        readonly axon: AxonClient;
         /**
          * Returns the bot client instance
          *
          * @readonly
          * @memberof Base
          */
-        public readonly bot: LibClient;
+        readonly bot: LibClient;
         /**
          * Returns the Logger instance
          *
          * @readonly
          * @memberof Base
          */
-        public readonly logger: ALogger;
+        readonly logger: ALogger;
         /**
          * Returns the Resolver class (Based on AxonClient.Resolver (default: use the current library Resolver))
          *
          * @readonly
          * @memberof Base
          */
-        public readonly Resolver: Resolver;
+        readonly Resolver: Resolver;
         /**
          * Returns the AxonUtils instance
          *
          * @readonly
          * @memberof Base
          */
-        public readonly axonUtils: AxonUtils;
+        readonly axonUtils: AxonUtils;
         /**
          * Returns the Utils instance
          *
          * @readonly
          * @memberof Base
          */
-        public readonly utils: Utils;
+        readonly utils: Utils;
         /**
          * Returns the MessageManager instance
          *
          * @readonly
          * @memberof Base
          */
-        public readonly l: MessageManager;
+        readonly l: MessageManager;
         /**
          * Creates an instance of Base.
          *
@@ -3038,10 +3066,14 @@ declare module 'axoncore' {
          *
          * @param user - User object to get the DM channel
          * @param content - String or object (embed)
+         * @param options - Options
+         * @param options.disableEveryone - Whether to allow mentioning everyone or not
+         * @param options.delete - Whether to delete the message or not
+         * @param options.delay - Delay after which the message will be deleted
          * @returns Message Object
          * @memberof Base
          */
-        public sendDM(user: LibUser, content: AxonMSGCont): Promise<LibMessage|void>;
+        public sendDM(user: LibUser, content: AxonMSGCont, options?: AxonMSGOpt): Promise<LibMessage|void>;
         /**
          * Send a message.
          * Check for bot permissions + message/embed length
@@ -3539,7 +3571,13 @@ declare module 'axoncore' {
         private _options: PromptOptionsData;
         private _actualOptions: PromptOptionsData;
         private _emitter: EventEmitter;
+        /**
+         * Whether the Prompt timed out
+         */
         public timedOut: boolean;
+        /**
+         * Whether the Prompt ended
+         */
         public ended: boolean;
         private _boundEvent(): void;
         constructor(client: AxonClient, uID: string, channel: LibTextableChannel, defaultOptions?: PromptOptions);
@@ -4280,7 +4318,7 @@ declare module 'axoncore' {
          * @returns The Parsed message
          * @memberof MessageParser
          */
-        public parse2(message: string, args: string[] ): string;
+        public parse2(message: string, ...args: string[] ): string;
     }
 
     /**
@@ -4472,7 +4510,7 @@ declare module 'axoncore' {
      * @extends ASelector
      */
     export class LoggerSelector extends ASelector {
-        public select(axonConfig: AxonConfig): ALogger;
+        public select(axonConfig: AOptionsSettings): ALogger;
         static testLogger(Logger: ALogger): void;
     }
 
@@ -4667,9 +4705,9 @@ declare module 'axoncore' {
      * @author KhaaZ
      *
      * @class CommandLoader
-     * @extends ALoader<Module>
+     * @extends ALoader<Command>
      */
-    class CommandLoader extends ALoader<Module> {
+    class CommandLoader extends ALoader<Command> {
         private _module: Module;
         /**
          * Creates an instance of CommandLoader
@@ -4913,19 +4951,21 @@ declare module 'axoncore' {
          * Get the registry
          *
          * @returns The current registry
-         * @memberof CommandRegistry
+         * @memberof ARegistry
          */
         getAll(): Collection<T>;
         /**
          * Add an item to the registry
          *
          * @returns The registry
+         * @memberof ARegistry
          */
         add(key: string, value: T): Collection<T>;
         /**
          * Remove an item from the registry
          *
          * @returns {Boolean} - Whether it could remove the item or not
+         * @memberof ARegistry
          */
         remove(key: string): boolean;
         public [Symbol.iterator](): [string|number, T][];
@@ -5085,7 +5125,7 @@ declare module 'axoncore' {
      * @author KhaaZ
      *
      * @class ModuleRegistry
-     * @extends ARegistry
+     * @extends ARegistry<Module>
      */
     class ModuleRegistry extends ARegistry<Module> {
         /**
@@ -5576,9 +5616,10 @@ declare module 'axoncore' {
         constructor(lib: LibraryInterface);
         /**
          * Bot client
+         * @readonly
          * @memberof Client
          */
-        public client: LibClient;
+        readonly client: LibClient;
         /**
          * Bot user ID
          * @memberof Client
@@ -5889,9 +5930,10 @@ declare module 'axoncore' {
         constructor(botClient: LibClient, structs: LibraryInterfaceStructs);
         /**
          * Bot client
+         * @readonly
          * @memberof LibraryInterface
          */
-        public botClient: LibClient;
+        readonly botClient: LibClient;
         /**
          * @memberof LibraryInterface
          */
@@ -6129,6 +6171,9 @@ declare module 'axoncore' {
     }
 
     class DjsGuild extends Guild {
+        /**
+         * @memberof DjsGuild
+         */
         getMember(guild: djs.Guild, userID: string): djs.GuildMember;
     }
 
@@ -6192,8 +6237,15 @@ declare module 'axoncore' {
 
     class DjsClient extends Client {
         private _token: string;
+        /**
+         * @memberof DjsClient
+         */
         constructor(lib: DjsInterface, token: string);
-        public client: djs.Client;
+        /**
+         * @readonly
+         * @memberof DjsClient
+         */
+        readonly client: djs.Client;
         public getMember(guild: djs.Guild): djs.GuildMember;
         public connect(): Promise<string>;
         public setPresence(status: djs.PresenceStatus, game: DjsPresenceGame): Promise<djs.ClientUser>;
@@ -6209,6 +6261,9 @@ declare module 'axoncore' {
         public resolver: DjsResolver;
         public client: DjsClient;
         public type: 1;
+        /**
+         * @memberof DjsInterface
+         */
         constructor(botClient: djs.Client, token: string);
         public enums: DjsEnums;
         public HANDLERS: object; // Not going to list them all
@@ -6472,7 +6527,10 @@ declare module 'axoncore' {
     }
 
     class ErisClient extends Client {
-        public client: Eris.Client;
+        /**
+         * @readonly
+         */
+        readonly client: Eris.Client;
         public getMember(guild: Eris.Guild): Eris.Member;
         public connect(): Promise<void>;
         public setPresence(status: 'online' | 'idle' | 'dnd' | 'invisible', game: ErisPresenceGame): Promise<void>;

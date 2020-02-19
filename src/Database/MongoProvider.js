@@ -8,6 +8,13 @@ import GuildConfig from '../Structures/DataStructure/GuildConfig';
  * @typedef {import('./Mongo/AxonSchema').default} AxonSchema
  * @typedef {import('./Mongo/GuildSchema').default} GuildSchema
  * @typedef {String|Boolean|Object.<string, any>|Array<any>|Number|Date} updateDBVal
+ * @typedef {{
+ * id: String, prefix: String, createdAt: Date, updatedAt: Date, bannedUsers: Array<String>, bannedGuilds: Array<String>
+ * }} AxonConfigRaw
+ * @typedef {{
+ * guildID: string, prefixes: Array<String>, createdAt: Date, updatedAt: Date, modules: Array<String>, commands: Array<String>, listeners: Array<String>,
+ * ignoredUsers: Array<String>, ignoredRoles: Array<String>, ignoredChannels: Array<String>, modOnly: Boolean, modRoles: Array<String>, modUsers: Array<String>
+ * }} GuildConfigRaw
  */
 
 /**
@@ -200,7 +207,7 @@ class MongoProvider extends ADBProvider {
     /**
      * Updates the Axon config in the DB with a new Axon config object.
      *
-     * @param {AxonConfig} data - the schema object to update
+     * @param {AxonConfig|AxonConfigRaw} data - the schema object to update
      * @returns {Promise<AxonConfig|null>} Updated AxonConfig from the DB
      * @memberof MongoProvider
      */
@@ -224,7 +231,7 @@ class MongoProvider extends ADBProvider {
      * Updates the given guild in the DB with a new schema object.
      *
      * @param {String} gID - Guid id
-     * @param {GuildConfig} data - the schema object to update
+     * @param {GuildConfig|GuildConfigRaw} data - the schema object to update
      * @returns {Promise<GuildConfig|null>} Updated GuildConfig from the DB
      * @memberof MongoProvider
      */

@@ -65,6 +65,8 @@ class LibraryInterface {
 
     /**
      * Bot client
+     * @type {BotClient}
+     * @readonly
      * @memberof LibraryInterface
      */
     get botClient() {

@@ -83,7 +83,7 @@ class ARegistry {
      * Get the registry
      *
      * @returns {Collection<T>} - The current registry
-     * @memberof CommandRegistry
+     * @memberof ARegistry
      */
     getAll() {
         return this.registry;
@@ -95,6 +95,7 @@ class ARegistry {
      * @param {String} key
      * @param {T} value
      * @returns {Collection<T>} - The registry
+     * @memberof ARegistry
      */
     add(key, value) {
         return this.registry.set(key.toLowerCase(), value);
@@ -105,6 +106,7 @@ class ARegistry {
      *
      * @param {String} key
      * @returns {Boolean} - Whether it could remove the item or not
+     * @memberof ARegistry
      */
     remove(key) {
         return this.registry.delete(key);

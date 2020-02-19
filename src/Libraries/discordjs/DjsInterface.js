@@ -21,6 +21,7 @@ class DjsInterface extends LibraryInterface {
     /**
      * @param {Client} botClient
      * @param {String} token
+     * @memberof DjsInterface
      */
     constructor(botClient, token) {
         super(botClient, {

@@ -135,7 +135,7 @@ class GuildConfig {
      * Check if the module is disabled on the specified guild.
      * *used internally*
      *
-     * @param {Module} module - The command object
+     * @param {Module} module - The module object
      * @returns {Boolean} Whether the module is disabled or not
      * @memberof GuildConfig
      */

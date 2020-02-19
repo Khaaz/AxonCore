@@ -14,6 +14,8 @@ import Collection from '../Collection';
  *
  * @class MessageCollector
  * @extends EventEmitter
+ *
+ * @prop {Collection<Message>} messages
  */
 class MessageCollector extends EventEmitter {
     /**

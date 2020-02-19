@@ -57,9 +57,6 @@ class CommandOptions {
         }
         this._command = command;
 
-        /**
-         * @type {CommandOptions}
-         */
         let base;
         if (useModuleDefault && !isModule && command.module.options) {
             base = Object.assign( {}, command.module.options);

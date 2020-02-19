@@ -26,6 +26,8 @@ class Client {
 
     /**
      * Bot client
+     * @type {BotClient}
+     * @readonly
      * @memberof Client
      */
     get client() {

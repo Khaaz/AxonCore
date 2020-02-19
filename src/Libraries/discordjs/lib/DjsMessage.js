@@ -23,6 +23,7 @@ class DjsMessage extends Message {
     /**
      * @param {message} message
      * @param {String|DjsContent} content
+     * @returns {Promise<message>}
      */
     edit(message, content) {
         if (typeof content === 'object') {

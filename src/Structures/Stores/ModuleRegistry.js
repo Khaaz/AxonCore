@@ -13,7 +13,7 @@ import AxonError from '../../Errors/AxonError';
  * @author KhaaZ
  *
  * @class ModuleRegistry
- * @extends ARegistry
+ * @extends ARegistry<Module>
  */
 class ModuleRegistry extends ARegistry {
     /**

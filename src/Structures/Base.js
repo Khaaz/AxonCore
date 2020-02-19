@@ -21,6 +21,7 @@ import { TYPE_ERRORS } from '../Utility/Constants/AxonEnums';
  * }} EmbedBase
  * @typedef {import('../Utility/Discord/Embed').default} Embed
  * @typedef {{ content?: String, embed?: Embed|EmbedBase }} MessageObject
+ * @typedef {{ guild: Guild|String, cmd: String, user: User|String}} Ctx
  */
 
 /**
@@ -149,7 +150,7 @@ class Base {
      *
      * @param {LOG_LEVELS} level - The LOG-LEVEL
      * @param {String|Error} content - The content or the error to log
-     * @param {Object} [ctx=null] - Additional context to be passed to logger
+     * @param {Ctx} [ctx=null] - Additional context to be passed to logger
      * @param {Guild|String} ctx.guild
      * @param {String} ctx.cmd
      * @param {User|String} ctx.user
@@ -167,11 +168,15 @@ class Base {
      *
      * @param {User} user - User object to get the DM channel
      * @param {String|MessageObject} content - String or object (embed)
+     * @param {Object} [options={}] - Options { disableEveryone: Boolean, delete: Boolean, delay: Number }
+     * @param {Boolean} [options.disableEveryone=true] - Whether to allow mentioning everyone or not
+     * @param {Boolean} [options.delete=false] - Whether to delete the message or not
+     * @param {Number} [options.delay=null] - Delay after which the message will be deleted
      * @returns {Promise<Message?>} Message Object
      * @memberof Base
      */
-    sendDM(user, content) {
-        return this.axonUtils.sendDM(user, content);
+    sendDM(user, content, options) {
+        return this.axonUtils.sendDM(user, content, options);
     }
 
     /**

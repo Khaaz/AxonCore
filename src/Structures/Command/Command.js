@@ -105,7 +105,7 @@ class Command extends Base {
         this.subCommands = null; // Collection of subcommands
 
         /**
-         * @type {AxonTemplate}
+         * @type {Boolean}
          */
         /* Bypass all perms - true = prevent the command to be disabled */
         this.serverBypass = data.serverBypass !== undefined ? data.serverBypass : module.serverBypass; // Default to module state
@@ -281,10 +281,12 @@ class Command extends Base {
             
             isAdmin && this._cooldown.shouldSetCooldown() && this._cooldown.setCooldown(userID);
             if (this.options.shouldSendInvalidUsageMessage(args) ) {
-                return this.sendHelp( {
-                    msg, args, guildConfig, isAdmin, isOwner,
-                } )
-                    .then( () => ctx.resolveSync() );
+                return (this.options.getInvalidUsageMessage()
+                    ? this.sendMessage(msg.channel, this.options.getInvalidUsageMessage() )
+                    : this.sendHelp( {
+                        msg, args, guildConfig, isAdmin, isOwner,
+                    } )
+                ).then( () => ctx.resolveSync() );
             }
             return ctx.resolveAsync();
         }

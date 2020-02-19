@@ -81,7 +81,7 @@ class Collection extends Map {
      *
      * @param {String} key - The property to use as key for the new Collection
      * @param {String} func - The function name to apply to the Collection
-     * @param {Array} args - All the argument that need to be applied to the Collection
+     * @param {...any} args - All the argument that need to be applied to the Collection
      * @returns {Collection<T>} A new Collection modified by the apply call
      * @memberof Collection
      */

@@ -16,7 +16,7 @@ import AxonError from '../../Errors/AxonError';
  * @author KhaaZ
  *
  * @class ModuleLoader
- * @extends ALoader
+ * @extends ALoader<AxonClient>
  */
 class ModuleLoader extends ALoader {
     /**

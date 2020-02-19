@@ -84,6 +84,7 @@ class JsonManager {
      * Get guild executor
      * @param {String} guildID Guild ID
      * @returns {AsyncQueue}
+     * @memberof JsonManager
      */
     getExecutor(guildID) {
         let executor = this.guildExecutors[guildID];
@@ -102,6 +103,7 @@ class JsonManager {
      * Parse JSON string as object/array
      * @param {String} string JSON string
      * @returns {Object.<string, any>|Array<any>|String} Parsed array/object or input string if failed
+     * @memberof JsonManager
      */
     toJSON(string) {
         if (!string) {
@@ -118,6 +120,7 @@ class JsonManager {
      * Parse object/array as JSON string
      * @param {Object|Array} json Object/array to be parsed into JSON string
      * @returns {String|Object.<string, any>|Array<any>} JSON string or parsed array/object if failed
+     * @memberof JsonManager
      */
     toString(json) {
         if (!json) {
