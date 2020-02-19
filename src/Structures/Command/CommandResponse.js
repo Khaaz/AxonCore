@@ -10,12 +10,13 @@
 class CommandResponse {
     /**
      * Creates an instance of CommandResponse.
-     * Build the commandresponse from all options given in parameters
+     * Build the CommandResponse from all options given in parameters
      *
      * @param {Object} [data={}]
      * @param {Boolean} [data.success=true]
      * @param {Boolean} [data.triggerCooldown=true]
-     * @param {Object|String} [data.error=null]
+     * @param {Error} [data.error=null]
+     *
      * @memberof CommandResponse
      */
     constructor(data = {} ) {

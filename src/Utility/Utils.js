@@ -5,6 +5,11 @@ import AxonError from '../Errors/AxonError';
 
 import { PERMISSIONS_NUMBERS } from './Constants/DiscordEnums';
 
+/**
+ * @typedef {import('../AxonClient').default} AxonClient
+ * @typedef {import('../Libraries/definitions/LibraryInterface').default} LibraryInterface
+ */
+
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
 
@@ -28,7 +33,7 @@ const HEX_CODE = /^#?([0-9A-Fa-f]{6})$/;
  * @prop {RegExp} roleMention - Regular Expression to match a roleMention
  * @prop {RegExp} channelMention - Regular Expression to match a channelMention
  * @prop {RegExp} id - Regular Expression to match an id
- * @prop {RegExp} hexCode - Regular Expression to match an hexCode
+ * @prop {RegExp} hexCode - Regular Expression to match a hexCode
  */
 class Utils {
     /**
@@ -158,7 +163,7 @@ class Utils {
     /**
      * Returns the guild prefix of the given msg.
      *
-     * @param {Object} msg - Message object given at the command.
+     * @param {Message} msg - Message object given at the command.
      * @returns {Promise<String>} The prefix as string.
      * @memberof Utils
      */
@@ -251,7 +256,8 @@ class Utils {
      *
      * @param {Member} member - Member object
      * @param {Array<String>} permissions - List of permissions to test
-     * @returns {Boolean} hether the member has permissions or not
+     * @returns {Boolean} Whether the member has permissions or not
+     *
      * @memberof Utils
      */
     hasPerms(member, permissions = [] ) {
@@ -303,7 +309,7 @@ class Utils {
      * Calculate permissions using a object of perms
      *
      * @param {Object} data - The permissions to calculate for
-     * @returns {Object} Object containing the perms denied & allowed
+     * @returns {{ allow: Number, deny: Number }} Object containing the perms denied & allowed
      * @memberof Utils
      */
     calculatePerms(data) {
@@ -334,10 +340,10 @@ class Utils {
     // **** GENERAL **** //
 
     /**
-     * Wait for a specified amount of miliseconds..
+     * Wait for a specified amount of milliseconds..
      *
      * @param {Number} ms
-     * @returns {Promise} resolve after the delay is passed
+     * @returns {Promise<void>} resolve after the delay is passed
      * @memberof Utils
      */
     sleep(ms) {
@@ -360,7 +366,7 @@ class Utils {
      *
      * @param {String} path
      * @param {String} content
-     * @returns {Promise}
+     * @returns {Promise<void>}
      * @memberof Utils
      */
     writeFileAsync(path, content) {
@@ -369,10 +375,10 @@ class Utils {
 
     /**
      * Ensures that all property names of obj1 exists in obj2.
-     * Doesn't compare values. Exept if it is an object, then it checks for property names recursively.
+     * Doesn't compare values. Except if it is an object, then it checks for property names recursively.
      *
-     * @param {Object} obj1 - Default config/object
-     * @param {Object} obj2 - Custom config/Object (Config/Object to compare with)
+     * @param {Object.<string, any>} obj1 - Default config/object
+     * @param {Object.<string, any>} obj2 - Custom config/Object (Config/Object to compare with)
      * @returns {Boolean} True: obj2 has at least all prop of obj1
      * @memberof Utils
      */

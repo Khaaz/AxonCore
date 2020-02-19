@@ -4,13 +4,22 @@ import Listener from '../Event/Listener';
 import AxonError from '../../Errors/AxonError';
 
 /**
+ * @typedef {import('../Module').default} Module
+ * @typedef {import('../../AxonClient').default} AxonClient
+ */
+
+/**
  * Load listeners in AxonClient.
  * Validate the listener entirely.
  *
  * @class ListenerLoader
- * @extends ALoader
+ * @extends ALoader<AxonClient>
  */
 class ListenerLoader extends ALoader {
+    /**
+     * Creates an instance of ListenerLoader
+     * @param {Module} module
+     */
     constructor(module) {
         super(module.axon);
         this._module = module;
@@ -20,7 +29,7 @@ class ListenerLoader extends ALoader {
      * Returns the Module instance
      *
      * @readonly
-     * @type {Module}
+     * @type {AxonClient}
      * @memberof ListenerLoader
      */
     get axon() {
@@ -63,7 +72,7 @@ class ListenerLoader extends ALoader {
      * Load all events in the module.
      * Instantiate all events.
      *
-     * @param {Listener} listeners
+     * @param {Object.<string, Listener>} listeners
      * @returns {Boolean}
      * @memberof ListenerLoader
      */

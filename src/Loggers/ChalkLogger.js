@@ -22,7 +22,7 @@ class ChalkLogger extends ALogger {
      * Crashing bugs, unexpected errors...
      *
      * @param {String} input
-     * @param {Object} opt - context object
+     * @param {Context} opt - context object
      * @memberof ChalkLogger
      */
     fatal(input, opt) {
@@ -34,7 +34,7 @@ class ChalkLogger extends ALogger {
      * Major - critical error
      *
      * @param {String} input
-     * @param {Object} opt - context object
+     * @param {Context} opt - context object
      * @memberof ChalkLogger
      */
     error(input, opt) {
@@ -46,7 +46,7 @@ class ChalkLogger extends ALogger {
      * Warnings - expected errors
      *
      * @param {String} input
-     * @param {Object} opt - context object
+     * @param {Context} opt - context object
      * @memberof ChalkLogger
      */
     warn(input, opt) {
@@ -58,7 +58,7 @@ class ChalkLogger extends ALogger {
      * Eval - Debugging logs
      *
      * @param {String} input
-     * @param {Object} opt - context object
+     * @param {Context} opt - context object
      * @memberof ChalkLogger
      */
     debug(input, opt) {
@@ -70,7 +70,7 @@ class ChalkLogger extends ALogger {
      * Important information
      *
      * @param {String} input
-     * @param {Object} opt - context object
+     * @param {Context} opt - context object
      * @memberof ChalkLogger
      */
     notice(input, opt) {
@@ -82,7 +82,7 @@ class ChalkLogger extends ALogger {
      * Default information
      *
      * @param {String} input
-     * @param {Object} opt - context object
+     * @param {Context} opt - context object
      * @memberof ChalkLogger
      */
     info(input, opt) {
@@ -94,7 +94,7 @@ class ChalkLogger extends ALogger {
      * Other logs - executed commands, etc...
      *
      * @param {String} input
-     * @param {Object} opt - context object
+     * @param {Context} opt - context object
      * @memberof ChalkLogger
      */
     verbose(input, opt) {

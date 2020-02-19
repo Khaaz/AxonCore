@@ -5,12 +5,18 @@ import NotImplementedException from '../../Errors/NotImplementedException';
 import Collection from '../../Utility/Collection';
 
 /**
+ * @typedef {import('../../AxonClient').default} AxonClient
+ */
+
+/**
  * Abstract class to hold and manage a set of items.
  *
  * @author KhaaZ
  *
+ * @template T
+ *
  * @prop {AxonClient} _axon - The AxonClient
- * @prop {Collection<*>} registry - The collection of items hold by the registry
+ * @prop {Collection<T>} registry - The collection of items hold by the registry
  *
  * @abstract
  * @class ARegistry
@@ -20,7 +26,7 @@ class ARegistry {
      * Creates an instance of ARegistry.
      *
      * @param {AxonClient} axon - The AxonClient
-     * @param {Object} base - The base definition to use for the registry
+     * @param {T} base - The base definition to use for the registry
      * @memberof ARegistry
      */
     constructor(axon, base) {
@@ -55,7 +61,7 @@ class ARegistry {
      * Check whether the item exist in the registry
      *
      * @param {String} key
-     * @returns {Boolean} - Whether the item exist
+     * @returns {Boolean} - Whether the item exists
      * @memberof ARegistry
      */
     has(key) {
@@ -66,7 +72,7 @@ class ARegistry {
      * Get an item from the registry
      *
      * @param {String} key
-     * @returns {Object} - The item
+     * @returns {T} - The item
      * @memberof ARegistry
      */
     get(key) {
@@ -76,8 +82,8 @@ class ARegistry {
     /**
      * Get the registry
      *
-     * @returns {Collection} - The current registry
-     * @memberof CommandRegistry
+     * @returns {Collection<T>} - The current registry
+     * @memberof ARegistry
      */
     getAll() {
         return this.registry;
@@ -87,8 +93,9 @@ class ARegistry {
      * Add an item to the registry
      *
      * @param {String} key
-     * @param {Object} value
-     * @param {Collection} - The registry
+     * @param {T} value
+     * @returns {Collection<T>} - The registry
+     * @memberof ARegistry
      */
     add(key, value) {
         return this.registry.set(key.toLowerCase(), value);
@@ -98,7 +105,8 @@ class ARegistry {
      * Remove an item from the registry
      *
      * @param {String} key
-     * @param {Boolean} - Whether it could remove the item or not
+     * @returns {Boolean} - Whether it could remove the item or not
+     * @memberof ARegistry
      */
     remove(key) {
         return this.registry.delete(key);
@@ -113,7 +121,7 @@ class ARegistry {
      * Register correctly an item in the registry.
      *
      * @param {String} key
-     * @param {Object} value
+     * @param {T} value
      * @memberof ARegistry
      */
     register(key, value) {
@@ -124,7 +132,7 @@ class ARegistry {
      * Unregister correctly an item from the registry.
      *
      * @param {String} key
-     * @param {Object} value
+     * @param {T} value
      * @memberof ARegistry
      */
     unregister(key, value) {

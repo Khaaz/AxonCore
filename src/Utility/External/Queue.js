@@ -1,7 +1,7 @@
 /**
  * This default Queue works in a synchronous fashion.
  * It will execute all synchronous functions sequentially.
- * Any error will be catched and unless specified otherwise won't break the queue execution.
+ * Any error will be caught and unless specified otherwise won't break the queue execution.
  * The queue can be auto executed on add or the execution can be delayed.
  *
  * @author KhaaZ
@@ -14,10 +14,13 @@ class Queue {
     /**
      * Creates an instance of Queue.
      *
-     * @param {boolean} [stopOnError=false]
+     * @param {Boolean} [stopOnError=false]
      * @memberof Queue
      */
     constructor(stopOnError = false) {
+        /**
+         * @type {Array<Function>}
+         */
         this._functions = [];
         this._running = false;
 
@@ -50,11 +53,11 @@ class Queue {
 
     /**
      * Adds a function to the queue.
-     * Automatically wil wrap the function in a closure to keep the function context.
+     * Automatically will wrap the function in a closure to keep the function context.
      *
      * @param {Function} func - The function to run
      * @param {Boolean} [toExec=true] - Whether to auto exec the queue on add or not.
-     * @param {*} args - All arguments the function needs
+     * @param {...any} args - All arguments the function needs
      * @memberof Queue
      */
     add(func, toExec = true, ...args) {
@@ -67,6 +70,11 @@ class Queue {
         }
     }
 
+    /**
+     * @param {Function} fn
+     * @param  {...any} args
+     * @returns {unknown}
+     */
     createClosure(fn, ...args) {
         return () => fn(...args);
     }

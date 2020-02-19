@@ -4,6 +4,21 @@ import Module from '../Module';
 import AxonError from '../../Errors/AxonError';
 
 /**
+ * @typedef {import('../Module').default} Module
+ * @typedef {{
+ * bot?: Array<String>, serverMod?: Boolean, serverManager?: Boolean, serverAdmin?: Boolean, serverOwner?: Boolean,
+ * user?: {needed?: Array<String>, bypass?: Array<String>}, userIDs?: {needed?: Array<String>, bypass?: Array<String>},
+ * rolesIDs?: {needed?: Array<String>, bypass?: Array<String>}, channelsIDs?: {needed?: Array<String>, bypass?: Array<String>},
+ * staff?: {needed?: Array<String>, bypass?: Array<String>}, custom?: (i: Message) => boolean
+ * }} CommandPerms
+ * @typedef {import('../../AxonClient').default} AxonClient
+ * @typedef {import('../../Utility/Utils').default} Utils
+ * @typedef {import('../../Utility/AxonUtils').default} AxonUtils
+ * @typedef {import('../../Libraries/definitions/LibraryInterface').default} LibraryInterface
+ * @typedef {import('../DataStructure/GuildConfig').default} GuildConfig
+ */
+
+/**
  * CommandPermissions.
  * Holds permissions for a command and all necessary checkers.
  *
@@ -14,7 +29,7 @@ import AxonError from '../../Errors/AxonError';
  *
  * @class CommandPermissions
  *
- * @prop {Array} [bot=[]] - Discord permissions that the bot needs to have in orderto execute the command
+ * @prop {Array} [bot=[]] - Discord permissions that the bot needs to have in order to execute the command
  * @prop {Boolean} [serverMod=false] - Axoncore server moderator
  * @prop {Boolean} [serverManager=false] - Discord server manager (manageServer)
  * @prop {Boolean} [serverAdmin=false] - Discord server administrator (administrator)
@@ -35,8 +50,8 @@ class CommandPermissions {
     /**
      * Creates an instance of CommandPermissions.
      *
-     * @param {Command} command - The base command
-     * @param {Object} [override={}] - The specific permissions for this command (format - CommandPermissions)
+     * @param {Command|Module} command - The base command/module
+     * @param {CommandPerms} [override={}] - The specific permissions for this command/module (format - CommandPermissions)
      * @param {Boolean} [useModuleDefault=false] - Whether to use or not the module's base permissions before applying override permissions
      * @memberof CommandPermissions
      */
@@ -61,35 +76,56 @@ class CommandPermissions {
             base = override;
         }
 
+        /**
+         * @type {Array<String>}
+         */
         this.bot = base.bot || [];
         this.serverMod = !!base.serverMod;
         this.serverManager = !!base.serverManager;
         this.serverAdmin = !!base.serverAdmin;
         this.serverOwner = !!base.serverOwner;
         
+        /**
+         * @type {{needed: Array<String>, bypass: Array<String>}}
+         */
         this.user = {
             needed: (base.user && base.user.needed) || [],
             bypass: (base.user && base.user.bypass) || [],
         };
         
+        /**
+         * @type {{needed: Array<String>, bypass: Array<String>}}
+         */
         this.userIDs = {
             needed: (base.userIDs && base.userIDs.needed) || [],
             bypass: (base.userIDs && base.userIDs.bypass) || [],
         };
+        /**
+         * @type {{needed: Array<String>, bypass: Array<String>}}
+         */
         this.roleIDs = {
             needed: (base.roleIDs && base.roleIDs.needed) || [],
             bypass: (base.roleIDs && base.roleIDs.bypass) || [],
         };
+        /**
+         * @type {{needed: Array<String>, bypass: Array<String>}}
+         */
         this.channelIDs = {
             needed: (base.channelIDs && base.channelIDs.needed) || [],
             bypass: (base.channelIDs && base.channelIDs.bypass) || [],
         };
         
+        /**
+         * @type {{needed: Array<String>, bypass: Array<String>}}
+         */
         this.staff = {
             needed: (base.staff && base.staff.needed) ? [...base.staff.needed] : [], // creates a new array to prevent using a reference
             bypass: (base.staff && base.staff.bypass) ? [...base.staff.bypass] : [], // creates a new array to prevent using a reference
         };
         
+        /**
+         * @type {(i: Message) => Boolean}
+         */
         this.custom = base.custom || ( () => true);
     }
 
@@ -105,7 +141,7 @@ class CommandPermissions {
     }
 
     /**
-     *
+     * Return the Utils instance
      *
      * @readonly
      * @type {Utils}
@@ -144,7 +180,7 @@ class CommandPermissions {
      * ServerMod
      *
      * @param {Message} msg - The Message Object
-     * @param {Object} guildConf - GuildConfig
+     * @param {GuildConfig} guildConf - GuildConfig
      * @returns {Array<Boolean, String|null>} True if the user can execute command / False if not. Second element is the missing permission || null
      * @memberof Command
      */
@@ -201,7 +237,7 @@ class CommandPermissions {
     /**
      * Set the permissions the bot needs to have to execute this command.
      *
-     * @param {Array} [array=[]] - Array of permissions
+     * @param {Array<String>} [array=[]] - Array of permissions
      * @param {Boolean} [toAdd=false] - Whether to add the permissions to the existing permissions
      * @returns {CommandPermissions}
      * @memberof CommandPermissions
@@ -254,7 +290,7 @@ class CommandPermissions {
     /**
      * Set/unset the command to serverOwner only.
      *
-     * @param {Boolean} [boolean=true] - Whether to make the command serverOwnber only
+     * @param {Boolean} [boolean=true] - Whether to make the command serverOwner only
      * @returns {CommandPermissions}
      * @memberof CommandPermissions
      */
@@ -266,8 +302,8 @@ class CommandPermissions {
     /**
      * Set the permissions the user needs to have to execute this command.
      *
-     * @param {Object} [object={ bypass: [], needed: [] }] - Object of permissions
-     * @param {boolean} [toAdd=false] - Whether to add the permissions to the existing permissions
+     * @param {{needed: Array<String>, bypass: Array<String>}} [object={ bypass: [], needed: [] }] - Object of permissions
+     * @param {Boolean} [toAdd=false] - Whether to add the permissions to the existing permissions
      * @returns {CommandPermissions}
      * @memberof CommandPermissions
      */
@@ -293,8 +329,8 @@ class CommandPermissions {
     /**
      * Set the user IDs the user needs to have to execute this command.
      *
-     * @param {Object} [object={ bypass: [], needed: [] }] - Object of permissions
-     * @param {boolean} [toAdd=false] - Whether to add the permissions to the existing permissions
+     * @param {{needed: Array<String>, bypass: Array<String>}} [object={ bypass: [], needed: [] }] - Object of permissions
+     * @param {Boolean} [toAdd=false] - Whether to add the permissions to the existing permissions
      * @returns {CommandPermissions}
      * @memberof CommandPermissions
      */
@@ -320,8 +356,8 @@ class CommandPermissions {
     /**
      * Set the role IDs the user needs to have to execute this command.
      *
-     * @param {Object} [object={ bypass: [], needed: [] }] - Object of permissions
-     * @param {boolean} [toAdd=false] - Whether to add the permissions to the existing permissions
+     * @param {{needed: Array<String>, bypass: Array<String>}} [object={ bypass: [], needed: [] }] - Object of permissions
+     * @param {Boolean} [toAdd=false] - Whether to add the permissions to the existing permissions
      * @returns {CommandPermissions}
      * @memberof CommandPermissions
      */
@@ -347,8 +383,8 @@ class CommandPermissions {
     /**
      * Set the channel IDs needed to be in to execute this command.
      *
-     * @param {Object} [object={ bypass: [], needed: [] }] - Object of permissions
-     * @param {boolean} [toAdd=false] - Whether to add the permissions to the existing permissions
+     * @param {{needed: Array<String>, bypass: Array<String>}} [object={ bypass: [], needed: [] }] - Object of permissions
+     * @param {Boolean} [toAdd=false] - Whether to add the permissions to the existing permissions
      * @returns {CommandPermissions}
      * @memberof CommandPermissions
      */
@@ -374,8 +410,8 @@ class CommandPermissions {
     /**
      * Set the AxonCore staff members that can execute this command.
      *
-     * @param {Object} [object={ bypass: [], needed: [] }] - Object of permissions
-     * @param {boolean} [toAdd=false] - Whether to add the permissions to the existing permissions
+     * @param {{needed: Array<String>, bypass: Array<String>}} [object={ bypass: [], needed: [] }] - Object of permissions
+     * @param {Boolean} [toAdd=false] - Whether to add the permissions to the existing permissions
      * @returns {CommandPermissions}
      * @memberof CommandPermissions
      */
@@ -439,7 +475,8 @@ class CommandPermissions {
      * Check user permissions [needed]
      *
      * @param {Member} member
-     * @returns {Boolean}
+     * @returns {[Boolean, String?]}
+     *
      * @memberof CommandPermissions
      */
     _checkPermsUserNeeded(member) {

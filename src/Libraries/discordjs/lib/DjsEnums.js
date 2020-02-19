@@ -48,6 +48,7 @@
  * * ERROR: 'error'
  * * WARN: 'warn'
  * * DEBUG: 'debug'
+ * @enum {String}
  */
 export const EVENTS = {
     RATE_LIMIT: 'rateLimit',
@@ -132,6 +133,7 @@ export const EVENTS = {
  * * MANAGE_ROLES: 'MANAGE_ROLES'
  * * MANAGE_WEBHOOKS: 'MANAGE_WEBHOOKS'
  * * MANAGE_EMOJIS: 'MANAGE_EMOJIS'
+ * @enum {String}
  */
 export const DISCORD_LIB_PERMISSIONS = {
     CREATE_INSTANT_INVITE: 'CREATE_INSTANT_INVITE',

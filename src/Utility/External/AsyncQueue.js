@@ -2,7 +2,7 @@ import Queue from './Queue';
 
 /**
  * This data structure is a queue that will run every function one by one sequentially.
- * It will run indifferently synchrones and asynchrones functions. Making sure the previous oneis over before starting the next one. It will essentially wait for the previous function to be finished before running the next one.
+ * It will run indifferently synchronous and asynchronous functions. Making sure the previous one is over before starting the next one. It will essentially wait for the previous function to be finished before running the next one.
  * A Promise is returned on add. This promise will resolve or reject when the function is ran.
  *
  * The queue can be auto executed on add or the execution can be delayed.
@@ -38,13 +38,13 @@ class AsyncQueue extends Queue {
 
     /**
      * Adds a function to the queue.
-     * Automatically wil wrap the function in a closure to keep the function context.
+     * Automatically will wrap the function in a closure to keep the function context.
      * Will also create a Promise that will be returned and will be resolved with the actual data.
      *
      * @param {Function} func - The function to run
      * @param {Boolean} [toExec=true] - Whether to auto exec the queue on add or not.
-     * @param {*} args - All arguments the function needs
-     * @returns {Promise}
+     * @param {...any} args - All arguments the function needs
+     * @returns {Promise<any>}
      * @memberof AsyncQueue
      */
     add(func, toExec = true, ...args) {
@@ -59,6 +59,13 @@ class AsyncQueue extends Queue {
         return promise;
     }
 
+    /**
+     * @param {Function} fn
+     * @param {(value: unknown) => void} resolve
+     * @param {(reason: Error) => void} reject
+     * @param {...any} args
+     * @returns {Promise<Function>}
+     */
     createClosure(fn, resolve, reject, ...args) {
         return async() => {
             try {

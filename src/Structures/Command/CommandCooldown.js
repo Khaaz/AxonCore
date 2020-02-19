@@ -1,4 +1,8 @@
 /**
+ * @typedef {import('./Command').default} Command
+ */
+
+/**
  * CommandCooldown. Handles cooldowns for a command.
  *
  * @author KhaaZ
@@ -18,6 +22,9 @@ class CommandCooldown {
     constructor(command) {
         this._command = command;
 
+        /**
+         * @type {Map<string, {time: Date, post: Boolean}>}
+         */
         this._cooldowns = new Map();
     }
 
@@ -36,7 +43,8 @@ class CommandCooldown {
      * Checks the command cooldown of the user
      *
      * @param {String} userID - The userID
-     * @returns {Array[Number,Boolean]} Empty array if no cooldowns / Array with the time left and whether we shouldsend a cooldown message or not
+     * @returns {[Number, Boolean]} Empty array if no cooldowns / Array with the time left and whether we should send a cooldown message or not
+     *
      * @memberof CommandCooldown
      */
     shouldCooldown(userID) {
@@ -59,6 +67,15 @@ class CommandCooldown {
         return []; // Doesn't cooldown
     }
 
+    /**
+     * Checks if the cooldown message should be sent
+     *
+     * @param {Object} cooldown
+     * @param {Date} cooldown.time
+     * @param {Boolean} cooldown.post
+     *
+     * @memberof CommandCooldown
+     */
     shouldSendCooldownMessage(cooldown) {
         if (cooldown.post) {
             cooldown.post = false;
@@ -67,6 +84,12 @@ class CommandCooldown {
         return false;
     }
 
+    /**
+     * @param {Object} response
+     * @param {Boolean} response.triggerCooldown
+     *
+     * @memberof CommandCooldown
+     */
     shouldSetCooldown(response = null) {
         if (!this.cooldown || this.cooldown === 0) {
             return false;
