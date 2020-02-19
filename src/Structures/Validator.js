@@ -6,6 +6,18 @@ import CommandCooldown from './Command/CommandCooldown';
 import AxonError from '../Errors/AxonError';
 
 /**
+ * @typedef {import('./Module').default} Module
+ * @typedef {import('./Command/Command').default} Command
+ * @typedef {{
+ * title?: String, description?: String, url?: String, timestamp?: Date|String, color?: Number, footer?: { text: String, icon_url?: String },
+ * image?: { url: String, height?: Number, width?: Number }, thumbnail?: { url: String, height?: Number, width?: Number },
+ * fields?: Array<{ name: String, value: String, inline?: Boolean }>, author?: { name: String, url?: String, icon_url?: String }
+ * }} EmbedBase
+ * @typedef {import('../Utility/Discord/Embed').default} Embed
+ * @typedef {{ content?: String, embed?: Embed|EmbedBase }} MessageObject
+ */
+
+/**
  * Static Class that makes sure objects are formatted correctly.
  *
  * @author KhaaZ
@@ -13,6 +25,10 @@ import AxonError from '../Errors/AxonError';
  * @class Validator
  */
 class Validator {
+    /**
+     * @param {Module} module
+     * @returns {Boolean} Whether the module is considered valid or not
+     */
     static validModule(module) {
         const PERMS = module.axon.library.enums.PERMISSIONS;
 
@@ -60,7 +76,7 @@ class Validator {
 
     /**
      * Valid that a command uses the correct format.
-     * Will automatically correct the command by using default fors ome part
+     * Will automatically correct the command by using default for some part
      *
      * @static
      * @param {Command} command
@@ -150,7 +166,7 @@ class Validator {
      * Check whether a message content / embed comply with discord limits.
      *
      * @static
-     * @param {Object|String} content
+     * @param {String|MessageObject} content
      * @returns {Boolean} Returns true if the message is valid, otherwise throw an AxonError
      * @memberof Validator
      */

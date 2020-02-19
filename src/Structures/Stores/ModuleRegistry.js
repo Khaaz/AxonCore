@@ -4,14 +4,22 @@ import Module from '../Module';
 import AxonError from '../../Errors/AxonError';
 
 /**
+ * @typedef {import('../../AxonClient').default} AxonClient
+ */
+
+/**
  * Registry that holds all Modules.
  *
  * @author KhaaZ
  *
  * @class ModuleRegistry
- * @extends ARegistry
+ * @extends ARegistry<Module>
  */
 class ModuleRegistry extends ARegistry {
+    /**
+     * Creates an instance of ModuleRegistry
+     * @param {AxonClient} axon
+     */
     constructor(axon) {
         super(axon, Module);
     }
@@ -20,7 +28,8 @@ class ModuleRegistry extends ARegistry {
      * Register a Module inside the ModuleRegistry
      *
      * @param {String} label - The module label
-     * @param {Module} modile - The module object
+     * @param {Module} module - The module object
+     *
      * @memberof ModuleRegistry
      */
     register(label, module) {

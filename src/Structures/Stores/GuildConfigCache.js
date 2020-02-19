@@ -5,6 +5,10 @@ import GuildConfig from '../DataStructure/GuildConfig';
 import AxonError from '../../Errors/AxonError';
 
 /**
+ * @typedef {import('../../AxonClient').default} AxonClient
+ */
+
+/**
  * Handles GuildConfigs cache.
  * Can be extended to a redis or memcached cache easily for instance.
  *

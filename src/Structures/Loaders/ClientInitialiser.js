@@ -1,4 +1,9 @@
 /**
+ * @typedef {import('../../Loggers/ALogger').default} ALogger
+ * @typedef {import('../../AxonClient').default} AxonClient
+ */
+
+/**
  * Loads the AxonClient.
  *
  * @author KhaaZ
@@ -11,9 +16,9 @@ class ClientInitialiser {
      * Initialise AxonStaff from the configuration file.
      *
      * @static
-     * @param {Object} botConfig
-     * @param {Object} logger
-     * @returns {Object} Axon staff newly created.
+     * @param {Object.<string, Array<{id: String, name: String}>} staffConfig
+     * @param {ALogger} logger
+     * @returns {Object.<string, Array<String>} Axon staff newly created.
      * @memberof ClientInitialiser
      */
     static initStaff(staffConfig, logger) {

@@ -6,7 +6,15 @@ import { request } from 'https';
 
 import { HTTP_CODE } from '../../Utility/Constants/AxonEnums';
 
+/**
+ * @typedef {import('./LibraryInterface').default} LibraryInterface
+ */
+
 class Client {
+    /**
+     * Creates an instance of Client
+     * @param {LibraryInterface} lib
+     */
     constructor(lib) {
         this.lib = lib;
         this.baseWebhookURL = 'https://discordapp.com/api/webhooks/';
@@ -16,32 +24,69 @@ class Client {
         }
     }
 
+    /**
+     * Bot client
+     * @type {BotClient}
+     * @readonly
+     * @memberof Client
+     */
     get client() {
         return this.lib.botClient;
     }
 
     // **** GETTERS / SETTERS **** //
 
+    /**
+     * Bot user ID
+     * @returns {String}
+     * @memberof Client
+     */
     getID() {
         return this.client.user.id;
     }
 
+    /**
+     * Bot username
+     * @returns {String}
+     * @memberof Client
+     */
     getUsername() {
         return this.getUser() ? this.getUser().username : null;
     }
 
+    /**
+     * Bot mention
+     * @returns {String}
+     * @memberof Client
+     */
     getMention() {
         return this.client.user.mention;
     }
 
+    /**
+     * Bot avatar
+     * @returns {String}
+     * @memberof Client
+     */
     getAvatar() {
         throw new NotImplementedException();
     }
 
+    /**
+     * Bot user
+     * @memberof Client
+     * @returns {User}
+     */
     getUser() {
         return this.client.user;
     }
 
+    /**
+     * Bot guild member
+     * @param {Guild} guild
+     * @returns {Member}
+     * @memberof Client
+     */
     getMember(guild) {
         throw new NotImplementedException();
     }

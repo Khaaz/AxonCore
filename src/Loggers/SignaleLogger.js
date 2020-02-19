@@ -4,6 +4,10 @@ import figures from 'figures';
 import ALogger from './ALogger';
 import Context from './Context';
 
+/**
+ * @typedef {import('signale').SignaleOptions} SignaleOptions
+ */
+
 const logOptions = {
     types: {
         verbose: {

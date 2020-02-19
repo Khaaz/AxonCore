@@ -4,6 +4,11 @@ import Module from '../Module';
 import AxonError from '../../Errors/AxonError';
 
 /**
+ * @typedef {import('../../Langs/MessageManager').default} MessageManager
+ * @typedef {import('../DataStructure/GuildConfig').default} GuildConfig
+ */
+
+/**
  * CommandOptions.
  * Holds options for a command and all necessary checkers.
  *
@@ -11,7 +16,7 @@ import AxonError from '../../Errors/AxonError';
  *
  * @class CommandOptions
  *
- * @prop {Function | String} [invalidPermissionMessage=null] - What the invalid permission message should be
+ * @prop {(channel: Channel, member: Member) => String | String} [invalidPermissionMessage=null] - What the invalid permission message should be
  * @prop {Boolean} [sendPermissionMessage=false] - Whether to trigger an error message on invalid permission (bot / user / custom etc)
  * @prop {Number} [invalidPermissionMessageTimeout=9000] - What the invalid permission message deletion timeout should be
  * @prop {Number} [argsMin=0] - Minimum arguments required to execute the command
@@ -28,7 +33,7 @@ class CommandOptions {
      *
      * @param {Command} command - The base command
      * @param {Object} [override={}] - - The specific options for this command (format - CommandOptions)
-     * @param {Function | String} override.invalidPermissionMessage - What the invalid permission message should be
+     * @param {(channel: Channel, member: Member) => String | String} override.invalidPermissionMessage - What the invalid permission message should be
      * @param {Boolean} override.sendPermissionMessage - Whether to trigger an error message on invalid permission (bot / user / custom etc)
      * @param {Number} override.invalidPermissionMessageTimeout - What the invalid permission message deletion timeout should be
      * @param {Number} override.argsMin - Minimum arguments required to execute the command
@@ -64,22 +69,52 @@ class CommandOptions {
 
         // invalid permissions
         if (typeof base.invalidPermissionMessage === 'string') {
+            /**
+             * @type {() => String}
+             */
             this.invalidPermissionMessage = () => base.invalidPermissionMessage;
         } else if (typeof base.invalidPermissionMessage === 'function') {
             this.invalidPermissionMessage = base.invalidPermissionMessage;
         } else {
             this.invalidPermissionMessage = null;
         }
+        /**
+         * @type {Boolean}
+         */
         this.sendPermissionMessage = !!base.sendPermissionMessage;
+        /**
+         * @type {Number}
+         */
         this.invalidPermissionMessageTimeout = base.invalidPermissionMessageTimeout !== undefined ? base.invalidPermissionMessageTimeout : 9000; // eslint-disable-line no-magic-numbers
  
+        /**
+         * @type {Number}
+         */
         this.argsMin = base.argsMin || 0;
+        /**
+         * @type {String}
+         */
         this.invalidUsageMessage = base.invalidUsageMessage !== undefined ? base.invalidUsageMessage : null;
+        /**
+         * @type {Boolean}
+         */
         this.sendUsageMessage = base.sendUsageMessage !== false;
   
+        /**
+         * @type {Boolean}
+         */
         this.deleteCommand = !!base.deleteCommand;
+        /**
+         * @type {Boolean}
+         */
         this.guildOnly = base.guildOnly !== false;
+        /**
+         * @type {Boolean}
+         */
         this.hidden = !!base.hidden;
+        /**
+         * @type {Number}
+         */
         this.cooldown = (base.cooldown === 0 || base.cooldown === null) ? 0 : (base.cooldown || 3000); // eslint-disable-line no-magic-numbers
     }
 
@@ -117,7 +152,7 @@ class CommandOptions {
     /**
      * Whether args for this command are correct or not (enough args).
      *
-     * @param {Array} args
+     * @param {Array<String>} args
      * @returns {Boolean}
      * @memberof CommandOptions
      */
@@ -128,7 +163,7 @@ class CommandOptions {
     /**
      * Whether we should send an invalid usage message or not (help command)
      *
-     * @param {Array} args
+     * @param {Array<String>} args
      * @returns {Boolean}
      * @memberof CommandOptions
      */

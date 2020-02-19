@@ -3,9 +3,21 @@ import AxonConfig from '../Structures/DataStructure/AxonConfig';
 import GuildConfig from '../Structures/DataStructure/GuildConfig';
 
 /**
+ * @typedef {String|Boolean|Object.<string, any>|Array<any>|Number|Date} updateDBVal
+ * @typedef {import('../Structures/DataStructure/AxonConfig')} AxonConfig
+ * @typedef {{
+ * id: String, prefix: String, createdAt: Date, updatedAt: Date, bannedUsers: Array<String>, bannedGuilds: Array<String>
+ * }} AxonConfigRaw
+ * @typedef {{
+ * guildID: string, prefixes: Array<String>, createdAt: Date, updatedAt: Date, modules: Array<String>, commands: Array<String>, listeners: Array<String>,
+ * ignoredUsers: Array<String>, ignoredRoles: Array<String>, ignoredChannels: Array<String>, modOnly: Boolean, modRoles: Array<String>, modUsers: Array<String>
+ * }} GuildConfigRaw
+ */
+
+/**
  * A schema designed use an InMemory solution in AxonCore
  *
- * @author VoidNulll
+ * @author VoidNull
  *
  * @class InMemoryProvider
  * @extends ADBProvider
@@ -15,6 +27,10 @@ class InMemoryProvider extends ADBProvider {
         return;
     }
 
+    /**
+     * @async
+     * @returns {Promise<AxonConfig>}
+     */
     async fetchAxon() {
         let { axonConfig } = this.axon;
         if (!axonConfig) {
@@ -23,6 +39,11 @@ class InMemoryProvider extends ADBProvider {
         return axonConfig;
     }
 
+    /**
+     * @async
+     * @param {String} gID Guild ID
+     * @returns {Promise<GuildConfig>}
+     */
     async fetchGuild(gID) {
         let guildConfig = this.axon.guildConfigs.get(gID);
         if (!guildConfig) {
@@ -31,6 +52,10 @@ class InMemoryProvider extends ADBProvider {
         return guildConfig;
     }
 
+    /**
+     * @async
+     * @returns {Promise<AxonConfig>}
+     */
     async initAxon() {
         return new AxonConfig(this.axon, {
             prefix: this.axon.settings.prefixes[0],
@@ -39,6 +64,11 @@ class InMemoryProvider extends ADBProvider {
         } );
     }
 
+    /**
+     * @async
+     * @param {String} gID Guild ID
+     * @returns {Promise<GuildConfig>}
+     */
     async initGuild(gID) {
         return new GuildConfig(this.axon, {
             guildID: gID,
@@ -48,14 +78,30 @@ class InMemoryProvider extends ADBProvider {
         } );
     }
 
+    /**
+     * @param {AxonConfig|AxonCOnfigRaw} axonSchema
+     * @returns {Promise<AxonConfig>}
+     */
     async saveAxon(axonSchema) {
         return new AxonConfig(this.axon, axonSchema);
     }
 
+    /**
+     * @param {String} gID Guild ID
+     * @param {GuildConfig|GuildConfigRaw} guildSchema
+     * @returns {Promise<GuildConfig>}
+     */
     async saveGuild(gID, guildSchema) {
         return new GuildConfig(this.axon, guildSchema);
     }
 
+    /**
+     * Update guild config
+     * @param {String} key Value to update
+     * @param {String} gID Guild ID
+     * @param {updateDBVal} value What the value should be updated to
+     * @returns {Promise<Boolean>} Whether the request was successful or not
+     */
     async updateGuild(key, gID, value) {
         const guildConf = await this.fetchGuild(gID);
         guildConf[key] = value;
@@ -64,6 +110,12 @@ class InMemoryProvider extends ADBProvider {
         return true;
     }
 
+    /**
+     * Update Axon config
+     * @param {String} key Value to update
+     * @param {updateDBVal} value What the value should be updated to
+     * @returns {Promise<Boolean>} Whether the request was successful or not
+     */
     async updateAxon(key, value) {
         const axonConf = await this.fetchAxon();
         axonConf[key] = value;

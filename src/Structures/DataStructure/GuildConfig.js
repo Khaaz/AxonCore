@@ -1,7 +1,19 @@
 /**
+ * @typedef {import('../../AxonClient').default} AxonClient
+ * @typedef {import('../Module').default} Module
+ * @typedef {import('../Command/Command').default} Command
+ * @typedef {import('../Event/Listener').default} Listener
+ * @typedef {{
+ * guildID?: String, prefixes?: Array<String>, createdAt?: Date, updatedAt?: Date, modules?: Array<String>
+ * commands: Array<String>, listeners: Array<String>, ignoredUsers: Array<String>, ignoredRoles: Array<String>,
+ * ignoredChannels: Array<String>, modOnly: Boolean, modRoles: Array<String>, modUsers: Array<String>
+ * }} GConfig
+ */
+
+/**
  * Default GuildConfig data structure used in AxonCore.
  * This class can be extended and changed as you want.
- * All methods flagged with "is used internally" can be overriden but need to keep the same name.
+ * All methods flagged with "is used internally" can be overridden but need to keep the same name.
  *
  * @author KhaaZ
  *
@@ -13,9 +25,9 @@
  * @prop {Array<String>} commands - Guild disabled commands: Array of commands labels
  * @prop {Array<String>} listeners - Guild disabled listeners: Array of listeners labels
  * @prop {Date} createdAt - Creation of the guild Config
- * @prop {date} updatedAt - Last update of the guild Config
+ * @prop {Date} updatedAt - Last update of the guild Config
  * @prop {Array<String>} ignoredUsers - Users that cannot use commands in this guild: Users ids
- * @prop {Array<String>} ignoredRoles - Roles that cannot use commmands in this guild: Roles ids
+ * @prop {Array<String>} ignoredRoles - Roles that cannot use commands in this guild: Roles ids
  * @prop {Array<String>} ignoredChannels - Channels where commands cannot be used in this guild: Channels ids
  * @prop {Boolean} modOnly - Whether the guild accept commands from only mods+ or everyone
  * @prop {Array<String>} modRoles - Roles able to execute mod commands: Roles ids
@@ -26,7 +38,7 @@ class GuildConfig {
      * Creates an instance of GuildConfig.
      *
      * @param {AxonClient} axon
-     * @param {Object} values - DB values for the current guild
+     * @param {GConfig} values - DB values for the current guild
      * @memberof GuildConfig
      */
     constructor(axon, values) {
@@ -54,7 +66,7 @@ class GuildConfig {
 
     //
     // **** CHECKER - used IN the framework **** //
-    /* Can be overriden/changed but need to exists / keep the same name */
+    /* Can be overridden/changed but need to exists / keep the same name */
     //
 
     /**
@@ -85,7 +97,8 @@ class GuildConfig {
      * Check if the user/role/channel is ignored on the specified guild.
      *
      * @param {String} userID
-     * @returns {Boolean} True if the user is one ofthe ignored users
+     * @returns {Boolean} True if the user is one of the ignored users
+     *
      * @memberof GuildConfig
      */
     isUserIgnored(userID) {
@@ -122,7 +135,7 @@ class GuildConfig {
      * Check if the module is disabled on the specified guild.
      * *used internally*
      *
-     * @param {Command} command - The command object
+     * @param {Module} module - The module object
      * @returns {Boolean} Whether the module is disabled or not
      * @memberof GuildConfig
      */
@@ -198,8 +211,8 @@ class GuildConfig {
      * Update the guild config in the cache and DB.
      * *not used internally*
      *
-     * @param {Object} guildConfig - Guild schema Object
-     * @returns {Promise<Object>} Updated guildSchema
+     * @param {GConfig} guildConfig - Guild schema Object
+     * @returns {Promise<GuildConfig>} Updated guildSchema
      * @memberof GuildConfig
      */
     async update(guildConfig) {

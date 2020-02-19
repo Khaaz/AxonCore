@@ -5,6 +5,15 @@ import Utils from '../../../Utility/Utils';
 import AxonError from '../../../Errors/AxonError';
 
 /**
+ * @typedef {import('eris').Client} Client
+ * @typedef {import('eris').User} User
+ * @typedef {import('eris').Member} Member
+ * @typedef {import('eris').Role} Role
+ * @typedef {import('eris').GuildChannel} Channel
+ * @typedef {import('eris').Guild} Guild
+ */
+
+/**
  * Static Resolver class for Eris.AxonCore
  *
  * @author KhaaZ
@@ -16,9 +25,10 @@ class ErisResolver extends Resolver {
     /**
      * Resolve a user within all the users the bot has.
      *
-     * @param {Object<Eris.Client>} client - The bot client
-     * @param {Array|String} args - Array of arguments resolved by the command.
-     * @returns {Object|null} The user object / Null if not found / Error
+     * @param {Client} client - The bot client
+     * @param {Array<String>|String} args - Array of arguments resolved by the command.
+     * @returns {User|null} The user object / Null if not found / Error
+     * @memberof ErisResolver
      */
     static user(client, args) {
         // Checking if all the arguments are supplied.
@@ -52,8 +62,9 @@ class ErisResolver extends Resolver {
      * Resolve a member within a guild.
      *
      * @param {Guild} guild - Object Guild resolved by the command.
-     * @param {Array|String} args - Array of arguments resolved by the command.
-     * @returns {Object|null} The member object / Null if not found / Error
+     * @param {Array<String>|String} args - Array of arguments resolved by the command.
+     * @returns {Member|null} The member object / Null if not found / Error
+     * @memberof ErisResolver
      */
     static member(guild, args) {
         // Checking if all the arguments are supplied.
@@ -91,8 +102,9 @@ class ErisResolver extends Resolver {
      * Resolve a role within a guild.
      *
      * @param {Guild} guild - Object Guild resolved by the command.
-     * @param {Array|String} args - Array of arguments resolved by the command.
-     * @returns {Object|null} The role object / Null if not found / Error
+     * @param {Array<String>|String} args - Array of arguments resolved by the command.
+     * @returns {Role|null} The role object / Null if not found / Error
+     * @memberof ErisResolver
      */
     static role(guild, args) {
         // Checking if all the arguments are supplied.
@@ -126,8 +138,9 @@ class ErisResolver extends Resolver {
      * Resolve a channel within a guild.
      *
      * @param {Guild} guild - Object Guild resolved by the command.
-     * @param {Array|String} args - Array of arguments resolved by the command.
-     * @returns {Object|null} The channel object / Null if not found / Error
+     * @param {Array<String>|String} args - Array of arguments resolved by the command.
+     * @returns {Channel|null} The channel object / Null if not found / Error
+     * @memberof ErisResolver
      */
     static channel(guild, args) {
         // Checking if all the arguments are supplied.
@@ -160,9 +173,10 @@ class ErisResolver extends Resolver {
     /**
      * Resolve a guild within all guilds the bot is in.
      *
-     * @param {Object<Eris.Client>} client - The bot client
-     * @param {Array} args - Array with guild name/ID
-     * @returns {Object|null} The guild object / Null if not found / Error
+     * @param {Client} client - The bot client
+     * @param {Array<String>} args - Array with guild name/ID
+     * @returns {Guild|null} The guild object / Null if not found / Error
+     * @memberof ErisResolver
      */
     static guild(client, args) {
         // Checking if all the arguments are supplied.

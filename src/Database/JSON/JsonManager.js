@@ -9,23 +9,39 @@ const readFileAsync = util.promisify(fs.readFile);
 const writeFileAsync = util.promisify(fs.writeFile);
 
 /**
+ * @typedef {{id: String; prefix: String; createdAt: String; updatedAt: String; bannedGuilds: Array<String>; bannedUsers: Array<String>}} AxonJSON
+ * @typedef {{
+ * guildID: String; prefixes: Array<String>; modules: Array<String>; commands: Array<String>; eventListeners: Array<String>; createdAt: String; updatedAt: String;
+ * ignoredUsers: Array<String>; ignoredRoles: Array<String>; ignoredChannels: Array<String>; modOnly: Boolean; modRoles: Array<String>; modUsers: Array<String>;
+ * }} GuildJSON
+ * @typedef {String|Boolean|Object.<string, any>|Array<any>|Number|Date} updateDBVal
+ */
+
+/**
  * Manager class for handling Json database
  * @TODO Add a mutex / queue system per document/guild to reduce possibility of corruption
  *
  * @author KhaaZ, Olybear
  *
- * @class Manager
+ * @class JsonManager
  */
-class Manager {
+class JsonManager {
     /**
-     * Creates an instance of Manager.
+     * Creates an instance of JsonManager.
      *
      * @param {String} basePath - The path / location where to create and use the database
-     * @memberof Manager
+     *
+     * @memberof JsonManager
      */
     constructor(basePath) {
         // default schemas values
+        /**
+         * @type {AxonJSON}
+         */
         this._axonDefault = axonDefault;
+        /**
+         * @type {GuildJSON}
+         */
         this._guildDefault = guildDefault;
 
         if (!fs.existsSync(basePath) ) {
@@ -38,6 +54,9 @@ class Manager {
         this._axonPath = `${basePath}axon.json` || `${__dirname}/Database/axon.json`;
 
         this.axonExecutor = new AsyncQueue();
+        /**
+         * @type {Object.<string, AsyncQueue>}
+         */
         this.guildExecutors = {};
     }
 
@@ -45,7 +64,7 @@ class Manager {
      * Returns default data structure for axon
      *
      * @readonly
-     * @memberof Manager
+     * @memberof JsonManager
      */
     get axonDefault() {
         return this._axonDefault;
@@ -55,12 +74,18 @@ class Manager {
      * Returns default data structure for guild
      *
      * @readonly
-     * @memberof Manager
+     * @memberof JsonManager
      */
     get guildDefault() {
         return this._guildDefault;
     }
 
+    /**
+     * Get guild executor
+     * @param {String} guildID Guild ID
+     * @returns {AsyncQueue}
+     * @memberof JsonManager
+     */
     getExecutor(guildID) {
         let executor = this.guildExecutors[guildID];
 
@@ -74,6 +99,12 @@ class Manager {
 
     // **** CORE **** //
 
+    /**
+     * Parse JSON string as object/array
+     * @param {String} string JSON string
+     * @returns {Object.<string, any>|Array<any>|String} Parsed array/object or input string if failed
+     * @memberof JsonManager
+     */
     toJSON(string) {
         if (!string) {
             return null;
@@ -85,6 +116,12 @@ class Manager {
         }
     }
 
+    /**
+     * Parse object/array as JSON string
+     * @param {Object|Array} json Object/array to be parsed into JSON string
+     * @returns {String|Object.<string, any>|Array<any>} JSON string or parsed array/object if failed
+     * @memberof JsonManager
+     */
     toString(json) {
         if (!json) {
             return null;
@@ -96,6 +133,10 @@ class Manager {
         }
     }
 
+    /**
+     * Get guild config path
+     * @param {String} gID Guild ID
+     */
     _buildPath(gID) {
         return `${this._basePath}${gID}.json`;
     }
@@ -105,7 +146,8 @@ class Manager {
      *
      * @param {String} path
      * @returns {Promise<String|null>}
-     * @memberof Manager
+     *
+     * @memberof JsonManager
      */
     async readFile(path) {
         if (!path) {
@@ -119,11 +161,13 @@ class Manager {
     }
 
     /**
-     * Read a file and return the string of the file content or null
+     * Write a file
      *
      * @param {String} path
-     * @returns {Promise<String|null>}
-     * @memberof Manager
+     * @param {String} [content='{}']
+     * @returns {Promise<Boolean>} Whether or not the task completed successfully
+     *
+     * @memberof JsonManager
      */
     async writeFile(path, content = '{}') {
         if (!path) {
@@ -146,8 +190,10 @@ class Manager {
 
     /**
      * Create a file and schema for Axon global file.
-     * @returns {Promise<Object>} The newly created Schema || null
-     * @memberof Manager
+     * @param {String} defaultPrefix Default prefix
+     * @returns {Promise<AxonJSON>} The newly created Schema || null
+     *
+     * @memberof JsonManager
      */
     async createAxonSchema(defaultPrefix) {
         // create schema with default / basic values
@@ -158,7 +204,7 @@ class Manager {
 
         const res = await this.writeFile(this._axonPath, this.toString(axonSchema) );
         if (res) {
-            return this.axonDefault;
+            return axonSchema;
         }
         return null;
     }
@@ -166,10 +212,11 @@ class Manager {
     /**
      * Create a file and schema for the given guild.
      *
-     * @param {String} gID
-     * @param {Array} prefixes
-     * @returns {Promise<Object>} The newly created Schema || null
-     * @memberof Manager
+     * @param {Array<String>} prefixes Array of prefixes
+     * @param {String} gID Guild ID
+     * @returns {Promise<GuildJSON>} The newly created Schema || null
+     *
+     * @memberof JsonManager
      */
     async createGuildSchema(prefixes, gID) {
         // create schema with default / basic values
@@ -191,8 +238,9 @@ class Manager {
     /**
      * Fetch the axon schema
      *
-     * @returns {Promise<Object>} AxonSchema || null
-     * @memberof Manager
+     * @returns {Promise<AxonJSON>} AxonSchema || null
+     *
+     * @memberof JsonManager
      */
     async fetchAxonSchema() {
         const res = await this.readFile(this._axonPath);
@@ -205,9 +253,10 @@ class Manager {
     /**
      * Fetch the guild schema for the given guild
      *
-     * @param {String} gID
-     * @returns {Promise<Object>} GuildSchema || null
-     * @memberof Manager
+     * @param {String} gID Guild ID
+     * @returns {Promise<GuildJSON>} GuildSchema || null
+     *
+     * @memberof JsonManager
      */
     async fetchGuildSchema(gID) {
         const res = await this.readFile(this._buildPath(gID) );
@@ -222,11 +271,12 @@ class Manager {
     /**
      * Update the schema with the given value for the given guild
      *
-     * @param {String} gID
-     * @param {String} key
-     * @param {Object} value - The value to update for the given key (can be anything)
-     * @returns {Promise<Object>} GuildSchema || null
-     * @memberof Manager
+     * @param {String} gID Guild ID
+     * @param {String} key Value to update
+     * @param {updateDBVal} value - The value to update for the given key (can be anything)
+     * @returns {Promise<GuildJSON>} GuildSchema || null
+     *
+     * @memberof JsonManager
      */
     updateGuildKey(gID, key, value) {
         return this.getExecutor(gID).add(async() => {
@@ -242,10 +292,11 @@ class Manager {
     /**
      * Update the schema with the given value
      *
-     * @param {String} key
+     * @param {String} key Value to update
      * @param {Object} value - The value to update for the given key (can be anything)
-     * @returns {Promise<Object>} AxonSchema || null
-     * @memberof Manager
+     * @returns {Promise<AxonJSON>} AxonSchema || null
+     *
+     * @memberof JsonManager
      */
     updateAxonKey(key, value) {
         return this.axonExecutor.add(async() => {
@@ -263,9 +314,10 @@ class Manager {
     /**
      * Write the updated schema in the file.
      *
-     * @param {Object} schema
-     * @returns {Promise<Object>} AxonSchema || null
-     * @memberof Manager
+     * @param {AxonJSON} schema AxonSchema
+     * @returns {Promise<AxonJSON>} AxonSchema || null
+     *
+     * @memberof JsonManager
      */
     async writeAxonSchema(schema) {
         schema.updatedAt = new Date();
@@ -280,10 +332,11 @@ class Manager {
     /**
      * Write the updated schema in the file (for the given guild).
      *
-     * @param {String} gID
-     * @param {Object} schema
-     * @returns {Promise<Object>} GuildSchema || null
-     * @memberof Manager
+     * @param {String} gID Guild ID
+     * @param {GuildJSON} schema GuildSchema
+     * @returns {Promise<GuildJSON>} GuildSchema || null
+     *
+     * @memberof JsonManager
      */
     async writeGuildSchema(gID, schema) {
         schema.updatedAt = new Date();
@@ -296,4 +349,4 @@ class Manager {
     }
 }
 
-export default Manager;
+export default JsonManager;

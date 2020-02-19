@@ -6,15 +6,23 @@ import Validator from '../Validator';
 import AxonError from '../../Errors/AxonError';
 
 /**
+ * @typedef {import('../../AxonClient').default} AxonClient
+ */
+
+/**
  * Load modules in AxonClient.
  * Validate the module validity entirely.
  *
  * @author KhaaZ
  *
  * @class ModuleLoader
- * @extends ALoader
+ * @extends ALoader<AxonClient>
  */
 class ModuleLoader extends ALoader {
+    /**
+     * Creates an instance of ModuleLoader
+     * @param {AxonClient} axonClient
+     */
     // eslint-disable-next-line no-useless-constructor
     constructor(axonClient) {
         super(axonClient);
@@ -71,7 +79,7 @@ class ModuleLoader extends ALoader {
      * Load all modules in the client.
      * Instantiate all modules.
      *
-     * @param {Module} modules
+     * @param {Object.<string, Module>} modules
      * @returns {Boolean}
      * @memberof ModuleLoader
      */

@@ -4,12 +4,18 @@ import { EventEmitter } from 'events';
 import Collection from '../Collection';
 
 /**
- * Collect bunch of message object according to choosen options
+ * @typedef {import('../../AxonClient').default} AxonClient
+ */
+
+/**
+ * Collect bunch of message object according to chosen options
  *
- * @author VoidNulll
+ * @author VoidNull
  *
  * @class MessageCollector
  * @extends EventEmitter
+ *
+ * @prop {Collection<Message>} messages
  */
 class MessageCollector extends EventEmitter {
     /**
@@ -20,7 +26,7 @@ class MessageCollector extends EventEmitter {
      * @param {Number} [options.count=100] - The amount of messages to collect before automatically ending
      * @param {Boolean} [options.ignoreBots=true] - Whether or not to ignore bots
      * @param {String} [options.uID] - The user id to listen for (listens to all messages if not specified)
-     * @param {Boolean} [options.caseSensitive=false] - Whether or not to return messages with content lowercased. Default: content unchanged
+     * @param {Boolean} [options.caseSensitive=false] - Whether or not to return messages with lowercase content. Default: content unchanged
      *
      * @example
      * const collector = new MessageCollector(this.axon, { count: 10, ignoreBots: false });
@@ -35,20 +41,46 @@ class MessageCollector extends EventEmitter {
         };
         this._axon = client;
 
+        /**
+         * @type {{timeout?: Number, count?: Number, ignoreBots?: Boolean, uID?: String, caseSensitive?: Boolean}}
+         */
         this._actualOptions = {};
 
+        /**
+         * @type {(msg: Message) => void}
+         */
         this._boundMsgEvent = this._onMsgCreate.bind(this);
+        /**
+         * @type {(msg: Message) => void}
+         */
         this._boundDelEvent = this._onMsgDelete.bind(this);
+        /**
+         * @type {(msg: Message, oldMsg: Message) => void}
+         */
         this._boundEditEvent = this._onMsgEdit.bind(this);
+        /**
+         * @type {() => void}
+         */
         this._boundCollectEvent = this._onCollectEvent.bind(this);
 
+        /**
+         * @type {Collection<Message>}
+         */
         this.messages = new Collection();
     }
 
+    /**
+     * @type {AxonClient}
+     * @readonly
+     */
     get axon() {
         return this._axon;
     }
 
+    /**
+     * @type {BotClient}
+     * @readonly
+     */
     get client() {
         return this._axon.botClient;
     }
@@ -63,9 +95,9 @@ class MessageCollector extends EventEmitter {
      * @param {Number} [options.count=100] The amount of messages to collect before automatically ending
      * @param {Boolean} [options.ignoreBots=true] Whether or not to ignore bots
      * @param {String} [options.uID] The user id to listen for (listens to all messages if not specified)
-     * @param {Boolean} [options.caseSensitive=true] Whether or not to return messages with content lowercased. Default: content not changed
+     * @param {Boolean} [options.caseSensitive=true] Whether or not to return messages with lowercase content. Default: content not changed
      *
-     * @returns {Promise} Map of messages collected.
+     * @returns {Promise<Message>} Map of messages collected.
      *
      * @example
      * const messages = await collector.run(msg.channel, { caseInsensitive: false });
@@ -154,7 +186,7 @@ class MessageCollector extends EventEmitter {
             return;
         }
         if (!this._actualOptions.caseSensitive) { // If caseSensitive
-            msg.content = msg.content.toLowerCase(); // Make the content lowercased
+            msg.content = msg.content.toLowerCase(); // Make the lowercase content
         }
         this.messages.add(msg.id, msg);
         this.emit('collect', msg);
@@ -166,7 +198,7 @@ class MessageCollector extends EventEmitter {
      *
      * @param {String} mID The id of the message you want to remove
      *
-     * @returns {Collection} Collection of messages collected, now excluding the removed message.
+     * @returns {Collection<Message>} Collection of messages collected, now excluding the removed message.
      *
      * @example
      *

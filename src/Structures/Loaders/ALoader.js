@@ -7,6 +7,7 @@ import NotImplementedException from '../../Errors/NotImplementedException';
  * Module Loader, Command Loader, Listener Loader
  *
  * @author KhaaZ
+ * @template T
  *
  * @abstract
  * @class ALoader
@@ -17,7 +18,7 @@ class ALoader {
     /**
      * Creates an instance of ALoader.
      *
-     * @param {Object} loadIn
+     * @param {T} loadIn
      * @memberof ALoader
      */
     constructor(loadIn) {
@@ -31,6 +32,7 @@ class ALoader {
      * Loads the object given in parameter.
      *
      * @param {Object} toLoad - The Object to load
+     * @returns {Boolean} - Whether it worked
      * @memberof ALoader
      */
     load(toLoad) {
@@ -41,6 +43,7 @@ class ALoader {
      * Loads all objects given in parameters.
      *
      * @param {Object|Array} toLoad - All Objects to load
+     * @returns {Boolean} - Whether it worked
      * @memberof ALoader
      */
     // eslint-disable-next-line no-unused-vars
@@ -52,6 +55,7 @@ class ALoader {
      * Unload the object given in parameter.
      *
      * @param {String} toUnload
+     * @returns {Boolean} - Whether it worked
      * @memberof ALoader
      */
     unload(toUnload) {

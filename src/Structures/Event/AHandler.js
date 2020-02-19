@@ -2,6 +2,11 @@ import NoAbstractInstanceException from '../../Errors/NoAbstractInstanceExceptio
 import NotImplementedException from '../../Errors/NotImplementedException';
 
 /**
+ * @typedef {import('../../AxonClient').default} AxonClient
+ * @typedef {import('./Listener').default} Listener
+ */
+
+/**
  * Abstract class for handlers.
  * Events root handlers.
  *
@@ -73,7 +78,7 @@ class AHandler {
     /**
      * Takes the event parameters as arguments and returns the guild ID if possible or null.
      *
-     * @param {Object} args - All parameters for this event
+     * @param {...any} args - All parameters for this event
      * @returns {String|null} The guild ID
      * @memberof AHandler
      */

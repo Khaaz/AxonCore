@@ -4,6 +4,11 @@ import JsonProvider from './JsonProvider';
 import { DB_TYPES } from './../Utility/Constants/AxonEnums';
 
 /**
+ * @typedef {import('../AxonClient').default} AxonClient
+ * @typedef {import('../AxonOptions').default} AxonOptions
+ */
+
+/**
  * Database Selector
  * Use require to dynamically load a Database Provider depending on installed dependencies.
  *
@@ -13,7 +18,12 @@ import { DB_TYPES } from './../Utility/Constants/AxonEnums';
  * @extends ASelector
  */
 class DBSelector extends ASelector {
-    static select(axonOptions, axon) {
+    /**
+     * Select the DB to use
+     * @param {AxonClient} axonClient AxonClient
+     * @param {AxonOptions} axonOptions AxonOptions
+     */
+    static select(axonClient, axonOptions) {
         let DBProvider;
 
         // eslint-disable-next-line no-shadow
@@ -21,19 +31,19 @@ class DBSelector extends ASelector {
 
         switch (db) {
             // No database
-            case DB_TYPES.DBLESS:
+            case DB_TYPES.IN_MEMORY:
             default: {
                 const InMemoryProvider = require('./InMemoryProvider').default;
-                DBProvider = new InMemoryProvider(axon);
-                axon.log('INFO', 'Selected Database: Database-Less');
-                axon.log('WARN', 'Configs will not change.');
+                DBProvider = new InMemoryProvider(axonClient);
+                axonClient.log('INFO', 'Selected Database: In-Memory');
+                axonClient.log('WARN', 'Configs will not change.');
                 break;
             }
 
             // Json Database
             case DB_TYPES.JSON: {
-                DBProvider = new JsonProvider(axon);
-                axon.log('INFO', 'Selected Database: JSON DB.');
+                DBProvider = new JsonProvider(axonClient);
+                axonClient.log('INFO', 'Selected Database: JSON DB.');
                 break;
             }
 
@@ -41,19 +51,19 @@ class DBSelector extends ASelector {
             case DB_TYPES.MONGO: {
                 try {
                     const MongoService = require('./MongoProvider').default;
-                    DBProvider = new MongoService(axon);
-                    axon.log('INFO', 'Selected Database: MongoDB.');
+                    DBProvider = new MongoService(axonClient);
+                    axonClient.log('INFO', 'Selected Database: MongoDB.');
                 } catch (err) {
-                    DBProvider = new JsonProvider(axon);
-                    axon.log('WARN', 'Mongoose wasn\'t found, using JSON DB instead.');
-                    axon.log('INFO', 'Selected Database: JSON DB.');
+                    DBProvider = new JsonProvider(axonClient);
+                    axonClient.log('WARN', 'Mongoose wasn\'t found, using JSON DB instead.');
+                    axonClient.log('INFO', 'Selected Database: JSON DB.');
                 }
                 break;
             }
         }
 
         DBProvider.init(axonOptions);
-        axon.log('NOTICE', 'DB ready.');
+        axonClient.log('NOTICE', 'DB ready.');
         return DBProvider;
     }
 }

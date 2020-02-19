@@ -6,6 +6,11 @@ import DjsInterface from './discordjs/DjsInterface';
 import { LIBRARY_TYPES } from '../Utility/Constants/AxonEnums';
 
 /**
+ * @typedef {import('../AxonClient').default} AxonClient
+ * @typedef {import('../AxonOptions').default} AxonOptions
+ */
+
+/**
  * Library Handler
  * Use eris or discord.js.
  *
@@ -15,6 +20,10 @@ import { LIBRARY_TYPES } from '../Utility/Constants/AxonEnums';
  * @extends ASelector
  */
 class LibrarySelector extends ASelector {
+    /**
+     * @param {AxonClient} axon
+     * @param {AxonOptions} axonOptions
+     */
     static select(axon, axonOptions) {
         let libraryInterface;
 

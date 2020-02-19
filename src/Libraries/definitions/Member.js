@@ -2,7 +2,15 @@
 import NoAbstractInstanceException from '../../Errors/NoAbstractInstanceException';
 import NotImplementedException from '../../Errors/NotImplementedException';
 
+/**
+ * @typedef {import('./LibraryInterface').default} LibraryInterface
+ */
+
 class Member {
+    /**
+     * Creates an instance of Member
+     * @param {LibraryInterface} lib
+     */
     constructor(lib) {
         this.lib = lib;
         if (this.constructor === 'Member') {
@@ -12,6 +20,12 @@ class Member {
     
     // **** GETTERS / SETTERS **** //
 
+    /**
+     * Guild member ID
+     * @param {Member} member
+     * @returns {String}
+     * @memberof Member
+     */
     getID(member) {
         return member.id;
     }
