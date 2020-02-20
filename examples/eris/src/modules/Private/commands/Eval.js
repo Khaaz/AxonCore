@@ -12,6 +12,7 @@ import {
     Embed,
     Prompt,
     MessageCollector,
+    Stack,
     Queue,
     FunctionQueue,
     AutoQueue,

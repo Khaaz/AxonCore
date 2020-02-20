@@ -63,6 +63,7 @@ export { default as Prompt } from './src/Utility/Discord/Prompt';
 export { default as MessageCollector } from './src/Utility/Discord/MessageCollector';
 export { default as ReactionCollector } from './src/Utility/Discord/ReactionCollector';
 // External
+export { default as Stack } from './src/Utility/External/Stack';
 export { default as Queue } from './src/Utility/External/Queue';
 export { default as FunctionQueue } from './src/Utility/External/FunctionQueue';
 export { default as AutoQueue } from './src/Utility/External/AutoQueue';
