@@ -155,5 +155,4 @@ export declare class Collection<T> extends Map<string | number, T> {
     public apply<U>(key: string, func: 'reduce', args: [(accumulator: U, val: T) => U, U] ): Collection<U>;
     public apply(key: string, func: 'update', args: [string, T] ): Collection<T>;
     public apply(key: string, func: 'remove', args: [string] ): Collection<T | null>;
-    public apply(key: string, func: 'toObject'): Collection<T>;
 }
