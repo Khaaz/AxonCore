@@ -1,6 +1,10 @@
 import Queue from './Queue';
 
 /**
+ * @typedef {import('./Queue').default} Queue
+ */
+
+/**
  * This default FunctionQueue works in a synchronous fashion.
  * It will execute all synchronous functions sequentially.
  * Any error will be caught and unless specified otherwise won't break the FunctionQueue execution.
@@ -10,7 +14,9 @@ import Queue from './Queue';
  *
  * @class FunctionQueue
  *
- * @prop {Boolean} [stopOnError=false] Whether to stop the queue execution on error.
+ * @prop {Queue} _functions - The function queue
+ * @prop {Boolean} [_running=false] - Whether the queue is running.
+ * @prop {Boolean} [stopOnError=false] - Whether to stop the queue execution on error.
  */
 class FunctionQueue {
     /**
@@ -21,7 +27,7 @@ class FunctionQueue {
      */
     constructor(stopOnError = false) {
         /**
-         * @type {Array<Function>}
+         * @type {Queue<Function>}
          */
         this._functions = new Queue();
         this._running = false;
