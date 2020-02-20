@@ -248,8 +248,8 @@ class Command extends Base {
 
         if (isAdmin) {
             if (!isOwner && !this.axonUtils.isBotOwner(userID)
-                && this.permissions.staff.needed.length > 0
-                && this.permissions.staff.needed.filter(e => !this.axon.staff.owners.includes(e) ).length === 0) { // ONLY FOR OWNER
+                && this.permissions.staff.permissions.author.length > 0
+                && this.permissions.staff.permissions.author.filter(e => !this.axon.staff.owners.includes(e) ).length === 0) { // ONLY FOR OWNER
                 return new CommandContext(this, msg, {
                     executed: false,
                     executionType: CommandContext.getExecutionType(isAdmin, isOwner),
@@ -409,8 +409,8 @@ class Command extends Base {
             perm = '`Server Manager`';
         } else if (this.permissions.serverMod) {
             perm = '`Server Mod`';
-        } else if (this.permissions.user.needed.length > 0) {
-            perm = this.permissions.user.needed
+        } else if (this.permissions.author.needed.length > 0) {
+            perm = this.permissions.author.permissions.author
                 .map(p => `\`${this.library.enums.PERMISSIONS_NAMES[p]}\``)
                 .join(', ');
         }

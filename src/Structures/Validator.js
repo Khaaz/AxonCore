@@ -55,21 +55,21 @@ class Validator {
         }
         module.axon.emit('debug', `[${module.label}] - Correct permissions name in Module.permissions.bot.`);
 
-        for (const perm of module.permissions.user.needed) {
+        for (const perm of module.permissions.author.needed) {
             if (!this.checkValidPermissionName(PERMS, perm) ) {
-                module.axon.emit('debug', `[${module.label}] - Invalid permissions name (${perm}) in Module.permissions.user.needed.`);
+                module.axon.emit('debug', `[${module.label}] - Invalid permissions name (${perm}) in Module.permissions.author.needed.`);
                 return false;
             }
         }
-        module.axon.emit('debug', `[${module.label}] - Correct permissions name in Module.permissions.user.needed.`);
+        module.axon.emit('debug', `[${module.label}] - Correct permissions name in Module.permissions.author.needed.`);
 
-        for (const perm of module.permissions.user.bypass) {
+        for (const perm of module.permissions.author.bypass) {
             if (!this.checkValidPermissionName(PERMS, perm) ) {
-                module.axon.emit('debug', `[${module.label}] - Invalid permissions name (${perm}) in Module.permissions.user.bypass.`);
+                module.axon.emit('debug', `[${module.label}] - Invalid permissions name (${perm}) in Module.permissions.author.bypass.`);
                 return false;
             }
         }
-        module.axon.emit('debug', `[${module.label}] - Correct permissions name in Module.permissions.user.bypass.`);
+        module.axon.emit('debug', `[${module.label}] - Correct permissions name in Module.permissions.author.bypass.`);
 
         return true;
     }
@@ -129,21 +129,21 @@ class Validator {
         }
         command.axon.emit('debug', `[${command.module.label}(${command.fullLabel})] - Correct permissions name in Command.permissions.bot.`);
 
-        for (const perm of command.permissions.user.needed) {
+        for (const perm of command.permissions.author.needed) {
             if (!this.checkValidPermissionName(PERMS, perm) ) {
-                command.axon.emit('debug', `[${command.module.label}(${command.fullLabel})] - Invalid permissions name (${perm}) in Command.permissions.user.needed.`);
+                command.axon.emit('debug', `[${command.module.label}(${command.fullLabel})] - Invalid permissions name (${perm}) in Command.permissions.author.needed.`);
                 return false;
             }
         }
-        command.axon.emit('debug', `[${command.module.label}(${command.fullLabel})] - Correct permissions name in Command.permissions.user.needed.`);
+        command.axon.emit('debug', `[${command.module.label}(${command.fullLabel})] - Correct permissions name in Command.permissions.author.needed.`);
 
-        for (const perm of command.permissions.user.bypass) {
+        for (const perm of command.permissions.author.bypass) {
             if (!this.checkValidPermissionName(PERMS, perm) ) {
-                command.axon.emit('debug', `[${command.module.label}(${command.fullLabel})] - Invalid permissions name (${perm}) in Command.permissions.user.bypass.`);
+                command.axon.emit('debug', `[${command.module.label}(${command.fullLabel})] - Invalid permissions name (${perm}) in Command.permissions.author.bypass.`);
                 return false;
             }
         }
-        command.axon.emit('debug', `[${command.module.label}(${command.fullLabel})] - Correct permissions name in Command.permissions.user.bypass.`);
+        command.axon.emit('debug', `[${command.module.label}(${command.fullLabel})] - Correct permissions name in Command.permissions.author.bypass.`);
         return true;
     }
 
