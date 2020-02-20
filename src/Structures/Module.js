@@ -108,6 +108,7 @@ class Module extends Base {
      * A Collection of all commands the module holds
      *
      * @readonly
+     * @type {Collection<Command>}
      * @memberof Module
      */
     get commands() {
@@ -118,6 +119,7 @@ class Module extends Base {
      * A Collection of all listeners the module holds
      *
      * @readonly
+     * @type {Collection<Listener>}
      * @memberof Module
      */
     get listeners() {
