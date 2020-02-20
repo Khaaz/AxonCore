@@ -9,7 +9,7 @@ import AxonError from '../../Errors/AxonError';
  * bot?: Array<String>, serverMod?: Boolean, serverManager?: Boolean, serverAdmin?: Boolean, serverOwner?: Boolean,
  * user?: {needed?: Array<String>, bypass?: Array<String>}, userIDs?: {needed?: Array<String>, bypass?: Array<String>},
  * rolesIDs?: {needed?: Array<String>, bypass?: Array<String>}, channelsIDs?: {needed?: Array<String>, bypass?: Array<String>},
- * staff?: {needed?: Array<String>, bypass?: Array<String>}, custom?: (i: Message) => boolean
+ * guildIDs?: {needed?: Array<String>, bypass?: Array<String>}, staff?: {needed?: Array<String>, bypass?: Array<String>}, custom?: (i: Message) => boolean
  * }} CommandPerms
  * @typedef {import('../../AxonClient').default} AxonClient
  * @typedef {import('../../Utility/Utils').default} Utils
@@ -42,6 +42,8 @@ import AxonError from '../../Errors/AxonError';
  * @prop {Array} [roleIDs.bypass=[]] - Discord role ids that will allow the user to execute the command no matter what
  * @prop {Array} [channelIDs.needed=[]] - Discord channel ids that the user needs to have in order to execute the command
  * @prop {Array} [channelIDs.bypass=[]] - Discord channel ids that will allow the user to execute the command no matter what
+ * @prop {Array} [guildIDs.needed=[]] - Discord guild ids that the user needs to have in order to execute the command
+ * @prop {Array} [guildIDs.bypass=[]] - Discord guild ids that will allow the user to execute the command no matter what
  * @prop {Array} [staff.needed=[]] - Axoncore staff ids that the user needs to have in order to execute the command
  * @prop {Array} [staff.bypass=[]] - Axoncore staff ids that will allow the user to execute the command no matter what
  * @prop {Function} [custom=()=>true] Custom function that returns a boolean. True will let the command execute, False will prevent the command from executing
@@ -114,6 +116,9 @@ class CommandPermissions {
             needed: (base.channelIDs && base.channelIDs.needed) || [],
             bypass: (base.channelIDs && base.channelIDs.bypass) || [],
         };
+        /**
+         * @type {{needed: Array<String>, bypass: Array<String>}}
+         */
         this.guildIDs = {
             needed: (base.guildIDs && base.guildIDs.needed) || [],
             bypass: (base.guildIDs && base.guildIDs.bypass) || [],
@@ -415,6 +420,33 @@ class CommandPermissions {
     }
 
     /**
+     * Set the channel IDs needed to be in to execute this command.
+     *
+     * @param {{needed: Array<String>, bypass: Array<String>}} [object={ bypass: [], needed: [] }] - Object of permissions
+     * @param {Boolean} [toAdd=false] - Whether to add the permissions to the existing permissions
+     * @returns {CommandPermissions}
+     * @memberof CommandPermissions
+     */
+    setGuildlIDs(object = { bypass: [], needed: [] }, toAdd = false) {
+        if (toAdd) {
+            if (object.bypass.length > 0) {
+                this.guildIDs.bypass = [...this.guildIDs.bypass, ...object.bypass];
+            }
+            if (object.needed.length > 0) {
+                this.guildIDs.needed = [...this.guildIDs.needed, ...object.needed];
+            }
+        } else {
+            if (object.bypass.length > 0) {
+                this.guildIDs.bypass = object.bypass;
+            }
+            if (object.needed.length > 0) {
+                this.guildIDs.needed = object.needed;
+            }
+        }
+        return this;
+    }
+
+    /**
      * Set the AxonCore staff members that can execute this command.
      *
      * @param {{needed: Array<String>, bypass: Array<String>}} [object={ bypass: [], needed: [] }] - Object of permissions
@@ -595,9 +627,9 @@ class CommandPermissions {
     }
 
     /**
-     * Check channelIDs [bypass]
+     * Check guildIDs [bypass]
      *
-     * @param {Channel} channel
+     * @param {Guild} guild
      * @returns {Boolean}
      * @memberof CommandPermissions
      */
@@ -609,9 +641,9 @@ class CommandPermissions {
     }
 
     /**
-     * Check channelIDs [needed]
+     * Check guildIDs [needed]
      *
-     * @param {Channel} channel
+     * @param {Guild} guild
      * @returns {Boolean}
      * @memberof CommandPermissions
      */
