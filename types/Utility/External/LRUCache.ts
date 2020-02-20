@@ -26,7 +26,7 @@ export declare class LRUCache<T> {
     /** Current size of the LRU */
     public size: number;
     public head: Node<T> | null;
-    public queue: Node<T> | null;
+    public tail: Node<T> | null;
     /** The Collection holding the cache (private, handled by the LRU structure) */
     private _cache: Collection<T>;
     /**
