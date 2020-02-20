@@ -11,7 +11,7 @@ class GuildCreate extends Listener {
 
         this.enabled = true;
 
-        this.infos = {
+        this.info = {
             owners: ['KhaaZ'],
             description: 'Guild Create event',
         };

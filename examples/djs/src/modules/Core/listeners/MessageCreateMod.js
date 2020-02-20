@@ -11,7 +11,7 @@ class MessageCreateMod extends Listener {
 
         this.enabled = true;
 
-        this.infos = {
+        this.info = {
             owners: ['KhaaZ'],
             description: 'Log Message Create events',
         };
