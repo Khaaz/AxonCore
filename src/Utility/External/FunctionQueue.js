@@ -1,21 +1,21 @@
 /**
- * This default Queue works in a synchronous fashion.
+ * This default FunctionQueue works in a synchronous fashion.
  * It will execute all synchronous functions sequentially.
- * Any error will be caught and unless specified otherwise won't break the queue execution.
- * The queue can be auto executed on add or the execution can be delayed.
+ * Any error will be caught and unless specified otherwise won't break the FunctionQueue execution.
+ * The FunctionQueue can be auto executed on add or the execution can be delayed.
  *
  * @author KhaaZ
  *
- * @class Queue
+ * @class FunctionQueue
  *
  * @prop {Boolean} [stopOnError=false] Whether to stop the queue execution on error.
  */
-class Queue {
+class FunctionQueue {
     /**
-     * Creates an instance of Queue.
+     * Creates an instance of FunctionQueue.
      *
      * @param {Boolean} [stopOnError=false]
-     * @memberof Queue
+     * @memberof FunctionQueue
      */
     constructor(stopOnError = false) {
         /**
@@ -28,8 +28,8 @@ class Queue {
     }
 
     /**
-     * Execute the Queue
-     * @memberof Queue
+     * Execute the FunctionQueue
+     * @memberof FunctionQueue
      */
     exec() {
         if (this._functions.length > 0) {
@@ -52,13 +52,13 @@ class Queue {
     }
 
     /**
-     * Adds a function to the queue.
+     * Adds a function to the FunctionQueue.
      * Automatically will wrap the function in a closure to keep the function context.
      *
      * @param {Function} func - The function to run
-     * @param {Boolean} [toExec=true] - Whether to auto exec the queue on add or not.
+     * @param {Boolean} [toExec=true] - Whether to auto exec the FunctionQueue on add or not.
      * @param {...any} args - All arguments the function needs
-     * @memberof Queue
+     * @memberof FunctionQueue
      */
     add(func, toExec = true, ...args) {
         const fn = this.createClosure(func, ...args);
@@ -80,4 +80,4 @@ class Queue {
     }
 }
 
-export default Queue;
+export default FunctionQueue;

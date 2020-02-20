@@ -63,7 +63,7 @@ export { default as Prompt } from './src/Utility/Discord/Prompt';
 export { default as MessageCollector } from './src/Utility/Discord/MessageCollector';
 export { default as ReactionCollector } from './src/Utility/Discord/ReactionCollector';
 // External
-export { default as Queue } from './src/Utility/External/Queue';
+export { default as FunctionQueue } from './src/Utility/External/FunctionQueue';
 export { default as AutoQueue } from './src/Utility/External/AutoQueue';
 export { default as AsyncQueue } from './src/Utility/External/AsyncQueue';
 export { default as LRUCache } from './src/Utility/External/LRUCache';

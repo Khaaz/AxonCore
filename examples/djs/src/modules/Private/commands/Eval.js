@@ -12,7 +12,7 @@ import {
     Embed,
     Prompt,
     MessageCollector,
-    Queue,
+    FunctionQueue,
     AutoQueue,
     AsyncQueue,
 } from 'axoncore';

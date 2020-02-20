@@ -1,4 +1,4 @@
-import Queue from './Queue';
+import FunctionQueue from './FunctionQueue';
 
 /**
  * This data structure is a queue that will run every function one by one sequentially.
@@ -10,9 +10,9 @@ import Queue from './Queue';
  * @author KhaaZ
  *
  * @class AsyncQueue
- * @extends Queue
+ * @extends FunctionQueue
  */
-class AsyncQueue extends Queue {
+class AsyncQueue extends FunctionQueue {
     /**
      * Execute the queue.
      * @memberof AsyncQueue
