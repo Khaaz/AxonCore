@@ -149,13 +149,11 @@ export declare class Collection<T> extends Map<string | number, T> {
      */
     public apply<R>(key: string, func: 'from', args: [Array<R>, string] ): Collection<R>;
     public apply(key: string, func: 'add', args: [string, T, boolean?] ): Collection<T>;
-    public apply(key: string, func: 'find', args: [(i: T) => boolean] ): Collection<T>;
-    public apply(key: string, func: 'random'): Collection<T>;
-    public apply(key: string, func: 'filter', args: [(i: T) => boolean] ): Collection<T>;
+    public apply(key: string, func: 'find' | 'filter', args: [(i: T) => boolean] ): Collection<T>;
+    public apply(key: string, func: 'random' | 'toArray' | 'toObject'): Collection<T>;
     public apply<R>(key: string, func: 'map', args: [(i: T) => R] ): Collection<R>;
     public apply<U>(key: string, func: 'reduce', args: [(accumulator: U, val: T) => U, U] ): Collection<U>;
     public apply(key: string, func: 'update', args: [string, T] ): Collection<T>;
     public apply(key: string, func: 'remove', args: [string] ): Collection<T | null>;
-    public apply(key: string, func: 'toArray'): Collection<T>;
     public apply(key: string, func: 'toObject'): Collection<T>;
 }
