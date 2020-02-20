@@ -24,9 +24,9 @@ import NotImplementedException from '../../Errors/NotImplementedException';
  * @prop {Boolean} [enabled=module.enabled] - Whether the event is enabled or not
  * @prop {Boolean} [serverBypass=module.serverBypass] - Can the event be disabled?
  *
- * @prop {Object} infos - Default infos about the event
- * @prop {Array<String>} infos.owners - Listener owners/authors
- * @prop {String} infos.description - Listener description
+ * @prop {Object} info - Default info about the event
+ * @prop {Array<String>} info.owners - Listener owners/authors
+ * @prop {String} info.description - Listener description
  */
 class Listener extends Base {
     /**
@@ -39,9 +39,9 @@ class Listener extends Base {
      * @param {Boolean} [data.load]
      * @param {Boolean} [data.enabled]
      * @param {Boolean} [data.serverBypass]
-     * @param {Object} [data.infos]
-     * @param {Array<String>} [data.infos.owners]
-     * @param {String} [data.infos.description]
+     * @param {Object} [data.info]
+     * @param {Array<String>} [data.info.owners]
+     * @param {String} [data.info.description]
      * @memberof Listener
      */
     constructor(module, data = {} ) {
@@ -59,7 +59,7 @@ class Listener extends Base {
         /* Bypass all perms - can/can't be server disabled */
         this.serverBypass = data.serverBypass !== undefined ? data.serverBypass : module.serverBypass;
 
-        this.infos = data.infos || {
+        this.info = data.info || {
             owners: [],
             description: 'description',
         };
