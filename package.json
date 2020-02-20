@@ -37,7 +37,7 @@
   "scripts": {
     "lint": "yarn run lint:js && yarn run lint:ts",
     "lint:js": "eslint src examples *.js",
-    "lint:ts": "eslint index.d.ts",
+    "lint:ts": "eslint index.d.ts types/** *.ts",
     "tsc": "tsc index.d.ts",
     "test": "yarn run lint && yarn run tsc",
     "test:push": "eslint src examples *.js",
