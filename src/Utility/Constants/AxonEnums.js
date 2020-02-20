@@ -132,7 +132,6 @@ export const HTTP_CODE = {
  * 510: 'Not Extended'
  * 511: 'Network Authentication Required'
  * @readonly
- * @enum {String}
  * }}
  */
 export const HTTP_MESSAGES = {
