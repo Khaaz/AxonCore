@@ -7,9 +7,9 @@ import AxonError from '../../Errors/AxonError';
  * @typedef {import('../Module').default} Module
  * @typedef {{
  * bot?: Array<String>, serverMod?: Boolean, serverManager?: Boolean, serverAdmin?: Boolean, serverOwner?: Boolean,
- * user?: {needed?: Array<String>, bypass?: Array<String>}, userIDs?: {needed?: Array<String>, bypass?: Array<String>},
- * rolesIDs?: {needed?: Array<String>, bypass?: Array<String>}, channelsIDs?: {needed?: Array<String>, bypass?: Array<String>},
- * guildIDs?: {needed?: Array<String>, bypass?: Array<String>}, staff?: {needed?: Array<String>, bypass?: Array<String>}, custom?: (i: Message) => boolean
+ * author?: {needed?: Array<String>, bypass?: Array<String>}, users?: {needed?: Array<String>, bypass?: Array<String>},
+ * roles?: {needed?: Array<String>, bypass?: Array<String>}, channels?: {needed?: Array<String>, bypass?: Array<String>},
+ * guilds?: {needed?: Array<String>, bypass?: Array<String>}, staff?: {needed?: Array<String>, bypass?: Array<String>}, custom?: (i: Message) => boolean
  * }} CommandPerms
  * @typedef {import('../../AxonClient').default} AxonClient
  * @typedef {import('../../Utility/Utils').default} Utils
@@ -34,18 +34,18 @@ import AxonError from '../../Errors/AxonError';
  * @prop {Boolean} [serverManager=false] - Discord server manager (manageServer)
  * @prop {Boolean} [serverAdmin=false] - Discord server administrator (administrator)
  * @prop {Boolean} [serverOwner=false] - Discord server owner
- * @prop {Array} [user.needed=[]] - Discord permissions that the user needs to have in order to execute the command
- * @prop {Array} [user.bypass=[]] - Discord permissions that will allow the user to execute the command no matter what
- * @prop {Array} [userIDs.needed=[]] - Discord user ids that the user needs to have in order to execute the command
- * @prop {Array} [userIDs.bypass=[]] - Discord user ids that will allow the user to execute the command no matter what
- * @prop {Array} [roleIDs.needed=[]] - Discord role ids that the user needs to have in order to execute the command
- * @prop {Array} [roleIDs.bypass=[]] - Discord role ids that will allow the user to execute the command no matter what
- * @prop {Array} [channelIDs.needed=[]] - Discord channel ids that the user needs to have in order to execute the command
- * @prop {Array} [channelIDs.bypass=[]] - Discord channel ids that will allow the user to execute the command no matter what
- * @prop {Array} [guildIDs.needed=[]] - Discord guild ids that the user needs to have in order to execute the command
- * @prop {Array} [guildIDs.bypass=[]] - Discord guild ids that will allow the user to execute the command no matter what
- * @prop {Array} [staff.needed=[]] - Axoncore staff ids that the user needs to have in order to execute the command
- * @prop {Array} [staff.bypass=[]] - Axoncore staff ids that will allow the user to execute the command no matter what
+ * @prop {Array<String>} [author.needed=[]] - Discord permissions that the user needs to have in order to execute the command
+ * @prop {Array<String>} [author.bypass=[]] - Discord permissions that will allow the user to execute the command no matter what
+ * @prop {Array<String>} [users.needed=[]] - Discord user ids that the user needs to have in order to execute the command
+ * @prop {Array<String>} [users.bypass=[]] - Discord user ids that will allow the user to execute the command no matter what
+ * @prop {Array<String>} [roles.needed=[]] - Discord role ids that the user needs to have in order to execute the command
+ * @prop {Array<String>} [roles.bypass=[]] - Discord role ids that will allow the user to execute the command no matter what
+ * @prop {Array<String>} [channels.needed=[]] - Discord channel ids that the user needs to have in order to execute the command
+ * @prop {Array<String>} [channels.bypass=[]] - Discord channel ids that will allow the user to execute the command no matter what
+ * @prop {Array<String>} [guilds.needed=[]] - Discord guild ids that the user needs to have in order to execute the command
+ * @prop {Array<String>} [guilds.bypass=[]] - Discord guild ids that will allow the user to execute the command no matter what
+ * @prop {Array<String>} [staff.needed=[]] - Axoncore staff ids that the user needs to have in order to execute the command
+ * @prop {Array<String>} [staff.bypass=[]] - Axoncore staff ids that will allow the user to execute the command no matter what
  * @prop {Function} [custom=()=>true] Custom function that returns a boolean. True will let the command execute, False will prevent the command from executing
  */
 class CommandPermissions {
@@ -90,38 +90,38 @@ class CommandPermissions {
         /**
          * @type {{needed: Array<String>, bypass: Array<String>}}
          */
-        this.user = {
-            needed: (base.user && base.user.needed) || [],
-            bypass: (base.user && base.user.bypass) || [],
+        this.author = {
+            needed: (base.author && base.author.needed) || [],
+            bypass: (base.author && base.author.bypass) || [],
         };
         
         /**
          * @type {{needed: Array<String>, bypass: Array<String>}}
          */
-        this.userIDs = {
-            needed: (base.userIDs && base.userIDs.needed) || [],
-            bypass: (base.userIDs && base.userIDs.bypass) || [],
+        this.users = {
+            needed: (base.users && base.users.needed) || [],
+            bypass: (base.users && base.users.bypass) || [],
         };
         /**
          * @type {{needed: Array<String>, bypass: Array<String>}}
          */
-        this.roleIDs = {
-            needed: (base.roleIDs && base.roleIDs.needed) || [],
-            bypass: (base.roleIDs && base.roleIDs.bypass) || [],
+        this.roles = {
+            needed: (base.roles && base.roles.needed) || [],
+            bypass: (base.roles && base.roles.bypass) || [],
         };
         /**
          * @type {{needed: Array<String>, bypass: Array<String>}}
          */
-        this.channelIDs = {
-            needed: (base.channelIDs && base.channelIDs.needed) || [],
-            bypass: (base.channelIDs && base.channelIDs.bypass) || [],
+        this.channels = {
+            needed: (base.channels && base.channels.needed) || [],
+            bypass: (base.channels && base.channels.bypass) || [],
         };
         /**
          * @type {{needed: Array<String>, bypass: Array<String>}}
          */
-        this.guildIDs = {
-            needed: (base.guildIDs && base.guildIDs.needed) || [],
-            bypass: (base.guildIDs && base.guildIDs.bypass) || [],
+        this.guilds = {
+            needed: (base.guilds && base.guilds.needed) || [],
+            bypass: (base.guilds && base.guilds.bypass) || [],
         };
         
         /**
@@ -322,17 +322,17 @@ class CommandPermissions {
     setUser(object = { bypass: [], needed: [] }, toAdd = false) {
         if (toAdd) {
             if (object.bypass.length > 0) {
-                this.user.bypass = [...this.user.bypass, ...object.bypass];
+                this.author.bypass = [...this.author.bypass, ...object.bypass];
             }
             if (object.needed.length > 0) {
-                this.user.needed = [...this.user.needed, ...object.needed];
+                this.author.needed = [...this.author.needed, ...object.needed];
             }
         } else {
             if (object.bypass.length > 0) {
-                this.user.bypass = object.bypass;
+                this.author.bypass = object.bypass;
             }
             if (object.needed.length > 0) {
-                this.user.needed = object.needed;
+                this.author.needed = object.needed;
             }
         }
         return this;
@@ -346,20 +346,20 @@ class CommandPermissions {
      * @returns {CommandPermissions}
      * @memberof CommandPermissions
      */
-    setUserIDs(object = { bypass: [], needed: [] }, toAdd = false) {
+    setUsers(object = { bypass: [], needed: [] }, toAdd = false) {
         if (toAdd) {
             if (object.bypass.length > 0) {
-                this.userIDs.bypass = [...this.userIDs.bypass, ...object.bypass];
+                this.users.bypass = [...this.users.bypass, ...object.bypass];
             }
             if (object.needed.length > 0) {
-                this.userIDs.needed = [...this.userIDs.needed, ...object.needed];
+                this.users.needed = [...this.users.needed, ...object.needed];
             }
         } else {
             if (object.bypass.length > 0) {
-                this.userIDs.bypass = object.bypass;
+                this.users.bypass = object.bypass;
             }
             if (object.needed.length > 0) {
-                this.userIDs.needed = object.needed;
+                this.users.needed = object.needed;
             }
         }
         return this;
@@ -373,20 +373,20 @@ class CommandPermissions {
      * @returns {CommandPermissions}
      * @memberof CommandPermissions
      */
-    setRoleIDs(object = { bypass: [], needed: [] }, toAdd = false) {
+    setRoles(object = { bypass: [], needed: [] }, toAdd = false) {
         if (toAdd) {
             if (object.bypass.length > 0) {
-                this.roleIDs.bypass = [...this.roleIDs.bypass, ...object.bypass];
+                this.roles.bypass = [...this.roles.bypass, ...object.bypass];
             }
             if (object.needed.length > 0) {
-                this.roleIDs.needed = [...this.roleIDs.needed, ...object.needed];
+                this.roles.needed = [...this.roles.needed, ...object.needed];
             }
         } else {
             if (object.bypass.length > 0) {
-                this.roleIDs.bypass = object.bypass;
+                this.roles.bypass = object.bypass;
             }
             if (object.needed.length > 0) {
-                this.roleIDs.needed = object.needed;
+                this.roles.needed = object.needed;
             }
         }
         return this;
@@ -400,20 +400,20 @@ class CommandPermissions {
      * @returns {CommandPermissions}
      * @memberof CommandPermissions
      */
-    setChannelIDs(object = { bypass: [], needed: [] }, toAdd = false) {
+    setChannels(object = { bypass: [], needed: [] }, toAdd = false) {
         if (toAdd) {
             if (object.bypass.length > 0) {
-                this.channelIDs.bypass = [...this.channelIDs.bypass, ...object.bypass];
+                this.channels.bypass = [...this.channels.bypass, ...object.bypass];
             }
             if (object.needed.length > 0) {
-                this.channelIDs.needed = [...this.channelIDs.needed, ...object.needed];
+                this.channels.needed = [...this.channels.needed, ...object.needed];
             }
         } else {
             if (object.bypass.length > 0) {
-                this.channelIDs.bypass = object.bypass;
+                this.channels.bypass = object.bypass;
             }
             if (object.needed.length > 0) {
-                this.channelIDs.needed = object.needed;
+                this.channels.needed = object.needed;
             }
         }
         return this;
@@ -427,20 +427,20 @@ class CommandPermissions {
      * @returns {CommandPermissions}
      * @memberof CommandPermissions
      */
-    setGuildlIDs(object = { bypass: [], needed: [] }, toAdd = false) {
+    setGuilds(object = { bypass: [], needed: [] }, toAdd = false) {
         if (toAdd) {
             if (object.bypass.length > 0) {
-                this.guildIDs.bypass = [...this.guildIDs.bypass, ...object.bypass];
+                this.guilds.bypass = [...this.guilds.bypass, ...object.bypass];
             }
             if (object.needed.length > 0) {
-                this.guildIDs.needed = [...this.guildIDs.needed, ...object.needed];
+                this.guilds.needed = [...this.guilds.needed, ...object.needed];
             }
         } else {
             if (object.bypass.length > 0) {
-                this.guildIDs.bypass = object.bypass;
+                this.guilds.bypass = object.bypass;
             }
             if (object.needed.length > 0) {
-                this.guildIDs.needed = object.needed;
+                this.guilds.needed = object.needed;
             }
         }
         return this;
@@ -498,11 +498,11 @@ class CommandPermissions {
      * @memberof CommandPermissions
      */
     _checkPermsUserBypass(member) {
-        if (!this.user.bypass.length) {
+        if (!this.author.bypass.length) {
             return false;
         }
 
-        for (const userPerm of this.user.bypass) {
+        for (const userPerm of this.author.bypass) {
             if (this.library.member.hasPermission(member, userPerm) ) {
                 return true;
             }
@@ -519,10 +519,10 @@ class CommandPermissions {
      * @memberof CommandPermissions
      */
     _checkPermsUserNeeded(member) {
-        if (!this.user.needed.length) {
+        if (!this.author.needed.length) {
             return [true];
         }
-        for (const userPerm of this.user.needed) {
+        for (const userPerm of this.author.needed) {
             if (!this.library.member.hasPermission(member, userPerm) ) {
                 return [false, userPerm];
             }
@@ -538,10 +538,10 @@ class CommandPermissions {
      * @memberof CommandPermissions
      */
     _checkUserBypass(member) {
-        if (!this.userIDs.bypass.length) {
+        if (!this.users.bypass.length) {
             return false;
         }
-        return this.userIDs.bypass.includes(this.library.member.getID(member) );
+        return this.users.bypass.includes(this.library.member.getID(member) );
     }
 
     /**
@@ -552,10 +552,10 @@ class CommandPermissions {
      * @memberof CommandPermissions
      */
     _checkUserNeeded(member) {
-        if (!this.userIDs.needed.length) {
+        if (!this.users.needed.length) {
             return true;
         }
-        return this.userIDs.needed.includes(this.library.member.getID(member) );
+        return this.users.needed.includes(this.library.member.getID(member) );
     }
 
     /**
@@ -566,11 +566,11 @@ class CommandPermissions {
      * @memberof CommandPermissions
      */
     _checkRoleBypass(member) {
-        if (!this.roleIDs.bypass.length) {
+        if (!this.roles.bypass.length) {
             return false;
         }
         const roles = this.library.member.getRoles(member);
-        for (const role of this.roleIDs.bypass) {
+        for (const role of this.roles.bypass) {
             if (roles.includes(role) ) {
                 return true;
             }
@@ -586,11 +586,11 @@ class CommandPermissions {
      * @memberof CommandPermissions
      */
     _checkRoleNeeded(member) {
-        if (!this.roleIDs.needed.length) {
+        if (!this.roles.needed.length) {
             return true;
         }
         const roles = this.library.member.getRoles(member);
-        for (const role of this.roleIDs.needed) {
+        for (const role of this.roles.needed) {
             if (!roles.includes(role) ) {
                 return false;
             }
@@ -606,10 +606,10 @@ class CommandPermissions {
      * @memberof CommandPermissions
      */
     _checkChannelBypass(channel) {
-        if (!this.channelIDs.bypass.length) {
+        if (!this.channels.bypass.length) {
             return false;
         }
-        return this.channelIDs.bypass.includes(this.library.channel.getID(channel) );
+        return this.channels.bypass.includes(this.library.channel.getID(channel) );
     }
 
     /**
@@ -620,10 +620,10 @@ class CommandPermissions {
      * @memberof CommandPermissions
      */
     _checkChannelNeeded(channel) {
-        if (!this.channelIDs.needed.length) {
+        if (!this.channels.needed.length) {
             return true;
         }
-        return this.channelIDs.needed.includes(this.library.channel.getID(channel) );
+        return this.channels.needed.includes(this.library.channel.getID(channel) );
     }
 
     /**
@@ -634,10 +634,10 @@ class CommandPermissions {
      * @memberof CommandPermissions
      */
     _checkGuildBypass(guild) {
-        if (!guild || !this.guildIDs.bypass.length) {
+        if (!guild || !this.guilds.bypass.length) {
             return false;
         }
-        return this.guildIDs.bypass.includes(this.library.guild.getID(guild) );
+        return this.guilds.bypass.includes(this.library.guild.getID(guild) );
     }
 
     /**
@@ -648,10 +648,10 @@ class CommandPermissions {
      * @memberof CommandPermissions
      */
     _checkGuildNeeded(guild) {
-        if (!guild || !this.guildIDs.needed.length) {
+        if (!guild || !this.guilds.needed.length) {
             return true;
         }
-        return this.guildIDs.needed.includes(this.library.guild.getID(guild) );
+        return this.guilds.needed.includes(this.library.guild.getID(guild) );
     }
 
     /**
