@@ -113,9 +113,9 @@ class MessageCollector extends EventEmitter {
             }
 
             // Bind events
-            this.client.on('messageCreate', this._boundMsgEvent);
-            this.client.on('messageUpdate', this._boundEditEvent);
-            this.client.on('messageDelete', this._boundDelEvent);
+            this.client.on(this.axon.library.enums.EVENTS.MESSAGE_CREATE, this._boundMsgEvent);
+            this.client.on(this.axon.library.enums.EVENTS.MESSAGE_UPDATE, this._boundEditEvent);
+            this.client.on(this.axon.library.enums.EVENTS.MESSAGE_DELETE, this._boundDelEvent);
 
             this.on('collect', this._boundCollectEvent);
 
@@ -134,9 +134,9 @@ class MessageCollector extends EventEmitter {
     }
 
     _onEnd() {
-        this.client.off('messageCreate', this._boundMsgEvent); // Stop listening to the eris message events
-        this.client.off('messageUpdate', this._boundEditEvent);
-        this.client.off('messageDelete', this._boundDelEvent);
+        this.client.off(this.axon.library.enums.EVENTS.MESSAGE_CREATE, this._boundMsgEvent); // Stop listening to the eris message events
+        this.client.off(this.axon.library.enums.EVENTS.MESSAGE_UPDATE, this._boundEditEvent);
+        this.client.off(this.axon.library.enums.EVENTS.MESSAGE_DELETE, this._boundDelEvent);
         this.off('collect', this._boundCollectEvent); // Stop listening to the collect event in this class
     }
 
