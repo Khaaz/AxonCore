@@ -29,10 +29,10 @@ import NotImplementedException from '../Errors/NotImplementedException';
  * @prop {String} label - Module label (name/id)
  * @prop {Boolean} [enabled=true] - Whether the module is enabled or not
  * @prop {Boolean} [serverBypass=false] - Whether the module can be disabled or not (will bypass guild disabled)
- * @prop {Object} infos - Default info about the module
- * @prop {String} [infos.name]
- * @prop {String} [infos.category]
- * @prop {String} [infos.description]
+ * @prop {Object} info - Default info about the module
+ * @prop {String} [info.name]
+ * @prop {String} [info.category]
+ * @prop {String} [info.description]
  * @prop {CommandPermissions} permissions - Default values potentially used for CommandPermissions
  * @prop {CommandOptions} options - Default values potentially used for CommandOptions
  *
@@ -48,10 +48,10 @@ class Module extends Base {
      * @param {String} [data.label] - The module label
      * @param {Boolean} [data.enabled] - Whether the module is enabled or not
      * @param {Boolean} [data.serverBypass] - Whether the module can be disabled in a server or not
-     * @param {Object} [data.infos]
-     * @param {String} data.infos.name - The module name
-     * @param {String} data.infos.description - The module description
-     * @param {String} data.infos.category - The module category
+     * @param {Object} [data.info]
+     * @param {String} data.info.name - The module name
+     * @param {String} data.info.description - The module description
+     * @param {String} data.info.category - The module category
      * @param {CommandOptions} [data.options] - The default options for all commands in this module
      * @param {CommandPermissions} [data.permissions] - The default permissions for all commands in this module
      * @memberof Module
@@ -71,7 +71,7 @@ class Module extends Base {
          * Info for the help command
          * All fields are required
          */
-        this.infos = data.infos || {
+        this.info = data.info || {
             name: this.label,
             category: null,
             description: null,
