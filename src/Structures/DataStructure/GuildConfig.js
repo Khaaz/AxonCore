@@ -5,7 +5,7 @@
  * @typedef {import('../Event/Listener').default} Listener
  * @typedef {{
  * guildID?: String, prefixes?: Array<String>, createdAt?: Date, updatedAt?: Date, modules?: Array<String>
- * commands: Array<String>, listeners: Array<String>, ignoredUsers: Array<String>, ignoredRoles: Array<String>,
+ * commands: Array<String>, eventListeners: Array<String>, ignoredUsers: Array<String>, ignoredRoles: Array<String>,
  * ignoredChannels: Array<String>, modOnly: Boolean, modRoles: Array<String>, modUsers: Array<String>
  * }} GConfig
  */
@@ -53,7 +53,7 @@ class GuildConfig {
         /* Disabled modules / commands / events */
         this.modules = values.modules || [];
         this.commands = values.commands || [];
-        this.listeners = values.listeners || [];
+        this.listeners = values.eventListeners || [];
 
         this.ignoredUsers = values.ignoredUsers || [];
         this.ignoredRoles = values.ignoredRoles || [];

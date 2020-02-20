@@ -62,7 +62,7 @@ class LRUCache {
         /**
          * @type {Node<T>}
          */
-        this.queue = null;
+        this.tail = null;
         
         /**
          * @type {Collection<T>}

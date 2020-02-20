@@ -13,7 +13,7 @@ class Pang extends Command {
         this.hasSubcmd = true;
         this.subcmds = [Pung];
 
-        this.infos = {
+        this.info = {
             owners: ['KhaaZ'],
             name: 'ping pong pang',
             description: 'Ping the bot.',

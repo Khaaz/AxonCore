@@ -11,7 +11,7 @@ class GuildDelete extends Listener {
 
         this.enabled = true;
 
-        this.infos = {
+        this.info = {
             owners: ['KhaaZ'],
             description: 'Guild Delete event',
         };

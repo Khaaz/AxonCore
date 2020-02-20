@@ -13,7 +13,7 @@ class Pong extends Command {
         this.hasSubcmd = true;
         this.subcmds = [Pang];
 
-        this.infos = {
+        this.info = {
             owners: ['KhaaZ'],
             name: 'ping pong',
             description: 'Ping the bot.',
@@ -30,7 +30,7 @@ class Pong extends Command {
         } );
 
         this.permissions = new CommandPermissions(this, {
-            user: {
+            author: {
                 needed: ['manageGuild'],
             },
             staff: {

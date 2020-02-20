@@ -41,6 +41,7 @@ class ARegistry {
      * Get the AxonClient
      *
      * @readonly
+     * @type {AxonClient}
      * @memberof ARegistry
      */
     get axon() {
@@ -51,6 +52,7 @@ class ARegistry {
      * Get the size of the registry
      *
      * @readonly
+     * @type {Number}
      * @memberof ARegistry
      */
     get size() {

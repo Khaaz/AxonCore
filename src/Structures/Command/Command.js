@@ -44,12 +44,12 @@ import { COMMAND_EXECUTION_STATE } from '../../Utility/Constants/AxonEnums';
  * @prop {CommandCollection} [subCommands=null] - Collection of subcommands
  * @prop {Map} [subCommandsAliases=null] - Map of subcommand aliases
  *
- * @prop {Object} infos - Default info about the command
- * @prop {Array<String>} [infos.owners] - Command authors
- * @prop {String} [infos.name] - Full command name
- * @prop {String} [infos.description] - Command description
- * @prop {String} [infos.usage] - Command usage
- * @prop {Array<String>} [infos.example] - Array of command examples
+ * @prop {Object} info - Default info about the command
+ * @prop {Array<String>} [info.owners] - Command authors
+ * @prop {String} [info.name] - Full command name
+ * @prop {String} [info.description] - Command description
+ * @prop {String} [info.usage] - Command usage
+ * @prop {Array<String>} [info.example] - Array of command examples
  *
  * @prop {CommandOptions} options - Options Object for the command (manage all command options)
  * @prop {CommandPermissions} permissions - Permissions Object for the command (manage all command permissions)
@@ -69,12 +69,12 @@ class Command extends Base {
      * @param {Boolean} [data.enabled] - Whether the command is enabled
      * @param {Boolean} [data.serverBypass] - Whether the command can be server disabled
      * @param {Array<new (...args[]: any) => Command>} [data.subcmds] - List of subcommands class to be added in the Command
-     * @param {Object} [data.infos]
-     * @param {Array<String>} [data.infos.owners] - Who created the command
-     * @param {String} [data.infos.description] - The command description
-     * @param {Array<String>} [data.infos.examples] - Command examples
-     * @param {String} [data.infos.usage] - The command usage
-     * @param {String} [data.infos.name] - The full command name
+     * @param {Object} [data.info]
+     * @param {Array<String>} [data.info.owners] - Who created the command
+     * @param {String} [data.info.description] - The command description
+     * @param {Array<String>} [data.info.examples] - Command examples
+     * @param {String} [data.info.usage] - The command usage
+     * @param {String} [data.info.name] - The full command name
      * @param {CommandOptions|Object} [data.options] - The command options
      * @param {CommandPermissions|Object} [data.permissions] - The command permissions
      * @memberof Command
@@ -110,8 +110,8 @@ class Command extends Base {
         /* Bypass all perms - true = prevent the command to be disabled */
         this.serverBypass = data.serverBypass !== undefined ? data.serverBypass : module.serverBypass; // Default to module state
 
-        /* Command infos (help command) */
-        this.infos = data.infos || {
+        /* Command info (help command) */
+        this.info = data.info || {
             owners: [], // ['KhaaZ'] or ['KhaaZ', 'Jack']
             name: null, // Full name of the command
             description: null, // 'A cool command that does things.'
@@ -248,8 +248,8 @@ class Command extends Base {
 
         if (isAdmin) {
             if (!isOwner && !this.axonUtils.isBotOwner(userID)
-                && this.permissions.staff.needed.length > 0
-                && this.permissions.staff.needed.filter(e => !this.axon.staff.owners.includes(e) ).length === 0) { // ONLY FOR OWNER
+                && this.permissions.staff.permissions.author.length > 0
+                && this.permissions.staff.permissions.author.filter(e => !this.axon.staff.owners.includes(e) ).length === 0) { // ONLY FOR OWNER
                 return new CommandContext(this, msg, {
                     executed: false,
                     executionType: CommandContext.getExecutionType(isAdmin, isOwner),
@@ -386,7 +386,7 @@ class Command extends Base {
 
         const embed = {};
         embed.author = {
-            name: `Help for ${this.infos.name || this.fullLabel}`,
+            name: `Help for ${this.info.name || this.fullLabel}`,
             icon_url: this.library.client.getAvatar(),
         };
 
@@ -394,11 +394,11 @@ class Command extends Base {
             ? parseInt(this.template.embeds.help, 16) || null
             : this.template.embeds.help;
 
-        embed.description = `**Description:** ${this.infos.description}\n`;
+        embed.description = `**Description:** ${this.info.description}\n`;
 
         embed.description += `**Cooldown:** ${this.options.cooldown / 1000}s\n`;
 
-        embed.description += `**Usage:** ${prefix}${this.infos.usage || this.fullLabel}\n`;
+        embed.description += `**Usage:** ${prefix}${this.info.usage || this.fullLabel}\n`;
 
         let perm;
         if (this.permissions.serverOwner) {
@@ -409,8 +409,8 @@ class Command extends Base {
             perm = '`Server Manager`';
         } else if (this.permissions.serverMod) {
             perm = '`Server Mod`';
-        } else if (this.permissions.user.needed.length > 0) {
-            perm = this.permissions.user.needed
+        } else if (this.permissions.author.needed.length > 0) {
+            perm = this.permissions.author.permissions.author
                 .map(p => `\`${this.library.enums.PERMISSIONS_NAMES[p]}\``)
                 .join(', ');
         }
@@ -419,16 +419,16 @@ class Command extends Base {
             embed.description += `**Required:** ${perm}\n`;
         }
 
-        if (this.infos.examples && this.infos.examples.length > 0) {
-            this.infos.examples.length > 1
-                ? embed.description += `\n**Examples:**\n${prefix}${this.infos.examples.join(`\n${prefix}`)}\n`
-                : embed.description += `**Example:** ${prefix}${this.infos.examples.join(`\n${prefix}`)}\n`;
+        if (this.info.examples && this.info.examples.length > 0) {
+            this.info.examples.length > 1
+                ? embed.description += `\n**Examples:**\n${prefix}${this.info.examples.join(`\n${prefix}`)}\n`
+                : embed.description += `**Example:** ${prefix}${this.info.examples.join(`\n${prefix}`)}\n`;
         }
 
         embed.fields = [];
         /* SubCommands */
         if (this.hasSubcmd) {
-            const subcmds = this.subCommands.getAll().filter(e => !e.options.hidden).map(e => `${prefix}${e.infos.usage}`);
+            const subcmds = this.subCommands.getAll().filter(e => !e.options.hidden).map(e => `${prefix}${e.info.usage}`);
             if (subcmds.length > 0) {
                 embed.fields.push( {
                     name: 'SubCommands:',

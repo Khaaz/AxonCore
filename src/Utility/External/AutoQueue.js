@@ -1,4 +1,4 @@
-import Queue from './Queue';
+import FunctionQueue from './FunctionQueue';
 
 /**
  * This data structure is a queue that will run every function one by one sequentially.
@@ -10,18 +10,18 @@ import Queue from './Queue';
  * @KhaaZ
  *
  * @class AutoQueue
- * @extends Queue
+ * @extends FunctionQueue
  */
-class AutoQueue extends Queue {
+class AutoQueue extends FunctionQueue {
     /**
      * Execute the queue.
      * @memberof AutoQueue
      */
     async exec() {
-        if (this._functions.length > 0) {
+        if (this._functions.size > 0) {
             this._running = true;
 
-            const func = this._functions.shift();
+            const func = this._functions.dequeue();
             try {
                 await func();
             } catch (err) {

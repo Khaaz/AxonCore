@@ -1,5 +1,5 @@
 /**
- * Queue class.
+ * Stack class.
  *
  * @author KhaaZ
  *
@@ -9,15 +9,15 @@
  * @prop {Boolean} max
  * @prop {Boolean} replaceOnMax
  *
- * @class Queue
+ * @class Stack
  */
-class Queue {
+class Stack {
     /**
-     * Creates an instance of Queue.
+     * Creates an instance of Stack.
      *
-     * @param {Number} [max=null] - Maximum number of elements that can be added in this queue
-     * @param {Boolean} [replaceOnMax=true] - Whether to replace value when adding if max is reached (dequeue first element and queue new element)
-     * @memberof Queue
+     * @param {Number} [max=null] - Maximum number of elements that can be added in this Stack
+     * @param {Boolean} [replaceOnMax=true] - Whether to replace value when adding if max is reached (unstack first element and stack new element)
+     * @memberof Stack
      */
     constructor(max = null, replaceOnMax = true) {
         this._elements = [];
@@ -26,38 +26,38 @@ class Queue {
     }
 
     /**
-     * Returns the Queue size
+     * Returns the Stack size
      *
      * @readonly
      * @type {Number}
-     * @memberof Queue
+     * @memberof Stack
      */
     get size() {
         return this._elements.length;
     }
 
     /**
-     * Return first element of this queue
+     * Return first element of this Stack (top of the Stack).
      *
      * @returns {T}
-     * @memberof Queue
+     * @memberof Stack
      */
     first() {
-        return this._elements[0];
+        return this._elements[this._elements.length - 1];
     }
 
     /**
-     * Queue up an element.
+     * Stack up an element.
      *
      * @param {T} elem
      * @param {Boolean} replaceOnMax
      * @returns {Boolean} Whether element was successfully added
-     * @memberof Queue
+     * @memberof Stack
      */
-    queue(elem, replaceOnMax) {
+    stack(elem, replaceOnMax) {
         if (this.max && this._elements.length === this.max) {
             if ( (replaceOnMax !== undefined) ? replaceOnMax : this.replaceOnMax) {
-                this._elements.shift();
+                this._elements.pop();
             } else {
                 return false;
             }
@@ -67,14 +67,14 @@ class Queue {
     }
 
     /**
-     * Dequeue an element and returns it
+     * Unstack an element and returns it
      *
      * @returns {T}
-     * @memberof Queue
+     * @memberof Stack
      */
-    dequeue() {
-        return this._elements.shift();
+    unstack() {
+        return this._elements.pop();
     }
 }
 
-export default Queue;
+export default Stack;
