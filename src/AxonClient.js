@@ -86,11 +86,11 @@ import { WEBHOOK_TYPES, LOG_LEVELS, WEBHOOK_TO_COLOR } from './Utility/Constants
  * @prop {String} settings.ownerPrefix - Owner prefix : override perms/cd
  * @prop {String} settings.lang - Default lang for the bot
  * @prop {Number} settings.guildConfigCache - Max amount of guildConfigs cached at the same time (LRUCache)
- * @prop {Object} infos - General infos about the current application
- * @prop {String} infos.name - Bot name
- * @prop {String} infos.description - Bot description
- * @prop {String} infos.version - Bot version
- * @prop {Array<String>} infos.owners - Bot owners (array of names)
+ * @prop {Object} info - General info about the current application
+ * @prop {String} info.name - Bot name
+ * @prop {String} info.description - Bot description
+ * @prop {String} info.version - Bot version
+ * @prop {Array<String>} info.owners - Bot owners (array of names)
  * @prop {Object} axoncore - AxonCore info
  * @prop {String} axoncore.version - AxonCore version
  * @prop {String} axoncore.author - AxonCore author
@@ -126,7 +126,7 @@ class AxonClient extends EventEmitter {
         };
 
         /* Bot informations */
-        this.infos = {
+        this.info = {
             name: axonOptions.info.name,
             description: axonOptions.info.description,
             version: axonOptions.info.version,
@@ -440,7 +440,7 @@ class AxonClient extends EventEmitter {
             // eslint-disable-next-line no-nested-ternary
             }, `${whType}${this.library.client.getUser()
                 ? ` - ${this.library.client.getUsername()}`
-                : this.infos.name ? ` - ${this.infos.name}` : ''}`);
+                : this.info.name ? ` - ${this.info.name}` : ''}`);
         }
     }
 
@@ -692,7 +692,7 @@ class AxonClient extends EventEmitter {
             name: `Help for ${this.library.client.getUsername()}`,
             icon_url: this.library.client.getAvatar(),
         };
-        embed.description = this.infos.description;
+        embed.description = this.info.description;
         embed.footer = {
             text: 'Runs with AxonCore',
         };
