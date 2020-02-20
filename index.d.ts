@@ -3956,6 +3956,8 @@ declare module 'axoncore' {
         owners: string[];
         /** Array of user IDs with BotAdmin permissions */
         admins: string[];
+        /** Any other names you want */
+        [key: string]: string[];
     }
 
     class AxonClient extends EventEmitter {
