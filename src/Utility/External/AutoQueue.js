@@ -18,10 +18,10 @@ class AutoQueue extends FunctionQueue {
      * @memberof AutoQueue
      */
     async exec() {
-        if (this._functions.length > 0) {
+        if (this._functions.size > 0) {
             this._running = true;
 
-            const func = this._functions.shift();
+            const func = this._functions.dequeue();
             try {
                 await func();
             } catch (err) {

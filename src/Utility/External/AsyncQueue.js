@@ -18,10 +18,10 @@ class AsyncQueue extends FunctionQueue {
      * @memberof AsyncQueue
      */
     async exec() {
-        if (this._functions.length > 0) {
+        if (this._functions.size > 0) {
             this._running = true;
 
-            const func = this._functions.shift();
+            const func = this._functions.dequeue();
             try {
                 await func();
             } catch (err) {
@@ -50,7 +50,7 @@ class AsyncQueue extends FunctionQueue {
     add(func, toExec = true, ...args) {
         const promise = new Promise( (resolve, reject) => {
             const fn = this.createClosure(func, resolve, reject, ...args);
-            this._functions.push(fn);
+            this._functions.queue(fn);
         } );
         
         if (toExec && !this._running) {

@@ -1,3 +1,5 @@
+import Queue from './Queue';
+
 /**
  * This default FunctionQueue works in a synchronous fashion.
  * It will execute all synchronous functions sequentially.
@@ -21,7 +23,7 @@ class FunctionQueue {
         /**
          * @type {Array<Function>}
          */
-        this._functions = [];
+        this._functions = new Queue();
         this._running = false;
 
         this.stopOnError = stopOnError;
@@ -32,9 +34,9 @@ class FunctionQueue {
      * @memberof FunctionQueue
      */
     exec() {
-        if (this._functions.length > 0) {
+        if (this._functions.size > 0) {
             this._running = true;
-            const func = this._functions.shift();
+            const func = this._functions.dequeue();
 
             try {
                 func();
@@ -63,7 +65,7 @@ class FunctionQueue {
     add(func, toExec = true, ...args) {
         const fn = this.createClosure(func, ...args);
 
-        this._functions.add(fn);
+        this._functions.queue(fn);
 
         if (toExec && !this._running) {
             this.exec();
