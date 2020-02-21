@@ -1,5 +1,5 @@
 
-class Member {
+export declare class Member {
     public lib: LibraryInterface;
     /**
      * Creates an instance of Member

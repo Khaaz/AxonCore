@@ -153,7 +153,7 @@ enum PERMISSIONS_NAMES {
     manageEmojis = 'Manage Emojis',
 }
 
-export declare interface ErisEnums {
+export declare interface DefaultEnums {
     EVENTS: EVENTS;
     DISCORD_LIB_PERMISSIONS: DISCORD_LIB_PERMISSIONS;
     PERMISSIONS: PERMISSIONS;
