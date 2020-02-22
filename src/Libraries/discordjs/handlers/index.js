@@ -14,8 +14,8 @@ export { default as guildDelete } from './GuildDeleteHandler';
 export { default as guildIntegrationsUpdate } from './GuildIntegrationsUpdateHandler';
 
 export { default as guildMemberAdd } from './GuildMemberAddHandler';
-export { default as guildMemberChunk } from './GuildMemberChunkHandler';
 export { default as guildMemberRemove } from './GuildMemberRemoveHandler';
+export { default as guildMembersChunk } from './GuildMembersChunkHandler';
 export { default as guildMemberSpeaking } from './GuildMemberSpeakingHandler';
 export { default as guildMemberUpdate } from './GuildMemberUpdateHandler';
 
@@ -36,11 +36,11 @@ export { default as roleCreate } from './RoleCreateHandler';
 export { default as roleDelete } from './RoleDeleteHandler';
 export { default as roleUpdate } from './RoleUpdateHandler';
 
-export { default as shardDisconnected } from './ShardDisconnectedHandler';
+export { default as shardDisconnect } from './ShardDisconnectHandler';
 export { default as shardError } from './ShardErrorHandler';
 export { default as shardReady } from './ShardReadyHandler';
 export { default as shardReconnecting } from './ShardReconnectingHandler';
-export { default as shardResumed } from './ShardResumedHandler';
+export { default as shardResume } from './ShardResumeHandler';
 
 export { default as typingStart } from './TypingStartHandler';
 

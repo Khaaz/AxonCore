@@ -1,9 +1,9 @@
 import AHandler from '../../../Structures/Event/AHandler';
 
-class ShardResumedHandler extends AHandler {
+class ShardDisconnectHandler extends AHandler {
     handle() {
         return null;
     }
 }
 
-export default ShardResumedHandler;
+export default ShardDisconnectHandler;
