@@ -9,6 +9,6 @@
  * @extends ASelector
  */
 export declare class LoggerSelector extends ASelector {
-    public select(axonConfig: AOptionsSettings): ALogger;
+    public select(axonConfig: AOptionsSettings): ChalkLogger | DefLogger | SignaleLogger;
     static testLogger(Logger: ALogger): void;
 }

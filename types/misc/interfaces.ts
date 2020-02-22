@@ -62,31 +62,6 @@ interface GuildJSON {
     modUsers: string[];
 }
 
-interface GuildSchema extends Document {
-    guildID: string;
-    prefixes: string[];
-    modules: string[];
-    commands: string[];
-    eventListeners: string[];
-    createdAt: Date;
-    updatedAt: Date;
-    ignoredUsers: string[];
-    ignoredRoles: string[];
-    ignoredChannels: string[];
-    modOnly: boolean;
-    modRoles: string[];
-    modUsers: string[];
-}
-
-interface AxonSchema extends Document {
-    id: string;
-    prefix: string;
-    createdAt: Date;
-    updatedAt: Date;
-    bannedGuilds: string[];
-    bannedUsers: string[];
-}
-
 interface AConfig {
     id?: string;
     prefix?: string;
@@ -902,3 +877,12 @@ interface ErisWebhookContent extends ErisContent {
 interface ErisPresenceGame extends PresenceGame {
     type: 0 | 1 | 2 | 3 | 4;
 }
+
+export {
+    ModuleInfo, ModuleData, AxonJSON, GuildJSON, AConfig, AxonConfigRaw, GConfig, GuildConfigRaw, CommandInfo,
+    ACommandOptions, CommandPerms, CommandData, AxonTemplate, ListenerInfo, ListenerData, APIAxonMSGCont, AxonMSGCont, AxonMSGOpt, PermissionObject,
+    Ctx, EmbedFields, EmbedAuthor, EmbedThumbnail, EmbedImage, EmbedFooter, EmbedData, PromptOptions, PromptOptionsData, CollectorOptions,
+    AxonOptionsSettings, AOptionsSettings, AxonLanguageResponse, Languages, AxonOptionsBase, WebhookConfig, Webhooks, AxonOptionsPrefixes,
+    AxonOptionsInfo, AxonOptionsStaff, AxonOptionsExtensions, AxonConfs, AxonParams, Infos, AxonInfos, LibraryInterfaceStructs, PresenceGame,
+    RawAttachment, RawUser, WebhookResponse, DjsContent, DjsWebhookContent, DjsPresenceGame, DjsEnums, ErisContent, ErisWebhookContent, ErisPresenceGame,
+};

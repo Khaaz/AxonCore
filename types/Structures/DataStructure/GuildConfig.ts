@@ -134,7 +134,7 @@ export declare class GuildConfig implements GuildConfigRaw {
      * @returns Updated guildSchema
      * @memberof GuildConfig
      */
-    public update(guildConfig: GuildConfig): Promise<GuildSchema | null>;
+    public update(guildConfig: GuildConfig): Promise<GuildConfig | null>;
     /**
      * Register prefixes for this guild.
      *
