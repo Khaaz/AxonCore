@@ -13,7 +13,7 @@ import Collection from '../Collection';
 
 class ReactionCollector extends EventEmitter {
     /**
-     *
+     * Creates an instance of ReactionCollector.
      * @param {AxonClient} client - The axon client object.
      * @param {Message} message - The message object to listen for reactions.
      * @param {Object} [options] - The default options for this reaction collector instance.
@@ -45,14 +45,30 @@ class ReactionCollector extends EventEmitter {
         this.reactions = new Collection();
     }
 
+    /**
+     * @readonly
+     */
+
     get axon() {
         return this._axon;
     }
+
+    /**
+     * @readonly
+     */
 
     get client() {
         return this._axon.botClient;
     }
 
+    /**
+     * Runs the reaction collector.
+     * @param {Message} msg - The message to collect reactions from.
+     * @param {Object} options - Options for this collector.
+     * @returns {Collection} Collection of reactions collected.
+     *
+     * @example const reactions = await collector.run(msg, {timeout: 40000})
+     */
     run(msg, options = {} ) {
         this._message = msg;
 
