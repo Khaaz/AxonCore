@@ -904,7 +904,7 @@ declare module "axoncore" {
     }
     
     export class ReactionCollector {
-        private _options: rCollectorOptions;
+        private _options: ReactionCollectorOptions;
         private _axon: AxonClient;
         public reactions: Collection<Reaction>;
 
