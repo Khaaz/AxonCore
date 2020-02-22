@@ -875,7 +875,7 @@ declare module "axoncore" {
     
     // OK
     export class MessageCollector {
-        private _options: mCollectorOptions;
+        private _options: CollectorOptions;
         private _axon: AxonClient;
         private _actualOptions: mCollectorOptions;
         public messages: Collection<Message>;
