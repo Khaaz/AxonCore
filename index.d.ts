@@ -913,7 +913,7 @@ declare module "axoncore" {
         readonly axon: AxonClient;
         readonly client: Client;
 
-        public run(channel: TextableChannel, options: mCollectorOptions): Promise<Collection<Reaction>>;
+        public run(channel: TextableChannel, options: ReactionCollectorOptions): Promise<Collection<Reaction>>;
         private _onEnd(): void;
         private _startTimeout(): void;
         private _onReactionAdd(msg: Message, emoji: Reaction, userId: string): void;
