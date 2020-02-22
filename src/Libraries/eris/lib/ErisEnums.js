@@ -25,8 +25,9 @@
  * MESSAGE_DELETE_BULK: 'messageDeleteBulk'
  * MESSAGE_DELETE: 'messageDelete'
  * MESSAGE_REACTION_ADD: 'messageReactionAdd'
- * MESSAGE_REACTION_REMOVE: 'messageReactionRemove'
  * MESSAGE_REACTION_REMOVE_ALL: 'messageReactionRemoveAll'
+ * MESSAGE_REACTION_REMOVE_EMOJI: 'messageReactionRemoveEmoji'
+ * MESSAGE_REACTION_REMOVE: 'messageReactionRemove'
  * MESSAGE_UPDATE: 'messageUpdate'
  * PRESENCE_UPDATE: 'presenceUpdate'
  * SHARD_DISCONNECT: 'shardDisconnect'
@@ -80,8 +81,9 @@ export const EVENTS = {
     MESSAGE_DELETE_BULK: 'messageDeleteBulk',
     MESSAGE_DELETE: 'messageDelete',
     MESSAGE_REACTION_ADD: 'messageReactionAdd',
-    MESSAGE_REACTION_REMOVE: 'messageReactionRemove',
     MESSAGE_REACTION_REMOVE_ALL: 'messageReactionRemoveAll',
+    MESSAGE_REACTION_REMOVE_EMOJI: 'messageReactionRemoveEmoji',
+    MESSAGE_REACTION_REMOVE: 'messageReactionRemove',
     MESSAGE_UPDATE: 'messageUpdate',
     PRESENCE_UPDATE: 'presenceUpdate',
     SHARD_DISCONNECT: 'shardDisconnect',
