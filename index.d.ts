@@ -908,7 +908,7 @@ declare module "axoncore" {
         private _axon: AxonClient;
         public reactions: Collection<Reaction>;
 
-        constructor(client: AxonClient, options: rCollectorOptions);
+        constructor(client: AxonClient, options: ReactionCollectorOptions);
 
         readonly axon: AxonClient;
         readonly client: Client;
