@@ -875,7 +875,7 @@ declare module "axoncore" {
     
     // OK
     export class MessageCollector {
-        private _options: mCollectorOptions;
+        private _options: CollectorOptions;
         private _axon: AxonClient;
         private _actualOptions: mCollectorOptions;
         public messages: Collection<Message>;
@@ -896,7 +896,7 @@ declare module "axoncore" {
         public delete(mID: string): Collection<Message>;
     }
 
-    interface CollectorOptions {
+    interface ReactionCollectorOptions {
         filteredReactions?: object[];
         count?: number;
         timeout?: number;
@@ -904,16 +904,16 @@ declare module "axoncore" {
     }
     
     export class ReactionCollector {
-        private _options: rCollectorOptions;
+        private _options: ReactionCollectorOptions;
         private _axon: AxonClient;
         public reactions: Collection<Reaction>;
 
-        constructor(client: AxonClient, options: rCollectorOptions);
+        constructor(client: AxonClient, options: ReactionCollectorOptions);
 
         readonly axon: AxonClient;
         readonly client: Client;
 
-        public run(channel: TextableChannel, options: mCollectorOptions): Promise<Collection<Reaction>>;
+        public run(channel: TextableChannel, options: ReactionCollectorOptions): Promise<Collection<Reaction>>;
         private _onEnd(): void;
         private _startTimeout(): void;
         private _onReactionAdd(msg: Message, emoji: Reaction, userId: string): void;
