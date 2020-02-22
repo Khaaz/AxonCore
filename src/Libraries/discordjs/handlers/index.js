@@ -30,6 +30,7 @@ export { default as messageDelete } from './MessageDeleteHandler';
 export { default as message } from './MessageHandler';
 export { default as messageReactionAdd } from './MessageReactionAddHandler';
 export { default as messageReactionRemoveAll } from './MessageReactionRemoveAllHandler';
+export { default as messageReactionRemoveEmoji } from './MessageReactionRemoveEmojiHandler';
 export { default as messageReactionRemove } from './MessageReactionRemoveHandler';
 export { default as messageUpdate } from './MessageUpdateHandler';
 

@@ -26,6 +26,7 @@
  * MESSAGE: 'message'
  * MESSAGE_REACTION_ADD: 'messageReactionAdd'
  * MESSAGE_REACTION_REMOVE_ALL: 'messageReactionRemoveAll'
+ * MESSAGE_REACTION_REMOVE_EMOJI: 'messageReactionRemoveEmoji',
  * MESSAGE_REACTION_REMOVE: 'messageReactionRemove'
  * MESSAGE_UPDATE: 'messageUpdate'
  * PRESENCE_UPDATE: 'presenceUpdate'
@@ -76,6 +77,7 @@ export const EVENTS = {
     MESSAGE: 'message',
     MESSAGE_REACTION_ADD: 'messageReactionAdd',
     MESSAGE_REACTION_REMOVE_ALL: 'messageReactionRemoveAll',
+    MESSAGE_REACTION_REMOVE_EMOJI: 'messageReactionRemoveEmoji',
     MESSAGE_REACTION_REMOVE: 'messageReactionRemove',
     MESSAGE_UPDATE: 'messageUpdate',
     PRESENCE_UPDATE: 'presenceUpdate',
