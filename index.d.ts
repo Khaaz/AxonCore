@@ -896,7 +896,7 @@ declare module "axoncore" {
         public delete(mID: string): Collection<Message>;
     }
 
-    interface rCollectorOptions {
+    interface CollectorOptions {
         filteredReactions?: object[];
         count?: number;
         timeout?: number;
