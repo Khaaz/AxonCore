@@ -9,9 +9,9 @@
  * @author KhaaZ
  *
  * @class AsyncQueue
- * @extends Queue
+ * @extends FunctionQueue
  */
-export declare class AsyncQueue extends Queue {
+export declare class AsyncQueue extends FunctionQueue {
     public exec(): Promise<void>;
     /**
      * Adds a function to the queue.

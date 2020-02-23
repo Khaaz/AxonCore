@@ -9,8 +9,8 @@
  * @KhaaZ
  *
  * @class AutoQueue
- * @extends Queue
+ * @extends FunctionQueue
  */
-export declare class AutoQueue extends Queue {
+export declare class AutoQueue extends FunctionQueue {
     exec(): Promise<void>;
 }

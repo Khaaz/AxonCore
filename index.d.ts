@@ -83,7 +83,7 @@ declare namespace AxonCore {
     export import AxonOptionsExtensions = Types.AxonOptionsExtensions;
     export import AxonConfs = Types.AxonConfs;
     export import AxonParams = Types.AxonParams;
-    export import Infos = Types.Infos;
+    export import Info = Types.Info;
     export import AxonInfos = Types.AxonInfos;
     export import LibraryInterfaceStructs = Types.LibraryInterfaceStructs;
     export import PresenceGame = Types.PresenceGame;
@@ -132,7 +132,7 @@ declare namespace AxonCore {
     export import AsyncQueue = Types.AsyncQueue;
     export import AutoQueue = Types.AutoQueue;
     export import LRUCache = Types.LRUCache;
-    export import Queue = Types.Queue;
+    export import FunctionQueue = Types.FunctionQueue;
     export import AxonUtils = Types.AxonUtils;
     export import Collection = Types.Collection;
     export import Utils = Types.Utils;
