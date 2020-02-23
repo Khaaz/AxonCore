@@ -114,7 +114,7 @@ interface GConfig {
     /**
      * Guild disabled listeners: Array of listeners labels
      */
-    listeners?: string[];
+    eventListeners?: string[];
     /**
      * Users that cannot use commands in this guild: Users ids
      */
