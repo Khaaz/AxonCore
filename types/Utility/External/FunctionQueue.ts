@@ -10,7 +10,7 @@
  * @class FunctionQueue
  */
 export declare class FunctionQueue {
-    private _functions: Function[];
+    private _functions: Queue[];
     private _running: boolean;
     /** Whether to stop the FunctionQueue execution on error. */
     public stopOnError: boolean;

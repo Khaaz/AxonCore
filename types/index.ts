@@ -82,8 +82,9 @@ export { ReactionCollector } from './Utility/Discord/ReactionCollector';
 
 export { AsyncQueue } from './Utility/External/AsyncQueue';
 export { AutoQueue } from './Utility/External/AutoQueue';
-export { LRUCache } from './Utility/External/LRUCache';
 export { FunctionQueue } from './Utility/External/FunctionQueue';
+export { LRUCache } from './Utility/External/LRUCache';
+export { Queue } from './Utility/External/Queue';
 
 export { AxonUtils } from './Utility/AxonUtils';
 export { Collection } from './Utility/Collection';
