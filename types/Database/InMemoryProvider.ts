@@ -8,8 +8,8 @@
  * @extends ADBProvider
  */
 export declare class InMemoryProvider extends ADBProvider {
-    public fetchAxon(): Promise<AxonConfig>;
     public init(): void;
+    public fetchAxon(): Promise<AxonConfig>;
     /**
      * @param gID Guild ID
      */
@@ -20,45 +20,6 @@ export declare class InMemoryProvider extends ADBProvider {
      * @param gID Guild ID
      */
     initGuild(gID: string): Promise<GuildConfig>;
-
-    /**
-     * Update the blacklist user list
-     * @param blacklistedUsers Array of blacklisted user IDs
-     */
-    updateBlacklistUser(blacklistedUsers: string[] ): Promise<AxonConfig>;
-    /**
-     * Update the blacklist guild list
-     * @param blacklistedGuilds Array of blacklisted guild IDs
-     */
-    updateBlacklistGuild(blacklistedGuilds: string[] ): Promise<AxonConfig>;
-    /**
-     * Update a guild's prefix
-     * @param gID Guild ID
-     * @param prefixArr Array of prefixes
-     * @returns Whether the request was successful or not
-     */
-    updateGuildPrefix(gID: string, prefixArr: string[] ): Promise<boolean>;
-    /**
-     * Update list of disabled modules
-     * @param gID Guild ID
-     * @param modulesArr Array of disabled modules
-     * @returns Whether the request was successful or not
-     */
-    updateModule(gID: string, modulesArr: string[] ): Promise<boolean>;
-    /**
-     * Update list of disabled commands
-     * @param gID Guild ID
-     * @param commandArr Array of disabled commands
-     * @returns Whether the request was successful or not
-     */
-    updateCommand(gID: string, commandArr: string[] ): Promise<boolean>;
-    /**
-     * Update list of disabled events
-     * @param gID Guild ID
-     * @param eventArr Array of disabled events
-     * @returns Whether the request was successful or not
-     */
-    updateEvent(gID: string, eventArr: string[] ): Promise<boolean>;
     
     saveAxon(axonSchema: AxonConfig): Promise<AxonConfig>;
     saveGuild(gID: string, guildSchema: GuildConfig): Promise<GuildConfig>;
