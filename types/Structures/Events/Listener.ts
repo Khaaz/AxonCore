@@ -11,7 +11,7 @@ export declare class Listener extends Base implements ListenerData {
     public enabled: boolean;
     public serverBypass: boolean;
 
-    public infos: {
+    public info: {
         owners: string[];
         description: string;
     };

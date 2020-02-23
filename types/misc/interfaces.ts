@@ -414,7 +414,7 @@ interface ListenerData {
     /**
      * Default infos about the event
      */
-    infos?: ListenerInfo;
+    info?: ListenerInfo;
 }
 
 interface APIAxonMSGCont {
