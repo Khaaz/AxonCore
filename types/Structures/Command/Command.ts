@@ -24,7 +24,7 @@ export declare class Command extends Base implements CommandData {
     public enabled: boolean;
     public serverBypass: boolean;
     public subcmds?: (new (...args: any[] ) => Command)[] | null;
-    public infos: CommandInfo;
+    public info: CommandInfo;
     public options: CommandOptions;
     public permissions: CommandPermissions;
 

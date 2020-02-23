@@ -363,7 +363,7 @@ interface CommandData {
     /**
      * Default info about the command
      */
-    infos?: CommandInfo;
+    info?: CommandInfo;
     /**
      * Options Object for the command (manage all command options)
      */
