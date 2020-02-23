@@ -52,7 +52,7 @@ export declare class AxonClient extends EventEmitter {
      * @param modules - Object with all modules to add in the bot
      * @memberof AxonClient
      */
-    constructor(botClient: LibClient, AxonOptions: AxonOptions, modules: object);
+    constructor(botClient: LibClient, axonOptions: AxonOptions, modules: object);
 
     /**
      * Returns the bot client instance
