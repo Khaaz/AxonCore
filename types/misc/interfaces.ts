@@ -311,7 +311,7 @@ interface CommandPerms {
          * Discord guild ids that will allow the user to execute the command no matter what
          */
         bypass?: string[];
-    }
+    };
     /**
      * AxonCore staff
      */
