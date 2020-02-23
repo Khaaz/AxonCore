@@ -46,6 +46,7 @@ class ReactionCollector extends EventEmitter {
     }
 
     /**
+     * @type {AxonClient}
      * @readonly
      */
 
@@ -54,6 +55,7 @@ class ReactionCollector extends EventEmitter {
     }
 
     /**
+     * @type {BotClient}
      * @readonly
      */
 
@@ -65,6 +67,7 @@ class ReactionCollector extends EventEmitter {
      * Runs the reaction collector.
      * @param {Message} msg - The message to collect reactions from.
      * @param {Object} options - Options for this collector.
+     * @memberof ReactionCollector
      * @returns {Collection} Collection of reactions collected.
      *
      * @example const reactions = await collector.run(msg, {timeout: 40000})
@@ -103,10 +106,9 @@ class ReactionCollector extends EventEmitter {
     /**
     * Removes a reaction from the reactions collected
     *
-    * @param {String} rID The id of the reaction you want to remove
-    *
+    * @param {String} rID The id of the reaction you want to remove.
+    * @memberof ReactionCollector
     * @returns {Collection} Collection of reactions collected, now excluding the removed reaction.
-    *
     * @example
     *
     * collector.delete('542164538347225118');
