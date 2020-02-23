@@ -150,7 +150,7 @@ enum TYPE_ERRORS {
     UNKNOWN = 'Unexpected error',
 }
 
-export declare const AxonEnums: {
+export declare interface AxonEnums {
     HTTP_CODE: HTTP_CODE;
     HTTP_MESSAGES: HttpMessages;
     LIBRARY_TYPES: LIBRARY_TYPES;
@@ -165,4 +165,4 @@ export declare const AxonEnums: {
     LOG_LEVELS: LOG_LEVELS;
     WEBHOOK_TO_COLOR: WEBHOOK_TO_COLOR;
     TYPE_ERRORS: TYPE_ERRORS;
-};
+}
