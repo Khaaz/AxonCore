@@ -248,22 +248,22 @@ interface CommandPerms {
      */
     serverOwner?: boolean;
     /**
-     * Discord permissions for the user
+     * Discord permissions for the author
      */
-    user?: {
+    author?: {
         /**
-         * Discord permissions that the user needs to have in order to execute the command
+         * Discord permissions that the author needs to have in order to execute the command
          */
         needed?: string[];
         /**
-         * Discord permissions that will allow the user to execute the command no matter what
+         * Discord permissions that will allow the author to execute the command no matter what
          */
         bypass?: string[];
     };
     /**
      * User IDs
      */
-    usersIDs?: {
+    users?: {
         /**
          * Discord user ids that the user needs to have in order to execute the command
          */
@@ -276,7 +276,7 @@ interface CommandPerms {
     /**
      * Role IDs for the user
      */
-    rolesIDs?: {
+    roles?: {
         /**
          * Discord role ids that the user needs to have in order to execute the command
          */
@@ -289,7 +289,7 @@ interface CommandPerms {
     /**
      * Channel IDs
      */
-    channelsIDs?: {
+    channels?: {
         /**
          * Discord channel ids that the user needs to have in order to execute the command
          */
@@ -299,6 +299,19 @@ interface CommandPerms {
          */
         bypass?: string[];
     };
+    /**
+     * Guild IDs
+     */
+    guilds?: {
+        /**
+         * Discord guild ids that the user needed to have in order to execute the command
+         */
+        needed?: string[];
+        /**
+         * Discord guild ids that will allow the user to execute the command no matter what
+         */
+        bypass?: string[];
+    }
     /**
      * AxonCore staff
      */

@@ -19,11 +19,30 @@ export declare class CommandPermissions implements CommandPerms {
     public serverManager: boolean;
     public serverAdmin: boolean;
     public serverOwner: boolean;
-    public user: { needed: string[]; bypass: string[]; };
-    public usersIDs: { needed: string[]; bypass: string[]; };
-    public rolesIDs: { needed: string[]; bypass: string[]; };
-    public channelsIDs: { needed: string[]; bypass: string[]; };
-    public staff: { needed: string[]; bypass: string[]; };
+    public author: {
+        needed: string[];
+        bypass: string[];
+    };
+    public users: {
+        needed: string[];
+        bypass: string[];
+    };
+    public roles: {
+        needed: string[];
+        bypass: string[];
+    };
+    public channels: {
+        needed: string[];
+        bypass: string[];
+    };
+    public guilds: {
+        needed: string[];
+        bypass: string[];
+    };
+    public staff: {
+        needed: string[];
+        bypass: string[];
+    };
     public custom: (msg: LibMessage) => boolean;
     /**
      * Creates an instance of CommandPermissions.
@@ -151,6 +170,13 @@ export declare class CommandPermissions implements CommandPerms {
      */
     public setChannelIDs(object?: { bypass?: string[]; needed?: string[]; }, toAdd?: boolean): CommandPermissions;
     /**
+     * Set the guild IDs needed to be in to execute this command.
+     *
+     * @param object - Object of permissions
+     * @param toAdd - Whether to add the permissions to the existing permissions
+     */
+    public setGuildIDs(object?: { bypass?: string[]; needed?: string; }, toAdd?: boolean): CommandPermissions;
+    /**
      * Set the AxonCore staff members that can execute this command.
      *
      * @param object - Object of permissions
@@ -215,6 +241,18 @@ export declare class CommandPermissions implements CommandPerms {
      * @memberof CommandPermissions
      */
     private _checkChannelNeeded(channel: LibTextableChannel): boolean;
+    /**
+     * Check guildIDs [bypass]
+     *
+     * @memberof CommandPermissions
+     */
+    private _checkGuildBypass(guild: LibGuild): boolean;
+    /**
+     * Check guildIDs [needed]
+     *
+     * @memberof CommandPermissions
+     */
+    private _checkGuildNeeded(guild: LibGuild): boolean;
     /**
      * Check if the user is bot staff [bypass]
      *
