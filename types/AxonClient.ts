@@ -5,7 +5,7 @@ export declare class AxonClient extends EventEmitter {
     /** Bot settings */
     public settings: AxonParams;
     /** General infos about the current application */
-    public infos: Infos;
+    public info: Info;
     public axoncore: AxonInfos;
     /** The Logger instance */
     public logger: ALogger;

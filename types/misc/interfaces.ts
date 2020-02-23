@@ -762,7 +762,7 @@ interface AxonParams {
     guildConfigCache: number;
 }
 
-interface Infos {
+interface Info {
     /** Bot name */
     name: string;
     /** Bot description */
@@ -896,6 +896,6 @@ export {
     ACommandOptions, CommandPerms, CommandData, AxonTemplate, ListenerInfo, ListenerData, APIAxonMSGCont, AxonMSGCont, AxonMSGOpt, PermissionObject,
     Ctx, EmbedFields, EmbedAuthor, EmbedThumbnail, EmbedImage, EmbedFooter, EmbedData, PromptOptions, PromptOptionsData, CollectorOptions,
     AxonOptionsSettings, AOptionsSettings, AxonLanguageResponse, Languages, AxonOptionsBase, WebhookConfig, Webhooks, AxonOptionsPrefixes,
-    AxonOptionsInfo, AxonOptionsStaff, AxonOptionsExtensions, AxonConfs, AxonParams, Infos, AxonInfos, LibraryInterfaceStructs, PresenceGame,
+    AxonOptionsInfo, AxonOptionsStaff, AxonOptionsExtensions, AxonConfs, AxonParams, Info, AxonInfos, LibraryInterfaceStructs, PresenceGame,
     RawAttachment, RawUser, WebhookResponse, DjsContent, DjsWebhookContent, DjsPresenceGame, DjsEnums, ErisContent, ErisWebhookContent, ErisPresenceGame,
 };
