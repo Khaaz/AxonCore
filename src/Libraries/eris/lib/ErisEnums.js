@@ -1,46 +1,46 @@
 /**
  * @type {{
- * GUILD_CREATE: 'guildCreate'
- * GUILD_DELETE: 'guildDelete'
- * GUILD_UPDATE: 'guildUpdate'
- * GUILD_UNAVAILABLE: 'guildUnavailable'
- * GUILD_AVAILABLE: 'guildAvailable'
- * GUILD_MEMBER_ADD: 'guildMemberAdd'
- * GUILD_MEMBER_REMOVE: 'guildMemberRemove'
- * GUILD_MEMBER_UPDATE: 'guildMemberUpdate'
- * GUILD_MEMBER_AVAILABLE: 'guildMemberAvailable'
- * GUILD_MEMBER_SPEAKING: 'guildMemberSpeaking'
- * GUILD_MEMBERS_CHUNK: 'guildMembersChunk'
- * GUILD_ROLE_CREATE: 'roleCreate'
- * GUILD_ROLE_DELETE: 'roleDelete'
- * GUILD_ROLE_UPDATE: 'roleUpdate'
- * GUILD_EMOJIS_UPDATE: 'guildEmojisUpdate'
- * GUILD_BAN_ADD: 'guildBanAdd'
- * GUILD_BAN_REMOVE: 'guildBanRemove'
- * UNAVAILABLE_GUILD_CREATE: 'unavailableGuildCreate'
  * CHANNEL_CREATE: 'channelCreate'
  * CHANNEL_DELETE: 'channelDelete'
  * CHANNEL_UPDATE: 'channelUpdate'
  * CHANNEL_PIN_UPDATE: 'channelPinUpdate'
+ * GUILD_AVAILABLE: 'guildAvailable'
+ * GUILD_CREATE: 'guildCreate'
+ * GUILD_DELETE: 'guildDelete'
+ * GUILD_EMOJIS_UPDATE: 'guildEmojisUpdate'
+ * GUILD_BAN_ADD: 'guildBanAdd'
+ * GUILD_BAN_REMOVE: 'guildBanRemove'
+ * GUILD_MEMBER_ADD: 'guildMemberAdd'
+ * GUILD_MEMBER_CHUNK: 'guildMemberChunk'
+ * GUILD_MEMBER_REMOVE: 'guildMemberRemove'
+ * GUILD_MEMBER_UPDATE: 'guildMemberUpdate'
+ * GUILD_ROLE_CREATE: 'roleCreate'
+ * GUILD_ROLE_DELETE: 'roleDelete'
+ * GUILD_ROLE_UPDATE: 'roleUpdate'
+ * GUILD_UNAVAILABLE: 'guildUnavailable'
+ * GUILD_UPDATE: 'guildUpdate'
+ * INVITE_CREATE: 'inviteCreate'
+ * INIVTE_DELETE: 'inviteDelete'
  * MESSAGE_CREATE: 'messageCreate'
- * MESSAGE_DELETE: 'messageDelete'
- * MESSAGE_UPDATE: 'messageUpdate'
  * MESSAGE_DELETE_BULK: 'messageDeleteBulk'
+ * MESSAGE_DELETE: 'messageDelete'
  * MESSAGE_REACTION_ADD: 'messageReactionAdd'
  * MESSAGE_REACTION_REMOVE: 'messageReactionRemove'
  * MESSAGE_REACTION_REMOVE_ALL: 'messageReactionRemoveAll'
- * TYPING_START: 'typingStart'
- * USER_UPDATE: 'userUpdate'
+ * MESSAGE_UPDATE: 'messageUpdate'
  * PRESENCE_UPDATE: 'presenceUpdate'
+ * SHARD_DISCONNECT: 'shardDisconnect'
+ * SHARD_PRE_READY: 'shardPreReady'
+ * SHARD_READY: 'shardReady'
+ * SHARD_RESUME: 'shardResume'
+ * TYPING_START: 'typingStart'
+ * UNAVAILABLE_GUILD_CREATE: 'unavailableGuildCreate'
+ * USER_UPDATE: 'userUpdate'
  * VOICE_CHANNEL_JOIN: 'voicecChannelJoin'
  * VOICE_CHANNEL_LEAVE: 'voiceChannelLeave'
  * VOICE_CHANNEL_SWITCH: 'voiceChannelSwitch'
  * VOICE_STATE_UPDATE: 'voiceStateUpdate'
  * WEBHOOKS_UPDATE: 'webhookUpdate'
- * SHARD_DISCONNECT: 'shardDisconnect'
- * SHARD_PRE_READY: 'shardPreReady'
- * SHARD_READY: 'shardReady'
- * SHARD_RESUME: 'shardResume'
  * UNKNOWN: 'unknown'
  * CONNECT: 'connect'
  * DISCONNECT: 'disconnect'
@@ -55,47 +55,47 @@
  * @enum {String}
  */
 export const EVENTS = {
+    CHANNEL_CREATE: 'channelCreate',
+    CHANNEL_DELETE: 'channelDelete',
+    CHANNEL_PIN_UPDATE: 'channelPinUpdate',
+    CHANNEL_UPDATE: 'channelUpdate',
+    GUILD_AVAILABLE: 'guildAvailable',
+    GUILD_BAN_ADD: 'guildBanAdd',
+    GUILD_BAN_REMOVE: 'guildBanRemove',
     GUILD_CREATE: 'guildCreate',
     GUILD_DELETE: 'guildDelete',
-    GUILD_UPDATE: 'guildUpdate',
-    GUILD_UNAVAILABLE: 'guildUnavailable',
-    GUILD_AVAILABLE: 'guildAvailable',
+    GUILD_EMOJIS_UPDATE: 'guildEmojisUpdate',
     GUILD_MEMBER_ADD: 'guildMemberAdd',
+    GUILD_MEMBER_CHUNK: 'guildMemberChunk',
     GUILD_MEMBER_REMOVE: 'guildMemberRemove',
     GUILD_MEMBER_UPDATE: 'guildMemberUpdate',
-    GUILD_MEMBER_AVAILABLE: 'guildMemberAvailable',
-    GUILD_MEMBER_SPEAKING: 'guildMemberSpeaking',
-    GUILD_MEMBERS_CHUNK: 'guildMembersChunk',
     GUILD_ROLE_CREATE: 'roleCreate',
     GUILD_ROLE_DELETE: 'roleDelete',
     GUILD_ROLE_UPDATE: 'roleUpdate',
-    GUILD_EMOJIS_UPDATE: 'guildEmojisUpdate',
-    GUILD_BAN_ADD: 'guildBanAdd',
-    GUILD_BAN_REMOVE: 'guildBanRemove',
-    UNAVAILABLE_GUILD_CREATE: 'unavailableGuildCreate',
-    CHANNEL_CREATE: 'channelCreate',
-    CHANNEL_DELETE: 'channelDelete',
-    CHANNEL_UPDATE: 'channelUpdate',
-    CHANNEL_PIN_UPDATE: 'channelPinUpdate',
+    GUILD_UNAVAILABLE: 'guildUnavailable',
+    GUILD_UPDATE: 'guildUpdate',
+    INVITE_CREATE: 'inviteCreate',
+    INIVTE_DELETE: 'inviteDelete',
     MESSAGE_CREATE: 'messageCreate',
-    MESSAGE_DELETE: 'messageDelete',
-    MESSAGE_UPDATE: 'messageUpdate',
     MESSAGE_DELETE_BULK: 'messageDeleteBulk',
+    MESSAGE_DELETE: 'messageDelete',
     MESSAGE_REACTION_ADD: 'messageReactionAdd',
     MESSAGE_REACTION_REMOVE: 'messageReactionRemove',
     MESSAGE_REACTION_REMOVE_ALL: 'messageReactionRemoveAll',
-    TYPING_START: 'typingStart',
-    USER_UPDATE: 'userUpdate',
+    MESSAGE_UPDATE: 'messageUpdate',
     PRESENCE_UPDATE: 'presenceUpdate',
+    SHARD_DISCONNECT: 'shardDisconnect',
+    SHARD_PRE_READY: 'shardPreReady',
+    SHARD_READY: 'shardReady',
+    SHARD_RESUME: 'shardResume',
+    TYPING_START: 'typingStart',
+    UNAVAILABLE_GUILD_CREATE: 'unavailableGuildCreate',
+    USER_UPDATE: 'userUpdate',
     VOICE_CHANNEL_JOIN: 'voicecChannelJoin',
     VOICE_CHANNEL_LEAVE: 'voiceChannelLeave',
     VOICE_CHANNEL_SWITCH: 'voiceChannelSwitch',
     VOICE_STATE_UPDATE: 'voiceStateUpdate',
     WEBHOOKS_UPDATE: 'webhookUpdate',
-    SHARD_DISCONNECT: 'shardDisconnect',
-    SHARD_PRE_READY: 'shardPreReady',
-    SHARD_READY: 'shardReady',
-    SHARD_RESUME: 'shardResume',
     UNKNOWN: 'unknown',
     CONNECT: 'connect',
     DISCONNECT: 'disconnect',
