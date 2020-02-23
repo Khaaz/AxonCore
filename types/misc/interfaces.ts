@@ -26,7 +26,7 @@ interface ModuleData {
      * Whether the module can be disabled in a server or not
      */
     serverBypass?: boolean;
-    infos?: ModuleInfo;
+    info?: ModuleInfo;
     /**
      * The default options for all commands in this module
      */

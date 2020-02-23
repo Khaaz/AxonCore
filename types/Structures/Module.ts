@@ -35,7 +35,7 @@ export declare class Module extends Base {
     /**
      * Default info about the module
      */
-    public infos: ModuleInfo;
+    public info: ModuleInfo;
 
     /**
      * Load all commands in the module / register / unregister
@@ -54,10 +54,10 @@ export declare class Module extends Base {
      * @param data.label - The module label
      * @param data.enabled - Whether the module is enabled or not
      * @param data.serverBypass - Whether the module can be disabled in a server or not
-     * @param data.infos
-     * @param data.infos.name - The module name
-     * @param data.infos.description - The module description
-     * @param data.infos.category - The module category
+     * @param data.info
+     * @param data.info.name - The module name
+     * @param data.info.description - The module description
+     * @param data.info.category - The module category
      * @param data.options - The default options for all commands in this module
      * @param data.permissions - The default permissions for all commands in this module
      * @memberof Module
