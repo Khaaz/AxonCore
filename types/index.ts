@@ -28,6 +28,7 @@ export { Context } from './Loggers/Context';
 export { DefLogger } from './Loggers/DefLogger';
 export { LoggerSelector } from './Loggers/LoggerSelector';
 export { SignaleLogger } from './Loggers/SignaleLogger';
+export { WinstonLogger } from './Loggers/WinstonLogger';
 
 export {
     ModuleInfo, ModuleData, AxonJSON, GuildJSON, AConfig, AxonConfigRaw, GConfig, GuildConfigRaw, CommandInfo,

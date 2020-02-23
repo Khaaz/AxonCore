@@ -41,6 +41,7 @@ declare namespace AxonCore {
     export import DefLogger = Types.DefLogger;
     export import LoggerSelector = Types.LoggerSelector;
     export import SignaleLogger = Types.SignaleLogger;
+    export import WinstonLogger = Types.WinstonLogger;
     export import ModuleInfo = Types.ModuleInfo;
     export import ModuleData = Types.ModuleData;
     export import AxonJSON = Types.AxonJSON;
