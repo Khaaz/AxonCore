@@ -141,6 +141,7 @@ declare namespace AxonCore {
     export import Utils = Types.Utils;
     export import AxonClient = Types.AxonClient;
     export import AxonOptions = Types.AxonOptions;
+    export import updateDBVal = Types.updateDBVal;
 }
 
 export = AxonCore;

@@ -94,3 +94,5 @@ export { Utils } from './Utility/Utils';
 
 export { AxonClient } from './AxonClient';
 export { AxonOptions } from './AxonOptions';
+
+export type updateDBVal = string | boolean | object | any[] | number | Date
