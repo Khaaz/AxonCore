@@ -85,6 +85,7 @@ export { AutoQueue } from './Utility/External/AutoQueue';
 export { FunctionQueue } from './Utility/External/FunctionQueue';
 export { LRUCache } from './Utility/External/LRUCache';
 export { Queue } from './Utility/External/Queue';
+export { Stack } from './Utility/External/Stack';
 
 export { AxonUtils } from './Utility/AxonUtils';
 export { Collection } from './Utility/Collection';

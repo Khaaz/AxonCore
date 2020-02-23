@@ -134,6 +134,7 @@ declare namespace AxonCore {
     export import FunctionQueue = Types.FunctionQueue;
     export import LRUCache = Types.LRUCache;
     export import Queue = Types.Queue;
+    export import Stack = Types.Stack;
     export import AxonUtils = Types.AxonUtils;
     export import Collection = Types.Collection;
     export import Utils = Types.Utils;
