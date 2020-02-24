@@ -50,7 +50,7 @@ class Queue {
      * Queue up an element.
      *
      * @param {T} elem
-     * @param {Boolean} replaceOnMax
+     * @param {Boolean} [replaceOnMax] - Whether to replace value when adding if max is reached (dequeue first element and queue new element)
      * @returns {Boolean} Whether element was successfully added
      * @memberof Queue
      */
