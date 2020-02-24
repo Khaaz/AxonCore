@@ -420,7 +420,7 @@ class CommandPermissions {
     }
 
     /**
-     * Set the channel IDs needed to be in to execute this command.
+     * Set the guild IDs needed to be in to execute this command.
      *
      * @param {{needed: Array<String>, bypass: Array<String>}} [object={ bypass: [], needed: [] }] - Object of permissions
      * @param {Boolean} [toAdd=false] - Whether to add the permissions to the existing permissions
