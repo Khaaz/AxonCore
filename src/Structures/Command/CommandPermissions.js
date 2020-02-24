@@ -319,7 +319,7 @@ class CommandPermissions {
      * @returns {CommandPermissions}
      * @memberof CommandPermissions
      */
-    setUser(object = { bypass: [], needed: [] }, toAdd = false) {
+    setAuthor(object = { bypass: [], needed: [] }, toAdd = false) {
         if (toAdd) {
             if (object.bypass.length > 0) {
                 this.author.bypass = [...this.author.bypass, ...object.bypass];
