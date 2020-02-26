@@ -51,7 +51,7 @@ class DjsInterface extends LibraryInterface {
      * @memberof DjsInterface
      */
     onMessageCreate(func) {
-        this.botClient.on(this.enums.EVENTS.MESSAGE_CREATE, (msg) => {
+        this.botClient.on(this.enums.EVENTS.MESSAGE, (msg) => {
             func(msg);
         } );
     }
