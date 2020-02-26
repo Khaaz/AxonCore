@@ -46,7 +46,6 @@ class ALoader {
      * @returns {Boolean} - Whether it worked
      * @memberof ALoader
      */
-    // eslint-disable-next-line no-unused-vars
     loadAll(toLoad) {
         throw new NotImplementedException();
     }

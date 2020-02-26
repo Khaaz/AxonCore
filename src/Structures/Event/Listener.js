@@ -96,8 +96,7 @@ class Listener extends Base {
      * @returns {Promise}
      * @memberof Listener
      */
-    // eslint-disable-next-line no-unused-vars
-    async execute(args, guildConfig) {
+    async execute(args, guildConfig) { // eslint-disable-line no-unused-vars
         throw new NotImplementedException();
     }
 }

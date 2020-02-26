@@ -354,7 +354,7 @@ class Command extends Base {
      * @returns {Promise<CommandResponse>} Returns a CommandResponse that will be used to create the CommandContext
      * @memberof Command
      */
-    async execute({ msg, args, guildConfig }) { // eslint-disable-line
+    async execute( { msg, args, guildConfig } ) { // eslint-disable-line no-unused-vars
         throw new AxonError('Not implemented Exception.', `${this.module}: ${this.fullLabel}`);
     }
 

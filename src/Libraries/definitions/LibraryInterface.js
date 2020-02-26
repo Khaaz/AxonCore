@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import NotImplementedException from '../../Errors/NotImplementedException';
 import User from './User';
 import Member from './Member';
@@ -78,7 +79,6 @@ class LibraryInterface {
      * @returns {void}
      * @memberof LibraryInterface
      */
-    // eslint-disable-next-line no-unused-vars
     onMessageCreate(func) {
         throw new NotImplementedException();
     }
@@ -88,7 +88,6 @@ class LibraryInterface {
      * @returns {void}
      * @memberof LibraryInterface
      */
-    // eslint-disable-next-line no-unused-vars
     onceReady(func) {
         throw new NotImplementedException();
     }

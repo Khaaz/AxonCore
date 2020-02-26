@@ -35,7 +35,7 @@ class JsonProvider extends ADBProvider {
      * @param {AxonOptions}
      * @memberof JsonProvider
      */
-    init(axonOptions = {} ) { // eslint-disable-next-line no-unused-vars
+    init(axonOptions = {} ) {
         this.manager = new JsonManager(axonOptions.extensions.DBLocation);
     }
 

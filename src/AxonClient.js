@@ -144,8 +144,8 @@ class AxonClient extends EventEmitter {
         };
 
         /* Logger */
-        if (axonOptions.extensions.logger && axonOptions.extensions.logger.prototype instanceof ALogger) {
-            this.logger = axonOptions.extensions.logger; // eslint-disable-line new-cap
+        if (axonOptions.extensions.logger && axonOptions.extensions.logger instanceof ALogger) {
+            this.logger = axonOptions.extensions.logger;
         } else {
             this.logger = LoggerSelector.select(axonOptions.settings);
         }
@@ -751,8 +751,6 @@ class AxonClient extends EventEmitter {
     }
 
     // ***** GENERAL **** //
-    /* eslint max-classes-per-file: ["warn", 2]*/
-    /* eslint-disable no-prototype-builtins */
 
     /**
      * Custom toString method.
