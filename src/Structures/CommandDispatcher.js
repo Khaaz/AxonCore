@@ -92,8 +92,6 @@ class CommandDispatcher {
         if (!prefix) {
             return;
         }
-        /* msg.prefix doesn't exist. Adding it as reference */
-        msg.prefix = prefix; // eslint-disable-line require-atomic-updates
 
         /* Formatting mention to replace <!@ mention to <@ mentions (uniform mentions) */
         const content = this.library.message
