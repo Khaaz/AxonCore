@@ -36,7 +36,7 @@ import DBSelector from './Database/index';
 import logo from './Configs/logo';
 import packageJSON from '../package.json';
 import { EMBED_LIMITS } from './Utility/Constants/DiscordEnums';
-import { WEBHOOK_TYPES, LOG_LEVELS, WEBHOOK_TO_COLOR } from './Utility/Constants/AxonEnums';
+import { WEBHOOK_TYPES, LOG_LEVELS, WEBHOOK_TO_COLOR, DEBUG_FLAGS } from './Utility/Constants/AxonEnums';
 
 /**
  * @typedef {import('./AxonOptions').default} AxonOptions
@@ -182,7 +182,7 @@ class AxonClient extends EventEmitter {
         }
 
         if (this.settings.debugMode) {
-            this.on('debug', (m) => this.logger.verbose(m) );
+            this.on('debug', this.onDebug);
         }
 
         /* Structures */
@@ -480,6 +480,30 @@ class AxonClient extends EventEmitter {
     }
 
     /**
+     * Function ran on debug event.
+     * Logs the debug event.
+     *
+     * @param {DEBUG_FLAGS} flag
+     * @param {String} d
+     * @memberof AxonClient
+     */
+    onDebug(flag, d) {
+        let m = '';
+        if (flag & DEBUG_FLAGS.GOOD) {
+            m += 'V: ';
+        } else if (flag & DEBUG_FLAGS.BAD) {
+            m += 'X: ';
+        }
+
+        if (flag & DEBUG_FLAGS.INIT) {
+            m += '[INIT] ';
+        } else if (flag & DEBUG_FLAGS.COMMAND) {
+            m += '[CMD] ';
+        }
+        this.logger.verbose(`${m}${d}`);
+    }
+
+    /**
      * Initialize error listeners and webhooks.
      * Override this method to setup your own error listeners.
      * @memberof AxonClient
@@ -520,6 +544,7 @@ class AxonClient extends EventEmitter {
     /**
      * Fired when a debug message need to be sent
      * @event AxonClient#debug
+     * @prop {DEBUG_FLAGS} flags - debug flags used used to have more information about the event
      * @prop {String} debugMessage - debug message with information about the situation
      * @memberof AxonClient
      */
