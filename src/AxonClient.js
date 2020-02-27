@@ -1,6 +1,7 @@
 // Lib - Modules
 import EventEmitter from 'events';
 import util from 'util';
+import { performance } from 'perf_hooks';
 
 // Core - Structures
 import Base from './Structures/Base';
@@ -584,29 +585,37 @@ class AxonClient extends EventEmitter {
      * @param {Boolean} permissions.isOwner
      */
     _execCommand(msg, args, command, guildConfig, { isAdmin, isOwner } ) {
+        this.emit('debug', DEBUG_FLAGS.INFO | DEBUG_FLAGS.COMMAND, `${guildConfig ? '[GUILD]' : '[DM]'} ${isAdmin ? 'Admin' : 'Regular'} execution of ${command.fullLabel}`);
+        let startTime;
         if (this.settings.debugMode) {
-            this.log('VERBOSE', `${guildConfig ? '[GUILD]' : '[DM]'} ${isAdmin ? 'Admin' : 'Regular'} execution of ${command.fullLabel}`);
-            console.time('- Net');
-            console.time('- Node');
+            startTime = performance.now();
         }
-
+        
         command._process( {
             msg, args, guildConfig, isAdmin, isOwner,
         } )
             .then( (context) => {
                 this.emit('commandExecution', context.executed, command.fullLabel, { msg, command, guildConfig, context } );
-
-                this.settings.debugMode && console.timeEnd('- Net');
+                
+                if (this.settings.debugMode) {
+                    const endTime = performance.now();
+                    this.emit('debug', DEBUG_FLAGS.INFO | DEBUG_FLAGS.COMMAND, `NET: ${endTime - startTime}`);
+                }
             } )
             .catch(err => {
                 this.emit('commandError', command.fullLabel, { msg, command, guildConfig, error: err } );
-                this.settings.debugMode && console.timeEnd('- Net');
+                
+                if (this.settings.debugMode) {
+                    const endTime = performance.now();
+                    this.emit('debug', DEBUG_FLAGS.INFO | DEBUG_FLAGS.COMMAND, `NET: ${endTime - startTime}`);
+                }
                 
                 this.log('ERROR', err);
             } );
 
         if (this.settings.debugMode) {
-            console.timeEnd('- Node');
+            const endTime = performance.now();
+            this.emit('debug', DEBUG_FLAGS.INFO | DEBUG_FLAGS.COMMAND, `NODE: ${endTime - startTime}`);
         }
     }
 
@@ -625,10 +634,10 @@ class AxonClient extends EventEmitter {
             return;
         }
 
+        this.emit('debug', DEBUG_FLAGS.INFO | DEBUG_FLAGS.COMMAND, `${guildConfig ? '[GUILD]' : '[DM]'} ${isAdmin ? 'Admin' : 'Regular'} -HELP- execution of ${command.fullLabel}`);
+        let startTime;
         if (this.settings.debugMode) {
-            this.log('VERBOSE', `${guildConfig ? '[GUILD]' : '[DM]'} ${isAdmin ? 'Admin' : 'Regular'} -HELP- execution of ${command.fullLabel}`);
-            console.time('- Net');
-            console.time('- Node');
+            startTime = performance.now();
         }
 
         command.sendHelp( {
@@ -636,17 +645,24 @@ class AxonClient extends EventEmitter {
         } )
             .then( (context) => {
                 this.emit('commandExecution', true, command.label, { msg, command, guildConfig, context } );
-                this.settings.debugMode && console.timeEnd('- Net');
+                if (this.settings.debugMode) {
+                    const endTime = performance.now();
+                    this.emit('debug', DEBUG_FLAGS.INFO | DEBUG_FLAGS.COMMAND, `NET: ${endTime - startTime}`);
+                }
             } )
             .catch(err => {
                 this.emit('commandError', command.label, { msg, command, guildConfig, err } );
-                this.settings.debugMode && console.timeEnd('- Net');
+                if (this.settings.debugMode) {
+                    const endTime = performance.now();
+                    this.emit('debug', DEBUG_FLAGS.INFO | DEBUG_FLAGS.COMMAND, `NET: ${endTime - startTime}`);
+                }
 
                 this.log('ERROR', err);
             } );
 
         if (this.settings.debugMode) {
-            console.timeEnd('- Node');
+            const endTime = performance.now();
+            this.emit('debug', DEBUG_FLAGS.INFO | DEBUG_FLAGS.COMMAND, `NODE: ${endTime - startTime}`);
         }
     }
 
@@ -680,16 +696,27 @@ class AxonClient extends EventEmitter {
      * @param {...any} args
      */
     _execListener(listener, guildConfig, ...args) {
+        this.emit('debug', DEBUG_FLAGS.INFO | DEBUG_FLAGS.LISTENER, `Execution of ${listener.label} for ${listener.eventName}`);
+        let startTime;
+        if (this.settings.debugMode) {
+            startTime = performance.now();
+        }
+
         listener._execute(guildConfig, ...args)
             .then( () => {
                 if (this.settings.debugMode) {
-                    this.log('VERBOSE', `[EVENT](${listener.eventName}) - ${listener.label}`);
+                    const endTime = performance.now();
+                    this.emit('debug', DEBUG_FLAGS.INFO | DEBUG_FLAGS.LISTENER, `TIME: ${endTime - startTime}`);
                 }
                 this.emit('listenerExecution', true, listener.eventName, listener.label, { listener, guildConfig } );
             } )
             .catch(err => {
                 this.emit('listenerError', listener.eventName, listener.label, { listener, guildConfig, error: err } );
 
+                if (this.settings.debugMode) {
+                    const endTime = performance.now();
+                    this.emit('debug', DEBUG_FLAGS.INFO | DEBUG_FLAGS.LISTENER, `NET: ${endTime - startTime}`);
+                }
                 this.log('ERROR', `[EVENT](${listener.eventName}) - ${listener.label}\n${err}`);
             } );
     }
