@@ -147,7 +147,7 @@ export declare class CommandPermissions implements CommandPerms {
      * @param toAdd - Whether to add the permissions to the existing permissions
      * @memberof CommandPermissions
      */
-    public setUser(object?: { bypass?: string[]; needed?: string[]; }, toAdd?: boolean): CommandPermissions;
+    public setAuthor(object?: { bypass?: string[]; needed?: string[]; }, toAdd?: boolean): CommandPermissions;
     /**
      * Set the user IDs the user needs to have to execute this command.
      *
@@ -155,7 +155,7 @@ export declare class CommandPermissions implements CommandPerms {
      * @param toAdd - Whether to add the permissions to the existing permissions
      * @memberof CommandPermissions
      */
-    public setUserIDs(object?: { bypass?: string[]; needed?: string[]; }, toAdd?: boolean): CommandPermissions;
+    public setUsers(object?: { bypass?: string[]; needed?: string[]; }, toAdd?: boolean): CommandPermissions;
     /**
      * Set the role IDs the user needs to have to execute this command.
      *
@@ -163,7 +163,7 @@ export declare class CommandPermissions implements CommandPerms {
      * @param toAdd - Whether to add the permissions to the existing permissions
      * @memberof CommandPermissions
      */
-    public setRoleIDs(object?: { bypass?: string[]; needed?: string[]; }, toAdd?: boolean): CommandPermissions;
+    public setRoles(object?: { bypass?: string[]; needed?: string[]; }, toAdd?: boolean): CommandPermissions;
     /**
      * Set the channel IDs needed to be in to execute this command.
      *
@@ -171,14 +171,14 @@ export declare class CommandPermissions implements CommandPerms {
      * @param toAdd - Whether to add the permissions to the existing permissions
      * @memberof CommandPermissions
      */
-    public setChannelIDs(object?: { bypass?: string[]; needed?: string[]; }, toAdd?: boolean): CommandPermissions;
+    public setChannels(object?: { bypass?: string[]; needed?: string[]; }, toAdd?: boolean): CommandPermissions;
     /**
      * Set the guild IDs needed to be in to execute this command.
      *
      * @param object - Object of permissions
      * @param toAdd - Whether to add the permissions to the existing permissions
      */
-    public setGuildIDs(object?: { bypass?: string[]; needed?: string; }, toAdd?: boolean): CommandPermissions;
+    public setGuilds(object?: { bypass?: string[]; needed?: string; }, toAdd?: boolean): CommandPermissions;
     /**
      * Set the AxonCore staff members that can execute this command.
      *
