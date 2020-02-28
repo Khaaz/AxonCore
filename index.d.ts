@@ -18,6 +18,10 @@ declare namespace AxonCore {
     export import Channel = Types.Channel;
     export import Client = Types.Client;
     export import Enums = Types.Enums;
+    export import EVENTS = Types.EVENTS;
+    export import DISCORD_LIB_PERMISSIONS = Types.DISCORD_LIB_PERMISSIONS;
+    export import PERMISSIONS = Types.PERMISSIONS;
+    export import PERMISSIONS_NAMES = Types.PERMISSIONS_NAMES;
     export import Guild = Types.Guild;
     export import LibraryInterface = Types.LibraryInterface;
     export import Member = Types.Member;
@@ -85,7 +89,8 @@ declare namespace AxonCore {
     export import AxonConfs = Types.AxonConfs;
     export import AxonParams = Types.AxonParams;
     export import Info = Types.Info;
-    export import AxonInfos = Types.AxonInfos;
+    export import AxonInfo = Types.AxonInfo;
+    export import AxonStaffIDs = Types.AxonStaffIDs;
     export import LibraryInterfaceStructs = Types.LibraryInterfaceStructs;
     export import PresenceGame = Types.PresenceGame;
     export import RawAttachment = Types.RawAttachment;
@@ -94,7 +99,6 @@ declare namespace AxonCore {
     export import DjsContent = Types.DjsContent;
     export import DjsWebhookContent = Types.DjsWebhookContent;
     export import DjsPresenceGame = Types.DjsPresenceGame;
-    export import DjsEnums = Types.DjsEnums;
     export import ErisContent = Types.ErisContent;
     export import ErisWebhookContent = Types.ErisWebhookContent;
     export import ErisPresenceGame = Types.ErisPresenceGame;
@@ -125,6 +129,17 @@ declare namespace AxonCore {
     export import Module = Types.Module;
     export import Validator = Types.Validator;
     export import AxonEnums = Types.AxonEnums;
+    export import HTTP_CODE = Types.HTTP_CODE;
+    export import HTTP_MESSAGES = Types.HTTP_MESSAGES;
+    export import LIBRARY_TYPES = Types.LIBRARY_TYPES;
+    export import LOGGER_TYPES = Types.LOGGER_TYPES;
+    export import LOG_LEVELS = Types.LOG_LEVELS;
+    export import DB_TYPES = Types.DB_TYPES;
+    export import COMMAND_EXECUTION_TYPES = Types.COMMAND_EXECUTION_TYPES;
+    export import COMMAND_EXECUTION_STATE = Types.COMMAND_EXECUTION_STATE;
+    export import AXON_PERMISSION_LEVELS = Types.AXON_PERMISSION_LEVELS;
+    export import PERMISSION_ADMIN = Types.PERMISSION_ADMIN;
+    export import PERMISSION_MANAGER = Types.PERMISSION_MANAGER;
     export import DiscordEnums = Types.DiscordEnums;
     export import Embed = Types.Embed;
     export import MessageCollector = Types.MessageCollector;

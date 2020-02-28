@@ -1,3 +1,6 @@
+import {
+    LibraryInterface, LibChannel, LibGuild, LibUser, AxonMSGCont, LibMessage,
+} from '../../';
 
 export declare class Channel {
     public lib: LibraryInterface;

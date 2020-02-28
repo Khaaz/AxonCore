@@ -1,3 +1,6 @@
+import {
+    CommandPerms, Command, LibMessage, Module, AxonClient, Utils, AxonUtils, LibraryInterface, GuildConfig, LibTextableChannel, LibMember, LibGuild,
+} from '../../';
 
 /**
  * CommandPermissions.

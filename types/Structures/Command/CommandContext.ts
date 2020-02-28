@@ -1,3 +1,6 @@
+import {
+    Command, LibMessage, COMMAND_EXECUTION_STATE, COMMAND_EXECUTION_TYPES, CommandResponse,
+} from '../../';
 
 export declare class CommandContext {
     /**

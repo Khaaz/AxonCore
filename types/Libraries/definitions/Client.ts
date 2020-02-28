@@ -1,3 +1,7 @@
+import { RequestOptions } from 'http';
+import {
+    LibraryInterface, LibClient, LibUser, LibGuild, LibMember, ErisWebhookContent, DjsWebhookContent, WebhookResponse,
+} from '../../';
 
 export declare class Client {
     public lib: LibraryInterface;

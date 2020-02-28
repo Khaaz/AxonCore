@@ -1,3 +1,4 @@
+import { Queue } from '../../';
 
 /**
  * This default FunctionQueue works in a synchronous fashion.
@@ -9,8 +10,8 @@
  *
  * @class FunctionQueue
  */
-export declare class FunctionQueue {
-    private _functions: Queue[];
+export declare class FunctionQueue<T> {
+    private _functions: Queue<T>[];
     private _running: boolean;
     /** Whether to stop the FunctionQueue execution on error. */
     public stopOnError: boolean;

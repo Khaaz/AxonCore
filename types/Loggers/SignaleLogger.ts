@@ -1,3 +1,5 @@
+import { ALogger } from '../';
+import { Signale } from 'signale';
 
 /**
  * A different Logger that uses Signale to format console output. See DefLogger for documentation.
@@ -8,7 +10,7 @@
  * @class SignaleLogger
  * @extends ALogger
  */
-export class SignaleLogger extends ALogger {
+export declare class SignaleLogger extends ALogger {
     /** Signale */
     public out: Signale;
 }

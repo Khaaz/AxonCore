@@ -1,3 +1,4 @@
+import { ARegistry, Command, AxonClient, GuildConfig } from '../../';
 
 /**
  * Registry that holds all Commands.

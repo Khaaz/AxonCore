@@ -1,3 +1,6 @@
+import {
+    ADBProvider, JsonManager, AxonOptions, AxonConfig, GuildConfig, updateDBVal,
+} from '../../';
 
 /**
  * DB interface to interact with a Json Database.

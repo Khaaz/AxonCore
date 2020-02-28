@@ -1,3 +1,4 @@
+import { AxonClient, LibraryInterface, LibMessage, GuildConfig } from '../';
 
 /**
  * Class responsible to call the correct command and correct execution flow when needed.

@@ -1,3 +1,6 @@
+import {
+    ALoader, AxonClient, Module, ALogger, Listener,
+} from '../../';
 
 /**
  * Load listeners in AxonClient.
@@ -13,7 +16,7 @@ export declare class ListenerLoader extends ALoader<AxonClient> {
      */
     constructor(module: Module);
     /**
-     * Returns the Module instance
+     * Returns the AxonClient
      *
      * @readonly
      * @memberof ListenerLoader

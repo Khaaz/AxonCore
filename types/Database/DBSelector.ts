@@ -1,3 +1,6 @@
+import {
+    ASelector, AxonClient, AxonOptions, InMemoryProvider, JsonProvider, MongoProvider,
+} from '../../';
 
 /**
  * Database Selector

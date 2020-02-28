@@ -1,3 +1,7 @@
+import {
+    Base, CommandData, Module, CommandCooldown, CommandInfo, CommandOptions, CommandPermissions, Collection, AxonTemplate,
+    LibraryInterface, LibMessage, GuildConfig, CommandContext, CommandResponse, LibTextableChannel, LibMember,
+} from '../../';
 
 /**
  * AxonCore - Command constructor

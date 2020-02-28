@@ -1,4 +1,3 @@
-
 /**
  * Queue class.
  *

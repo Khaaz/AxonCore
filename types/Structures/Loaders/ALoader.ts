@@ -1,4 +1,3 @@
-
 /**
  * Abstract class for loaders.
  * Module Loader, Command Loader, Listener Loader

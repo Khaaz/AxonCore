@@ -1,4 +1,4 @@
-enum EVENTS {
+export declare enum EVENTS {
     RATE_LIMIT = 'rateLimit',
     READY = 'ready',
     RESUME = 'resume',
@@ -48,7 +48,7 @@ enum EVENTS {
     WARN = 'warn',
     DEBUG = 'debug',
 }
-enum DISCORD_LIB_PERMISSIONS {
+export declare enum DISCORD_LIB_PERMISSIONS {
     CREATE_INSTANT_INVITE = 'CREATE_INSTANT_INVITE',
     KICK_MEMBERS = 'KICK_MEMBERS',
     BAN_MEMBERS = 'BAN_MEMBERS',
@@ -81,7 +81,7 @@ enum DISCORD_LIB_PERMISSIONS {
     MANAGE_WEBHOOKS = 'MANAGE_WEBHOOKS',
     MANAGE_EMOJIS = 'MANAGE_EMOJIS',
 }
-enum PERMISSIONS {
+export declare enum PERMISSIONS {
     'CREATE_INSTANT_INVITE',
     'KICK_MEMBERS',
     'BAN_MEMBERS',
@@ -114,7 +114,7 @@ enum PERMISSIONS {
     'MANAGE_EMOJIS',
 }
 
-enum PERMISSIONS_NAMES {
+export declare enum PERMISSIONS_NAMES {
     CREATE_INSTANT_INVITE = 'Create Instant Invite',
     KICK_MEMBERS = 'Kick Members',
     BAN_MEMBERS = 'Ban Members',
@@ -152,5 +152,5 @@ export declare interface DjsEnums {
     EVENTS: EVENTS;
     DISCORD_LIB_PERMISSIONS: DISCORD_LIB_PERMISSIONS;
     PERMISSIONS: PERMISSIONS;
-    PERMISSION_NAMES: PERMISSIONS_NAMES;
+    PERMISSIONS_NAMES: PERMISSIONS_NAMES;
 }

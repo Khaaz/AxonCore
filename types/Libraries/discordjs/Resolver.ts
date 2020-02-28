@@ -1,3 +1,5 @@
+import { Resolver } from '../definitions/Resolver';
+import * as djs from 'discord.js';
 
 export declare class DjsResolver extends Resolver {
     /**

@@ -1,3 +1,4 @@
+import { AxonClient, Listener } from '../../';
 
 /**
  * Abstract class for handlers.

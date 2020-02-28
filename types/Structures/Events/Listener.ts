@@ -1,3 +1,4 @@
+import { Base, ListenerData, Module, GuildConfig } from '../../';
 
 export declare class Listener extends Base implements ListenerData {
     /**

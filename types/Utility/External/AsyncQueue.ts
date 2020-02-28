@@ -1,3 +1,4 @@
+import { FunctionQueue } from '../../';
 
 /**
  * This data structure is a queue that will run every function one by one sequentially.
@@ -11,7 +12,7 @@
  * @class AsyncQueue
  * @extends FunctionQueue
  */
-export declare class AsyncQueue extends FunctionQueue {
+export declare class AsyncQueue<T> extends FunctionQueue<T> {
     public exec(): Promise<void>;
     /**
      * Adds a function to the queue.

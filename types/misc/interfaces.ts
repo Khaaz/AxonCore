@@ -1,3 +1,10 @@
+import {
+    CommandOptions, CommandPermissions, LibTextableChannel, LibMember, LibMessage, Command, LibGuild, LibUser, LIBRARY_TYPES, LOGGER_TYPES,
+    DB_TYPES, Utils, ALogger, ADBProvider, AxonConfig, GuildConfig, User, Member, Message, Channel, Guild, Resolver, Embed,
+} from '../';
+import * as djs from 'discord.js';
+import * as Eris from 'eris';
+
 interface ModuleInfo {
     /**
      * The module name
@@ -864,13 +871,6 @@ interface DjsPresenceGame extends PresenceGame {
     type: djs.ActivityType | 0 | 1 | 2 | 3 | 4;
 }
 
-interface DjsEnums {
-    EVENTS: DJS_ENUMS_EVENTS;
-    DISCORD_LIB_PERMISSIONS: DJS_ENUMS_DISCORD_LIB_PERMISSIONS;
-    PERMISSIONS: DJS_ENUMS_PERMISSIONS;
-    PERMISSION_NAMES: DJS_ENUMS_PERMISSIONS_NAMES;
-}
-
 interface ErisContent {
     content?: string;
     tts?: boolean;
@@ -896,6 +896,6 @@ export {
     ACommandOptions, CommandPerms, CommandData, AxonTemplate, ListenerInfo, ListenerData, APIAxonMSGCont, AxonMSGCont, AxonMSGOpt, PermissionObject,
     Ctx, EmbedFields, EmbedAuthor, EmbedThumbnail, EmbedImage, EmbedFooter, EmbedData, PromptOptions, PromptOptionsData, CollectorOptions,
     AxonOptionsSettings, AOptionsSettings, AxonLanguageResponse, Languages, AxonOptionsBase, WebhookConfig, Webhooks, AxonOptionsPrefixes,
-    AxonOptionsInfo, AxonOptionsStaff, AxonOptionsExtensions, AxonConfs, AxonParams, Info, AxonInfo, LibraryInterfaceStructs, PresenceGame,
-    RawAttachment, RawUser, WebhookResponse, DjsContent, DjsWebhookContent, DjsPresenceGame, DjsEnums, ErisContent, ErisWebhookContent, ErisPresenceGame,
+    AxonOptionsInfo, AxonOptionsStaff, AxonOptionsExtensions, AxonConfs, AxonParams, Info, AxonInfo, AxonStaffIDs, LibraryInterfaceStructs, PresenceGame,
+    RawAttachment, RawUser, WebhookResponse, DjsContent, DjsWebhookContent, DjsPresenceGame, ErisContent, ErisWebhookContent, ErisPresenceGame,
 };

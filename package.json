@@ -30,6 +30,7 @@
     "signale": "^1.4.0",
     "superagent": "^5.2.1",
     "typescript": "^3.7.5",
+    "winston": "^3.2.1",
     "yarn": "^1.21.1"
   },
   "main": "./index.js",

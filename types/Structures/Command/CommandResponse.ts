@@ -1,4 +1,3 @@
-
 /**
  * Build a Command Response - the formatted object used internally by the framework to resolve context.
  *

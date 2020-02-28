@@ -1,4 +1,3 @@
-
 /**
  * Static class
  * Select and instantiate dependencies.

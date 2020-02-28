@@ -1,3 +1,6 @@
+import {
+    ALoader, Command, Module, AxonClient, ALogger,
+} from '../../';
 
 /**
  * Load commands in a Module.

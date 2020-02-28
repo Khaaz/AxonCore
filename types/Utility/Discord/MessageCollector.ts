@@ -1,3 +1,7 @@
+import * as EventEmitter from 'events';
+import {
+    CollectorOptions, AxonClient, LibMessage, Collection, LibClient, LibTextableChannel,
+} from '../../';
 
 /**
  * Collect bunch of message object according to chosen options

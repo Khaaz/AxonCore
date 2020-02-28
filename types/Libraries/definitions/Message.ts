@@ -1,3 +1,6 @@
+import {
+    LibraryInterface, LibMessage, LibUser, LibMember, LibTextableChannel, LibGuild, AxonMSGCont,
+} from '../../../';
 
 export declare class Message {
     public lib: LibraryInterface;

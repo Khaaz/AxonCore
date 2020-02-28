@@ -1,3 +1,4 @@
+import { AxonClient, Collection } from '../../';
 
 /**
  * Abstract class to hold and manage a set of items.

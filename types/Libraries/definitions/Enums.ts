@@ -1,4 +1,4 @@
-enum EVENTS {
+export declare enum EVENTS {
     GUILD_CREATE = 'guildCreate',
     GUILD_DELETE = 'guildDelete',
     GUILD_UPDATE = 'guildUpdate',
@@ -52,7 +52,7 @@ enum EVENTS {
     RAW_WS = 'rawWS',
 }
 
-enum DISCORD_LIB_PERMISSIONS {
+export declare enum DISCORD_LIB_PERMISSIONS {
     CREATE_INSTANT_INVITE = 'createInstantInvite',
     KICK_MEMBERS = 'kickMembers',
     BAN_MEMBERS = 'banMembers',
@@ -86,7 +86,7 @@ enum DISCORD_LIB_PERMISSIONS {
     MANAGE_EMOJIS = 'manageEmojis',
 }
 
-enum PERMISSIONS {
+export declare enum PERMISSIONS {
     'createInstantInvite',
     'kickMembers',
     'banMembers',
@@ -119,7 +119,7 @@ enum PERMISSIONS {
     'manageEmojis',
 }
 
-enum PERMISSIONS_NAMES {
+export declare enum PERMISSIONS_NAMES {
     createInstantInvite = 'Create Instant Invite',
     kickMembers = 'Kick Members',
     banMembers = 'Ban Members',

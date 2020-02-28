@@ -1,3 +1,6 @@
+import { Message } from '../definitions/Message';
+import * as Eris from 'eris';
+import { ErisContent } from '../../';
 
 export declare class ErisMessage extends Message {
     /**

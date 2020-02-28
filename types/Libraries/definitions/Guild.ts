@@ -1,4 +1,4 @@
-
+import { LibraryInterface, LibGuild, LibMember } from '../../';
 export declare class Guild {
     public lib: LibraryInterface
     /**

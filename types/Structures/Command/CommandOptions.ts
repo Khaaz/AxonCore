@@ -1,3 +1,6 @@
+import {
+    ACommandOptions, Command, LibTextableChannel, LibMember, MessageManager, GuildConfig,
+} from '../../';
 
 /**
  * CommandOptions.

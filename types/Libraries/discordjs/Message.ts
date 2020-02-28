@@ -1,3 +1,7 @@
+import { Message } from '../definitions/Message';
+import * as djs from 'discord.js';
+import { DjsContent } from '../../';
+
 export declare class DjsMessage extends Message {
     /**
      * @memberof DjsMessage

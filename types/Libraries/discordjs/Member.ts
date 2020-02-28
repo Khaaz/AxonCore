@@ -1,3 +1,6 @@
+import { Member } from '../definitions/Member';
+import * as djs from 'discord.js';
+import { DISCORD_LIB_PERMISSIONS } from './Enums';
 
 export declare class DjsMember extends Member {
     /**
@@ -11,5 +14,5 @@ export declare class DjsMember extends Member {
     /**
      * @memberof DjsMember
      */
-    hasPermission(member: djs.GuildMember, permission: DJS_ENUMS_DISCORD_LIB_PERMISSIONS): boolean;
+    hasPermission(member: djs.GuildMember, permission: DISCORD_LIB_PERMISSIONS): boolean;
 }

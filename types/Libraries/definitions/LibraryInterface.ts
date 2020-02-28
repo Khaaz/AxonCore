@@ -1,5 +1,17 @@
-import { LibClient } from './types';
+import {
+    LibClient, LibraryInterfaceStructs, LibMessage, LIBRARY_TYPES,
+} from '../../';
 import { User } from './User';
+import { Member } from './Member';
+import { Guild } from './Guild';
+import { Channel } from './Channel';
+import { Message } from './Message';
+import { Resolver } from './Resolver';
+import { Client } from './Client';
+import { DefaultEnums as Enums } from './Enums';
+import { DjsEnums } from '../discordjs/Enums';
+import { ErisEnums } from '../eris/Enums';
+
 /**
  * Base class that handle any interaction with the library.
  *
@@ -31,7 +43,7 @@ export declare class LibraryInterface {
     /**
      * @memberof LibraryInterface
      */
-    public enums: Enums;
+    public enums: Enums | DjsEnums | ErisEnums;
     /**
      * @memberof LibraryInterface
      */

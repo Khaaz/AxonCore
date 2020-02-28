@@ -1,3 +1,5 @@
+import { Guild } from '../definitions/Guild';
+import * as djs from 'discord.js';
 
 export declare class DjsGuild extends Guild {
     /**

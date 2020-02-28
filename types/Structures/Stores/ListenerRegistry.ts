@@ -1,3 +1,4 @@
+import { ARegistry, Listener, AxonClient } from '../../';
 
 /**
  * Registry that holds all Commands.

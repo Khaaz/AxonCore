@@ -1,3 +1,6 @@
+import { Client } from '../definitions/Client';
+import * as Eris from 'eris';
+import { ErisPresenceGame, ErisWebhookContent, WebhookResponse } from '../../';
 
 export declare class ErisClient extends Client {
     /**

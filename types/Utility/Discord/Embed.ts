@@ -1,3 +1,6 @@
+import {
+    EmbedData, EmbedAuthor, EmbedThumbnail, EmbedFields, EmbedImage, EmbedFooter,
+} from '../../';
 
 /**
  * Embed class to create Embed without without using raw json format

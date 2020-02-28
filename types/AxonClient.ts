@@ -1,3 +1,9 @@
+import * as EventEmitter from 'events';
+import {
+    AxonConfs, AxonParams, Info, AxonInfo, ALogger, AxonUtils, LibClient, LibraryInterface, Utils, ADBProvider, ModuleRegistry, CommandRegistry,
+    ListenerRegistry, EventManager, GuildConfigCache, AxonConfig, ModuleLoader, CommandDispatcher, MessageManager, AxonStaffIDs, AxonOptions,
+    Collection, AHandler, Listener, Resolver, Webhooks, AxonTemplate, Module, Command, LOG_LEVELS, Ctx, LibMessage, GuildConfig, CommandContext, AxonCommandError,
+} from './';
 
 export declare class AxonClient extends EventEmitter {
     /** Configs (webhooks, template, custom) */
@@ -6,7 +12,7 @@ export declare class AxonClient extends EventEmitter {
     public settings: AxonParams;
     /** General infos about the current application */
     public info: Info;
-    public axoncore: AxonInfos;
+    public axoncore: AxonInfo;
     /** The Logger instance */
     public logger: ALogger;
     /** Util methods (AxonCore) */

@@ -1,3 +1,6 @@
+import {
+    LibClient, LibUser, LibGuild, LibMember, LibRole, LibChannel,
+} from '../../../';
 
 /**
  * Static Resolver class for AxonCore

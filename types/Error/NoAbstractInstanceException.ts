@@ -1,4 +1,3 @@
-
 /**
  * Error thrown when an abstract class is instantiated.
  *

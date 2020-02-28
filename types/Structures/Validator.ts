@@ -1,3 +1,4 @@
+import { Module, Command, LibMessage } from '../';
 
 /**
  * Static Class that makes sure objects are formatted correctly.

@@ -1,6 +1,8 @@
 export { DjsChannel as Channel } from './discordjs/Channel';
 export { DjsClient as Client } from './discordjs/Client';
-export { DjsEnums as Enums } from './discordjs/Enums';
+export {
+    DjsEnums as Enums, EVENTS, DISCORD_LIB_PERMISSIONS, PERMISSIONS, PERMISSIONS_NAMES,
+} from './discordjs/Enums';
 export { DjsGuild as Guild } from './discordjs/Guild';
 export { DjsInterface as LibraryInterface } from './discordjs/LibraryInterface';
 export { DjsMember as Member } from './discordjs/Member';

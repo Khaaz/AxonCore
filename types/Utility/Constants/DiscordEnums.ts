@@ -1,4 +1,4 @@
-enum DISCORD_GATEWAY_EVENTS {
+export declare enum DISCORD_GATEWAY_EVENTS {
     'HELLO',
     'READY',
     'RESUMED',
@@ -35,7 +35,7 @@ enum DISCORD_GATEWAY_EVENTS {
     'WEBHOOKS_UPDATE',
 }
 
-enum DISCORD_PERMISSIONS {
+export declare enum DISCORD_PERMISSIONS {
     'CREATE_INSTANT_INVITE',
     'KICK_MEMBERS',
     'BAN_MEMBERS',
@@ -70,7 +70,7 @@ enum DISCORD_PERMISSIONS {
 }
 
 // There's some inconsistency with this
-enum PERMISSIONS_NUMBERS {
+export declare enum PERMISSIONS_NUMBERS {
     CREATE_INSTANT_INVITE = 1,
     KICK_MEMBERS = 2,
     BAN_MEMBERS = 4,
@@ -106,7 +106,7 @@ enum PERMISSIONS_NUMBERS {
     ALL = 2147483647,
 }
 
-enum EMBED_LIMITS {
+export declare enum EMBED_LIMITS {
     LIMIT_CONTENT = 2000,
     LIMIT_TOTAL_EMBED = 6000,
     LIMIT_TITLE = 256,
@@ -118,7 +118,7 @@ enum EMBED_LIMITS {
     LIMIT_AUTHOR_NAME = 256,
 }
 
-enum CHANNEL_TYPES {
+export declare enum CHANNEL_TYPES {
     GUILD_TEXT = 0,
     DM = 1,
     GUILD_VOICE = 2,
@@ -128,7 +128,7 @@ enum CHANNEL_TYPES {
     GUILD_STORE = 6,
 }
 
-enum MESSAGE_TYPES {
+export declare enum MESSAGE_TYPES {
     DEFAULT = 0,
     RECIPIENT_ADD = 1,
     RECIPIENT_REMOVE = 2,
@@ -143,7 +143,7 @@ enum MESSAGE_TYPES {
     USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_3 = 11,
 }
 
-enum CLIENT_STATUS_TYPES {
+export declare enum CLIENT_STATUS_TYPES {
     PLAYING = 0,
     STREAMING = 1,
     LISTENING = 2,

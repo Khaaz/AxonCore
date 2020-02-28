@@ -1,3 +1,6 @@
+import {
+    AxonOptionsPrefixes, AOptionsSettings, Languages, AxonOptionsInfo, AxonOptionsStaff, AxonTemplate, Webhooks, AxonOptionsExtensions, AxonOptionsBase,
+} from './';
 
 export declare class AxonOptions {
     /**

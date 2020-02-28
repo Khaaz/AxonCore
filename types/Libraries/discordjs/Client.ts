@@ -1,3 +1,7 @@
+import { DjsPresenceGame, DjsWebhookContent, WebhookResponse } from '../../../';
+import { DjsInterface } from './LibraryInterface';
+import { Client } from '../definitions/Client';
+import * as djs from 'discord.js';
 
 export declare class DjsClient extends Client {
     private _token: string;

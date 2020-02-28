@@ -1,3 +1,4 @@
+import { ARegistry, Module, AxonClient } from '../../';
 
 /**
  * Registry that holds all Modules.

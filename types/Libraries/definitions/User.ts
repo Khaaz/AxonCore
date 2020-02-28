@@ -1,3 +1,4 @@
+import { LibraryInterface, LibUser, LibDMChannel } from '../../../';
 
 export declare class User {
     public lib: LibraryInterface;

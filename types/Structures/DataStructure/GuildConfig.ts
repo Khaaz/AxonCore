@@ -1,3 +1,6 @@
+import {
+    GuildConfigRaw, AxonClient, GConfig, LibMessage, LibMember, Module, Command, Listener, updateDBVal,
+} from '../../';
 
 /**
  * Default GuildConfig data structure used in AxonCore.

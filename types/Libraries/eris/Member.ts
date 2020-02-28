@@ -1,3 +1,6 @@
+import { Member } from '../definitions/Member';
+import * as Eris from 'eris';
+import { DISCORD_LIB_PERMISSIONS } from './Enums';
 
 export declare class ErisMember extends Member {
     /**
@@ -11,5 +14,5 @@ export declare class ErisMember extends Member {
     /**
      * @memberof ErisMember
      */
-    public hasPermission(member: Eris.Member, permission: ERIS_ENUMS_DISCORD_LIB_PERMISSIONS): boolean;
+    public hasPermission(member: Eris.Member, permission: DISCORD_LIB_PERMISSIONS): boolean;
 }

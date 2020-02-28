@@ -1,3 +1,5 @@
+import { User } from '../definitions/User';
+import * as djs from 'discord.js';
 
 export declare class DjsUser extends User {
     /**

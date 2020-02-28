@@ -19,6 +19,7 @@ export { TranslationManager } from './Langs/TranslationManager';
 export {
     Channel, Client, Enums, Guild, LibraryInterface, Member, Message, Resolver, User,
     LibMessage, LibMember, LibClient, LibGuild, LibUser, LibTextableChannel, LibRole, LibChannel, LibDMChannel, LibPermission,
+    EVENTS, DISCORD_LIB_PERMISSIONS, PERMISSIONS, PERMISSIONS_NAMES,
 } from './Libraries';
 export { LibrarySelector } from './Libraries/LibrarySelector';
 
@@ -35,8 +36,8 @@ export {
     ACommandOptions, CommandPerms, CommandData, AxonTemplate, ListenerInfo, ListenerData, APIAxonMSGCont, AxonMSGCont, AxonMSGOpt, PermissionObject,
     Ctx, EmbedFields, EmbedAuthor, EmbedThumbnail, EmbedImage, EmbedFooter, EmbedData, PromptOptions, PromptOptionsData, CollectorOptions,
     AxonOptionsSettings, AOptionsSettings, AxonLanguageResponse, Languages, AxonOptionsBase, WebhookConfig, Webhooks, AxonOptionsPrefixes,
-    AxonOptionsInfo, AxonOptionsStaff, AxonOptionsExtensions, AxonConfs, AxonParams, Info, AxonInfos, LibraryInterfaceStructs, PresenceGame,
-    RawAttachment, RawUser, WebhookResponse, DjsContent, DjsWebhookContent, DjsPresenceGame, DjsEnums, ErisContent, ErisWebhookContent, ErisPresenceGame,
+    AxonOptionsInfo, AxonOptionsStaff, AxonOptionsExtensions, AxonConfs, AxonParams, Info, AxonInfo, AxonStaffIDs, LibraryInterfaceStructs, PresenceGame,
+    RawAttachment, RawUser, WebhookResponse, DjsContent, DjsWebhookContent, DjsPresenceGame, ErisContent, ErisWebhookContent, ErisPresenceGame,
 } from './misc/interfaces';
 
 export { Command } from './Structures/Command/Command';
@@ -71,8 +72,14 @@ export { CommandDispatcher } from './Structures/CommandDispatcher';
 export { Module } from './Structures/Module';
 export { Validator } from './Structures/Validator';
 
-export { AxonEnums } from './Utility/Constants/AxonEnums';
-export { DiscordEnums } from './Utility/Constants/DiscordEnums';
+export {
+    AxonEnums, HTTP_CODE, HttpMessages as HTTP_MESSAGES, LIBRARY_TYPES, LOGGER_TYPES, DB_TYPES, COMMAND_EXECUTION_TYPES, COMMAND_EXECUTION_STATE,
+    AXON_PERMISSION_LEVELS, WEBHOOK_TYPES, LOG_LEVELS, WEBHOOK_TO_COLOR, TYPE_ERRORS, PERMISSION_ADMIN, PERMISSION_MANAGER,
+} from './Utility/Constants/AxonEnums';
+export {
+    DiscordEnums, DISCORD_GATEWAY_EVENTS, DISCORD_PERMISSIONS, PERMISSIONS_NUMBERS,
+    EMBED_LIMITS, CHANNEL_TYPES, MESSAGE_TYPES, CLIENT_STATUS_TYPES,
+} from './Utility/Constants/DiscordEnums';
 
 export { Embed } from './Utility/Discord/Embed';
 export { MessageCollector } from './Utility/Discord/MessageCollector';

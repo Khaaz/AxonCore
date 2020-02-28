@@ -1,3 +1,4 @@
+import { Collection } from '../../';
 
 declare class Node<T> {
     public key: string;

@@ -1,3 +1,4 @@
+import { ALogger } from '../';
 
 /**
  * Logger with timestamps, custom methods and terminal colors with Chalk.
@@ -7,7 +8,7 @@
  * @class ChalkLogger
  * @extends ALogger
  */
-export class ChalkLogger extends ALogger {
+export declare class ChalkLogger extends ALogger {
     /** Console */
     public out: Console;
 }

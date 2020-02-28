@@ -1,4 +1,4 @@
-enum HTTP_CODE {
+export declare enum HTTP_CODE {
     CONTINUE = 100,
    
     OK = 200,
@@ -30,7 +30,7 @@ enum HTTP_CODE {
     GATEWAY_TIMEOUT = 504,
     }
 
-interface HttpMessages {
+export declare interface HttpMessages {
     100: 'Continue';
     101: 'Switching Protocols';
     102: 'Processing';
@@ -95,28 +95,28 @@ interface HttpMessages {
     510: 'Not Extended';
 }
 
-enum LIBRARY_TYPES { ERIS = 0, DISCORDJS = 1 }
-enum LOGGER_TYPES { DEFAULT = 0, CHALK = 1, SIGNALE = 2, WINSTON = 3, }
-enum DB_TYPES { IN_MEMORY = 0, JSON = 1, MONGO = 2, } // eslint-disable-line no-shadow
-enum COMMAND_EXECUTION_TYPES {
+export declare enum LIBRARY_TYPES { ERIS = 0, DISCORDJS = 1 }
+export declare enum LOGGER_TYPES { DEFAULT = 0, CHALK = 1, SIGNALE = 2, WINSTON = 3, }
+export declare enum DB_TYPES { IN_MEMORY = 0, JSON = 1, MONGO = 2, } // eslint-disable-line no-shadow
+export declare enum COMMAND_EXECUTION_TYPES {
     REGULAR = 0,
     ADMIN = 1,
     OWNER = 2,
 }
-enum COMMAND_EXECUTION_STATE {
+export declare enum COMMAND_EXECUTION_STATE {
     NO_ERROR = 0,
     COOLDOWN = 1,
     INVALID_USAGE = 2,
     INVALID_PERMISSIONS_BOT = 3,
     INVALID_PERMISSIONS_USER = 4,
 }
-enum AXON_PERMISSION_LEVELS {
+export declare enum AXON_PERMISSION_LEVELS {
     OWNER = 0,
     ADMINISTRATOR = 1,
     MANAGER = 2,
     MODERATOR = 3,
 }
-enum WEBHOOK_TYPES {
+export declare enum WEBHOOK_TYPES {
     FATAL = 'FATAL',
     ERROR = 'ERROR',
     WARN = 'WARN',
@@ -125,7 +125,7 @@ enum WEBHOOK_TYPES {
     INFO = 'INFO',
     VERBOSE = 'VERBOSE',
 }
-enum LOG_LEVELS {
+export declare enum LOG_LEVELS {
     FATAL = 'fatal',
     ERROR = 'error',
     WARN = 'warn',
@@ -134,7 +134,7 @@ enum LOG_LEVELS {
     INFO = 'info',
     VERBOSE = 'verbose',
 }
-enum WEBHOOK_TO_COLOR {
+export declare enum WEBHOOK_TO_COLOR {
     FATAL = 0xFF0000,
     ERROR = 0xFF0000,
     WARN = 0xFF4500,
@@ -143,12 +143,15 @@ enum WEBHOOK_TO_COLOR {
     INFO = 0x00FF00,
     VERBOSE = 0x808080,
 }
-enum TYPE_ERRORS {
+export declare enum TYPE_ERRORS {
     DAPI = 'DAPI error - failed to retrieve from Discord',
     DB = 'DB error - failed to retrieve from the DB',
     INTERNAL = 'Internal error - AxonClient/internal methods',
     UNKNOWN = 'Unexpected error',
 }
+
+export declare type PERMISSION_ADMIN = 'ADMINISTRATOR';
+export declare type PERMISSION_MANAGER = 'MANAGE_GUILD';
 
 export declare interface AxonEnums {
     HTTP_CODE: HTTP_CODE;
@@ -159,8 +162,8 @@ export declare interface AxonEnums {
     COMMAND_EXECUTION_TYPES: COMMAND_EXECUTION_TYPES;
     COMMAND_EXECUTION_STATE: COMMAND_EXECUTION_STATE;
     AXON_PERMISSION_LEVELS: AXON_PERMISSION_LEVELS;
-    PERMISSION_ADMIN: 'ADMINISTRATOR';
-    PERMISSION_MANAGER: 'MANAGE_GUILD';
+    PERMISSION_ADMIN: PERMISSION_ADMIN;
+    PERMISSION_MANAGER: PERMISSION_MANAGER;
     WEBHOOK_TYPES: WEBHOOK_TYPES;
     LOG_LEVELS: LOG_LEVELS;
     WEBHOOK_TO_COLOR: WEBHOOK_TO_COLOR;

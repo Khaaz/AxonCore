@@ -1,3 +1,6 @@
+import { ASelector, AxonClient, AxonOptions } from '../';
+import { ErisInterface } from './eris/LibraryInterface';
+import { DjsInterface } from './discordjs/LibraryInterface';
 
 /**
  * Library Handler

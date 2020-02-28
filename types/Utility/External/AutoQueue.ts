@@ -1,3 +1,4 @@
+import { FunctionQueue } from '../../';
 
 /**
  * This data structure is a queue that will run every function one by one sequentially.
@@ -11,6 +12,6 @@
  * @class AutoQueue
  * @extends FunctionQueue
  */
-export declare class AutoQueue extends FunctionQueue {
+export declare class AutoQueue<T> extends FunctionQueue<T> {
     exec(): Promise<void>;
 }

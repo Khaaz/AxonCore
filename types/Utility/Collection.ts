@@ -1,4 +1,3 @@
-
 /**
  * Extended Map with built in methods for ease of data manipulation.
  * Based on Eris.Collection

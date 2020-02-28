@@ -1,3 +1,4 @@
+import { Command } from '../../';
 
 /**
  * CommandCooldown. Handles cooldowns for a command.

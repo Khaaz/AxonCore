@@ -1,3 +1,7 @@
+import {
+    AxonClient, LibClient, AxonTemplate, ALogger, Utils, LibraryInterface, EmbedData, LibMember,
+    GuildConfig, LibGuild, LibUser, AxonMSGCont, AxonMSGOpt, LibTextableChannel, LibMessage,
+} from '../';
 
 /**
  * AxonCore Utility Class.

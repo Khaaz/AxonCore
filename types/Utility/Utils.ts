@@ -1,3 +1,6 @@
+import {
+    AxonClient, LibClient, LibraryInterface, LibMessage, LibGuild, LibMember, LibRole, LibTextableChannel, LibUser, PermissionObject,
+} from '../';
 
 /**
  * General Utility Class for AxonCore

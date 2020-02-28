@@ -1,3 +1,4 @@
+import { Module } from '../../';
 
 /**
  * Custom error with better formatting + information about where the error is originated from.

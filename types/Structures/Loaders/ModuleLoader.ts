@@ -1,3 +1,4 @@
+import { ALoader, AxonClient, ALogger, Module } from '../../';
 
 /**
  * Load modules in AxonClient.

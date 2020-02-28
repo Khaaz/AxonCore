@@ -1,3 +1,4 @@
+import { Context } from '../';
 
 /**
  * Abstract Logger, based to create all loggers used in AxonCore.

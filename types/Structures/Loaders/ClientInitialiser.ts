@@ -1,3 +1,4 @@
+import { ALogger, AxonClient } from '../../';
 
 /**
  * Loads the AxonClient.

@@ -1,3 +1,5 @@
+import { Resolver } from '../definitions/Resolver';
+import * as Eris from 'eris';
 
 /**
  * Static Resolver class for Eris.AxonCore

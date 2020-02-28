@@ -1,3 +1,4 @@
+import { LibraryInterface, LibMember, LibRole } from '../../';
 
 export declare class Member {
     public lib: LibraryInterface;

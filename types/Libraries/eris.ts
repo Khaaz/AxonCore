@@ -1,6 +1,8 @@
 export { ErisChannel as Channel } from './eris/Channel';
 export { ErisClient as Client } from './eris/Client';
-export { ErisEnums as Enums } from './eris/Enums';
+export {
+    ErisEnums as Enums, EVENTS, DISCORD_LIB_PERMISSIONS, PERMISSIONS, PERMISSIONS_NAMES,
+} from './eris/Enums';
 export { ErisGuild as Guild } from './eris/Guild';
 export { ErisInterface as LibraryInterface } from './eris/LibraryInterface';
 export { ErisMember as Member } from './eris/Member';
