@@ -1,4 +1,4 @@
-import { AxonJSON, GuildJSON, AsyncQueue, updateDBVal } from '../../../';
+import { AxonJSON, GuildJSON, AsyncQueue, updateDBVal } from '../../';
 
 /**
  * Manager class for handling Json database
