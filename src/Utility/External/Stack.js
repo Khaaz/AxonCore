@@ -6,8 +6,8 @@
  * @template T
  *
  * @prop {Array<T>} _elements
- * @prop {Boolean} max
- * @prop {Boolean} replaceOnMax
+ * @prop {Boolean} max - Maximum number of elements that can be added in this Stack
+ * @prop {Boolean} replaceOnMax - Whether to replace value when adding if max is reached (unstack first element and stack new element)
  *
  * @class Stack
  */
@@ -50,7 +50,7 @@ class Stack {
      * Stack up an element.
      *
      * @param {T} elem
-     * @param {Boolean} replaceOnMax
+     * @param {Boolean} [replaceOnMax] - Whether to replace value when adding if max is reached (unstack first element and stack new element)
      * @returns {Boolean} Whether element was successfully added
      * @memberof Stack
      */

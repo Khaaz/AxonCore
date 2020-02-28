@@ -14,15 +14,15 @@ import Queue from './Queue';
  *
  * @class FunctionQueue
  *
- * @prop {Queue} _functions - The function queue
- * @prop {Boolean} [_running=false] - Whether the queue is running.
- * @prop {Boolean} [stopOnError=false] - Whether to stop the queue execution on error.
+ * @prop {Queue<Function>} _functions - The queue of function
+ * @prop {Boolean} [_running=false] - Whether the FunctionQueue is running.
+ * @prop {Boolean} [stopOnError=false] - Whether to stop the FunctionQueue execution on error.
  */
 class FunctionQueue {
     /**
      * Creates an instance of FunctionQueue.
      *
-     * @param {Boolean} [stopOnError=false]
+     * @param {Boolean} [stopOnError=false] - Whether to stop the FunctionQueue execution on error.
      * @memberof FunctionQueue
      */
     constructor(stopOnError = false) {
