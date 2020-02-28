@@ -39,7 +39,7 @@
     "lint": "yarn run lint:js && yarn run lint:ts",
     "lint:js": "eslint src examples *.js",
     "lint:ts": "eslint index.d.ts types/**/*.ts",
-    "tsc": "tsc index.d.ts --noEmit",
+    "tsc": "tsc index.d.ts --noEmit --skipLibCheck true",
     "test": "yarn run lint && yarn run tsc",
     "test:push": "eslint src examples *.js",
     "test:publish": "eslint src *.js",
