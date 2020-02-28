@@ -12,6 +12,6 @@ import { FunctionQueue } from '../../';
  * @class AutoQueue
  * @extends FunctionQueue
  */
-export declare class AutoQueue<T> extends FunctionQueue<T> {
+export declare class AutoQueue<T> extends FunctionQueue {
     exec(): Promise<void>;
 }

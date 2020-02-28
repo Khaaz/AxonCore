@@ -12,7 +12,7 @@ import { FunctionQueue } from '../../';
  * @class AsyncQueue
  * @extends FunctionQueue
  */
-export declare class AsyncQueue<T> extends FunctionQueue<T> {
+export declare class AsyncQueue extends FunctionQueue {
     public exec(): Promise<void>;
     /**
      * Adds a function to the queue.

@@ -10,8 +10,8 @@ import { Queue } from '../../';
  *
  * @class FunctionQueue
  */
-export declare class FunctionQueue<T> {
-    private _functions: Queue<T>[];
+export declare class FunctionQueue {
+    private _functions: Queue<Function>[];
     private _running: boolean;
     /** Whether to stop the FunctionQueue execution on error. */
     public stopOnError: boolean;
