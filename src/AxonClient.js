@@ -49,6 +49,7 @@ import { WEBHOOK_TYPES, LOG_LEVELS, WEBHOOK_TO_COLOR, DEBUG_FLAGS } from './Util
  * @typedef {import('./Structures/Command/Command').default} Command
  * @typedef {import('./Loggers/Context').default} Context
  * @typedef {import('./Structures/DataStructure/GuildConfig').default} GuildConfig
+ * @typedef {import('./Structures/Command/CommandEnvironment').default} CommandEnvironment
  */
 
 /**
@@ -576,24 +577,19 @@ class AxonClient extends EventEmitter {
      */
 
     /**
-     * @param {Message} msg
-     * @param {Array<String>} args
      * @param {Command} command
-     * @param {GuildConfig} guildConfig
-     * @param {Object} permissions
-     * @param {Boolean} permissions.isAdmin
-     * @param {Boolean} permissions.isOwner
+     * @param {CommandEnvironment} env
      */
-    _execCommand(msg, args, command, guildConfig, { isAdmin, isOwner } ) {
-        this.emit('debug', DEBUG_FLAGS.INFO | DEBUG_FLAGS.COMMAND, `${guildConfig ? '[GUILD]' : '[DM]'} ${isAdmin ? 'Admin' : 'Regular'} execution of ${command.fullLabel}`);
+    _execCommand(command, env) {
+        const { msg, guildConfig } = env;
+        
+        this.emit('debug', DEBUG_FLAGS.INFO | DEBUG_FLAGS.COMMAND, `${guildConfig ? '[GUILD]' : '[DM]'} ${env.isAdmin || env.isOwner ? 'Admin' : 'Regular'} execution of ${command.fullLabel}`);
         let startTime;
         if (this.settings.debugMode) {
             startTime = performance.now();
         }
         
-        command._process( {
-            msg, args, guildConfig, isAdmin, isOwner,
-        } )
+        command._process(env)
             .then( (context) => {
                 this.emit('commandExecution', context.executed, command.fullLabel, { msg, command, guildConfig, context } );
                 
@@ -620,29 +616,23 @@ class AxonClient extends EventEmitter {
     }
 
     /**
-      * @param {Message} msg
-      * @param {Array<String>} args
-      * @param {Command} command
-      * @param {GuildConfig} guildConfig
-      * @param {Object} permissions
-      * @param {Boolean} permissions.isAdmin
-      * @param {Boolean} permissions.isOwner
-      */
-    _execHelp(msg, args, command, guildConfig, { isAdmin, isOwner } ) {
+     * @param {Command} command
+     * @param {CommandEnvironment} env
+     */
+    _execHelp(command, env) {
+        const { msg, guildConfig } = env;
         if (!command) {
             this.sendFullHelp(msg, guildConfig);
             return;
         }
 
-        this.emit('debug', DEBUG_FLAGS.INFO | DEBUG_FLAGS.COMMAND, `${guildConfig ? '[GUILD]' : '[DM]'} ${isAdmin ? 'Admin' : 'Regular'} -HELP- execution of ${command.fullLabel}`);
+        this.emit('debug', DEBUG_FLAGS.INFO | DEBUG_FLAGS.COMMAND, `${guildConfig ? '[GUILD]' : '[DM]'} ${env.isAdmin || env.isOwner ? 'Admin' : 'Regular'} -HELP- execution of ${command.fullLabel}`);
         let startTime;
         if (this.settings.debugMode) {
             startTime = performance.now();
         }
 
-        command.sendHelp( {
-            msg, args, guildConfig, isAdmin, isOwner,
-        } )
+        command.sendHelp(env)
             .then( (context) => {
                 this.emit('commandExecution', true, command.label, { msg, command, guildConfig, context } );
                 if (this.settings.debugMode) {

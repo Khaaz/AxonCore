@@ -1,3 +1,6 @@
+import CommandEnvironment from './Command/CommandEnvironment';
+import { COMMAND_EXECUTION_TYPES } from '../Utility/Constants/AxonEnums';
+
 /**
  * @typedef {import('../AxonClient').default} AxonClient
  * @typedef {import('../Libraries/definitions/LibraryInterface').default} LibraryInterface
@@ -13,6 +16,7 @@
  *
  * @class CommandDispatcher
  *
+ * @prop {AxonClient} _axon
  * @prop {RegExp} mentionFormatter
  */
 class CommandDispatcher {
@@ -23,8 +27,8 @@ class CommandDispatcher {
      * @memberof CommandDispatcher
      */
     constructor(axon) {
-        this.mentionFormatter = /<@!/g;
         this._axon = axon;
+        this.mentionFormatter = /<@!/g;
     }
 
     /**
@@ -55,15 +59,16 @@ class CommandDispatcher {
      * @memberof CommandDispatcher
      */
     async dispatch(msg) {
-        const { isAdmin, isOwner } = this.getExecutionType(msg);
+        const executionType = this.getExecutionType(msg);
+
+        const env = new CommandEnvironment( { msg, executionType } );
 
         /* Extract necessary attribute from lib structures */
         const author = this.library.message.getAuthor(msg);
         const guild = this.library.message.getGuild(msg);
 
-
         /* ignore cached blacklisted users */
-        if (!isAdmin && this._axon.axonConfig.isBlacklistedUser(this.library.user.getID(author) ) ) {
+        if (!env.isAdmin && this._axon.axonConfig.isBlacklistedUser(this.library.user.getID(author) ) ) {
             return;
         }
 
@@ -72,7 +77,7 @@ class CommandDispatcher {
         /* GUILD execution only */
         if (guild) {
             /* ignore cached blacklisted guilds */
-            if (!isAdmin && this._axon.axonConfig.isBlacklistedGuild(this.library.guild.getID(guild) ) ) {
+            if (!env.isAdmin && this._axon.axonConfig.isBlacklistedGuild(this.library.guild.getID(guild) ) ) {
                 return;
             }
 
@@ -87,11 +92,13 @@ class CommandDispatcher {
                 return;
             }
         }
+        env.setGuildConfig(guildConfig);
         
-        const prefix = this.resolvePrefix(msg, guildConfig, isAdmin, isOwner);
+        const prefix = this.resolvePrefix(msg, guildConfig, env.isAdmin, env.isOwner);
         if (!prefix) {
             return;
         }
+        env.setPrefix(prefix);
 
         /* Formatting mention to replace <!@ mention to <@ mentions (uniform mentions) */
         const content = this.library.message
@@ -100,10 +107,10 @@ class CommandDispatcher {
         this.library.message.setContent(msg, content);
 
         /* IN GUILD | NOT ADMIN | Check if the user/role/channel is ignored in the guild */
-        if (guildConfig && !isAdmin && guildConfig.isIgnored(msg) ) {
+        if (guildConfig && !env.isAdmin && guildConfig.isIgnored(msg) ) {
             return;
         }
-
+        
         const args = msg.content.substring(prefix.length).split(' ');
         let label = args.shift().toLowerCase();
 
@@ -112,7 +119,7 @@ class CommandDispatcher {
         if (onHelp) {
             /* If no additional args: send FullHelp */
             if (args.length === 0) {
-                this._axon._execHelp(msg, args, null, guildConfig, { isAdmin, isOwner } );
+                this._axon._execHelp(null, env);
                 return;
             }
             /* Otherwise resolve the command we want to send the help for */
@@ -124,15 +131,17 @@ class CommandDispatcher {
         if (!command) { // command doesn't exist or not globally enabled
             return;
         }
+        env.setCommand(command);
+        env.resolveArgs(null, args.join(' ') );
 
         /* Send help for the resolved command */
         if (onHelp) {
-            this._axon._execHelp(msg, args, command, guildConfig, { isAdmin, isOwner } );
+            this._axon._execHelp(command, env);
             return;
         }
 
         /* Execute the command */
-        this._axon._execCommand(msg, args, command, guildConfig, { isAdmin, isOwner } );
+        this._axon._execCommand(command, env);
         return;
     }
 
@@ -143,24 +152,19 @@ class CommandDispatcher {
      * It uses the global admin and owner prefixes and checks for the BotStaff rank of the caller.
      *
      * @param {Message} msg
-     * @returns {{isAdmin: Boolean, isOwner: Boolean}} { isAdmin: Boolean, isOwner: Boolean }
+     * @returns {COMMAND_EXECUTION_TYPES} The execution type
      * @memberof CommandDispatcher
      */
     getExecutionType(msg) {
         const content = this.library.message.getContent(msg);
         const authorID = this.library.message.getAuthorID(msg);
 
-        let isAdmin = false;
-        let isOwner = false;
-
         if (content.startsWith(this._axon.settings.ownerPrefix) && !!this._axon.axonUtils.isBotOwner(authorID) ) { // Owner prefix + user is owner
-            isOwner = true;
-            isAdmin = true;
-        } else if (content.startsWith(this._axon.settings.adminPrefix) && !!this._axon.axonUtils.isBotAdmin(authorID) ) { // admin prefix + user is admin+ (admin/owner)
-            isAdmin = true;
+            return COMMAND_EXECUTION_TYPES.OWNER;
+        } if (content.startsWith(this._axon.settings.adminPrefix) && !!this._axon.axonUtils.isBotAdmin(authorID) ) { // admin prefix + user is admin+ (admin/owner)
+            return COMMAND_EXECUTION_TYPES.ADMIN;
         }
-        
-        return { isAdmin, isOwner };
+        return COMMAND_EXECUTION_TYPES.REGULAR;
     }
 
     /**

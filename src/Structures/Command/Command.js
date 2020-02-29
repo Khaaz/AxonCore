@@ -16,7 +16,7 @@ import { COMMAND_EXECUTION_STATE } from '../../Utility/Constants/AxonEnums';
  * @typedef {import('../../Utility/Collection').default<Command>} CommandCollection
  * @typedef {{embeds: Object.<string, number>, emotes: Object.<string, string>}} AxonTemplate
  * @typedef {import('../../Libraries/definitions/LibraryInterface').default} LibraryInterface
- * @typedef {import('../DataStructure/GuildConfig').default} GuildConfig
+ * @typedef {import('./CommandEnvironment').default} CommandEnvironment
  */
 
 /**
@@ -194,19 +194,14 @@ class Command extends Base {
     /**
      * Process the command, and executes it if it can (permissions, options etc..).
      *
-     * @param {Object} params
-     * @param {Message} params.msg
-     * @param {Array<String>} params.args
-     * @param {GuildConfig} params.guildConfig
-     * @param {Boolean} params.isAdmin
-     * @param {Boolean} params.isOwner
+     * @param {CommandEnvironment} env
      * @returns {Promise<CommandContext>} Return a CommandContext or throw an AxonCommandError.
      * @memberof Command
      */
-    _process(params) {
+    _process(env) {
         const {
-            msg, args, guildConfig, isAdmin, isOwner,
-        } = params;
+            msg, args, guildConfig,
+        } = env;
 
         const userID = this.library.message.getAuthorID(msg);
         const channel = this.library.message.getChannel(msg);
@@ -215,7 +210,7 @@ class Command extends Base {
             if (this.options.isGuildOnly() ) { // guild only
                 return new CommandContext(this, msg, {
                     executed: false,
-                    executionType: CommandContext.getExecutionType(isAdmin, isOwner),
+                    executionType: env.executionType,
                 } ).resolveAsync();
             }
         } else { // REGULAR EXECUTION
@@ -224,13 +219,13 @@ class Command extends Base {
                 this.sendBotPerms(channel);
                 return new CommandContext(this, msg, {
                     executed: false,
-                    executionType: CommandContext.getExecutionType(isAdmin, isOwner),
+                    executionType: env.executionType,
                     executionState: COMMAND_EXECUTION_STATE.INVALID_PERMISSIONS_BOT,
                 } ).resolveAsync();
             }
 
             /* Permissions checkers */
-            if (!isAdmin) {
+            if (!env.isAdmin) {
                 const canExecute = this.permissions.canExecute(msg, guildConfig);
                 if (!canExecute[0] ) {
                 /* Sends invalid perm message in case of invalid perm [option enabled] */
@@ -239,20 +234,20 @@ class Command extends Base {
                     }
                     return new CommandContext(this, msg, {
                         executed: false,
-                        executionType: CommandContext.getExecutionType(isAdmin, isOwner),
+                        executionType: env.executionType,
                         executionState: COMMAND_EXECUTION_STATE.INVALID_PERMISSIONS_USER,
                     } ).resolveAsync();
                 }
             }
         }
 
-        if (isAdmin) {
-            if (!isOwner && !this.axonUtils.isBotOwner(userID)
+        if (env.isAdmin) {
+            if (!env.isOwner && !this.axonUtils.isBotOwner(userID)
                 && this.permissions.staff.permissions.author.length > 0
                 && this.permissions.staff.permissions.author.filter(e => !this.axon.staff.owners.includes(e) ).length === 0) { // ONLY FOR OWNER
                 return new CommandContext(this, msg, {
                     executed: false,
-                    executionType: CommandContext.getExecutionType(isAdmin, isOwner),
+                    executionType: env.executionType,
                     executionState: COMMAND_EXECUTION_STATE.INVALID_PERMISSIONS_USER,
                 } ).resolveAsync();
             }
@@ -265,7 +260,7 @@ class Command extends Base {
                 }
                 return new CommandContext(this, msg, {
                     executed: false,
-                    executionType: CommandContext.getExecutionType(isAdmin, isOwner),
+                    executionType: env.executionType,
                     executionState: COMMAND_EXECUTION_STATE.COOLDOWN,
                 } ).resolveAsync();
             }
@@ -275,17 +270,15 @@ class Command extends Base {
         if (!this.options.hasCorrectArgs(args) ) {
             const ctx = new CommandContext(this, msg, {
                 executed: false,
-                executionType: CommandContext.getExecutionType(isAdmin, isOwner),
+                executionType: env.executionType,
                 executionState: COMMAND_EXECUTION_STATE.INVALID_USAGE,
             } );
             
-            isAdmin && this._cooldown.shouldSetCooldown() && this._cooldown.setCooldown(userID);
+            env.isAdmin && this._cooldown.shouldSetCooldown() && this._cooldown.setCooldown(userID);
             if (this.options.shouldSendInvalidUsageMessage(args) ) {
                 return (this.options.getInvalidUsageMessage()
                     ? this.sendMessage(msg.channel, this.options.getInvalidUsageMessage() )
-                    : this.sendHelp( {
-                        msg, args, guildConfig, isAdmin, isOwner,
-                    } )
+                    : this.sendHelp(env)
                 ).then( () => ctx.resolveSync() );
             }
             return ctx.resolveAsync();
@@ -296,7 +289,7 @@ class Command extends Base {
             this.library.message.delete(msg).catch(this.logger.warn);
         }
 
-        return this._execute(params);
+        return this._execute(env);
     }
 
     _preExecute() {
@@ -308,25 +301,18 @@ class Command extends Base {
      * Get the CommandResponse from the command execution or create it in case of errors.
      * Create the CommandContext and returns it.
      *
-     * @param {Object} object { msg, args, guildConfig, isAdmin, isOwner }
-     * @param {Message} object.msg
-     * @param {Array<String>} object.args
-     * @param {GuildConfig} object.guildConfig
-     * @param {Boolean} object.isAdmin
-     * @param {Boolean} object.isOwner
-     * @returns {CommandContext}
+     * @param {CommandEnvironment} env
+     * @returns {Promise<CommandContext>}
      * @memberof Command
      */
-    _execute( {
-        msg, args, guildConfig, isAdmin, isOwner,
-    } ) {
+    _execute(env) {
+        const { msg } = env;
         const context = new CommandContext(this, msg, {
             executed: true,
-            executionType:
-            CommandContext.getExecutionType(isAdmin, isOwner),
+            executionType: env.executionType,
         } );
         
-        return this.execute( { msg, args, guildConfig } )
+        return this.execute(env)
             /* Successful and failed execution + caught errors (this.error()) */
             .then( (response) => {
                 this._cooldown.shouldSetCooldown(response) && this._cooldown.setCooldown(this.library.message.getAuthorID(msg) );
@@ -335,7 +321,7 @@ class Command extends Base {
             } )
             /* UNEXPECTED ERRORS ONLY (non caught) */
             .catch(err => {
-                !isAdmin && this._cooldown.shouldSetCooldown() && this._cooldown.setCooldown(this.library.message.getAuthorID(msg) );
+                !env.isAdmin && this._cooldown.shouldSetCooldown() && this._cooldown.setCooldown(this.library.message.getAuthorID(msg) );
 
                 context.addResponseData(new CommandResponse( { success: false, triggerCooldown: true, error: err } ) );
                 throw new AxonCommandError(context, err);
@@ -346,11 +332,7 @@ class Command extends Base {
      * Override this method in all Command child.
      * Main method - command logic being executed when the command is actually ran.
      *
-     * @param {Object} object - An Object with all arguments to use execute
-     * @param {Message} [object.message] - The message Object
-     * @param {Array<String>} [object.args] - The Array of arguments
-     * @param {GuildConfig} [object.guildConfig] - The guildConfig if it exists
-     *
+     * @param {CommandEnvironment} env - The Command Environment object with all variables needed for the Commandexecution
      * @returns {Promise<CommandResponse>} Returns a CommandResponse that will be used to create the CommandContext
      * @memberof Command
      */
@@ -368,18 +350,15 @@ class Command extends Base {
      * Send help message in the current channel with perm checks done before.
      * Call a custom sendHelp method if it exists, use the default one if it doesn't.
      *
-     * @param {Object} object { msg, guildConfig, isAdmin, isOwner }
-     * @param {Message} object.msg
-     * @param {GuildConfig} object.guildConfig
-     * @param {Boolean} object.isAdmin
-     * @param {Boolean} object.isOwner
+     * @param {CommandEnvironment} env
      * @returns {Promise<CommandContext>}
      * @memberof Command
      */
-    sendHelp( { msg, guildConfig, isAdmin, isOwner } ) {
+    sendHelp(env) {
+        const { msg, guildConfig } = env;
         /* OVERRIDE default sendHelp with a CUSTOM in AxonClient */
         if (this.axon.sendHelp) {
-            return this.axon.sendHelp(this, { msg, guildConfig, isAdmin, isOwner } );
+            return this.axon.sendHelp(this, env);
         }
 
         const prefix = (guildConfig && guildConfig.getPrefixes().length > 0) ? guildConfig.getPrefixes()[0] : this.axon.settings.prefixes[0];
@@ -451,7 +430,7 @@ class Command extends Base {
         return this.sendMessage(msg.channel, { embed } )
             .then( () => new CommandContext(this, msg, {
                 executed: true,
-                executionType: CommandContext.getExecutionType(isAdmin, isOwner),
+                executionType: env.executionType,
                 helpExecution: true,
             } ).resolveAsync() );
     }
