@@ -49,6 +49,7 @@ import { WEBHOOK_TYPES, LOG_LEVELS, WEBHOOK_TO_COLOR, DEBUG_FLAGS } from './Util
  * @typedef {import('./Structures/Command/Command').default} Command
  * @typedef {import('./Loggers/Context').default} Context
  * @typedef {import('./Structures/DataStructure/GuildConfig').default} GuildConfig
+ * @typedef {import(./Libraries/definitions/LibraryInterface).default} LibraryInterface
  */
 
 /**
@@ -69,6 +70,7 @@ import { WEBHOOK_TYPES, LOG_LEVELS, WEBHOOK_TO_COLOR, DEBUG_FLAGS } from './Util
  * @prop {CommandDispatcher} dispatcher - Dispatch commands onMessageCreate.
  * @prop {ModuleLoader} moduleLoader - Load, unload modules.
  * @prop {MessageManager} _messageManager - Message manager object accessible with `<AxonClient>.l`
+ * @prop {LibraryInterface} library - LibraryInterface object depending the lib used
  * @prop {ALogger} logger - The Logger instance
  * @prop {AxonUtils} axonUtils - Util methods (AxonCore)
  * @prop {Utils} utils - Utils methods (general)
