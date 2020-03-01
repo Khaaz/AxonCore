@@ -11,9 +11,10 @@ logs/
 # Miscellaneous
 .vscode/
 axoncore.code-workspace
-docs/
-examples/
 _images/
+examples/
+docs/
+tests/
 
 # NPM ignore
 
@@ -23,7 +24,6 @@ _images/
 .travis.yml
 .github/
 .git/
-test/
 tsconfig.json
 tslint.json
 CONTRIBUTING.md
