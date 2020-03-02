@@ -49,7 +49,7 @@ class Client extends AxonClient {
 
     // disabled
     // eslint-disable-next-line no-unused-vars
-    $sendHelp(command, env, isAdmin, isOwner) {
+    $sendHelp(command, env) {
         // override sendHelp method
         return this.axonUtils.sendMessage(env.msg.channel, `Help override for ${command.label}`);
     }
