@@ -60,7 +60,7 @@ class ErisInterface extends LibraryInterface {
      * @memberof ErisInterface
      */
     onceReady(func) {
-        this.botClient.once(this.enums.EVENTS.READY, () => {
+        this.botClient.once('ready', () => {
             func();
         } );
     }
