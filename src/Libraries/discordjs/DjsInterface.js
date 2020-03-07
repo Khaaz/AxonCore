@@ -66,6 +66,18 @@ class DjsInterface extends LibraryInterface {
             func();
         } );
     }
+
+    onMessageUpdate(func) {
+        this.botClient.on(this.enums.EVENTS.MESSAGE_UPDATE, (oldMsg, msg) => {
+            func(oldMsg, msg);
+        } );
+    }
+
+    onMessageDelete(func) {
+        this.botClient.on(this.enums.EVENTS.MESSAGE_CREATE, (msg) => {
+            func(msg);
+        } );
+    }
 }
 
 export default DjsInterface;

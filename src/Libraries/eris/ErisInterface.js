@@ -64,6 +64,18 @@ class ErisInterface extends LibraryInterface {
             func();
         } );
     }
+
+    onMessageUpdate(func) {
+        this.botClient.on(this.enums.EVENTS.MESSAGE_UPDATE, (msg, oldMsg) => {
+            func(oldMsg, msg);
+        } );
+    }
+
+    onMessageDelete(func) {
+        this.botClient.on(this.enums.EVENTS.MESSAGE_CREATE, (msg) => {
+            func(msg);
+        } );
+    }
 }
 
 export default ErisInterface;

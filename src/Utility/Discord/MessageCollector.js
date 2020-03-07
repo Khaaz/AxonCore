@@ -47,15 +47,15 @@ class MessageCollector extends Collector {
     }
 
     setListeners() {
-        this.bot.on('messageCreate', this.onMessageCreate);
-        this.bot.on('messageDelete', this.onMessageDelete);
-        this.bot.on('messageUpdate', this.onMessageUpdate);
+        this.lib.onMessageCreate(this.onMessageCreate);
+        this.lib.onMessageDelete(this.onMessageDelete);
+        this.lib.onMessageUpdate(this.onMessageUpdate);
     }
 
     unsetListeners() {
-        this.bot.off('messageCreate', this.onMessageCreate);
-        this.bot.off('messageDelete', this.onMessageDelete);
-        this.bot.off('messageUpdate', this.onMessageUpdate);
+        this.bot.off(this.lib.enums.EVENTS.MESSAGE_CREATE, this.onMessageCreate);
+        this.bot.off(this.lib.enums.EVENTS.MESSAGE_UPDATE, this.onMessageUpdate);
+        this.bot.off(this.lib.enums.EVENTS.MESSAGE_DELETE, this.onMessageDelete);
     }
 
     /**
@@ -137,11 +137,11 @@ class MessageCollector extends Collector {
      * Function bound to messageUpdate event.
      * Updates the message from all collector that collected this message
      *
-     * @param {Message} msg
      * @param {Message} oldMsg
+     * @param {Message} msg
      * @memberof MessageCollector
      */
-    _onMessageUpdate(msg, oldMsg) {
+    _onMessageUpdate(oldMsg, msg) {
         if (!oldMsg) {
             return;
         }
