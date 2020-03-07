@@ -244,7 +244,7 @@ class Collector extends EventEmitter {
      * @event Collector#timeout
      * @param {String} id - The id of the CollectorContainer that timed out
      */
-    
+
     /**
      * Handles on timeout action
      *
@@ -258,7 +258,7 @@ class Collector extends EventEmitter {
         }
 
         this.collectors.delete(c.id);
-        c.reject('TIMEOUT');
+        c.reject(c.collected);
     }
 }
 
