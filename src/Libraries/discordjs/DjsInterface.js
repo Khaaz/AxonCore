@@ -67,16 +67,16 @@ class DjsInterface extends LibraryInterface {
         } );
     }
 
-    onMessageUpdate(func) {
-        this.botClient.on(this.enums.EVENTS.MESSAGE_UPDATE, (oldMsg, msg) => {
-            func(oldMsg, msg);
-        } );
+    getMessageCreate(func) {
+        return (msg) => func(msg);
     }
 
-    onMessageDelete(func) {
-        this.botClient.on(this.enums.EVENTS.MESSAGE_CREATE, (msg) => {
-            func(msg);
-        } );
+    getMessageUpdate(func) {
+        return (oldMsg, msg) => func(oldMsg, msg);
+    }
+
+    getMessageDelete(func) {
+        return (msg) => func(msg);
     }
 }
 

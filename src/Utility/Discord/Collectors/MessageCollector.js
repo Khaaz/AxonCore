@@ -41,15 +41,15 @@ class MessageCollector extends Collector {
             userID: options.userID || null,
         };
 
-        this.onMessageCreate = this._onMessageCreate.bind(this);
-        this.onMessageDelete = this._onMessageDelete.bind(this);
-        this.onMessageUpdate = this._onMessageUpdate.bind(this);
+        this.onMessageCreate = this.lib.getMessageCreate(this._onMessageCreate.bind(this) );
+        this.onMessageDelete = this.lib.getMessageDelete(this._onMessageDelete.bind(this) );
+        this.onMessageUpdate = this.lib.getMessageUpdate(this._onMessageUpdate.bind(this) );
     }
 
     setListeners() {
-        this.lib.onMessageCreate(this.onMessageCreate);
-        this.lib.onMessageDelete(this.onMessageDelete);
-        this.lib.onMessageUpdate(this.onMessageUpdate);
+        this.bot.on(this.lib.enums.EVENTS.MESSAGE_CREATE, this.onMessageCreate);
+        this.bot.on(this.lib.enums.EVENTS.MESSAGE_DELETE, this.onMessageDelete);
+        this.bot.on(this.lib.enums.EVENTS.MESSAGE_UPDATE, this.onMessageUpdate);
     }
 
     unsetListeners() {
