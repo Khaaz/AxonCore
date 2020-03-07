@@ -77,7 +77,7 @@ class MessageCollector extends Collector {
             channel,
             timeout: options.timeout !== undefined ? options.timeout : this.options.timeout,
             count: options.count !== undefined ? options.count : this.options.count,
-            ignoreBots: options.ignoreBots === undefined ? options.ignoreBots : this.options.ignoreBots,
+            ignoreBots: options.ignoreBots !== undefined ? options.ignoreBots : this.options.ignoreBots,
             userID: options.userID !== undefined ? options.userID : this.options.userID,
             
         } );
@@ -98,8 +98,8 @@ class MessageCollector extends Collector {
         return this.collectors
             .filter(e => (
                 e.options.channel.id === message.channel.id
-                // && (message.author.bot ? !e.options.ignoreBots : true)
-                // && (e.options.userID && message.author.id !== e.options.userID)
+                && (message.author.bot ? !e.options.ignoreBots : true)
+                && (e.options.userID ? message.author.id === e.options.userID : true)
             ) );
     }
 
