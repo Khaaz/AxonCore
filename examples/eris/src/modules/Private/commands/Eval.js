@@ -64,7 +64,7 @@ class Eval extends Command {
             }
         } catch (err) {
             this.logger.debug(err.stack);
-            return this.sendError(msg.channel, err.message ? err.message : err.name);
+            return this.sendError(msg.channel, err.message ? err.message : err);
         }
 
         evalString = this.cleanUpToken(evalString);
