@@ -469,7 +469,7 @@ entities@~1.1.1:
 
 eris@abalabahaha/eris#dev:
   version "0.11.2"
-  resolved "https://codeload.github.com/abalabahaha/eris/tar.gz/71dd17eaf6a587ddb1427d406df411c18de0b7be"
+  resolved "https://codeload.github.com/abalabahaha/eris/tar.gz/2fdf6c02b89a17ffef6532682f1e42bcc3455fc9"
   dependencies:
     ws "^7.2.1"
   optionalDependencies:

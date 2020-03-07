@@ -1,7 +1,4 @@
-import { EventEmitter } from 'events';
-
-// For collection
-import Collection from '../Collection';
+import Collector from './Collector';
 
 /**
  * @typedef {import('../../AxonClient').default} AxonClient
@@ -10,209 +7,151 @@ import Collection from '../Collection';
 /**
  * Collect bunch of message object according to chosen options
  *
- * @author VoidNull
+ * @author VoidNull, KhaaZ
  *
  * @class MessageCollector
- * @extends EventEmitter
+ * @extends Collector
  *
- * @prop {Collection<Message>} messages
+ * @prop {Object} options
+ * @prop {Number} options.timeout - Number of ms before timing out
+ * @prop {Number} options.count - Number of messages to collect
+ * @prop {Boolean} options.ignoreBots - Whether to ignore bots
+ * @prop {String} options.userID - Specify a userID to only collect message from this user
  */
-class MessageCollector extends EventEmitter {
+class MessageCollector extends Collector {
     /**
+     * Creates an instance of MessageCollector
+     *
      * @param {AxonClient} client - The axon client object
-     *
      * @param {Object} [options] - The default options for the message collector instance
-     * @param {Number} [options.timeout=60000] - The time before the collector times out in milliseconds
-     * @param {Number} [options.count=100] - The amount of messages to collect before automatically ending
+     * @param {Number} [options.timeout=10000] - The time before the collector times out in milliseconds
+     * @param {Number} [options.count=10] - The amount of messages to collect before automatically ending
      * @param {Boolean} [options.ignoreBots=true] - Whether or not to ignore bots
-     * @param {String} [options.uID] - The user id to listen for (listens to all messages if not specified)
-     * @param {Boolean} [options.caseSensitive=false] - Whether or not to return messages with lowercase content. Default: content unchanged
-     *
+     * @param {String} [options.userID] - The user id to listen for (listens to all messages if not specified)
+     * @memberof MessageCollector
      * @example
      * const collector = new MessageCollector(this.axon, { count: 10, ignoreBots: false });
      */
-    constructor(client, options = {} ) {
-        super();
-        this._options = {
-            timeout: options.timeout || 60000, // eslint-disable-line no-magic-numbers
-            count: options.count || 100,
-            ignoreBots: options.ignoreBots === undefined ? true : !!options.ignoreBots, // Ignore bots by default
-            caseSensitive: options.caseSensitive === undefined ? true : !!options.caseSensitive, // Be case sensitive by default
+    constructor(axonClient, options = {} ) {
+        super(axonClient);
+        this.options = {
+            timeout: options.timeout || 10000, // eslint-disable-line no-magic-numbers
+            count: options.count || 10,
+            ignoreBots: options.ignoreBots === undefined ? true : !!options.ignoreBots,
+            userID: options.userID || null,
         };
-        this._axon = client;
 
-        /**
-         * @type {{timeout?: Number, count?: Number, ignoreBots?: Boolean, uID?: String, caseSensitive?: Boolean}}
-         */
-        this._actualOptions = {};
-
-        /**
-         * @type {(msg: Message) => void}
-         */
-        this._boundMsgEvent = this._onMsgCreate.bind(this);
-        /**
-         * @type {(msg: Message) => void}
-         */
-        this._boundDelEvent = this._onMsgDelete.bind(this);
-        /**
-         * @type {(msg: Message, oldMsg: Message) => void}
-         */
-        this._boundEditEvent = this._onMsgEdit.bind(this);
-        /**
-         * @type {() => void}
-         */
-        this._boundCollectEvent = this._onCollectEvent.bind(this);
-
-        /**
-         * @type {Collection<Message>}
-         */
-        this.messages = new Collection();
+        this.onMessageCreate = this._onMessageCreate.bind(this);
+        this.onMessageDelete = this._onMessageDelete.bind(this);
+        this.onMessageUpdate = this._onMessageUpdate.bind(this);
     }
 
-    /**
-     * @type {AxonClient}
-     * @readonly
-     */
-    get axon() {
-        return this._axon;
+    setListeners() {
+        this.bot.on('messageCreate', this.onMessageCreate);
+        this.bot.on('messageDelete', this.onMessageDelete);
+        this.bot.on('messageUpdate', this.onMessageUpdate);
     }
 
-    /**
-     * @type {BotClient}
-     * @readonly
-     */
-    get client() {
-        return this._axon.botClient;
+    unsetListeners() {
+        this.bot.off('messageCreate', this.onMessageCreate);
+        this.bot.off('messageDelete', this.onMessageDelete);
+        this.bot.off('messageUpdate', this.onMessageUpdate);
     }
 
     /**
      * Runs the message collector
      *
-     * @param {Channel} channel The channel object to listen to
-     *
-     * @param {Object} [options] The options for the message collector
-     * @param {Number} [options.timeout=60000] The time before the collector times out in milliseconds
-     * @param {Number} [options.count=100] The amount of messages to collect before automatically ending
-     * @param {Boolean} [options.ignoreBots=true] Whether or not to ignore bots
-     * @param {String} [options.uID] The user id to listen for (listens to all messages if not specified)
-     * @param {Boolean} [options.caseSensitive=true] Whether or not to return messages with lowercase content. Default: content not changed
-     *
-     * @returns {Promise<Message>} Map of messages collected.
-     *
+     * @param {Channel} channel - The channel object to listen to
+     * @param {Object} [options] - The options for the message collector
+     * @param {Number} [options.timeout] - The time before the collector times out in milliseconds
+     * @param {Number} [options.count] - The amount of messages to collect before automatically ending
+     * @param {Boolean} [options.ignoreBots] - Whether or not to ignore bots
+     * @param {String} [options.userID] - The user id to listen for (listens to all messages if not specified)
+     * @returns {Promise<Map<Message>>} Map of messages collected.
+     * @memberof MessageCollector
      * @example
      * const messages = await collector.run(msg.channel, { caseInsensitive: false });
      */
     run(channel, options = {} ) {
-        return new Promise( (resolve, reject) => {
-            this._channel = channel;
-            this._actualOptions = options;
-            for (const value in this._options) {
-                if (this._actualOptions[value] === null || this._actualOptions[value] === undefined) {
-                    this._actualOptions[value] = this._options[value];
-                }
-            }
-
-            // Bind events
-            this.client.on('messageCreate', this._boundMsgEvent);
-            this.client.on('messageUpdate', this._boundEditEvent);
-            this.client.on('messageDelete', this._boundDelEvent);
-
-            this.on('collect', this._boundCollectEvent);
-
-            this.once('end', () => {
-                this._onEnd();
-                return resolve(this.messages); // Resolve with a collection of messages
-            } );
-
-            this.once('timedOut', () => {
-                this._onEnd();
-                return reject('TIMEOUT');
-            } );
-
-            this._startTimeout();
+        return this._run( {
+            channel,
+            timeout: options.timeout !== undefined ? options.timeout : this.options.timeout,
+            count: options.count !== undefined ? options.count : this.options.count,
+            ignoreBots: options.ignoreBots === undefined ? options.ignoreBots : this.options.ignoreBots,
+            userID: options.userID !== undefined ? options.userID : this.options.userID,
+            
         } );
     }
 
-    _onEnd() {
-        this.client.off('messageCreate', this._boundMsgEvent); // Stop listening to the eris message events
-        this.client.off('messageUpdate', this._boundEditEvent);
-        this.client.off('messageDelete', this._boundDelEvent);
-        this.off('collect', this._boundCollectEvent); // Stop listening to the collect event in this class
+    /**
+     * Get all CollectorContainers that will collect from this particular message
+     *
+     * @param {Message} message
+     * @returns {Array<CollectorContainer>}
+     * @memberof MessageCollector
+     */
+    getCollectors(message) {
+        if (message.author.id === this.bot.user.id) {
+            return [];
+        }
+
+        return this.collectors
+            .filter(e => (
+                e.options.channel.id === message.channel.id
+                // && (message.author.bot ? !e.options.ignoreBots : true)
+                // && (e.options.userID && message.author.id !== e.options.userID)
+            ) );
     }
 
-    _startTimeout() {
-        setTimeout( () => {
-            this.emit('timedOut');
-        }, this._actualOptions.timeout);
+    /**
+     * Function bound to messageCreate event.
+     * Collect the message for all collectors that respond to the criteria
+     * Emits collect event.
+     *
+     * @param {Message} msg
+     * @memberof MessageCollector
+     */
+    _onMessageCreate(msg) {
+        const collectors = this.getCollectors(msg);
+        this.emit('collect', collectors, { id: msg.id, collected: msg } );
     }
 
-    _onMsgDelete(msg) {
-        if (this.messages.has(msg.id) ) {
-            this.messages.remove(msg.id);
-            this.emit('delete', msg);
+    /**
+     * Function bound to messageDelete event.
+     * Remove the message from all collector that collected this message
+     *
+     * @param {Message} msg
+     * @memberof MessageCollector
+     */
+    _onMessageDelete(msg) {
+        const collectors = this.getCollectors(msg);
+
+        for (const c of collectors) {
+            if (c.collected.has(msg.id) ) {
+                c.collected.delete(msg.id);
+            }
         }
     }
 
-    async _onMsgEdit(oldMsg, msg) {
+    /**
+     * Function bound to messageUpdate event.
+     * Updates the message from all collector that collected this message
+     *
+     * @param {Message} msg
+     * @param {Message} oldMsg
+     * @memberof MessageCollector
+     */
+    _onMessageUpdate(msg, oldMsg) {
         if (!oldMsg) {
             return;
         }
-        if (this.messages.has(oldMsg.id) ) {
-            this.emit('edit', oldMsg, msg);
-            await this.axon.utils.sleep(500); // eslint-disable-line no-magic-numbers
-            this.messages.update(msg.id, msg);
-        }
-    }
+        const collectors = this.getCollectors(msg);
 
-    _onCollectEvent() {
-        if (this.messages.size >= this._actualOptions.count) {
-            this.end();
+        for (const c of collectors) {
+            if (c.collected.has(msg.id) ) {
+                c.collected.set(msg.id, msg);
+            }
         }
-    }
-
-    end() {
-        this.emit('end');
-    }
-
-    _onMsgCreate(msg) {
-        // Checks for values to match up before continuing.
-        if (msg.channel.id !== this._channel.id) {
-            return;
-        } if (msg.author.id === this.client.user.id) {
-            return;
-        } if (this._actualOptions.ignoreBots && msg.author.bot) {
-            return;
-        } if (this._actualOptions.uID && msg.author.id !== this._actualOptions.uID) {
-            return;
-        }
-        if (!this._actualOptions.caseSensitive) { // If caseSensitive
-            msg.content = msg.content.toLowerCase(); // Make the lowercase content
-        }
-        this.messages.add(msg.id, msg);
-        this.emit('collect', msg);
-    }
-
-
-    /**
-     * Removes a message from the messages collected
-     *
-     * @param {String} mID The id of the message you want to remove
-     *
-     * @returns {Collection<Message>} Collection of messages collected, now excluding the removed message.
-     *
-     * @example
-     *
-     * collector.delete('542164538347225118')
-     */
-    delete(mID) {
-        if (!this.axon.utils.id.test(mID) ) {
-            throw new Error(`Value ${mID} is NOT a ID`);
-        }
-        if (!this.messages.has(mID) ) { // If messages does not contain the message id
-            throw new Error(`MESSAGE ${mID} NOT FOUND`);
-        }
-        this.messages.remove(mID); // Remove the message
-        return this.messages; // Return the new map
     }
 }
 
