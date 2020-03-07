@@ -1,10 +1,10 @@
 import { EventEmitter } from 'events';
-import NotImplementedException from '../../Errors/NotImplementedException';
-import Collection from '../Collection';
+import NotImplementedException from '../../../Errors/NotImplementedException';
+import Collection from '../../Collection';
 import TimeoutQueue from './TimeoutQueue';
 
 /**
- * @typedef {import('../../AxonClient').default} AxonClient
+ * @typedef {import('../../../AxonClient').default} AxonClient
  * @typedef {{
  * id: String, collected: Map, options: Object, resolve: () => {}, reject: () => {}),
  * }} CollectorContainer

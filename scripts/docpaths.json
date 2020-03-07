@@ -125,8 +125,16 @@
         "output": "Utility/Embed.md"
     },
     {
-        "input": "Utility/Discord/MessageCollector.js",
+        "input": "Utility/Discord/Collectors/Collector.js",
+        "output": "Utility/Collector.md"
+    },
+    {
+        "input": "Utility/Discord/Collectors/MessageCollector.js",
         "output": "Utility/MessageCollector.md"
+    },
+    {
+        "input": "Utility/Discord/Collector/ReactionCollector.js",
+        "output": "Utility/ReactionCollector.md"
     },
     {
         "input": "Utility/Discord/Prompt.js",

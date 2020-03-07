@@ -1,7 +1,7 @@
 import Collector from './Collector';
 
 /**
- * @typedef {import('../../AxonClient').default} AxonClient
+ * @typedef {import('../../../AxonClient').default} AxonClient
  */
 
 /**
