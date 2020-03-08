@@ -2,7 +2,7 @@ import { COMMAND_EXECUTION_TYPES } from '../../Utility/Constants/AxonEnums';
 
 /**
  * @typedef {import('./Command').default} Command
- * @typedef {import('../DataStructure/GuildConfig').default} GuildConfig
+ * @typedef {import('../Models/GuildConfig').default} GuildConfig
  */
 
 /**

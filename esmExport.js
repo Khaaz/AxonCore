@@ -27,8 +27,8 @@ export { default as ModuleRegistry } from './src/Core/Stores/ModuleRegistry';
 export { default as GuildConfigCache } from './src/Core/Stores/GuildConfigCache';
 
 // Models
-export { default as AxonConfig } from './src/Core/DataStructure/AxonConfig';
-export { default as GuildConfig } from './src/Core/DataStructure/GuildConfig';
+export { default as AxonConfig } from './src/Core/Models/AxonConfig';
+export { default as GuildConfig } from './src/Core/Models/GuildConfig';
 
 // == Hooks ==
 

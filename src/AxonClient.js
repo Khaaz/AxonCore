@@ -48,7 +48,7 @@ import { WEBHOOK_TYPES, LOG_LEVELS, WEBHOOK_TO_COLOR, DEBUG_FLAGS } from './Util
  * @typedef {import('./Libraries/definitions/Resolver').default} Resolver
  * @typedef {import('./Core/Command/Command').default} Command
  * @typedef {import('./Loggers/Context').default} Context
- * @typedef {import('./Core/DataStructure/GuildConfig').default} GuildConfig
+ * @typedef {import('./Core/Models/GuildConfig').default} GuildConfig
  * @typedef {import('./Core/Command/CommandEnvironment').default} CommandEnvironment
  * @typedef {import(./Libraries/definitions/LibraryInterface).default} LibraryInterface
  */

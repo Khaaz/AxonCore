@@ -12,7 +12,7 @@ import Validator from '../Core/Validator';
  * @typedef {{ embeds: Object.<string, Number>, emotes: Object.<string, String> }} AxonTemplate
  * @typedef {import('./Utils').default} Utils
  * @typedef {import('../Libraries/definitions/LibraryInterface').default} LibraryInterface
- * @typedef {import('../Core/DataStructure/GuildConfig').default} GuildConfig
+ * @typedef {import('../Core/Models/GuildConfig').default} GuildConfig
  * @typedef {import('../Loggers/ALogger').default} ALogger
  */
 

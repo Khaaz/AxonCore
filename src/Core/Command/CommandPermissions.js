@@ -15,7 +15,7 @@ import AxonError from '../../Errors/AxonError';
  * @typedef {import('../../Utility/Utils').default} Utils
  * @typedef {import('../../Utility/AxonUtils').default} AxonUtils
  * @typedef {import('../../Libraries/definitions/LibraryInterface').default} LibraryInterface
- * @typedef {import('../DataStructure/GuildConfig').default} GuildConfig
+ * @typedef {import('../Models/GuildConfig').default} GuildConfig
  */
 
 /**

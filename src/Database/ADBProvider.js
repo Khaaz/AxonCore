@@ -8,8 +8,8 @@ import NotImplementedException from '../Errors/NotImplementedException';
 /**
  * @typedef {String|Boolean|Object.<string, any>|Array<any>|Number|Date} updateDBVal
  * @typedef {import('../AxonOptions').default} AxonOptions
- * @typedef {import('../Core/DataStructure/AxonConfig').default} AxonConfig
- * @typedef {import('../Core/DataStructure/GuildConfig').default} GuildConfig
+ * @typedef {import('../Core/Models/AxonConfig').default} AxonConfig
+ * @typedef {import('../Core/Models/GuildConfig').default} GuildConfig
  * @typedef {{
  * id: String, prefix: String, createdAt: Date, updatedAt: Date, bannedUsers: Array<String>, bannedGuilds: Array<String>
  * }} AxonConfigRaw

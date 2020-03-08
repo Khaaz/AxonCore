@@ -4,7 +4,7 @@ import { COMMAND_EXECUTION_TYPES } from '../Utility/Constants/AxonEnums';
 /**
  * @typedef {import('../AxonClient').default} AxonClient
  * @typedef {import('../Libraries/definitions/LibraryInterface').default} LibraryInterface
- * @typedef {import('./DataStructure/GuildConfig').default} GuildConfig
+ * @typedef {import('./Models/GuildConfig').default} GuildConfig
  */
 
 /**

@@ -108,7 +108,7 @@ There are specific providers for each type of Database, such as:
 - SQL ([sequelize](https://github.com/sequelize/sequelize)) [TODO]
 - SQLite () [TODO]
 
-The only thing you will handle is a [GuildConfig](src/Core/DataStructure/GuildConfig.js) and an [AxonConfig](src/Core/DataStructure/AxonConfig.js) object. Those are stored in the [GuildConfigCache](src/Core/GuildConfigCache.js).
+The only thing you will handle is a [GuildConfig](src/Core/Models/GuildConfig.js) and an [AxonConfig](src/Core/Models/AxonConfig.js) object. Those are stored in the [GuildConfigCache](src/Core/GuildConfigCache.js).
 
 ### Translation support
 

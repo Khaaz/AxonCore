@@ -1,7 +1,7 @@
 import ADBProvider from './ADBProvider';
 
-import AxonConfig from '../Core/DataStructure/AxonConfig';
-import GuildConfig from '../Core/DataStructure/GuildConfig';
+import AxonConfig from '../Core/Models/AxonConfig';
+import GuildConfig from '../Core/Models/GuildConfig';
 
 /**
  * @typedef {import('../AxonOptions').default} AxonOptions

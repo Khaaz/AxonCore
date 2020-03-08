@@ -193,11 +193,11 @@
     },
 
     {
-        "input": "Core/DataStructure/AxonConfig.js",
+        "input": "Core/Models/AxonConfig.js",
         "output": "Core/AxonConfig.md"
     },
     {
-        "input": "Core/DataStructure/GuildConfig.js",
+        "input": "Core/Models/GuildConfig.js",
         "output": "Core/GuildConfig.md"
     },
     {
