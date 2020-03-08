@@ -119,7 +119,7 @@ class CommandDispatcher {
         if (onHelp) {
             /* If no additional args: send FullHelp */
             if (args.length === 0) {
-                this._axon._execHelp(null, env);
+                this._axon.executor.help(null, env);
                 return;
             }
             /* Otherwise resolve the command we want to send the help for */
@@ -136,12 +136,12 @@ class CommandDispatcher {
 
         /* Send help for the resolved command */
         if (onHelp) {
-            this._axon._execHelp(command, env);
+            this._axon.executor.help(command, env);
             return;
         }
 
         /* Execute the command */
-        this._axon._execCommand(command, env);
+        this._axon.executor.command(command, env);
         return;
     }
 

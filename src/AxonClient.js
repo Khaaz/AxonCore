@@ -1,7 +1,6 @@
 // Lib - Modules
 import EventEmitter from 'events';
 import util from 'util';
-import { performance } from 'perf_hooks';
 
 // Core - Core
 import Base from './Core/Base';
@@ -19,6 +18,7 @@ import MessageManager from './Langs/MessageManager';
 
 import ModuleLoader from './Core/Loaders/ModuleLoader';
 import ClientInitialiser from './Core/Loaders/ClientInitialiser';
+import Executor from './Core/Executor';
 
 import ADBProvider from './Database/ADBProvider'; // default ADBProvider
 
@@ -201,6 +201,7 @@ class AxonClient extends EventEmitter {
         /* Core Logic */
         this.moduleLoader = new ModuleLoader(this);
         this.dispatcher = new CommandDispatcher(this);
+        this.executor = new Executor(this);
 
         this._messageManager = new MessageManager(this, axonOptions.lang, axonOptions.settings.lang);
 
@@ -544,175 +545,6 @@ class AxonClient extends EventEmitter {
         } );
     }
 
-    // **** EXECUTOR **** //
-    /**
-     * Fired when a debug message need to be sent
-     * @event AxonClient#debug
-     * @prop {DEBUG_FLAGS} flags - debug flags used used to have more information about the event
-     * @prop {String} debugMessage - debug message with information about the situation
-     * @memberof AxonClient
-     */
-
-    /**
-     * Fired when a command is successfully ran
-     * @event AxonClient#commandExecution
-     * @prop {Boolean} status - If the command was successfully executed or not
-     * @prop {String} commandFullLabel - The command fullLabel
-     * @prop {Object} data
-     * @prop {Message} data.msg - The message that triggered the command
-     * @prop {Command} data.command - The Command that was executed
-     * @prop {GuildConfig} data.guildConfig - The GuildConfig
-     * @prop {CommandContext} data.context - The execution context
-     * @memberof AxonClient
-     */
-
-    /**
-     * Fired when a command fails
-     * @event AxonClient#commandError
-     * @prop {String} commandFullLabel - The command fullLabel
-     * @prop {Object} data
-     * @prop {Message} data.msg - The message that triggered the command
-     * @prop {Command} data.command - The Command that was executed
-     * @prop {GuildConfig} data.guildConfig - The GuildConfig
-     * @prop {AxonCommandError} data.error - The error
-     * @memberof AxonClient
-     */
-
-    /**
-     * @param {Command} command
-     * @param {CommandEnvironment} env
-     */
-    _execCommand(command, env) {
-        const { msg, guildConfig } = env;
-        
-        this.emit('debug', DEBUG_FLAGS.INFO | DEBUG_FLAGS.COMMAND, `${guildConfig ? '[GUILD]' : '[DM]'} ${env.isAdmin || env.isOwner ? 'Admin' : 'Regular'} execution of ${command.fullLabel}`);
-        let startTime;
-        if (this.settings.debugMode) {
-            startTime = performance.now();
-        }
-        
-        command._process(env)
-            .then( (context) => {
-                this.emit('commandExecution', context.executed, command.fullLabel, { msg, command, guildConfig, context } );
-                
-                if (this.settings.debugMode) {
-                    const endTime = performance.now();
-                    this.emit('debug', DEBUG_FLAGS.INFO | DEBUG_FLAGS.COMMAND, `NET: ${endTime - startTime}`);
-                }
-            } )
-            .catch(err => {
-                this.emit('commandError', command.fullLabel, { msg, command, guildConfig, error: err } );
-                
-                if (this.settings.debugMode) {
-                    const endTime = performance.now();
-                    this.emit('debug', DEBUG_FLAGS.INFO | DEBUG_FLAGS.COMMAND, `NET: ${endTime - startTime}`);
-                }
-                
-                this.log('ERROR', err);
-            } );
-
-        if (this.settings.debugMode) {
-            const endTime = performance.now();
-            this.emit('debug', DEBUG_FLAGS.INFO | DEBUG_FLAGS.COMMAND, `NODE: ${endTime - startTime}`);
-        }
-    }
-
-    /**
-     * @param {Command} command
-     * @param {CommandEnvironment} env
-     */
-    _execHelp(command, env) {
-        const { msg, guildConfig } = env;
-        if (!command) {
-            this.sendFullHelp(msg, guildConfig);
-            return;
-        }
-
-        this.emit('debug', DEBUG_FLAGS.INFO | DEBUG_FLAGS.COMMAND, `${guildConfig ? '[GUILD]' : '[DM]'} ${env.isAdmin || env.isOwner ? 'Admin' : 'Regular'} -HELP- execution of ${command.fullLabel}`);
-        let startTime;
-        if (this.settings.debugMode) {
-            startTime = performance.now();
-        }
-
-        command.sendHelp(env)
-            .then( (context) => {
-                this.emit('commandExecution', true, command.label, { msg, command, guildConfig, context } );
-                if (this.settings.debugMode) {
-                    const endTime = performance.now();
-                    this.emit('debug', DEBUG_FLAGS.INFO | DEBUG_FLAGS.COMMAND, `NET: ${endTime - startTime}`);
-                }
-            } )
-            .catch(err => {
-                this.emit('commandError', command.label, { msg, command, guildConfig, err } );
-                if (this.settings.debugMode) {
-                    const endTime = performance.now();
-                    this.emit('debug', DEBUG_FLAGS.INFO | DEBUG_FLAGS.COMMAND, `NET: ${endTime - startTime}`);
-                }
-
-                this.log('ERROR', err);
-            } );
-
-        if (this.settings.debugMode) {
-            const endTime = performance.now();
-            this.emit('debug', DEBUG_FLAGS.INFO | DEBUG_FLAGS.COMMAND, `NODE: ${endTime - startTime}`);
-        }
-    }
-
-    /**
-     * Fired when a listener is executed
-     * @event AxonClient#listenerExecution
-     * @prop {Boolean} status - Whereas the listener was successfully executed or not
-     * @prop {String} eventName - The discord event name
-     * @prop {String} listenerName - The listener label
-     * @prop {Object} data - Additional information
-     * @prop {Listener} data.listener - The Listener that was executed
-     * @prop {GuildConfig} data.guildConfig - The GuildConfig object
-     * @memberof AxonClient
-     */
-
-    /**
-     * Fired when a listener errors
-     * @event AxonClient#listenerError
-     * @prop {String} eventName - The discord event name
-     * @prop {String} listenerName - The Listener label
-     * @prop {Object} data - Additional information
-     * @prop {Listener} data.listener - The Listener that was executed
-     * @prop {GuildConfig} data.guildConfig - The GuildConfig object
-     * @prop {Error} data.error - The error
-     * @memberof AxonClient
-     */
-
-    /**
-     * @param {Listener} listener
-     * @param {GuildConfig} guildConfig
-     * @param {...any} args
-     */
-    _execListener(listener, guildConfig, ...args) {
-        this.emit('debug', DEBUG_FLAGS.INFO | DEBUG_FLAGS.LISTENER, `Execution of ${listener.label} for ${listener.eventName}`);
-        let startTime;
-        if (this.settings.debugMode) {
-            startTime = performance.now();
-        }
-
-        listener._execute(guildConfig, ...args)
-            .then( () => {
-                if (this.settings.debugMode) {
-                    const endTime = performance.now();
-                    this.emit('debug', DEBUG_FLAGS.INFO | DEBUG_FLAGS.LISTENER, `TIME: ${endTime - startTime}`);
-                }
-                this.emit('listenerExecution', true, listener.eventName, listener.label, { listener, guildConfig } );
-            } )
-            .catch(err => {
-                this.emit('listenerError', listener.eventName, listener.label, { listener, guildConfig, error: err } );
-
-                if (this.settings.debugMode) {
-                    const endTime = performance.now();
-                    this.emit('debug', DEBUG_FLAGS.INFO | DEBUG_FLAGS.LISTENER, `NET: ${endTime - startTime}`);
-                }
-                this.log('ERROR', `[EVENT](${listener.eventName}) - ${listener.label}\n${err}`);
-            } );
-    }
-
     // **** HELPERS **** //
 
     /**
@@ -829,5 +661,5 @@ class AxonClient extends EventEmitter {
         return Base.prototype[util.inspect.custom].call(this);
     }
 }
-
+    
 export default AxonClient;
