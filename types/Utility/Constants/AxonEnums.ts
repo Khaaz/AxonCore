@@ -150,6 +150,14 @@ export declare enum TYPE_ERRORS {
     UNKNOWN = 'Unexpected error',
 }
 
+export declare enum DEBUG_FLAGS {
+    INFO = 1,
+    GOOD = 2,
+    BAD = 4,
+    INIT = 8,
+    COMMAND = 16
+}
+
 export declare type PERMISSION_ADMIN = 'ADMINISTRATOR';
 export declare type PERMISSION_MANAGER = 'MANAGE_GUILD';
 

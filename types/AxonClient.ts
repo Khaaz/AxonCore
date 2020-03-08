@@ -1,8 +1,8 @@
 import * as EventEmitter from 'events';
 import {
-    AxonConfs, AxonParams, Info, AxonInfo, ALogger, AxonUtils, LibClient, LibraryInterface, Utils, ADBProvider, ModuleRegistry, CommandRegistry,
-    ListenerRegistry, EventManager, GuildConfigCache, AxonConfig, ModuleLoader, CommandDispatcher, MessageManager, AxonStaffIDs, AxonOptions,
-    Collection, AHandler, Listener, Resolver, Webhooks, AxonTemplate, Module, Command, LOG_LEVELS, Ctx, LibMessage, GuildConfig, CommandContext, AxonCommandError,
+    AxonConfs, AxonParams, Info, AxonInfo, ALogger, AxonUtils, LibClient, LibraryInterface, Utils, ADBProvider, ModuleRegistry, CommandRegistry, ListenerRegistry,
+    EventManager, GuildConfigCache, AxonConfig, ModuleLoader, CommandDispatcher, MessageManager, AxonStaffIDs, AxonOptions, Collection, AHandler, Listener, Resolver,
+    Webhooks, AxonTemplate, Module, Command, LOG_LEVELS, Ctx, LibMessage, GuildConfig, CommandContext, AxonCommandError, DEBUG_FLAGS,
 } from './';
 
 export declare class AxonClient extends EventEmitter {
@@ -189,6 +189,12 @@ export declare class AxonClient extends EventEmitter {
      */
     private _onReady(): void;
     /**
+     * Function ran on debug event.
+     * Logs the debug event.
+     * @memberof AxonClient
+     */
+    public onDebug(flag: DEBUG_FLAGS, d: string): void;
+    /**
      * Initialize error listeners and webhooks.
      * Override this method to setup your own error listeners.
      * @memberof AxonClient
@@ -242,7 +248,7 @@ export declare class AxonClient extends EventEmitter {
     toJSON(): object;
 
     // events
-    on(event: 'debug', listener: (debugMessage: string) => void): this;
+    on(event: 'debug', listener: (flags: DEBUG_FLAGS, debugMessage: string) => void): this;
     on(event: 'commandExecution', listener: (status: boolean, commandFullLabel: string, data: { msg: LibMessage; command: Command; guildConfig: GuildConfig; context: CommandContext;} ) => void): this;
     on(event: 'commandError', listener: (commandFullLabel: string, data: { msg: LibMessage; command: Command; guildConfig: GuildConfig; error: AxonCommandError; } ) => void): this;
     on(event: 'listenerExecution', listener: (status: boolean, eventName: string, listenerName: string, data: { listener: Listener; guildConfig: GuildConfig; } ) => void): this;
