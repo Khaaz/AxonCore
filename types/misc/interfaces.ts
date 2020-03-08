@@ -906,7 +906,7 @@ interface CommandEnvironmentBase {
 }
 
 interface CommandEnvironmentProps extends CommandEnvironmentBase {
-    /** The full label of the command */
+    /** The full label of the command being executed */
     command: string;
 }
 
