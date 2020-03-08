@@ -38,11 +38,13 @@ export {
     AxonOptionsSettings, AOptionsSettings, AxonLanguageResponse, Languages, AxonOptionsBase, WebhookConfig, Webhooks, AxonOptionsPrefixes,
     AxonOptionsInfo, AxonOptionsStaff, AxonOptionsExtensions, AxonConfs, AxonParams, Info, AxonInfo, AxonStaffIDs, LibraryInterfaceStructs, PresenceGame,
     RawAttachment, RawUser, WebhookResponse, DjsContent, DjsWebhookContent, DjsPresenceGame, ErisContent, ErisWebhookContent, ErisPresenceGame,
+    CommandEnvironmentParams, CommandEnvironmentProps,
 } from './misc/interfaces';
 
 export { Command } from './Structures/Command/Command';
 export { CommandContext } from './Structures/Command/CommandContext';
 export { CommandCooldown } from './Structures/Command/CommandCooldown';
+export { CommandEnvironment } from './Structures/Command/CommandEnvironment';
 export { CommandOptions } from './Structures/Command/CommandOptions';
 export { CommandPermissions } from './Structures/Command/CommandPermissions';
 export { CommandResponse } from './Structures/Command/CommandResponse';

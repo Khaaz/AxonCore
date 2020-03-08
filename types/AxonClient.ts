@@ -2,7 +2,7 @@ import * as EventEmitter from 'events';
 import {
     AxonConfs, AxonParams, Info, AxonInfo, ALogger, AxonUtils, LibClient, LibraryInterface, Utils, ADBProvider, ModuleRegistry, CommandRegistry, ListenerRegistry,
     EventManager, GuildConfigCache, AxonConfig, ModuleLoader, CommandDispatcher, MessageManager, AxonStaffIDs, AxonOptions, Collection, AHandler, Listener, Resolver,
-    Webhooks, AxonTemplate, Module, Command, LOG_LEVELS, Ctx, LibMessage, GuildConfig, CommandContext, AxonCommandError, DEBUG_FLAGS,
+    Webhooks, AxonTemplate, Module, Command, LOG_LEVELS, Ctx, LibMessage, GuildConfig, CommandContext, AxonCommandError, DEBUG_FLAGS, CommandEnvironment,
 } from './';
 
 export declare class AxonClient extends EventEmitter {
@@ -207,8 +207,8 @@ export declare class AxonClient extends EventEmitter {
      */
     public initStatus(): void;
 
-    public _execCommand(msg: LibMessage, args: string[], command: Command, guildConfig: GuildConfig, optionals: { isAdmin: boolean; isOwner: boolean; } ): void;
-    public _execHelp(msg: LibMessage, args: string[], command: Command, guildConfig: GuildConfig, optionals: { isAdmin: boolean; isOwner: boolean; } ): void;
+    public _execCommand(command: Command, env: CommandEnvironment): void;
+    public _execHelp(command: Command, env: CommandEnvironment): void;
     public _execListener(listener: Listener, guildConfig: GuildConfig, ...args: any[] ): void;
 
     /**

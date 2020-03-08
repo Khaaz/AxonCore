@@ -1,4 +1,6 @@
-import { AxonClient, LibraryInterface, LibMessage, GuildConfig } from '../';
+import {
+    AxonClient, LibraryInterface, LibMessage, GuildConfig, CommandEnvironment, COMMAND_EXECUTION_TYPES,
+} from '../';
 
 /**
  * Class responsible to call the correct command and correct execution flow when needed.
@@ -47,7 +49,7 @@ export declare class CommandDispatcher {
      *
      * @memberof CommandDispatcher
      */
-    public getExecutionType(msg: LibMessage): { isAdmin: boolean; isOwner: boolean; }
+    public getExecutionType(msg: LibMessage): COMMAND_EXECUTION_TYPES;
     /**
      * Resolves the prefix for the guild of the message.
      * Will resolve the owner or admin prefix if it's an owner or admin execution.

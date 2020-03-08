@@ -1,6 +1,6 @@
 import {
     Base, CommandData, Module, CommandCooldown, CommandInfo, CommandOptions, CommandPermissions, Collection, AxonTemplate,
-    LibraryInterface, LibMessage, GuildConfig, CommandContext, CommandResponse, LibTextableChannel, LibMember,
+    LibraryInterface, LibMessage, GuildConfig, CommandContext, CommandResponse, LibTextableChannel, LibMember, CommandEnvironment,
 } from '../../';
 
 /**
@@ -90,7 +90,7 @@ export declare class Command extends Base implements CommandData {
      * @returns Return a CommandContext or throw an AxonCommandError.
      * @memberof Command
      */
-    private _process(object: { msg: LibMessage; args: string[]; guildConfig?: GuildConfig; isAdmin?: boolean; isOwner?: boolean; } ): Promise<CommandContext>;
+    private _process(env: CommandEnvironment): Promise<CommandContext>;
     private _preExecute(): void; // Blank function
     /**
      * Execute the command.
@@ -98,7 +98,7 @@ export declare class Command extends Base implements CommandData {
      * Create the CommandContext and returns it.
      * @memberof Command
      */
-    private _execute(message: { msg: LibMessage; args?: string[]; guildConfig?: GuildConfig; isAdmin?: boolean; isOwner?: boolean; } ): Promise<CommandContext>;
+    private _execute(env: CommandEnvironment): Promise<CommandContext>;
     private _postExecute(): void; // Blank function
 
     // External
@@ -106,22 +106,18 @@ export declare class Command extends Base implements CommandData {
      * Override this method in all Command child.
      * Main method - command logic being executed when the command is actually ran.
      *
-     * @param object - An Object with all arguments to use execute
-     * @param object.message - The message Object
-     * @param object.args - The Array of arguments
-     * @param object.guildConfig - The guildConfig if it exists
-     *
+     * @param env - The Command Environment object with all variables needed for the Commandexecution
      * @returns Returns a CommandResponse that will be used to create the CommandContext
      * @memberof Command
      */
-    public execute(object: { msg: LibMessage; args?: string[]; guildConfig?: GuildConfig; } ): Promise<CommandResponse>; // Not implemented
+    public execute(env: CommandEnvironment): Promise<CommandResponse>; // Not implemented
     /**
      * Send help message in the current channel with perm checks done before.
      * Call a custom sendHelp method if it exists, use the default one if it doesn't.
      *
      * @memberof Command
      */
-    public sendHelp(object: { msg: LibMessage; guildConf?: GuildConfig; isAdmin: boolean; isOwner: boolean; } ): Promise<CommandContext>;
+    public sendHelp(env: CommandEnvironment): Promise<CommandContext>;
     /**
      * Send an error message in case of invalid bot permissions, delete it automatically after a delay.
      *

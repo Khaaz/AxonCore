@@ -1,6 +1,6 @@
 import {
     CommandOptions, CommandPermissions, LibTextableChannel, LibMember, LibMessage, Command, LibGuild, LibUser, LIBRARY_TYPES, LOGGER_TYPES,
-    DB_TYPES, Utils, ALogger, ADBProvider, AxonConfig, GuildConfig, User, Member, Message, Channel, Guild, Resolver, Embed,
+    DB_TYPES, Utils, ALogger, ADBProvider, AxonConfig, GuildConfig, User, Member, Message, Channel, Guild, Resolver, Embed, COMMAND_EXECUTION_TYPES,
 } from '../';
 import * as djs from 'discord.js';
 import * as Eris from 'eris';
@@ -891,6 +891,30 @@ interface ErisPresenceGame extends PresenceGame {
     type: 0 | 1 | 2 | 3 | 4;
 }
 
+interface CommandEnvironmentBase {
+    /** The message object from the lib */
+    msg: LibMessage;
+    /** The array of arguments */
+    args: string[];
+    /** The prefix used for this command */
+    prefix: string;
+    command: Command|string;
+    /** The GuildConfig data-structure with all DB saved settings */
+    guildConfig: GuildConfig;
+    /** Execution type: admin, owner, regular */
+    executionType: COMMAND_EXECUTION_TYPES;
+}
+
+interface CommandEnvironmentProps extends CommandEnvironmentBase {
+    /** The full label of the command */
+    command: string;
+}
+
+interface CommandEnvironmentParams extends CommandEnvironmentBase {
+    /** The command object */
+    command: Command;
+}
+
 export {
     ModuleInfo, ModuleData, AxonJSON, GuildJSON, AConfig, AxonConfigRaw, GConfig, GuildConfigRaw, CommandInfo,
     ACommandOptions, CommandPerms, CommandData, AxonTemplate, ListenerInfo, ListenerData, APIAxonMSGCont, AxonMSGCont, AxonMSGOpt, PermissionObject,
@@ -898,4 +922,5 @@ export {
     AxonOptionsSettings, AOptionsSettings, AxonLanguageResponse, Languages, AxonOptionsBase, WebhookConfig, Webhooks, AxonOptionsPrefixes,
     AxonOptionsInfo, AxonOptionsStaff, AxonOptionsExtensions, AxonConfs, AxonParams, Info, AxonInfo, AxonStaffIDs, LibraryInterfaceStructs, PresenceGame,
     RawAttachment, RawUser, WebhookResponse, DjsContent, DjsWebhookContent, DjsPresenceGame, ErisContent, ErisWebhookContent, ErisPresenceGame,
+    CommandEnvironmentProps, CommandEnvironmentParams,
 };
