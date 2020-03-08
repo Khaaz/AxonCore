@@ -67,14 +67,29 @@ class DjsInterface extends LibraryInterface {
         } );
     }
 
+    /**
+     * @param {(msg: Message) => void}
+     * @returns {(msg: Message) => void}
+     * @memberof DjsInterface
+     */
     getMessageCreate(func) {
         return (msg) => func(msg);
     }
 
+    /**
+     * @param {(msg: Message) => void}
+     * @returns {(oldMsg: Message, msg: Message) => void}
+     * @memberof DjsInterface
+     */
     getMessageUpdate(func) {
         return (oldMsg, msg) => func(oldMsg, msg);
     }
 
+    /**
+     * @param {(msg: Message) => void}
+     * @returns {(msg: Message) => void}
+     * @memberof DjsInterface
+     */
     getMessageDelete(func) {
         return (msg) => func(msg);
     }

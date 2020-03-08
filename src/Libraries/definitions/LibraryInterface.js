@@ -91,6 +91,33 @@ class LibraryInterface {
     onceReady(func) {
         throw new NotImplementedException();
     }
+
+    /**
+     * @param {() => void}
+     * @returns {() => void}
+     * @memberof LibraryInterface
+     */
+    getMessageCreate(func) {
+        throw new NotImplementedException();
+    }
+
+    /**
+     * @param {() => void}
+     * @returns {() => void)}
+     * @memberof LibraryInterface
+     */
+    getMessageUpdate(func) {
+        throw new NotImplementedException();
+    }
+
+    /**
+     * @param {() => void}
+     * @returns {() => void}
+     * @memberof LibraryInterface
+     */
+    getMessageDelete(func) {
+        throw new NotImplementedException();
+    }
 }
 
 export default LibraryInterface;
