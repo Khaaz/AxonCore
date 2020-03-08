@@ -1,6 +1,6 @@
 import {
     Base, CommandData, Module, CommandCooldown, CommandInfo, CommandOptions, CommandPermissions, Collection, AxonTemplate,
-    LibraryInterface, LibMessage, GuildConfig, CommandContext, CommandResponse, LibTextableChannel, LibMember, CommandEnvironment,
+    LibraryInterface, CommandContext, CommandResponse, LibTextableChannel, LibMember, CommandEnvironment,
 } from '../../';
 
 /**

@@ -1,5 +1,5 @@
 import {
-    AxonClient, LibraryInterface, LibMessage, GuildConfig, CommandEnvironment, COMMAND_EXECUTION_TYPES,
+    AxonClient, LibraryInterface, LibMessage, GuildConfig, COMMAND_EXECUTION_TYPES,
 } from '../';
 
 /**
