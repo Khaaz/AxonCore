@@ -2,10 +2,10 @@
 
 * **[Setup](index.md)**
   * [AxonClient](AxonClient.md)
-  * [AxonOptions](Structures/AxonOptions.md)
-  * [Base](Structures/Base.md)
-  * [ARegistry](Structures/ARegistry.md)
-  * [GuildConfigCache](Structures/GuildConfigCache.md)
+  * [AxonOptions](Core/AxonOptions.md)
+  * [Base](Core/Base.md)
+  * [ARegistry](Core/ARegistry.md)
+  * [GuildConfigCache](Core/GuildConfigCache.md)
 
 * **[Modules](Modules/index.md)**
   * [Module](Modules/Module.md)
@@ -58,8 +58,8 @@
   * [NotImplementedException](Errors/NotImplementedException.md)
 
 * **[Database](Database/index.md)**
-  * [AxonConfig](Structures/AxonConfig.md)
-  * [GuildConfig](Structures/GuildConfig.md)
+  * [AxonConfig](Core/AxonConfig.md)
+  * [GuildConfig](Core/GuildConfig.md)
   * [ADBProvider](Database/ADBProvider.md)
   * [InMemoryProvider](Database/InMemoryProvider.md)
   * [JsonProvider](Database/JsonProvider.md)

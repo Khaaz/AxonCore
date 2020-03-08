@@ -3,22 +3,22 @@ import EventEmitter from 'events';
 import util from 'util';
 import { performance } from 'perf_hooks';
 
-// Core - Structures
-import Base from './Structures/Base';
+// Core - Core
+import Base from './Core/Base';
 
-import EventManager from './Structures/Event/EventManager';
-import CommandDispatcher from './Structures/CommandDispatcher';
+import EventManager from './Core/Event/EventManager';
+import CommandDispatcher from './Core/CommandDispatcher';
 // Registries
-import ModuleRegistry from './Structures/Stores/ModuleRegistry';
-import CommandRegistry from './Structures/Stores/CommandRegistry';
-import ListenerRegistry from './Structures/Stores/ListenerRegistry';
+import ModuleRegistry from './Core/Stores/ModuleRegistry';
+import CommandRegistry from './Core/Stores/CommandRegistry';
+import ListenerRegistry from './Core/Stores/ListenerRegistry';
 
-import GuildConfigCache from './Structures/Stores/GuildConfigCache';
+import GuildConfigCache from './Core/Stores/GuildConfigCache';
 
 import MessageManager from './Langs/MessageManager';
 
-import ModuleLoader from './Structures/Loaders/ModuleLoader';
-import ClientInitialiser from './Structures/Loaders/ClientInitialiser';
+import ModuleLoader from './Core/Loaders/ModuleLoader';
+import ClientInitialiser from './Core/Loaders/ClientInitialiser';
 
 import ADBProvider from './Database/ADBProvider'; // default ADBProvider
 
@@ -41,15 +41,15 @@ import { WEBHOOK_TYPES, LOG_LEVELS, WEBHOOK_TO_COLOR, DEBUG_FLAGS } from './Util
 
 /**
  * @typedef {import('./AxonOptions').default} AxonOptions
- * @typedef {import('./Structures/Module').default} Module
- * @typedef {import('./Structures/Event/AHandler').default} AHandler
+ * @typedef {import('./Core/Module').default} Module
+ * @typedef {import('./Core/Event/AHandler').default} AHandler
  * @typedef {import('./Utility/Collection').default<AHandler>} HandlerCollection
- * @typedef {import('./Structures/Event/Listener').default} Listener
+ * @typedef {import('./Core/Event/Listener').default} Listener
  * @typedef {import('./Libraries/definitions/Resolver').default} Resolver
- * @typedef {import('./Structures/Command/Command').default} Command
+ * @typedef {import('./Core/Command/Command').default} Command
  * @typedef {import('./Loggers/Context').default} Context
- * @typedef {import('./Structures/DataStructure/GuildConfig').default} GuildConfig
- * @typedef {import('./Structures/Command/CommandEnvironment').default} CommandEnvironment
+ * @typedef {import('./Core/DataStructure/GuildConfig').default} GuildConfig
+ * @typedef {import('./Core/Command/CommandEnvironment').default} CommandEnvironment
  * @typedef {import(./Libraries/definitions/LibraryInterface).default} LibraryInterface
  */
 
@@ -189,7 +189,7 @@ class AxonClient extends EventEmitter {
             this.on('debug', this.onDebug);
         }
 
-        /* Structures */
+        /* Core */
         this.moduleRegistry = new ModuleRegistry(this);
         this.commandRegistry = new CommandRegistry(this);
         this.listenerRegistry = new ListenerRegistry(this);

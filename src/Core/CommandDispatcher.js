@@ -63,7 +63,7 @@ class CommandDispatcher {
 
         const env = new CommandEnvironment( { msg, executionType } );
 
-        /* Extract necessary attribute from lib structures */
+        /* Extract necessary attribute from lib Core */
         const author = this.library.message.getAuthor(msg);
         const guild = this.library.message.getGuild(msg);
 

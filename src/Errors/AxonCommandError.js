@@ -1,5 +1,5 @@
 /**
- * @typedef {import('../Structures/Command/CommandContext').default} CommandContext
+ * @typedef {import('../Core/Command/CommandContext').default} CommandContext
  */
 
 /**

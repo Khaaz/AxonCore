@@ -1,10 +1,10 @@
 import ADBProvider from './ADBProvider';
-import AxonConfig from '../Structures/DataStructure/AxonConfig';
-import GuildConfig from '../Structures/DataStructure/GuildConfig';
+import AxonConfig from '../Core/DataStructure/AxonConfig';
+import GuildConfig from '../Core/DataStructure/GuildConfig';
 
 /**
  * @typedef {String|Boolean|Object.<string, any>|Array<any>|Number|Date} updateDBVal
- * @typedef {import('../Structures/DataStructure/AxonConfig')} AxonConfig
+ * @typedef {import('../Core/DataStructure/AxonConfig')} AxonConfig
  * @typedef {{
  * id: String, prefix: String, createdAt: Date, updatedAt: Date, bannedUsers: Array<String>, bannedGuilds: Array<String>
  * }} AxonConfigRaw

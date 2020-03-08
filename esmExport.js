@@ -4,30 +4,30 @@ export { AxonClient };
 
 export { default as AxonOptions } from './src/AxonOptions';
 
-// == Structures ==
-export { default as Base } from './src/Structures/Base';
+// == Core ==
+export { default as Base } from './src/Core/Base';
 // Module
-export { default as Module } from './src/Structures/Module';
+export { default as Module } from './src/Core/Module';
 // Command
-export { default as Command } from './src/Structures/Command/Command';
-export { default as CommandPermissions } from './src/Structures/Command/CommandPermissions';
-export { default as CommandOptions } from './src/Structures/Command/CommandOptions';
-export { default as CommandResponse } from './src/Structures/Command/CommandResponse';
-export { default as CommandContext } from './src/Structures/Command/CommandContext';
+export { default as Command } from './src/Core/Command/Command';
+export { default as CommandPermissions } from './src/Core/Command/CommandPermissions';
+export { default as CommandOptions } from './src/Core/Command/CommandOptions';
+export { default as CommandResponse } from './src/Core/Command/CommandResponse';
+export { default as CommandContext } from './src/Core/Command/CommandContext';
 // Listener
-export { default as EventManager } from './src/Structures/Event/EventManager';
-export { default as Listener } from './src/Structures/Event/Listener';
+export { default as EventManager } from './src/Core/Event/EventManager';
+export { default as Listener } from './src/Core/Event/Listener';
 
 // Stores
-export { default as ARegistry } from './src/Structures/Stores/ARegistry';
-export { default as CommandRegistry } from './src/Structures/Stores/CommandRegistry';
-export { default as ListenerRegistry } from './src/Structures/Stores/ListenerRegistry';
-export { default as ModuleRegistry } from './src/Structures/Stores/ModuleRegistry';
-export { default as GuildConfigCache } from './src/Structures/Stores/GuildConfigCache';
+export { default as ARegistry } from './src/Core/Stores/ARegistry';
+export { default as CommandRegistry } from './src/Core/Stores/CommandRegistry';
+export { default as ListenerRegistry } from './src/Core/Stores/ListenerRegistry';
+export { default as ModuleRegistry } from './src/Core/Stores/ModuleRegistry';
+export { default as GuildConfigCache } from './src/Core/Stores/GuildConfigCache';
 
 // Models
-export { default as AxonConfig } from './src/Structures/DataStructure/AxonConfig';
-export { default as GuildConfig } from './src/Structures/DataStructure/GuildConfig';
+export { default as AxonConfig } from './src/Core/DataStructure/AxonConfig';
+export { default as GuildConfig } from './src/Core/DataStructure/GuildConfig';
 
 // == Hooks ==
 
