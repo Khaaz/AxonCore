@@ -51,7 +51,8 @@ class Eval extends Command {
         } );
     }
 
-    async execute( { msg, args, guildConfig } ) {
+    async execute(env) {
+        const { msg, args, guildConfig } = env;
         let evalString;
         try {
             // eslint-disable-next-line no-eval
