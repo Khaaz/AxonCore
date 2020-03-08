@@ -14,6 +14,7 @@ export { default as CommandPermissions } from './src/Core/Command/CommandPermiss
 export { default as CommandOptions } from './src/Core/Command/CommandOptions';
 export { default as CommandResponse } from './src/Core/Command/CommandResponse';
 export { default as CommandContext } from './src/Core/Command/CommandContext';
+export { default as CommandEnvironment } from './src/Core/Command/CommandEnvironment';
 // Listener
 export { default as EventManager } from './src/Core/Event/EventManager';
 export { default as Listener } from './src/Core/Event/Listener';
@@ -60,6 +61,7 @@ export { default as Resolver } from './src/Libraries/definitions/Resolver';
 // Discord
 export { default as Embed } from './src/Utility/Discord/Embed';
 export { default as Prompt } from './src/Utility/Discord/Prompt';
+export { default as Collector } from './src/Utility/Discord/Collectors/Collector';
 export { default as MessageCollector } from './src/Utility/Discord/Collectors/MessageCollector';
 export { default as ReactionCollector } from './src/Utility/Discord/Collectors/ReactionCollector';
 // External
