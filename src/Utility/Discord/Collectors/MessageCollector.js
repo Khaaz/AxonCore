@@ -91,7 +91,7 @@ class MessageCollector extends Collector {
      * @memberof MessageCollector
      */
     getCollectors(message) {
-        if (message.author.id === this.bot.user.id) {
+        if (message.author.id === this.lib.client.getID() ) {
             return [];
         }
 
