@@ -66,6 +66,18 @@ class DjsInterface extends LibraryInterface {
             func();
         } );
     }
+
+    getMessageCreate(func) {
+        return (msg) => func(msg);
+    }
+
+    getMessageUpdate(func) {
+        return (oldMsg, msg) => func(oldMsg, msg);
+    }
+
+    getMessageDelete(func) {
+        return (msg) => func(msg);
+    }
 }
 
 export default DjsInterface;

@@ -64,6 +64,18 @@ class ErisInterface extends LibraryInterface {
             func();
         } );
     }
+
+    getMessageCreate(func) {
+        return (msg) => func(msg);
+    }
+
+    getMessageUpdate(func) {
+        return (msg, oldMsg) => func(oldMsg, msg);
+    }
+
+    getMessageDelete(func) {
+        return (msg) => func(msg);
+    }
 }
 
 export default ErisInterface;
