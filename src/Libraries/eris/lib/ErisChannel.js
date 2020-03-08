@@ -12,7 +12,7 @@ import Channel from '../../definitions/Channel';
  * @typedef {import('eris').TextableChannel} channel
  * @typedef {import('eris').Message} Message
  * @typedef {{
- * content?: String, tts?: Boolean, disableEveryone?: Boolean, embed?: Embed|EmbedOptions, file: MessageFile|Array<MessageFile>
+ * content?: String, tts?: Boolean, allowedMentions?: Object, embed?: Embed|EmbedOptions, file: MessageFile|Array<MessageFile>
  * }} ErisContent
  * @typedef {import('../../../Utility/Discord/Embed').default} Embed
  * @typedef {import('eris').EmbedOptions} EmbedOptions
