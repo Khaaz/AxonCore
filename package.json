@@ -1,7 +1,7 @@
 {
   "name": "axoncore",
   "version": "2.0.0",
-  "description": "Universal Bot Framework for Eris and Discordjs. Fully featured Client, Command and Event handler with built in DB.",
+  "description": "The best fully featured discord bot framework. Universal Client, Command and Event handler.",
   "author": "KhaaZ#0001",
   "link": "https://github.com/Khaazz/AxonCore",
   "license": "MIT",
@@ -58,14 +58,18 @@
   },
   "homepage": "https://github.com/Khaazz/AxonCore#readme",
   "keywords": [
-    "bot",
     "discord",
+    "bot",
     "framework",
+    "client",
     "eris",
     "discord.js",
     "discordjs",
+    "detritus",
+    "detritus.js",
     "core",
     "handler",
+    "commandClient",
     "commandHandler",
     "commandFramework"
   ]

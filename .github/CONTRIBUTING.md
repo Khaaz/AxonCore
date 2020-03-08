@@ -28,12 +28,12 @@ Here the commit types used in this project:
 - fix(file): fix, **PATCH**
 - refactor(file): improvement, implementation change without API change, **PATCH**
 - perf(file): performance improvement (same as refactor) **PATCH**, **MINOR**
-- feat(file): change, addition (new feature), minor API change, **MINOR**
-- BREAKING(file): big API change **MAJOR**
+- feat(file): addition (new feature) or change with no API change, **MINOR**
+- BREAKING(file): addition or change introducing API change **MAJOR**
 - docs(file): documentation only change
-- chore: CI and internal / dev tool changes
-- typings: typings improvement or change **PATCH / MINOR**
-- style: code formatting only change
+- chorefile(): CI and internal / dev tool changes
+- typings(file): typings improvement or change **PATCH / MINOR**
+- style(file): code formatting and style only changes
 
 Adding `(file)` is optional and is used to specify the file changed.
 

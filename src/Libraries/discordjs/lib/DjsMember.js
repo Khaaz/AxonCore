@@ -14,7 +14,7 @@ class DjsMember extends Member {
      * @memberof DjsMember
      */
     getRoles(member) {
-        return [...member.roles.keys()];
+        return [...member.roles.cache.keys()];
     }
 
     /**
@@ -23,7 +23,7 @@ class DjsMember extends Member {
      * @memberof DjsMember
      */
     getRolesObject(member) {
-        return [...member.roles.values()];
+        return [...member.roles.cache.values()];
     }
 
     /**

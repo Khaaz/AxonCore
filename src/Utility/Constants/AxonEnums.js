@@ -382,6 +382,27 @@ export const TYPE_ERRORS = {
     UNKNOWN: 'Unexpected error',
 };
 
+/**
+ * @type {{
+ * INFO: 1
+ * GOOD: 2
+ * BAD: 4
+ * INIT: 8
+ * COMMAND: 16
+ * LISTENER: 32
+ * }}
+ * @readonly
+ * @enum {1|2|4|8|16|32}
+ */
+export const DEBUG_FLAGS = {
+    INFO: 1 << 0,
+    GOOD: 1 << 1,
+    BAD: 1 << 2,
+    INIT: 1 << 3,
+    COMMAND: 1 << 4,
+    LISTENER: 1 << 5,
+};
+
 export default {
     HTTP_CODE,
     HTTP_MESSAGES,

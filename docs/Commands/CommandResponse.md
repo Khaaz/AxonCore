@@ -52,7 +52,7 @@ Returns the Command Response (synchronously)
 
 #### new CommandResponse([data])
 Creates an instance of CommandResponse.
-Build the commandresponse from all options given in parameters
+Build the CommandResponse from all options given in parameters
 
 
 | Param | Type | Default |
@@ -60,5 +60,5 @@ Build the commandresponse from all options given in parameters
 | [data] | <code>Object</code> | <code>{}</code> | 
 | [data.success] | <code>Boolean</code> | <code>true</code> | 
 | [data.triggerCooldown] | <code>Boolean</code> | <code>true</code> | 
-| [data.error] | <code>Object</code> \| <code>String</code> | <code></code> | 
+| [data.error] | <code>Error</code> | <code></code> | 
 

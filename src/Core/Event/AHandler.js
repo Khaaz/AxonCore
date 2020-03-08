@@ -71,7 +71,7 @@ class AHandler {
                 (guildConfig.isModuleDisabled(listener.module) && !listener.module.serverBypass) || (guildConfig.isListenerDisabled(listener) && !listener.serverBypass) ) ) {
                 continue;
             }
-            this._axon._execListener(listener, guildConfig, ...args);
+            this._axon.executor.listener(listener, guildConfig, ...args);
         }
     }
 

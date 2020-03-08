@@ -1,6 +1,6 @@
 import LRUCache from './../../Utility/External/LRUCache';
 
-import GuildConfig from '../DataStructure/GuildConfig';
+import GuildConfig from '../Models/GuildConfig';
 
 import AxonError from '../../Errors/AxonError';
 

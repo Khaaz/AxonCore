@@ -11,8 +11,8 @@ PR description/overview (changes introduced, implementation justification if nee
 
 ## **Semantic versioning classification**
 
-- [ ] This PR introduces *BREAKING* changes.
-- [ ] This PR adds new features, improve the code and implies minimal changes.
-- [ ] This PR fixes a bug, if needed it also references the relevant issue or documentation.
-- [ ] This PR improve performance or code refactor without API changes.
-- [ ] This PR **only** includes non-code changes (documentation, CI, tools...).
+- [ ] MAJOR: This PR introduces *BREAKING* changes (direct API change).
+- [ ] MINOR: This PR adds new features, improve the code and/or implies minimal API changes.
+- [ ] PATCH: This PR fixes a bug, if needed it also references the relevant issue or documentation.
+- [ ] PATCH: This PR improve performance or code refactor without API changes.
+- [ ] PATCH: This PR **only** includes non-code changes (documentation, style, CI, tools...).

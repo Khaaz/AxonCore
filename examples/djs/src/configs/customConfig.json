@@ -1,7 +1,7 @@
 {
     "info": {
         "name": "Axon",
-        "description": "AxonCore - Bot client, core module (eris lib)",
+        "description": "AxonCore - Bot client, core module (discordjs lib)",
         "version": "1.0.0",
         "library": "eris"
     },

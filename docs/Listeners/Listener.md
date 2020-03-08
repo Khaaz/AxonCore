@@ -11,12 +11,12 @@
 | _module | <code>Module</code> |  | Module instance |
 | eventName | <code>String</code> |  | The discord event name |
 | label | <code>String</code> |  | The listener name |
-| load | <code>Boolean</code> |  | Whether to load this event on startup or not |
+| load | <code>Boolean</code> |  | Whether to load this event on start up or not |
 | [enabled] | <code>Boolean</code> | <code>module.enabled</code> | Whether the event is enabled or not |
 | [serverBypass] | <code>Boolean</code> | <code>module.serverBypass</code> | Can the event be disabled? |
-| infos | <code>Object</code> |  | Default infos about the event |
-| infos.owners | <code>Array</code> |  | Listener owners/authors |
-| infos.description | <code>String</code> |  | Listener description |
+| info | <code>Object</code> |  | Default info about the event |
+| info.owners | <code>Array.&lt;String&gt;</code> |  | Listener owners/authors |
+| info.description | <code>String</code> |  | Listener description |
 
 
 * [Listener](#Listener) ⇐ <code>Base</code>
@@ -24,7 +24,7 @@
     * _instance_
         * [.module](#Listener+module) : <code>Module</code>
         * [._execute(guildConfig, ...args)](#Listener+_execute) ⇒ <code>Promise</code>
-        * [.execute(args, guildConfig)](#Listener+execute) ⇒ <code>Promise</code>
+        * [.execute(args, [guildConfig])](#Listener+execute) ⇒ <code>Promise</code>
     * _static_
         * [.Listener](#Listener.Listener)
             * [new Listener(module, [data])](#new_Listener.Listener_new)
@@ -51,20 +51,20 @@ Promisify the return execute return to prevent promise issue
 
 | Param | Type | Description |
 | --- | --- | --- |
-| guildConfig | <code>Object</code> | the guildConfig or undefined if not a guild event |
-| ...args | <code>Array</code> | Array of the events arguments |
+| guildConfig | <code>GuildConfig</code> | the guildConfig or undefined if not a guild event |
+| ...args | <code>any</code> | Array of the events arguments |
 
 <a name="Listener+execute"></a>
 
-### listener.execute(args, guildConfig) ⇒ <code>Promise</code>
-Main execute function, need to be overriden in child.
+### listener.execute(args, [guildConfig]) ⇒ <code>Promise</code>
+Main execute function, need to be overridden in child.
 
 **Kind**: instance method of [<code>Listener</code>](#Listener)  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| args | <code>Array</code> | Array of the events arguments (as separate parameters) |
-| guildConfig | <code>GuildConfig</code> | The guildConfig or undefined if not a guild event |
+| args | <code>Array.&lt;any&gt;</code> | Array of the events arguments (as separate parameters) |
+| [guildConfig] | <code>GuildConfig</code> | The guildConfig or undefined if not a guild event |
 
 <a name="Listener.Listener"></a>
 
@@ -85,5 +85,7 @@ Creates an Listener instance.
 | [data.load] | <code>Boolean</code> |  |  |
 | [data.enabled] | <code>Boolean</code> |  |  |
 | [data.serverBypass] | <code>Boolean</code> |  |  |
-| [data.infos] | <code>Object</code> |  |  |
+| [data.info] | <code>Object</code> |  |  |
+| [data.info.owners] | <code>Array.&lt;String&gt;</code> |  |  |
+| [data.info.description] | <code>String</code> |  |  |
 

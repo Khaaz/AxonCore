@@ -1,3 +1,17 @@
+## Classes
+
+<dl>
+<dt><a href="#Base">Base</a></dt>
+<dd></dd>
+</dl>
+
+## Typedefs
+
+<dl>
+<dt><a href="#Ctx">Ctx</a> : <code>Object</code></dt>
+<dd></dd>
+</dl>
+
 <a name="Base"></a>
 
 ## Base
@@ -15,18 +29,18 @@
     * _instance_
         * [.axon](#Base+axon) : <code>AxonClient</code>
         * [.bot](#Base+bot) : <code>Client</code>
-        * [.logger](#Base+logger) : <code>Logger</code>
+        * [.logger](#Base+logger) : <code>ALogger</code>
         * [.Resolver](#Base+Resolver) : <code>Resolver</code>
         * [.axonUtils](#Base+axonUtils) : <code>AxonUtils</code>
         * [.utils](#Base+utils) : <code>Utils</code>
         * [.l](#Base+l) : <code>MessageManager</code>
-        * [.getModule(module)](#Base+getModule) ⇒ <code>Module</code> \| <code>NULL</code>
-        * [.getCommand(fullLabel)](#Base+getCommand) ⇒ <code>Command</code> \| <code>NULL</code>
+        * [.getModule(module)](#Base+getModule) ⇒ <code>Module</code> \| <code>null</code>
+        * [.getCommand(fullLabel)](#Base+getCommand) ⇒ <code>Command</code> \| <code>null</code>
         * [.sendDM(user, content, [options])](#Base+sendDM) ⇒ <code>Promise.&lt;?Message&gt;</code>
         * [.sendMessage(channel, content, [options])](#Base+sendMessage) ⇒ <code>Promise.&lt;?Message&gt;</code>
         * [.editMessage(message, content)](#Base+editMessage) ⇒ <code>Promise.&lt;?Message&gt;</code>
         * [.sendSuccess(channel, content, [options])](#Base+sendSuccess) ⇒ <code>Promise.&lt;CommandResponse&gt;</code>
-        * [.sendError(content, [options])](#Base+sendError) ⇒ <code>Promise.&lt;CommandResponse&gt;</code>
+        * [.sendError(channel, content, [options])](#Base+sendError) ⇒ <code>Promise.&lt;CommandResponse&gt;</code>
         * [.error(msg, err, type, errMsg)](#Base+error) ⇒ <code>Promise.&lt;CommandResponse&gt;</code>
         * [.toString()](#Base+toString) ⇒ <code>String</code>
         * [.toJSON()](#Base+toJSON) ⇒ <code>Object</code>
@@ -55,7 +69,7 @@ Returns the bot client instance
 **Read only**: true  
 <a name="Base+logger"></a>
 
-### base.logger : <code>Logger</code>
+### base.logger : <code>ALogger</code>
 Returns the Logger instance
 
 **Kind**: instance property of [<code>Base</code>](#Base)  
@@ -90,7 +104,7 @@ Returns the MessageManager instance
 **Read only**: true  
 <a name="Base+getModule"></a>
 
-### base.getModule(module) ⇒ <code>Module</code> \| <code>NULL</code>
+### base.getModule(module) ⇒ <code>Module</code> \| <code>null</code>
 Get a module from AxonClient with the label
 
 **Kind**: instance method of [<code>Base</code>](#Base)  
@@ -101,7 +115,7 @@ Get a module from AxonClient with the label
 
 <a name="Base+getCommand"></a>
 
-### base.getCommand(fullLabel) ⇒ <code>Command</code> \| <code>NULL</code>
+### base.getCommand(fullLabel) ⇒ <code>Command</code> \| <code>null</code>
 Get a command/subcommand from AxonClient with the full label
 
 **Kind**: instance method of [<code>Base</code>](#Base)  
@@ -122,11 +136,11 @@ Reject promise if not
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | user | <code>User</code> |  | User object to get the DM channel |
-| content | <code>Object/String</code> |  | String or object (embed) |
+| content | <code>String</code> \| <code>MessageObject</code> |  | String or object (embed) |
 | [options] | <code>Object</code> | <code>{}</code> | Options { disableEveryone: Boolean, delete: Boolean, delay: Number } |
 | [options.disableEveryone] | <code>Boolean</code> | <code>true</code> | Whether to allow mentioning everyone or not |
-| [options.delete] | <code>Number</code> | <code>false</code> | Whether to deletethe message or not |
-| [options.delay] | <code>Boolean</code> | <code></code> | Delay after which the message will be deleted |
+| [options.delete] | <code>Boolean</code> | <code>false</code> | Whether to delete the message or not |
+| [options.delay] | <code>Number</code> | <code></code> | Delay after which the message will be deleted |
 
 <a name="Base+sendMessage"></a>
 
@@ -141,11 +155,11 @@ Doesn't support file
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | channel | <code>Channel</code> |  | The channel Object |
-| content | <code>Object/String</code> |  | Message content, String or Embed Object |
+| content | <code>String</code> \| <code>MessageObject</code> |  | Message content, String or Embed Object |
 | [options] | <code>Object</code> | <code>{}</code> | Options { disableEveryone: Boolean, delete: Boolean, delay: Number } |
 | [options.disableEveryone] | <code>Boolean</code> | <code>true</code> | Whether to allow mentioning everyone or not |
-| [options.delete] | <code>Number</code> | <code>false</code> | Whether to deletethe message or not |
-| [options.delay] | <code>Boolean</code> | <code></code> | Delay after which the message will be deleted |
+| [options.delete] | <code>Boolean</code> | <code>false</code> | Whether to delete the message or not |
+| [options.delay] | <code>Number</code> | <code></code> | Delay after which the message will be deleted |
 
 <a name="Base+editMessage"></a>
 
@@ -159,12 +173,12 @@ Check for bot permissions + message embed/length
 | Param | Type | Description |
 | --- | --- | --- |
 | message | <code>Message</code> | The message object to edit |
-| content | <code>Object/String</code> | Object (embed) or String |
+| content | <code>MessageObject</code> | Object (embed) or String |
 
 <a name="Base+sendSuccess"></a>
 
 ### base.sendSuccess(channel, content, [options]) ⇒ <code>Promise.&lt;CommandResponse&gt;</code>
-Send a success message. If the content is a string, suffixe the success emote to the content.
+Send a success message. If the content is a string, suffix the success emote to the content.
 Check for sendMessage perms.
 Await for sendMessage to throw correctly potential errors.
 
@@ -174,33 +188,33 @@ Await for sendMessage to throw correctly potential errors.
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | channel | <code>Channel</code> |  | The channel Object |
-| content | <code>Object</code> \| <code>String</code> |  | Success message content |
+| content | <code>String</code> \| <code>MessageObject</code> |  | Success message content |
 | [options] | <code>Object</code> | <code>{}</code> | Additional options |
 | [options.disableEveryone] | <code>Boolean</code> | <code>true</code> | Whether to allow mentioning everyone or not |
-| [options.delete] | <code>Boolean</code> | <code>false</code> | Whether to deletethe message or not |
+| [options.delete] | <code>Boolean</code> | <code>false</code> | Whether to delete the message or not |
 | [options.delay] | <code>Number</code> | <code></code> | Delay after which the message will be deleted |
-| [options.triggerCooldown] | <code>Boolean</code> | <code>true</code> | Whether the command shoudl trigger cooldown or not |
+| [options.triggerCooldown] | <code>Boolean</code> | <code>true</code> | Whether the command should trigger cooldown or not |
 
 <a name="Base+sendError"></a>
 
-### base.sendError(content, [options]) ⇒ <code>Promise.&lt;CommandResponse&gt;</code>
-Send an error message. If the content is a string, suffixe the error emote to the content.
+### base.sendError(channel, content, [options]) ⇒ <code>Promise.&lt;CommandResponse&gt;</code>
+Send an error message. If the content is a string, suffix the error emote to the content.
 Check for sendMessage perms.
 Await for sendMessage to throw correctly potential errors.
 
 **Kind**: instance method of [<code>Base</code>](#Base)  
 **Returns**: <code>Promise.&lt;CommandResponse&gt;</code> - The non successful Command Response  
-**@param**: <code>Channel</code> channel - The channel Object  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| content | <code>Object</code> \| <code>String</code> |  | Success message content |
+| channel | <code>Channel</code> |  | The channel Object |
+| content | <code>String</code> \| <code>MessageObject</code> |  | Success message content |
 | [options] | <code>Object</code> | <code>{}</code> | Additional options |
 | [options.disableEveryone] | <code>Boolean</code> | <code>true</code> | Whether to allow mentioning everyone or not |
-| [options.delete] | <code>Boolean</code> | <code>false</code> | Whether to deletethe message or not |
+| [options.delete] | <code>Boolean</code> | <code>false</code> | Whether to delete the message or not |
 | [options.delay] | <code>Number</code> | <code></code> | Delay after which the message will be deleted |
-| [options.triggerCooldown] | <code>Boolean</code> | <code>false</code> | Whether the command shoudl trigger cooldown or not |
-| [options.error] | <code>Object</code> \| <code>String</code> | <code></code> | Whether the command shoudl trigger cooldown or not |
+| [options.triggerCooldown] | <code>Boolean</code> | <code>false</code> | Whether the command should trigger cooldown or not |
+| [options.error] | <code>Boolean</code> | <code></code> | Whether the command should trigger cooldown or not |
 
 <a name="Base+error"></a>
 
@@ -246,3 +260,7 @@ Creates an instance of Base.
 | --- | --- |
 | axonClient | <code>AxonClient</code> | 
 
+<a name="Ctx"></a>
+
+## Ctx : <code>Object</code>
+**Kind**: global typedef  

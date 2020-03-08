@@ -5,7 +5,7 @@ import AxonError from '../../Errors/AxonError';
 
 /**
  * @typedef {import('../../Langs/MessageManager').default} MessageManager
- * @typedef {import('../DataStructure/GuildConfig').default} GuildConfig
+ * @typedef {import('../Models/GuildConfig').default} GuildConfig
  */
 
 /**

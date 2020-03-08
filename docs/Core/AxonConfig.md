@@ -18,6 +18,8 @@
 * [AxonConfig](#AxonConfig)
     * [new AxonConfig()](#new_AxonConfig_new)
     * _instance_
+        * [.bannedUsers](#AxonConfig+bannedUsers) : <code>Array.&lt;String&gt;</code>
+        * [.bannedGuilds](#AxonConfig+bannedGuilds) : <code>Array.&lt;String&gt;</code>
         * [.isBlacklistedUser(userID)](#AxonConfig+isBlacklistedUser) ⇒ <code>Boolean</code>
         * [.isBlacklistedGuild(guildID)](#AxonConfig+isBlacklistedGuild) ⇒ <code>Boolean</code>
         * [.updateBlacklistUser(userID, [boolean])](#AxonConfig+updateBlacklistUser) ⇒ <code>Promise.&lt;(AxonConfig\|null)&gt;</code>
@@ -31,8 +33,16 @@
 ### new AxonConfig()
 Default AxonConfig data structure used in AxonCore.
 This class can be extended and changed as you want.
-All methods flagged with "is used internally" can be overriden but need to keep the same name.
+All methods flagged with "is used internally" can be overridden but need to keep the same name.
 
+<a name="AxonConfig+bannedUsers"></a>
+
+### axonConfig.bannedUsers : <code>Array.&lt;String&gt;</code>
+**Kind**: instance property of [<code>AxonConfig</code>](#AxonConfig)  
+<a name="AxonConfig+bannedGuilds"></a>
+
+### axonConfig.bannedGuilds : <code>Array.&lt;String&gt;</code>
+**Kind**: instance property of [<code>AxonConfig</code>](#AxonConfig)  
 <a name="AxonConfig+isBlacklistedUser"></a>
 
 ### axonConfig.isBlacklistedUser(userID) ⇒ <code>Boolean</code>
@@ -100,5 +110,5 @@ Creates an instance of AxonConfig.
 | Param | Type | Description |
 | --- | --- | --- |
 | axon | <code>AxonClient</code> |  |
-| values | <code>Object</code> | DB values for the current Guild |
+| values | <code>AConfig</code> | DB values for the current Guild |
 

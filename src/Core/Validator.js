@@ -1,4 +1,5 @@
 import { EMBED_LIMITS } from '../Utility/Constants/DiscordEnums';
+import { DEBUG_FLAGS } from '../Utility/Constants/AxonEnums';
 
 import CommandPermissions from './Command/CommandPermissions';
 import CommandOptions from './Command/CommandOptions';
@@ -17,6 +18,10 @@ import AxonError from '../Errors/AxonError';
  * @typedef {{ content?: String, embed?: Embed|EmbedBase }} MessageObject
  */
 
+function debug(client, flag, content) {
+    client.emit('debug', DEBUG_FLAGS.INIT | flag, content);
+}
+
 /**
  * Static Class that makes sure objects are formatted correctly.
  *
@@ -34,42 +39,42 @@ class Validator {
 
         if (!(module.options instanceof CommandOptions) ) {
             module.options = new CommandOptions(module);
-            module.axon.emit('debug', `[${module.label}] - Invalid command options... using default.`);
+            debug(module.axon, DEBUG_FLAGS.BAD, `[${module.label}] - Invalid command options... using default.`);
         } else {
-            module.axon.emit('debug', `[${module.label}] - Valid command options.`);
+            debug(module.axon, DEBUG_FLAGS.GOOD, `[${module.label}] - Valid command options.`);
         }
 
         if (!(module.permissions instanceof CommandPermissions) ) {
             module.permissions = new CommandPermissions(module);
-            module.axon.emit('debug', `[${module.label}] - Invalid command permissions... using default.`);
+            debug(module.axon, DEBUG_FLAGS.BAD, `[${module.label}] - Invalid command permissions... using default.`);
         } else {
-            module.axon.emit('debug', `[${module.label}] - Valid command permissions.`);
+            debug(module.axon, DEBUG_FLAGS.GOOD, `[${module.label}] - Valid command permissions.`);
         }
 
         /* Validate Eris permissions */
         for (const perm of module.permissions.bot) {
             if (!this.checkValidPermissionName(PERMS, perm) ) {
-                module.axon.emit('debug', `[${module.label}] - Invalid permissions name (${perm}) in Module.permissions.bot.`);
+                debug(module.axon, DEBUG_FLAGS.BAD, `[${module.label}] - Invalid permissions name (${perm}) in Module.permissions.bot.`);
                 return false;
             }
         }
-        module.axon.emit('debug', `[${module.label}] - Correct permissions name in Module.permissions.bot.`);
+        debug(module.axon, DEBUG_FLAGS.GOOD, `[${module.label}] - Correct permissions name in Module.permissions.bot.`);
 
         for (const perm of module.permissions.author.needed) {
             if (!this.checkValidPermissionName(PERMS, perm) ) {
-                module.axon.emit('debug', `[${module.label}] - Invalid permissions name (${perm}) in Module.permissions.author.needed.`);
+                debug(module.axon, DEBUG_FLAGS.BAD, `[${module.label}] - Invalid permissions name (${perm}) in Module.permissions.author.needed.`);
                 return false;
             }
         }
-        module.axon.emit('debug', `[${module.label}] - Correct permissions name in Module.permissions.author.needed.`);
+        debug(module.axon, DEBUG_FLAGS.GOOD, `[${module.label}] - Correct permissions name in Module.permissions.author.needed.`);
 
         for (const perm of module.permissions.author.bypass) {
             if (!this.checkValidPermissionName(PERMS, perm) ) {
-                module.axon.emit('debug', `[${module.label}] - Invalid permissions name (${perm}) in Module.permissions.author.bypass.`);
+                debug(module.axon, DEBUG_FLAGS.BAD, `[${module.label}] - Invalid permissions name (${perm}) in Module.permissions.author.bypass.`);
                 return false;
             }
         }
-        module.axon.emit('debug', `[${module.label}] - Correct permissions name in Module.permissions.author.bypass.`);
+        debug(module.axon, DEBUG_FLAGS.GOOD, `[${module.label}] - Correct permissions name in Module.permissions.author.bypass.`);
 
         return true;
     }
@@ -89,61 +94,61 @@ class Validator {
         /* Correct: No aliases, or aliases does not include the label. */
         if (!command.aliases || command.aliases.length === 0) {
             command.aliases = [command.label];
-            command.axon.emit('debug', `[${command.module.label}(${command.fullLabel})] - No aliases... adding default.`);
+            debug(command.axon, DEBUG_FLAGS.BAD, `[${command.module.label}(${command.fullLabel})] - No aliases... adding default.`);
         } else if (Array.isArray(command.aliases) && !command.aliases.includes(command.fullLabel) ) {
             command.aliases.push(command.label);
-            command.axon.emit('debug', `[${command.module.label}(${command.fullLabel})] - Missing default alias... adding.`);
+            debug(command.axon, DEBUG_FLAGS.BAD, `[${command.module.label}(${command.fullLabel})] - Missing default alias... adding.`);
         } else if (!Array.isArray(command.aliases) && command.aliases !== command.label) {
             command.aliases = [command.aliases, command.label];
-            command.axon.emit('debug', `[${command.module.label}(${command.fullLabel})] - Aliases not an array... fixing.`);
+            debug(command.axon, DEBUG_FLAGS.BAD, `[${command.module.label}(${command.fullLabel})] - Aliases not an array... fixing.`);
         }
 
         /* Correct commands properties */
         if (!(command._cooldown instanceof CommandCooldown) ) {
             command._cooldown = new CommandCooldown(command);
-            command.axon.emit('debug', `[${command.module.label}(${command.fullLabel})] - Invalid command cooldown... recreating.`);
+            debug(command.axon, DEBUG_FLAGS.BAD, `[${command.module.label}(${command.fullLabel})] - Invalid command cooldown... recreating.`);
         } else {
-            command.axon.emit('debug', `[${command.module.label}(${command.fullLabel})] - Valid command cooldown.`);
+            debug(command.axon, DEBUG_FLAGS.GOOD, `[${command.module.label}(${command.fullLabel})] - Valid command cooldown.`);
         }
     
         if (!(command.options instanceof CommandOptions) ) {
             command.options = new CommandOptions(command);
-            command.axon.emit('debug', `[${command.module.label}(${command.fullLabel})] - Invalid command options... using default.`);
+            debug(command.axon, DEBUG_FLAGS.BAD, `[${command.module.label}(${command.fullLabel})] - Invalid command options... using default.`);
         } else {
-            command.axon.emit('debug', `[${command.module.label}(${command.fullLabel})] - Valid command options.`);
+            debug(command.axon, DEBUG_FLAGS.GOOD, `[${command.module.label}(${command.fullLabel})] - Valid command options.`);
         }
 
         if (!(command.permissions instanceof CommandPermissions) ) {
             command.permissions = new CommandPermissions(command);
-            command.axon.emit('debug', `[${command.module.label}(${command.fullLabel})] - Invalid command permissions... using default.`);
+            debug(command.axon, DEBUG_FLAGS.BAD, `[${command.module.label}(${command.fullLabel})] - Invalid command permissions... using default.`);
         } else {
-            command.axon.emit('debug', `[${command.module.label}(${command.fullLabel})] - Valid command permissions.`);
+            debug(command.axon, DEBUG_FLAGS.GOOD, `[${command.module.label}(${command.fullLabel})] - Valid command permissions.`);
         }
 
         /* Validate Library permissions */
         for (const perm of command.permissions.bot) {
             if (!this.checkValidPermissionName(PERMS, perm) ) {
-                command.axon.emit('debug', `[${command.module.label}(${command.fullLabel})] - Invalid permissions name (${perm}) in Command.permissions.bot.`);
+                debug(command.axon, DEBUG_FLAGS.BAD, `[${command.module.label}(${command.fullLabel})] - Invalid permissions name (${perm}) in Command.permissions.bot.`);
                 return false;
             }
         }
-        command.axon.emit('debug', `[${command.module.label}(${command.fullLabel})] - Correct permissions name in Command.permissions.bot.`);
+        debug(command.axon, DEBUG_FLAGS.GOOD, `[${command.module.label}(${command.fullLabel})] - Correct permissions name in Command.permissions.bot.`);
 
         for (const perm of command.permissions.author.needed) {
             if (!this.checkValidPermissionName(PERMS, perm) ) {
-                command.axon.emit('debug', `[${command.module.label}(${command.fullLabel})] - Invalid permissions name (${perm}) in Command.permissions.author.needed.`);
+                debug(command.axon, DEBUG_FLAGS.BAD, `[${command.module.label}(${command.fullLabel})] - Invalid permissions name (${perm}) in Command.permissions.author.needed.`);
                 return false;
             }
         }
-        command.axon.emit('debug', `[${command.module.label}(${command.fullLabel})] - Correct permissions name in Command.permissions.author.needed.`);
+        debug(command.axon, DEBUG_FLAGS.GOOD, `[${command.module.label}(${command.fullLabel})] - Correct permissions name in Command.permissions.author.needed.`);
 
         for (const perm of command.permissions.author.bypass) {
             if (!this.checkValidPermissionName(PERMS, perm) ) {
-                command.axon.emit('debug', `[${command.module.label}(${command.fullLabel})] - Invalid permissions name (${perm}) in Command.permissions.author.bypass.`);
+                debug(command.axon, DEBUG_FLAGS.BAD, `[${command.module.label}(${command.fullLabel})] - Invalid permissions name (${perm}) in Command.permissions.author.bypass.`);
                 return false;
             }
         }
-        command.axon.emit('debug', `[${command.module.label}(${command.fullLabel})] - Correct permissions name in Command.permissions.author.bypass.`);
+        debug(command.axon, DEBUG_FLAGS.GOOD, `[${command.module.label}(${command.fullLabel})] - Correct permissions name in Command.permissions.author.bypass.`);
         return true;
     }
 

@@ -22,8 +22,8 @@ export { default as guildMemberUpdate } from './GuildMemberUpdateHandler';
 export { default as guildUnavailable } from './GuildUnavailableHandler';
 export { default as guildUpdate } from './GuildUpdateHandler';
 
-export { default as inviteCreate } from './inviteCreateHandler';
-export { default as inviteDelete } from './inviteDeleteHandler';
+export { default as inviteCreate } from './InviteCreateHandler';
+export { default as inviteDelete } from './InviteDeleteHandler';
 
 export { default as messageDeleteBulk } from './MessageDeleteBulkHandler';
 export { default as messageDelete } from './MessageDeleteHandler';

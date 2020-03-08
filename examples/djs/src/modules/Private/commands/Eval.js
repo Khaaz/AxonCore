@@ -51,58 +51,54 @@ class Eval extends Command {
         } );
     }
 
-    async execute( { msg, args, guildConfig } ) {
-        const { utils } = this;
-        const { template } = this;
-        const { axon } = this;
-        const { member } = msg;
-        const { guild } = msg.channel;
-        const { channel } = msg;
-            
-
-        let evaled;
+    async execute(env) {
+        const { msg, args, guildConfig } = env;
+        let evalString;
         try {
             // eslint-disable-next-line no-eval
-            evaled = await eval(args.join(' ') );
+            evalString = await eval(args.join(' ') );
 
-            if (typeof evaled === 'object') {
-                evaled = nodeUtil.inspect(evaled, { depth: 0, showHidden: true } );
+            if (typeof evalString === 'object') {
+                evalString = nodeUtil.inspect(evalString, { depth: 0, showHidden: true } );
             } else {
-                evaled = String(evaled);
+                evalString = String(evalString);
             }
         } catch (err) {
             this.logger.debug(err.stack);
-            return this.sendError(msg.channel, err.message ? err.message : err.name);
+            return this.sendError(msg.channel, err.message ? err.message : err);
         }
 
-        /** Just for security. */
-        evaled = evaled.replace(this.bot.token, 'Khaaz Baguette');
+        evalString = this.cleanUpToken(evalString);
 
-        const fullLen = evaled.length;
-
-        if (fullLen === 0) {
-            return null;
+        if (evalString.length === 0) {
+            return this.sendError(msg.channel, 'Nothing to evaluate.');
         }
 
-        if (fullLen > DiscordEnums.EMBED_LIMITS.LIMIT_CONTENT) {
-            evaled = evaled.match(/[\s\S]{1,1900}[\n\r]/g) || [];
-            if (evaled.length > 3) {
-                this.sendMessage(msg.channel, `Cut the response! [${evaled.length} | ${fullLen}]`);
-                this.sendMessage(msg.channel, `\`\`\`js\n${evaled[0]}\`\`\``);
-                this.sendMessage(msg.channel, `\`\`\`js\n${evaled[1]}\`\`\``);
-                this.sendMessage(msg.channel, `\`\`\`js\n${evaled[2]}\`\`\``);
-                return new CommandResponse( {
-                    success: true,
-                } );
+        const splitEvaled = evalString.match(/[\s\S]{1,1900}[\n\r]/g) || [evalString];
+        
+        if (splitEvaled.length > 3) {
+            this.sendMessage(msg.channel, `Cut the response! [3/${splitEvaled.length} | ${evalString.length} chars]`);
+        }
+        
+        for (let i = 0; i < 3; i++) {
+            if (!splitEvaled[i] ) {
+                break;
             }
-            return evaled.forEach( (message) => {
-                this.sendMessage(msg.channel, `\`\`\`js\n${message}\`\`\``);
-                return new CommandResponse( {
-                    success: true,
-                } );
-            } );
+            this.sendCode(msg.channel, splitEvaled[i] );
         }
-        return this.sendMessage(msg.channel, `\`\`\`js\n${evaled}\`\`\``);
+        return new CommandResponse( {
+            success: true,
+        } );
+    }
+
+    cleanUpToken(evalString) {
+        return evalString
+            .split(this.bot._token ? this.bot._token : this.bot.token)
+            .join('Khaaz Baguette');
+    }
+
+    sendCode(channel, content, lang = 'js') {
+        return this.sendMessage(channel, `\`\`\`${lang}\n${content}\`\`\``);
     }
 }
 

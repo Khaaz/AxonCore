@@ -17,7 +17,7 @@ class GuildCreate extends Listener {
         };
     }
 
-    execute(guild, guildConfig) { // eslint-disable-line 
+    execute(guild, guildConfig) { // eslint-disable-line no-unused-vars
         console.log(`Guild Created: ${guild.name} [${guild.id}]`);
         return Promise.resolve();
     }

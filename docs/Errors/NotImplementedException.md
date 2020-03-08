@@ -7,5 +7,5 @@
 <a name="new_NotImplementedException_new"></a>
 
 ### new NotImplementedException()
-Error thrown when a method not implemented (not overrided) is used.
+Error thrown when a method not implemented (not overridden) is used.
 

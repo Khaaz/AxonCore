@@ -7,27 +7,37 @@
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| [bot] | <code>Array</code> | <code>[]</code> | Discord permissions that the bot needs to have in orderto execute the command |
+| [bot] | <code>Array</code> | <code>[]</code> | Discord permissions that the bot needs to have in order to execute the command |
 | [serverMod] | <code>Boolean</code> | <code>false</code> | Axoncore server moderator |
 | [serverManager] | <code>Boolean</code> | <code>false</code> | Discord server manager (manageServer) |
 | [serverAdmin] | <code>Boolean</code> | <code>false</code> | Discord server administrator (administrator) |
 | [serverOwner] | <code>Boolean</code> | <code>false</code> | Discord server owner |
-| [user.needed] | <code>Array</code> | <code>[]</code> | Discord permissions that the user needs to have in order to execute the command |
-| [user.bypass] | <code>Array</code> | <code>[]</code> | Discord permissions that will allow the user to execute the command no matter what |
-| [userIDs.needed] | <code>Array</code> | <code>[]</code> | Discord user ids that the user needs to have in order to execute the command |
-| [userIDs.bypass] | <code>Array</code> | <code>[]</code> | Discord user ids that will allow the user to execute the command no matter what |
-| [roleIDs.needed] | <code>Array</code> | <code>[]</code> | Discord role ids that the user needs to have in order to execute the command |
-| [roleIDs.bypass] | <code>Array</code> | <code>[]</code> | Discord role ids that will allow the user to execute the command no matter what |
-| [channelIDs.needed] | <code>Array</code> | <code>[]</code> | Discord channel ids that the user needs to have in order to execute the command |
-| [channelIDs.bypass] | <code>Array</code> | <code>[]</code> | Discord channel ids that will allow the user to execute the command no matter what |
-| [staff.needed] | <code>Array</code> | <code>[]</code> | Axoncore staff ids that the user needs to have in order to execute the command |
-| [staff.bypass] | <code>Array</code> | <code>[]</code> | Axoncore staff ids that will allow the user to execute the command no matter what |
+| [author.needed] | <code>Array.&lt;String&gt;</code> | <code>[]</code> | Discord permissions that the user needs to have in order to execute the command |
+| [author.bypass] | <code>Array.&lt;String&gt;</code> | <code>[]</code> | Discord permissions that will allow the user to execute the command no matter what |
+| [users.needed] | <code>Array.&lt;String&gt;</code> | <code>[]</code> | Discord user ids that the user needs to have in order to execute the command |
+| [users.bypass] | <code>Array.&lt;String&gt;</code> | <code>[]</code> | Discord user ids that will allow the user to execute the command no matter what |
+| [roles.needed] | <code>Array.&lt;String&gt;</code> | <code>[]</code> | Discord role ids that the user needs to have in order to execute the command |
+| [roles.bypass] | <code>Array.&lt;String&gt;</code> | <code>[]</code> | Discord role ids that will allow the user to execute the command no matter what |
+| [channels.needed] | <code>Array.&lt;String&gt;</code> | <code>[]</code> | Discord channel ids that the user needs to have in order to execute the command |
+| [channels.bypass] | <code>Array.&lt;String&gt;</code> | <code>[]</code> | Discord channel ids that will allow the user to execute the command no matter what |
+| [guilds.needed] | <code>Array.&lt;String&gt;</code> | <code>[]</code> | Discord guild ids that the user needs to have in order to execute the command |
+| [guilds.bypass] | <code>Array.&lt;String&gt;</code> | <code>[]</code> | Discord guild ids that will allow the user to execute the command no matter what |
+| [staff.needed] | <code>Array.&lt;String&gt;</code> | <code>[]</code> | Axoncore staff ids that the user needs to have in order to execute the command |
+| [staff.bypass] | <code>Array.&lt;String&gt;</code> | <code>[]</code> | Axoncore staff ids that will allow the user to execute the command no matter what |
 | [custom] | <code>function</code> | <code>()&#x3D;&gt;true</code> | Custom function that returns a boolean. True will let the command execute, False will prevent the command from executing |
 
 
 * [CommandPermissions](#CommandPermissions)
     * [new CommandPermissions()](#new_CommandPermissions_new)
     * _instance_
+        * [.bot](#CommandPermissions+bot) : <code>Array.&lt;String&gt;</code>
+        * [.author](#CommandPermissions+author) : <code>Object</code>
+        * [.users](#CommandPermissions+users) : <code>Object</code>
+        * [.roles](#CommandPermissions+roles) : <code>Object</code>
+        * [.channels](#CommandPermissions+channels) : <code>Object</code>
+        * [.guilds](#CommandPermissions+guilds) : <code>Object</code>
+        * [.staff](#CommandPermissions+staff) : <code>Object</code>
+        * [.custom](#CommandPermissions+custom)
         * [.axon](#CommandPermissions+axon) : <code>AxonClient</code>
         * [.utils](#CommandPermissions+utils) : <code>Utils</code>
         * [.axonUtils](#CommandPermissions+axonUtils) : <code>AxonUtils</code>
@@ -37,20 +47,23 @@
         * [.setServerManager([boolean])](#CommandPermissions+setServerManager) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
         * [.setServerAdmin([boolean])](#CommandPermissions+setServerAdmin) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
         * [.setServerOwner([boolean])](#CommandPermissions+setServerOwner) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
-        * [.setUser([object], [toAdd])](#CommandPermissions+setUser) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
-        * [.setUserIDs([object], [toAdd])](#CommandPermissions+setUserIDs) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
-        * [.setRoleIDs([object], [toAdd])](#CommandPermissions+setRoleIDs) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
-        * [.setChannelIDs([object], [toAdd])](#CommandPermissions+setChannelIDs) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
+        * [.setAuthor([object], [toAdd])](#CommandPermissions+setAuthor) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
+        * [.setUsers([object], [toAdd])](#CommandPermissions+setUsers) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
+        * [.setRoles([object], [toAdd])](#CommandPermissions+setRoles) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
+        * [.setChannels([object], [toAdd])](#CommandPermissions+setChannels) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
+        * [.setGuilds([object], [toAdd])](#CommandPermissions+setGuilds) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
         * [.setStaff([object], [toAdd])](#CommandPermissions+setStaff) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
         * [._checkPermsBot(channel)](#CommandPermissions+_checkPermsBot) ⇒ <code>Boolean</code>
         * [._checkPermsUserBypass(member)](#CommandPermissions+_checkPermsUserBypass) ⇒ <code>Boolean</code>
-        * [._checkPermsUserNeeded(member)](#CommandPermissions+_checkPermsUserNeeded) ⇒ <code>Boolean</code>
+        * [._checkPermsUserNeeded(member)](#CommandPermissions+_checkPermsUserNeeded) ⇒
         * [._checkUserBypass(member)](#CommandPermissions+_checkUserBypass) ⇒ <code>Boolean</code>
         * [._checkUserNeeded(member)](#CommandPermissions+_checkUserNeeded) ⇒ <code>Boolean</code>
         * [._checkRoleBypass(member)](#CommandPermissions+_checkRoleBypass) ⇒ <code>Boolean</code>
         * [._checkRoleNeeded(member)](#CommandPermissions+_checkRoleNeeded) ⇒ <code>Boolean</code>
         * [._checkChannelBypass(channel)](#CommandPermissions+_checkChannelBypass) ⇒ <code>Boolean</code>
         * [._checkChannelNeeded(channel)](#CommandPermissions+_checkChannelNeeded) ⇒ <code>Boolean</code>
+        * [._checkGuildBypass(guild)](#CommandPermissions+_checkGuildBypass) ⇒ <code>Boolean</code>
+        * [._checkGuildNeeded(guild)](#CommandPermissions+_checkGuildNeeded) ⇒ <code>Boolean</code>
         * [._checkStaffBypass(member)](#CommandPermissions+_checkStaffBypass) ⇒ <code>Boolean</code>
         * [._checkStaffNeeded(member)](#CommandPermissions+_checkStaffNeeded) ⇒ <code>Boolean</code>
     * _static_
@@ -66,6 +79,38 @@ Holds permissions for a command and all necessary checkers.
 needed => needed to have **ALL** <NEEDED> permissions to execute the command
 bypass => needed to have **ONE** <BYPASS> permission to execute the command
 
+<a name="CommandPermissions+bot"></a>
+
+### commandPermissions.bot : <code>Array.&lt;String&gt;</code>
+**Kind**: instance property of [<code>CommandPermissions</code>](#CommandPermissions)  
+<a name="CommandPermissions+author"></a>
+
+### commandPermissions.author : <code>Object</code>
+**Kind**: instance property of [<code>CommandPermissions</code>](#CommandPermissions)  
+<a name="CommandPermissions+users"></a>
+
+### commandPermissions.users : <code>Object</code>
+**Kind**: instance property of [<code>CommandPermissions</code>](#CommandPermissions)  
+<a name="CommandPermissions+roles"></a>
+
+### commandPermissions.roles : <code>Object</code>
+**Kind**: instance property of [<code>CommandPermissions</code>](#CommandPermissions)  
+<a name="CommandPermissions+channels"></a>
+
+### commandPermissions.channels : <code>Object</code>
+**Kind**: instance property of [<code>CommandPermissions</code>](#CommandPermissions)  
+<a name="CommandPermissions+guilds"></a>
+
+### commandPermissions.guilds : <code>Object</code>
+**Kind**: instance property of [<code>CommandPermissions</code>](#CommandPermissions)  
+<a name="CommandPermissions+staff"></a>
+
+### commandPermissions.staff : <code>Object</code>
+**Kind**: instance property of [<code>CommandPermissions</code>](#CommandPermissions)  
+<a name="CommandPermissions+custom"></a>
+
+### commandPermissions.custom
+**Kind**: instance property of [<code>CommandPermissions</code>](#CommandPermissions)  
 <a name="CommandPermissions+axon"></a>
 
 ### commandPermissions.axon : <code>AxonClient</code>
@@ -76,6 +121,8 @@ Returns the AxonClient instance
 <a name="CommandPermissions+utils"></a>
 
 ### commandPermissions.utils : <code>Utils</code>
+Return the Utils instance
+
 **Kind**: instance property of [<code>CommandPermissions</code>](#CommandPermissions)  
 **Read only**: true  
 <a name="CommandPermissions+axonUtils"></a>
@@ -101,7 +148,7 @@ Set the permissions the bot needs to have to execute this command.
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| [array] | <code>Array</code> | <code>[]</code> | Array of permissions |
+| [array] | <code>Array.&lt;String&gt;</code> | <code>[]</code> | Array of permissions |
 | [toAdd] | <code>Boolean</code> | <code>false</code> | Whether to add the permissions to the existing permissions |
 
 <a name="CommandPermissions+setServerMod"></a>
@@ -146,11 +193,11 @@ Set/unset the command to serverOwner only.
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| [boolean] | <code>Boolean</code> | <code>true</code> | Whether to make the command serverOwnber only |
+| [boolean] | <code>Boolean</code> | <code>true</code> | Whether to make the command serverOwner only |
 
-<a name="CommandPermissions+setUser"></a>
+<a name="CommandPermissions+setAuthor"></a>
 
-### commandPermissions.setUser([object], [toAdd]) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
+### commandPermissions.setAuthor([object], [toAdd]) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
 Set the permissions the user needs to have to execute this command.
 
 **Kind**: instance method of [<code>CommandPermissions</code>](#CommandPermissions)  
@@ -158,11 +205,11 @@ Set the permissions the user needs to have to execute this command.
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | [object] | <code>Object</code> | <code>{ bypass: [], needed: [] }</code> | Object of permissions |
-| [toAdd] | <code>boolean</code> | <code>false</code> | Whether to add the permissions to the existing permissions |
+| [toAdd] | <code>Boolean</code> | <code>false</code> | Whether to add the permissions to the existing permissions |
 
-<a name="CommandPermissions+setUserIDs"></a>
+<a name="CommandPermissions+setUsers"></a>
 
-### commandPermissions.setUserIDs([object], [toAdd]) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
+### commandPermissions.setUsers([object], [toAdd]) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
 Set the user IDs the user needs to have to execute this command.
 
 **Kind**: instance method of [<code>CommandPermissions</code>](#CommandPermissions)  
@@ -170,11 +217,11 @@ Set the user IDs the user needs to have to execute this command.
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | [object] | <code>Object</code> | <code>{ bypass: [], needed: [] }</code> | Object of permissions |
-| [toAdd] | <code>boolean</code> | <code>false</code> | Whether to add the permissions to the existing permissions |
+| [toAdd] | <code>Boolean</code> | <code>false</code> | Whether to add the permissions to the existing permissions |
 
-<a name="CommandPermissions+setRoleIDs"></a>
+<a name="CommandPermissions+setRoles"></a>
 
-### commandPermissions.setRoleIDs([object], [toAdd]) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
+### commandPermissions.setRoles([object], [toAdd]) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
 Set the role IDs the user needs to have to execute this command.
 
 **Kind**: instance method of [<code>CommandPermissions</code>](#CommandPermissions)  
@@ -182,11 +229,11 @@ Set the role IDs the user needs to have to execute this command.
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | [object] | <code>Object</code> | <code>{ bypass: [], needed: [] }</code> | Object of permissions |
-| [toAdd] | <code>boolean</code> | <code>false</code> | Whether to add the permissions to the existing permissions |
+| [toAdd] | <code>Boolean</code> | <code>false</code> | Whether to add the permissions to the existing permissions |
 
-<a name="CommandPermissions+setChannelIDs"></a>
+<a name="CommandPermissions+setChannels"></a>
 
-### commandPermissions.setChannelIDs([object], [toAdd]) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
+### commandPermissions.setChannels([object], [toAdd]) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
 Set the channel IDs needed to be in to execute this command.
 
 **Kind**: instance method of [<code>CommandPermissions</code>](#CommandPermissions)  
@@ -194,7 +241,19 @@ Set the channel IDs needed to be in to execute this command.
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | [object] | <code>Object</code> | <code>{ bypass: [], needed: [] }</code> | Object of permissions |
-| [toAdd] | <code>boolean</code> | <code>false</code> | Whether to add the permissions to the existing permissions |
+| [toAdd] | <code>Boolean</code> | <code>false</code> | Whether to add the permissions to the existing permissions |
+
+<a name="CommandPermissions+setGuilds"></a>
+
+### commandPermissions.setGuilds([object], [toAdd]) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
+Set the guild IDs needed to be in to execute this command.
+
+**Kind**: instance method of [<code>CommandPermissions</code>](#CommandPermissions)  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [object] | <code>Object</code> | <code>{ bypass: [], needed: [] }</code> | Object of permissions |
+| [toAdd] | <code>Boolean</code> | <code>false</code> | Whether to add the permissions to the existing permissions |
 
 <a name="CommandPermissions+setStaff"></a>
 
@@ -206,7 +265,7 @@ Set the AxonCore staff members that can execute this command.
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | [object] | <code>Object</code> | <code>{ bypass: [], needed: [] }</code> | Object of permissions |
-| [toAdd] | <code>boolean</code> | <code>false</code> | Whether to add the permissions to the existing permissions |
+| [toAdd] | <code>Boolean</code> | <code>false</code> | Whether to add the permissions to the existing permissions |
 
 <a name="CommandPermissions+_checkPermsBot"></a>
 
@@ -232,7 +291,7 @@ Check user permissions [bypass]
 
 <a name="CommandPermissions+_checkPermsUserNeeded"></a>
 
-### commandPermissions.\_checkPermsUserNeeded(member) ⇒ <code>Boolean</code>
+### commandPermissions.\_checkPermsUserNeeded(member) ⇒
 Check user permissions [needed]
 
 **Kind**: instance method of [<code>CommandPermissions</code>](#CommandPermissions)  
@@ -307,6 +366,28 @@ Check channelIDs [needed]
 | --- | --- |
 | channel | <code>Channel</code> | 
 
+<a name="CommandPermissions+_checkGuildBypass"></a>
+
+### commandPermissions.\_checkGuildBypass(guild) ⇒ <code>Boolean</code>
+Check guildIDs [bypass]
+
+**Kind**: instance method of [<code>CommandPermissions</code>](#CommandPermissions)  
+
+| Param | Type |
+| --- | --- |
+| guild | <code>Guild</code> | 
+
+<a name="CommandPermissions+_checkGuildNeeded"></a>
+
+### commandPermissions.\_checkGuildNeeded(guild) ⇒ <code>Boolean</code>
+Check guildIDs [needed]
+
+**Kind**: instance method of [<code>CommandPermissions</code>](#CommandPermissions)  
+
+| Param | Type |
+| --- | --- |
+| guild | <code>Guild</code> | 
+
 <a name="CommandPermissions+_checkStaffBypass"></a>
 
 ### commandPermissions.\_checkStaffBypass(member) ⇒ <code>Boolean</code>
@@ -343,7 +424,7 @@ Creates an instance of CommandPermissions.
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| command | <code>Command</code> |  | The base command |
-| [override] | <code>Object</code> | <code>{}</code> | The specific permissions for this command (format - CommandPermissions) |
+| command | <code>Command</code> \| <code>Module</code> |  | The base command/module |
+| [override] | <code>CommandPerms</code> | <code>{}</code> | The specific permissions for this command/module (format - CommandPermissions) |
 | [useModuleDefault] | <code>Boolean</code> | <code>false</code> | Whether to use or not the module's base permissions before applying override permissions |
 

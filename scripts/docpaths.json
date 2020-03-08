@@ -5,87 +5,95 @@
     },
     {
         "input": "AxonOptions.js",
-        "output": "Structures/AxonOptions.md"
+        "output": "Core/AxonOptions.md"
     },
     {
-        "input": "Structures/Base.js",
-        "output": "Structures/Base.md"
+        "input": "Core/Base.js",
+        "output": "Core/Base.md"
     },
     {
-        "input": "Structures/Stores/GuildConfigCache.js",
-        "output": "Structures/GuildConfigCache.md"
+        "input": "Core/Executor.js",
+        "output": "Core/Executor.md"
     },
     {
-        "input": "Structures/Stores/ARegistry.js",
-        "output": "Structures/ARegistry.md"
+        "input": "Core/Stores/GuildConfigCache.js",
+        "output": "Core/GuildConfigCache.md"
+    },
+    {
+        "input": "Core/Stores/ARegistry.js",
+        "output": "Core/ARegistry.md"
     },
 
     {
-        "input": "Structures/Module.js",
+        "input": "Core/Module.js",
         "output": "Modules/Module.md"
     },
     {
-        "input": "Structures/Stores/ModuleRegistry.js",
+        "input": "Core/Stores/ModuleRegistry.js",
         "output": "Modules/ModuleRegistry.md"
     },
     {
-        "input": "Structures/Loaders/ModuleLoader.js",
+        "input": "Core/Loaders/ModuleLoader.js",
         "output": "Modules/ModuleLoader.md"
     },
 
 
     {
-        "input": "Structures/Command/Command.js",
+        "input": "Core/Command/Command.js",
         "output": "Commands/Command.md"
     },
     {
-        "input": "Structures/Command/CommandOptions.js",
+        "input": "Core/Command/CommandOptions.js",
         "output": "Commands/CommandOptions.md"
     },
     {
-        "input": "Structures/Command/CommandPermissions.js",
+        "input": "Core/Command/CommandPermissions.js",
         "output": "Commands/CommandPermissions.md"
     },
     {
-        "input": "Structures/Command/CommandResponse.js",
+        "input": "Core/Command/CommandEnvironment.js",
+        "output": "Commands/CommandEnvironment.md"
+    },
+    {
+        "input": "Core/Command/CommandResponse.js",
         "output": "Commands/CommandResponse.md"
     },
     {
-        "input": "Structures/Command/CommandContext.js",
+        "input": "Core/Command/CommandContext.js",
         "output": "Commands/CommandContext.md"
     },
     {
-        "input": "Structures/CommandDispatcher.js",
+        "input": "Core/CommandDispatcher.js",
         "output": "Commands/CommandDispatcher.md"
     },
     {
-        "input": "Structures/Stores/CommandRegistry.js",
+        "input": "Core/Stores/CommandRegistry.js",
         "output": "Commands/CommandRegistry.md"
     },
     {
-        "input": "Structures/Loaders/CommandLoader.js",
+        "input": "Core/Loaders/CommandLoader.js",
         "output": "Commands/CommandLoader.md"
     },
 
 
     {
-        "input": "Structures/Event/Listener.js",
+        "input": "Core/Event/Listener.js",
         "output": "Listeners/Listener.md"
     },
     {
-        "input": "Structures/Event/EventManager.js",
+        "input": "Core/Event/EventManager.js",
         "output": "Listeners/EventManager.md"
     },
     {
-        "input": "Structures/Event/AHandler.js",
+        "input": "Core/Event/AHandler.js",
         "output": "Listeners/AHandler.md"
     },
     {
-        "input": "Structures/Stores/ListenerRegistry.js",
+        "input": "Core/Stores/ListenerRegistry.js",
         "output": "Listeners/ListenerRegistry.md"
     },
     {
-        "input": "Structures/Loaders/ListenerLoader.js",
+        "input": "Core/Loaders/ListenerLoader.js",
         "output": "Listeners/ListenerLoader.md"
     },
     
@@ -125,16 +133,32 @@
         "output": "Utility/Embed.md"
     },
     {
-        "input": "Utility/Discord/MessageCollector.js",
+        "input": "Utility/Discord/Collectors/Collector.js",
+        "output": "Utility/Collector.md"
+    },
+    {
+        "input": "Utility/Discord/Collectors/MessageCollector.js",
         "output": "Utility/MessageCollector.md"
+    },
+    {
+        "input": "Utility/Discord/Collectors/ReactionCollector.js",
+        "output": "Utility/ReactionCollector.md"
     },
     {
         "input": "Utility/Discord/Prompt.js",
         "output": "Utility/Prompt.md"
     },
     {
+        "input": "Utility/External/Stack.js",
+        "output": "Utility/Stack.md"
+    },
+    {
         "input": "Utility/External/Queue.js",
         "output": "Utility/Queue.md"
+    },
+    {
+        "input": "Utility/External/FunctionQueue.js",
+        "output": "Utility/FunctionQueue.md"
     },
     {
         "input": "Utility/External/AsyncQueue.js",
@@ -185,12 +209,12 @@
     },
 
     {
-        "input": "Structures/DataStructure/AxonConfig.js",
-        "output": "Structures/AxonConfig.md"
+        "input": "Core/Models/AxonConfig.js",
+        "output": "Core/AxonConfig.md"
     },
     {
-        "input": "Structures/DataStructure/GuildConfig.js",
-        "output": "Structures/GuildConfig.md"
+        "input": "Core/Models/GuildConfig.js",
+        "output": "Core/GuildConfig.md"
     },
     {
         "input": "Database/ADBProvider.js",

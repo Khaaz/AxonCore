@@ -1,4 +1,4 @@
-import AHandler from '../../../Structures/Event/AHandler';
+import AHandler from '../../../Core/Event/AHandler';
 
 class PresenceUpdateHandler extends AHandler {
     handle(member) {

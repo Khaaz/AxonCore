@@ -7,15 +7,16 @@
 
 | Name | Type |
 | --- | --- |
+| _axon | <code>AxonClient</code> | 
 | mentionFormatter | <code>RegExp</code> | 
 
 
 * [CommandDispatcher](#CommandDispatcher)
     * [new CommandDispatcher()](#new_CommandDispatcher_new)
     * _instance_
-        * [.library](#CommandDispatcher+library) : <code>Object.&lt;LibraryInterface&gt;</code>
-        * [.dispatch(msg)](#CommandDispatcher+dispatch) ⇒ <code>Promise</code>
-        * [.getExecutionType(msg)](#CommandDispatcher+getExecutionType) ⇒ <code>Object</code>
+        * [.library](#CommandDispatcher+library) : <code>LibraryInterface</code>
+        * [.dispatch(msg)](#CommandDispatcher+dispatch) ⇒ <code>Promise.&lt;void&gt;</code>
+        * [.getExecutionType(msg)](#CommandDispatcher+getExecutionType) ⇒ <code>COMMAND\_EXECUTION\_TYPES</code>
         * [.resolvePrefix(msg, guildConfig, [isAdmin], [isOwner])](#CommandDispatcher+resolvePrefix) ⇒ <code>String</code>
         * [.resolveGuildPrefix(msg, guildConfig)](#CommandDispatcher+resolveGuildPrefix) ⇒ <code>String</code>
     * _static_
@@ -31,14 +32,14 @@ Handles prefix resolving and command resolving.
 
 <a name="CommandDispatcher+library"></a>
 
-### commandDispatcher.library : <code>Object.&lt;LibraryInterface&gt;</code>
+### commandDispatcher.library : <code>LibraryInterface</code>
 Returns the LibraryInterface instance
 
 **Kind**: instance property of [<code>CommandDispatcher</code>](#CommandDispatcher)  
 **Read only**: true  
 <a name="CommandDispatcher+dispatch"></a>
 
-### commandDispatcher.dispatch(msg) ⇒ <code>Promise</code>
+### commandDispatcher.dispatch(msg) ⇒ <code>Promise.&lt;void&gt;</code>
 Dispatches the messageCreate event to:
 - end of execution if:
      - no prefix
@@ -54,20 +55,20 @@ Dispatches the messageCreate event to:
 
 | Param | Type | Description |
 | --- | --- | --- |
-| msg | <code>Object.&lt;Message&gt;</code> | Message Object from Eris |
+| msg | <code>Message</code> | Message Object from Eris |
 
 <a name="CommandDispatcher+getExecutionType"></a>
 
-### commandDispatcher.getExecutionType(msg) ⇒ <code>Object</code>
+### commandDispatcher.getExecutionType(msg) ⇒ <code>COMMAND\_EXECUTION\_TYPES</code>
 Give the execution type: Owner or Admin execution.
 It uses the global admin and owner prefixes and checks for the BotStaff rank of the caller.
 
 **Kind**: instance method of [<code>CommandDispatcher</code>](#CommandDispatcher)  
-**Returns**: <code>Object</code> - { isAdmin: Boolean, isOwner: Boolean }  
+**Returns**: <code>COMMAND\_EXECUTION\_TYPES</code> - The execution type  
 
 | Param | Type |
 | --- | --- |
-| msg | <code>Object.&lt;Message&gt;</code> | 
+| msg | <code>Message</code> | 
 
 <a name="CommandDispatcher+resolvePrefix"></a>
 
@@ -81,10 +82,10 @@ It will otherwise regularly resolve the prefix for this particular guild.
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| msg | <code>Object.&lt;Message&gt;</code> |  | The message object |
-| guildConfig | <code>Object.&lt;GuildConfig&gt;</code> |  | The guildConfig Object |
-| [isAdmin] | <code>Boolean</code> | <code>false</code> | The guildConfig Object |
-| [isOwner] | <code>Boolean</code> | <code>false</code> | The guildConfig Object |
+| msg | <code>Message</code> |  | The message object |
+| guildConfig | <code>GuildConfig</code> |  | The guildConfig Object |
+| [isAdmin] | <code>Boolean</code> | <code>false</code> | Whether admin prefix was used |
+| [isOwner] | <code>Boolean</code> | <code>false</code> | Whether owner prefix was used |
 
 <a name="CommandDispatcher+resolveGuildPrefix"></a>
 
@@ -98,8 +99,8 @@ Global prefixes will only take over if no prefix are specified in this guild.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| msg | <code>Object.&lt;Message&gt;</code> | The message object |
-| guildConfig | <code>Object.&lt;GuildConfig&gt;</code> | The guildConfig Object |
+| msg | <code>Message</code> | The message object |
+| guildConfig | <code>GuildConfig</code> | The guildConfig Object |
 
 <a name="CommandDispatcher.CommandDispatcher"></a>
 
@@ -113,5 +114,5 @@ Creates an instance of CommandDispatcher.
 
 | Param | Type |
 | --- | --- |
-| axon | <code>Object.&lt;AxonClient&gt;</code> | 
+| axon | <code>AxonClient</code> | 
 

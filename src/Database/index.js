@@ -1,4 +1,4 @@
-import ASelector from '../Structures/ASelector';
+import ASelector from '../Core/ASelector';
 import JsonProvider from './JsonProvider';
 
 import { DB_TYPES } from './../Utility/Constants/AxonEnums';
@@ -26,10 +26,9 @@ class DBSelector extends ASelector {
     static select(axonClient, axonOptions) {
         let DBProvider;
 
-        // eslint-disable-next-line no-shadow
-        const { db } = axonOptions.settings;
+        const dbType = axonOptions.settings.db;
 
-        switch (db) {
+        switch (dbType) {
             // No database
             case DB_TYPES.IN_MEMORY:
             default: {

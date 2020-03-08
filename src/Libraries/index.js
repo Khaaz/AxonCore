@@ -1,4 +1,4 @@
-import ASelector from '../Structures/ASelector';
+import ASelector from '../Core/ASelector';
 
 import ErisInterface from './eris/ErisInterface';
 import DjsInterface from './discordjs/DjsInterface';
@@ -27,7 +27,6 @@ class LibrarySelector extends ASelector {
     static select(axon, axonOptions) {
         let libraryInterface;
 
-        // eslint-disable-next-line no-shadow
         const lib = axonOptions.settings ? axonOptions.settings.library : 0;
 
         switch (lib) {

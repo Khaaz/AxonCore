@@ -60,9 +60,36 @@ class ErisInterface extends LibraryInterface {
      * @memberof ErisInterface
      */
     onceReady(func) {
-        this.botClient.once(this.enums.EVENTS.READY, () => {
+        this.botClient.once('ready', () => {
             func();
         } );
+    }
+
+    /**
+     * @param {(msg: Message) => void}
+     * @returns {(msg: Message) => void}
+     * @memberof ErisInterface
+     */
+    getMessageCreate(func) {
+        return (msg) => func(msg);
+    }
+
+    /**
+     * @param {(msg: Message) => void}
+     * @returns {(msg: Message, oldMsg:Message) => void}
+     * @memberof ErisInterface
+     */
+    getMessageUpdate(func) {
+        return (msg, oldMsg) => func(oldMsg, msg);
+    }
+
+    /**
+     * @param {(msg: Message) => void}
+     * @returns {(msg: Message) => void}
+     * @memberof ErisInterface
+     */
+    getMessageDelete(func) {
+        return (msg) => func(msg);
     }
 }
 

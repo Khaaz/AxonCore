@@ -1,155 +1,127 @@
-## Classes
-
-<dl>
-<dt><a href="#MessageCollector">MessageCollector</a> ⇐ <code>EventEmitter</code></dt>
-<dd></dd>
-<dt><a href="#MessageCollector">MessageCollector</a></dt>
-<dd></dd>
-</dl>
-
 <a name="MessageCollector"></a>
 
-## MessageCollector ⇐ <code>EventEmitter</code>
+## MessageCollector ⇐ <code>Collector</code>
 **Kind**: global class  
-**Extends**: <code>EventEmitter</code>  
-**Author**: VoidNulll  
+**Extends**: <code>Collector</code>  
+**Author**: VoidNull, KhaaZ  
+**Properties**
 
-* [MessageCollector](#MessageCollector) ⇐ <code>EventEmitter</code>
+| Name | Type | Description |
+| --- | --- | --- |
+| options | <code>Object</code> |  |
+| options.timeout | <code>Number</code> | Number of ms before timing out |
+| options.count | <code>Number</code> | Number of messages to collect |
+| options.ignoreBots | <code>Boolean</code> | Whether to ignore bots |
+| options.userID | <code>String</code> | Specify a userID to only collect message from this user |
+
+
+* [MessageCollector](#MessageCollector) ⇐ <code>Collector</code>
     * [new MessageCollector()](#new_MessageCollector_new)
-    * [new MessageCollector(client, [options])](#new_MessageCollector_new)
-    * [.run(channel, [options])](#MessageCollector+run) ⇒ <code>Promise</code>
-    * [.delete(mID)](#MessageCollector+delete) ⇒ <code>Collection</code>
+    * _instance_
+        * [.run(channel, [options])](#MessageCollector+run) ⇒ <code>Promise.&lt;Map.&lt;Message&gt;&gt;</code>
+        * [.getCollectors(message)](#MessageCollector+getCollectors) ⇒ <code>Array.&lt;CollectorContainer&gt;</code>
+        * [._onMessageCreate(msg)](#MessageCollector+_onMessageCreate)
+        * [._onMessageDelete(msg)](#MessageCollector+_onMessageDelete)
+        * [._onMessageUpdate(oldMsg, msg)](#MessageCollector+_onMessageUpdate)
+    * _static_
+        * [.MessageCollector](#MessageCollector.MessageCollector)
+            * [new MessageCollector(client, [options])](#new_MessageCollector.MessageCollector_new)
 
 <a name="new_MessageCollector_new"></a>
 
 ### new MessageCollector()
-Collect bunch of message object according to choosen options
+Collect bunch of message object according to chosen options
 
-<a name="new_MessageCollector_new"></a>
-
-### new MessageCollector(client, [options])
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| client | <code>AxonClient</code> |  | The axon client object |
-| [options] | <code>Object</code> |  | The default options for the message collector instance |
-| [options.timeout] | <code>Number</code> | <code>60000</code> | The time before the collector times out in milliseconds |
-| [options.count] | <code>Number</code> | <code>100</code> | The amount of messages to collect before automatically ending |
-| [options.ignoreBots] | <code>Boolean</code> | <code>true</code> | Whether or not to ignore bots |
-| [options.uID] | <code>String</code> |  | The user id to listen for (listens to all messages if not specified) |
-| [options.caseSensitive] | <code>Boolean</code> | <code>false</code> | Whether or not to return messages with content lowercased. Default: content unchanged |
-
-**Example**  
-```js
-const collector = new MessageCollector(this.axon, { count: 10, ignoreBots: false });
-```
 <a name="MessageCollector+run"></a>
 
-### messageCollector.run(channel, [options]) ⇒ <code>Promise</code>
+### messageCollector.run(channel, [options]) ⇒ <code>Promise.&lt;Map.&lt;Message&gt;&gt;</code>
 Runs the message collector
 
 **Kind**: instance method of [<code>MessageCollector</code>](#MessageCollector)  
-**Returns**: <code>Promise</code> - Map of messages collected.  
+**Returns**: <code>Promise.&lt;Map.&lt;Message&gt;&gt;</code> - Map of messages collected.  
 
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| channel | <code>Channel</code> |  | The channel object to listen to |
-| [options] | <code>Object</code> |  | The options for the message collector |
-| [options.timeout] | <code>Number</code> | <code>60000</code> | The time before the collector times out in milliseconds |
-| [options.count] | <code>Number</code> | <code>100</code> | The amount of messages to collect before automatically ending |
-| [options.ignoreBots] | <code>Boolean</code> | <code>true</code> | Whether or not to ignore bots |
-| [options.uID] | <code>String</code> |  | The user id to listen for (listens to all messages if not specified) |
-| [options.caseSensitive] | <code>Boolean</code> | <code>true</code> | Whether or not to return messages with content lowercased. Default: content not changed |
+| Param | Type | Description |
+| --- | --- | --- |
+| channel | <code>Channel</code> | The channel object to listen to |
+| [options] | <code>Object</code> | The options for the message collector |
+| [options.timeout] | <code>Number</code> | The time before the collector times out in milliseconds |
+| [options.count] | <code>Number</code> | The amount of messages to collect before automatically ending |
+| [options.ignoreBots] | <code>Boolean</code> | Whether or not to ignore bots |
+| [options.userID] | <code>String</code> | The user id to listen for (listens to all messages if not specified) |
 
 **Example**  
 ```js
 const messages = await collector.run(msg.channel, { caseInsensitive: false });
 ```
-<a name="MessageCollector+delete"></a>
+<a name="MessageCollector+getCollectors"></a>
 
-### messageCollector.delete(mID) ⇒ <code>Collection</code>
-Removes a message from the messages collected
+### messageCollector.getCollectors(message) ⇒ <code>Array.&lt;CollectorContainer&gt;</code>
+Get all CollectorContainers that will collect from this particular message
 
 **Kind**: instance method of [<code>MessageCollector</code>](#MessageCollector)  
-**Returns**: <code>Collection</code> - Collection of messages collected, now excluding the removed message.  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| mID | <code>String</code> | The id of the message you want to remove |
+| Param | Type |
+| --- | --- |
+| message | <code>Message</code> | 
 
-**Example**  
-```js
-collector.delete('542164538347225118')
-```
-<a name="MessageCollector"></a>
+<a name="MessageCollector+_onMessageCreate"></a>
 
-## MessageCollector
-**Kind**: global class  
+### messageCollector.\_onMessageCreate(msg)
+Function bound to messageCreate event.
+Collect the message for all collectors that respond to the criteria
+Emits collect event.
 
-* [MessageCollector](#MessageCollector)
-    * [new MessageCollector()](#new_MessageCollector_new)
-    * [new MessageCollector(client, [options])](#new_MessageCollector_new)
-    * [.run(channel, [options])](#MessageCollector+run) ⇒ <code>Promise</code>
-    * [.delete(mID)](#MessageCollector+delete) ⇒ <code>Collection</code>
+**Kind**: instance method of [<code>MessageCollector</code>](#MessageCollector)  
 
-<a name="new_MessageCollector_new"></a>
+| Param | Type |
+| --- | --- |
+| msg | <code>Message</code> | 
 
-### new MessageCollector()
-Collect bunch of message object according to choosen options
+<a name="MessageCollector+_onMessageDelete"></a>
 
-<a name="new_MessageCollector_new"></a>
+### messageCollector.\_onMessageDelete(msg)
+Function bound to messageDelete event.
+Remove the message from all collector that collected this message
 
-### new MessageCollector(client, [options])
+**Kind**: instance method of [<code>MessageCollector</code>](#MessageCollector)  
+
+| Param | Type |
+| --- | --- |
+| msg | <code>Message</code> | 
+
+<a name="MessageCollector+_onMessageUpdate"></a>
+
+### messageCollector.\_onMessageUpdate(oldMsg, msg)
+Function bound to messageUpdate event.
+Updates the message from all collector that collected this message
+
+**Kind**: instance method of [<code>MessageCollector</code>](#MessageCollector)  
+
+| Param | Type |
+| --- | --- |
+| oldMsg | <code>Message</code> | 
+| msg | <code>Message</code> | 
+
+<a name="MessageCollector.MessageCollector"></a>
+
+### MessageCollector.MessageCollector
+**Kind**: static class of [<code>MessageCollector</code>](#MessageCollector)  
+<a name="new_MessageCollector.MessageCollector_new"></a>
+
+#### new MessageCollector(client, [options])
+Creates an instance of MessageCollector
+
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | client | <code>AxonClient</code> |  | The axon client object |
 | [options] | <code>Object</code> |  | The default options for the message collector instance |
-| [options.timeout] | <code>Number</code> | <code>60000</code> | The time before the collector times out in milliseconds |
-| [options.count] | <code>Number</code> | <code>100</code> | The amount of messages to collect before automatically ending |
+| [options.timeout] | <code>Number</code> | <code>10000</code> | The time before the collector times out in milliseconds |
+| [options.count] | <code>Number</code> | <code>10</code> | The amount of messages to collect before automatically ending |
 | [options.ignoreBots] | <code>Boolean</code> | <code>true</code> | Whether or not to ignore bots |
-| [options.uID] | <code>String</code> |  | The user id to listen for (listens to all messages if not specified) |
-| [options.caseSensitive] | <code>Boolean</code> | <code>false</code> | Whether or not to return messages with content lowercased. Default: content unchanged |
+| [options.userID] | <code>String</code> |  | The user id to listen for (listens to all messages if not specified) |
 
 **Example**  
 ```js
 const collector = new MessageCollector(this.axon, { count: 10, ignoreBots: false });
-```
-<a name="MessageCollector+run"></a>
-
-### messageCollector.run(channel, [options]) ⇒ <code>Promise</code>
-Runs the message collector
-
-**Kind**: instance method of [<code>MessageCollector</code>](#MessageCollector)  
-**Returns**: <code>Promise</code> - Map of messages collected.  
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| channel | <code>Channel</code> |  | The channel object to listen to |
-| [options] | <code>Object</code> |  | The options for the message collector |
-| [options.timeout] | <code>Number</code> | <code>60000</code> | The time before the collector times out in milliseconds |
-| [options.count] | <code>Number</code> | <code>100</code> | The amount of messages to collect before automatically ending |
-| [options.ignoreBots] | <code>Boolean</code> | <code>true</code> | Whether or not to ignore bots |
-| [options.uID] | <code>String</code> |  | The user id to listen for (listens to all messages if not specified) |
-| [options.caseSensitive] | <code>Boolean</code> | <code>true</code> | Whether or not to return messages with content lowercased. Default: content not changed |
-
-**Example**  
-```js
-const messages = await collector.run(msg.channel, { caseInsensitive: false });
-```
-<a name="MessageCollector+delete"></a>
-
-### messageCollector.delete(mID) ⇒ <code>Collection</code>
-Removes a message from the messages collected
-
-**Kind**: instance method of [<code>MessageCollector</code>](#MessageCollector)  
-**Returns**: <code>Collection</code> - Collection of messages collected, now excluding the removed message.  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| mID | <code>String</code> | The id of the message you want to remove |
-
-**Example**  
-```js
-collector.delete('542164538347225118')
 ```

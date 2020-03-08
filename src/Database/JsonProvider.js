@@ -1,7 +1,7 @@
 import ADBProvider from './ADBProvider';
 
-import AxonConfig from '../Structures/DataStructure/AxonConfig';
-import GuildConfig from '../Structures/DataStructure/GuildConfig';
+import AxonConfig from '../Core/Models/AxonConfig';
+import GuildConfig from '../Core/Models/GuildConfig';
 
 import JsonManager from './JSON/JsonManager';
 
@@ -35,7 +35,7 @@ class JsonProvider extends ADBProvider {
      * @param {AxonOptions}
      * @memberof JsonProvider
      */
-    init(axonOptions = {} ) { // eslint-disable-next-line no-unused-vars
+    init(axonOptions = {} ) {
         this.manager = new JsonManager(axonOptions.extensions.DBLocation);
     }
 
