@@ -13,7 +13,7 @@ class DjsGuild extends Guild {
      * @memberof DjsGuild
      */
     getMember(guild, userID) {
-        return guild.members.get(userID);
+        return guild.members.cache.get(userID);
     }
 }
 

@@ -42,7 +42,7 @@ class DjsResolver extends Resolver {
 
         args.all = args.join(' ');
         args.lower = args.all.toLowerCase();
-        const { users } = client;
+        const users = client.users.cache;
 
         const mention = Utils.userMention.exec(args[0] );
 
@@ -78,7 +78,7 @@ class DjsResolver extends Resolver {
 
         args.all = args.join(' ');
         args.lower = args.all.toLowerCase();
-        const { members } = guild;
+        const members = guild.members.cache;
 
         const mention = Utils.userMention.exec(args[0] );
 
@@ -119,7 +119,7 @@ class DjsResolver extends Resolver {
 
         args.all = args.join(' ');
         args.lower = args.all.toLowerCase();
-        const { roles } = guild;
+        const roles = guild.roles.cache;
 
         const mention = Utils.roleMention.exec(args[0] );
 
@@ -155,7 +155,7 @@ class DjsResolver extends Resolver {
 
         args.all = args.join(' ');
         args.lower = args.all.toLowerCase();
-        const { channels } = guild;
+        const channels = guild.channels.cache;
 
         const mention = Utils.channelMention.exec(args[0] );
 
@@ -184,7 +184,7 @@ class DjsResolver extends Resolver {
             throw new AxonError('All the arguments are either not given or false.', 'Resolver', 'Guild');
         }
 
-        const { guilds } = client;
+        const guilds = client.guilds.cache;
         args.all = args.join(' ');
         args.lower = args.all.toLowerCase();
 
