@@ -12,6 +12,10 @@
         "output": "Core/Base.md"
     },
     {
+        "input": "Core/Executor.js",
+        "output": "Core/Executor.md"
+    },
+    {
         "input": "Core/Stores/GuildConfigCache.js",
         "output": "Core/GuildConfigCache.md"
     },
@@ -45,6 +49,10 @@
     {
         "input": "Core/Command/CommandPermissions.js",
         "output": "Commands/CommandPermissions.md"
+    },
+    {
+        "input": "Core/Command/CommandEnvironment.js",
+        "output": "Commands/CommandEnvironment.md"
     },
     {
         "input": "Core/Command/CommandResponse.js",
@@ -141,8 +149,16 @@
         "output": "Utility/Prompt.md"
     },
     {
+        "input": "Utility/External/Stack.js",
+        "output": "Utility/Stack.md"
+    },
+    {
         "input": "Utility/External/Queue.js",
         "output": "Utility/Queue.md"
+    },
+    {
+        "input": "Utility/External/FunctionQueue.js",
+        "output": "Utility/FunctionQueue.md"
     },
     {
         "input": "Utility/External/AsyncQueue.js",
