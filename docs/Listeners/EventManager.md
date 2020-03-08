@@ -8,19 +8,21 @@
 
 | Name | Type | Description |
 | --- | --- | --- |
-| _eve,ts | <code>Object</code> | Object that links an event name to an array of Listener objects { eventName: [Listener, Listener] } |
+|  |  |  |
 | _handlers | <code>Collection.&lt;AHandler&gt;</code> | Collection of handler keyed to the event name [key: eventName, value: AHandler] |
 
 
 * [EventManager](#EventManager) ⇐ <code>Base</code>
     * [new EventManager()](#new_EventManager_new)
     * _instance_
+        * [._events](#EventManager+_events)
+        * [._handlers](#EventManager+_handlers) : <code>Collection.&lt;AHandler&gt;</code>
         * [.HANDLERS](#EventManager+HANDLERS) : <code>Object</code>
-        * [.handlers](#EventManager+handlers) : <code>Collection.&lt;Object&gt;</code>
-        * [.getListeners(eventName)](#EventManager+getListeners) ⇒ <code>Array</code>
+        * [.handlers](#EventManager+handlers) : <code>Collection.&lt;AHandler&gt;</code>
+        * [.getListeners(eventName)](#EventManager+getListeners) ⇒ <code>Array.&lt;Listener&gt;</code>
         * [.bindListeners()](#EventManager+bindListeners)
         * [.bindHandlers()](#EventManager+bindHandlers)
-        * [.registerListener(listener)](#EventManager+registerListener)
+        * [.registerListener(listener)](#EventManager+registerListener) ⇒ <code>Array.&lt;Listener&gt;</code>
         * [.registerHandler(event)](#EventManager+registerHandler) ⇒ <code>AHandler</code>
         * [.registerEvent(event)](#EventManager+registerEvent) ⇒ <code>AHandler</code>
         * [.unregisterListener(event, label)](#EventManager+unregisterListener) ⇒ <code>Boolean</code>
@@ -35,6 +37,14 @@
 ### new EventManager()
 Event Manager class
 
+<a name="EventManager+_events"></a>
+
+### eventManager.\_events
+**Kind**: instance property of [<code>EventManager</code>](#EventManager)  
+<a name="EventManager+_handlers"></a>
+
+### eventManager.\_handlers : <code>Collection.&lt;AHandler&gt;</code>
+**Kind**: instance property of [<code>EventManager</code>](#EventManager)  
 <a name="EventManager+HANDLERS"></a>
 
 ### eventManager.HANDLERS : <code>Object</code>
@@ -44,18 +54,18 @@ Returns all Handlers base
 **Read only**: true  
 <a name="EventManager+handlers"></a>
 
-### eventManager.handlers : <code>Collection.&lt;Object&gt;</code>
-Returns Collection of every handlers for every discord event
+### eventManager.handlers : <code>Collection.&lt;AHandler&gt;</code>
+Returns Collection of every handlers for every Discord event
 
 **Kind**: instance property of [<code>EventManager</code>](#EventManager)  
 **Read only**: true  
 <a name="EventManager+getListeners"></a>
 
-### eventManager.getListeners(eventName) ⇒ <code>Array</code>
+### eventManager.getListeners(eventName) ⇒ <code>Array.&lt;Listener&gt;</code>
 Get all functions bound to the event passed in parameters.
 
 **Kind**: instance method of [<code>EventManager</code>](#EventManager)  
-**Returns**: <code>Array</code> - Array of the functions bound to the event  
+**Returns**: <code>Array.&lt;Listener&gt;</code> - Array of the functions bound to the event  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -78,12 +88,13 @@ Bind every handler to the correct Discord event and start listening to this even
 **Kind**: instance method of [<code>EventManager</code>](#EventManager)  
 <a name="EventManager+registerListener"></a>
 
-### eventManager.registerListener(listener)
+### eventManager.registerListener(listener) ⇒ <code>Array.&lt;Listener&gt;</code>
 Register a listener for the given discord event.
 Add the Listener in the array of Listener for each discord event.
 Called by ModuleLoader when registering an event.
 
 **Kind**: instance method of [<code>EventManager</code>](#EventManager)  
+**Returns**: <code>Array.&lt;Listener&gt;</code> - Array of the functions bound to the event  
 
 | Param | Type | Description |
 | --- | --- | --- |

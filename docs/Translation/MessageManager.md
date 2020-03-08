@@ -1,3 +1,17 @@
+## Classes
+
+<dl>
+<dt><a href="#MessageManager">MessageManager</a></dt>
+<dd></dd>
+</dl>
+
+## Typedefs
+
+<dl>
+<dt><a href="#Languages">Languages</a> : <code>Object.&lt;string, AxonLanguageResponse&gt;</code></dt>
+<dd></dd>
+</dl>
+
 <a name="MessageManager"></a>
 
 ## MessageManager
@@ -8,7 +22,7 @@
 | Name | Type | Description |
 | --- | --- | --- |
 | _axon | <code>AxonClient</code> |  |
-| _message | <code>Object</code> | All messages (all langs) |
+| _message | [<code>Languages</code>](#Languages) | All messages (all langs) |
 | translation | <code>TranslationManager</code> |  |
 | parser | <code>MessageParser</code> |  |
 
@@ -16,13 +30,13 @@
 * [MessageManager](#MessageManager)
     * [new MessageManager()](#new_MessageManager_new)
     * _instance_
-        * [.messages](#MessageManager+messages) : <code>Object</code>
-        * [.getMessages(lang)](#MessageManager+getMessages) ⇒ <code>Object</code>
+        * [.messages](#MessageManager+messages) : [<code>Languages</code>](#Languages)
+        * [.getMessages(lang)](#MessageManager+getMessages) ⇒ <code>AxonLanguageResponse</code>
         * [.getMessage(message, lang)](#MessageManager+getMessage) ⇒ <code>String</code>
         * [.get(message, args, lang)](#MessageManager+get) ⇒ <code>String</code>
     * _static_
         * [.MessageManager](#MessageManager.MessageManager)
-            * [new MessageManager(axonClient, messages)](#new_MessageManager.MessageManager_new)
+            * [new MessageManager(axonClient, messages, baseLang)](#new_MessageManager.MessageManager_new)
 
 <a name="new_MessageManager_new"></a>
 
@@ -32,18 +46,18 @@ Used as an interface to get the message in the correct lang and parse arguments 
 
 <a name="MessageManager+messages"></a>
 
-### messageManager.messages : <code>Object</code>
+### messageManager.messages : [<code>Languages</code>](#Languages)
 Returns all messages (all langs)
 
 **Kind**: instance property of [<code>MessageManager</code>](#MessageManager)  
 **Read only**: true  
 <a name="MessageManager+getMessages"></a>
 
-### messageManager.getMessages(lang) ⇒ <code>Object</code>
+### messageManager.getMessages(lang) ⇒ <code>AxonLanguageResponse</code>
 All message from the given lang (or default lang)
 
 **Kind**: instance method of [<code>MessageManager</code>](#MessageManager)  
-**Returns**: <code>Object</code> - Object with all messages  
+**Returns**: <code>AxonLanguageResponse</code> - Object with all messages  
 
 | Param | Type |
 | --- | --- |
@@ -73,7 +87,7 @@ Get the message in the correct lang, parsed to replace {{key}} with the correct 
 | Param | Type |
 | --- | --- |
 | message | <code>String</code> | 
-| args | <code>Object</code> | 
+| args | <code>AxonLanguageResponse</code> | 
 | lang | <code>String</code> | 
 
 <a name="MessageManager.MessageManager"></a>
@@ -82,7 +96,7 @@ Get the message in the correct lang, parsed to replace {{key}} with the correct 
 **Kind**: static class of [<code>MessageManager</code>](#MessageManager)  
 <a name="new_MessageManager.MessageManager_new"></a>
 
-#### new MessageManager(axonClient, messages)
+#### new MessageManager(axonClient, messages, baseLang)
 Creates an instance of MessageManager.
 Dynamically create one method for each message so we can use <this>.MESSAGE_CONSTANT() directly. It will actually call the get method.
 
@@ -90,5 +104,10 @@ Dynamically create one method for each message so we can use <this>.MESSAGE_CONS
 | Param | Type |
 | --- | --- |
 | axonClient | <code>AxonClient</code> | 
-| messages | <code>Object</code> | 
+| messages | [<code>Languages</code>](#Languages) | 
+| baseLang | <code>String</code> | 
 
+<a name="Languages"></a>
+
+## Languages : <code>Object.&lt;string, AxonLanguageResponse&gt;</code>
+**Kind**: global typedef  

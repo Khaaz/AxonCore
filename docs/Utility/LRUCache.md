@@ -1,3 +1,49 @@
+## Classes
+
+<dl>
+<dt><a href="#Node">Node</a></dt>
+<dd></dd>
+<dt><a href="#Node">Node</a></dt>
+<dd></dd>
+<dt><a href="#LRUCache">LRUCache</a></dt>
+<dd></dd>
+</dl>
+
+<a name="Node"></a>
+
+## Node
+**Kind**: global class  
+**Author**: KhaaZ  
+<a name="new_Node_new"></a>
+
+### new Node(key, [value], [next], [prev])
+Creates an instance of Node
+
+
+| Param | Type | Default |
+| --- | --- | --- |
+| key | <code>String</code> |  | 
+| [value] | <code>T</code> |  | 
+| [next] | <code>Node.&lt;T&gt;</code> | <code></code> | 
+| [prev] | <code>Node.&lt;T&gt;</code> | <code></code> | 
+
+<a name="Node"></a>
+
+## Node
+**Kind**: global class  
+<a name="new_Node_new"></a>
+
+### new Node(key, [value], [next], [prev])
+Creates an instance of Node
+
+
+| Param | Type | Default |
+| --- | --- | --- |
+| key | <code>String</code> |  | 
+| [value] | <code>T</code> |  | 
+| [next] | <code>Node.&lt;T&gt;</code> | <code></code> | 
+| [prev] | <code>Node.&lt;T&gt;</code> | <code></code> | 
+
 <a name="LRUCache"></a>
 
 ## LRUCache
@@ -9,22 +55,25 @@
 | --- | --- | --- |
 | limit | <code>Number</code> | Maximum size of the LRU |
 | size | <code>Number</code> | Current size of the LRU |
-| head | <code>Node</code> |  |
-| tail | <code>Node</code> |  |
-| _cache | <code>Collection.&lt;\*&gt;</code> | The Collection holding the cache (private, handled by the LRU structure) |
+| head | <code>Node.&lt;T&gt;</code> |  |
+| tail | <code>Node.&lt;T&gt;</code> |  |
+| _cache | <code>Collection.&lt;T&gt;</code> | The Collection holding the cache (private, handled by the LRU structure) |
 
 
 * [LRUCache](#LRUCache)
     * [new LRUCache()](#new_LRUCache_new)
     * _instance_
+        * [.head](#LRUCache+head) : <code>Node.&lt;T&gt;</code>
+        * [.tail](#LRUCache+tail) : <code>Node.&lt;T&gt;</code>
+        * [._cache](#LRUCache+_cache) : <code>Collection.&lt;T&gt;</code>
         * [.set(key, value)](#LRUCache+set)
-        * [.get(key)](#LRUCache+get) ⇒ <code>\*</code>
+        * [.get(key)](#LRUCache+get) ⇒ <code>T</code>
         * [.remove(key)](#LRUCache+remove)
         * [.clear()](#LRUCache+clear)
         * [.forEach(fn)](#LRUCache+forEach)
-        * [.find(func)](#LRUCache+find) ⇒ <code>Class</code>
-        * [.map(func)](#LRUCache+map) ⇒ <code>Array</code>
-        * [.filter(func)](#LRUCache+filter) ⇒ <code>Array.&lt;Class&gt;</code>
+        * [.find(func)](#LRUCache+find) ⇒ <code>T</code>
+        * [.map(func)](#LRUCache+map) ⇒ <code>Array.&lt;R&gt;</code>
+        * [.filter(func)](#LRUCache+filter) ⇒ <code>Array.&lt;T&gt;</code>
         * [.some(func)](#LRUCache+some) ⇒ <code>Boolean</code>
         * [.every(func)](#LRUCache+every) ⇒ <code>Boolean</code>
     * _static_
@@ -39,6 +88,18 @@ Read and Write operations are in O(1)
 
 https://medium.com/dsinjs/implementing-lru-cache-in-javascript-94ba6755cda9
 
+<a name="LRUCache+head"></a>
+
+### lruCache.head : <code>Node.&lt;T&gt;</code>
+**Kind**: instance property of [<code>LRUCache</code>](#LRUCache)  
+<a name="LRUCache+tail"></a>
+
+### lruCache.tail : <code>Node.&lt;T&gt;</code>
+**Kind**: instance property of [<code>LRUCache</code>](#LRUCache)  
+<a name="LRUCache+_cache"></a>
+
+### lruCache.\_cache : <code>Collection.&lt;T&gt;</code>
+**Kind**: instance property of [<code>LRUCache</code>](#LRUCache)  
 <a name="LRUCache+set"></a>
 
 ### lruCache.set(key, value)
@@ -49,15 +110,15 @@ Add a value in the LRU cache.
 | Param | Type |
 | --- | --- |
 | key | <code>String</code> | 
-| value | <code>\*</code> | 
+| value | <code>T</code> | 
 
 <a name="LRUCache+get"></a>
 
-### lruCache.get(key) ⇒ <code>\*</code>
+### lruCache.get(key) ⇒ <code>T</code>
 Retrieve a value from the LRU cache
 
 **Kind**: instance method of [<code>LRUCache</code>](#LRUCache)  
-**Returns**: <code>\*</code> - value  
+**Returns**: <code>T</code> - value  
 
 | Param | Type |
 | --- | --- |
@@ -87,45 +148,45 @@ Execute a function against every element of the Collection
 
 **Kind**: instance method of [<code>LRUCache</code>](#LRUCache)  
 
-| Param | Type |
-| --- | --- |
-| fn | <code>function</code> | 
+| Param |
+| --- |
+| fn | 
 
 <a name="LRUCache+find"></a>
 
-### lruCache.find(func) ⇒ <code>Class</code>
+### lruCache.find(func) ⇒ <code>T</code>
 Return the first object to make the function evaluate true
 
 **Kind**: instance method of [<code>LRUCache</code>](#LRUCache)  
-**Returns**: <code>Class</code> - The first matching object, or null if no match  
+**Returns**: <code>T</code> - The first matching object, or null if no match  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| func | <code>function</code> | A function that takes an object and returns true if it matches |
+| Param |
+| --- |
+| func | 
 
 <a name="LRUCache+map"></a>
 
-### lruCache.map(func) ⇒ <code>Array</code>
+### lruCache.map(func) ⇒ <code>Array.&lt;R&gt;</code>
 Return an array with the results of applying the given function to each element
 
 **Kind**: instance method of [<code>LRUCache</code>](#LRUCache)  
-**Returns**: <code>Array</code> - An array containing the results  
+**Returns**: <code>Array.&lt;R&gt;</code> - An array containing the results  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| func | <code>function</code> | A function that takes an object and returns something |
+| Param |
+| --- |
+| func | 
 
 <a name="LRUCache+filter"></a>
 
-### lruCache.filter(func) ⇒ <code>Array.&lt;Class&gt;</code>
+### lruCache.filter(func) ⇒ <code>Array.&lt;T&gt;</code>
 Return all the objects that make the function evaluate true
 
 **Kind**: instance method of [<code>LRUCache</code>](#LRUCache)  
-**Returns**: <code>Array.&lt;Class&gt;</code> - An array containing all the objects that matched  
+**Returns**: <code>Array.&lt;T&gt;</code> - An array containing all the objects that matched  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| func | <code>function</code> | A function that takes an object and returns true if it matches |
+| Param |
+| --- |
+| func | 
 
 <a name="LRUCache+some"></a>
 
@@ -135,21 +196,21 @@ Test if at least one element passes the test implemented by the provided functio
 **Kind**: instance method of [<code>LRUCache</code>](#LRUCache)  
 **Returns**: <code>Boolean</code> - An array containing all the objects that matched  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| func | <code>function</code> | A function that takes an object and returns true if it matches |
+| Param |
+| --- |
+| func | 
 
 <a name="LRUCache+every"></a>
 
 ### lruCache.every(func) ⇒ <code>Boolean</code>
-Test if all elements passe the test implemented by the provided function. Returns true if yes, or false if not.
+Test if all elements pass the test implemented by the provided function. Returns true if yes, or false if not.
 
 **Kind**: instance method of [<code>LRUCache</code>](#LRUCache)  
 **Returns**: <code>Boolean</code> - An array containing all the objects that matched  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| func | <code>function</code> | A function that takes an object and returns true if it matches |
+| Param |
+| --- |
+| func | 
 
 <a name="LRUCache.LRUCache"></a>
 
@@ -161,10 +222,10 @@ Test if all elements passe the test implemented by the provided function. Return
 Creates an instance of LRUCache.
 
 
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| limit | <code>Number</code> |  | Max number of element in the Collection |
-| options | <code>Object</code> |  | Options used to construct the Collection |
-| [options.base] | <code>Class</code> | <code></code> |  |
-| [options.iterable] | <code>Array</code> \| <code>Object</code> | <code></code> |  |
+| Param | Type | Description |
+| --- | --- | --- |
+| limit | <code>Number</code> | Max number of element in the Collection |
+| options | <code>Object</code> | Options used to construct the Collection |
+|  |  |  |
+|  |  |  |
 

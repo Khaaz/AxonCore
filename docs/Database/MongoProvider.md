@@ -1,3 +1,17 @@
+## Classes
+
+<dl>
+<dt><a href="#MongoProvider">MongoProvider</a> ⇐ <code>ADBProvider</code></dt>
+<dd></dd>
+</dl>
+
+## Typedefs
+
+<dl>
+<dt><a href="#GuildConfigRaw">GuildConfigRaw</a> : <code>String</code> | <code>Boolean</code> | <code>Object.&lt;string, any&gt;</code> | <code>Array.&lt;any&gt;</code> | <code>Number</code> | <code>Date</code></dt>
+<dd></dd>
+</dl>
+
 <a name="MongoProvider"></a>
 
 ## MongoProvider ⇐ <code>ADBProvider</code>
@@ -8,8 +22,8 @@
 
 | Name | Type |
 | --- | --- |
-| AxonSchema | <code>Object</code> | 
-| GuildSchema | <code>Object</code> | 
+| AxonSchema | <code>AxonSchema</code> | 
+| GuildSchema | <code>GuildSchema</code> | 
 
 
 * [MongoProvider](#MongoProvider) ⇐ <code>ADBProvider</code>
@@ -71,19 +85,19 @@ Retrieves the axon config from the DB
 <a name="MongoProvider+fetchGuild"></a>
 
 ### mongoProvider.fetchGuild(gID) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>
-Retreives the Guild config for the specified guild.
+Retrieves the Guild config for the specified guild.
 
 **Kind**: instance method of [<code>MongoProvider</code>](#MongoProvider)  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| gID | <code>String</code> | guild ID |
+| gID | <code>String</code> | Guild ID |
 
 <a name="MongoProvider+fetchGuildSchema"></a>
 
 ### mongoProvider.fetchGuildSchema(gID) ⇒ <code>Promise.&lt;(Object\|null)&gt;</code>
-Retreives the Guild **Schema** for the specified guild.
-Does not lean and return the actual mongoos Schema.
+Retrieves the Guild **Schema** for the specified guild.
+Does not lean and return the actual mongoose Schema.
 MongoProvider specific method.
 
 **Kind**: instance method of [<code>MongoProvider</code>](#MongoProvider)  
@@ -91,7 +105,7 @@ MongoProvider specific method.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| gID | <code>String</code> | guild ID |
+| gID | <code>String</code> | Guild ID |
 
 <a name="MongoProvider+updateAxon"></a>
 
@@ -101,12 +115,12 @@ Update the specific key with the value given as second parameters.
 Generic method to update Database.
 
 **Kind**: instance method of [<code>MongoProvider</code>](#MongoProvider)  
-**Returns**: <code>Promise.&lt;Boolean&gt;</code> - Whether the request was successfull or not  
+**Returns**: <code>Promise.&lt;Boolean&gt;</code> - Whether the request was successful or not  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | key | <code>String</code> | The identifier in the Database |
-| value | <code>Object</code> \| <code>Array</code> \| <code>String</code> \| <code>Boolean</code> | The value to update in the DB |
+| value | <code>updateDBVal</code> | The value to update in the DB |
 
 <a name="MongoProvider+updateGuild"></a>
 
@@ -117,13 +131,13 @@ Specify the guild with the guild ID.
 Generic method to update Database.
 
 **Kind**: instance method of [<code>MongoProvider</code>](#MongoProvider)  
-**Returns**: <code>Promise.&lt;Boolean&gt;</code> - Whether the request was successfull or not  
+**Returns**: <code>Promise.&lt;Boolean&gt;</code> - Whether the request was successful or not  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | key | <code>String</code> | The identifier in the Database |
 | gID | <code>String</code> | The guild ID to update |
-| value | <code>Object</code> \| <code>Array</code> \| <code>String</code> \| <code>Boolean</code> | The value to update in the DB |
+| value | <code>updateDBVal</code> | The value to update in the DB |
 
 <a name="MongoProvider+saveAxon"></a>
 
@@ -135,7 +149,7 @@ Updates the Axon config in the DB with a new Axon config object.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| data | <code>Object</code> | the schema object to update |
+| data | <code>AxonConfig</code> \| <code>AxonConfigRaw</code> | the schema object to update |
 
 <a name="MongoProvider+saveGuild"></a>
 
@@ -148,5 +162,9 @@ Updates the given guild in the DB with a new schema object.
 | Param | Type | Description |
 | --- | --- | --- |
 | gID | <code>String</code> | Guid id |
-| data | <code>Object</code> | the schema object to update |
+| data | <code>GuildConfig</code> \| [<code>GuildConfigRaw</code>](#GuildConfigRaw) | the schema object to update |
 
+<a name="GuildConfigRaw"></a>
+
+## GuildConfigRaw : <code>String</code> \| <code>Boolean</code> \| <code>Object.&lt;string, any&gt;</code> \| <code>Array.&lt;any&gt;</code> \| <code>Number</code> \| <code>Date</code>
+**Kind**: global typedef  

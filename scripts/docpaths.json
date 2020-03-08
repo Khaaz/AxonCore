@@ -141,7 +141,7 @@
         "output": "Utility/MessageCollector.md"
     },
     {
-        "input": "Utility/Discord/Collector/ReactionCollector.js",
+        "input": "Utility/Discord/Collectors/ReactionCollector.js",
         "output": "Utility/ReactionCollector.md"
     },
     {

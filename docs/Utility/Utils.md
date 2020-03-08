@@ -1,3 +1,17 @@
+## Classes
+
+<dl>
+<dt><a href="#Utils">Utils</a></dt>
+<dd></dd>
+</dl>
+
+## Typedefs
+
+<dl>
+<dt><a href="#readFile">readFile</a></dt>
+<dd></dd>
+</dl>
+
 <a name="Utils"></a>
 
 ## Utils
@@ -12,7 +26,7 @@
 | roleMention | <code>RegExp</code> | Regular Expression to match a roleMention |
 | channelMention | <code>RegExp</code> | Regular Expression to match a channelMention |
 | id | <code>RegExp</code> | Regular Expression to match an id |
-| hexCode | <code>RegExp</code> | Regular Expression to match an hexCode |
+| hexCode | <code>RegExp</code> | Regular Expression to match a hexCode |
 
 
 * [Utils](#Utils)
@@ -32,9 +46,9 @@
         * [.hasChannelPerms(channel, permissions, [user])](#Utils+hasChannelPerms) ⇒ <code>Boolean</code>
         * [.missingPerms(member, [permissions])](#Utils+missingPerms) ⇒ <code>Array.&lt;String&gt;</code>
         * [.calculatePerms(data)](#Utils+calculatePerms) ⇒ <code>Object</code>
-        * [.sleep(ms)](#Utils+sleep) ⇒ <code>Promise</code>
+        * [.sleep(ms)](#Utils+sleep) ⇒ <code>Promise.&lt;void&gt;</code>
         * [.readFileAsync(path)](#Utils+readFileAsync) ⇒ <code>Promise.&lt;String&gt;</code>
-        * [.writeFileAsync(path, content)](#Utils+writeFileAsync) ⇒ <code>Promise</code>
+        * [.writeFileAsync(path, content)](#Utils+writeFileAsync) ⇒ <code>Promise.&lt;void&gt;</code>
     * _static_
         * [.Utils](#Utils.Utils)
             * [new Utils(client)](#new_Utils.Utils_new)
@@ -95,7 +109,7 @@ Returns the guild prefix of the given msg.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| msg | <code>Object</code> | Message object given at the command. |
+| msg | <code>Message</code> | Message object given at the command. |
 
 <a name="Utils+getRoles"></a>
 
@@ -166,7 +180,7 @@ Check if the highest role of first is higher than the highest role of second
 Check if the member has correct permissions to execute
 
 **Kind**: instance method of [<code>Utils</code>](#Utils)  
-**Returns**: <code>Boolean</code> - hether the member has permissions or not  
+**Returns**: <code>Boolean</code> - Whether the member has permissions or not  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -214,11 +228,11 @@ Calculate permissions using a object of perms
 
 <a name="Utils+sleep"></a>
 
-### utils.sleep(ms) ⇒ <code>Promise</code>
-Wait for a specified amount of miliseconds..
+### utils.sleep(ms) ⇒ <code>Promise.&lt;void&gt;</code>
+Wait for a specified amount of milliseconds..
 
 **Kind**: instance method of [<code>Utils</code>](#Utils)  
-**Returns**: <code>Promise</code> - resolve after the delay is passed  
+**Returns**: <code>Promise.&lt;void&gt;</code> - resolve after the delay is passed  
 
 | Param | Type |
 | --- | --- |
@@ -238,7 +252,7 @@ Promisified readFile method
 
 <a name="Utils+writeFileAsync"></a>
 
-### utils.writeFileAsync(path, content) ⇒ <code>Promise</code>
+### utils.writeFileAsync(path, content) ⇒ <code>Promise.&lt;void&gt;</code>
 Promisified writeFile method
 
 **Kind**: instance method of [<code>Utils</code>](#Utils)  
@@ -301,13 +315,17 @@ Return the HexCode regex
 
 ### Utils.compareObject(obj1, obj2) ⇒ <code>Boolean</code>
 Ensures that all property names of obj1 exists in obj2.
-Doesn't compare values. Exept if it is an object, then it checks for property names recursively.
+Doesn't compare values. Except if it is an object, then it checks for property names recursively.
 
 **Kind**: static method of [<code>Utils</code>](#Utils)  
 **Returns**: <code>Boolean</code> - True: obj2 has at least all prop of obj1  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| obj1 | <code>Object</code> | Default config/object |
-| obj2 | <code>Object</code> | Custom config/Object (Config/Object to compare with) |
+| obj1 | <code>Object.&lt;string, any&gt;</code> | Default config/object |
+| obj2 | <code>Object.&lt;string, any&gt;</code> | Custom config/Object (Config/Object to compare with) |
 
+<a name="readFile"></a>
+
+## readFile
+**Kind**: global typedef  

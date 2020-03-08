@@ -13,9 +13,9 @@
 | commands | <code>Array.&lt;String&gt;</code> | Guild disabled commands: Array of commands labels |
 | listeners | <code>Array.&lt;String&gt;</code> | Guild disabled listeners: Array of listeners labels |
 | createdAt | <code>Date</code> | Creation of the guild Config |
-| updatedAt | <code>date</code> | Last update of the guild Config |
+| updatedAt | <code>Date</code> | Last update of the guild Config |
 | ignoredUsers | <code>Array.&lt;String&gt;</code> | Users that cannot use commands in this guild: Users ids |
-| ignoredRoles | <code>Array.&lt;String&gt;</code> | Roles that cannot use commmands in this guild: Roles ids |
+| ignoredRoles | <code>Array.&lt;String&gt;</code> | Roles that cannot use commands in this guild: Roles ids |
 | ignoredChannels | <code>Array.&lt;String&gt;</code> | Channels where commands cannot be used in this guild: Channels ids |
 | modOnly | <code>Boolean</code> | Whether the guild accept commands from only mods+ or everyone |
 | modRoles | <code>Array.&lt;String&gt;</code> | Roles able to execute mod commands: Roles ids |
@@ -30,13 +30,13 @@
         * [.isUserIgnored(userID)](#GuildConfig+isUserIgnored) ⇒ <code>Boolean</code>
         * [.isRoleIgnored(member)](#GuildConfig+isRoleIgnored) ⇒ <code>Boolean</code>
         * [.isChannelIgnored(channelID)](#GuildConfig+isChannelIgnored) ⇒ <code>Boolean</code>
-        * [.isModuleDisabled(command)](#GuildConfig+isModuleDisabled) ⇒ <code>Boolean</code>
+        * [.isModuleDisabled(module)](#GuildConfig+isModuleDisabled) ⇒ <code>Boolean</code>
         * [.isCommandDisabled(command)](#GuildConfig+isCommandDisabled) ⇒ <code>Boolean</code>
         * [.isListenerDisabled(listener)](#GuildConfig+isListenerDisabled) ⇒ <code>Boolean</code>
         * [.isModOnly()](#GuildConfig+isModOnly) ⇒ <code>Boolean</code>
         * [.isModRole(roleID)](#GuildConfig+isModRole) ⇒ <code>Boolean</code>
         * [.isModUser(userID)](#GuildConfig+isModUser) ⇒ <code>Boolean</code>
-        * [.update(guildConfig)](#GuildConfig+update) ⇒ <code>Promise.&lt;Object&gt;</code>
+        * [.update(guildConfig)](#GuildConfig+update) ⇒ [<code>Promise.&lt;GuildConfig&gt;</code>](#GuildConfig)
         * [.updatePrefixes(prefixArr)](#GuildConfig+updatePrefixes) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>
         * [.updateStateModule(label, [boolean])](#GuildConfig+updateStateModule) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>
         * [.updateStateCommand(label, [boolean])](#GuildConfig+updateStateCommand) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>
@@ -52,7 +52,7 @@
 ### new GuildConfig()
 Default GuildConfig data structure used in AxonCore.
 This class can be extended and changed as you want.
-All methods flagged with "is used internally" can be overriden but need to keep the same name.
+All methods flagged with "is used internally" can be overridden but need to keep the same name.
 
 <a name="GuildConfig+getPrefixes"></a>
 
@@ -79,7 +79,7 @@ Check if the user/role/channel is ignored on the specified guild.
 Check if the user/role/channel is ignored on the specified guild.
 
 **Kind**: instance method of [<code>GuildConfig</code>](#GuildConfig)  
-**Returns**: <code>Boolean</code> - True if the user is one ofthe ignored users  
+**Returns**: <code>Boolean</code> - True if the user is one of the ignored users  
 
 | Param | Type |
 | --- | --- |
@@ -111,7 +111,7 @@ Check if the user/role/channel is ignored on the specified guild.
 
 <a name="GuildConfig+isModuleDisabled"></a>
 
-### guildConfig.isModuleDisabled(command) ⇒ <code>Boolean</code>
+### guildConfig.isModuleDisabled(module) ⇒ <code>Boolean</code>
 Check if the module is disabled on the specified guild.
 *used internally*
 
@@ -120,7 +120,7 @@ Check if the module is disabled on the specified guild.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| command | <code>Command</code> | The command object |
+| module | <code>Module</code> | The module object |
 
 <a name="GuildConfig+isCommandDisabled"></a>
 
@@ -181,16 +181,16 @@ Whether the user ID is in the guild mod users.
 
 <a name="GuildConfig+update"></a>
 
-### guildConfig.update(guildConfig) ⇒ <code>Promise.&lt;Object&gt;</code>
+### guildConfig.update(guildConfig) ⇒ [<code>Promise.&lt;GuildConfig&gt;</code>](#GuildConfig)
 Update the guild config in the cache and DB.
 *not used internally*
 
 **Kind**: instance method of [<code>GuildConfig</code>](#GuildConfig)  
-**Returns**: <code>Promise.&lt;Object&gt;</code> - Updated guildSchema  
+**Returns**: [<code>Promise.&lt;GuildConfig&gt;</code>](#GuildConfig) - Updated guildSchema  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| guildConfig | <code>Object</code> | Guild schema Object |
+| guildConfig | <code>GConfig</code> | Guild schema Object |
 
 <a name="GuildConfig+updatePrefixes"></a>
 
@@ -293,5 +293,5 @@ Creates an instance of GuildConfig.
 | Param | Type | Description |
 | --- | --- | --- |
 | axon | <code>AxonClient</code> |  |
-| values | <code>Object</code> | DB values for the current guild |
+| values | <code>GConfig</code> | DB values for the current guild |
 
