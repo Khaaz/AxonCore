@@ -4,6 +4,7 @@ import {
     EventManager, GuildConfigCache, AxonConfig, ModuleLoader, CommandDispatcher, MessageManager, AxonStaffIDs, AxonOptions, Collection, AHandler, Listener, Resolver,
     Webhooks, AxonTemplate, Module, Command, LOG_LEVELS, Ctx, LibMessage, GuildConfig, CommandContext, AxonCommandError, DEBUG_FLAGS, CommandEnvironment,
 } from './';
+import { Executor } from '..';
 
 export declare class AxonClient extends EventEmitter {
     /** Configs (webhooks, template, custom) */
@@ -44,6 +45,7 @@ export declare class AxonClient extends EventEmitter {
     public moduleLoader: ModuleLoader;
     /** Dispatch commands onMessageCreate. */
     public dispatcher: CommandDispatcher;
+    public executor: Executor;
     /** Message manager object accessible with `<AxonClient>.l` */
     private _messageManager: MessageManager;
 
@@ -207,9 +209,6 @@ export declare class AxonClient extends EventEmitter {
      */
     public initStatus(): void;
 
-    public _execCommand(command: Command, env: CommandEnvironment): void;
-    public _execHelp(command: Command, env: CommandEnvironment): void;
-    public _execListener(listener: Listener, guildConfig: GuildConfig, ...args: any[] ): void;
 
     /**
      * Send full help in DM.
@@ -246,11 +245,4 @@ export declare class AxonClient extends EventEmitter {
      * @memberof AxonClient
      */
     toJSON(): object;
-
-    // events
-    on(event: 'debug', listener: (flags: DEBUG_FLAGS, debugMessage: string) => void): this;
-    on(event: 'commandExecution', listener: (status: boolean, commandFullLabel: string, data: { msg: LibMessage; command: Command; guildConfig: GuildConfig; context: CommandContext;} ) => void): this;
-    on(event: 'commandError', listener: (commandFullLabel: string, data: { msg: LibMessage; command: Command; guildConfig: GuildConfig; error: AxonCommandError; } ) => void): this;
-    on(event: 'listenerExecution', listener: (status: boolean, eventName: string, listenerName: string, data: { listener: Listener; guildConfig: GuildConfig; } ) => void): this;
-    on(event: 'listenerError', listener: (eventName: string, listenerName: string, data: { listener: Listener; guildConfig: GuildConfig; error: Error; } ) => void): this;
 }

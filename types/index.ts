@@ -71,6 +71,7 @@ export { ModuleRegistry } from './Core/Stores/ModuleRegistry';
 export { ASelector } from './Core/ASelector';
 export { Base } from './Core/Base';
 export { CommandDispatcher } from './Core/CommandDispatcher';
+export { Executor } from './Core/Executor';
 export { Module } from './Core/Module';
 export { Validator } from './Core/Validator';
 

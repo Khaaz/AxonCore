@@ -130,6 +130,7 @@ declare namespace AxonCore {
     export import ASelector = Types.ASelector;
     export import Base = Types.Base;
     export import CommandDispatcher = Types.CommandDispatcher;
+    export import Executor = Types.Executor;
     export import Module = Types.Module;
     export import Validator = Types.Validator;
     export import AxonEnums = Types.AxonEnums;
