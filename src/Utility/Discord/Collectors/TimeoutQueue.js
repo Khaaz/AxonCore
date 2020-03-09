@@ -14,12 +14,12 @@ class TimeoutQueue {
     }
 
     /**
-     * Wether the queue is empty or not
+     * Whether the queue is empty or not
      *
      * @returns {Boolean}
      * @memberof TimeoutQueue
      */
-    empty() {
+    isEmpty() {
         return this.queue.length === 0;
     }
 
