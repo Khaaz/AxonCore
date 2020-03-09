@@ -16,7 +16,7 @@ import { COMMAND_EXECUTION_TYPES } from '../../Utility/Constants/AxonEnums';
  * @prop {Array<String>} args - The array of arguments
  * @prop {GuildConfig} guildConfig - The GuildConfig data-structure with all DB saved settings
  * @prop {String} prefix - The prefix used for this command
- * @prop {String} command - The full label of the command being
+ * @prop {String} command - The full label of the command being executed
  * @prop {COMMAND_EXECUTION_TYPES} executionType - Execution type: admin, owner, regular
  */
 class CommandEnvironment {
