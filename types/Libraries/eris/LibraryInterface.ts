@@ -39,4 +39,16 @@ export declare class ErisInterface extends LibraryInterface {
      * @memberof ErisInterface
      */
     public onceReady(func: () => void): void;
+    /**
+     * @memberof DjsInterface
+     */
+    public getMessageCreate(func: (msg: Eris.Message) => void): (msg: Eris.Message) => void;
+    /**
+     * @memberof DjsInterface
+     */
+    public getMessageUpdate(func: (oldMsg: Eris.Message, msg: Eris.Message) => void): (msg: Eris.Message, oldMsg: Eris.Message) => void;
+    /**
+     * @memberof DjsInterface
+     */
+    public getMessageDelete(func: (msg: Eris.Message) => void): (msg: Eris.Message) => void;
 }

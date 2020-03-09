@@ -606,7 +606,7 @@ interface CollectorOptions {
     /**
      * Whether or not to return messages with lowercase content. Default: content unchanged
      */
-    caseSensitive?: boolean;
+    caseInsensitive?: boolean;
 }
 
 interface AxonOptionsSettings {
@@ -915,6 +915,20 @@ interface CommandEnvironmentParams extends CommandEnvironmentBase {
     command: Command;
 }
 
+interface CollectorContainer<T> {
+    id: string;
+    collected: Map<string, T>;
+    options: object;
+    resolve<U>(value: U | PromiseLike<U>): Promise<U>;
+    resolve(): Promise<void>;
+    reject<U = never>(reason?: any): Promise<U>;
+}
+
+interface Timeout {
+    id: string;
+    timeout: number;
+}
+
 export {
     ModuleInfo, ModuleData, AxonJSON, GuildJSON, AConfig, AxonConfigRaw, GConfig, GuildConfigRaw, CommandInfo,
     ACommandOptions, CommandPerms, CommandData, AxonTemplate, ListenerInfo, ListenerData, APIAxonMSGCont, AxonMSGCont, AxonMSGOpt, PermissionObject,
@@ -922,5 +936,6 @@ export {
     AxonOptionsSettings, AOptionsSettings, AxonLanguageResponse, Languages, AxonOptionsBase, WebhookConfig, Webhooks, AxonOptionsPrefixes,
     AxonOptionsInfo, AxonOptionsStaff, AxonOptionsExtensions, AxonConfs, AxonParams, Info, AxonInfo, AxonStaffIDs, LibraryInterfaceStructs, PresenceGame,
     RawAttachment, RawUser, WebhookResponse, DjsContent, DjsWebhookContent, DjsPresenceGame, ErisContent, ErisWebhookContent, ErisPresenceGame,
-    CommandEnvironmentProps, CommandEnvironmentParams,
+    CommandEnvironmentProps, CommandEnvironmentParams, CollectorContainer, Timeout,
 };
+Promise.resolve();

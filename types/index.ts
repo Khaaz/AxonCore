@@ -38,7 +38,7 @@ export {
     AxonOptionsSettings, AOptionsSettings, AxonLanguageResponse, Languages, AxonOptionsBase, WebhookConfig, Webhooks, AxonOptionsPrefixes,
     AxonOptionsInfo, AxonOptionsStaff, AxonOptionsExtensions, AxonConfs, AxonParams, Info, AxonInfo, AxonStaffIDs, LibraryInterfaceStructs, PresenceGame,
     RawAttachment, RawUser, WebhookResponse, DjsContent, DjsWebhookContent, DjsPresenceGame, ErisContent, ErisWebhookContent, ErisPresenceGame,
-    CommandEnvironmentParams, CommandEnvironmentProps,
+    CommandEnvironmentParams, CommandEnvironmentProps, CollectorContainer, Timeout,
 } from './misc/interfaces';
 
 export { Command } from './Structures/Command/Command';
@@ -84,11 +84,13 @@ export {
 } from './Utility/Constants/DiscordEnums';
 
 export { Embed } from './Utility/Discord/Embed';
-export { MessageCollector } from './Utility/Discord/MessageCollector';
 export { Prompt } from './Utility/Discord/Prompt';
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore Typings file is currently empty, waiting for #51
-export { ReactionCollector } from './Utility/Discord/ReactionCollector';
+export { ReactionCollector } from './Utility/Discord/Collectors/ReactionCollector';
+export { MessageCollector } from './Utility/Discord/Collectors/MessageCollector';
+export { Collector } from './Utility/Discord/Collectors/Collector';
+export { TimeoutQueue } from './Utility/Discord/Collectors/TimeoutQueue';
 
 export { AsyncQueue } from './Utility/External/AsyncQueue';
 export { AutoQueue } from './Utility/External/AutoQueue';

@@ -102,6 +102,10 @@ declare namespace AxonCore {
     export import ErisContent = Types.ErisContent;
     export import ErisWebhookContent = Types.ErisWebhookContent;
     export import ErisPresenceGame = Types.ErisPresenceGame;
+    export import CommandEnvironmentParams = Types.CommandEnvironmentParams;
+    export import CommandEnvironmentProps = Types.CommandEnvironmentProps;
+    export import CollectorContainer = Types.CollectorContainer;
+    export import Timeout = Types.Timeout;
     export import Command = Types.Command;
     export import CommandContext = Types.CommandContext;
     export import CommandCooldown = Types.CommandCooldown;
@@ -145,6 +149,7 @@ declare namespace AxonCore {
     export import MessageCollector = Types.MessageCollector;
     export import Prompt = Types.Prompt;
     export import ReactionCollector = Types.ReactionCollector;
+    export import TimeoutQueue = Types.TimeoutQueue;
     export import AsyncQueue = Types.AsyncQueue;
     export import AutoQueue = Types.AutoQueue;
     export import FunctionQueue = Types.FunctionQueue;

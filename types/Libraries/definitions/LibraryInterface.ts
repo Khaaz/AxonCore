@@ -56,4 +56,19 @@ export declare class LibraryInterface {
      * @memberof LibraryInterface
      */
     public onceReady(func: () => void): void; // Not Implemented
+
+    /**
+     * @memberof LibraryInterface
+     */
+    public getMessageCreate(func: (msg: LibMessage) => void): Function;
+
+    /**
+     * @memberof LibraryInterface
+     */
+    public getMessageUpdate(func: (oldMsg: LibMessage, msg: LibMessage) => void): Function;
+
+    /**
+     * @memberof LibraryInterface
+     */
+    public getMessageDelete(func: (msg: LibMessage) => void): Function;
 }

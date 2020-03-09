@@ -23,7 +23,28 @@ export declare class DjsInterface extends LibraryInterface {
      * @memberof DjsInterface
      */
     constructor(botClient: djs.Client, token: string);
+    /**
+     * @memberof DjsInterface
+     */
     public enums: DjsEnums;
+    /**
+     * @memberof DjsInterface
+     */
     public HANDLERS: object; // Not going to list them all
+    /**
+     * @memberof DjsInterface
+     */
     public onMessageCreate(func: (message: djs.Message) => void): void;
+    /**
+     * @memberof DjsInterface
+     */
+    public getMessageCreate(func: (msg: djs.Message) => void): (msg: djs.Message) => void;
+    /**
+     * @memberof DjsInterface
+     */
+    public getMessageUpdate(func: (oldMsg: djs.Message, msg: djs.Message) => void): (oldMsg: djs.Message, msg: djs.Message) => void;
+    /**
+     * @memberof DjsInterface
+     */
+    public getMessageDelete(func: (msg: djs.Message) => void): (msg: djs.Message) => void;
 }
