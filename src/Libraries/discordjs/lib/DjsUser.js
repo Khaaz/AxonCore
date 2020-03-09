@@ -12,7 +12,7 @@ class DjsUser extends User {
      * @memberof DjsUser
      */
     getDM(user) {
-        return Promise.resolve(user.DMChannel);
+        return user.createDM();
     }
 }
 
