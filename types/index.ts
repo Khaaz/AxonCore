@@ -41,38 +41,38 @@ export {
     CommandEnvironmentParams, CommandEnvironmentProps, CollectorContainer, Timeout,
 } from './misc/interfaces';
 
-export { Command } from './Structures/Command/Command';
-export { CommandContext } from './Structures/Command/CommandContext';
-export { CommandCooldown } from './Structures/Command/CommandCooldown';
-export { CommandEnvironment } from './Structures/Command/CommandEnvironment';
-export { CommandOptions } from './Structures/Command/CommandOptions';
-export { CommandPermissions } from './Structures/Command/CommandPermissions';
-export { CommandResponse } from './Structures/Command/CommandResponse';
+export { Command } from './Core/Command/Command';
+export { CommandContext } from './Core/Command/CommandContext';
+export { CommandCooldown } from './Core/Command/CommandCooldown';
+export { CommandEnvironment } from './Core/Command/CommandEnvironment';
+export { CommandOptions } from './Core/Command/CommandOptions';
+export { CommandPermissions } from './Core/Command/CommandPermissions';
+export { CommandResponse } from './Core/Command/CommandResponse';
 
-export { AxonConfig } from './Structures/DataStructure/AxonConfig';
-export { GuildConfig } from './Structures/DataStructure/GuildConfig';
+export { AxonConfig } from './Core/Models/AxonConfig';
+export { GuildConfig } from './Core/Models/GuildConfig';
 
-export { AHandler } from './Structures/Events/AHandler';
-export { EventManager } from './Structures/Events/EventManager';
-export { Listener } from './Structures/Events/Listener';
+export { AHandler } from './Core/Events/AHandler';
+export { EventManager } from './Core/Events/EventManager';
+export { Listener } from './Core/Events/Listener';
 
-export { ALoader } from './Structures/Loaders/ALoader';
-export { ClientInitialiser } from './Structures/Loaders/ClientInitialiser';
-export { CommandLoader } from './Structures/Loaders/CommandLoader';
-export { ListenerLoader } from './Structures/Loaders/ListenerLoader';
-export { ModuleLoader } from './Structures/Loaders/ModuleLoader';
+export { ALoader } from './Core/Loaders/ALoader';
+export { ClientInitialiser } from './Core/Loaders/ClientInitialiser';
+export { CommandLoader } from './Core/Loaders/CommandLoader';
+export { ListenerLoader } from './Core/Loaders/ListenerLoader';
+export { ModuleLoader } from './Core/Loaders/ModuleLoader';
 
-export { ARegistry } from './Structures/Stores/ARegistry';
-export { CommandRegistry } from './Structures/Stores/CommandRegistry';
-export { GuildConfigCache } from './Structures/Stores/GuildConfigCache';
-export { ListenerRegistry } from './Structures/Stores/ListenerRegistry';
-export { ModuleRegistry } from './Structures/Stores/ModuleRegistry';
+export { ARegistry } from './Core/Stores/ARegistry';
+export { CommandRegistry } from './Core/Stores/CommandRegistry';
+export { GuildConfigCache } from './Core/Stores/GuildConfigCache';
+export { ListenerRegistry } from './Core/Stores/ListenerRegistry';
+export { ModuleRegistry } from './Core/Stores/ModuleRegistry';
 
-export { ASelector } from './Structures/ASelector';
-export { Base } from './Structures/Base';
-export { CommandDispatcher } from './Structures/CommandDispatcher';
-export { Module } from './Structures/Module';
-export { Validator } from './Structures/Validator';
+export { ASelector } from './Core/ASelector';
+export { Base } from './Core/Base';
+export { CommandDispatcher } from './Core/CommandDispatcher';
+export { Module } from './Core/Module';
+export { Validator } from './Core/Validator';
 
 export {
     AxonEnums, HTTP_CODE, HttpMessages as HTTP_MESSAGES, LIBRARY_TYPES, LOGGER_TYPES, DB_TYPES, COMMAND_EXECUTION_TYPES, COMMAND_EXECUTION_STATE,
