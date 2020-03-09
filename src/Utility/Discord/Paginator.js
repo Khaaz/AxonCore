@@ -6,17 +6,15 @@
  * 
  * @param {Array<any>} content - The array to paginate.
  * @param {Number} pages - The amount of chunks or "pages" to create with the data.
- * @param {Object} opts - The options for instaniation.
  */
 class Paginator {
     constructor(content = [], pages = 2) {
         this.__data = content;
-        this.__opts = opts;
         this.__chunked = [];
         this.__chunks = pages;
         this.__page = 0;
         this.chunk();
-    } 
+    }
 
     /**
      * Chunks given data.
@@ -26,7 +24,7 @@ class Paginator {
      */
     chunk(size = this.__chunks) {
         for (let i = 0; i < this.__data.length; i++) {
-            let index = Math.floor(i / size);
+            const index = Math.floor(i / size);
 
             if (!this.__chunked[index]) {
                 this.__chunked[index] = [];
@@ -105,7 +103,7 @@ class Paginator {
 
         this.__data.concat(data);
         this.chunk();
-        
+
         return this.__chunked;
     }
 
