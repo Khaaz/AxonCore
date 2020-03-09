@@ -10,7 +10,7 @@ import Collector from './Collector';
  * @author VoidNull, KhaaZ
  *
  * @class MessageCollector
- * @extends Collector
+ * @extends Collector<Message>
  *
  * @prop {Object} options
  * @prop {Number} options.timeout - Number of ms before timing out
@@ -67,7 +67,7 @@ class MessageCollector extends Collector {
      * @param {Number} [options.count] - The amount of messages to collect before automatically ending
      * @param {Boolean} [options.ignoreBots] - Whether or not to ignore bots
      * @param {String} [options.userID] - The user id to listen for (listens to all messages if not specified)
-     * @returns {Promise<Map<Message>>} Map of messages collected.
+     * @returns {Promise<Map<String, Message>>} Map of messages collected.
      * @memberof MessageCollector
      * @example
      * const messages = await collector.run(msg.channel, { caseInsensitive: false });

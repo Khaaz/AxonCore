@@ -76,7 +76,7 @@ class ErisInterface extends LibraryInterface {
 
     /**
      * @param {(msg: Message) => void}
-     * @returns {(msg: Message, oldMsg:Message) => void}
+     * @returns {(msg: Message, oldMsg: Message) => void}
      * @memberof ErisInterface
      */
     getMessageUpdate(func) {

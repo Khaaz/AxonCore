@@ -5,9 +5,10 @@ import TimeoutQueue from './TimeoutQueue';
 
 /**
  * @typedef {import('../../../AxonClient').default} AxonClient
+ * @typedef {import('../../../Libraries/definitions/LibraryInterface').default} LibraryInterface
  * @typedef {{
- * id: String, collected: Map, options: Object, resolve: () => {}, reject: () => {}),
- * }} CollectorContainer
+ * id: String, collected: Map<String, T>, options: Object, resolve: (T) => Promise<T>, reject: (T) => Promise<T>),
+ * }} CollectorContainer<T>
  */
 
 /**
@@ -18,10 +19,12 @@ import TimeoutQueue from './TimeoutQueue';
  * It is advised to only use one instance per Collector type.
  * This Collector handles using only one Collector instance with many collectors running.
  *
+ * @template T
+ *
  * @class Collector
  * @extends {EventEmitter}
- * @prop {AxonClient} _client - The AxonClient instance
- * @prop {Collection<CollectorContainer>} collectors - Collection of CollectorContainer
+ * @prop {AxonClient} _axon - The AxonClient instance
+ * @prop {Collection<CollectorContainer<T>>} collectors - Collection of CollectorContainer
  * @prop {TimeoutQueue} timeoutQueue - The current timeout queue sorted with the first timeout due at the top of the queue
  * @prop {Number} _INCREMENT - Unique increment count used to generate ids
  * @prop {Boolean} running - Whether the Collector is currently running
@@ -118,9 +121,9 @@ class Collector extends EventEmitter {
      * Run this Collector with the given options
      *
      * @param {Object} [options={}]
-     * @param {Number} options.timeout - Number of millisecond before timing out
+     * @param {Number} options.timeout - Number of milliseconds before timing out
      * @param {Number} options.count - Number of elements to collect before resolving
-     * @returns {Promise<Map>} - Collection of elements to resolve
+     * @returns {Promise<Map<String, T>>} - Map of elements resolved
      * @memberof Collector
      */
     run(options = {} ) {
@@ -140,7 +143,7 @@ class Collector extends EventEmitter {
     }
 
     /**
-     * Unset all listeners (strop listening)
+     * Unset all listeners (stop listening)
      *
      * @memberof Collector
      */
@@ -199,7 +202,7 @@ class Collector extends EventEmitter {
      * @memberof Collector
      */
     timeout() {
-        if (this.timeoutQueue.empty() ) {
+        if (this.timeoutQueue.isEmpty() ) {
             return;
         }
         
@@ -214,19 +217,20 @@ class Collector extends EventEmitter {
     /**
      * Fired to collect an element
      * @event Collector#collect
-     * @param {Array<CollectorContainer>} collectors - The collectors that will collect the element
+     * @param {Array<CollectorContainer<T>>} collectors - The collectors that will collect the element
      * @param {Object} obj
-     * @param {Object} obj.id - The collected element id
-     * @param {Object} obj.collected - The collected element
+     * @param {String} obj.id - The collected element id
+     * @param {T} obj.collected - The collected element
+     * @memberof Collector
      */
 
     /**
      * Handles on collect action
      *
      * @param {Array<CollectorContainer>} collectors
-     * @param {Object} param { id, collected }
-     * @param {String} param.id
-     * @param {Object} collected - element collected
+     * @param {Object} param - { id, collected }
+     * @param {String} param.id - The collected element id
+     * @param {T} collected - Element collected
      * @memberof Collector
      */
     onCollect(collectors, { id, collected } ) {
