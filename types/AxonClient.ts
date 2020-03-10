@@ -2,7 +2,7 @@ import * as EventEmitter from 'events';
 import {
     AxonConfs, AxonParams, Info, AxonInfo, ALogger, AxonUtils, LibClient, LibraryInterface, Utils, ADBProvider, ModuleRegistry, CommandRegistry, ListenerRegistry,
     EventManager, GuildConfigCache, AxonConfig, ModuleLoader, CommandDispatcher, MessageManager, AxonStaffIDs, AxonOptions, Collection, AHandler, Listener, Resolver,
-    Webhooks, AxonTemplate, Module, Command, LOG_LEVELS, Ctx, LibMessage, GuildConfig, CommandContext, AxonCommandError, DEBUG_FLAGS, CommandEnvironment,
+    Webhooks, AxonTemplate, Module, Command, LOG_LEVELS, Ctx, LibMessage, GuildConfig, DEBUG_FLAGS,
 } from './';
 import { Executor } from '..';
 
