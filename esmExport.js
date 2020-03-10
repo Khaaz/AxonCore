@@ -29,6 +29,10 @@ export { default as GuildConfigCache } from './src/Core/Stores/GuildConfigCache'
 
 // Misc
 export { default as Executor } from './src/Core/Executor';
+export { default as ALoader } from './src/Core/Loaders/ALoader';
+export { default as CommandLoader } from './src/Core/Loaders/CommandLoader';
+export { default as EventLoader } from './src/Core/Loaders/EventLoader';
+export { default as ModuleLoader } from './src/Core/Loaders/ModuleLoader';
 
 // Models
 export { default as AxonConfig } from './src/Core/Models/AxonConfig';
