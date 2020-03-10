@@ -24,63 +24,6 @@ class Executor {
     }
 
     /**
-     * Fired when a debug message need to be sent
-     * @event AxonClient#debug
-     * @prop {DEBUG_FLAGS} flags - debug flags used used to have more information about the event
-     * @prop {String} debugMessage - debug message with information about the situation
-     * @memberof AxonClient
-     */
-
-    /**
-     * Fired when a command is successfully ran
-     * @event AxonClient#commandExecution
-     * @prop {Boolean} status - If the command was successfully executed or not
-     * @prop {String} commandFullLabel - The command fullLabel
-     * @prop {Object} data
-     * @prop {Message} data.msg - The message that triggered the command
-     * @prop {Command} data.command - The Command that was executed
-     * @prop {GuildConfig} data.guildConfig - The GuildConfig
-     * @prop {CommandContext} data.context - The execution context
-     * @memberof AxonClient
-     */
-
-    /**
-     * Fired when a command fails
-     * @event AxonClient#commandError
-     * @prop {String} commandFullLabel - The command fullLabel
-     * @prop {Object} data
-     * @prop {Message} data.msg - The message that triggered the command
-     * @prop {Command} data.command - The Command that was executed
-     * @prop {GuildConfig} data.guildConfig - The GuildConfig
-     * @prop {AxonCommandError} data.error - The error
-     * @memberof AxonClient
-     */
-
-    /**
-     * Fired when a listener is executed
-     * @event AxonClient#listenerExecution
-     * @prop {Boolean} status - Whereas the listener was successfully executed or not
-     * @prop {String} eventName - The discord event name
-     * @prop {String} listenerName - The listener label
-     * @prop {Object} data - Additional information
-     * @prop {Listener} data.listener - The Listener that was executed
-     * @prop {GuildConfig} data.guildConfig - The GuildConfig object
-     * @memberof AxonClient
-     */
-
-    /**
-     * Fired when a listener errors
-     * @event AxonClient#listenerError
-     * @prop {String} eventName - The discord event name
-     * @prop {String} listenerName - The Listener label
-     * @prop {Object} data - Additional information
-     * @prop {Listener} data.listener - The Listener that was executed
-     * @prop {GuildConfig} data.guildConfig - The GuildConfig object
-     * @prop {Error} data.error - The error
-     * @memberof AxonClient
-     */
-
-    /**
      * @param {Listener} listener
      * @param {GuildConfig} guildConfig
      * @param {...any} args
