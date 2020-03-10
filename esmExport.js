@@ -27,6 +27,9 @@ export { default as ListenerRegistry } from './src/Core/Stores/ListenerRegistry'
 export { default as ModuleRegistry } from './src/Core/Stores/ModuleRegistry';
 export { default as GuildConfigCache } from './src/Core/Stores/GuildConfigCache';
 
+// Misc
+export { default as Executor } from './src/Core/Executor';
+
 // Models
 export { default as AxonConfig } from './src/Core/Models/AxonConfig';
 export { default as GuildConfig } from './src/Core/Models/GuildConfig';
