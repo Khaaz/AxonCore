@@ -18,6 +18,7 @@ export { default as CommandEnvironment } from './src/Core/Command/CommandEnviron
 // Listener
 export { default as EventManager } from './src/Core/Event/EventManager';
 export { default as Listener } from './src/Core/Event/Listener';
+export { default as AHandler } from './src/Core/Event/AHandler';
 
 // Stores
 export { default as ARegistry } from './src/Core/Stores/ARegistry';
