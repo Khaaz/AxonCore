@@ -74,6 +74,7 @@ export { default as Collector } from './src/Utility/Discord/Collectors/Collector
 export { default as MessageCollector } from './src/Utility/Discord/Collectors/MessageCollector';
 export { default as ReactionCollector } from './src/Utility/Discord/Collectors/ReactionCollector';
 // External
+export { default as SortedList } from './src/Utility/External/SortedList';
 export { default as Stack } from './src/Utility/External/Stack';
 export { default as Queue } from './src/Utility/External/Queue';
 export { default as FunctionQueue } from './src/Utility/External/FunctionQueue';

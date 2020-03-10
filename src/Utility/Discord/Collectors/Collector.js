@@ -1,7 +1,7 @@
 import { EventEmitter } from 'events';
 import NotImplementedException from '../../../Errors/NotImplementedException';
 import Collection from '../../Collection';
-import TimeoutQueue from './TimeoutQueue';
+import SortedList from '../../External/SortedList';
 import AxonError from '../../../Errors/AxonError';
 
 /**
@@ -10,6 +10,7 @@ import AxonError from '../../../Errors/AxonError';
  * @typedef {{
  * id: String, collected: Map<String, T>, options: Object, resolve: (T) => Promise<T>, reject: (T) => Promise<T>),
  * }} CollectorContainer<T>
+ * @typedef {{ id: String, timeout: Number }} Timeout
  */
 
 /**
@@ -26,7 +27,7 @@ import AxonError from '../../../Errors/AxonError';
  * @extends {EventEmitter}
  * @prop {AxonClient} _axon - The AxonClient instance
  * @prop {Collection<CollectorContainer<T>>} collectors - Collection of CollectorContainer
- * @prop {TimeoutQueue} timeoutQueue - The current timeout queue sorted with the first timeout due at the top of the queue
+ * @prop {SortedList<Timeout>} timeoutQueue - The current timeout sorted with the first timeout due at the top of the queue
  * @prop {Number} _INCREMENT - Unique increment count used to generate ids
  * @prop {Boolean} running - Whether the Collector is currently running
  * @prop {String} _intervalID - setInterval ID used to clear setinterval
@@ -43,7 +44,7 @@ class Collector extends EventEmitter {
         this._axon = axonClient;
 
         this.collectors = new Collection();
-        this.timeoutQueue = new TimeoutQueue();
+        this.timeoutQueue = new SortedList( ( (toInsert, baseElement) => toInsert.timeout >= baseElement.timeout) );
 
         this._INCREMENT = 0;
         this.running = false;
@@ -191,7 +192,7 @@ class Collector extends EventEmitter {
         } );
 
         const timestamp = Date.now() + options.timeout;
-        this.timeoutQueue.add(id, timestamp);
+        this.timeoutQueue.add( { id, timeout: timestamp } );
 
         if (!this.running) {
             this.setListeners();
@@ -219,8 +220,8 @@ class Collector extends EventEmitter {
         }
         
         this._intervalID = setInterval( () => {
-            while (this.timeoutQueue.peek() && Date.now() > this.timeoutQueue.peek().timeout) {
-                const { id }  = this.timeoutQueue.getNext();
+            while (this.timeoutQueue.first() && Date.now() > this.timeoutQueue.first().timeout) {
+                const { id }  = this.timeoutQueue.shift();
                 this.emit('timeout', id);
             }
         }, 100);
