@@ -69,6 +69,7 @@ import { WEBHOOK_TYPES, LOG_LEVELS, WEBHOOK_TO_COLOR, DEBUG_FLAGS } from './Util
  * @prop {GuildConfigCache} guildConfigs - The Manager that handles GuildConfigs (cache / DB etc)
  * @prop {AxonConfig} [axonConfig] - The AxonConfig object that handles globally blacklisted users and guilds
  * @prop {CommandDispatcher} dispatcher - Dispatch commands onMessageCreate.
+ * @prop {Executor} executor - Executor class that handles executing commands and listeners
  * @prop {ModuleLoader} moduleLoader - Load, unload modules.
  * @prop {MessageManager} _messageManager - Message manager object accessible with `<AxonClient>.l`
  * @prop {LibraryInterface} library - LibraryInterface object depending the lib used
@@ -663,9 +664,9 @@ class AxonClient extends EventEmitter {
 }
 
 /**
- * Fired when a debug message need to be sent
+ * Fired when a debug message needs to be sent
  * @event AxonClient#debug
- * @prop {DEBUG_FLAGS} flags - Debug flags used used to have more information about the event
+ * @prop {DEBUG_FLAGS} flags - Debug flags used to have more information about the event
  * @prop {String} debugMessage - Debug message with information about the situation
  * @memberof AxonClient
  */
@@ -698,7 +699,7 @@ class AxonClient extends EventEmitter {
 /**
  * Fired when a listener is executed
  * @event AxonClient#listenerExecution
- * @prop {Boolean} status - Whereas the listener was successfully executed or not
+ * @prop {Boolean} status - Whether the listener was successfully executed or not
  * @prop {String} eventName - The discord event name
  * @prop {String} listenerName - The listener label
  * @prop {Object} data - Additional information

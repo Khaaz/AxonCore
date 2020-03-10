@@ -3,14 +3,18 @@ import { DEBUG_FLAGS } from '../Utility/Constants/AxonEnums';
 
 /**
  * @typedef {import('../AxonClient').default} AxonClient
+ * @typedef {import('../Core/Event/Listener').default} Listener
+ * @typedef {import('../Core/Command/Command').default} Command
+ * @typedef {import('../Core/Command/CommandEnvironment').default} CommandEnvironment
+ * @typedef {import('../Core/Models/GuildConfig').default} GuildConfig
  */
 
 /**
- * Executor class. Execute and handle execution of listeners and command in the framework
+ * Executor class. Execute and handle execution of listeners and commands in the framework
  * Will emit events depending on the execution
  *
  * @class Executor
- * @prop {AxonClient} axon
+ * @prop {AxonClient} _axon
  */
 class Executor {
     /**
