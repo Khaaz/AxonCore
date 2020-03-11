@@ -69,6 +69,7 @@ import { WEBHOOK_TYPES, LOG_LEVELS, WEBHOOK_TO_COLOR, DEBUG_FLAGS } from './Util
  * @prop {GuildConfigCache} guildConfigs - The Manager that handles GuildConfigs (cache / DB etc)
  * @prop {AxonConfig} [axonConfig] - The AxonConfig object that handles globally blacklisted users and guilds
  * @prop {CommandDispatcher} dispatcher - Dispatch commands onMessageCreate.
+ * @prop {Executor} executor - Executor class that handles executing commands and listeners
  * @prop {ModuleLoader} moduleLoader - Load, unload modules.
  * @prop {MessageManager} _messageManager - Message manager object accessible with `<AxonClient>.l`
  * @prop {LibraryInterface} library - LibraryInterface object depending the lib used
@@ -661,5 +662,62 @@ class AxonClient extends EventEmitter {
         return Base.prototype[util.inspect.custom].call(this);
     }
 }
+
+/**
+ * Fired when a debug message needs to be sent
+ * @event AxonClient#debug
+ * @prop {DEBUG_FLAGS} flags - Debug flags used to have more information about the event
+ * @prop {String} debugMessage - Debug message with information about the situation
+ * @memberof AxonClient
+ */
+
+/**
+ * Fired when a command is successfully ran
+ * @event AxonClient#commandExecution
+ * @prop {Boolean} status - If the command was successfully executed or not
+ * @prop {String} commandFullLabel - The command fullLabel
+ * @prop {Object} data
+ * @prop {Message} data.msg - The message that triggered the command
+ * @prop {Command} data.command - The Command that was executed
+ * @prop {GuildConfig} data.guildConfig - The GuildConfig
+ * @prop {CommandContext} data.context - The execution context
+ * @memberof AxonClient
+ */
+
+/**
+ * Fired when a command fails
+ * @event AxonClient#commandError
+ * @prop {String} commandFullLabel - The command fullLabel
+ * @prop {Object} data
+ * @prop {Message} data.msg - The message that triggered the command
+ * @prop {Command} data.command - The Command that was executed
+ * @prop {GuildConfig} data.guildConfig - The GuildConfig
+ * @prop {AxonCommandError} data.error - The error
+ * @memberof AxonClient
+ */
+
+/**
+ * Fired when a listener is executed
+ * @event AxonClient#listenerExecution
+ * @prop {Boolean} status - Whether the listener was successfully executed or not
+ * @prop {String} eventName - The discord event name
+ * @prop {String} listenerName - The listener label
+ * @prop {Object} data - Additional information
+ * @prop {Listener} data.listener - The Listener that was executed
+ * @prop {GuildConfig} data.guildConfig - The GuildConfig object
+ * @memberof AxonClient
+ */
+
+/**
+ * Fired when a listener errors
+ * @event AxonClient#listenerError
+ * @prop {String} eventName - The discord event name
+ * @prop {String} listenerName - The Listener label
+ * @prop {Object} data - Additional information
+ * @prop {Listener} data.listener - The Listener that was executed
+ * @prop {GuildConfig} data.guildConfig - The GuildConfig object
+ * @prop {Error} data.error - The error
+ * @memberof AxonClient
+ */
     
 export default AxonClient;

@@ -87,7 +87,7 @@ class MessageCollector extends Collector {
      * Get all CollectorContainers that will collect from this particular message
      *
      * @param {Message} message
-     * @returns {Array<CollectorContainer>}
+     * @returns {Array<CollectorContainer<Message>>}
      * @memberof MessageCollector
      */
     getCollectors(message) {
@@ -118,7 +118,7 @@ class MessageCollector extends Collector {
 
     /**
      * Function bound to messageDelete event.
-     * Remove the message from all collector that collected this message
+     * Remove the message from all collectors that collected this message
      *
      * @param {Message} msg
      * @memberof MessageCollector
@@ -135,7 +135,7 @@ class MessageCollector extends Collector {
 
     /**
      * Function bound to messageUpdate event.
-     * Updates the message from all collector that collected this message
+     * Updates the message from all collectors that collected this message
      *
      * @param {Message} oldMsg
      * @param {Message} msg

@@ -18,6 +18,7 @@ export { default as CommandEnvironment } from './src/Core/Command/CommandEnviron
 // Listener
 export { default as EventManager } from './src/Core/Event/EventManager';
 export { default as Listener } from './src/Core/Event/Listener';
+export { default as AHandler } from './src/Core/Event/AHandler';
 
 // Stores
 export { default as ARegistry } from './src/Core/Stores/ARegistry';
@@ -25,6 +26,14 @@ export { default as CommandRegistry } from './src/Core/Stores/CommandRegistry';
 export { default as ListenerRegistry } from './src/Core/Stores/ListenerRegistry';
 export { default as ModuleRegistry } from './src/Core/Stores/ModuleRegistry';
 export { default as GuildConfigCache } from './src/Core/Stores/GuildConfigCache';
+
+// Misc
+export { default as Executor } from './src/Core/Executor';
+export { default as CommandDispatcher } from './src/Core/CommandDispatcher';
+export { default as ALoader } from './src/Core/Loaders/ALoader';
+export { default as CommandLoader } from './src/Core/Loaders/CommandLoader';
+export { default as ListenerLoader } from './src/Core/Loaders/ListenerLoader';
+export { default as ModuleLoader } from './src/Core/Loaders/ModuleLoader';
 
 // Models
 export { default as AxonConfig } from './src/Core/Models/AxonConfig';

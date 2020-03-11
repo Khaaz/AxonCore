@@ -2,6 +2,7 @@ import { EventEmitter } from 'events';
 import NotImplementedException from '../../../Errors/NotImplementedException';
 import Collection from '../../Collection';
 import TimeoutQueue from './TimeoutQueue';
+import AxonError from '../../../Errors/AxonError';
 
 /**
  * @typedef {import('../../../AxonClient').default} AxonClient
@@ -118,19 +119,15 @@ class Collector extends EventEmitter {
     }
 
     /**
-     * Run this Collector with the given options
+     * Run this Collector. Main method (called by the user).
+     * Should be overriden in any child that extends this class.
      *
-     * @param {Object} [options={}]
-     * @param {Number} options.timeout - Number of milliseconds before timing out
-     * @param {Number} options.count - Number of elements to collect before resolving
+     * @param {...any}
      * @returns {Promise<Map<String, T>>} - Map of elements resolved
      * @memberof Collector
      */
-    run(options = {} ) {
-        return this._run( {
-            timeout: options.timeout || 10000,
-            count: options.count || 10,
-        } );
+    run(...args) { // eslint-disable-line no-unused-vars
+        throw new NotImplementedException();
     }
 
     /**
@@ -151,8 +148,23 @@ class Collector extends EventEmitter {
         throw new NotImplementedException();
     }
 
-    
+    /**
+     * Run this Collector with the given options
+     *
+     * @param {Object} [options={}]
+     * @param {Number} options.timeout - Number of milliseconds before timing out
+     * @param {Number} options.count - Number of elements to collect before resolving
+     * @returns {Promise<Map<String, T>>} - Map of elements resolved
+     * @memberof Collector
+     */
     _run(options) {
+        if (!options.timeout) {
+            throw new AxonError('Please specify a valid timeout time.', 'Collector');
+        }
+        if (!options.count) {
+            throw new AxonError('Please specify a valid count limit.', 'Collector');
+        }
+
         const promise = new Promise( (resolve, reject) => {
             this._preRun(options, resolve, reject);
         } );
