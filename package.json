@@ -9,7 +9,8 @@
     "node": ">=8.0.0"
   },
   "dependencies": {
-    "esm": "^3.2.25"
+    "esm": "^3.2.25",
+    "inquirer": "^7.1.0"
   },
   "optionalDependencies": {
     "mongoose": "^5.7.7"
@@ -47,7 +48,8 @@
     "start:eris": "node -r esm examples/eris/src/index.js",
     "start:djs": "node -r esm examples/djs/src/index.js",
     "pm2start:eris": "node examples/eris/scripts/start.js",
-    "pm2start:djs": "node examples/djs/scripts/start.js"
+    "pm2start:djs": "node examples/djs/scripts/start.js",
+    "postinstall": "node typings.js"
   },
   "repository": {
     "type": "git",
