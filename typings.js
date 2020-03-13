@@ -1,6 +1,12 @@
 const { prompt } = require('inquirer');
 const { copyFileSync, writeFileSync } = require('fs');
 
+const Libraries = [
+    'eris',
+    'discordjs',
+    'detritus',
+];
+
 function promptTypings() {
     return prompt( [
         {
@@ -20,18 +26,12 @@ function promptTypings() {
     ] );
 }
 
-const libraries = [
-    'eris',
-    'discordjs',
-    'detritus',
-];
-
 async function checkConfig() {
     let config;
     try {
         config = require('../../.axoncorerc.json');
         
-        if (!libraries.includes(config.library) ) {
+        if (!Libraries.includes(config.library) ) {
             throw new Error();
         }
     } catch (error) {
