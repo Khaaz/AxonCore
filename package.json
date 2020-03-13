@@ -49,7 +49,7 @@
     "start:djs": "node -r esm examples/djs/src/index.js",
     "pm2start:eris": "node examples/eris/scripts/start.js",
     "pm2start:djs": "node examples/djs/scripts/start.js",
-    "postinstall": "node typings.js"
+    "postinstall": "node ./scripts/typings.js"
   },
   "repository": {
     "type": "git",
