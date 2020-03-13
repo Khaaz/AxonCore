@@ -1,9 +1,8 @@
 const { prompt } = require('inquirer');
 const { copyFileSync, writeFileSync } = require('fs');
-let config;
 
-async function promptTypings() {
-    const answer = await prompt( [
+function promptTypings() {
+    return prompt( [
         {
             name: 'library',
             type: 'list',
@@ -19,7 +18,6 @@ async function promptTypings() {
             filter: (input) => input.toLowerCase().replace('.', ''),
         },
     ] );
-    config = answer;
 }
 
 const libraries = [
@@ -29,6 +27,7 @@ const libraries = [
 ];
 
 async function checkConfig() {
+    let config;
     try {
         config = require('../../.axoncorerc.json');
         
@@ -37,7 +36,7 @@ async function checkConfig() {
         }
     } catch (error) {
         console.error('Could not find a valid AxonCore configuration file. Please complete the prompts below to set up AxonCore.');
-        await promptTypings();
+        config = await promptTypings();
     }
 
     if (config.library === 'detritus') {
