@@ -12,8 +12,11 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-      - run: yarn install
-      - run: yarn test:publish
+      - run: |
+        yarn install
+        yarn test:publish
+      env:
+        CI: true
 
   publish-npm:
     needs: build
@@ -26,6 +29,8 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - name: Dep install
         run: yarn install
+        env:
+          CI: true
       - name: Publish
         run: npm publish
         env:
@@ -45,6 +50,8 @@ jobs:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
       - name: Dep install
         run: yarn install
+        env:
+          CI: true
       - name: Autoscope package
         uses: khaazz/action-autoscope@master
       - name: Configure .npmrc
