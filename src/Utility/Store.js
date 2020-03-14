@@ -164,7 +164,7 @@ class Store {
      * Execute a function over each element of the Store in a synchronous fashion
      *
      * @param {(i: T) => void} func - A function that takes an object and do something on it
-     * @returns {Store} - returns the current Store
+     * @returns {Store} The current Store
      * @memberof Store
      */
     forEach(func) {
