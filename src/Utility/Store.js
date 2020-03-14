@@ -74,7 +74,7 @@ class Store {
     }
 
     /**
-     * Wether an element exists in the Store
+     * Whether an element exists in the Store
      *
      * @param {String} key
      * @returns {Boolean}
