@@ -136,7 +136,7 @@ class Store {
      * Store to object
      * { key: value, key: value }
      *
-     * @returns {{[key:string]: T}}
+     * @returns {Object.<string, T>}
      *
      * @memberof Store
      */
