@@ -7,7 +7,7 @@
  *
  * @template T
  * @class Store
- * @prop {Map} cache - Key => Value Data structure
+ * @prop {Map<string, T>} cache - Key => Value Data structure
  */
 class Store {
     /**
