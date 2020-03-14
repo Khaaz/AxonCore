@@ -133,7 +133,7 @@ class Store {
     }
 
     /**
-     * Store to object
+     * `Store.cache` to object
      * { key: value, key: value }
      *
      * @returns {Object.<string, T>}
