@@ -260,7 +260,7 @@ class Store {
      * Test if at least one element passes the test implemented by the provided function. Returns true if yes, or false if not.
      *
      * @param {(i: T) => Boolean} func - A function that takes an object and returns true if it matches
-     * @returns {Boolean} An array containing all the objects that matched
+     * @returns {Boolean} Whether or not any of the elements returned true
      * @memberof Store
      */
     some(func) {
