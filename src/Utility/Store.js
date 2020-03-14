@@ -26,7 +26,7 @@ class Store {
      * Current size of the cache
      *
      * @readonly
-     * @typedef {Number}
+     * @type {Number}
      * @memberof Store
      */
     get size() {
@@ -60,7 +60,7 @@ class Store {
      * @memberof Store
      */
     values() {
-        return this.cache.keys();
+        return this.cache.values();
     }
 
     /**
