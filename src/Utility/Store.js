@@ -164,7 +164,7 @@ class Store {
      * Execute a function over each element of the Store in a synchronous fashion
      *
      * @param {(i: T) => void} func - A function that takes an object and do something on it
-     * @returns {Store} - returns the current Store
+     * @returns {Store} The current Store
      * @memberof Store
      */
     forEach(func) {
@@ -178,7 +178,7 @@ class Store {
      * Execute a function over each element of the Store in an asynchronous fashion
      *
      * @param {(i: T) => Promise<void>} func - A function that takes an object and do something on it
-     * @returns {Promise<Store>} - returns the current Store
+     * @returns {Promise<Store>} The current Store
      * @memberof Store
      */
     async forEachAsync(func) {
@@ -238,14 +238,14 @@ class Store {
     }
 
     /**
-	 * Reduce values by function
+     * Reduce values by function
      *
      * @template U
      * @param {(accumulator: U, val: T) => U} func - Function to execute on each element in the array
      * @param {Number} [initialValue=0] - Value to use as the first argument to the first call of the callback
      * @returns {U} Accumulator
      * @memberof Store
-	 */
+     */
     reduce(func, initialValue = 0) {
         const iter = this.values();
         let val;
