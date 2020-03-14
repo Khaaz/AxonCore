@@ -91,7 +91,7 @@ export { Prompt } from './Utility/Discord/Prompt';
 export { ReactionCollector } from './Utility/Discord/Collectors/ReactionCollector';
 export { MessageCollector } from './Utility/Discord/Collectors/MessageCollector';
 export { Collector } from './Utility/Discord/Collectors/Collector';
-export { TimeoutQueue } from './Utility/Discord/Collectors/TimeoutQueue';
+export { SortedList } from './Utility/External/SortedList';
 
 export { AsyncQueue } from './Utility/External/AsyncQueue';
 export { AutoQueue } from './Utility/External/AutoQueue';

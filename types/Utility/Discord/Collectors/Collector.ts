@@ -1,6 +1,6 @@
 import { EventEmitter } from 'events';
 import {
-    Collection, TimeoutQueue, AxonClient, CollectorContainer, LibClient, LibraryInterface,
+    Collection, SortedList, AxonClient, CollectorContainer, LibClient, LibraryInterface, Timeout,
 } from '../../../';
 
 /**
@@ -35,7 +35,7 @@ export declare class Collector<T> extends EventEmitter {
     /** Collection of CollectorContainer */
     public collectors: Collection<CollectorContainer<T>>;
     /** The current timeout queue sorted with the first timeout due at the top of the queue */
-    public timeoutQueue: TimeoutQueue;
+    public timeoutQueue: SortedList<Timeout>;
     /** Unique increment count used to generate ids */
     private _INCREMENT: number;
     /** Whether the Collector is currently running */

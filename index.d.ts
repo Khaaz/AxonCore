@@ -150,7 +150,7 @@ declare namespace AxonCore {
     export import MessageCollector = Types.MessageCollector;
     export import Prompt = Types.Prompt;
     export import ReactionCollector = Types.ReactionCollector;
-    export import TimeoutQueue = Types.TimeoutQueue;
+    export import SortedList = Types.SortedList;
     export import AsyncQueue = Types.AsyncQueue;
     export import AutoQueue = Types.AutoQueue;
     export import FunctionQueue = Types.FunctionQueue;
