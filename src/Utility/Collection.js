@@ -6,10 +6,9 @@ import Store from './Store';
  *
  * @author KhaaZ
  *
- * @class Collection
- * @extends Store
- *
  * @template T
+ * @class Collection
+ * @extends Store<T>
  * @prop {T} baseObject - The base class for all items
  */
 class Collection extends Store {
