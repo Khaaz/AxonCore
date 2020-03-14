@@ -12,7 +12,7 @@ class Core extends Module {
         this.enabled = true;
         this.serverBypass = true;
 
-        this.infos = {
+        this.info = {
             name: 'Core',
             description: 'The main module with most basic commands.',
         };
