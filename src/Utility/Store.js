@@ -36,7 +36,7 @@ class Store {
     /**
      * Iterator over cache.entries.
      *
-     * @returns {Iterator<Key, Value>}
+     * @returns {IterableIterator<[string, T]>}
      * @memberof Store
      */
     entries() {
