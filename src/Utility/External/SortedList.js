@@ -13,7 +13,7 @@
 class SortedList {
     constructor(comparator = null, ascending = true) {
         console.log(comparator);
-        this.comporator = comparator || ( (toInsert, baseElement) => toInsert >= baseElement);
+        this.comparator = comparator || ( (toInsert, baseElement) => toInsert >= baseElement);
         this.ascending = ascending;
         this.list = [];
     }
