@@ -44,7 +44,7 @@ class Store {
     }
 
     /**
-     * Iterator over cache.keys
+     * Iterator over `cache.keys`
      *
      * @returns {Iterator<Key>}
      * @memberof Store
