@@ -122,7 +122,7 @@ class Store {
     // General cache manipulation
 
     /**
-     * Store.cache to array
+     * `Store.cache` to array
      * [ value, value, value ]
      *
      * @returns {Array<T>}
