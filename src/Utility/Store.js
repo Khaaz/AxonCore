@@ -245,7 +245,7 @@ class Store {
      * @param {Number} [initialValue=0] - Value to use as the first argument to the first call of the callback
      * @returns {U} Accumulator
      * @memberof Store
-	 */
+     */
     reduce(func, initialValue = 0) {
         const iter = this.values();
         let val;
