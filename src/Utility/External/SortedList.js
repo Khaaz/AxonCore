@@ -7,12 +7,11 @@
  *
  * @class SortedList
  * @prop {Boolean} acending
- * @prop {(toInsert, baseElement) => Boolean)} comparator - Whether toInsert is bigger than baseElement
+ * @prop {(toInsert: T, baseElement: T) => Boolean)} comparator - Whether toInsert is bigger than baseElement
  * @prop {Array<T>} list
  */
 class SortedList {
     constructor(comparator = null, ascending = true) {
-        console.log(comparator);
         this.comparator = comparator || ( (toInsert, baseElement) => toInsert >= baseElement);
         this.ascending = ascending;
         this.list = [];
@@ -30,7 +29,7 @@ class SortedList {
     }
 
     /**
-     * Whether the List is empty or not
+     * Whether the list is empty or not
      *
      * @returns {Boolean}
      * @memberof SortedList
@@ -40,7 +39,7 @@ class SortedList {
     }
 
     /**
-     * Returns the first element of the List without removing it
+     * Returns the first element of the list without removing it
      *
      * @returns {T}
      * @memberof SortedList
@@ -63,7 +62,7 @@ class SortedList {
      * Adds an element in the queue, sorting by ascending element
      *
      * @param {T} element
-     * @param {(toInsert, baseElement) => Boolean} comparator
+     * @param {(toInsert: T, baseElement: T) => Boolean} comparator
      * @memberof SortedList
      */
     add(element, comparator = null) {
@@ -82,7 +81,7 @@ class SortedList {
     }
 
     /**
-     * Get the first element in the queue and removes it
+     * Get the first element in the list and removes it
      *
      * @returns {T}
      * @memberof SortedList
@@ -92,7 +91,7 @@ class SortedList {
     }
 
     /**
-     * Get the last element in the queue and removes it
+     * Get the last element in the list and removes it
      *
      * @returns {T}
      * @memberof SortedList
