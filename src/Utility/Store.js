@@ -154,7 +154,7 @@ class Store {
      *
      * @param {String} key - The property to use as key for the new Store
      * @param {String} func - The function name to apply to the Store
-     * @param {...any} args - All the argument that need to be applied to the function
+     * @param {...any} args - All the arguments that need to be applied to the function
      * @returns {Store<T>} A new Store modified by the apply call
      * @memberof Store
      */
