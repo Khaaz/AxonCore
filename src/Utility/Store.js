@@ -74,6 +74,17 @@ class Store {
     }
 
     /**
+     * Wether an element exists in the Store
+     *
+     * @param {String} key
+     * @returns {Boolean}
+     * @memberof Store
+     */
+    has(key) {
+        return this.cache.has(key);
+    }
+
+    /**
      * Get an element by key in the Store
      *
      * @param {String} key
