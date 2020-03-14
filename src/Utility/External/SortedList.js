@@ -22,7 +22,7 @@ class SortedList {
      * Size of the list
      *
      * @readonly
-     * @typedef {Number}
+     * @type {Number}
      * @memberof SortedList
      */
     get size() {
