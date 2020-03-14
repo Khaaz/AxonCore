@@ -50,7 +50,7 @@ class SortedList {
     }
 
     /**
-     * Returns the first element of the List without removing it
+     * Returns the last element of the list without removing it
      *
      * @returns {T}
      * @memberof SortedList
