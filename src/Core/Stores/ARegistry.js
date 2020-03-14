@@ -53,7 +53,7 @@ class ARegistry extends Store {
      * Returns the current registry
      *
      * @readonly
-     * @type {Map}
+     * @type {Map<String, T>}
      * @memberof ARegistry
      */
     get registry() {
@@ -87,7 +87,7 @@ class ARegistry extends Store {
      *
      * @param {String} key
      * @param {T} value
-     * @returns {ARegistry} - The registry
+     * @returns {ARegistry<T>} - The registry
      * @memberof ARegistry
      */
     add(key, value) {

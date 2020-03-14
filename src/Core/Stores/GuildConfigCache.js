@@ -32,6 +32,13 @@ class GuildConfigsCache extends Store {
         this._axon = axonClient;
     }
 
+    /**
+     * Returns the cache
+     *
+     * @readonly
+     * @type {LRUCache<GuildConfig>}
+     * @memberof GuildConfigsCache
+     */
     get guildConfigs() {
         return this.cache;
     }
