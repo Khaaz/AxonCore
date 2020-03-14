@@ -178,7 +178,7 @@ class Store {
      * Execute a function over each element of the Store in an asynchronous fashion
      *
      * @param {(i: T) => Promise<void>} func - A function that takes an object and do something on it
-     * @returns {Promise<Store>} - returns the current Store
+     * @returns {Promise<Store>} The current Store
      * @memberof Store
      */
     async forEachAsync(func) {
