@@ -1,6 +1,11 @@
 const { prompt } = require('inquirer');
 const { copyFileSync, writeFileSync } = require('fs');
 
+if (process.env.CI) {
+    console.log('Detected CI. Exiting process...');
+    process.exit(0);
+}
+
 const Libraries = [
     'eris',
     'discordjs',
