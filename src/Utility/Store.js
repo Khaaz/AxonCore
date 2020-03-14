@@ -13,7 +13,7 @@ class Store {
     /**
      * Creates an instance of Store.
      *
-     * @param {Map} cache - Key => Value data structure
+     * @param {Map<string, T>} cache - Key => Value data structure
      * @memberof Store
      */
     constructor(cache) {
@@ -112,7 +112,7 @@ class Store {
      * Delete an element by key in the Store
      *
      * @param {String} key
-     * @returns {Boolean} - Whether the element was suppressed or not
+     * @returns {Boolean} - Whether the element was deleted or not
      * @memberof Store
      */
     delete(key) {
@@ -122,8 +122,7 @@ class Store {
     // General cache manipulation
 
     /**
-     * `Store.cache` to array
-     * [ value, value, value ]
+     * `Store.cache` to array (simple array of value)
      *
      * @returns {Array<T>}
      * @memberof Store
@@ -134,7 +133,6 @@ class Store {
 
     /**
      * `Store.cache` to object
-     * { key: value, key: value }
      *
      * @returns {Object.<string, T>}
      *
