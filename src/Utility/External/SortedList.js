@@ -55,7 +55,7 @@ class SortedList {
      * @memberof SortedList
      */
     last() {
-        return this.list[this.list.length];
+        return this.list[this.list.length - 1];
     }
 
     /**
