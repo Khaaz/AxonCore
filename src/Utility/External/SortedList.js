@@ -7,7 +7,7 @@
  *
  * @class SortedList
  * @prop {Boolean} acending
- * @prop {(toInsert, baseElement) => Boolean)} comparator - Wether toInsert is bigger than baseElement
+ * @prop {(toInsert, baseElement) => Boolean)} comparator - Whether toInsert is bigger than baseElement
  * @prop {Array<T>} list
  */
 class SortedList {
