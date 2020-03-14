@@ -191,7 +191,7 @@ class Store {
     /**
      * Return the first object to make the function evaluate true
      *
-     * @param {(i: T) => boolean} func - A function that takes an object and returns true if it matches
+     * @param {(i: T) => Boolean} func - A function that takes an object and returns true if it matches
      * @returns {T} The first matching object, or null if no match
      * @memberof Store
      */
@@ -223,7 +223,7 @@ class Store {
     /**
      * Return all the objects that make the function evaluate true
      *
-     * @param {(i: T) => boolean} func - A function that takes an object and returns true if it matches
+     * @param {(i: T) => Boolean} func - A function that takes an object and returns true if it matches
      * @returns {Array<T>} An array containing all the objects that matched
      * @memberof Store
      */
@@ -259,7 +259,7 @@ class Store {
     /**
      * Test if at least one element passes the test implemented by the provided function. Returns true if yes, or false if not.
      *
-     * @param {(i: T) => boolean} func - A function that takes an object and returns true if it matches
+     * @param {(i: T) => Boolean} func - A function that takes an object and returns true if it matches
      * @returns {Boolean} An array containing all the objects that matched
      * @memberof Store
      */
@@ -275,7 +275,7 @@ class Store {
     /**
      * Test if all elements pass the test implemented by the provided function. Returns true if yes, or false if not.
      *
-     * @param {(i: T) => boolean} func - A function that takes an object and returns true if it matches
+     * @param {(i: T) => Boolean} func - A function that takes an object and returns true if it matches
      * @returns {Boolean} An array containing all the objects that matched
      * @memberof Store
      */
