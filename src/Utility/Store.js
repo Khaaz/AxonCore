@@ -238,7 +238,7 @@ class Store {
     }
 
     /**
-	 * Reduce values by function
+     * Reduce values by function
      *
      * @template U
      * @param {(accumulator: U, val: T) => U} func - Function to execute on each element in the array
