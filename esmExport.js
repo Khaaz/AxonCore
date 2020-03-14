@@ -54,6 +54,7 @@ export { default as User } from './src/Libraries/definitions/User';
 
 // == Utility ==
 export { default as AxonUtils } from './src/Utility/AxonUtils';
+export { default as Store } from './src/Utility/Store';
 export { default as Collection } from './src/Utility/Collection';
 export { default as Utils } from './src/Utility/Utils';
 // Generic
