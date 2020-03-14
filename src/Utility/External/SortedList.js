@@ -67,7 +67,7 @@ class SortedList {
      * @memberof SortedList
      */
     add(element, comparator = null) {
-        const comp = comparator || this.comporator;
+        const comp = comparator || this.comparator;
 
         let i;
         for (i = 0; i < this.list.length; i++) {
