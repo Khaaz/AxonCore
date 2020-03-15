@@ -35,6 +35,7 @@ async function checkConfig() {
     let config;
     try {
         config = require('../../.axoncorerc.json');
+        console.log(config);
         
         if (!Libraries.includes(config.library) ) {
             throw new Error();
