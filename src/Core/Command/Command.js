@@ -407,7 +407,7 @@ class Command extends Base {
         embed.fields = [];
         /* SubCommands */
         if (this.hasSubcmd) {
-            const subcmds = this.subCommands.getAll().filter(e => !e.options.hidden).map(e => `${prefix}${e.info.usage}`);
+            const subcmds = this.subCommands.filter(e => !e.options.hidden).map(e => `${prefix}${e.info.usage}`);
             if (subcmds.length > 0) {
                 embed.fields.push( {
                     name: 'SubCommands:',
