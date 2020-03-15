@@ -147,6 +147,16 @@ class Store {
     }
 
     /**
+     * The first value of the Store
+     *
+     * @returns {T} - The first element
+     * @memberof Store
+     */
+    first() {
+        return this.values().next().value;
+    }
+
+    /**
      * Apply a function to the Store and returns a new Store.
      * Usable over: `map`, `filter`, `toArray`.
      * Using apply with toArray is pretty much "cloning" the Store.
