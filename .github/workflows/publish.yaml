@@ -12,6 +12,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
+      - name: Dep install and test
       - run: |
         yarn install
         yarn test:publish
