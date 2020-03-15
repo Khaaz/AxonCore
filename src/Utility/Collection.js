@@ -2,7 +2,7 @@ import Store from './Store';
 
 /**
  * Custom Store that uses Map as cache.
- * Enforce that a single object type exists in a Collection.
+ * Enforces that a single object type exists in a Collection.
  *
  * @author KhaaZ
  *
