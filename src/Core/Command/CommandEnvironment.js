@@ -77,6 +77,7 @@ class CommandEnvironment {
      */
     setPrefix(prefix) {
         this.prefix = prefix;
+        return this;
     }
 
     /**
