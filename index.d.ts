@@ -1,5 +1,5 @@
 import * as Types from './types';
-declare namespace AxonCore {
+declare module AxonCore {
     export import JsonManager = Types.JsonManager;
     export import AxonSchema = Types.AxonSchema;
     export import GuildSchema = Types.GuildSchema;
