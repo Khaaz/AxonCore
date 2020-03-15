@@ -71,6 +71,12 @@ export declare class Store<T> {
      */
     public toObject(): { [key: string]: T; };
     /**
+     * The first value of the store
+     * @returns The first element
+     * @memberof Store
+     */
+    public first(): T;
+    /**
      * Execute a function over each element of the Store in a synchronous fashion
      * @param func A function that takes an object and do something on it
      * @returns The current store
@@ -84,6 +90,12 @@ export declare class Store<T> {
      * @memberof Store
      */
     public forEachAsync(func: (i: T) => Promise<void>): Promise<Store<T>>;
+    /**
+     * Removes from the Store all element that satisfy the function in parameter
+     * @returns The current store
+     * @memberof Store
+     */
+    public sweep(func: (value: T, key: string) => boolean): Store<T>;
     /**
      * Return the first object to make the function evaluate true
      * @param func A function that takes an object and returns true if it matches
