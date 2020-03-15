@@ -1,4 +1,4 @@
-import { AxonClient, LRUCache, GuildConfig } from '../../';
+import { AxonClient, LRUCache, GuildConfig, Store } from '../../';
 
 /**
  * Handles GuildConfigs cache.
@@ -7,10 +7,10 @@ import { AxonClient, LRUCache, GuildConfig } from '../../';
  * @author KhaaZ
  *
  * @class GuildConfigsCache
+ * @extends Store<GuildConfig>
  */
-export declare class GuildConfigCache {
+export declare class GuildConfigCache extends Store<GuildConfig> {
     private _axon: AxonClient;
-    public guildConfigs: LRUCache<GuildConfig>;
     /**
      * Creates an instance of GuildConfigsCache.
      *
@@ -18,18 +18,11 @@ export declare class GuildConfigCache {
      */
     constructor(axonClient: AxonClient);
     /**
-     * Get a GuildConfig from the guild ID.
-     *
-     * @memberof GuildConfigsCache
+     * Returns the cache
+     * @readonly
+     * @memberof GuildConfigCache
      */
-    get(key: string): GuildConfig;
-    /**
-     * Set a GuildConfig with the Guild ID as key.
-     *
-     * @memberof GuildConfigsCache
-     */
-    set(key: string, value: GuildConfig): void;
-    public [Symbol.iterator](): [string|number, GuildConfig];
+    readonly guildConfigs: LRUCache<GuildConfig>;
     /**
      * Get a GuildConfig from the cache or from the DB if not in the cache.
      *

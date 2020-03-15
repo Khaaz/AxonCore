@@ -19,7 +19,7 @@ export declare class SortedList<T> {
      * @readonly
      * @memberof SortedList
      */
-    public size: number;
+    readonly size: number;
 
     /**
      * Whether the list is empty or not

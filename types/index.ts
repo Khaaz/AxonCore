@@ -91,17 +91,18 @@ export { Prompt } from './Utility/Discord/Prompt';
 export { ReactionCollector } from './Utility/Discord/Collectors/ReactionCollector';
 export { MessageCollector } from './Utility/Discord/Collectors/MessageCollector';
 export { Collector } from './Utility/Discord/Collectors/Collector';
-export { SortedList } from './Utility/External/SortedList';
 
 export { AsyncQueue } from './Utility/External/AsyncQueue';
 export { AutoQueue } from './Utility/External/AutoQueue';
 export { FunctionQueue } from './Utility/External/FunctionQueue';
 export { LRUCache } from './Utility/External/LRUCache';
 export { Queue } from './Utility/External/Queue';
+export { SortedList } from './Utility/External/SortedList';
 export { Stack } from './Utility/External/Stack';
 
 export { AxonUtils } from './Utility/AxonUtils';
 export { Collection } from './Utility/Collection';
+export { Store } from './Utility/Store';
 export { Utils } from './Utility/Utils';
 
 export { AxonClient } from './AxonClient';

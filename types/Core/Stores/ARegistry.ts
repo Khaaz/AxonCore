@@ -1,4 +1,4 @@
-import { AxonClient, Collection } from '../../';
+import { AxonClient, Store } from '../../';
 
 /**
  * Abstract class to hold and manage a set of items.
@@ -7,12 +7,13 @@ import { AxonClient, Collection } from '../../';
  *
  * @abstract
  * @class ARegistry
+ * @extends Store
  */
-export declare class ARegistry<T> {
+export declare class ARegistry<T> extends Store<T> {
     /** The AxonClient */
     private _axon: AxonClient;
-    /** The collection of items hold by the registry */
-    public registry: Collection<T>;
+    /** The base definition to use for the registry */
+    private _base: T
     /**
      * Creates an instance of ARegistry.
      *
@@ -23,63 +24,47 @@ export declare class ARegistry<T> {
     constructor(axon: AxonClient, base: T);
     /**
      * Get the AxonClient
-     *
      * @readonly
      * @memberof ARegistry
      */
     readonly axon: AxonClient;
     /**
-     * Get the size of the registry
-     *
+     * Returns the current registry
      * @readonly
      * @memberof ARegistry
      */
-    readonly size: number;
+    readonly registry: Map<string, T>;
     /**
-     * Check whether the item exist in the registry
-     *
+     * Check whether the item exists in the registry
      * @returns Whether the item exists
      * @memberof ARegistry
      */
-    has(key: string): boolean;
+    public has(key: string): boolean;
     /**
      * Get an item from the registry
-     *
      * @returns The item
      * @memberof ARegistry
      */
-    get(key: string): T | null;
-    /**
-     * Get the registry
-     *
-     * @returns The current registry
-     * @memberof ARegistry
-     */
-    getAll(): Collection<T>;
+    public get(key: string): T;
     /**
      * Add an item to the registry
-     *
      * @returns The registry
      * @memberof ARegistry
      */
-    add(key: string, value: T): Collection<T>;
+    public add(key: string, value: T): ARegistry<T>;
     /**
      * Remove an item from the registry
-     *
-     * @returns {Boolean} - Whether it could remove the item or not
+     * @returns Whether it removed the item or not
      * @memberof ARegistry
      */
-    remove(key: string): boolean;
-    public [Symbol.iterator](): [string|number, T][];
+    public remove(key: string): boolean;
     /**
-     * Register correctly an item in the registry.
-     *
+     * Register correctly an item in the registry
      * @memberof ARegistry
      */
     public register(key: string, value: T): any; // Not implemented
     /**
      * Unregister correctly an item from the registry.
-     *
      * @memberof ARegistry
      */
     public unregister(key: string, value: T): any; // Not implemented

@@ -159,6 +159,7 @@ declare namespace AxonCore {
     export import Stack = Types.Stack;
     export import AxonUtils = Types.AxonUtils;
     export import Collection = Types.Collection;
+    export import Store = Types.Store;
     export import Utils = Types.Utils;
     export import AxonClient = Types.AxonClient;
     export import AxonOptions = Types.AxonOptions;
