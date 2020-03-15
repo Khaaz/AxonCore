@@ -98,6 +98,7 @@ class LRUCache extends Store {
      *
      * @param {String} key
      * @param {T} value
+     * @param {LRUCache<T>} - The current LRUCache
      * @memberof LRUCache
      */
     set(key, value) {
@@ -111,12 +112,14 @@ class LRUCache extends Store {
   
         // Update the cache map
         this.cache.set(key, this.head);
+        return this;
     }
 
     /**
      * Delete an element from the LRUCache
      *
      * @param {String} key
+     * @returns {Boolean} - Wether it deleted the item or not
      * @memberof LRUCache
      */
     delete(key) {
