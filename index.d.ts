@@ -1,5 +1,5 @@
 import * as Types from './types';
-declare module AxonCore {
+declare module 'AxonCore' {
     export import JsonManager = Types.JsonManager;
     export import AxonSchema = Types.AxonSchema;
     export import GuildSchema = Types.GuildSchema;
@@ -165,5 +165,3 @@ declare module AxonCore {
     export import AxonOptions = Types.AxonOptions;
     export import updateDBVal = Types.updateDBVal;
 }
-
-export = AxonCore;
