@@ -148,7 +148,8 @@ class Store {
 
     /**
      * Apply a function to the Store and returns a new Store.
-     * Usable over: `map`, `filter`, `toArray`
+     * Usable over: `map`, `filter`, `toArray`.
+     * Using apply with toArray is pretty much "cloning" the Store.
      *
      * @param {String} key - The property to use as key for the new Store
      * @param {String} func - The function name to apply to the Store
@@ -157,6 +158,13 @@ class Store {
      * @memberof Store
      */
     apply(key, func, ...args) {
+        if (![
+            'map',
+            'filter',
+            'toArray',
+        ].includes(key) ) {
+            throw new AxonError(`You can't use apply on function: ${key}.`, 'Store');
+        }
         return new Store(new Map(this[func](...args).map(e => [e[key], e] ) ) );
     }
 
