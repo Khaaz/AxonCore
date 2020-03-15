@@ -61,7 +61,7 @@ class ARegistry extends Store {
     }
 
     /**
-     * Check whether the item exist in the registry
+     * Check whether the item exists in the registry
      *
      * @param {String} key
      * @returns {Boolean} - Whether the item exists
@@ -102,7 +102,7 @@ class ARegistry extends Store {
      * Remove an item from the registry
      *
      * @param {String} key
-     * @returns {Boolean} - Whether it could remove the item or not
+     * @returns {Boolean} - Whether it removed the item or not
      * @memberof ARegistry
      */
     remove(key) {
