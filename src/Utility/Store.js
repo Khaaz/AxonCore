@@ -72,7 +72,7 @@ class Store {
     /**
      * Iterator over cache
      *
-     * @returns {Iterator}
+     * @returns {IterableIterator<[string, T]>;}
      * @memberof Store
      */
     [Symbol.iterator]() {
