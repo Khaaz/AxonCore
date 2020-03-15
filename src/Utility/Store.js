@@ -1,7 +1,13 @@
+import AxonError from '../Errors/AxonError';
+
 /**
  * Generic class that expose all data manipulation methods.
- * A Store can be constructed with any Key => Value structure (Map like object).
- * It exposes all methods similar to aarray methods in one place.
+ * A Store can be constructed with any Key => Value structure (Map like object)
+ * Map-like object can be anything as long as it implements the following:
+ * - `size` property
+ * - `entries`, `values`, `keys` iterators
+ * - `has`, `get`, `set`, `delete` methods
+ * It exposes all methods similar to array methods in one place.
  *
  * @author KhaaZ
  *
@@ -135,7 +141,6 @@ class Store {
      * `Store.cache` to object
      *
      * @returns {Object.<string, T>}
-     *
      * @memberof Store
      */
     toObject() {
@@ -332,7 +337,7 @@ class Store {
         if (!this.size) {
             return null;
         }
-        return Array.from(this.values() )[Math.floor(Math.random() * this.size)];
+        return this.toArray()[Math.floor(Math.random() * this.size)];
     }
 
     toString() {
