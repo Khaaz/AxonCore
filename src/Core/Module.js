@@ -112,7 +112,7 @@ class Module extends Base {
      * @memberof Module
      */
     get commands() {
-        return this.axon.commandRegistry.getAll().apply('label', 'filter', (c) => c.module === this);
+        return this.axon.commandRegistry.apply('label', 'filter', (c) => c.module === this);
     }
 
     /**
@@ -123,7 +123,7 @@ class Module extends Base {
      * @memberof Module
      */
     get listeners() {
-        return this.axon.listenerRegistry.getAll().apply('label', 'filter', (l) => l.module === this);
+        return this.axon.listenerRegistry.apply('label', 'filter', (l) => l.module === this);
     }
 
     /**

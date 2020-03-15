@@ -57,6 +57,7 @@ AxonCore is lib agnostic, which mean you can use it indifferently with [Eris](ht
 - **Translations** - Built-in support for translation and message management system.
 - **Logging** - Built-in custom logging.
 - **Tracking** - Easily track and debug command usage, events and errors with custom events emitted by AxonCore.
+- **Typescript support** - Full typescript and intellisense support
 
 ## Philosophy
 
@@ -77,6 +78,10 @@ Here's how to use it:
 
 - Available libraries: `eris`, `discordjs`.  
 - Available module types: `commonjs`, `esm`.
+
+AxonCore has **FULL** typescript support.  
+When you install the package the first time, you can choose the library you are using, and the package will automatically link the library typings. That will allow you to have full and complete typings for your typescript project or for using intllisense.  
+Note: AxonCore creates a `.axoncorerc` file with the default configuration. Editing or deleting this file will change the typings link on the next install.
 
 ## Features Overview
 
@@ -159,13 +164,17 @@ axonClient.on('listenerError', (eventName: String, listenerName: String, { liste
 ### Utilities
 
 - [Embed](src/Utility/External/Embed.js)
-- Resolver
+- [Resolver](src/Libraries/definitions/Resolver.js)
 - [Utility](src/Utility/Utils.js)
-- Message Collector [TODO-outdated]
+- [Collectors](src/Utility/Discord/Collectors/Collector.js)
+- [Message Collector](src/Utility/Discord/Collectors/MessageCollector.js)
 - Reaction collector [TODO-outdated]
 
 - [LRUCache](src/Utility/External/LRUCache.js)
+- [SortedList](src/Utility/External/SortedList.js)
+- [Stack](src/Utility/External/Stack.js)
 - [Queue](src/Utility/External/Queue.js)
+- [FunctionQueue](src/Utility/External/FunctionQueue.js)
 - [AsyncQueue](src/Utility/External/AsyncQueue.js)
 - [AutoQueue](src/Utility/External/AutoQueue.js)
 

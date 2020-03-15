@@ -1,8 +1,9 @@
 /* eslint-disable no-unused-vars */
 import NoAbstractInstanceException from '../../Errors/NoAbstractInstanceException';
 import NotImplementedException from '../../Errors/NotImplementedException';
+import AxonError from '../../Errors/AxonError';
 
-import Collection from '../../Utility/Collection';
+import Store from '../../Utility/Store';
 
 /**
  * @typedef {import('../../AxonClient').default} AxonClient
@@ -14,14 +15,13 @@ import Collection from '../../Utility/Collection';
  * @author KhaaZ
  *
  * @template T
- *
- * @prop {AxonClient} _axon - The AxonClient
- * @prop {Collection<T>} registry - The collection of items hold by the registry
- *
  * @abstract
  * @class ARegistry
+ * @extends Store<T>
+ * @prop {AxonClient} _axon - The AxonClient
+ * @prop {T} _base - The base definition to use for the registry
  */
-class ARegistry {
+class ARegistry extends Store {
     /**
      * Creates an instance of ARegistry.
      *
@@ -30,11 +30,12 @@ class ARegistry {
      * @memberof ARegistry
      */
     constructor(axon, base) {
+        super(new Map() );
         if (this.constructor === 'ARegistry') {
             throw new NoAbstractInstanceException();
         }
         this._axon = axon;
-        this.registry = new Collection( { base } );
+        this._base = base;
     }
 
     /**
@@ -49,25 +50,25 @@ class ARegistry {
     }
 
     /**
-     * Get the size of the registry
+     * Returns the current registry
      *
      * @readonly
-     * @type {Number}
+     * @type {Map<String, T>}
      * @memberof ARegistry
      */
-    get size() {
-        return this.registry.size;
+    get registry() {
+        return this.cache;
     }
 
     /**
-     * Check whether the item exist in the registry
+     * Check whether the item exists in the registry
      *
      * @param {String} key
      * @returns {Boolean} - Whether the item exists
      * @memberof ARegistry
      */
     has(key) {
-        return this.registry.has(key);
+        return this.registry.has(key.toLowerCase() );
     }
 
     /**
@@ -82,41 +83,30 @@ class ARegistry {
     }
 
     /**
-     * Get the registry
-     *
-     * @returns {Collection<T>} - The current registry
-     * @memberof ARegistry
-     */
-    getAll() {
-        return this.registry;
-    }
-
-    /**
      * Add an item to the registry
      *
      * @param {String} key
      * @param {T} value
-     * @returns {Collection<T>} - The registry
+     * @returns {ARegistry<T>} - The registry
      * @memberof ARegistry
      */
     add(key, value) {
-        return this.registry.set(key.toLowerCase(), value);
+        if (!(value instanceof this._base) ) {
+            throw new AxonError('Incorrect Object type', 'REGISTRY');
+        }
+        this.registry.set(key.toLowerCase(), value);
+        return this;
     }
 
     /**
      * Remove an item from the registry
      *
      * @param {String} key
-     * @returns {Boolean} - Whether it could remove the item or not
+     * @returns {Boolean} - Whether it removed the item or not
      * @memberof ARegistry
      */
     remove(key) {
-        return this.registry.delete(key);
-    }
-
-    // for - of directly on the registry
-    [Symbol.iterator]() {
-        return this.registry[Symbol.iterator]();
+        return this.registry.delete(key.toLowerCase() );
     }
 
     /**
