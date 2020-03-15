@@ -197,6 +197,22 @@ class Store {
     }
 
     /**
+     * Removes from the Store all element that satisfy the function in parameter
+     *
+     * @param {(value: T, key: String) => Boolean} func
+     * @returns {Store} - The current Store
+     * @memberof Store
+     */
+    sweep(func) {
+        for (const [key, val] of this.entries() ) {
+            if (func(val, key) ) {
+                this.delete(key);
+            }
+        }
+        return this;
+    }
+
+    /**
      * Return the first object to make the function evaluate true
      *
      * @param {(i: T) => Boolean} func - A function that takes an object and returns true if it matches
