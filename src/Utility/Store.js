@@ -148,7 +148,7 @@ class Store {
 
     /**
      * Apply a function to the Store and returns a new Store.
-     * Usable over: map, filter, some, every, forEach, forEachAsync
+     * Usable over: `map`, `filter`, `toArray`
      *
      * @param {String} key - The property to use as key for the new Store
      * @param {String} func - The function name to apply to the Store
