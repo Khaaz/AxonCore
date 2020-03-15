@@ -34,8 +34,9 @@
 * **[Utility](Utility/index.md)**
   * [AxonUtils](Utility/AxonUtils.md)
   * [Utils](Utility/Utils.md)
-  * [Resolver](Utility/Resolver.md)
+  * [Store](Utility/Store.md)
   * [Collection](Utility/Collection.md)
+  * [Resolver](Utility/Resolver.md)
   * [Embed](Utility/Embed.md)
   * [Collector](Utility/Collector.md)
   * [MessageCollector](Utility/MessageCollector.md)

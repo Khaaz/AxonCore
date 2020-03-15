@@ -1,8 +1,8 @@
 <a name="MessageCollector"></a>
 
-## MessageCollector ⇐ <code>Collector</code>
+## MessageCollector ⇐ <code>Collector&lt;Message&gt;</code>
 **Kind**: global class  
-**Extends**: <code>Collector</code>  
+**Extends**: <code>Collector&lt;Message&gt;</code>  
 **Author**: VoidNull, KhaaZ  
 **Properties**
 
@@ -15,11 +15,11 @@
 | options.userID | <code>String</code> | Specify a userID to only collect message from this user |
 
 
-* [MessageCollector](#MessageCollector) ⇐ <code>Collector</code>
+* [MessageCollector](#MessageCollector) ⇐ <code>Collector&lt;Message&gt;</code>
     * [new MessageCollector()](#new_MessageCollector_new)
     * _instance_
-        * [.run(channel, [options])](#MessageCollector+run) ⇒ <code>Promise.&lt;Map.&lt;Message&gt;&gt;</code>
-        * [.getCollectors(message)](#MessageCollector+getCollectors) ⇒ <code>Array.&lt;CollectorContainer&gt;</code>
+        * [.run(channel, [options])](#MessageCollector+run) ⇒ <code>Promise.&lt;Map.&lt;String, Message&gt;&gt;</code>
+        * [.getCollectors(message)](#MessageCollector+getCollectors) ⇒ <code>Array.&lt;CollectorContainer.&lt;Message&gt;&gt;</code>
         * [._onMessageCreate(msg)](#MessageCollector+_onMessageCreate)
         * [._onMessageDelete(msg)](#MessageCollector+_onMessageDelete)
         * [._onMessageUpdate(oldMsg, msg)](#MessageCollector+_onMessageUpdate)
@@ -34,11 +34,11 @@ Collect bunch of message object according to chosen options
 
 <a name="MessageCollector+run"></a>
 
-### messageCollector.run(channel, [options]) ⇒ <code>Promise.&lt;Map.&lt;Message&gt;&gt;</code>
+### messageCollector.run(channel, [options]) ⇒ <code>Promise.&lt;Map.&lt;String, Message&gt;&gt;</code>
 Runs the message collector
 
 **Kind**: instance method of [<code>MessageCollector</code>](#MessageCollector)  
-**Returns**: <code>Promise.&lt;Map.&lt;Message&gt;&gt;</code> - Map of messages collected.  
+**Returns**: <code>Promise.&lt;Map.&lt;String, Message&gt;&gt;</code> - Map of messages collected.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -55,7 +55,7 @@ const messages = await collector.run(msg.channel, { caseInsensitive: false });
 ```
 <a name="MessageCollector+getCollectors"></a>
 
-### messageCollector.getCollectors(message) ⇒ <code>Array.&lt;CollectorContainer&gt;</code>
+### messageCollector.getCollectors(message) ⇒ <code>Array.&lt;CollectorContainer.&lt;Message&gt;&gt;</code>
 Get all CollectorContainers that will collect from this particular message
 
 **Kind**: instance method of [<code>MessageCollector</code>](#MessageCollector)  
@@ -81,7 +81,7 @@ Emits collect event.
 
 ### messageCollector.\_onMessageDelete(msg)
 Function bound to messageDelete event.
-Remove the message from all collector that collected this message
+Remove the message from all collectors that collected this message
 
 **Kind**: instance method of [<code>MessageCollector</code>](#MessageCollector)  
 
@@ -93,7 +93,7 @@ Remove the message from all collector that collected this message
 
 ### messageCollector.\_onMessageUpdate(oldMsg, msg)
 Function bound to messageUpdate event.
-Updates the message from all collector that collected this message
+Updates the message from all collectors that collected this message
 
 **Kind**: instance method of [<code>MessageCollector</code>](#MessageCollector)  
 

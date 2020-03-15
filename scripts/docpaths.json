@@ -121,6 +121,10 @@
         "output": "Utility/Utils.md"
     },
     {
+        "input": "Utility/Store.js",
+        "output": "Utility/Store.md"
+    },
+    {
         "input": "Utility/Collection.js",
         "output": "Utility/Collection.md"
     },

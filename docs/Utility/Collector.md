@@ -1,3 +1,17 @@
+## Classes
+
+<dl>
+<dt><a href="#Collector">Collector</a> ⇐ <code>EventEmitter</code></dt>
+<dd></dd>
+</dl>
+
+## Typedefs
+
+<dl>
+<dt><a href="#Timeout">Timeout</a> : <code>Object</code></dt>
+<dd></dd>
+</dl>
+
 <a name="Collector"></a>
 
 ## Collector ⇐ <code>EventEmitter</code>
@@ -7,9 +21,9 @@
 
 | Name | Type | Description |
 | --- | --- | --- |
-| _client | <code>AxonClient</code> | The AxonClient instance |
-| collectors | <code>Collection.&lt;CollectorContainer&gt;</code> | Collection of CollectorContainer |
-| timeoutQueue | <code>TimeoutQueue</code> | The current timeout queue sorted with the first timeout due at the top of the queue |
+| _axon | <code>AxonClient</code> | The AxonClient instance |
+| collectors | <code>Collection.&lt;CollectorContainer.&lt;T&gt;&gt;</code> | Collection of CollectorContainer |
+| timeoutQueue | [<code>SortedList.&lt;Timeout&gt;</code>](#Timeout) | The current timeout sorted with the first timeout due at the top of the queue |
 | _INCREMENT | <code>Number</code> | Unique increment count used to generate ids |
 | running | <code>Boolean</code> | Whether the Collector is currently running |
 | _intervalID | <code>String</code> | setInterval ID used to clear setinterval |
@@ -23,9 +37,10 @@
         * [.lib](#Collector+lib) : <code>LibraryInterface</code>
         * [.INCREMENT](#Collector+INCREMENT) : <code>Number</code>
         * [._genID()](#Collector+_genID) ⇒ <code>String</code>
-        * [.run([options])](#Collector+run) ⇒ <code>Promise.&lt;Map&gt;</code>
+        * [.run(...args)](#Collector+run) ⇒ <code>Promise.&lt;Map.&lt;String, T&gt;&gt;</code>
         * [.setListeners()](#Collector+setListeners)
         * [.unsetListeners()](#Collector+unsetListeners)
+        * [._run([options])](#Collector+_run) ⇒ <code>Promise.&lt;Map.&lt;String, T&gt;&gt;</code>
         * [.timeout()](#Collector+timeout)
         * [.onCollect(collectors, param, collected)](#Collector+onCollect)
         * [.onTimeout(id)](#Collector+onTimeout)
@@ -83,17 +98,16 @@ Generate a unique ID by using the current timestamp and appending a count (INCRE
 **Returns**: <code>String</code> - The unique ID generated  
 <a name="Collector+run"></a>
 
-### collector.run([options]) ⇒ <code>Promise.&lt;Map&gt;</code>
-Run this Collector with the given options
+### collector.run(...args) ⇒ <code>Promise.&lt;Map.&lt;String, T&gt;&gt;</code>
+Run this Collector. Main method (called by the user).
+Should be overriden in any child that extends this class.
 
 **Kind**: instance method of [<code>Collector</code>](#Collector)  
-**Returns**: <code>Promise.&lt;Map&gt;</code> - - Collection of elements to resolve  
+**Returns**: <code>Promise.&lt;Map.&lt;String, T&gt;&gt;</code> - - Map of elements resolved  
 
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| [options] | <code>Object</code> | <code>{}</code> |  |
-| options.timeout | <code>Number</code> |  | Number of millisecond before timing out |
-| options.count | <code>Number</code> |  | Number of elements to collect before resolving |
+| Param | Type |
+| --- | --- |
+| ...args | <code>any</code> | 
 
 <a name="Collector+setListeners"></a>
 
@@ -104,9 +118,23 @@ Set all listeners to the relevant function (listen to the event)
 <a name="Collector+unsetListeners"></a>
 
 ### collector.unsetListeners()
-Unset all listeners (strop listening)
+Unset all listeners (stop listening)
 
 **Kind**: instance method of [<code>Collector</code>](#Collector)  
+<a name="Collector+_run"></a>
+
+### collector.\_run([options]) ⇒ <code>Promise.&lt;Map.&lt;String, T&gt;&gt;</code>
+Run this Collector with the given options
+
+**Kind**: instance method of [<code>Collector</code>](#Collector)  
+**Returns**: <code>Promise.&lt;Map.&lt;String, T&gt;&gt;</code> - - Map of elements resolved  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [options] | <code>Object</code> | <code>{}</code> |  |
+| options.timeout | <code>Number</code> |  | Number of milliseconds before timing out |
+| options.count | <code>Number</code> |  | Number of elements to collect before resolving |
+
 <a name="Collector+timeout"></a>
 
 ### collector.timeout()
@@ -124,8 +152,8 @@ Handles on collect action
 | --- | --- | --- |
 | collectors | <code>Array.&lt;CollectorContainer&gt;</code> |  |
 | param | <code>Object</code> | { id, collected } |
-| param.id | <code>String</code> |  |
-| collected | <code>Object</code> | element collected |
+| param.id | <code>String</code> | The collected element id |
+| collected | <code>T</code> | Element collected |
 
 <a name="Collector+onTimeout"></a>
 
@@ -147,10 +175,10 @@ Fired to collect an element
 
 | Param | Type | Description |
 | --- | --- | --- |
-| collectors | <code>Array.&lt;CollectorContainer&gt;</code> | The collectors that will collect the element |
+| collectors | <code>Array.&lt;CollectorContainer.&lt;T&gt;&gt;</code> | The collectors that will collect the element |
 | obj | <code>Object</code> |  |
-| obj.id | <code>Object</code> | The collected element id |
-| obj.collected | <code>Object</code> | The collected element |
+| obj.id | <code>String</code> | The collected element id |
+| obj.collected | <code>T</code> | The collected element |
 
 <a name="Collector+event_timeout"></a>
 
@@ -177,3 +205,7 @@ Creates an instance of Collector.
 | --- | --- |
 | axonClient | <code>AxonClient</code> | 
 
+<a name="Timeout"></a>
+
+## Timeout : <code>Object</code>
+**Kind**: global typedef  

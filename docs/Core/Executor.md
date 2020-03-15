@@ -6,7 +6,7 @@
 
 | Name | Type |
 | --- | --- |
-| axon | <code>AxonClient</code> | 
+| _axon | <code>AxonClient</code> | 
 
 
 * [Executor](#Executor)
@@ -22,7 +22,7 @@
 <a name="new_Executor_new"></a>
 
 ### new Executor()
-Executor class. Execute and handle execution of listeners and command in the framework
+Executor class. Execute and handle execution of listeners and commands in the framework
 Will emit events depending on the execution
 
 <a name="Executor+listener"></a>

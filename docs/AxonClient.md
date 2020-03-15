@@ -16,6 +16,7 @@
 | guildConfigs | <code>GuildConfigCache</code> | The Manager that handles GuildConfigs (cache / DB etc) |
 | [axonConfig] | <code>AxonConfig</code> | The AxonConfig object that handles globally blacklisted users and guilds |
 | dispatcher | <code>CommandDispatcher</code> | Dispatch commands onMessageCreate. |
+| executor | <code>Executor</code> | Executor class that handles executing commands and listeners |
 | moduleLoader | <code>ModuleLoader</code> | Load, unload modules. |
 | _messageManager | <code>MessageManager</code> | Message manager object accessible with `<AxonClient>.l` |
 | library | <code>LibraryInterface</code> | LibraryInterface object depending the lib used |
@@ -79,6 +80,11 @@
         * [.registerGuildPrefixes(gID, prefixArr)](#AxonClient+registerGuildPrefixes) ⇒ <code>Promise.&lt;GuildConfig&gt;</code>
         * [.toString()](#AxonClient+toString) ⇒ <code>String</code>
         * [.toJSON()](#AxonClient+toJSON) ⇒ <code>Object</code>
+        * ["debug"](#AxonClient+event_debug)
+        * ["commandExecution"](#AxonClient+event_commandExecution)
+        * ["commandError"](#AxonClient+event_commandError)
+        * ["listenerExecution"](#AxonClient+event_listenerExecution)
+        * ["listenerError"](#AxonClient+event_listenerError)
     * _static_
         * [.AxonClient](#AxonClient.AxonClient)
             * [new AxonClient(botClient, [axonOptions], [modules])](#new_AxonClient.AxonClient_new)
@@ -320,6 +326,88 @@ Custom ToJSON method.
 
 **Kind**: instance method of [<code>AxonClient</code>](#AxonClient)  
 **Returns**: <code>Object</code> - JSON-like Object  
+<a name="AxonClient+event_debug"></a>
+
+### "debug"
+Fired when a debug message needs to be sent
+
+**Kind**: event emitted by [<code>AxonClient</code>](#AxonClient)  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| flags | <code>DEBUG\_FLAGS</code> | Debug flags used to have more information about the event |
+| debugMessage | <code>String</code> | Debug message with information about the situation |
+
+<a name="AxonClient+event_commandExecution"></a>
+
+### "commandExecution"
+Fired when a command is successfully ran
+
+**Kind**: event emitted by [<code>AxonClient</code>](#AxonClient)  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| status | <code>Boolean</code> | If the command was successfully executed or not |
+| commandFullLabel | <code>String</code> | The command fullLabel |
+| data | <code>Object</code> |  |
+| data.msg | <code>Message</code> | The message that triggered the command |
+| data.command | <code>Command</code> | The Command that was executed |
+| data.guildConfig | <code>GuildConfig</code> | The GuildConfig |
+| data.context | <code>CommandContext</code> | The execution context |
+
+<a name="AxonClient+event_commandError"></a>
+
+### "commandError"
+Fired when a command fails
+
+**Kind**: event emitted by [<code>AxonClient</code>](#AxonClient)  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| commandFullLabel | <code>String</code> | The command fullLabel |
+| data | <code>Object</code> |  |
+| data.msg | <code>Message</code> | The message that triggered the command |
+| data.command | <code>Command</code> | The Command that was executed |
+| data.guildConfig | <code>GuildConfig</code> | The GuildConfig |
+| data.error | <code>AxonCommandError</code> | The error |
+
+<a name="AxonClient+event_listenerExecution"></a>
+
+### "listenerExecution"
+Fired when a listener is executed
+
+**Kind**: event emitted by [<code>AxonClient</code>](#AxonClient)  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| status | <code>Boolean</code> | Whether the listener was successfully executed or not |
+| eventName | <code>String</code> | The discord event name |
+| listenerName | <code>String</code> | The listener label |
+| data | <code>Object</code> | Additional information |
+| data.listener | <code>Listener</code> | The Listener that was executed |
+| data.guildConfig | <code>GuildConfig</code> | The GuildConfig object |
+
+<a name="AxonClient+event_listenerError"></a>
+
+### "listenerError"
+Fired when a listener errors
+
+**Kind**: event emitted by [<code>AxonClient</code>](#AxonClient)  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| eventName | <code>String</code> | The discord event name |
+| listenerName | <code>String</code> | The Listener label |
+| data | <code>Object</code> | Additional information |
+| data.listener | <code>Listener</code> | The Listener that was executed |
+| data.guildConfig | <code>GuildConfig</code> | The GuildConfig object |
+| data.error | <code>Error</code> | The error |
+
 <a name="AxonClient.AxonClient"></a>
 
 ### AxonClient.AxonClient

@@ -1,7 +1,8 @@
 <a name="GuildConfigsCache"></a>
 
-## GuildConfigsCache
+## GuildConfigsCache ⇐ <code>Store&lt;GuildConfig&gt;</code>
 **Kind**: global class  
+**Extends**: <code>Store&lt;GuildConfig&gt;</code>  
 **Author**: KhaaZ  
 **Properties**
 
@@ -11,11 +12,10 @@
 | guildConfigs | <code>LRUCache.&lt;GuildConfig&gt;</code> | 
 
 
-* [GuildConfigsCache](#GuildConfigsCache)
+* [GuildConfigsCache](#GuildConfigsCache) ⇐ <code>Store&lt;GuildConfig&gt;</code>
     * [new GuildConfigsCache()](#new_GuildConfigsCache_new)
     * _instance_
-        * [.get(key)](#GuildConfigsCache+get) ⇒ <code>GuildConfig</code>
-        * [.set(key, value)](#GuildConfigsCache+set)
+        * [.guildConfigs](#GuildConfigsCache+guildConfigs) : <code>LRUCache.&lt;GuildConfig&gt;</code>
         * [.getOrFetch(key)](#GuildConfigsCache+getOrFetch) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>
         * [.fetchGuildConf(gID)](#GuildConfigsCache+fetchGuildConf) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>
     * _static_
@@ -28,29 +28,13 @@
 Handles GuildConfigs cache.
 Can be extended to a redis or memcached cache easily for instance.
 
-<a name="GuildConfigsCache+get"></a>
+<a name="GuildConfigsCache+guildConfigs"></a>
 
-### guildConfigsCache.get(key) ⇒ <code>GuildConfig</code>
-Get a GuildConfig from the guild ID.
+### guildConfigsCache.guildConfigs : <code>LRUCache.&lt;GuildConfig&gt;</code>
+Returns the cache
 
-**Kind**: instance method of [<code>GuildConfigsCache</code>](#GuildConfigsCache)  
-
-| Param | Type |
-| --- | --- |
-| key | <code>String</code> | 
-
-<a name="GuildConfigsCache+set"></a>
-
-### guildConfigsCache.set(key, value)
-Set a GuildConfig with the Guild ID as key.
-
-**Kind**: instance method of [<code>GuildConfigsCache</code>](#GuildConfigsCache)  
-
-| Param | Type |
-| --- | --- |
-| key | <code>String</code> | 
-| value | <code>GuildConfig</code> | 
-
+**Kind**: instance property of [<code>GuildConfigsCache</code>](#GuildConfigsCache)  
+**Read only**: true  
 <a name="GuildConfigsCache+getOrFetch"></a>
 
 ### guildConfigsCache.getOrFetch(key) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>

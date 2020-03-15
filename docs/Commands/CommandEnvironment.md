@@ -12,7 +12,7 @@
 | args | <code>Array.&lt;String&gt;</code> | The array of arguments |
 | guildConfig | <code>GuildConfig</code> | The GuildConfig data-structure with all DB saved settings |
 | prefix | <code>String</code> | The prefix used for this command |
-| command | <code>String</code> | The full label of the command being |
+| command | <code>String</code> | The full label of the command being executed |
 | executionType | <code>COMMAND\_EXECUTION\_TYPES</code> | Execution type: admin, owner, regular |
 
 
