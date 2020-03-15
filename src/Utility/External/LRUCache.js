@@ -41,7 +41,7 @@ class LRUCache extends Store {
     /**
      * Creates an instance of LRUCache.
      *
-     * @param {Number} limit - Max number of element in the cache
+     * @param {Number} limit - Max number of elements in the cache
      * @param {Object} options - Options used to construct the cache
      * @param {Object.<string, T>|Array<[string, T]>} [options.iterable=null]
      * @memberof LRUCache
