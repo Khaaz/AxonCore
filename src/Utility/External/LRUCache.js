@@ -32,7 +32,7 @@ class Node {
  *
  * @template T
  * @class LRUCache
- * @extends Store<Node>
+ * @extends Store<Node<T>>
  * @prop {Number} limit - Maximum size of the LRU
  * @prop {Node<T>} head
  * @prop {Node<T>} tail
