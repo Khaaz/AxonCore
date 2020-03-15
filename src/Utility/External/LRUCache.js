@@ -134,7 +134,7 @@ class LRUCache extends Store {
             this.tail = node.prev;
         }
   
-        this.cache.delete(key);
+        return this.cache.delete(key);
     }
 
     /**
