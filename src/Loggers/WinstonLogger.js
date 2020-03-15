@@ -37,7 +37,7 @@ class Winston {
             levels: levelConfig.levels,
             transports: [
                 this.consoleTransport,
-                // this.emergTransport,
+                // this.fatalTransport,
                 // this.errorTransport,
                 // this.infoTransport,
                 // this.globalTransport,
@@ -51,7 +51,7 @@ class Winston {
                 format.printf(this.format),
             ),
             exitOnError: false,
-            exceptionHandlers: [this.consoleTransport/* , this.emergTransport*/],
+            exceptionHandlers: [this.consoleTransport/* , this.fatalTransport*/],
         } );
     }
 
@@ -67,7 +67,7 @@ class Winston {
             ),
         } );
         
-        this.emergTransport = new transports.File( {
+        this.fatalTransport = new transports.File( {
             filename: 'fatal.winston.log',
             level: 'fatal',
         } );

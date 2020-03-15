@@ -88,7 +88,7 @@ class CommandDispatcher {
             try {
                 guildConfig = await this._axon.guildConfigs.getOrFetch(this.library.guild.getID(guild) );
             } catch (err) {
-                this._axon.log('EMERG', err.stack, { guild } );
+                this._axon.log('FATAL', err.stack, { guild } );
                 return;
             }
         }

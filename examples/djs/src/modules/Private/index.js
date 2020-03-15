@@ -12,7 +12,7 @@ class Private extends Module {
         this.enabled = true;
         this.serverBypass = true;
 
-        this.infos = {
+        this.info = {
             name: 'Private',
             description: 'Very Private. Much Dev. Wow.',
         };

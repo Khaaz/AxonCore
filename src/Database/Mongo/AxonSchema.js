@@ -6,7 +6,7 @@ const axonSchema = new Schema( {
     prefix: { type: String, default: 'a!' },
 
     /**
-     * General infos
+     * General info
      */
     createdAt: { type: Date, default: Date.now }, // date of schema creation
     updatedAt: { type: Date, default: Date.now }, // data of last DB update

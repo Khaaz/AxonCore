@@ -14,7 +14,7 @@ const guildSchema = new Schema( {
     eventListeners: { type: Array, default: [] }, // Array of disabled listeners (labels)
 
     /**
-     * General infos
+     * General info
      */
     createdAt: { type: Date, default: Date.now }, // date of schema creation
     updatedAt: { type: Date, default: Date.now }, // data of last DB update
