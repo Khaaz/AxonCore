@@ -290,13 +290,31 @@ class Utils {
     /**
      * List all missing permissions of the given user.
      *
+     * @param {Member} member
+     * @param {Array<String>} [permissions=[]] - List of permissions to test
+     * @returns {Array<String>} An array of missing permissions
+     * @memberof Utils
+     */
+    missingPerms(member, permissions = [] ) {
+        const missing = [];
+        for (const perm of permissions) {
+            if (!this.library.member.hasPermission(member, perm) ) {
+                missing.push(perm);
+            }
+        }
+        return missing;
+    }
+
+    /**
+     * List all missing permissions of the given user in the given channel.
+     *
      * @param {Channel} channel
      * @param {Member} member
      * @param {Array<String>} [permissions=[]] - List of permissions to test
      * @returns {Array<String>} An array of missing permissions
      * @memberof Utils
      */
-    missingPerms(channel, member, permissions = [] ) {
+    missingChannelPerms(channel, member, permissions = [] ) {
         const missing = [];
         for (const perm of permissions) {
             if (!this.library.channel.hasPermission(channel, member, perm) ) {
