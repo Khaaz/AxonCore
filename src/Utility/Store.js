@@ -177,8 +177,8 @@ class Store {
             'map',
             'filter',
             'toArray',
-        ].includes(key) ) {
-            throw new AxonError(`You can't use apply on function: ${key}.`, 'Store');
+        ].includes(func) ) {
+            throw new AxonError(`You can't use apply on function: ${func}.`, 'Store');
         }
         return new Store(new Map(this[func](...args).map(e => [e[key], e] ) ) );
     }
