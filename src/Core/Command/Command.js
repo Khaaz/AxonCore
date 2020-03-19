@@ -188,7 +188,7 @@ class Command extends Base {
      * @returns {Array<Command>} An Array of Commands class (non instantiated)
      */
     init() {
-        // return this.suncmds for backward compatibility
+        // return this.subcmds for backward compatibility
         return this.subcmds || [];
     }
 
