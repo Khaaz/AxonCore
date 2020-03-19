@@ -304,7 +304,6 @@ class AxonUtils {
             content = { content: `${content}` };
         }
 
-        content.disableEveryone = !!options.disableEveryone;
         if (options.allowedMentions) {
             content.allowedMentions = options.allowedMentions;
         }
