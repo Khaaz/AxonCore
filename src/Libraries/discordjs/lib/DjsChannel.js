@@ -1,6 +1,9 @@
 import Channel from '../../definitions/Channel';
 
 /**
+ * @typedef {{
+ * parse?: String[], roles?: String[], users?: String[]
+ * }} AlloweMentions
  * @typedef {import('discord.js').Channel} channel
  * @typedef {import('discord.js').User} user
  * @typedef {{
