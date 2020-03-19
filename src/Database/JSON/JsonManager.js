@@ -19,7 +19,6 @@ const writeFileAsync = util.promisify(fs.writeFile);
 
 /**
  * Manager class for handling Json database
- * @TODO Add a mutex / queue system per document/guild to reduce possibility of corruption
  *
  * @author KhaaZ, Olybear
  *
@@ -200,13 +199,8 @@ class JsonManager {
         const axonSchema = Object.assign( {}, this.axonDefault);
         axonSchema.prefix = defaultPrefix;
         axonSchema.createdAt = new Date();
-        axonSchema.updatedAt = new Date();
 
-        const res = await this.writeFile(this._axonPath, this.toString(axonSchema) );
-        if (res) {
-            return axonSchema;
-        }
-        return null;
+        return this.writeAxonSchema(axonSchema);
     }
 
     /**
@@ -223,14 +217,9 @@ class JsonManager {
         const guildSchema = Object.assign( {}, this.guildDefault);
         guildSchema.guildID = gID;
         guildSchema.createdAt = new Date();
-        guildSchema.updatedAt = new Date();
         guildSchema.prefixes = prefixes;
 
-        const res = await this.writeFile(this._buildPath(gID), this.toString(guildSchema) );
-        if (res) {
-            return guildSchema;
-        }
-        return null;
+        return this.writeGuildSchema(gID, guildSchema);
     }
 
     // **** FETCHERS **** //
@@ -283,7 +272,6 @@ class JsonManager {
             const guildSchema = await this.fetchGuildSchema(gID);
 
             guildSchema[key] = value;
-            guildSchema.updatedAt = new Date();
             
             return this.writeGuildSchema(gID, guildSchema);
         }, true);
@@ -303,7 +291,6 @@ class JsonManager {
             const axonSchema = await this.fetchAxonSchema();
 
             axonSchema[key] = value;
-            axonSchema.updatedAt = new Date();
 
             return this.writeAxonSchema(axonSchema);
         }, true);
