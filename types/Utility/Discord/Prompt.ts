@@ -1,7 +1,7 @@
 import {
     AxonClient, LibTextableChannel, PromptOptionsData, PromptOptions, LibClient, AxonMSGCont, LibMessage,
 } from '../../';
-import * as EventEmitter from 'events';
+import { EventEmitter } from 'events';
 
 /**
  * Create a Prompt, waiting for specific input before resolving with the message Object
