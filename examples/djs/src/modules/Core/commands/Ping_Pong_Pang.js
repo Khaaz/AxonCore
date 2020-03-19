@@ -9,9 +9,7 @@ class Pang extends Command {
         this.label = 'pang';
         this.aliases = ['pang'];
 
-        this.isSubcmd = true;
         this.hasSubcmd = true;
-        this.subcmds = [Pung];
 
         this.info = {
             owners: ['KhaaZ'],
@@ -32,6 +30,10 @@ class Pang extends Command {
         this.permissions = new CommandPermissions(this, {
             serverMod: true,
         } );
+    }
+
+    init() {
+        return [Pung];
     }
 
     async execute( { msg } ) {

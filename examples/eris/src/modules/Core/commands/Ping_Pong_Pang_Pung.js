@@ -7,7 +7,6 @@ class Pung extends Command {
         this.label = 'pung';
         this.aliases = ['pung'];
 
-        this.isSubcmd = true;
         this.hasSubcmd = false;
 
         this.info = {
