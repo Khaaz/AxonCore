@@ -108,7 +108,7 @@ class CommandLoader extends ALoader {
      * Init and construct/instance all subcommands of the given parent command
      *
      * @param {Command} parentCommand - The command Object
-     * @param {Array<Command>} subCommands - Array of Command class to load
+     * @param {Array<new (...args[]: any) => Command>} subCommands - Array of Command class to load
      * @returns {Boolean} - Wether it loaded the subcommands or not
      * @memberof Command
      */
