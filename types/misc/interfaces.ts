@@ -1,6 +1,6 @@
 import {
-    CommandOptions, CommandPermissions, LibTextableChannel, LibMember, LibMessage, Command, LibGuild, LibUser, LIBRARY_TYPES, LOGGER_TYPES,
-    DB_TYPES, Utils, ALogger, ADBProvider, AxonConfig, GuildConfig, User, Member, Message, Channel, Guild, Resolver, Embed, COMMAND_EXECUTION_TYPES,
+    CommandOptions, CommandPermissions, LibTextableChannel, LibMember, LibMessage, Command, LibGuild, LibUser, LIBRARY_TYPES, LOGGER_TYPES, DB_TYPES,
+    Utils, ALogger, ADBProvider, AxonConfig, GuildConfig, User, Member, Message, Channel, Guild, Resolver, Embed, COMMAND_EXECUTION_TYPES, LibAllowedMentions,
 } from '../';
 import * as djs from 'discord.js';
 import * as Eris from 'eris';
@@ -437,9 +437,9 @@ interface AxonMSGOpt {
      */
     delete?: boolean;
     /**
-     * Whether to allow mentioning everyone or not
+     * Custom allowed mentions object
      */
-    disableEveryone?: boolean;
+    allowedMentions?: LibAllowedMentions;
     /**
      * Delay after which the message will be deleted
      */
@@ -852,7 +852,7 @@ interface DjsContent {
     tts?: boolean;
     nonce?: string;
     embed?: Embed | djs.MessageEmbed | EmbedData;
-    disableEveryone?: boolean;
+    allowedMentions?: djs.MessageMentionOptions;
     files?: (djs.FileOptions | djs.BufferResolvable | djs.MessageAttachment)[];
     code?: string | boolean;
     split?: boolean | djs.SplitOptions;
@@ -874,7 +874,7 @@ interface DjsPresenceGame extends PresenceGame {
 interface ErisContent {
     content?: string;
     tts?: boolean;
-    disableEveryone?: boolean;
+    allowedMentions?: Eris.AllowedMentions;
     embed?: Embed | EmbedData;
     file: Eris.MessageFile | Eris.MessageFile[];
 }

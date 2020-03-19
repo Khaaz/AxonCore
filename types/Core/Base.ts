@@ -106,7 +106,7 @@ export declare class Base {
      * @param user - User object to get the DM channel
      * @param content - String or object (embed)
      * @param options - Options
-     * @param options.disableEveryone - Whether to allow mentioning everyone or not
+     * @param options.allowedMentions - Custom allowed mentions object
      * @param options.delete - Whether to delete the message or not
      * @param options.delay - Delay after which the message will be deleted
      * @returns Message Object
@@ -121,7 +121,7 @@ export declare class Base {
      * @param channel - The channel Object
      * @param content - Message content, String or Embed Object
      * @param options - Options { disableEveryone: Boolean, delete: Boolean, delay: Number }
-     * @param options.disableEveryone - Whether to allow mentioning everyone or not
+     * @param options.allowedMentions - Custom allowed mentions object
      * @param options.delete - Whether to delete the message or not
      * @param options.delay - Delay after which the message will be deleted
      * @returns Message Object
@@ -146,7 +146,7 @@ export declare class Base {
      * @param channel - The channel Object
      * @param content - Success message content
      * @param options - Additional options
-     * @param options.disableEveryone - Whether to allow mentioning everyone or not
+     * @param options.allowedMentions - Custom allowed mentions object
      * @param options.delete - Whether to delete the message or not
      * @param options.delay - Delay after which the message will be deleted
      * @param options.triggerCooldown - Whether the command should trigger cooldown or not
@@ -162,7 +162,7 @@ export declare class Base {
      * @param channel - The channel Object
      * @param content - Success message content
      * @param options - Additional options
-     * @param options.disableEveryone - Whether to allow mentioning everyone or not
+     * @param options.allowedMentions - Custom allowed mentions object
      * @param options.delete - Whether to delete the message or not
      * @param options.delay - Delay after which the message will be deleted
      * @param options.triggerCooldown - Whether the command should trigger cooldown or not

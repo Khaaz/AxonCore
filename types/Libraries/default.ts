@@ -9,6 +9,6 @@ export { Member } from './definitions/Member';
 export { Message } from './definitions/Message';
 export { Resolver } from './definitions/Resolver';
 export {
-    LibMessage, LibMember, LibClient, LibGuild, LibUser, LibTextableChannel, LibRole, LibChannel, LibDMChannel, LibPermission,
+    LibMessage, LibMember, LibClient, LibGuild, LibUser, LibTextableChannel, LibRole, LibChannel, LibDMChannel, LibPermission, LibAllowedMentions,
 } from './definitions/types';
 export { User } from './definitions/User';

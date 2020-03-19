@@ -1,5 +1,5 @@
 import {
-    Message, GuildMember, Client, Guild, User, TextChannel, Role, Channel, DMChannel, PermissionOverwrites,
+    Message, GuildMember, Client, Guild, User, TextChannel, Role, Channel, DMChannel, PermissionOverwrites, MessageMentionOptions,
 } from 'discord.js';
 
 declare type LibMessage = Message;
@@ -11,7 +11,8 @@ declare type LibTextableChannel = TextChannel;
 declare type LibRole = Role;
 declare type LibChannel = Channel;
 declare type LibDMChannel = DMChannel;
-declare type LibPermission = PermissionOverwrites
+declare type LibPermission = PermissionOverwrites;
+declare type LibAllowedMentions = MessageMentionOptions;
 
 export {
     LibMessage,
@@ -24,4 +25,5 @@ export {
     LibChannel,
     LibDMChannel,
     LibPermission,
+    LibAllowedMentions,
 };

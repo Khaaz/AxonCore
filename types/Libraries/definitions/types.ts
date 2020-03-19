@@ -11,6 +11,7 @@ declare type LibRole = Eris.Role | Djs.Role;
 declare type LibChannel = Eris.Channel | Djs.Channel;
 declare type LibDMChannel = Eris.PrivateChannel | Djs.DMChannel;
 declare type LibPermission = Eris.Permission | Eris.PermissionOverwrite | Djs.PermissionOverwrites;
+declare type LibAllowedMentions = Eris.AllowedMentions | Djs.MessageMentionOptions;
 
 export {
     LibMessage,
@@ -23,4 +24,5 @@ export {
     LibChannel,
     LibDMChannel,
     LibPermission,
+    LibAllowedMentions,
 };

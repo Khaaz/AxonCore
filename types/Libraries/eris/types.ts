@@ -1,5 +1,5 @@
 import {
-    Message, Member, Client, Guild, User, TextableChannel, Role, Channel, PrivateChannel, Permission, PermissionOverwrite,
+    Message, Member, Client, Guild, User, TextableChannel, Role, Channel, PrivateChannel, Permission, PermissionOverwrite, AllowedMentions,
 } from 'eris';
 
 declare type LibMessage = Message;
@@ -12,6 +12,7 @@ declare type LibRole = Role;
 declare type LibChannel = Channel;
 declare type LibDMChannel = PrivateChannel;
 declare type LibPermission = Permission | PermissionOverwrite;
+declare type LibAllowedMentions = AllowedMentions;
 
 export {
     LibMessage,
@@ -24,4 +25,5 @@ export {
     LibChannel,
     LibDMChannel,
     LibPermission,
+    LibAllowedMentions,
 };

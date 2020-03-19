@@ -9,6 +9,6 @@ export { ErisMember as Member } from './eris/Member';
 export { ErisMessage as Message } from './eris/Message';
 export { ErisResolver as Resolver } from './eris/Resolver';
 export {
-    LibMessage, LibMember, LibClient, LibGuild, LibUser, LibTextableChannel, LibRole, LibChannel, LibDMChannel, LibPermission,
+    LibMessage, LibMember, LibClient, LibGuild, LibUser, LibTextableChannel, LibRole, LibChannel, LibDMChannel, LibPermission, LibAllowedMentions,
 } from './eris/types';
 export { ErisUser as User } from './eris/User';

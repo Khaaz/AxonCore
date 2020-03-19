@@ -18,7 +18,7 @@ export { TranslationManager } from './Langs/TranslationManager';
 
 export {
     Channel, Client, Enums, Guild, LibraryInterface, Member, Message, Resolver, User,
-    LibMessage, LibMember, LibClient, LibGuild, LibUser, LibTextableChannel, LibRole, LibChannel, LibDMChannel, LibPermission,
+    LibMessage, LibMember, LibClient, LibGuild, LibUser, LibTextableChannel, LibRole, LibChannel, LibDMChannel, LibPermission, LibAllowedMentions,
     EVENTS, DISCORD_LIB_PERMISSIONS, PERMISSIONS, PERMISSIONS_NAMES,
 } from './Libraries';
 export { LibrarySelector } from './Libraries/LibrarySelector';
