@@ -4,11 +4,11 @@ import Command from '../Command/Command';
 import Validator from '../Validator';
 
 import AxonError from '../../Errors/AxonError';
-import CommandRegistry from './../Stores/CommandRegistry';
 
 /**
  * @typedef {import('../Module').default} Module
  * @typedef {import('../../AxonClient').default} AxonClient
+ * @typedef {import('../Stores/CommandRegistry').default} CommandRegistry
  */
 
 /**
@@ -57,11 +57,11 @@ class CommandLoader extends ALoader {
      * Validate and correct the command before registering it.
      *
      * @param {Command} command - The command to load
-     * @param {Command} [parent=null] - The optional parent command
+     * @param {CommandRegistry} parent - The registry to load the command into
      * @returns {Boolean}
      * @memberof CommandLoader
      */
-    load(command, parent = null) {
+    load(command, registry) {
         if (!(command instanceof Command) ) {
             throw new AxonError(`[${command.toString()}] Not a Command!`, 'COMMAND-LOADER', this._module.label);
         }
@@ -74,11 +74,8 @@ class CommandLoader extends ALoader {
             throw new AxonError(`[${command.label}] Invalid Command (enable debugMode)!`, 'COMMAND-LOADER', this._module.label);
         }
 
-        if (parent) {
-            this.registerSubCommand(command, parent);
-        } else {
-            this.registerCommand(command);
-        }
+        this.registerCommand(command, registry);
+        
         return true;
     }
 
@@ -98,7 +95,7 @@ class CommandLoader extends ALoader {
         for (const Value of Object.values(commands) ) {
             const command = new Value(this._module);
             try {
-                this.load(command);
+                this.load(command, this.axon.commandRegistry);
             } catch (err) {
                 this.logger.error(err);
             }
@@ -111,20 +108,27 @@ class CommandLoader extends ALoader {
      * Init and construct/instance all subcommands of the given parent command
      *
      * @param {Command} parentCommand - The command Object
+     * @param {Array<Command>} subCommands - Array of Command class to load
+     * @returns {Boolean} - Wether it loaded the subcommands or not
      * @memberof Command
      */
-    loadSubCommands(parentCommand) {
-        const subcmds = parentCommand.init();
+    loadSubCommands(parentCommand, subCommands) {
         /* No subCommands */
-        if (!parentCommand.subCommands || !subcmds.length) {
+        if (!parentCommand.subCommands || !subCommands.length) {
             this.logger.error(`[Module(${this._module.label})] Command: ${parentCommand.fullLabel} - Couldn't init subcommands.`);
-            return;
+            return false;
         }
 
-        for (const Value of Object.values(subcmds) ) {
+        for (const Value of Object.values(subCommands) ) {
             const subCommand = new Value(this._module);
-            this.load(subCommand, parentCommand);
+            try {
+                this.load(subCommand, parentCommand.subCommands);
+                subCommand.parentCommand = parentCommand;
+            } catch (err) {
+                this.logger.error(err);
+            }
         }
+        return true;
     }
 
     /**
@@ -145,34 +149,13 @@ class CommandLoader extends ALoader {
      * Register a Command. Register its subcommands if it has any.
      *
      * @param {Command} command - Command object
+     * @param {CommandRegistry} registry - The registry to register the command into
      * @memberof CommandLoader
      */
-    registerCommand(command) {
-        if (command.hasSubcmd) {
-            command.subCommands = new CommandRegistry(command.axon);
-            this.loadSubCommands(command);
-        }
-       
-        this.axon.commandRegistry.register(command.label, command); // add the command to the Map of commands.
-    }
+    registerCommand(command, registry) {
+        command._init();
 
-    /**
-     * Register a SubCommand.Register its subcommands if it has any
-     *
-     * @param {Command} command - The subcommand to register
-     * @param {Command} parent - The parent command
-     * @memberof CommandLoader
-     */
-    registerSubCommand(command, parent) {
-        if (command.hasSubcmd) {
-            command.subCommands = new CommandRegistry(command.axon);
-            this.loadSubCommands(command);
-        }
-        
-        // assign parentCommand
-        command.parentCommand = parent;
-
-        parent.subCommands.register(command.label, command);
+        registry.register(command.label, command); // add the command to the Map of commands.
     }
 
     /**

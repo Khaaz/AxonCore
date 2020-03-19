@@ -6,6 +6,8 @@ import CommandCooldown from './CommandCooldown';
 import CommandContext from './CommandContext';
 import CommandResponse from './CommandResponse';
 
+import CommandRegistry from '../Stores/CommandRegistry';
+
 import AxonError from '../../Errors/AxonError';
 import AxonCommandError from '../../Errors/AxonCommandError';
 
@@ -39,7 +41,7 @@ import { COMMAND_EXECUTION_STATE } from '../../Utility/Constants/AxonEnums';
  *
  * @prop {Command} [parentCommand=null] - Reference to the parent command
  * @prop {Boolean} [hasSubcmd=false] - Whether the command HAS subcommands
- * @prop {CommandRegistry} [subCommands=null] - Collection of subcommands
+ * @prop {CommandRegistry} [subCommands=null] - Registry of subcommands
  *
  * @prop {Object} info - Default info about the command
  * @prop {Array<String>} [info.owners] - Command authors
@@ -190,6 +192,19 @@ class Command extends Base {
     init() {
         // return this.subcmds for backward compatibility
         return this.subcmds || [];
+    }
+
+    /**
+     * @returns {Boolean}
+     */
+    _init() {
+        if (!this.hasSubcmd) {
+            return false;
+        }
+        const commands = this.init();
+        this.subCommands = new CommandRegistry(this.axon);
+
+        return this.module.commandLoader.loadSubCommands(this, commands);
     }
 
     // **** MAIN **** //
