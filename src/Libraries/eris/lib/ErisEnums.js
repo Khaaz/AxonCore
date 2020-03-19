@@ -105,7 +105,7 @@ export const EVENTS = {
  * READ_MESSAGE_HISTORY: 'readMessageHistory'
  * MENTION_EVERYONE: 'mentionEveryone'
  * USE_EXTERNAL_EMOJIS: 'externalEmojis'
- * VIEW_GUILD_ANALYTICS: 'viewGuildAnalytics'
+ * VIEW_GUILD_INSIGHTS: 'viewGuildInsights'
  * CONNECT: 'voiceConnect'
  * SPEAK: 'voiceSpeak'
  * MUTE_MEMBERS: 'voiceMuteMembers'
@@ -140,7 +140,7 @@ export const DISCORD_LIB_PERMISSIONS = {
     READ_MESSAGE_HISTORY: 'readMessageHistory',
     MENTION_EVERYONE: 'mentionEveryone',
     USE_EXTERNAL_EMOJIS: 'externalEmojis',
-    VIEW_GUILD_ANALYTICS: 'viewGuildAnalytics',
+    VIEW_GUILD_INSIGHTS: 'viewGuildInsights',
     CONNECT: 'voiceConnect',
     SPEAK: 'voiceSpeak',
     MUTE_MEMBERS: 'voiceMuteMembers',
@@ -175,7 +175,7 @@ export const DISCORD_LIB_PERMISSIONS = {
     'readMessageHistory',
     'mentionEveryone',
     'externalEmojis',
-    'viewGuildAnalytics',
+    'viewGuildInsights',
     'voiceConnect',
     'voiceSpeak',
     'voiceMuteMembers',
@@ -209,7 +209,7 @@ export const PERMISSIONS = [
     'readMessageHistory',
     'mentionEveryone',
     'externalEmojis',
-    'viewGuildAnalytics',
+    'viewGuildInsights',
     'voiceConnect',
     'voiceSpeak',
     'voiceMuteMembers',
@@ -244,7 +244,7 @@ export const PERMISSIONS = [
  * readMessageHistory: 'Read Message History'
  * mentionEveryone: 'Mention Everyone'
  * externalEmojis: 'External Emojis'
- * viewGuildAnalytics: 'View Guild Analytics'
+ * viewGuildInsights: 'View Guild Insights'
  * voiceConnect: 'Voice Connect'
  * voiceSpeak: 'Voice Speak'
  * voiceMuteMembers: 'Voice Mute Members'
@@ -279,7 +279,7 @@ export const PERMISSIONS_NAMES = {
     readMessageHistory: 'Read Message History',
     mentionEveryone: 'Mention Everyone',
     externalEmojis: 'External Emojis',
-    viewGuildAnalytics: 'View Guild Analytics',
+    viewGuildInsights: 'View Guild Insights',
     voiceConnect: 'Voice Connect',
     voiceSpeak: 'Voice Speak',
     voiceMuteMembers: 'Voice Mute Members',
