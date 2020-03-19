@@ -1,6 +1,9 @@
 import Channel from '../../definitions/Channel';
 
 /**
+ * @typedef {{
+ * everyone?: Boolean, roles?: boolean | String[], users?: boolean | String[]
+ * }} AlloweMentions
  * @typedef {import('eris').GuildChannel} gchannel
  * @typedef {import('eris').User} User
  * @typedef {
@@ -12,7 +15,7 @@ import Channel from '../../definitions/Channel';
  * @typedef {import('eris').TextableChannel} channel
  * @typedef {import('eris').Message} Message
  * @typedef {{
- * content?: String, tts?: Boolean, allowedMentions?: Object, embed?: Embed|EmbedOptions, file: MessageFile|Array<MessageFile>
+ * content?: String, tts?: Boolean, allowedMentions?: AllowedMentions, embed?: Embed|EmbedOptions, file: MessageFile|Array<MessageFile>
  * }} ErisContent
  * @typedef {import('../../../Utility/Discord/Embed').default} Embed
  * @typedef {import('eris').EmbedOptions} EmbedOptions
