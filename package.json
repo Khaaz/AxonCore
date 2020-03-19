@@ -18,7 +18,7 @@
     "@axonteam/doc-gen": "git+https://github.com/AxonTeam/doc-gen",
     "@axonteam/eslint-config": "^2.2.0",
     "@types/mongoose": "^5.5.32",
-    "@types/node": "^12.12.14",
+    "@types/node": "^13.9.2",
     "@types/signale": "^1.2.1",
     "@typescript-eslint/eslint-plugin": "^2.16.0",
     "@typescript-eslint/parser": "^2.16.0",
