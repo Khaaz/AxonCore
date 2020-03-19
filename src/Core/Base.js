@@ -23,7 +23,7 @@ import { TYPE_ERRORS } from '../Utility/Constants/AxonEnums';
  * @typedef {{ content?: String, embed?: Embed|EmbedBase }} MessageObject
  * @typedef {{ guild: Guild|String, cmd: String, user: User|String}} Ctx
  * @typedef {import('eris').AllowedMentions} ErisAllowedMentions
- * @typedef {import('discord.js').AllowedMentions} DjsAllowedMentions
+ * @typedef {import('discord.js').MessageMentionOptions} DjsAllowedMentions
  * @typedef {ErisAllowedMentions | DjsAllowedMentions} AllowedMentions
  */
 
