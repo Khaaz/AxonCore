@@ -11,8 +11,8 @@ import defaultWebhooksConfig from './Configs/webhooksConfig.json';
  * @typedef {import('./Langs/TranslationManager').AxonLanguageResponse} AxonLanguageResponse
  * @typedef {import('./Loggers/ALogger').default} ALogger
  * @typedef {import('./Database/ADBProvider').default} ADBProvider
- * @typedef {import('./Structures/DataStructure/AxonConfig').default} AxonConfig
- * @typedef {import('./Structures/DataStructure/GuildConfig').default} GuildConfig
+ * @typedef {import('./Core/Models/AxonConfig').default} AxonConfig
+ * @typedef {import('./Core/Models/GuildConfig').default} GuildConfig
  * @typedef {import('./Utility/Constants/AxonEnums').LIBRARY_TYPES} LIBRARY_TYPES
  * @typedef {import('./Utility/Constants/AxonEnums').LOGGER_TYPES} LOGGER_TYPES
  * @typedef {import('./Utility/Constants/AxonEnums').DB_TYPES} DB_TYPES

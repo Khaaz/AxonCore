@@ -90,11 +90,11 @@ There's also a built-in help command that you can easily override if you want to
 
 ### Commands
 
-You can create commands by extending [Command](src/Structures/Command/Command.js), [CommandPermissions](src/Structures/Command/CommandPermissions.js) and [CommandOptions](src/Structures/Command/CommandOptions.js).
+You can create commands by extending [Command](src/Core/Command/Command.js), [CommandPermissions](src/Core/Command/CommandPermissions.js) and [CommandOptions](src/Core/Command/CommandOptions.js).
 
 ### Listeners
 
-You can also create listeners by extending [Listener](src/Structures/Listener.js).  
+You can also create listeners by extending [Listener](src/Core/Listener.js).  
 A **Listener** is a function that is run when a Discord-specific event occurs. Many listeners can be bound to one Discord event.  
 A **Handler** is an object responsible of running all listeners for a specific Discord event.
 
@@ -108,7 +108,7 @@ There are specific providers for each type of Database, such as:
 - SQL ([sequelize](https://github.com/sequelize/sequelize)) [TODO]
 - SQLite () [TODO]
 
-The only thing you will handle is a [GuildConfig](src/Structures/DataStructure/GuildConfig.js) and an [AxonConfig](src/Structures/DataStructure/AxonConfig.js) object. Those are stored in the [GuildConfigCache](src/Structures/GuildConfigCache.js).
+The only thing you will handle is a [GuildConfig](src/Core/Models/GuildConfig.js) and an [AxonConfig](src/Core/Models/AxonConfig.js) object. Those are stored in the [GuildConfigCache](src/Core/GuildConfigCache.js).
 
 ### Translation support
 
@@ -133,9 +133,9 @@ TODO
 
 ### Execution context, error management, usage tracking
 
-A Command always should returns a Promise wrapping a [CommandResponse](src/Structures/Command/CommandResponse.js). Either explicitely by creating a CommandResponse and wrapping it in a Promise (`CommandResponse.resolve()`), or implicitely via [`sendMessage`](a), [`sendSuccess`](a) or [`sendError`](a). CommandResponse in these last cases is filled with appropriate information regarding command execution.  
+A Command always should returns a Promise wrapping a [CommandResponse](src/Core/Command/CommandResponse.js). Either explicitely by creating a CommandResponse and wrapping it in a Promise (`CommandResponse.resolve()`), or implicitely via [`sendMessage`](a), [`sendSuccess`](a) or [`sendError`](a). CommandResponse in these last cases is filled with appropriate information regarding command execution.  
 
-The framework will then build a [CommandContext](src/Structures/Command/CommandContext.js) object after each command execution.  
+The framework will then build a [CommandContext](src/Core/Command/CommandContext.js) object after each command execution.  
 Two types of events will then be emitted, depending on the scenario:
 
 - The command was executed entirely and successfully. A **commandExecution** event is emitted by AxonClient with `status = true`.

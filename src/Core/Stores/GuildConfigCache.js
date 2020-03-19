@@ -1,6 +1,7 @@
 import LRUCache from './../../Utility/External/LRUCache';
+import Store from '../../Utility/Store';
 
-import GuildConfig from '../DataStructure/GuildConfig';
+import GuildConfig from '../Models/GuildConfig';
 
 import AxonError from '../../Errors/AxonError';
 
@@ -15,11 +16,11 @@ import AxonError from '../../Errors/AxonError';
  * @author KhaaZ
  *
  * @class GuildConfigsCache
- *
+ * @extends Store<GuildConfig>
  * @prop {AxonClient} _axon
  * @prop {LRUCache<GuildConfig>} guildConfigs
  */
-class GuildConfigsCache {
+class GuildConfigsCache extends Store {
     /**
      * Creates an instance of GuildConfigsCache.
      *
@@ -27,36 +28,19 @@ class GuildConfigsCache {
      * @memberof GuildConfigsCache
      */
     constructor(axonClient) {
+        super(new LRUCache(1000, { base: GuildConfig } ) );
         this._axon = axonClient;
-
-        this.guildConfigs = new LRUCache(1000, { base: GuildConfig } );
     }
 
     /**
-     * Get a GuildConfig from the guild ID.
+     * Returns the cache
      *
-     * @param {String} key
-     * @returns {GuildConfig}
+     * @readonly
+     * @type {LRUCache<GuildConfig>}
      * @memberof GuildConfigsCache
      */
-    get(key) {
-        return this.guildConfigs.get(key);
-    }
-
-    /**
-     * Set a GuildConfig with the Guild ID as key.
-     *
-     * @param {String} key
-     * @param {GuildConfig} value
-     * @memberof GuildConfigsCache
-     */
-    set(key, value) {
-        this.guildConfigs.set(key, value);
-    }
-
-    // for - of directly on guildConfigs cache
-    [Symbol.iterator]() {
-        return this.guildConfigs[Symbol.iterator]();
+    get guildConfigs() {
+        return this.cache;
     }
 
     /**

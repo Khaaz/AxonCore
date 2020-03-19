@@ -1,5 +1,5 @@
 /**
- * @typedef {import('../Structures/Module').default} Module
+ * @typedef {import('../Core/Module').default} Module
  */
 
 /**

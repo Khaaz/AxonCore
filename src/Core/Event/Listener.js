@@ -4,7 +4,7 @@ import NotImplementedException from '../../Errors/NotImplementedException';
 
 /**
  * @typedef {import('../Module').default} Module
- * @typedef {import('../DataStructure/GuildConfig').default} GuildConfig
+ * @typedef {import('../Models/GuildConfig').default} GuildConfig
  */
 
 /**

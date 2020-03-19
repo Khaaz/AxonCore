@@ -2,10 +2,11 @@
 
 * **[Setup](index.md)**
   * [AxonClient](AxonClient.md)
-  * [AxonOptions](Structures/AxonOptions.md)
-  * [Base](Structures/Base.md)
-  * [ARegistry](Structures/ARegistry.md)
-  * [GuildConfigCache](Structures/GuildConfigCache.md)
+  * [AxonOptions](Core/AxonOptions.md)
+  * [Executor](Core/Executor.md)
+  * [Base](Core/Base.md)
+  * [ARegistry](Core/ARegistry.md)
+  * [GuildConfigCache](Core/GuildConfigCache.md)
 
 * **[Modules](Modules/index.md)**
   * [Module](Modules/Module.md)
@@ -16,6 +17,7 @@
   * [Command](Commands/Command.md)
   * [CommandOptions](Commands/CommandOptions.md)
   * [CommandPermissions](Commands/CommandPermissions.md)
+  * [CommandEnvironment](Commands/CommandEnvironment.md)
   * [CommandContext](Commands/CommandContext.md)
   * [CommandResponse](Commands/CommandResponse.md)
   * [CommandRegistry](Commands/CommandRegistry.md)
@@ -32,12 +34,16 @@
 * **[Utility](Utility/index.md)**
   * [AxonUtils](Utility/AxonUtils.md)
   * [Utils](Utility/Utils.md)
-  * [Resolver](Utility/Resolver.md)
+  * [Store](Utility/Store.md)
   * [Collection](Utility/Collection.md)
+  * [Resolver](Utility/Resolver.md)
   * [Embed](Utility/Embed.md)
-  * [Prompt](Utility/Prompt.md)
+  * [Collector](Utility/Collector.md)
   * [MessageCollector](Utility/MessageCollector.md)
+  * [Prompt](Utility/Prompt.md)
+  * [Stack](Utility/Stack.md)
   * [Queue](Utility/Queue.md)
+  * [FunctionQueue](Utility/FunctionQueue.md)
   * [AsyncQueue](Utility/AsyncQueue.md)
   * [AutoQueue](Utility/AutoQueue.md)
   * [LRUCache](Utility/LRUCache.md)
@@ -58,8 +64,8 @@
   * [NotImplementedException](Errors/NotImplementedException.md)
 
 * **[Database](Database/index.md)**
-  * [AxonConfig](Structures/AxonConfig.md)
-  * [GuildConfig](Structures/GuildConfig.md)
+  * [AxonConfig](Core/AxonConfig.md)
+  * [GuildConfig](Core/GuildConfig.md)
   * [ADBProvider](Database/ADBProvider.md)
   * [InMemoryProvider](Database/InMemoryProvider.md)
   * [JsonProvider](Database/JsonProvider.md)

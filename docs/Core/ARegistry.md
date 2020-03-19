@@ -1,25 +1,26 @@
 <a name="ARegistry"></a>
 
-## *ARegistry*
+## *ARegistry ⇐ <code>Store&lt;T&gt;</code>*
 **Kind**: global abstract class  
+**Extends**: <code>Store&lt;T&gt;</code>  
 **Author**: KhaaZ  
 **Properties**
 
 | Name | Type | Description |
 | --- | --- | --- |
 | _axon | <code>AxonClient</code> | The AxonClient |
-| registry | <code>Collection.&lt;\*&gt;</code> | The collection of items hold by the registry |
+| _base | <code>T</code> | The base definition to use for the registry |
 
 
-* *[ARegistry](#ARegistry)*
+* *[ARegistry](#ARegistry) ⇐ <code>Store&lt;T&gt;</code>*
     * *[new ARegistry()](#new_ARegistry_new)*
     * _instance_
-        * *[.axon](#ARegistry+axon)*
-        * *[.size](#ARegistry+size)*
+        * *[.axon](#ARegistry+axon) : <code>AxonClient</code>*
+        * *[.registry](#ARegistry+registry) : <code>Map.&lt;String, T&gt;</code>*
         * *[.has(key)](#ARegistry+has) ⇒ <code>Boolean</code>*
-        * *[.get(key)](#ARegistry+get) ⇒ <code>Object</code>*
-        * *[.add(key, value)](#ARegistry+add)*
-        * *[.remove(key)](#ARegistry+remove)*
+        * *[.get(key)](#ARegistry+get) ⇒ <code>T</code>*
+        * *[.add(key, value)](#ARegistry+add) ⇒ <code>ARegistry.&lt;T&gt;</code>*
+        * *[.remove(key)](#ARegistry+remove) ⇒ <code>Boolean</code>*
         * *[.register(key, value)](#ARegistry+register)*
         * *[.unregister(key, value)](#ARegistry+unregister)*
     * _static_
@@ -33,25 +34,25 @@ Abstract class to hold and manage a set of items.
 
 <a name="ARegistry+axon"></a>
 
-### *aRegistry.axon*
+### *aRegistry.axon : <code>AxonClient</code>*
 Get the AxonClient
 
 **Kind**: instance property of [<code>ARegistry</code>](#ARegistry)  
 **Read only**: true  
-<a name="ARegistry+size"></a>
+<a name="ARegistry+registry"></a>
 
-### *aRegistry.size*
-Get the size of the registry
+### *aRegistry.registry : <code>Map.&lt;String, T&gt;</code>*
+Returns the current registry
 
 **Kind**: instance property of [<code>ARegistry</code>](#ARegistry)  
 **Read only**: true  
 <a name="ARegistry+has"></a>
 
 ### *aRegistry.has(key) ⇒ <code>Boolean</code>*
-Check whether the item exist in the registry
+Check whether the item exists in the registry
 
 **Kind**: instance method of [<code>ARegistry</code>](#ARegistry)  
-**Returns**: <code>Boolean</code> - - Whether the item exist  
+**Returns**: <code>Boolean</code> - - Whether the item exists  
 
 | Param | Type |
 | --- | --- |
@@ -59,11 +60,11 @@ Check whether the item exist in the registry
 
 <a name="ARegistry+get"></a>
 
-### *aRegistry.get(key) ⇒ <code>Object</code>*
+### *aRegistry.get(key) ⇒ <code>T</code>*
 Get an item from the registry
 
 **Kind**: instance method of [<code>ARegistry</code>](#ARegistry)  
-**Returns**: <code>Object</code> - - The item  
+**Returns**: <code>T</code> - - The item  
 
 | Param | Type |
 | --- | --- |
@@ -71,28 +72,28 @@ Get an item from the registry
 
 <a name="ARegistry+add"></a>
 
-### *aRegistry.add(key, value)*
+### *aRegistry.add(key, value) ⇒ <code>ARegistry.&lt;T&gt;</code>*
 Add an item to the registry
 
 **Kind**: instance method of [<code>ARegistry</code>](#ARegistry)  
+**Returns**: <code>ARegistry.&lt;T&gt;</code> - - The registry  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| key | <code>String</code> |  |
-| value | <code>Object</code> |  |
-|  | <code>Collection</code> | The registry |
+| Param | Type |
+| --- | --- |
+| key | <code>String</code> | 
+| value | <code>T</code> | 
 
 <a name="ARegistry+remove"></a>
 
-### *aRegistry.remove(key)*
+### *aRegistry.remove(key) ⇒ <code>Boolean</code>*
 Remove an item from the registry
 
 **Kind**: instance method of [<code>ARegistry</code>](#ARegistry)  
+**Returns**: <code>Boolean</code> - - Whether it removed the item or not  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| key | <code>String</code> |  |
-|  | <code>Boolean</code> | Whether it could remove the item or not |
+| Param | Type |
+| --- | --- |
+| key | <code>String</code> | 
 
 <a name="ARegistry+register"></a>
 
@@ -104,7 +105,7 @@ Register correctly an item in the registry.
 | Param | Type |
 | --- | --- |
 | key | <code>String</code> | 
-| value | <code>Object</code> | 
+| value | <code>T</code> | 
 
 <a name="ARegistry+unregister"></a>
 
@@ -116,7 +117,7 @@ Unregister correctly an item from the registry.
 | Param | Type |
 | --- | --- |
 | key | <code>String</code> | 
-| value | <code>Object</code> | 
+| value | <code>T</code> | 
 
 <a name="ARegistry.ARegistry"></a>
 
@@ -131,5 +132,5 @@ Creates an instance of ARegistry.
 | Param | Type | Description |
 | --- | --- | --- |
 | axon | <code>AxonClient</code> | The AxonClient |
-| base | <code>Object</code> | The base definition to use for the registry |
+| base | <code>T</code> | The base definition to use for the registry |
 

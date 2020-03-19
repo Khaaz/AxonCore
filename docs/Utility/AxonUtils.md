@@ -1,3 +1,17 @@
+## Classes
+
+<dl>
+<dt><a href="#AxonUtils">AxonUtils</a></dt>
+<dd></dd>
+</dl>
+
+## Typedefs
+
+<dl>
+<dt><a href="#AxonTemplate">AxonTemplate</a> : <code>Object</code></dt>
+<dd></dd>
+</dl>
+
 <a name="AxonUtils"></a>
 
 ## AxonUtils
@@ -15,8 +29,8 @@
     * _instance_
         * [.axon](#AxonUtils+axon) : <code>AxonClient</code>
         * [.bot](#AxonUtils+bot) : <code>BotClient</code>
-        * [.template](#AxonUtils+template) : <code>Object</code>
-        * [.logger](#AxonUtils+logger) : <code>Logger</code>
+        * [.template](#AxonUtils+template) : [<code>AxonTemplate</code>](#AxonTemplate)
+        * [.logger](#AxonUtils+logger) : <code>ALogger</code>
         * [.utils](#AxonUtils+utils) : <code>Utils</code>
         * [.library](#AxonUtils+library) : <code>LibraryInterface</code>
         * [.triggerWebhook(type, embed, opt)](#AxonUtils+triggerWebhook)
@@ -57,14 +71,14 @@ Returns the BotClient instance
 **Read only**: true  
 <a name="AxonUtils+template"></a>
 
-### axonUtils.template : <code>Object</code>
+### axonUtils.template : [<code>AxonTemplate</code>](#AxonTemplate)
 Returns the template object
 
 **Kind**: instance property of [<code>AxonUtils</code>](#AxonUtils)  
 **Read only**: true  
 <a name="AxonUtils+logger"></a>
 
-### axonUtils.logger : <code>Logger</code>
+### axonUtils.logger : <code>ALogger</code>
 Returns the Logger instance
 
 **Kind**: instance property of [<code>AxonUtils</code>](#AxonUtils)  
@@ -86,7 +100,7 @@ Returns the LibraryInterface instance
 <a name="AxonUtils+triggerWebhook"></a>
 
 ### axonUtils.triggerWebhook(type, embed, opt)
-Triger an Axon Webhook.
+Trigger an Axon Webhook.
 Works directly with axon._configs.webhooks.
 
 **Kind**: instance method of [<code>AxonUtils</code>](#AxonUtils)  
@@ -94,7 +108,7 @@ Works directly with axon._configs.webhooks.
 | Param | Type | Description |
 | --- | --- | --- |
 | type | <code>String</code> | Type of the webhook [status, loader, error, misc] |
-| embed | <code>Object</code> | Embed object |
+| embed | <code>Embed</code> \| <code>EmbedBase</code> | Embed object |
 | opt | <code>String</code> | Optional string to use as bot username |
 
 <a name="AxonUtils+isBotOwner"></a>
@@ -142,7 +156,7 @@ Managers, Admins and Owner are automatically Mod.
 | Param | Type | Description |
 | --- | --- | --- |
 | member | <code>Member</code> | The member object |
-| guildConfig | <code>Object</code> | The guild Config from the DB |
+| guildConfig | <code>GuildConfig</code> | The guild Config from the DB |
 
 <a name="AxonUtils+isServerManager"></a>
 
@@ -194,11 +208,11 @@ Reject promise if not
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | user | <code>User</code> |  | User object to get the DM channel |
-| content | <code>Object/String</code> |  | String or object (embed) |
+| content | <code>String</code> \| <code>MessageObject</code> |  | String or object (embed) |
 | [options] | <code>Object</code> | <code>{}</code> | Options { disableEveryone: Boolean, delete: Boolean, delay: Number } |
-| [options.disableEveryone] | <code>Object</code> | <code>true</code> | Whether to allow mentioning everyone or not |
-| [options.delete] | <code>Object</code> | <code>false</code> | Whether to deletethe message or not |
-| [options.delay] | <code>Object</code> | <code></code> | Delay after which the message will be deleted |
+| [options.disableEveryone] | <code>Boolean</code> | <code>true</code> | Whether to allow mentioning everyone or not |
+| [options.delete] | <code>Boolean</code> | <code>false</code> | Whether to delete the message or not |
+| [options.delay] | <code>Number</code> | <code></code> | Delay after which the message will be deleted |
 
 <a name="AxonUtils+sendMessage"></a>
 
@@ -213,10 +227,10 @@ Doesn't support file uploads.
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | channel | <code>Channel</code> |  | The channel Object |
-| content | <code>Object</code> \| <code>String</code> |  | Message content: String or Embed Object |
+| content | <code>String</code> \| <code>MessageObject</code> |  | Message content: String or Embed Object |
 | [options] | <code>Object</code> | <code>{}</code> | Options { disableEveryone: Boolean, delete: Boolean, delay: Number } |
 | [options.disableEveryone] | <code>Boolean</code> | <code>true</code> | Whether to allow mentioning everyone or not |
-| [options.delete] | <code>Boolean</code> | <code>false</code> | Whether to deletethe message or not |
+| [options.delete] | <code>Boolean</code> | <code>false</code> | Whether to delete the message or not |
 | [options.delay] | <code>Number</code> | <code></code> | Delay after which the message will be deleted |
 
 <a name="AxonUtils+editMessage"></a>
@@ -231,7 +245,7 @@ Checks for bot permissions + message embed/length.
 | Param | Type | Description |
 | --- | --- | --- |
 | message | <code>Message</code> | The message object to edit |
-| content | <code>Object/String</code> | Object (embed) or String |
+| content | <code>String</code> \| <code>MessageObject</code> | Object (embed) or String |
 
 <a name="AxonUtils.AxonUtils"></a>
 
@@ -247,3 +261,7 @@ Creates an AxonUtils instance.
 | --- | --- |
 | axon | <code>AxonClient</code> | 
 
+<a name="AxonTemplate"></a>
+
+## AxonTemplate : <code>Object</code>
+**Kind**: global typedef  

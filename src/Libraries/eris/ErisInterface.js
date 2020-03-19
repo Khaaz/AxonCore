@@ -64,6 +64,33 @@ class ErisInterface extends LibraryInterface {
             func();
         } );
     }
+
+    /**
+     * @param {(msg: Message) => void}
+     * @returns {(msg: Message) => void}
+     * @memberof ErisInterface
+     */
+    getMessageCreate(func) {
+        return (msg) => func(msg);
+    }
+
+    /**
+     * @param {(msg: Message) => void}
+     * @returns {(msg: Message, oldMsg: Message) => void}
+     * @memberof ErisInterface
+     */
+    getMessageUpdate(func) {
+        return (msg, oldMsg) => func(oldMsg, msg);
+    }
+
+    /**
+     * @param {(msg: Message) => void}
+     * @returns {(msg: Message) => void}
+     * @memberof ErisInterface
+     */
+    getMessageDelete(func) {
+        return (msg) => func(msg);
+    }
 }
 
 export default ErisInterface;

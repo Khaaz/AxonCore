@@ -1,24 +1,24 @@
 // Lib - Modules
-import EventEmitter from 'events';
+import { EventEmitter } from 'events';
 import util from 'util';
-import { performance } from 'perf_hooks';
 
-// Core - Structures
-import Base from './Structures/Base';
+// Core - Core
+import Base from './Core/Base';
 
-import EventManager from './Structures/Event/EventManager';
-import CommandDispatcher from './Structures/CommandDispatcher';
+import EventManager from './Core/Event/EventManager';
+import CommandDispatcher from './Core/CommandDispatcher';
 // Registries
-import ModuleRegistry from './Structures/Stores/ModuleRegistry';
-import CommandRegistry from './Structures/Stores/CommandRegistry';
-import ListenerRegistry from './Structures/Stores/ListenerRegistry';
+import ModuleRegistry from './Core/Stores/ModuleRegistry';
+import CommandRegistry from './Core/Stores/CommandRegistry';
+import ListenerRegistry from './Core/Stores/ListenerRegistry';
 
-import GuildConfigCache from './Structures/Stores/GuildConfigCache';
+import GuildConfigCache from './Core/Stores/GuildConfigCache';
 
 import MessageManager from './Langs/MessageManager';
 
-import ModuleLoader from './Structures/Loaders/ModuleLoader';
-import ClientInitialiser from './Structures/Loaders/ClientInitialiser';
+import ModuleLoader from './Core/Loaders/ModuleLoader';
+import ClientInitialiser from './Core/Loaders/ClientInitialiser';
+import Executor from './Core/Executor';
 
 import ADBProvider from './Database/ADBProvider'; // default ADBProvider
 
@@ -41,14 +41,15 @@ import { WEBHOOK_TYPES, LOG_LEVELS, WEBHOOK_TO_COLOR, DEBUG_FLAGS } from './Util
 
 /**
  * @typedef {import('./AxonOptions').default} AxonOptions
- * @typedef {import('./Structures/Module').default} Module
- * @typedef {import('./Structures/Event/AHandler').default} AHandler
+ * @typedef {import('./Core/Module').default} Module
+ * @typedef {import('./Core/Event/AHandler').default} AHandler
  * @typedef {import('./Utility/Collection').default<AHandler>} HandlerCollection
- * @typedef {import('./Structures/Event/Listener').default} Listener
+ * @typedef {import('./Core/Event/Listener').default} Listener
  * @typedef {import('./Libraries/definitions/Resolver').default} Resolver
- * @typedef {import('./Structures/Command/Command').default} Command
+ * @typedef {import('./Core/Command/Command').default} Command
  * @typedef {import('./Loggers/Context').default} Context
- * @typedef {import('./Structures/DataStructure/GuildConfig').default} GuildConfig
+ * @typedef {import('./Core/Models/GuildConfig').default} GuildConfig
+ * @typedef {import('./Core/Command/CommandEnvironment').default} CommandEnvironment
  * @typedef {import(./Libraries/definitions/LibraryInterface).default} LibraryInterface
  */
 
@@ -68,6 +69,7 @@ import { WEBHOOK_TYPES, LOG_LEVELS, WEBHOOK_TO_COLOR, DEBUG_FLAGS } from './Util
  * @prop {GuildConfigCache} guildConfigs - The Manager that handles GuildConfigs (cache / DB etc)
  * @prop {AxonConfig} [axonConfig] - The AxonConfig object that handles globally blacklisted users and guilds
  * @prop {CommandDispatcher} dispatcher - Dispatch commands onMessageCreate.
+ * @prop {Executor} executor - Executor class that handles executing commands and listeners
  * @prop {ModuleLoader} moduleLoader - Load, unload modules.
  * @prop {MessageManager} _messageManager - Message manager object accessible with `<AxonClient>.l`
  * @prop {LibraryInterface} library - LibraryInterface object depending the lib used
@@ -188,7 +190,7 @@ class AxonClient extends EventEmitter {
             this.on('debug', this.onDebug);
         }
 
-        /* Structures */
+        /* Core */
         this.moduleRegistry = new ModuleRegistry(this);
         this.commandRegistry = new CommandRegistry(this);
         this.listenerRegistry = new ListenerRegistry(this);
@@ -200,6 +202,7 @@ class AxonClient extends EventEmitter {
         /* Core Logic */
         this.moduleLoader = new ModuleLoader(this);
         this.dispatcher = new CommandDispatcher(this);
+        this.executor = new Executor(this);
 
         this._messageManager = new MessageManager(this, axonOptions.lang, axonOptions.settings.lang);
 
@@ -543,186 +546,6 @@ class AxonClient extends EventEmitter {
         } );
     }
 
-    // **** EXECUTOR **** //
-    /**
-     * Fired when a debug message need to be sent
-     * @event AxonClient#debug
-     * @prop {DEBUG_FLAGS} flags - debug flags used used to have more information about the event
-     * @prop {String} debugMessage - debug message with information about the situation
-     * @memberof AxonClient
-     */
-
-    /**
-     * Fired when a command is successfully ran
-     * @event AxonClient#commandExecution
-     * @prop {Boolean} status - If the command was successfully executed or not
-     * @prop {String} commandFullLabel - The command fullLabel
-     * @prop {Object} data
-     * @prop {Message} data.msg - The message that triggered the command
-     * @prop {Command} data.command - The Command that was executed
-     * @prop {GuildConfig} data.guildConfig - The GuildConfig
-     * @prop {CommandContext} data.context - The execution context
-     * @memberof AxonClient
-     */
-
-    /**
-     * Fired when a command fails
-     * @event AxonClient#commandError
-     * @prop {String} commandFullLabel - The command fullLabel
-     * @prop {Object} data
-     * @prop {Message} data.msg - The message that triggered the command
-     * @prop {Command} data.command - The Command that was executed
-     * @prop {GuildConfig} data.guildConfig - The GuildConfig
-     * @prop {AxonCommandError} data.error - The error
-     * @memberof AxonClient
-     */
-
-    /**
-     * @param {Message} msg
-     * @param {Array<String>} args
-     * @param {Command} command
-     * @param {GuildConfig} guildConfig
-     * @param {Object} permissions
-     * @param {Boolean} permissions.isAdmin
-     * @param {Boolean} permissions.isOwner
-     */
-    _execCommand(msg, args, command, guildConfig, { isAdmin, isOwner } ) {
-        this.emit('debug', DEBUG_FLAGS.INFO | DEBUG_FLAGS.COMMAND, `${guildConfig ? '[GUILD]' : '[DM]'} ${isAdmin ? 'Admin' : 'Regular'} execution of ${command.fullLabel}`);
-        let startTime;
-        if (this.settings.debugMode) {
-            startTime = performance.now();
-        }
-        
-        command._process( {
-            msg, args, guildConfig, isAdmin, isOwner,
-        } )
-            .then( (context) => {
-                this.emit('commandExecution', context.executed, command.fullLabel, { msg, command, guildConfig, context } );
-                
-                if (this.settings.debugMode) {
-                    const endTime = performance.now();
-                    this.emit('debug', DEBUG_FLAGS.INFO | DEBUG_FLAGS.COMMAND, `NET: ${endTime - startTime}`);
-                }
-            } )
-            .catch(err => {
-                this.emit('commandError', command.fullLabel, { msg, command, guildConfig, error: err } );
-                
-                if (this.settings.debugMode) {
-                    const endTime = performance.now();
-                    this.emit('debug', DEBUG_FLAGS.INFO | DEBUG_FLAGS.COMMAND, `NET: ${endTime - startTime}`);
-                }
-                
-                this.log('ERROR', err);
-            } );
-
-        if (this.settings.debugMode) {
-            const endTime = performance.now();
-            this.emit('debug', DEBUG_FLAGS.INFO | DEBUG_FLAGS.COMMAND, `NODE: ${endTime - startTime}`);
-        }
-    }
-
-    /**
-      * @param {Message} msg
-      * @param {Array<String>} args
-      * @param {Command} command
-      * @param {GuildConfig} guildConfig
-      * @param {Object} permissions
-      * @param {Boolean} permissions.isAdmin
-      * @param {Boolean} permissions.isOwner
-      */
-    _execHelp(msg, args, command, guildConfig, { isAdmin, isOwner } ) {
-        if (!command) {
-            this.sendFullHelp(msg, guildConfig);
-            return;
-        }
-
-        this.emit('debug', DEBUG_FLAGS.INFO | DEBUG_FLAGS.COMMAND, `${guildConfig ? '[GUILD]' : '[DM]'} ${isAdmin ? 'Admin' : 'Regular'} -HELP- execution of ${command.fullLabel}`);
-        let startTime;
-        if (this.settings.debugMode) {
-            startTime = performance.now();
-        }
-
-        command.sendHelp( {
-            msg, args, guildConfig, isAdmin, isOwner,
-        } )
-            .then( (context) => {
-                this.emit('commandExecution', true, command.label, { msg, command, guildConfig, context } );
-                if (this.settings.debugMode) {
-                    const endTime = performance.now();
-                    this.emit('debug', DEBUG_FLAGS.INFO | DEBUG_FLAGS.COMMAND, `NET: ${endTime - startTime}`);
-                }
-            } )
-            .catch(err => {
-                this.emit('commandError', command.label, { msg, command, guildConfig, err } );
-                if (this.settings.debugMode) {
-                    const endTime = performance.now();
-                    this.emit('debug', DEBUG_FLAGS.INFO | DEBUG_FLAGS.COMMAND, `NET: ${endTime - startTime}`);
-                }
-
-                this.log('ERROR', err);
-            } );
-
-        if (this.settings.debugMode) {
-            const endTime = performance.now();
-            this.emit('debug', DEBUG_FLAGS.INFO | DEBUG_FLAGS.COMMAND, `NODE: ${endTime - startTime}`);
-        }
-    }
-
-    /**
-     * Fired when a listener is executed
-     * @event AxonClient#listenerExecution
-     * @prop {Boolean} status - Whereas the listener was successfully executed or not
-     * @prop {String} eventName - The discord event name
-     * @prop {String} listenerName - The listener label
-     * @prop {Object} data - Additional information
-     * @prop {Listener} data.listener - The Listener that was executed
-     * @prop {GuildConfig} data.guildConfig - The GuildConfig object
-     * @memberof AxonClient
-     */
-
-    /**
-     * Fired when a listener errors
-     * @event AxonClient#listenerError
-     * @prop {String} eventName - The discord event name
-     * @prop {String} listenerName - The Listener label
-     * @prop {Object} data - Additional information
-     * @prop {Listener} data.listener - The Listener that was executed
-     * @prop {GuildConfig} data.guildConfig - The GuildConfig object
-     * @prop {Error} data.error - The error
-     * @memberof AxonClient
-     */
-
-    /**
-     * @param {Listener} listener
-     * @param {GuildConfig} guildConfig
-     * @param {...any} args
-     */
-    _execListener(listener, guildConfig, ...args) {
-        this.emit('debug', DEBUG_FLAGS.INFO | DEBUG_FLAGS.LISTENER, `Execution of ${listener.label} for ${listener.eventName}`);
-        let startTime;
-        if (this.settings.debugMode) {
-            startTime = performance.now();
-        }
-
-        listener._execute(guildConfig, ...args)
-            .then( () => {
-                if (this.settings.debugMode) {
-                    const endTime = performance.now();
-                    this.emit('debug', DEBUG_FLAGS.INFO | DEBUG_FLAGS.LISTENER, `TIME: ${endTime - startTime}`);
-                }
-                this.emit('listenerExecution', true, listener.eventName, listener.label, { listener, guildConfig } );
-            } )
-            .catch(err => {
-                this.emit('listenerError', listener.eventName, listener.label, { listener, guildConfig, error: err } );
-
-                if (this.settings.debugMode) {
-                    const endTime = performance.now();
-                    this.emit('debug', DEBUG_FLAGS.INFO | DEBUG_FLAGS.LISTENER, `NET: ${endTime - startTime}`);
-                }
-                this.log('ERROR', `[EVENT](${listener.eventName}) - ${listener.label}\n${err}`);
-            } );
-    }
-
     // **** HELPERS **** //
 
     /**
@@ -840,4 +663,61 @@ class AxonClient extends EventEmitter {
     }
 }
 
+/**
+ * Fired when a debug message needs to be sent
+ * @event AxonClient#debug
+ * @prop {DEBUG_FLAGS} flags - Debug flags used to have more information about the event
+ * @prop {String} debugMessage - Debug message with information about the situation
+ * @memberof AxonClient
+ */
+
+/**
+ * Fired when a command is successfully ran
+ * @event AxonClient#commandExecution
+ * @prop {Boolean} status - If the command was successfully executed or not
+ * @prop {String} commandFullLabel - The command fullLabel
+ * @prop {Object} data
+ * @prop {Message} data.msg - The message that triggered the command
+ * @prop {Command} data.command - The Command that was executed
+ * @prop {GuildConfig} data.guildConfig - The GuildConfig
+ * @prop {CommandContext} data.context - The execution context
+ * @memberof AxonClient
+ */
+
+/**
+ * Fired when a command fails
+ * @event AxonClient#commandError
+ * @prop {String} commandFullLabel - The command fullLabel
+ * @prop {Object} data
+ * @prop {Message} data.msg - The message that triggered the command
+ * @prop {Command} data.command - The Command that was executed
+ * @prop {GuildConfig} data.guildConfig - The GuildConfig
+ * @prop {AxonCommandError} data.error - The error
+ * @memberof AxonClient
+ */
+
+/**
+ * Fired when a listener is executed
+ * @event AxonClient#listenerExecution
+ * @prop {Boolean} status - Whether the listener was successfully executed or not
+ * @prop {String} eventName - The discord event name
+ * @prop {String} listenerName - The listener label
+ * @prop {Object} data - Additional information
+ * @prop {Listener} data.listener - The Listener that was executed
+ * @prop {GuildConfig} data.guildConfig - The GuildConfig object
+ * @memberof AxonClient
+ */
+
+/**
+ * Fired when a listener errors
+ * @event AxonClient#listenerError
+ * @prop {String} eventName - The discord event name
+ * @prop {String} listenerName - The Listener label
+ * @prop {Object} data - Additional information
+ * @prop {Listener} data.listener - The Listener that was executed
+ * @prop {GuildConfig} data.guildConfig - The GuildConfig object
+ * @prop {Error} data.error - The error
+ * @memberof AxonClient
+ */
+    
 export default AxonClient;

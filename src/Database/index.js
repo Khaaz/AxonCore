@@ -1,4 +1,4 @@
-import ASelector from '../Structures/ASelector';
+import ASelector from '../Core/ASelector';
 import JsonProvider from './JsonProvider';
 
 import { DB_TYPES } from './../Utility/Constants/AxonEnums';

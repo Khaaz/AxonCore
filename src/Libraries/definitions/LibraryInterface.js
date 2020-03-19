@@ -23,7 +23,7 @@ class LibraryInterface {
      * Creates an instance of LibraryInterface.
      *
      * @param {BotClient} botClient - The bot client (lib specific)
-     * @param {Object} structs - Object with all structures to use in lib interface
+     * @param {Object} structs - Object with all Core to use in lib interface
      * @param {new (...args: Array<any>) => User} structs.User
      * @param {new (...args: Array<any>) => Member} structs.Member
      * @param {new (...args: Array<any>) => Message} structs.Message
@@ -89,6 +89,33 @@ class LibraryInterface {
      * @memberof LibraryInterface
      */
     onceReady(func) {
+        throw new NotImplementedException();
+    }
+
+    /**
+     * @param {() => void}
+     * @returns {() => void}
+     * @memberof LibraryInterface
+     */
+    getMessageCreate(func) {
+        throw new NotImplementedException();
+    }
+
+    /**
+     * @param {() => void}
+     * @returns {() => void)}
+     * @memberof LibraryInterface
+     */
+    getMessageUpdate(func) {
+        throw new NotImplementedException();
+    }
+
+    /**
+     * @param {() => void}
+     * @returns {() => void}
+     * @memberof LibraryInterface
+     */
+    getMessageDelete(func) {
         throw new NotImplementedException();
     }
 }

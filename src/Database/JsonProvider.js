@@ -1,7 +1,7 @@
 import ADBProvider from './ADBProvider';
 
-import AxonConfig from '../Structures/DataStructure/AxonConfig';
-import GuildConfig from '../Structures/DataStructure/GuildConfig';
+import AxonConfig from '../Core/Models/AxonConfig';
+import GuildConfig from '../Core/Models/GuildConfig';
 
 import JsonManager from './JSON/JsonManager';
 

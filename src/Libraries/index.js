@@ -1,4 +1,4 @@
-import ASelector from '../Structures/ASelector';
+import ASelector from '../Core/ASelector';
 
 import ErisInterface from './eris/ErisInterface';
 import DjsInterface from './discordjs/DjsInterface';

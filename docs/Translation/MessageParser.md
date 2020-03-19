@@ -18,7 +18,7 @@ Parse a message and replace custom variable with arguments
 <a name="MessageParser+matchAll"></a>
 
 ### messageParser.matchAll(message)
-Generator function that will match all occurence of the regex and yield a Match structure
+Generator function that will match all occurrence of the regex and yield a Match structure
 
 **Kind**: instance method of [<code>MessageParser</code>](#MessageParser)  
 
@@ -36,8 +36,8 @@ Parse the message by replacing the dynamic content.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| message | <code>Sring</code> |  |
-| args | <code>Object</code> | Custom object with all arguments that needs tobe inserted in the string |
+| message | <code>String</code> |  |
+| args | <code>AxonLanguageResponse</code> | Custom object with all arguments that needs to be inserted in the string |
 
 <a name="MessageParser+parse2"></a>
 
@@ -50,5 +50,5 @@ Same as above but arguments are unnamed and passed as parameters instead of insi
 | Param | Type |
 | --- | --- |
 | message | <code>String</code> | 
-| ...args | <code>\*</code> | 
+| ...args | <code>String</code> | 
 
