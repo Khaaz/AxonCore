@@ -218,7 +218,7 @@ class Base {
      * @param {Channel} channel - The channel Object
      * @param {String|MessageObject} content - Success message content
      * @param {Object} [options={}] - Additional options
-     * @param {Object} [options.allowedMentions] - Cutom allowed mentions object
+     * @param {Object} [options.allowedMentions] - Custom allowed mentions object
      * @param {Boolean} [options.delete=false] - Whether to delete the message or not
      * @param {Number} [options.delay=null] - Delay after which the message will be deleted
      * @param {Boolean} [options.triggerCooldown=true] - Whether the command should trigger cooldown or not

@@ -270,7 +270,7 @@ class AxonUtils {
      * @param {Channel} channel - The channel Object
      * @param {String|MessageObject} content - Message content: String or Embed Object
      * @param {Object} [options={}] - Options { disableEveryone: Boolean, delete: Boolean, delay: Number }
-     * @param {Object} [options.allowedMentions] - Cutom allowed mentions object
+     * @param {Object} [options.allowedMentions] - Custom allowed mentions object
      * @param {Boolean} [options.delete=false] - Whether to delete the message or not
      * @param {Number} [options.delay=null] - Delay after which the message will be deleted
      * @returns {Promise<Message?>} Message Object
