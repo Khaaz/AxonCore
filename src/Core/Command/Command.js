@@ -13,10 +13,10 @@ import { COMMAND_EXECUTION_STATE } from '../../Utility/Constants/AxonEnums';
 
 /**
  * @typedef {import('../Module').default} Module
- * @typedef {import('../../Utility/Collection').default<Command>} CommandCollection
  * @typedef {{embeds: Object.<string, number>, emotes: Object.<string, string>}} AxonTemplate
  * @typedef {import('../../Libraries/definitions/LibraryInterface').default} LibraryInterface
  * @typedef {import('./CommandEnvironment').default} CommandEnvironment
+ * @typedef {import('../Stores/CommandRegistry')} CommandRegistry
  */
 
 /**
@@ -41,8 +41,7 @@ import { COMMAND_EXECUTION_STATE } from '../../Utility/Constants/AxonEnums';
  * @prop {Command} [parentCommand=null] - Reference to the parent command (if isSubcmd = true)
  * @prop {Boolean} [hasSubcmd=false] - Whether the command HAS subcommands
  * @prop {Array<Object>} subcmds - Array of subcommand objects (deleted after init)
- * @prop {CommandCollection} [subCommands=null] - Collection of subcommands
- * @prop {Map} [subCommandsAliases=null] - Map of subcommand aliases
+ * @prop {CommandRegistry} [subCommands=null] - Collection of subcommands
  *
  * @prop {Object} info - Default info about the command
  * @prop {Array<String>} [info.owners] - Command authors
@@ -99,7 +98,7 @@ class Command extends Base {
         this.subcmds = data.subcmds || []; // Array of imported commands - deleted after init
 
         /**
-         * @type {CommandCollection}
+         * @type {CommandRegistry}
          */
         /* Inited if there are subcommands */
         this.subCommands = null; // Collection of subcommands
