@@ -43,14 +43,14 @@ export declare class CommandEnvironment implements CommandEnvironmentProps {
      * @returns This CommandEnvironment
      * @memberof CommandEnvironment
      */
-    public setPrefix(prefix: string): CommandEnvironment;
+    public setPrefix(prefix: string): this;
 
     /**
      * Set the guildConfig
      * @returns This CommandEnvironment
      * @memberof CommandEnvironment
      */
-    public setGuildConfig(guildConfig: GuildConfig): CommandEnvironment;
+    public setGuildConfig(guildConfig: GuildConfig): this;
 
     /**
      * Set the command lavel from the command object

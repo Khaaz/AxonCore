@@ -19,17 +19,17 @@ export declare class CommandResponse {
      *
      * @memberof CommandResponse
      */
-    public resolve(): Promise<CommandResponse>;
+    public resolve(): Promise<this>;
     /**
      * Returns the Command Response in a Promise (asynchronously)
      *
      * @memberof CommandResponse
      */
-    public resolveAsync(): Promise<CommandResponse>;
+    public resolveAsync(): Promise<this>;
     /**
      * Returns the Command Response (synchronously)
      *
      * @memberof CommandResponse
      */
-    public resolveSync(): CommandResponse;
+    public resolveSync(): this;
 }

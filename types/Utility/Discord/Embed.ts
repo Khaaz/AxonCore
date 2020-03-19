@@ -32,7 +32,7 @@ export declare class Embed implements EmbedData {
      * @example Embed.setTitle('My New Embed');
      * @memberof Embed
      */
-    public setTitle(title: string): Embed;
+    public setTitle(title: string): this;
     /**
      * Sets the description of this embed.
      *
@@ -41,14 +41,14 @@ export declare class Embed implements EmbedData {
      * @example Embed.setDescription('Hi, this is my description!!!');
      * @memberof Embed
      */
-    public setDescription(description: string): Embed;
+    public setDescription(description: string): this;
     /**
      * @description Sets the URL of this embed.
      * @param url The URL
      * @returns This embed
      * @memberof Embed
      */
-    public setURL(url: string): Embed;
+    public setURL(url: string): this;
     /**
      * Sets the color of this embed.
      *
@@ -57,7 +57,7 @@ export declare class Embed implements EmbedData {
      * @example Embed.setColor(0xFFFFFF);
      * @memberof Embed
      */
-    public setColor(color: number): Embed;
+    public setColor(color: number): this;
     /**
      * Sets the author of this embed.
      *
@@ -68,7 +68,7 @@ export declare class Embed implements EmbedData {
      * @example Embed.setAuthor('KhaaZ', 'https://www.image.com/khaaz.png');
      * @memberof Embed
      */
-    public setAuthor(name: string, icon?: string, url?: string): Embed;
+    public setAuthor(name: string, icon?: string, url?: string): this;
     /**
      * Sets the timestamp of this embed.
      *
@@ -76,7 +76,7 @@ export declare class Embed implements EmbedData {
      * @returns This embed
      * @memberof Embed
      */
-    public setTimestamp(timestamp?: Date): Embed;
+    public setTimestamp(timestamp?: Date): this;
     /**
      * Adds a field to the embed (max 25).
      *
@@ -87,7 +87,7 @@ export declare class Embed implements EmbedData {
      * @example Embed.addField('My Field', 'This is a new field!', true);
      * @memberof Embed
      */
-    public addField(name: string, value: string, inline?: boolean): Embed;
+    public addField(name: string, value: string, inline?: boolean): this;
     /**
      * Set the thumbnail of this embed.
      *
@@ -95,7 +95,7 @@ export declare class Embed implements EmbedData {
      * @returns This embed
      * @memberof Embed
      */
-    public setThumbnail(url: string): Embed;
+    public setThumbnail(url: string): this;
     /**
      * Sets the image of this embed
      *
@@ -104,7 +104,7 @@ export declare class Embed implements EmbedData {
      * @example Embed.setImage('https://www.image.com/myImageUrl.png');
      * @memberof Embed
      */
-    public setImage(url: string): Embed;
+    public setImage(url: string): this;
     /**
      * Sets the footer of this embed.
      *
@@ -114,5 +114,5 @@ export declare class Embed implements EmbedData {
      * @example Embed.setFooter('My Footer', 'https://www.image.com/footer.png');
      * @memberof Embed
      */
-    public setFooter(text: string, icon?: string): Embed;
+    public setFooter(text: string, icon?: string): this;
 }

@@ -137,7 +137,7 @@ export declare class GuildConfig implements GuildConfigRaw {
      * @returns Updated guildSchema
      * @memberof GuildConfig
      */
-    public update(guildConfig: GuildConfig): Promise<GuildConfig | null>;
+    public update(guildConfig: GuildConfig): Promise<this | null>;
     /**
      * Register prefixes for this guild.
      *
@@ -147,7 +147,7 @@ export declare class GuildConfig implements GuildConfigRaw {
      * @returns Updated guildConfig / error
      * @memberof GuildConfig
      */
-    public updatePrefixes(prefixArr: string[] ): Promise<GuildConfig|null>;
+    public updatePrefixes(prefixArr: string[] ): Promise<this|null>;
     /**
      * Updates the state of a module.
      *
@@ -158,7 +158,7 @@ export declare class GuildConfig implements GuildConfigRaw {
      * @returns Updated guildConfig / Error
      * @memberof GuildConfig
      */
-    public updateStateModule(label: string, boolean: boolean): Promise<GuildConfig|null>;
+    public updateStateModule(label: string, boolean: boolean): Promise<this|null>;
     /**
      * Updates the state of a command.
      *
@@ -169,7 +169,7 @@ export declare class GuildConfig implements GuildConfigRaw {
      * @returns Updated guildConfig / Error
      * @memberof GuildConfig
      */
-    public updateStateCommand(label: string, boolean: boolean): Promise<GuildConfig|null>;
+    public updateStateCommand(label: string, boolean: boolean): Promise<this|null>;
     /**
      * Updates the state of a listener.
      *
@@ -180,7 +180,7 @@ export declare class GuildConfig implements GuildConfigRaw {
      * @returns Updated guildConfig / Error
      * @memberof GuildConfig
      */
-    public updateStateListener(label: string, boolean: boolean): Promise<GuildConfig|null>;
+    public updateStateListener(label: string, boolean: boolean): Promise<this|null>;
     /**
      * Updates the state of a mod role.
      *
@@ -191,7 +191,7 @@ export declare class GuildConfig implements GuildConfigRaw {
      * @returns Updated guildConfig / Error
      * @memberof GuildConfig
      */
-    public updateStateModRole(roleID: string, boolean: boolean): Promise<GuildConfig|null>;
+    public updateStateModRole(roleID: string, boolean: boolean): Promise<this|null>;
     /**
      * Updates the state of a mod user.
      *
@@ -202,7 +202,7 @@ export declare class GuildConfig implements GuildConfigRaw {
      * @returns Updated guildConfig / Error
      * @memberof GuildConfig
      */
-    public updateStateModUser(userID: string, boolean: boolean): Promise<GuildConfig|null>;
+    public updateStateModUser(userID: string, boolean: boolean): Promise<this|null>;
 
-    private _req(key: string, value: updateDBVal): Promise<GuildConfig|null>
+    private _req(key: string, value: updateDBVal): Promise<this|null>
 }

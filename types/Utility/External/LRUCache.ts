@@ -49,7 +49,7 @@ export declare class LRUCache<T> extends Store<T> {
      * Add a value in the LRU cache.
      * @memberof LRUCache
      */
-    public set(key: string, value: T): LRUCache<T>;
+    public set(key: string, value: T): this;
     /**
      * Delete an element from the LRU cache
      * @memberof LRUCache

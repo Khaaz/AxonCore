@@ -90,7 +90,7 @@ export declare class CommandContext {
      * @param commandResponse - CommandResponse object obtained or created after the command execution
      * @memberof CommandContext
      */
-    public addResponseData(commandResponse?: CommandResponse): CommandContext;
+    public addResponseData(commandResponse?: CommandResponse): this;
     /**
      * Return the type of command execution based of the execution context.
      * Admin, Owner or Regular execution.
@@ -104,17 +104,17 @@ export declare class CommandContext {
      *
      * @memberof CommandContext
      */
-    public resolve(): Promise<CommandContext>;
+    public resolve(): Promise<this>;
     /**
      * Returns the Command Context wrapped in a Promise (asynchronously)
      *
      * @memberof CommandContext
      */
-    public resolveAsync(): Promise<CommandContext>;
+    public resolveAsync(): Promise<this>;
     /**
      * Returns the Command Context (synchronously)
      *
      * @memberof CommandContext
      */
-    public resolveSync(): CommandContext;
+    public resolveSync(): this;
 }

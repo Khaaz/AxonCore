@@ -45,13 +45,13 @@ export declare class ARegistry<T> extends Store<T> {
      * @returns The item
      * @memberof ARegistry
      */
-    public get(key: string): T;
+    public get(key: string): T|null;
     /**
      * Add an item to the registry
      * @returns The registry
      * @memberof ARegistry
      */
-    public add(key: string, value: T): ARegistry<T>;
+    public add(key: string, value: T): this;
     /**
      * Remove an item from the registry
      * @returns Whether it removed the item or not

@@ -54,7 +54,7 @@ export declare class AxonConfig implements AxonConfigRaw {
      * @returns Updated axonConfig / Error
      * @memberof AxonConfig
      */
-    public updateBlacklistUser(userID: string, boolean: boolean): Promise<AxonConfig|null>;
+    public updateBlacklistUser(userID: string, boolean: boolean): Promise<this|null>;
     /**
      * Updates the state of a blacklisted guild.
      *
@@ -65,6 +65,6 @@ export declare class AxonConfig implements AxonConfigRaw {
      * @returns Updated axonConfig / Error
      * @memberof AxonConfig
      */
-    public updateBlacklistGuild(guildID: string, boolean: boolean): Promise<AxonConfig|null>;
-    private _req(key: string, value: updateDBVal): Promise<AxonConfig|null>;
+    public updateBlacklistGuild(guildID: string, boolean: boolean): Promise<this|null>;
+    private _req(key: string, value: updateDBVal): Promise<this|null>;
 }

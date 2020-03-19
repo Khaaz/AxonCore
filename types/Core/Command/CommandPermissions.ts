@@ -111,35 +111,35 @@ export declare class CommandPermissions implements CommandPerms {
      * @param toAdd - Whether to add the permissions to the existing permissions
      * @memberof CommandPermissions
      */
-    public setBot(array?: string[], toAdd?: boolean): CommandPermissions;
+    public setBot(array?: string[], toAdd?: boolean): this;
     /**
      * Set/unset the command to serverMod only.
      *
      * @param boolean - Whether to make the command serverMod only
      * @memberof CommandPermissions
      */
-    public setServerMod(boolean?: boolean): CommandPermissions;
+    public setServerMod(boolean?: boolean): this;
     /**
      * Set/unset the command to serverManager only.
      *
      * @param boolean - Whether to make the command serverManager only
      * @memberof CommandPermissions
      */
-    public setServerManager(boolean?: boolean): CommandPermissions;
+    public setServerManager(boolean?: boolean): this;
     /**
      * Set/unset the command to serverAdmin only.
      *
      * @param boolean - Whether to make the command serverAdmin only
      * @memberof CommandPermissions
      */
-    public setServerAdmin(boolean?: boolean): CommandPermissions;
+    public setServerAdmin(boolean?: boolean): this;
     /**
      * Set/unset the command to serverOwner only.
      *
      * @param boolean - Whether to make the command serverOwner only
      * @memberof CommandPermissions
      */
-    public setServerOwner(boolean?: boolean): CommandPermissions;
+    public setServerOwner(boolean?: boolean): this;
     /**
      * Set the permissions the user needs to have to execute this command.
      *
@@ -147,7 +147,7 @@ export declare class CommandPermissions implements CommandPerms {
      * @param toAdd - Whether to add the permissions to the existing permissions
      * @memberof CommandPermissions
      */
-    public setAuthor(object?: { bypass?: string[]; needed?: string[]; }, toAdd?: boolean): CommandPermissions;
+    public setAuthor(object?: { bypass?: string[]; needed?: string[]; }, toAdd?: boolean): this;
     /**
      * Set the user IDs the user needs to have to execute this command.
      *
@@ -155,7 +155,7 @@ export declare class CommandPermissions implements CommandPerms {
      * @param toAdd - Whether to add the permissions to the existing permissions
      * @memberof CommandPermissions
      */
-    public setUsers(object?: { bypass?: string[]; needed?: string[]; }, toAdd?: boolean): CommandPermissions;
+    public setUsers(object?: { bypass?: string[]; needed?: string[]; }, toAdd?: boolean): this;
     /**
      * Set the role IDs the user needs to have to execute this command.
      *
@@ -163,7 +163,7 @@ export declare class CommandPermissions implements CommandPerms {
      * @param toAdd - Whether to add the permissions to the existing permissions
      * @memberof CommandPermissions
      */
-    public setRoles(object?: { bypass?: string[]; needed?: string[]; }, toAdd?: boolean): CommandPermissions;
+    public setRoles(object?: { bypass?: string[]; needed?: string[]; }, toAdd?: boolean): this;
     /**
      * Set the channel IDs needed to be in to execute this command.
      *
@@ -171,14 +171,14 @@ export declare class CommandPermissions implements CommandPerms {
      * @param toAdd - Whether to add the permissions to the existing permissions
      * @memberof CommandPermissions
      */
-    public setChannels(object?: { bypass?: string[]; needed?: string[]; }, toAdd?: boolean): CommandPermissions;
+    public setChannels(object?: { bypass?: string[]; needed?: string[]; }, toAdd?: boolean): this;
     /**
      * Set the guild IDs needed to be in to execute this command.
      *
      * @param object - Object of permissions
      * @param toAdd - Whether to add the permissions to the existing permissions
      */
-    public setGuilds(object?: { bypass?: string[]; needed?: string; }, toAdd?: boolean): CommandPermissions;
+    public setGuilds(object?: { bypass?: string[]; needed?: string; }, toAdd?: boolean): this;
     /**
      * Set the AxonCore staff members that can execute this command.
      *
@@ -186,7 +186,7 @@ export declare class CommandPermissions implements CommandPerms {
      * @param toAdd - Whether to add the permissions to the existing permissions
      * @memberof CommandPermissions
      */
-    public setStaff(object?: { bypass?: string[]; needed?: string[]; }, toAdd?: boolean): CommandPermissions;
+    public setStaff(object?: { bypass?: string[]; needed?: string[]; }, toAdd?: boolean): this;
 
     // CHECK FOR IF PERMISSIONS ARE MET
 

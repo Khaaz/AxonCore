@@ -53,7 +53,7 @@ export declare class Store<T> {
      * @returns Current store
      * @memberof Store
      */
-    public set(key: string, value: T): Store<T>;
+    public set(key: string, value: T): this;
     /**
      * Delete an element by key in the store
      * @returns Whether the element was deleted or not
@@ -82,20 +82,20 @@ export declare class Store<T> {
      * @returns The current store
      * @memberof Store
      */
-    public forEach(func: (i: T) => void): Store<T>;
+    public forEach(func: (i: T) => void): this;
     /**
      * Execute a function over each element of the Store in an asynchronous fashion
      * @param func A function that takes an object and do something on it
      * @returns The current store
      * @memberof Store
      */
-    public forEachAsync(func: (i: T) => Promise<void>): Promise<Store<T>>;
+    public forEachAsync(func: (i: T) => Promise<void>): Promise<this>;
     /**
      * Removes from the Store all element that satisfy the function in parameter
      * @returns The current store
      * @memberof Store
      */
-    public sweep(func: (value: T, key: string) => boolean): Store<T>;
+    public sweep(func: (value: T, key: string) => boolean): this;
     /**
      * Return the first object to make the function evaluate true
      * @param func A function that takes an object and returns true if it matches

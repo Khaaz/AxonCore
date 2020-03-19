@@ -938,4 +938,3 @@ export {
     RawAttachment, RawUser, WebhookResponse, DjsContent, DjsWebhookContent, DjsPresenceGame, ErisContent, ErisWebhookContent, ErisPresenceGame,
     CommandEnvironmentProps, CommandEnvironmentParams, CollectorContainer, Timeout,
 };
-Promise.resolve();
