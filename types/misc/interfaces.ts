@@ -348,10 +348,6 @@ interface CommandData {
      */
     aliases?: string[];
     /**
-     * Whether the command IS a subcommand
-     */
-    isSubcmd?: boolean;
-    /**
      * Whether the command HAS subcommands
      */
     hasSubcmd?: boolean;

@@ -23,21 +23,16 @@ export declare class Command extends Base implements CommandData {
 
     public label: string;
     public aliases: string[];
-    public isSubcmd: boolean;
     public hasSubcmd: boolean;
     public enabled: boolean;
     public serverBypass: boolean;
-    public subcmds?: (new (...args: any[] ) => Command)[] | null;
+    /** Reference to the parent command */
+    public parentCommand: Command | null;
+    /** Registry of subcommands */
+    public subCommands: CommandRegistry | null;
     public info: CommandInfo;
     public options: CommandOptions;
     public permissions: CommandPermissions;
-
-    public parentCommand: Command | null;
-
-    /**
-     * Collection of subcommands
-     */
-    public subCommands: CommandRegistry | null;
 
     // GETTERS
     /**
@@ -78,6 +73,15 @@ export declare class Command extends Base implements CommandData {
      * @memberof Command
      */
     constructor(module: Module, data?: CommandData);
+
+    /**
+     * Returns all the subcommands for a command
+     * @returns An array of Command class (non instantiated)
+     * @memberof Command
+     */
+    init(): (new (...args: any[] ) => Command)[]
+
+    _init(): boolean;
 
     // Internal
     /**

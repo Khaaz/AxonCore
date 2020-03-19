@@ -36,14 +36,14 @@ export declare class ModuleLoader extends ALoader<AxonClient> {
      * @parammodule - The module to load
      * @memberof ModuleLoader
      */
-    load(module: Module): boolean;
+    public load(module: Module): boolean;
     /**
      * Load all modules in the client.
      * Instantiate all modules.
      *
      * @memberof ModuleLoader
      */
-    loadAll(modules: { [key: string]: Module; } ): boolean;
+    public loadAll(modules: { [key: string]: Module; } ): boolean;
     /**
      * Unload a Module from the client
      *
@@ -51,5 +51,5 @@ export declare class ModuleLoader extends ALoader<AxonClient> {
      * @returns Whether it worked
      * @memberof ModuleLoader
      */
-    unload(label: string): true;
+    public unload(label: string): true;
 }

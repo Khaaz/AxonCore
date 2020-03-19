@@ -36,14 +36,14 @@ export declare class ListenerLoader extends ALoader<AxonClient> {
      * @param listener - The event to load
      * @memberof ListenerLoader
      */
-    load(listener: Listener): boolean;
+    public load(listener: Listener): boolean;
     /**
      * Load all events in the module.
      * Instantiate all events.
      *
      * @memberof ListenerLoader
      */
-    loadAll(listeners: { [key: string]: Listener; } ): boolean;
+    public loadAll(listeners: { [key: string]: Listener; } ): boolean;
     /**
      * Unload a Listener from the client
      *
@@ -51,5 +51,5 @@ export declare class ListenerLoader extends ALoader<AxonClient> {
      * @returns Whether it worked
      * @memberof ListenerLoader
      */
-    unload(label: string): true;
+    public unload(label: string): true;
 }

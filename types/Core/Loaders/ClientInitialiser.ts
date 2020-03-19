@@ -27,5 +27,5 @@ export declare class ClientInitialiser {
      * @static
      * @memberof ClientInitialiser
      */
-    initAxon(axon: AxonClient): Promise<void>;
+    static initAxon(axon: AxonClient): Promise<void>;
 }

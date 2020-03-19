@@ -1,5 +1,5 @@
 import {
-    ALoader, Command, Module, AxonClient, ALogger,
+    ALoader, Command, Module, AxonClient, ALogger, CommandRegistry,
 } from '../../';
 
 /**
@@ -37,24 +37,26 @@ export declare class CommandLoader extends ALoader<Command> {
      * Validate and correct the command before registering it.
      *
      * @param command - The command to load
-     * @param parent - The optional parent command
+     * @param registry - The registry to load the command into
      * @memberof CommandLoader
      */
-    load(command: Command, parent?: Command): boolean;
+    public load(command: Command, registry: CommandRegistry): boolean;
     /**
      * Load all commands in the module.
      * Instantiate all commands.
      *
      * @memberof CommandLoader
      */
-    loadAll(commands: { [key: string]: Command; } ): boolean;
+    public loadAll(commands: { [key: string]: Command; } ): boolean;
     /**
      * Init and construct/instance all subcommands of the given parent command
      *
      * @param parentCommand - The command Object
+     * @param subCommands - Array of Command class to load
+     * @returns Whether it loaded the subcommands or not
      * @memberof Command
      */
-    loadSubCommands(parentCommand: Command): void;
+    public loadSubCommands(parentCommand: Command, subCommands: (new (...args: any[] ) => Command)[] ): boolean;
     /**
      * Unload a Command from the client
      *
@@ -62,14 +64,15 @@ export declare class CommandLoader extends ALoader<Command> {
      * @returns Whether it worked
      * @memberof CommandLoader
      */
-    unload(label: string): true;
+    public unload(label: string): true;
     /**
      * Register a Command. Register its subcommands if it has any.
      *
      * @param command - Command object
+     * @param registry - The registry to register the command into
      * @memberof CommandLoader
      */
-    registerCommand(command: Command): void;
+    public registerCommand(command: Command, registry: CommandRegistry): void;
     /**
      * Register a SubCommand.Register its subcommands if it has any
      *
@@ -77,7 +80,7 @@ export declare class CommandLoader extends ALoader<Command> {
      * @param parent - The parent command
      * @memberof CommandLoader
      */
-    registerSubCommand(command: Command, parent: Command): void;
+    public registerSubCommand(command: Command, parent: Command): void;
     /**
      * Remove a command from the module and the global cache.
      *
@@ -85,7 +88,7 @@ export declare class CommandLoader extends ALoader<Command> {
      * @returns True if successful / Error otherwise
      * @memberof CommandLoader
      */
-    unregisterCommand(fullLabel: string): boolean;
+    public unregisterCommand(fullLabel: string): boolean;
     /**
      * Remove a subcommand from a command
      *
@@ -93,5 +96,5 @@ export declare class CommandLoader extends ALoader<Command> {
      * @param subCommand - The Subcommand to unregister
      * @memberof CommandLoader
      */
-    unregisterSubCommand(command: Command, subCommand: Command): void;
+    public unregisterSubCommand(command: Command, subCommand: Command): void;
 }

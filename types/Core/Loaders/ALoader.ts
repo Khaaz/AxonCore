@@ -23,7 +23,7 @@ export declare class ALoader<T> {
      * @returns Whether it worked
      * @memberof ALoader
      */
-    load(toLoad: any): boolean; // Not implemented
+    public load(toLoad: any, ...args: any[] ): boolean; // Not implemented
     /**
      * Loads all objects given in parameters.
      *
@@ -31,12 +31,12 @@ export declare class ALoader<T> {
      * @returns Whether it worked
      * @memberof ALoader
      */
-    loadAll(toLoad: any): boolean; // Not implemented
+    public loadAll(toLoad: any): boolean; // Not implemented
     /**
      * Unload the object given in parameter.
      *
      * @returns Whether it worked
      * @memberof ALoader
      */
-    unload(toUnload: any): boolean; // Not implemented
+    public unload(toUnload: any): boolean; // Not implemented
 }
