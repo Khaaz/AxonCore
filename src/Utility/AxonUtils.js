@@ -15,7 +15,7 @@ import Validator from '../Core/Validator';
  * @typedef {import('../Core/Models/GuildConfig').default} GuildConfig
  * @typedef {import('../Loggers/ALogger').default} ALogger
  * @typedef {import('eris').AllowedMentions} ErisAllowedMentions
- * @typedef {import('discord.js').AllowedMentions} DjsAllowedMentions
+ * @typedef {import('discord.js').MessageMentionOptions} DjsAllowedMentions
  * @typedef {ErisAllowedMentions | DjsAllowedMentions} AllowedMentions
  */
 
