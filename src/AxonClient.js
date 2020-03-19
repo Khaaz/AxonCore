@@ -1,5 +1,5 @@
 // Lib - Modules
-import EventEmitter from 'events';
+import { EventEmitter } from 'events';
 import util from 'util';
 
 // Core - Core
