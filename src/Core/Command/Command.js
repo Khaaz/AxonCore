@@ -66,7 +66,6 @@ class Command extends Base {
      * @param {Boolean} [data.hasSubcmd] - Whether the command HAS subcommands
      * @param {Boolean} [data.enabled] - Whether the command is enabled
      * @param {Boolean} [data.serverBypass] - Whether the command can be server disabled
-     * @param {Array<new (...args[]: any) => Command>} [data.subcmds] - List of subcommands class to be added in the Command
      * @param {Object} [data.info]
      * @param {Array<String>} [data.info.owners] - Who created the command
      * @param {String} [data.info.description] - The command description
