@@ -19,7 +19,6 @@ const writeFileAsync = util.promisify(fs.writeFile);
 
 /**
  * Manager class for handling Json database
- * @TODO Add a mutex / queue system per document/guild to reduce possibility of corruption
  *
  * @author KhaaZ, Olybear
  *

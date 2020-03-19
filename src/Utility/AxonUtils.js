@@ -284,7 +284,6 @@ class AxonUtils {
         }
 
         if (guild && content.embed && !this.utils.hasChannelPerms(channel, [this.library.enums.DISCORD_LIB_PERMISSIONS.EMBED_LINKS] ) ) { // check if bot has embedPermission perm in the channel.
-            /** @TODO message for missing embed perm? - checked at command permissions level? */
             this.logger.verbose(`No embedLinks perms [${this.library.channel.getGuildName(channel)} - ${this.library.channel.getName(channel)}]!`);
             return Promise.resolve(false);
         }
@@ -328,7 +327,6 @@ class AxonUtils {
 
         const channel = this.library.message.getChannel(message);
         if (this.library.message.getGuild(message) && content.embed && !this.utils.hasChannelPerms(channel, [this.library.enums.DISCORD_LIB_PERMISSIONS.EMBED_LINKS] ) ) { // check if bot has embedPermission perm in the channel.
-            /** @TODO message for missing embed perm? - checked at command permissions level? */
             this.logger.verbose(`No embedLinks perms [${this.library.channel.getGuildName(channel)} - ${this.library.channel.getName(channel)}]!`);
             return Promise.resolve(false);
         }
