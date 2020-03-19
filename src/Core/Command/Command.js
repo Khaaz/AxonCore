@@ -187,7 +187,7 @@ class Command extends Base {
     /**
      * Returns all the subcommands for a command
      *
-     * @returns {Array<Command>} An Array of Commands class (non instantiated)
+     * @returns {Array<new (...args[]: any) => Command>} An Array of Commands class (non instantiated)
      */
     init() {
         // return this.subcmds for backward compatibility
