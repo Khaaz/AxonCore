@@ -23,7 +23,7 @@ import { TYPE_ERRORS } from '../Utility/Constants/AxonEnums';
  * @typedef {{ content?: String, embed?: Embed|EmbedBase }} MessageObject
  * @typedef {{ guild: Guild|String, cmd: String, user: User|String}} Ctx
  * @typedef {{
- * everyone?: Boolean, roles?: boolean | String[], users?: boolean | String[]
+ * everyone?: Boolean, roles?: Boolean | String[], users?: Boolean | String[]
  * }} ErisAllowedMentions
  * @typedef {{
  * parse?: String[], roles?: String[], users?: String[]
