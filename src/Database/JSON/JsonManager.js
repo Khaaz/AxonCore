@@ -199,13 +199,8 @@ class JsonManager {
         const axonSchema = Object.assign( {}, this.axonDefault);
         axonSchema.prefix = defaultPrefix;
         axonSchema.createdAt = new Date();
-        axonSchema.updatedAt = new Date();
 
-        const res = await this.writeFile(this._axonPath, this.toString(axonSchema) );
-        if (res) {
-            return axonSchema;
-        }
-        return null;
+        return this.writeAxonSchema(axonSchema);
     }
 
     /**
@@ -222,14 +217,9 @@ class JsonManager {
         const guildSchema = Object.assign( {}, this.guildDefault);
         guildSchema.guildID = gID;
         guildSchema.createdAt = new Date();
-        guildSchema.updatedAt = new Date();
         guildSchema.prefixes = prefixes;
 
-        const res = await this.writeFile(this._buildPath(gID), this.toString(guildSchema) );
-        if (res) {
-            return guildSchema;
-        }
-        return null;
+        return this.writeGuildSchema(gID, guildSchema);
     }
 
     // **** FETCHERS **** //
