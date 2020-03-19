@@ -170,7 +170,7 @@ class Base {
      * @param {String|MessageObject} content - String or object (embed)
      * @param {Object} [options={}] - Options { disableEveryone: Boolean, delete: Boolean, delay: Number }
      * @param {Boolean} [options.disableEveryone=true] - Whether to allow mentioning everyone or not
-     * @param {Object} [options.allowedMentions] - Cutom allowed mentions object
+     * @param {Object} [options.allowedMentions] - Custom allowed mentions object
      * @param {Boolean} [options.delete=false] - Whether to delete the message or not
      * @param {Number} [options.delay=null] - Delay after which the message will be deleted
      * @returns {Promise<Message?>} Message Object
