@@ -1,7 +1,7 @@
 import Channel from '../../definitions/Channel';
 
 /**
- * @typedef {import('discord.js').AllowedMentions} AllowedMentions
+ * @typedef {import('discord.js').MessageMentionOptions} AllowedMentions
  * @typedef {import('discord.js').Channel} channel
  * @typedef {import('discord.js').User} user
  * @typedef {{
