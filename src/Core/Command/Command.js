@@ -37,10 +37,8 @@ import { COMMAND_EXECUTION_STATE } from '../../Utility/Constants/AxonEnums';
  * @prop {Boolean} [enabled=module.enabled] - Whether the command is enabled
  * @prop {Boolean} [serverBypass=module.serverBypass] - Whether the command can be disabled
  *
- * @prop {Boolean} [isSubcmd=false] - Whether the command IS a subcommand
- * @prop {Command} [parentCommand=null] - Reference to the parent command (if isSubcmd = true)
+ * @prop {Command} [parentCommand=null] - Reference to the parent command
  * @prop {Boolean} [hasSubcmd=false] - Whether the command HAS subcommands
- * @prop {Array<Object>} subcmds - Array of subcommand objects (deleted after init)
  * @prop {CommandRegistry} [subCommands=null] - Collection of subcommands
  *
  * @prop {Object} info - Default info about the command
@@ -63,7 +61,6 @@ class Command extends Base {
      * @param {Object} [data={}] - All command parameters
      * @param {String} [data.label] - The command label
      * @param {Array<String>} [data.aliases] - The command aliases
-     * @param {Boolean} [data.isSubcmd] - Whether the command IS a subcommand
      * @param {Boolean} [data.hasSubcmd] - Whether the command HAS subcommands
      * @param {Boolean} [data.enabled] - Whether the command is enabled
      * @param {Boolean} [data.serverBypass] - Whether the command can be server disabled
@@ -91,11 +88,8 @@ class Command extends Base {
         this.enabled = data.enabled !== undefined ? data.enabled : module.enabled; // Default to module state
 
         /* Subcommands */
-        this.isSubcmd = data.isSubcmd || false;
         this.parentCommand = null; // Reference to the parent command - affected at instantiation
         this.hasSubcmd = data.hasSubcmd || false;
-        // temp var used to init subcommands
-        this.subcmds = data.subcmds || []; // Array of imported commands - deleted after init
 
         /**
          * @type {CommandRegistry}
@@ -186,6 +180,16 @@ class Command extends Base {
             return this.label;
         }
         return `${this.parentCommand.fullLabel} ${this.label}`;
+    }
+
+    /**
+     * Returns all the subcommands for a command
+     *
+     * @returns {Array<Command>} An Array of Commands class (non instantiated)
+     */
+    init() {
+        // return this.suncmds for backward compatibility
+        return this.subcmds || [];
     }
 
     // **** MAIN **** //

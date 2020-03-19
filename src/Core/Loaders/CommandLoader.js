@@ -114,18 +114,15 @@ class CommandLoader extends ALoader {
      * @memberof Command
      */
     loadSubCommands(parentCommand) {
+        const subcmds = parentCommand.init();
         /* No subCommands */
-        if (!parentCommand.subCommands || !parentCommand.subcmds.length) {
+        if (!parentCommand.subCommands || !subcmds.length) {
             this.logger.error(`[Module(${this._module.label})] Command: ${parentCommand.fullLabel} - Couldn't init subcommands.`);
             return;
         }
 
-        for (const Value of Object.values(parentCommand.subcmds) ) {
+        for (const Value of Object.values(subcmds) ) {
             const subCommand = new Value(this._module);
-            if (!subCommand.isSubcmd) {
-                this.logger.error(`[Module(${this._module.label})] Command: ${subCommand.fullLabel} - Couldn't load subcommand: Not a subcommand.`);
-                break;
-            }
             this.load(subCommand, parentCommand);
         }
     }
@@ -155,7 +152,6 @@ class CommandLoader extends ALoader {
             command.subCommands = new CommandRegistry(command.axon);
             this.loadSubCommands(command);
         }
-        delete command.subcmds;
        
         this.axon.commandRegistry.register(command.label, command); // add the command to the Map of commands.
     }
@@ -172,7 +168,6 @@ class CommandLoader extends ALoader {
             command.subCommands = new CommandRegistry(command.axon);
             this.loadSubCommands(command);
         }
-        delete command.subcmds;
         
         // assign parentCommand
         command.parentCommand = parent;
@@ -195,7 +190,7 @@ class CommandLoader extends ALoader {
         }
 
         /* Unregister command */
-        if (command.isSubcmd) {
+        if (command.parentCommand) {
             this.unregisterSubCommand(command.parentCommand, command);
         } else {
             this.axon.commandRegistry.unregister(command.label, command);
