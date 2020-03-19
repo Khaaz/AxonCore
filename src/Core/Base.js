@@ -169,7 +169,6 @@ class Base {
      * @param {User} user - User object to get the DM channel
      * @param {String|MessageObject} content - String or object (embed)
      * @param {Object} [options={}] - Options { disableEveryone: Boolean, delete: Boolean, delay: Number }
-     * @param {Boolean} [options.disableEveryone=true] - Whether to allow mentioning everyone or not
      * @param {Object} [options.allowedMentions] - Custom allowed mentions object
      * @param {Boolean} [options.delete=false] - Whether to delete the message or not
      * @param {Number} [options.delay=null] - Delay after which the message will be deleted
@@ -188,7 +187,6 @@ class Base {
      * @param {Channel} channel - The channel Object
      * @param {String|MessageObject} content - Message content, String or Embed Object
      * @param {Object} [options={}] - Options { disableEveryone: Boolean, delete: Boolean, delay: Number }
-     * @param {Boolean} [options.disableEveryone=true] - Whether to allow mentioning everyone or not
      * @param {Object} [options.allowedMentions] - Custom allowed mentions object
      * @param {Boolean} [options.delete=false] - Whether to delete the message or not
      * @param {Number} [options.delay=null] - Delay after which the message will be deleted
@@ -220,7 +218,6 @@ class Base {
      * @param {Channel} channel - The channel Object
      * @param {String|MessageObject} content - Success message content
      * @param {Object} [options={}] - Additional options
-     * @param {Boolean} [options.disableEveryone=true] - Whether to allow mentioning everyone or not
      * @param {Object} [options.allowedMentions] - Cutom allowed mentions object
      * @param {Boolean} [options.delete=false] - Whether to delete the message or not
      * @param {Number} [options.delay=null] - Delay after which the message will be deleted
@@ -246,7 +243,6 @@ class Base {
      * @param {Channel} channel - The channel Object
      * @param {String|MessageObject} content - Success message content
      * @param {Object} [options={}] - Additional options
-     * @param {Boolean} [options.disableEveryone=true] - Whether to allow mentioning everyone or not
      * @param {Object} [options.allowedMentions] - Custom allowed mentions object
      * @param {Boolean} [options.delete=false] - Whether to delete the message or not
      * @param {Number} [options.delay=null] - Delay after which the message will be deleted
