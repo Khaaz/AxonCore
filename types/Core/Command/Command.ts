@@ -1,6 +1,6 @@
 import {
-    Base, CommandData, Module, CommandCooldown, CommandInfo, CommandOptions, CommandPermissions, Collection, AxonTemplate,
-    LibraryInterface, CommandContext, CommandResponse, LibTextableChannel, LibMember, CommandEnvironment,
+    Base, CommandData, Module, CommandCooldown, CommandInfo, CommandOptions, CommandPermissions, CommandRegistry,
+    AxonTemplate, LibraryInterface, CommandContext, CommandResponse, LibTextableChannel, LibMember, CommandEnvironment,
 } from '../../';
 
 /**
@@ -37,11 +37,7 @@ export declare class Command extends Base implements CommandData {
     /**
      * Collection of subcommands
      */
-    public subCommands: Collection<Command> | null;
-    /**
-     * Map of subcommand aliases
-     */
-    public subCommandAliases?: Map<string, string>;
+    public subCommands: CommandRegistry | null;
 
     // GETTERS
     /**
