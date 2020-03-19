@@ -15,7 +15,7 @@ import Validator from '../Core/Validator';
  * @typedef {import('../Core/Models/GuildConfig').default} GuildConfig
  * @typedef {import('../Loggers/ALogger').default} ALogger
  * @typedef {{
- * everyone?: Boolean, roles?: boolean | String[], users?: boolean | String[]
+ * everyone?: Boolean, roles?: Boolean | String[], users?: Boolean | String[]
  * }} ErisAllowedMentions
  * @typedef {{
  * parse?: String[], roles?: String[], users?: String[]
