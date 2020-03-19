@@ -42,6 +42,8 @@ async function checkConfig() {
     } catch (error) {
         console.error('Could not find a valid AxonCore configuration file. Please complete the prompts below to set up AxonCore.');
         config = await promptTypings();
+        console.log(`Saving configuration file...`);
+        writeFileSync('../../.axoncorerc.json', JSON.stringify(config) );
     }
 
     if (config.library === 'detritus') {
@@ -51,8 +53,7 @@ async function checkConfig() {
 
     console.log(`Copying documentation for the ${config.library} library...`);
     copyFileSync(`./types/Libraries/${config.library}.ts`, `./types/Libraries/index.ts`);
-    console.log(`Library documentation copying complete. Saving configuration file...`);
-    writeFileSync('../../.axoncorerc.json', JSON.stringify(config) );
+    console.log('Library documentation copying complete.');
 }
 
 console.log('Thank you for installing AxonCore.');
