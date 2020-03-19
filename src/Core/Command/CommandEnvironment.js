@@ -114,7 +114,9 @@ class CommandEnvironment {
      */
     resolveArgs(parser, args) {
         if (!parser) {
-            this.args = args.split(' ');
+            this.args = args.length > 0
+                ? args.split(' ')
+                : [];
         } else {
             this.args = parser.parse(args);
         }
