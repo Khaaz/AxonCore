@@ -22,12 +22,8 @@ import { TYPE_ERRORS } from '../Utility/Constants/AxonEnums';
  * @typedef {import('../Utility/Discord/Embed').default} Embed
  * @typedef {{ content?: String, embed?: Embed|EmbedBase }} MessageObject
  * @typedef {{ guild: Guild|String, cmd: String, user: User|String}} Ctx
- * @typedef {{
- * everyone?: Boolean, roles?: boolean | String[], users?: boolean | String[]
- * }} ErisAllowedMentions
- * @typedef {{
- * parse?: String[], roles?: String[], users?: String[]
- * }} DjsAllowedMentions
+ * @typedef {import('eris').AllowedMentions} ErisAllowedMentions
+ * @typedef {import('discord.js').AllowedMentions} DjsAllowedMentions
  * @typedef {ErisAllowedMentions | DjsAllowedMentions} AllowedMentions
  */
 

@@ -14,12 +14,8 @@ import Validator from '../Core/Validator';
  * @typedef {import('../Libraries/definitions/LibraryInterface').default} LibraryInterface
  * @typedef {import('../Core/Models/GuildConfig').default} GuildConfig
  * @typedef {import('../Loggers/ALogger').default} ALogger
- * @typedef {{
- * everyone?: Boolean, roles?: boolean | String[], users?: boolean | String[]
- * }} ErisAllowedMentions
- * @typedef {{
- * parse?: String[], roles?: String[], users?: String[]
- * }} DjsAllowedMentions
+ * @typedef {import('eris').AllowedMentions} ErisAllowedMentions
+ * @typedef {import('discord.js').AllowedMentions} DjsAllowedMentions
  * @typedef {ErisAllowedMentions | DjsAllowedMentions} AllowedMentions
  */
 
