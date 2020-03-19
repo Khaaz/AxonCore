@@ -3,13 +3,13 @@ import Channel from '../../definitions/Channel';
 /**
  * @typedef {{
  * parse?: String[], roles?: String[], users?: String[]
- * }} AlloweMentions
+ * }} AllowedMentions
  * @typedef {import('discord.js').Channel} channel
  * @typedef {import('discord.js').User} user
  * @typedef {{
  * content?: String, tts?: Boolean, nonce?: String, embed?: Embed|import('discord.js').MessageEmbed|import('discord.js').MessageEmbedOptions,
  * files?: Array<import('discord.js').FileOptions|import('discord.js').BufferResolvable|import('discord.js').MessageAttachment>, code?: String|Boolean,
- * split?: Boolean|import('discord.js').SplitOptions, reply?: import('discord.js').UserResolvable, allowedMentions: Object
+ * split?: Boolean|import('discord.js').SplitOptions, reply?: import('discord.js').UserResolvable, allowedMentions: AllowedMentions
  * }} DjsContent
  * @typedef {import('../../../Utility/Discord/Embed').default} Embed
  * @typedef {import('discord.js').Message} message

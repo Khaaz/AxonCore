@@ -3,7 +3,7 @@ import Channel from '../../definitions/Channel';
 /**
  * @typedef {{
  * everyone?: Boolean, roles?: boolean | String[], users?: boolean | String[]
- * }} AlloweMentions
+ * }} AllowedMentions
  * @typedef {import('eris').GuildChannel} gchannel
  * @typedef {import('eris').User} User
  * @typedef {
