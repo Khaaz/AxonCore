@@ -31,7 +31,6 @@ class ErisChannel extends Channel {
      */
     hasPermission(channel, user, perm) {
         return channel.permissionsOf(user.id).has(perm);
-        // djs: channel.permissionsFor(user.id).has(perm)
     }
     // **** METHODS **** //
     

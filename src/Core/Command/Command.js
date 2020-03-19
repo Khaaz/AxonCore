@@ -444,7 +444,7 @@ class Command extends Base {
     sendBotPerms(channel, permissions = [] ) {
         if (permissions.length === 0) {
             const member = this.library.client.getMember(this.library.channel.getGuild(channel) );
-            permissions = this.utils.missingPerms(member, this.permissions.bot);
+            permissions = this.utils.missingPerms(channel, member, this.permissions.bot);
         }
         return this.sendError(
             channel,
