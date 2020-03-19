@@ -282,7 +282,6 @@ class JsonManager {
             const guildSchema = await this.fetchGuildSchema(gID);
 
             guildSchema[key] = value;
-            guildSchema.updatedAt = new Date();
             
             return this.writeGuildSchema(gID, guildSchema);
         }, true);
@@ -302,7 +301,6 @@ class JsonManager {
             const axonSchema = await this.fetchAxonSchema();
 
             axonSchema[key] = value;
-            axonSchema.updatedAt = new Date();
 
             return this.writeAxonSchema(axonSchema);
         }, true);
