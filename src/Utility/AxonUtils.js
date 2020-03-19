@@ -14,6 +14,9 @@ import Validator from '../Core/Validator';
  * @typedef {import('../Libraries/definitions/LibraryInterface').default} LibraryInterface
  * @typedef {import('../Core/Models/GuildConfig').default} GuildConfig
  * @typedef {import('../Loggers/ALogger').default} ALogger
+ * @typedef {import('eris').AllowedMentions} ErisAllowedMentions
+ * @typedef {import('discord.js').MessageMentionOptions} DjsAllowedMentions
+ * @typedef {ErisAllowedMentions | DjsAllowedMentions} AllowedMentions
  */
 
 /**
@@ -247,7 +250,7 @@ class AxonUtils {
      * @param {User} user - User object to get the DM channel
      * @param {String|MessageObject} content - String or object (embed)
      * @param {Object} [options={}] - Options { disableEveryone: Boolean, delete: Boolean, delay: Number }
-     * @param {Boolean} [options.disableEveryone=true] - Whether to allow mentioning everyone or not
+     * @param {AllowedMentions} [options.allowedMentions] - Custom allowed mentions object
      * @param {Boolean} [options.delete=false] - Whether to delete the message or not
      * @param {Number} [options.delay=null] - Delay after which the message will be deleted
      * @returns {Promise<Message?>} Message Object
@@ -270,7 +273,7 @@ class AxonUtils {
      * @param {Channel} channel - The channel Object
      * @param {String|MessageObject} content - Message content: String or Embed Object
      * @param {Object} [options={}] - Options { disableEveryone: Boolean, delete: Boolean, delay: Number }
-     * @param {Boolean} [options.disableEveryone=true] - Whether to allow mentioning everyone or not
+     * @param {AllowedMentions} [options.allowedMentions] - Custom allowed mentions object
      * @param {Boolean} [options.delete=false] - Whether to delete the message or not
      * @param {Number} [options.delay=null] - Delay after which the message will be deleted
      * @returns {Promise<Message?>} Message Object
@@ -295,8 +298,11 @@ class AxonUtils {
         if (typeof content !== 'object' || content === null) {
             content = { content: `${content}` };
         }
-        content.disableEveryone = !!options.disableEveryone;
 
+        if (options.allowedMentions) {
+            content.allowedMentions = options.allowedMentions;
+        }
+        
         return this.library.channel.sendMessage(channel, content)
             .then(message => {
                 /* Delete the message automatically */

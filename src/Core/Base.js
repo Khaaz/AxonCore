@@ -22,6 +22,9 @@ import { TYPE_ERRORS } from '../Utility/Constants/AxonEnums';
  * @typedef {import('../Utility/Discord/Embed').default} Embed
  * @typedef {{ content?: String, embed?: Embed|EmbedBase }} MessageObject
  * @typedef {{ guild: Guild|String, cmd: String, user: User|String}} Ctx
+ * @typedef {import('eris').AllowedMentions} ErisAllowedMentions
+ * @typedef {import('discord.js').MessageMentionOptions} DjsAllowedMentions
+ * @typedef {ErisAllowedMentions | DjsAllowedMentions} AllowedMentions
  */
 
 /**
@@ -169,7 +172,7 @@ class Base {
      * @param {User} user - User object to get the DM channel
      * @param {String|MessageObject} content - String or object (embed)
      * @param {Object} [options={}] - Options { disableEveryone: Boolean, delete: Boolean, delay: Number }
-     * @param {Boolean} [options.disableEveryone=true] - Whether to allow mentioning everyone or not
+     * @param {AllowedMentions} [options.allowedMentions] - Custom allowed mentions object
      * @param {Boolean} [options.delete=false] - Whether to delete the message or not
      * @param {Number} [options.delay=null] - Delay after which the message will be deleted
      * @returns {Promise<Message?>} Message Object
@@ -187,7 +190,7 @@ class Base {
      * @param {Channel} channel - The channel Object
      * @param {String|MessageObject} content - Message content, String or Embed Object
      * @param {Object} [options={}] - Options { disableEveryone: Boolean, delete: Boolean, delay: Number }
-     * @param {Boolean} [options.disableEveryone=true] - Whether to allow mentioning everyone or not
+     * @param {AllowedMentions} [options.allowedMentions] - Custom allowed mentions object
      * @param {Boolean} [options.delete=false] - Whether to delete the message or not
      * @param {Number} [options.delay=null] - Delay after which the message will be deleted
      * @returns {Promise<Message?>} Message Object
@@ -218,7 +221,7 @@ class Base {
      * @param {Channel} channel - The channel Object
      * @param {String|MessageObject} content - Success message content
      * @param {Object} [options={}] - Additional options
-     * @param {Boolean} [options.disableEveryone=true] - Whether to allow mentioning everyone or not
+     * @param {AllowedMentions} [options.allowedMentions] - Custom allowed mentions object
      * @param {Boolean} [options.delete=false] - Whether to delete the message or not
      * @param {Number} [options.delay=null] - Delay after which the message will be deleted
      * @param {Boolean} [options.triggerCooldown=true] - Whether the command should trigger cooldown or not
@@ -243,7 +246,7 @@ class Base {
      * @param {Channel} channel - The channel Object
      * @param {String|MessageObject} content - Success message content
      * @param {Object} [options={}] - Additional options
-     * @param {Boolean} [options.disableEveryone=true] - Whether to allow mentioning everyone or not
+     * @param {AllowedMentions} [options.allowedMentions] - Custom allowed mentions object
      * @param {Boolean} [options.delete=false] - Whether to delete the message or not
      * @param {Number} [options.delay=null] - Delay after which the message will be deleted
      * @param {Boolean} [options.triggerCooldown=false] - Whether the command should trigger cooldown or not
