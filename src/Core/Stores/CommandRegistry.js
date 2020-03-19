@@ -148,7 +148,11 @@ class CommandRegistry extends ARegistry {
         }
 
         if (command.hasSubcmd) {
-            return command.subCommands.resolve(args.shift(), args) || command;
+            const sub = command.subCommands.resolve(args[0], args.slice(1) );
+            if (sub) {
+                args.shift();
+            }
+            return sub || command;
         }
         return command;
     }
