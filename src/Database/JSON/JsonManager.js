@@ -309,7 +309,7 @@ class JsonManager {
     async writeAxonSchema(schema) {
         schema.updatedAt = new Date();
         
-        const res = await this.writeFile(this._axonDefault, this.toString(schema) );
+        const res = await this.writeFile(this._axonPath, this.toString(schema) );
         if (res) {
             return schema;
         }
