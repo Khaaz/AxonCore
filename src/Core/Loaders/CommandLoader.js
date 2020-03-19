@@ -80,10 +80,10 @@ class CommandLoader extends ALoader {
     }
 
     /**
-     * Load all commands in the module.
+     * Load all non instantiated commands in the module.
      * Instantiate all commands.
      *
-     * @param {Object.<string, Command>} commands
+     * @param {Object.<string, Command>} commands - Non instantiated Commands
      * @returns {Boolean}
      * @memberof CommandLoader
      */
@@ -108,7 +108,7 @@ class CommandLoader extends ALoader {
      * Init and construct/instance all subcommands of the given parent command
      *
      * @param {Command} parentCommand - The command Object
-     * @param {Array<new (...args[]: any) => Command>} subCommands - Array of Command class to load
+     * @param {Array<new (...args[]: any) => Command>} subCommands - Array of Command class to load (non instantiated)
      * @returns {Boolean} - Wether it loaded the subcommands or not
      * @memberof Command
      */

@@ -188,6 +188,7 @@ class Command extends Base {
      * Returns all the subcommands for a command
      *
      * @returns {Array<new (...args[]: any) => Command>} An Array of Commands class (non instantiated)
+     * @memberof Command
      */
     init() {
         // return this.subcmds for backward compatibility
@@ -196,6 +197,7 @@ class Command extends Base {
 
     /**
      * @returns {Boolean}
+     * @memberof Command
      */
     _init() {
         if (!this.hasSubcmd) {
