@@ -6,6 +6,8 @@ import CommandCooldown from './CommandCooldown';
 import CommandContext from './CommandContext';
 import CommandResponse from './CommandResponse';
 
+import CommandRegistry from '../Stores/CommandRegistry';
+
 import AxonError from '../../Errors/AxonError';
 import AxonCommandError from '../../Errors/AxonCommandError';
 
@@ -37,11 +39,9 @@ import { COMMAND_EXECUTION_STATE } from '../../Utility/Constants/AxonEnums';
  * @prop {Boolean} [enabled=module.enabled] - Whether the command is enabled
  * @prop {Boolean} [serverBypass=module.serverBypass] - Whether the command can be disabled
  *
- * @prop {Boolean} [isSubcmd=false] - Whether the command IS a subcommand
- * @prop {Command} [parentCommand=null] - Reference to the parent command (if isSubcmd = true)
+ * @prop {Command} [parentCommand=null] - Reference to the parent command
  * @prop {Boolean} [hasSubcmd=false] - Whether the command HAS subcommands
- * @prop {Array<Object>} subcmds - Array of subcommand objects (deleted after init)
- * @prop {CommandRegistry} [subCommands=null] - Collection of subcommands
+ * @prop {CommandRegistry} [subCommands=null] - Registry of subcommands
  *
  * @prop {Object} info - Default info about the command
  * @prop {Array<String>} [info.owners] - Command authors
@@ -63,11 +63,9 @@ class Command extends Base {
      * @param {Object} [data={}] - All command parameters
      * @param {String} [data.label] - The command label
      * @param {Array<String>} [data.aliases] - The command aliases
-     * @param {Boolean} [data.isSubcmd] - Whether the command IS a subcommand
      * @param {Boolean} [data.hasSubcmd] - Whether the command HAS subcommands
      * @param {Boolean} [data.enabled] - Whether the command is enabled
      * @param {Boolean} [data.serverBypass] - Whether the command can be server disabled
-     * @param {Array<new (...args[]: any) => Command>} [data.subcmds] - List of subcommands class to be added in the Command
      * @param {Object} [data.info]
      * @param {Array<String>} [data.info.owners] - Who created the command
      * @param {String} [data.info.description] - The command description
@@ -91,11 +89,8 @@ class Command extends Base {
         this.enabled = data.enabled !== undefined ? data.enabled : module.enabled; // Default to module state
 
         /* Subcommands */
-        this.isSubcmd = data.isSubcmd || false;
         this.parentCommand = null; // Reference to the parent command - affected at instantiation
         this.hasSubcmd = data.hasSubcmd || false;
-        // temp var used to init subcommands
-        this.subcmds = data.subcmds || []; // Array of imported commands - deleted after init
 
         /**
          * @type {CommandRegistry}
@@ -186,6 +181,31 @@ class Command extends Base {
             return this.label;
         }
         return `${this.parentCommand.fullLabel} ${this.label}`;
+    }
+
+    /**
+     * Returns all the subcommands for a command
+     *
+     * @returns {Array<new (...args[]: any) => Command>} An Array of Commands class (non instantiated)
+     * @memberof Command
+     */
+    init() {
+        // return this.subcmds for backward compatibility
+        return this.subcmds || [];
+    }
+
+    /**
+     * @returns {Boolean}
+     * @memberof Command
+     */
+    _init() {
+        if (!this.hasSubcmd) {
+            return false;
+        }
+        const commands = this.init();
+        this.subCommands = new CommandRegistry(this.axon);
+
+        return this.module.commandLoader.loadSubCommands(this, commands);
     }
 
     // **** MAIN **** //
