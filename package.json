@@ -9,7 +9,8 @@
     "node": ">=12.0.0"
   },
   "dependencies": {
-    "esm": "^3.2.25"
+    "esm": "^3.2.25",
+    "inquirer": "^7.1.0"
   },
   "optionalDependencies": {
     "mongoose": "^5.7.7"
@@ -30,6 +31,7 @@
     "signale": "^1.4.0",
     "superagent": "^5.2.1",
     "typescript": "^3.7.5",
+    "winston": "^3.2.1",
     "yarn": "^1.21.1"
   },
   "main": "./index.js",
@@ -37,8 +39,8 @@
   "scripts": {
     "lint": "yarn run lint:js && yarn run lint:ts",
     "lint:js": "eslint src examples *.js",
-    "lint:ts": "eslint index.d.ts",
-    "tsc": "tsc index.d.ts",
+    "lint:ts": "eslint index.d.ts types/**/*.ts",
+    "tsc": "tsc index.d.ts --noEmit --skipLibCheck true",
     "test": "yarn run lint && yarn run tsc",
     "test:push": "eslint src examples *.js",
     "test:publish": "eslint src *.js",
@@ -46,7 +48,8 @@
     "start:eris": "node -r esm examples/eris/src/index.js",
     "start:djs": "node -r esm examples/djs/src/index.js",
     "pm2start:eris": "node examples/eris/scripts/start.js",
-    "pm2start:djs": "node examples/djs/scripts/start.js"
+    "pm2start:djs": "node examples/djs/scripts/start.js",
+    "postinstall": "node ./scripts/typings.js"
   },
   "repository": {
     "type": "git",
