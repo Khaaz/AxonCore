@@ -1,5 +1,5 @@
 import {
-    AxonClient, LibClient, LibraryInterface, LibMessage, LibGuild, LibMember, LibRole, LibTextableChannel, LibUser, PermissionObject,
+    AxonClient, LibClient, LibraryInterface, LibMessage, LibGuild, LibMember, LibRole, LibTextableChannel, LibUser, PermissionObject, LibChannel,
 } from '../';
 
 /**
@@ -184,6 +184,13 @@ export declare class Utils {
      * @memberof Utils
      */
     public missingPerms(member: LibMember, permissions?: string[] ): string[];
+    /**
+     * List all missing permissions of the given user in the given channel.
+     *
+     * @param permissions An array of missing permissions
+     * @memberof Utils
+     */
+    public missingChannelPerms(channel: LibChannel, member: LibMember, permissions?: string[] ): string[];
     /**
      * Calculate permissions using a object of perms
      *
