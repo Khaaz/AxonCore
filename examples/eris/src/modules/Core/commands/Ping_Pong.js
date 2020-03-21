@@ -9,11 +9,9 @@ class Pong extends Command {
         this.label = 'pong';
         this.aliases = ['pong'];
 
-        this.isSubcmd = true;
         this.hasSubcmd = true;
-        this.subcmds = [Pang];
 
-        this.infos = {
+        this.info = {
             owners: ['KhaaZ'],
             name: 'ping pong',
             description: 'Ping the bot.',
@@ -30,13 +28,17 @@ class Pong extends Command {
         } );
 
         this.permissions = new CommandPermissions(this, {
-            user: {
+            author: {
                 needed: ['manageGuild'],
             },
             staff: {
                 bypass: [...this.axon.staff.owners, ...this.axon.staff.admins],
             },
         } );
+    }
+
+    init() {
+        return [Pang];
     }
 
     async execute( { msg } ) {

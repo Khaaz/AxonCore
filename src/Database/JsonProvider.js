@@ -1,9 +1,22 @@
 import ADBProvider from './ADBProvider';
 
-import AxonConfig from '../Structures/DataStructure/AxonConfig';
-import GuildConfig from '../Structures/DataStructure/GuildConfig';
+import AxonConfig from '../Core/Models/AxonConfig';
+import GuildConfig from '../Core/Models/GuildConfig';
 
-import Manager from './JSON/Manager';
+import JsonManager from './JSON/JsonManager';
+
+/**
+ * @typedef {import('../AxonOptions').default} AxonOptions
+ * @typedef {import('../AxonClient').default} AxonClient
+ * @typedef {String|Boolean|Object.<string, any>|Array<any>|Number|Date} updateDBVal
+ * @typedef {{
+ * id: String, prefix: String, createdAt: Date, updatedAt: Date, bannedUsers: Array<String>, bannedGuilds: Array<String>
+ * }} AxonConfigRaw
+ * @typedef {{
+ * guildID: string, prefixes: Array<String>, createdAt: Date, updatedAt: Date, modules: Array<String>, commands: Array<String>, listeners: Array<String>,
+ * ignoredUsers: Array<String>, ignoredRoles: Array<String>, ignoredChannels: Array<String>, modOnly: Boolean, modRoles: Array<String>, modUsers: Array<String>
+ * }} GuildConfigRaw
+ */
 
 /**
  * DB interface to interact with a Json Database.
@@ -13,7 +26,7 @@ import Manager from './JSON/Manager';
  * @class JsonProvider
  * @extends ADBProvider
  *
- * @prop {Manager} manager - Class responsible to read / write data to the DB as json.
+ * @prop {JsonManager} manager - Class responsible to read / write data to the DB as json.
  */
 class JsonProvider extends ADBProvider {
     /**
@@ -22,8 +35,8 @@ class JsonProvider extends ADBProvider {
      * @param {AxonOptions}
      * @memberof JsonProvider
      */
-    init(axonOptions = {} ) { // eslint-disable-next-line no-unused-vars
-        this.manager = new Manager(axonOptions.extensions.DBLocation);
+    init(axonOptions = {} ) {
+        this.manager = new JsonManager(axonOptions.extensions.DBLocation);
     }
 
     // **** INIT **** //
@@ -44,7 +57,6 @@ class JsonProvider extends ADBProvider {
      * Use default AxonClient prefix settings when creating the new guild config.
      *
      * @param {String} gID - Guild ID
-     * @param {AxonClient} axonClient
      *
      * @returns {Promise<GuildConfig|null>} Newly created Guild config from the DB
      * @memberof JsonProvider
@@ -68,7 +80,7 @@ class JsonProvider extends ADBProvider {
     }
 
     /**
-     * Retreives the Guild config for the specified guild.
+     * Retrieves the Guild config for the specified guild.
      *
      * @param {String} gID - guild ID
      * @returns {Promise<GuildConfig|null>}
@@ -87,8 +99,9 @@ class JsonProvider extends ADBProvider {
      * Generic method to update Database.
      *
      * @param {String} key - The identifier in the Database
-     * @param {Object|Array|String|Boolean} value - The value to update in the DB
-     * @returns {Promise<Boolean>} Whether the request was successfull or not
+     * @param {updateDBVal} value - The value to update in the DB
+     * @returns {Promise<Boolean>} Whether the request was successful or not
+     *
      * @memberof JsonProvider
      */
     async updateAxon(key, value) {
@@ -104,8 +117,9 @@ class JsonProvider extends ADBProvider {
      *
      * @param {String} key - The identifier in the Database
      * @param {String} gID - The guild ID to update
-     * @param {Object|Array|String|Boolean} value - The value to update in the DB
-     * @returns {Promise<Boolean>} Whether the request was successfull or not
+     * @param {updateDBVal} value - The value to update in the DB
+     * @returns {Promise<Boolean>} Whether the request was successful or not
+     *
      * @memberof JsonProvider
      */
     async updateGuild(key, gID, value) {
@@ -114,13 +128,13 @@ class JsonProvider extends ADBProvider {
     }
 
     /**
-    * Updates the Axon config in the DB with a new Axon config object.
-    *
-    * @param {Object} data - the schema object to update
-    * @returns {Promise<AxonConfig|null>} Updated AxonConfig from the DB
-    *
-    * @memberof JsonProvider
-    */
+     * Updates the Axon config in the DB with a new Axon config object.
+     *
+     * @param {AxonConfig|AxonConfigRaw} data - the schema object to update
+     * @returns {Promise<AxonConfig|null>} Updated AxonConfig from the DB
+     *
+     * @memberof JsonProvider
+     */
     async saveAxon(data) {
         const res = await this.manager.writeAxonSchema(data);
         return res && new AxonConfig(this.axon, res);
@@ -129,8 +143,8 @@ class JsonProvider extends ADBProvider {
     /**
      * Updates the given guild in the DB with a new schema object.
      *
-     * @param {String} gID - Guid id
-     * @param {Object} data - the schema object to update
+     * @param {String} gID - Guild id
+     * @param {GuildConfig|GuildConfigRaw} data - the schema object to update
      * @returns {Promise<GuildConfig|null>} Updated GuildConfig from the DB
      * @memberof JsonProvider
      */

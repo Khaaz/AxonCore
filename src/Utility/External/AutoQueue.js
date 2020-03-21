@@ -1,8 +1,8 @@
-import Queue from './Queue';
+import FunctionQueue from './FunctionQueue';
 
 /**
  * This data structure is a queue that will run every function one by one sequentially.
- * It will run indifferently synchrones and asynchrones functions. Making sure the previous function is over before starting the next one. It will essentially wait for the previous function to be finished before running the next one.
+ * It will run indifferently synchronous and asynchronous functions. Making sure the previous function is over before starting the next one. It will essentially wait for the previous function to be finished before running the next one.
  * It has no return value, it will just run the function added sometimes in the future.
  *
  * The queue can be auto executed on add or the execution can be delayed.
@@ -10,18 +10,18 @@ import Queue from './Queue';
  * @KhaaZ
  *
  * @class AutoQueue
- * @extends Queue
+ * @extends FunctionQueue
  */
-class AutoQueue extends Queue {
+class AutoQueue extends FunctionQueue {
     /**
      * Execute the queue.
      * @memberof AutoQueue
      */
     async exec() {
-        if (this._functions.length > 0) {
+        if (this._functions.size > 0) {
             this._running = true;
 
-            const func = this._functions.shift();
+            const func = this._functions.dequeue();
             try {
                 await func();
             } catch (err) {

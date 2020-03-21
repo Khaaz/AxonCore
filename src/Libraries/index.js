@@ -1,9 +1,14 @@
-import ASelector from '../Structures/ASelector';
+import ASelector from '../Core/ASelector';
 
 import ErisInterface from './eris/ErisInterface';
 import DjsInterface from './discordjs/DjsInterface';
 
 import { LIBRARY_TYPES } from '../Utility/Constants/AxonEnums';
+
+/**
+ * @typedef {import('../AxonClient').default} AxonClient
+ * @typedef {import('../AxonOptions').default} AxonOptions
+ */
 
 /**
  * Library Handler
@@ -15,10 +20,13 @@ import { LIBRARY_TYPES } from '../Utility/Constants/AxonEnums';
  * @extends ASelector
  */
 class LibrarySelector extends ASelector {
+    /**
+     * @param {AxonClient} axon
+     * @param {AxonOptions} axonOptions
+     */
     static select(axon, axonOptions) {
         let libraryInterface;
 
-        // eslint-disable-next-line no-shadow
         const lib = axonOptions.settings ? axonOptions.settings.library : 0;
 
         switch (lib) {

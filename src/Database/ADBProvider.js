@@ -6,11 +6,25 @@ import NoAbstractInstanceException from '../Errors/NoAbstractInstanceException';
 import NotImplementedException from '../Errors/NotImplementedException';
 
 /**
+ * @typedef {String|Boolean|Object.<string, any>|Array<any>|Number|Date} updateDBVal
+ * @typedef {import('../AxonOptions').default} AxonOptions
+ * @typedef {import('../Core/Models/AxonConfig').default} AxonConfig
+ * @typedef {import('../Core/Models/GuildConfig').default} GuildConfig
+ * @typedef {{
+ * id: String, prefix: String, createdAt: Date, updatedAt: Date, bannedUsers: Array<String>, bannedGuilds: Array<String>
+ * }} AxonConfigRaw
+ * @typedef {{
+ * guildID: string, prefixes: Array<String>, createdAt: Date, updatedAt: Date, modules: Array<String>, commands: Array<String>, listeners: Array<String>,
+ * ignoredUsers: Array<String>, ignoredRoles: Array<String>, ignoredChannels: Array<String>, modOnly: Boolean, modRoles: Array<String>, modUsers: Array<String>
+ * }} GuildConfigRaw
+ */
+
+/**
  * Abstract class for all DB services.
  * Extend this class to create your own Database provider.
- * You just need to write these methods for the framewor to be able to interact with the database.
+ * You just need to write these methods for the framework to be able to interact with the database.
  *
- * The provider creates guildconfigs with DB datas.
+ * The provider creates guildconfigs with DB data.
  *
  * @author KhaaZ
  *
@@ -21,29 +35,31 @@ import NotImplementedException from '../Errors/NotImplementedException';
  */
 class ADBProvider {
     /**
-     * Creates an instance of DBProvider.
+     * Creates an instance of ADBProvider.
      *
-     * @param {AxonClient} axon
-     * @memberof DBProvider
+     * @param {AxonClient} axonClient
+     *
+     * @memberof ADBProvider
      */
     constructor(axonClient) {
-        if (this.constructor === 'DBProvider') {
+        if (this.constructor === 'ADBProvider') {
             throw new NoAbstractInstanceException();
         }
 
         if (!axonClient || !(axonClient instanceof AxonClient) ) {
-            throw new AxonError('First argument needs to be the AxonClient.', 'DBProvider');
+            throw new AxonError('First argument needs to be the AxonClient.', 'ADBProvider');
         }
 
         this.axon = axonClient;
     }
 
     /**
-     * Init the DBProvider.
-     * Method calledjust after instantiation.Can be overrided with anything that willbe used by the provider.
+     * Init the ADBProvider.
+     * Method called just after instantiation. Can be overridden with anything that will be used by the provider.
      *
-     * @param {AxonOptions}
-     * @memberof DBProvider
+     * @param {AxonOptions} [axonOptions]
+     *
+     * @memberof ADBProvider
      */
     init(axonOptions = null) {
         throw new NotImplementedException();
@@ -55,9 +71,10 @@ class ADBProvider {
      * Initialises a default Axon config.
      *
      * @returns {Promise<AxonConfig>} Newly created Axon config from the DB
-     * @memberof DBProvider
+     *
+     * @memberof ADBProvider
      */
-    initAxon() {
+    async initAxon() {
         throw new NotImplementedException();
     }
 
@@ -68,9 +85,10 @@ class ADBProvider {
      * @param {String} gID - Guild ID
      *
      * @returns {Promise<GuildConfig|null>} Newly created Guild config from the DB
-     * @memberof DBProvider
+     *
+     * @memberof ADBProvider
      */
-    initGuild(gID) {
+    async initGuild(gID) {
         throw new NotImplementedException();
     }
 
@@ -80,24 +98,26 @@ class ADBProvider {
      * Retrieves the axon config from the DB
      *
      * @returns {Promise<AxonConfig|null>} AxonSchema Object or null
-     * @memberof DBProvider
+     *
+     * @memberof ADBProvider
      */
-    fetchAxon() {
+    async fetchAxon() {
         throw new NotImplementedException();
     }
 
     /**
-     * Retreives the Guild config for the specified guild.
+     * Retrieves the Guild config for the specified guild.
      *
-     * @param {String} gID - guild ID
+     * @param {String} gID - Guild ID
      * @returns {Promise<GuildConfig|null>}
-     * @memberof DBProvider
+     *
+     * @memberof ADBProvider
      */
-    fetchGuild(gID) {
+    async fetchGuild(gID) {
         throw new NotImplementedException();
     }
 
-    // **** UPDATERS **** //
+    // **** UPDATES **** //
 
     /**
      * Update AxonConfig in the DB.
@@ -105,11 +125,12 @@ class ADBProvider {
      * Generic method to update Database.
      *
      * @param {String} key - The identifier in the Database
-     * @param {Object|Array|String|Boolean} value - The value to update in the DB
-     * @returns {Promise<Boolean>} UWhether the request was successfull or not
-     * @memberof DBProvider
+     * @param {updateDBVal} value - The value to update in the DB
+     * @returns {Promise<Boolean>} Whether the request was successful or not
+     *
+     * @memberof ADBProvider
      */
-    updateAxon(key, value) {
+    async updateAxon(key, value) {
         throw new NotImplementedException();
     }
 
@@ -121,34 +142,37 @@ class ADBProvider {
      *
      * @param {String} key - The identifier in the Database
      * @param {String} gID - The guild ID to update
-     * @param {Object|Array|String|Boolean} value - The value to update in the DB
-     * @returns {Promise<Boolean>} Whether the request was successfull or not
-     * @memberof DBProvider
+     * @param {updateDBVal} value - The value to update in the DB
+     * @returns {Promise<Boolean>} Whether the request was successful or not
+     *
+     * @memberof ADBProvider
      */
-    updateGuild(key, gID, value) {
+    async updateGuild(key, gID, value) {
         throw new NotImplementedException();
     }
 
     /**
      * Updates the Axon config in the DB with a new Axon config object.
      *
-     * @param {Object} data - the schema object to update
+     * @param {AxonConfig|AxonConfigRaw} data - the schema object to update
      * @returns {Promise<AxonConfig|null>} Updated AxonConfig from the DB
-     * @memberof DBProvider
+     *
+     * @memberof ADBProvider
      */
-    saveAxon(data) {
+    async saveAxon(data) {
         throw new NotImplementedException();
     }
 
     /**
      * Updates the given guild in the DB with a new schema object.
      *
-     * @param {String} gID - Guid id
-     * @param {Object} data - the schema object to update
+     * @param {String} gID - Guild ID
+     * @param {GuildConfig|GuildConfigRaw} data - The schema object to update
      * @returns {Promise<GuildConfig|null>} Updated GuildConfig from the DB
-     * @memberof DBProvider
+     *
+     * @memberof ADBProvider
      */
-    saveGuild(gID, data) {
+    async saveGuild(gID, data) {
         throw new NotImplementedException();
     }
 }

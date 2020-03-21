@@ -5,26 +5,25 @@
 **Author**: DutchVanDerLinde  
 **Properties**
 
-| Name | Type | Description |
-| --- | --- | --- |
-| title | <code>String</code> |  |
-| url | <code>String</code> |  |
-| description | <code>String</code> |  |
-| color | <code>String</code> |  |
-| author | <code>Object</code> |  |
-| [author.name] | <code>String</code> |  |
-| [author.url] | <code>String</code> |  |
-| [author.icon_url] | <code>String</code> |  |
-| thumbnail | <code>Object</code> |  |
-| [thumbnail.url] | <code>String</code> |  |
-| fields | <code>Array.&lt;Object&gt;</code> | { name: "string", value: "string", inline: boolean } |
-| image | <code>Object</code> |  |
-| [image.url] | <code>String</code> |  |
-| footer | <code>Object</code> |  |
-| [footer.text] | <code>String</code> |  |
-| [footer.icon_url] | <code>String</code> |  |
-| timetamp | <code>String</code> |  |
-| file | <code>Object</code> |  |
+| Name | Type |
+| --- | --- |
+| title | <code>String</code> | 
+| url | <code>String</code> | 
+| description | <code>String</code> | 
+| color | <code>Number</code> | 
+| author | <code>Object</code> | 
+| author.name | <code>String</code> | 
+| [author.url] | <code>String</code> | 
+| [author.icon_url] | <code>String</code> | 
+| thumbnail | <code>Object</code> | 
+| [thumbnail.url] | <code>String</code> | 
+|  |  | 
+| image | <code>Object</code> | 
+| image.url | <code>String</code> | 
+| footer | <code>Object</code> | 
+| footer.text | <code>String</code> | 
+| [footer.icon_url] | <code>String</code> | 
+| timestamp | <code>Date</code> | 
 
 
 * [Embed](#Embed)
@@ -40,7 +39,6 @@
         * [.setThumbnail(url)](#Embed+setThumbnail) ⇒ [<code>Embed</code>](#Embed)
         * [.setImage(url)](#Embed+setImage) ⇒ [<code>Embed</code>](#Embed)
         * [.setFooter(text, [icon])](#Embed+setFooter) ⇒ [<code>Embed</code>](#Embed)
-        * [.attachFile(file)](#Embed+attachFile) ⇒ [<code>Embed</code>](#Embed)
     * _static_
         * [.Embed](#Embed.Embed)
             * [new Embed([data])](#new_Embed.Embed_new)
@@ -108,7 +106,7 @@ Sets the color of this embed.
 
 **Example**  
 ```js
-Embed.setColor(0xFFFFF);
+Embed.setColor(0xFFFFFF);
 ```
 <a name="Embed+setAuthor"></a>
 
@@ -126,7 +124,7 @@ Sets the author of this embed.
 
 **Example**  
 ```js
-Embed.setAuthor('KhaaZ', 'khaaz.png');
+Embed.setAuthor('KhaaZ', 'https://www.image.com/khaaz.png');
 ```
 <a name="Embed+setTimestamp"></a>
 
@@ -184,7 +182,7 @@ Sets the image of this embed
 
 **Example**  
 ```js
-Embed.setImage('myImageUrl.png');
+Embed.setImage('https://www.image.com/myImageUrl.png');
 ```
 <a name="Embed+setFooter"></a>
 
@@ -201,22 +199,8 @@ Sets the footer of this embed.
 
 **Example**  
 ```js
-Embed.setFooter('My Footer', 'footer.png');
+Embed.setFooter('My Footer', 'https://www.image.com/footer.png');
 ```
-<a name="Embed+attachFile"></a>
-
-### embed.attachFile(file) ⇒ [<code>Embed</code>](#Embed)
-Sets the file to upload alongside the embed.
-This file can be accessed via `attachment://fileName.extension` when setting an embed image or author/footer icons.
-Only one file may be attached.
-
-**Kind**: instance method of [<code>Embed</code>](#Embed)  
-**Returns**: [<code>Embed</code>](#Embed) - This embed  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| file | <code>string</code> | Local path or URL to the file to attach, or valid FileOptions for a file to attach |
-
 <a name="Embed.Embed"></a>
 
 ### Embed.Embed
@@ -233,19 +217,18 @@ An embed to be sent with a message with a fluent interface for creation.
 | [data.title] | <code>String</code> |  |
 | [data.url] | <code>String</code> |  |
 | [data.description] | <code>String</code> |  |
-| [data.color] | <code>String</code> |  |
+| [data.color] | <code>Number</code> |  |
 | [data.author] | <code>Object</code> |  |
-| [data.author.name] | <code>String</code> |  |
+| data.author.name | <code>String</code> |  |
 | [data.author.url] | <code>String</code> |  |
 | [data.author.icon_url] | <code>String</code> |  |
 | [data.thumbnail] | <code>Object</code> |  |
-| [data.thumbnail.url] | <code>String</code> |  |
-| [data.fields] | <code>Array.&lt;Object&gt;</code> | { name: "string", value: "string", inline: boolean } |
+| data.thumbnail.url | <code>String</code> |  |
+|  |  |  |
 | [data.image] | <code>Object</code> |  |
-| [data.image.url] | <code>String</code> |  |
+| data.image.url | <code>String</code> |  |
 | [data.footer] | <code>Object</code> |  |
-| [data.footer.text] | <code>String</code> |  |
+| data.footer.text | <code>String</code> |  |
 | [data.footer.icon_url] | <code>String</code> |  |
-| [data.timetamp] | <code>String</code> |  |
-| [data.file] | <code>Object</code> |  |
+| [data.timestamp] | <code>Date</code> |  |
 

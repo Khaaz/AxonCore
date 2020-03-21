@@ -11,15 +11,18 @@ class MessageCreateMod extends Listener {
 
         this.enabled = true;
 
-        this.infos = {
+        this.info = {
             owners: ['KhaaZ'],
             description: 'Log Message Create events',
         };
     }
 
-    execute(message, guildConfig) { // eslint-disable-line
+    execute(message, guildConfig) {
         if (guildConfig) {
             console.log(`Prefix: ${guildConfig.prefixes}`);
+        }
+        if (message.webhookID !== null) {
+            return Promise.resolve();
         }
         return Promise.resolve();
     }

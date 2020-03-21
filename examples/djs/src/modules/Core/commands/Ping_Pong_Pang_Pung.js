@@ -7,10 +7,9 @@ class Pung extends Command {
         this.label = 'pung';
         this.aliases = ['pung'];
 
-        this.isSubcmd = true;
         this.hasSubcmd = false;
 
-        this.infos = {
+        this.info = {
             owners: ['KhaaZ'],
             name: 'ping pong pang pung',
             description: 'Ping the bot.',

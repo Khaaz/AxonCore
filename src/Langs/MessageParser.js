@@ -1,4 +1,11 @@
 /**
+ * @typedef {{
+ * ERR_BOT_PERM?: String, ERR_CALLER_PERM?: String, ERR_DESTINATION_PERM?: String,
+ * ERR_COOLDOWN?: String, ERR_GENERAL?: String, [key: String]: String|undefined
+ * }} AxonLanguageResponse
+ */
+
+/**
  * Parse a message and replace custom variable with arguments
  *
  * @author KhaaZ
@@ -12,7 +19,7 @@ class MessageParser {
     }
 
     /**
-     * Generator function that will match all occurence of the regex and yield a Match structure
+     * Generator function that will match all occurrence of the regex and yield a Match structure
      *
      * @generator
      * @param {String} message
@@ -30,8 +37,8 @@ class MessageParser {
     /**
      * Parse the message by replacing the dynamic content.
      *
-     * @param {Sring} message
-     * @param {Object} args - Custom object with all arguments that needs tobe inserted in the string
+     * @param {String} message
+     * @param {AxonLanguageResponse} args - Custom object with all arguments that needs to be inserted in the string
      * @returns {String} - The Parsed message
      * @memberof MessageParser
      */
@@ -50,7 +57,7 @@ class MessageParser {
      * Same as above but arguments are unnamed and passed as parameters instead of inside one object.
      *
      * @param {String} message
-     * @param {*} args
+     * @param {...String} args
      * @returns {String} - The Parsed message
      * @memberof MessageParser
      */

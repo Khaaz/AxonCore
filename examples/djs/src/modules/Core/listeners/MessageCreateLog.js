@@ -11,14 +11,17 @@ class MessageCreateLog extends Listener {
 
         this.enabled = true;
 
-        this.infos = {
+        this.info = {
             owners: ['KhaaZ'],
             description: 'Log Message Create events',
         };
     }
 
-    execute(message, guildConfig) { // eslint-disable-line
+    execute(message, guildConfig) { // eslint-disable-line no-unused-vars
         if (!message.channel.guild) {
+            return Promise.resolve();
+        }
+        if (message.webhookID !== null) {
             return Promise.resolve();
         }
         console.log(`Msg ${message.channel.guild.id}`);

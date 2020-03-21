@@ -44,7 +44,7 @@ Takes the event parameters as arguments and returns the guild ID if possible or 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| ...args | <code>Object</code> | All parameters for this event |
+| ...args | <code>any</code> | All parameters for this event |
 
 <a name="AHandler.AHandler"></a>
 

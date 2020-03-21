@@ -1,88 +1,127 @@
 import ADBProvider from './ADBProvider';
-import AxonConfig from '../Structures/DataStructure/AxonConfig';
-import GuildConfig from '../Structures/DataStructure/GuildConfig';
+import AxonConfig from '../Core/Models/AxonConfig';
+import GuildConfig from '../Core/Models/GuildConfig';
+
+/**
+ * @typedef {String|Boolean|Object.<string, any>|Array<any>|Number|Date} updateDBVal
+ * @typedef {import('../Core/Models/AxonConfig')} AxonConfig
+ * @typedef {{
+ * id: String, prefix: String, createdAt: Date, updatedAt: Date, bannedUsers: Array<String>, bannedGuilds: Array<String>
+ * }} AxonConfigRaw
+ * @typedef {{
+ * guildID: string, prefixes: Array<String>, createdAt: Date, updatedAt: Date, modules: Array<String>, commands: Array<String>, listeners: Array<String>,
+ * ignoredUsers: Array<String>, ignoredRoles: Array<String>, ignoredChannels: Array<String>, modOnly: Boolean, modRoles: Array<String>, modUsers: Array<String>
+ * }} GuildConfigRaw
+ */
 
 /**
  * A schema designed use an InMemory solution in AxonCore
  *
- * @author VoidNulll
+ * @author VoidNull
  *
  * @class InMemoryProvider
  * @extends ADBProvider
  */
 class InMemoryProvider extends ADBProvider {
+    init() {
+        return;
+    }
+
+    /**
+     * @async
+     * @returns {Promise<AxonConfig>}
+     */
     async fetchAxon() {
-        let axon = this.axon.axonConfig;
-        if (!axon) {
-            axon = await this.initAxon();
+        let { axonConfig } = this.axon;
+        if (!axonConfig) {
+            axonConfig = await this.initAxon();
         }
-        return Promise.resolve(axon);
+        return axonConfig;
     }
 
+    /**
+     * @async
+     * @param {String} gID Guild ID
+     * @returns {Promise<GuildConfig>}
+     */
     async fetchGuild(gID) {
-        let guild = this.axon.guildConfigs.get(gID);
-        if (!guild) {
-            guild = await this.initGuild(gID);
+        let guildConfig = this.axon.guildConfigs.get(gID);
+        if (!guildConfig) {
+            guildConfig = await this.initGuild(gID);
         }
-        return guild;
+        return guildConfig;
     }
 
-    initAxon() {
-        this.axon.axonConfig = new AxonConfig(this.axon, {} );
-        return Promise.resolve(this.axon.axonConfig);
+    /**
+     * @async
+     * @returns {Promise<AxonConfig>}
+     */
+    async initAxon() {
+        return new AxonConfig(this.axon, {
+            prefix: this.axon.settings.prefixes[0],
+            createdAt: new Date(),
+            updatedAt: new Date(),
+        } );
     }
 
-    initGuild(gID) {
-        return Promise.resolve(new GuildConfig(this.axon, { guildID: gID } ) );
+    /**
+     * @async
+     * @param {String} gID Guild ID
+     * @returns {Promise<GuildConfig>}
+     */
+    async initGuild(gID) {
+        return new GuildConfig(this.axon, {
+            guildID: gID,
+            prefixes: [this.axon.settings.prefixes[0]],
+            createAt: new Date(),
+            updatedAt: new Date(),
+        } );
     }
 
-    async updateBlacklistUser(blacklistedUsers) {
-        return this.updateAxon('bannedUsers', blacklistedUsers);
+    /**
+     * @param {AxonConfig|AxonCOnfigRaw} axonSchema
+     * @returns {Promise<AxonConfig>}
+     */
+    async saveAxon(axonSchema) {
+        return new AxonConfig(this.axon, axonSchema);
     }
 
-    async updateBlacklistGuild(blacklistedGuilds) {
-        return this.updateAxon('bannedGuilds', blacklistedGuilds);
+    /**
+     * @param {String} gID Guild ID
+     * @param {GuildConfig|GuildConfigRaw} guildSchema
+     * @returns {Promise<GuildConfig>}
+     */
+    async saveGuild(gID, guildSchema) {
+        return new GuildConfig(this.axon, guildSchema);
     }
 
-    async updateGuildPrefix(gID, prefixArr) {
-        return this.updateGuild('prefixes', gID, prefixArr);
-    }
-
-    updateModule(gID, modulesArr) {
-        return this.updateGuild('modules', gID, modulesArr);
-    }
-
-    updateCommand(gID, commandArr) {
-        return this.updateGuild('commands', gID, commandArr);
-    }
-
-    async updateEvent(gID, eventArr) {
-        return this.updateGuild('listeners', gID, eventArr);
-    }
-
-    saveAxonSchema(axonSchema) {
-        this.axon.axonConfig = axonSchema;
-        return axonSchema;
-    }
-
-    saveGuildSchema(gID, guildSchema) {
-        return this.axon.guildConfigs.set(gID, guildSchema);
-    }
-
+    /**
+     * Update guild config
+     * @param {String} key Value to update
+     * @param {String} gID Guild ID
+     * @param {updateDBVal} value What the value should be updated to
+     * @returns {Promise<Boolean>} Whether the request was successful or not
+     */
     async updateGuild(key, gID, value) {
-        const guild = await this.fetchGuild(gID);
-        guild[key] = value;
-        this.saveGuildSchema(gID, guild);
-        return guild;
+        const guildConf = await this.fetchGuild(gID);
+        guildConf[key] = value;
+        guildConf.updatedAt = new Date();
+        this.axon.guildConfigs.set(gID, guildConf);
+        return true;
     }
 
+    /**
+     * Update Axon config
+     * @param {String} key Value to update
+     * @param {updateDBVal} value What the value should be updated to
+     * @returns {Promise<Boolean>} Whether the request was successful or not
+     */
     async updateAxon(key, value) {
-        let axonConf = this.axon.axonConfig;
-        if (!axonConf) {
-            axonConf = await this.initAxon();
-        }
+        const axonConf = await this.fetchAxon();
         axonConf[key] = value;
-        return axonConf;
+        axonConf.updatedAt = new Date();
+        this.axon.axonConfig = axonConf;
+        return true;
     }
 }
 

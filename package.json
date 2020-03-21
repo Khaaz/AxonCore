@@ -1,24 +1,23 @@
 {
   "name": "axoncore",
   "version": "2.0.0",
-  "description": "Universal Bot Framework for Eris and Discordjs. Fully featured Client, Command and Event handler with built in DB.",
+  "description": "The best fully featured discord bot framework. Universal Client, Command and Event handler.",
   "author": "KhaaZ#0001",
   "link": "https://github.com/Khaazz/AxonCore",
   "license": "MIT",
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=12.0.0"
   },
   "dependencies": {
-    "esm": "^3.2.25"
-  },
-  "optionalDependencies": {
-    "mongoose": "^5.7.7"
+    "esm": "^3.2.25",
+    "inquirer": "^7.1.0"
   },
   "devDependencies": {
     "@axonteam/doc-gen": "git+https://github.com/AxonTeam/doc-gen",
     "@axonteam/eslint-config": "^2.2.0",
     "@types/mongoose": "^5.5.32",
-    "@types/node": "^12.12.14",
+    "@types/node": "^13.9.2",
+    "@types/signale": "^1.2.1",
     "@typescript-eslint/eslint-plugin": "^2.16.0",
     "@typescript-eslint/parser": "^2.16.0",
     "chalk": "^2.4.2",
@@ -26,8 +25,10 @@
     "eris": "abalabahaha/eris#dev",
     "eslint": "^6.8.0",
     "mongoose": "^5.7.7",
+    "signale": "^1.4.0",
     "superagent": "^5.2.1",
     "typescript": "^3.7.5",
+    "winston": "^3.2.1",
     "yarn": "^1.22.0"
   },
   "main": "./index.js",
@@ -35,15 +36,18 @@
   "scripts": {
     "lint": "yarn run lint:js && yarn run lint:ts",
     "lint:js": "eslint src examples *.js",
-    "lint:ts": "eslint index.d.ts types *.ts",
-    "test": "yarn run lint",
+    "lint:ts": "eslint index.d.ts types/**/*.ts",
+    "tsc": "tsc index.d.ts --noEmit --skipLibCheck true",
+    "test": "yarn run lint && yarn run tsc",
     "test:push": "eslint src examples *.js",
     "test:publish": "eslint src *.js",
     "docgen": "node ./scripts/gendoc.js && cp README.md ./docs/README.md",
     "start:eris": "node -r esm examples/eris/src/index.js",
     "start:djs": "node -r esm examples/djs/src/index.js",
     "pm2start:eris": "node examples/eris/scripts/start.js",
-    "pm2start:djs": "node examples/djs/scripts/start.js"
+    "pm2start:djs": "node examples/djs/scripts/start.js",
+    "postinstall": "node ./scripts/typings.js",
+    "dep": "yarn install --ignore-scripts"
   },
   "repository": {
     "type": "git",
@@ -54,14 +58,18 @@
   },
   "homepage": "https://github.com/Khaazz/AxonCore#readme",
   "keywords": [
-    "bot",
     "discord",
+    "bot",
     "framework",
+    "client",
     "eris",
     "discord.js",
     "discordjs",
+    "detritus",
+    "detritus.js",
     "core",
     "handler",
+    "commandClient",
     "commandHandler",
     "commandFramework"
   ]

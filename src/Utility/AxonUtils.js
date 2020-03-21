@@ -1,4 +1,23 @@
-import Validator from '../Structures/Validator';
+import Validator from '../Core/Validator';
+
+/**
+ * @typedef {{
+ * title?: String, description?: String, url?: String, timestamp?: Date|String, color?: Number, footer?: { text: String, icon_url?: String },
+ * image?: { url: String, height?: Number, width?: Number }, thumbnail?: { url: String, height?: Number, width?: Number },
+ * fields?: Array<{ name: String, value: String, inline?: Boolean }>, author?: { name: String, url?: String, icon_url?: String }
+ * }} EmbedBase
+ * @typedef {import('../Utility/Discord/Embed').default} Embed
+ * @typedef {{ content?: String, embed?: Embed|EmbedBase }} MessageObject
+ * @typedef {import('../AxonClient').default} AxonClient
+ * @typedef {{ embeds: Object.<string, Number>, emotes: Object.<string, String> }} AxonTemplate
+ * @typedef {import('./Utils').default} Utils
+ * @typedef {import('../Libraries/definitions/LibraryInterface').default} LibraryInterface
+ * @typedef {import('../Core/Models/GuildConfig').default} GuildConfig
+ * @typedef {import('../Loggers/ALogger').default} ALogger
+ * @typedef {import('eris').AllowedMentions} ErisAllowedMentions
+ * @typedef {import('discord.js').MessageMentionOptions} DjsAllowedMentions
+ * @typedef {ErisAllowedMentions | DjsAllowedMentions} AllowedMentions
+ */
 
 /**
  * AxonCore Utility Class.
@@ -51,7 +70,7 @@ class AxonUtils {
      * Returns the template object
      *
      * @readonly
-     * @type {Object}
+     * @type {AxonTemplate}
      * @memberof AxonUtils
      */
     get template() {
@@ -62,7 +81,7 @@ class AxonUtils {
      * Returns the Logger instance
      *
      * @readonly
-     * @type {Logger}
+     * @type {ALogger}
      * @memberof AxonUtils
      */
     get logger() {
@@ -96,11 +115,11 @@ class AxonUtils {
     //
 
     /**
-     * Triger an Axon Webhook.
+     * Trigger an Axon Webhook.
      * Works directly with axon._configs.webhooks.
      *
      * @param {String} type - Type of the webhook [status, loader, error, misc]
-     * @param {Object} embed - Embed object
+     * @param {Embed|EmbedBase} embed - Embed object
      * @param {String} opt - Optional string to use as bot username
      * @memberof AxonUtils
      */
@@ -168,7 +187,7 @@ class AxonUtils {
      * Managers, Admins and Owner are automatically Mod.
      *
      * @param {Member} member - The member object
-     * @param {Object} guildConfig - The guild Config from the DB
+     * @param {GuildConfig} guildConfig - The guild Config from the DB
      * @returns {Boolean} True if user is a mod / False if not
      * @memberof AxonUtils
      */
@@ -229,15 +248,15 @@ class AxonUtils {
      * Reject promise if not
      *
      * @param {User} user - User object to get the DM channel
-     * @param {Object/String} content - String or object (embed)
+     * @param {String|MessageObject} content - String or object (embed)
      * @param {Object} [options={}] - Options { disableEveryone: Boolean, delete: Boolean, delay: Number }
-     * @param {Object} [options.disableEveryone=true] - Whether to allow mentioning everyone or not
-     * @param {Object} [options.delete=false] - Whether to deletethe message or not
-     * @param {Object} [options.delay=null] - Delay after which the message will be deleted
+     * @param {AllowedMentions} [options.allowedMentions] - Custom allowed mentions object
+     * @param {Boolean} [options.delete=false] - Whether to delete the message or not
+     * @param {Number} [options.delay=null] - Delay after which the message will be deleted
      * @returns {Promise<Message?>} Message Object
      * @memberof AxonUtils
      */
-    sendDM(user, content, options) {
+    sendDM(user, content, options = {} ) {
         this.library.user.getDM(user)
             .then(chan => this.sendMessage(chan, content, options) )
             .catch(err => {
@@ -252,10 +271,10 @@ class AxonUtils {
      * Doesn't support file uploads.
      *
      * @param {Channel} channel - The channel Object
-     * @param {Object|String} content - Message content: String or Embed Object
+     * @param {String|MessageObject} content - Message content: String or Embed Object
      * @param {Object} [options={}] - Options { disableEveryone: Boolean, delete: Boolean, delay: Number }
-     * @param {Boolean} [options.disableEveryone=true] - Whether to allow mentioning everyone or not
-     * @param {Boolean} [options.delete=false] - Whether to deletethe message or not
+     * @param {AllowedMentions} [options.allowedMentions] - Custom allowed mentions object
+     * @param {Boolean} [options.delete=false] - Whether to delete the message or not
      * @param {Number} [options.delay=null] - Delay after which the message will be deleted
      * @returns {Promise<Message?>} Message Object
      * @memberof AxonUtils
@@ -268,7 +287,6 @@ class AxonUtils {
         }
 
         if (guild && content.embed && !this.utils.hasChannelPerms(channel, [this.library.enums.DISCORD_LIB_PERMISSIONS.EMBED_LINKS] ) ) { // check if bot has embedPermission perm in the channel.
-            /** @TODO message for missing embed perm? - checked at command permissions level? */
             this.logger.verbose(`No embedLinks perms [${this.library.channel.getGuildName(channel)} - ${this.library.channel.getName(channel)}]!`);
             return Promise.resolve(false);
         }
@@ -280,8 +298,11 @@ class AxonUtils {
         if (typeof content !== 'object' || content === null) {
             content = { content: `${content}` };
         }
-        content.disableEveryone = !!options.disableEveryone;
 
+        if (options.allowedMentions) {
+            content.allowedMentions = options.allowedMentions;
+        }
+        
         return this.library.channel.sendMessage(channel, content)
             .then(message => {
                 /* Delete the message automatically */
@@ -301,7 +322,7 @@ class AxonUtils {
      * Checks for bot permissions + message embed/length.
      *
      * @param {Message} message - The message object to edit
-     * @param {Object/String} content - Object (embed) or String
+     * @param {String|MessageObject} content - Object (embed) or String
      * @returns {Promise<Message?>} Message Object
      * @memberof AxonUtils
      */
@@ -312,7 +333,6 @@ class AxonUtils {
 
         const channel = this.library.message.getChannel(message);
         if (this.library.message.getGuild(message) && content.embed && !this.utils.hasChannelPerms(channel, [this.library.enums.DISCORD_LIB_PERMISSIONS.EMBED_LINKS] ) ) { // check if bot has embedPermission perm in the channel.
-            /** @TODO message for missing embed perm? - checked at command permissions level? */
             this.logger.verbose(`No embedLinks perms [${this.library.channel.getGuildName(channel)} - ${this.library.channel.getName(channel)}]!`);
             return Promise.resolve(false);
         }

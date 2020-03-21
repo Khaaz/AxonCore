@@ -19,11 +19,15 @@ export { default as guildRoleUpdate } from './GuildRoleUpdateHandler';
 export { default as guildUnavailable } from './GuildUnavailableHandler';
 export { default as guildUpdate } from './GuildUpdateHandler';
 
+export { default as inviteCreate } from './InviteCreateHandler';
+export { default as inviteDelete } from './InviteDeleteHandler';
+
 export { default as messageCreate } from './MessageCreateHandler';
 export { default as messageDeleteBulk } from './MessageDeleteBulkHandler';
 export { default as messageDelete } from './MessageDeleteHandler';
 export { default as messageReactionAdd } from './MessageReactionAddHandler';
 export { default as messageReactionRemoveAll } from './MessageReactionRemoveAllHandler';
+export { default as messageReactionRemoveEmoji } from './MessageReactionRemoveEmojiHandler';
 export { default as messageReactionRemove } from './MessageReactionRemoveHandler';
 export { default as messageUpdate } from './MessageUpdateHandler';
 

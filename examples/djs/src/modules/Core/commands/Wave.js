@@ -5,7 +5,7 @@ class Wave extends Command {
         super(module);
         this.label = 'wave';
 
-        this.infos = {
+        this.info = {
             owners: ['Null'],
             name: 'wave',
             description: 'Wave at someone',

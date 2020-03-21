@@ -12,9 +12,9 @@
 class Context {
     /**
      * Creates an instance of Context.
-     * @param {Object|String} guild
+     * @param {{name: String, id: String}|String} guild
      * @param {String} cmd
-     * @param {Object|String} user
+     * @param {{username: String, discriminator: String, id: String}|String} user
      * @memberof Context
      */
     constructor(guild, cmd, user) {
@@ -34,13 +34,11 @@ class Context {
     }
 
     /**
-     *
-     *
      * @static
      * @param {Object} [ctx={}]
-     * @param {Object|String} ctx.guild
+     * @param {{name: String, id: String}|String} ctx.guild
      * @param {String} ctx.cmd
-     * @param {Object|String} ctx.user
+     * @param {{username: String, discriminator: String, id: String}|String} ctx.user
      * @returns {Context} A new instance of Context
      * @memberof Context
      */

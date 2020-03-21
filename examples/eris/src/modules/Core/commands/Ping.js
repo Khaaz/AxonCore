@@ -14,9 +14,8 @@ class Ping extends Command {
         ];
 
         this.hasSubcmd = true;
-        this.subcmds = [Pong];
 
-        this.infos = {
+        this.info = {
             owners: ['KhaaZ'],
             name: 'ping',
             description: 'Ping the bot.',
@@ -28,6 +27,10 @@ class Ping extends Command {
             argsMin: 0,
             guildOnly: false,
         } );
+    }
+
+    init() {
+        return [Pong];
     }
 
     async execute( { msg } ) {

@@ -1,3 +1,17 @@
+## Classes
+
+<dl>
+<dt><a href="#JsonProvider">JsonProvider</a> ⇐ <code>ADBProvider</code></dt>
+<dd></dd>
+</dl>
+
+## Typedefs
+
+<dl>
+<dt><a href="#GuildConfigRaw">GuildConfigRaw</a> : <code>String</code> | <code>Boolean</code> | <code>Object.&lt;string, any&gt;</code> | <code>Array.&lt;any&gt;</code> | <code>Number</code> | <code>Date</code></dt>
+<dd></dd>
+</dl>
+
 <a name="JsonProvider"></a>
 
 ## JsonProvider ⇐ <code>ADBProvider</code>
@@ -8,14 +22,14 @@
 
 | Name | Type | Description |
 | --- | --- | --- |
-| manager | <code>Manager</code> | Class responsible to read / write data to the DB as json. |
+| manager | <code>JsonManager</code> | Class responsible to read / write data to the DB as json. |
 
 
 * [JsonProvider](#JsonProvider) ⇐ <code>ADBProvider</code>
     * [new JsonProvider()](#new_JsonProvider_new)
     * [.init(axonOptions)](#JsonProvider+init)
     * [.initAxon()](#JsonProvider+initAxon) ⇒ <code>Promise.&lt;AxonConfig&gt;</code>
-    * [.initGuild(gID, axonClient)](#JsonProvider+initGuild) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>
+    * [.initGuild(gID)](#JsonProvider+initGuild) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>
     * [.fetchAxon()](#JsonProvider+fetchAxon) ⇒ <code>Promise.&lt;(AxonConfig\|null)&gt;</code>
     * [.fetchGuild(gID)](#JsonProvider+fetchGuild) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>
     * [.updateAxon(key, value)](#JsonProvider+updateAxon) ⇒ <code>Promise.&lt;Boolean&gt;</code>
@@ -48,7 +62,7 @@ Initialises a default Axon config.
 **Returns**: <code>Promise.&lt;AxonConfig&gt;</code> - Newly created Axon config from the DB  
 <a name="JsonProvider+initGuild"></a>
 
-### jsonProvider.initGuild(gID, axonClient) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>
+### jsonProvider.initGuild(gID) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>
 Initialises a default Guild config.
 Use default AxonClient prefix settings when creating the new guild config.
 
@@ -58,7 +72,6 @@ Use default AxonClient prefix settings when creating the new guild config.
 | Param | Type | Description |
 | --- | --- | --- |
 | gID | <code>String</code> | Guild ID |
-| axonClient | <code>AxonClient</code> |  |
 
 <a name="JsonProvider+fetchAxon"></a>
 
@@ -70,7 +83,7 @@ Retrieves the axon config from the DB
 <a name="JsonProvider+fetchGuild"></a>
 
 ### jsonProvider.fetchGuild(gID) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>
-Retreives the Guild config for the specified guild.
+Retrieves the Guild config for the specified guild.
 
 **Kind**: instance method of [<code>JsonProvider</code>](#JsonProvider)  
 
@@ -86,12 +99,12 @@ Update the specific key with the value given as second parameters.
 Generic method to update Database.
 
 **Kind**: instance method of [<code>JsonProvider</code>](#JsonProvider)  
-**Returns**: <code>Promise.&lt;Boolean&gt;</code> - Whether the request was successfull or not  
+**Returns**: <code>Promise.&lt;Boolean&gt;</code> - Whether the request was successful or not  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | key | <code>String</code> | The identifier in the Database |
-| value | <code>Object</code> \| <code>Array</code> \| <code>String</code> \| <code>Boolean</code> | The value to update in the DB |
+| value | <code>updateDBVal</code> | The value to update in the DB |
 
 <a name="JsonProvider+updateGuild"></a>
 
@@ -102,13 +115,13 @@ Specify the guild with the guild ID.
 Generic method to update Database.
 
 **Kind**: instance method of [<code>JsonProvider</code>](#JsonProvider)  
-**Returns**: <code>Promise.&lt;Boolean&gt;</code> - Whether the request was successfull or not  
+**Returns**: <code>Promise.&lt;Boolean&gt;</code> - Whether the request was successful or not  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | key | <code>String</code> | The identifier in the Database |
 | gID | <code>String</code> | The guild ID to update |
-| value | <code>Object</code> \| <code>Array</code> \| <code>String</code> \| <code>Boolean</code> | The value to update in the DB |
+| value | <code>updateDBVal</code> | The value to update in the DB |
 
 <a name="JsonProvider+saveAxon"></a>
 
@@ -120,7 +133,7 @@ Updates the Axon config in the DB with a new Axon config object.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| data | <code>Object</code> | the schema object to update |
+| data | <code>AxonConfig</code> \| <code>AxonConfigRaw</code> | the schema object to update |
 
 <a name="JsonProvider+saveGuild"></a>
 
@@ -132,6 +145,10 @@ Updates the given guild in the DB with a new schema object.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| gID | <code>String</code> | Guid id |
-| data | <code>Object</code> | the schema object to update |
+| gID | <code>String</code> | Guild id |
+| data | <code>GuildConfig</code> \| [<code>GuildConfigRaw</code>](#GuildConfigRaw) | the schema object to update |
 
+<a name="GuildConfigRaw"></a>
+
+## GuildConfigRaw : <code>String</code> \| <code>Boolean</code> \| <code>Object.&lt;string, any&gt;</code> \| <code>Array.&lt;any&gt;</code> \| <code>Number</code> \| <code>Date</code>
+**Kind**: global typedef  

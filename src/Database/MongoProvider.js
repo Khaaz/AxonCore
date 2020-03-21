@@ -1,7 +1,21 @@
 import ADBProvider from './ADBProvider';
 
-import AxonConfig from '../Structures/DataStructure/AxonConfig';
-import GuildConfig from '../Structures/DataStructure/GuildConfig';
+import AxonConfig from '../Core/Models/AxonConfig';
+import GuildConfig from '../Core/Models/GuildConfig';
+
+/**
+ * @typedef {import('../AxonOptions').default} AxonOptions
+ * @typedef {import('./Mongo/AxonSchema').default} AxonSchema
+ * @typedef {import('./Mongo/GuildSchema').default} GuildSchema
+ * @typedef {String|Boolean|Object.<string, any>|Array<any>|Number|Date} updateDBVal
+ * @typedef {{
+ * id: String, prefix: String, createdAt: Date, updatedAt: Date, bannedUsers: Array<String>, bannedGuilds: Array<String>
+ * }} AxonConfigRaw
+ * @typedef {{
+ * guildID: string, prefixes: Array<String>, createdAt: Date, updatedAt: Date, modules: Array<String>, commands: Array<String>, listeners: Array<String>,
+ * ignoredUsers: Array<String>, ignoredRoles: Array<String>, ignoredChannels: Array<String>, modOnly: Boolean, modRoles: Array<String>, modUsers: Array<String>
+ * }} GuildConfigRaw
+ */
 
 /**
  * DB interface to interact with a MongoDB Database.
@@ -11,20 +25,21 @@ import GuildConfig from '../Structures/DataStructure/GuildConfig';
  * @class MongoProvider
  * @extends ADBProvider
  *
- * @prop {Object} AxonSchema
- * @prop {Object} GuildSchema
+ * @prop {AxonSchema} AxonSchema
+ * @prop {GuildSchema} GuildSchema
  */
 class MongoProvider extends ADBProvider {
     /**
      * Override init method.
      *
-     * @param {AxonOptions}
+     * @param {AxonOptions} axonOptions
+     *
      * @memberof MongoProvider
      */
     init(axonOptions = null) { // eslint-disable-line no-unused-vars
         // We use require to require the schema at runtime.
         // This will prevent the MongoProvider from DIRECTLY depending on mongoose and preventing to make it break the global export
-        // This will also only create the model at runtime, allowing to override the model if the MongoProvider is extended and the init method overrided
+        // This will also only create the model at runtime, allowing to override the model if the MongoProvider is extended and the init method overridden
         this.AxonSchema = require('./Mongo/AxonSchema').default;
         this.GuildSchema = require('./Mongo/GuildSchema').default;
     }
@@ -98,9 +113,9 @@ class MongoProvider extends ADBProvider {
     }
 
     /**
-     * Retreives the Guild config for the specified guild.
+     * Retrieves the Guild config for the specified guild.
      *
-     * @param {String} gID - guild ID
+     * @param {String} gID - Guild ID
      * @returns {Promise<GuildConfig|null>}
      * @memberof MongoProvider
      */
@@ -112,11 +127,11 @@ class MongoProvider extends ADBProvider {
     }
 
     /**
-     * Retreives the Guild **Schema** for the specified guild.
-     * Does not lean and return the actual mongoos Schema.
+     * Retrieves the Guild **Schema** for the specified guild.
+     * Does not lean and return the actual mongoose Schema.
      * MongoProvider specific method.
      *
-     * @param {String} gID - guild ID
+     * @param {String} gID - Guild ID
      * @returns {Promise<Object|null>} GuildSchema or null
      * @memberof MongoProvider
      */
@@ -126,7 +141,7 @@ class MongoProvider extends ADBProvider {
         } );
     }
 
-    // **** UPDATERS **** //
+    // **** UPDATES **** //
 
     
     /**
@@ -135,8 +150,9 @@ class MongoProvider extends ADBProvider {
      * Generic method to update Database.
      *
      * @param {String} key - The identifier in the Database
-     * @param {Object|Array|String|Boolean} value - The value to update in the DB
-     * @returns {Promise<Boolean>} Whether the request was successfull or not
+     * @param {updateDBVal} value - The value to update in the DB
+     * @returns {Promise<Boolean>} Whether the request was successful or not
+     *
      * @memberof MongoProvider
      */
     async updateAxon(key, value) {
@@ -165,8 +181,9 @@ class MongoProvider extends ADBProvider {
      *
      * @param {String} key - The identifier in the Database
      * @param {String} gID - The guild ID to update
-     * @param {Object|Array|String|Boolean} value - The value to update in the DB
-     * @returns {Promise<Boolean>} Whether the request was successfull or not
+     * @param {updateDBVal} value - The value to update in the DB
+     * @returns {Promise<Boolean>} Whether the request was successful or not
+     *
      * @memberof MongoProvider
      */
     async updateGuild(key, gID, value) {
@@ -190,7 +207,7 @@ class MongoProvider extends ADBProvider {
     /**
      * Updates the Axon config in the DB with a new Axon config object.
      *
-     * @param {Object} data - the schema object to update
+     * @param {AxonConfig|AxonConfigRaw} data - the schema object to update
      * @returns {Promise<AxonConfig|null>} Updated AxonConfig from the DB
      * @memberof MongoProvider
      */
@@ -214,7 +231,7 @@ class MongoProvider extends ADBProvider {
      * Updates the given guild in the DB with a new schema object.
      *
      * @param {String} gID - Guid id
-     * @param {Object} data - the schema object to update
+     * @param {GuildConfig|GuildConfigRaw} data - the schema object to update
      * @returns {Promise<GuildConfig|null>} Updated GuildConfig from the DB
      * @memberof MongoProvider
      */

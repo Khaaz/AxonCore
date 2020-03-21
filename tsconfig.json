@@ -12,7 +12,8 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "moduleResolution": "node",
-    "lib": ["es6"]
+    "lib": ["es6"],
+    "allowSyntheticDefaultImports": true
   },
   "files": ["index.d.ts"]
 }

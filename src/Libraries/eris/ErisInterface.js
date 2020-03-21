@@ -12,7 +12,15 @@ import ErisChannel from './lib/ErisChannel';
 import ErisGuild from './lib/ErisGuild';
 import ErisResolver from './lib/ErisResolver';
 
+/**
+ * @typedef {import('eris').Client} Client
+ * @typedef {import('eris').Message} Message
+ */
+
 class ErisInterface extends LibraryInterface {
+    /**
+     * @param {Client} botClient
+     */
     constructor(botClient) {
         super(botClient, {
             User: ErisUser,
@@ -35,16 +43,53 @@ class ErisInterface extends LibraryInterface {
         return HANDLERS;
     }
 
+    /**
+     * @param {(msg: Message) => void} func
+     * @returns {void}
+     * @memberof ErisInterface
+     */
     onMessageCreate(func) {
         this.botClient.on(this.enums.EVENTS.MESSAGE_CREATE, (msg) => {
             func(msg);
         } );
     }
 
+    /**
+     * @param {() => void} func
+     * @returns {void}
+     * @memberof ErisInterface
+     */
     onceReady(func) {
-        this.botClient.once(this.enums.EVENTS.READY, () => {
+        this.botClient.once('ready', () => {
             func();
         } );
+    }
+
+    /**
+     * @param {(msg: Message) => void}
+     * @returns {(msg: Message) => void}
+     * @memberof ErisInterface
+     */
+    getMessageCreate(func) {
+        return (msg) => func(msg);
+    }
+
+    /**
+     * @param {(msg: Message) => void}
+     * @returns {(msg: Message, oldMsg: Message) => void}
+     * @memberof ErisInterface
+     */
+    getMessageUpdate(func) {
+        return (msg, oldMsg) => func(oldMsg, msg);
+    }
+
+    /**
+     * @param {(msg: Message) => void}
+     * @returns {(msg: Message) => void}
+     * @memberof ErisInterface
+     */
+    getMessageDelete(func) {
+        return (msg) => func(msg);
     }
 }
 

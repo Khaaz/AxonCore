@@ -11,13 +11,13 @@ class GuildCreate extends Listener {
 
         this.enabled = true;
 
-        this.infos = {
+        this.info = {
             owners: ['KhaaZ'],
             description: 'Guild Create event',
         };
     }
 
-    execute(guild, guildConfig) { // eslint-disable-line 
+    execute(guild, guildConfig) { // eslint-disable-line no-unused-vars
         console.log(`Guild Created: ${guild.name} [${guild.id}]`);
         return Promise.resolve();
     }

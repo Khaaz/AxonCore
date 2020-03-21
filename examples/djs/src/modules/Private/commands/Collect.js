@@ -4,7 +4,7 @@ class Collect extends Command {
     constructor(module) {
         super(module);
         this.label = 'collect';
-        this.infos = {
+        this.info = {
             owners: ['Null'],
             name: 'collect',
             description: 'Collect some messages and return',

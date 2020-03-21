@@ -16,7 +16,7 @@
 | [info.category] | <code>String</code> |  |  |
 | [info.description] | <code>String</code> |  |  |
 | permissions | <code>CommandPermissions</code> |  | Default values potentially used for CommandPermissions |
-| options | <code>CommandOptions</code> |  | Default values potentially used  for CommandOptions |
+| options | <code>CommandOptions</code> |  | Default values potentially used for CommandOptions |
 | commandLoader | <code>CommandLoader</code> |  | Load all commands in the module / register / unregister |
 | listenerLoader | <code>ListenerLoader</code> |  | Load all events in the module / register / unregister |
 
@@ -24,10 +24,10 @@
 * [Module](#Module) ⇐ <code>Base</code>
     * [new Module()](#new_Module_new)
     * _instance_
-        * [.commands](#Module+commands)
-        * [.listeners](#Module+listeners)
+        * [.commands](#Module+commands) : <code>Collection.&lt;Command&gt;</code>
+        * [.listeners](#Module+listeners) : <code>Collection.&lt;Listener&gt;</code>
         * [._init()](#Module+_init)
-        * [.init()](#Module+init) ⇒ <code>Object.&lt;{Commands, Listeners}&gt;</code>
+        * [.init()](#Module+init) ⇒ <code>Object.&lt;string, (Command\|Listener)&gt;</code>
     * _static_
         * [.Module](#Module.Module)
             * [new Module(client, [data])](#new_Module.Module_new)
@@ -41,14 +41,14 @@ It also has default CommandOptions and CommandPermissions that can potentially b
 
 <a name="Module+commands"></a>
 
-### module.commands
+### module.commands : <code>Collection.&lt;Command&gt;</code>
 A Collection of all commands the module holds
 
 **Kind**: instance property of [<code>Module</code>](#Module)  
 **Read only**: true  
 <a name="Module+listeners"></a>
 
-### module.listeners
+### module.listeners : <code>Collection.&lt;Listener&gt;</code>
 A Collection of all listeners the module holds
 
 **Kind**: instance property of [<code>Module</code>](#Module)  
@@ -61,11 +61,11 @@ Init a module with all commands and listeners.
 **Kind**: instance method of [<code>Module</code>](#Module)  
 <a name="Module+init"></a>
 
-### module.init() ⇒ <code>Object.&lt;{Commands, Listeners}&gt;</code>
+### module.init() ⇒ <code>Object.&lt;string, (Command\|Listener)&gt;</code>
 Override this method to returns { commands, listeners }
 
 **Kind**: instance method of [<code>Module</code>](#Module)  
-**Returns**: <code>Object.&lt;{Commands, Listeners}&gt;</code> - An object containing commands and listeners to initialise. { commands, listeners}  
+**Returns**: <code>Object.&lt;string, (Command\|Listener)&gt;</code> - An object containing commands and listeners to initialise. { commands, listeners}  
 <a name="Module.Module"></a>
 
 ### Module.Module
@@ -83,7 +83,10 @@ Creates a Module instance.
 | [data.label] | <code>String</code> |  | The module label |
 | [data.enabled] | <code>Boolean</code> |  | Whether the module is enabled or not |
 | [data.serverBypass] | <code>Boolean</code> |  | Whether the module can be disabled in a server or not |
-| [data.infos] | <code>Object</code> |  |  |
-| [data.options] | <code>CommandOptions</code> \| <code>Object</code> |  | The default options for all commands in this module |
-| [data.permissions] | <code>CommandPermissions</code> \| <code>Object</code> |  | The default permissions for all commands in this module |
+| [data.info] | <code>Object</code> |  |  |
+| data.info.name | <code>String</code> |  | The module name |
+| data.info.description | <code>String</code> |  | The module description |
+| data.info.category | <code>String</code> |  | The module category |
+| [data.options] | <code>CommandOptions</code> |  | The default options for all commands in this module |
+| [data.permissions] | <code>CommandPermissions</code> |  | The default permissions for all commands in this module |
 

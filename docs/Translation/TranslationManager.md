@@ -1,8 +1,22 @@
+## Classes
+
+<dl>
+<dt><a href="#TranslationManager">TranslationManager</a></dt>
+<dd></dd>
+</dl>
+
+## Typedefs
+
+<dl>
+<dt><a href="#Languages">Languages</a> : <code>Object.&lt;string, AxonLanguageResponse&gt;</code></dt>
+<dd></dd>
+</dl>
+
 <a name="TranslationManager"></a>
 
 ## TranslationManager
 **Kind**: global class  
-**Autho**: KhaaZ  
+**Author**: KhaaZ  
 **Properties**
 
 | Name | Type | Default | Description |
@@ -14,12 +28,12 @@
 * [TranslationManager](#TranslationManager)
     * [new TranslationManager()](#new_TranslationManager_new)
     * _instance_
-        * [.messages](#TranslationManager+messages) : <code>Object</code>
-        * [.getMessages(lang)](#TranslationManager+getMessages) ⇒ <code>Object</code>
+        * [.messages](#TranslationManager+messages) : [<code>Languages</code>](#Languages)
+        * [.getMessages(lang)](#TranslationManager+getMessages) ⇒ <code>AxonLanguageResponse</code>
         * [.getMessage(message, lang)](#TranslationManager+getMessage) ⇒ <code>String</code>
     * _static_
         * [.TranslationManager](#TranslationManager.TranslationManager)
-            * [new TranslationManager(manager)](#new_TranslationManager.TranslationManager_new)
+            * [new TranslationManager(manager, lang)](#new_TranslationManager.TranslationManager_new)
 
 <a name="new_TranslationManager_new"></a>
 
@@ -29,14 +43,14 @@ Holds all translations and get the message for the default lang or the specified
 
 <a name="TranslationManager+messages"></a>
 
-### translationManager.messages : <code>Object</code>
+### translationManager.messages : [<code>Languages</code>](#Languages)
 Returns all messages (all langs)
 
 **Kind**: instance property of [<code>TranslationManager</code>](#TranslationManager)  
 **Read only**: true  
 <a name="TranslationManager+getMessages"></a>
 
-### translationManager.getMessages(lang) ⇒ <code>Object</code>
+### translationManager.getMessages(lang) ⇒ <code>AxonLanguageResponse</code>
 Return all messages for the specified lang or the default lang if no specified lang.
 
 **Kind**: instance method of [<code>TranslationManager</code>](#TranslationManager)  
@@ -63,11 +77,16 @@ Return a specified message for the specified lang or the default lang if no spec
 **Kind**: static class of [<code>TranslationManager</code>](#TranslationManager)  
 <a name="new_TranslationManager.TranslationManager_new"></a>
 
-#### new TranslationManager(manager)
+#### new TranslationManager(manager, lang)
 Creates an instance of TranslationManager.
 
 
 | Param | Type |
 | --- | --- |
 | manager | <code>MessageManager</code> | 
+| lang | <code>String</code> | 
 
+<a name="Languages"></a>
+
+## Languages : <code>Object.&lt;string, AxonLanguageResponse&gt;</code>
+**Kind**: global typedef  

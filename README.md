@@ -57,6 +57,7 @@ AxonCore is lib agnostic, which mean you can use it indifferently with [Eris](ht
 - **Translations** - Built-in support for translation and message management system.
 - **Logging** - Built-in custom logging.
 - **Tracking** - Easily track and debug command usage, events and errors with custom events emitted by AxonCore.
+- **Typescript support** - Full typescript and intellisense support
 
 ## Philosophy
 
@@ -78,6 +79,10 @@ Here's how to use it:
 - Available libraries: `eris`, `discordjs`.  
 - Available module types: `commonjs`, `esm`.
 
+AxonCore has **FULL** typescript support.  
+When you install the package the first time, you can choose the library you are using, and the package will automatically link the library typings. That will allow you to have full and complete typings for your typescript project or for using intllisense.  
+Note: AxonCore creates a `.axoncorerc` file with the default configuration. Editing or deleting this file will change the typings link on the next install.
+
 ## Features Overview
 
 Because it is built with the correct level abstraction, using AxonCore feels natural and powerful. Everything is easily accessible, extendable and customisable.
@@ -90,11 +95,11 @@ There's also a built-in help command that you can easily override if you want to
 
 ### Commands
 
-You can create commands by extending [Command](src/Structures/Command/Command.js), [CommandPermissions](src/Structures/Command/CommandPermissions.js) and [CommandOptions](src/Structures/Command/CommandOptions.js).
+You can create commands by extending [Command](src/Core/Command/Command.js), [CommandPermissions](src/Core/Command/CommandPermissions.js) and [CommandOptions](src/Core/Command/CommandOptions.js).
 
 ### Listeners
 
-You can also create listeners by extending [Listener](src/Structures/Listener.js).  
+You can also create listeners by extending [Listener](src/Core/Listener.js).  
 A **Listener** is a function that is run when a Discord-specific event occurs. Many listeners can be bound to one Discord event.  
 A **Handler** is an object responsible of running all listeners for a specific Discord event.
 
@@ -108,7 +113,7 @@ There are specific providers for each type of Database, such as:
 - SQL ([sequelize](https://github.com/sequelize/sequelize)) [TODO]
 - SQLite () [TODO]
 
-The only thing you will handle is a [GuildConfig](src/Structures/DataStructure/GuildConfig.js) and an [AxonConfig](src/Structures/DataStructure/AxonConfig.js) object. Those are stored in the [GuildConfigCache](src/Structures/GuildConfigCache.js).
+The only thing you will handle is a [GuildConfig](src/Core/Models/GuildConfig.js) and an [AxonConfig](src/Core/Models/AxonConfig.js) object. Those are stored in the [GuildConfigCache](src/Core/GuildConfigCache.js).
 
 ### Translation support
 
@@ -133,9 +138,9 @@ TODO
 
 ### Execution context, error management, usage tracking
 
-A Command always should returns a Promise wrapping a [CommandResponse](src/Structures/Command/CommandResponse.js). Either explicitely by creating a CommandResponse and wrapping it in a Promise (`CommandResponse.resolve()`), or implicitely via [`sendMessage`](a), [`sendSuccess`](a) or [`sendError`](a). CommandResponse in these last cases is filled with appropriate information regarding command execution.  
+A Command always should returns a Promise wrapping a [CommandResponse](src/Core/Command/CommandResponse.js). Either explicitely by creating a CommandResponse and wrapping it in a Promise (`CommandResponse.resolve()`), or implicitely via [`sendMessage`](a), [`sendSuccess`](a) or [`sendError`](a). CommandResponse in these last cases is filled with appropriate information regarding command execution.  
 
-The framework will then build a [CommandContext](src/Structures/Command/CommandContext.js) object after each command execution.  
+The framework will then build a [CommandContext](src/Core/Command/CommandContext.js) object after each command execution.  
 Two types of events will then be emitted, depending on the scenario:
 
 - The command was executed entirely and successfully. A **commandExecution** event is emitted by AxonClient with `status = true`.
@@ -159,13 +164,17 @@ axonClient.on('listenerError', (eventName: String, listenerName: String, { liste
 ### Utilities
 
 - [Embed](src/Utility/External/Embed.js)
-- Resolver
+- [Resolver](src/Libraries/definitions/Resolver.js)
 - [Utility](src/Utility/Utils.js)
-- Message Collector [TODO-outdated]
+- [Collectors](src/Utility/Discord/Collectors/Collector.js)
+- [Message Collector](src/Utility/Discord/Collectors/MessageCollector.js)
 - Reaction collector [TODO-outdated]
 
 - [LRUCache](src/Utility/External/LRUCache.js)
+- [SortedList](src/Utility/External/SortedList.js)
+- [Stack](src/Utility/External/Stack.js)
 - [Queue](src/Utility/External/Queue.js)
+- [FunctionQueue](src/Utility/External/FunctionQueue.js)
 - [AsyncQueue](src/Utility/External/AsyncQueue.js)
 - [AutoQueue](src/Utility/External/AutoQueue.js)
 

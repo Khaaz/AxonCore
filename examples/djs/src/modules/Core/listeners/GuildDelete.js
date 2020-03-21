@@ -11,13 +11,13 @@ class GuildDelete extends Listener {
 
         this.enabled = true;
 
-        this.infos = {
+        this.info = {
             owners: ['KhaaZ'],
             description: 'Guild Delete event',
         };
     }
 
-    execute(guild, guildConfig) { // eslint-disable-line
+    execute(guild, guildConfig) { // eslint-disable-line no-unused-vars
         console.log(`Guild Deleted: ${guild.name} [${guild.id}]`);
         return Promise.resolve();
     }
