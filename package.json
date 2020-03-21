@@ -12,9 +12,6 @@
     "esm": "^3.2.25",
     "inquirer": "^7.1.0"
   },
-  "optionalDependencies": {
-    "mongoose": "^5.7.7"
-  },
   "devDependencies": {
     "@axonteam/doc-gen": "git+https://github.com/AxonTeam/doc-gen",
     "@axonteam/eslint-config": "^2.2.0",
@@ -49,7 +46,8 @@
     "start:djs": "node -r esm examples/djs/src/index.js",
     "pm2start:eris": "node examples/eris/scripts/start.js",
     "pm2start:djs": "node examples/djs/scripts/start.js",
-    "postinstall": "node ./scripts/typings.js"
+    "postinstall": "node ./scripts/typings.js",
+    "dep": "yarn install --ignore-scripts"
   },
   "repository": {
     "type": "git",
