@@ -19,11 +19,10 @@
     * [new CommandLoader(module)](#new_CommandLoader_new)
     * [.axon](#CommandLoader+axon) : <code>AxonClient</code>
     * [.logger](#CommandLoader+logger) : <code>Logger</code>
-    * [.load(command, [parent])](#CommandLoader+load) ⇒ <code>Boolean</code>
+    * [.load(command, parent)](#CommandLoader+load) ⇒ <code>Boolean</code>
     * [.loadAll(commands)](#CommandLoader+loadAll) ⇒ <code>Boolean</code>
     * [.unload(label)](#CommandLoader+unload) ⇒ <code>Boolean</code>
-    * [.registerCommand(command)](#CommandLoader+registerCommand)
-    * [.registerSubCommand(command, parent)](#CommandLoader+registerSubCommand)
+    * [.registerCommand(command, registry)](#CommandLoader+registerCommand)
     * [.unregisterCommand(fullLabel)](#CommandLoader+unregisterCommand) ⇒ <code>Boolean</code>
     * [.unregisterSubCommand(command, subCommand)](#CommandLoader+unregisterSubCommand)
 
@@ -59,28 +58,28 @@ Returns the Logger instance
 **Read only**: true  
 <a name="CommandLoader+load"></a>
 
-### commandLoader.load(command, [parent]) ⇒ <code>Boolean</code>
+### commandLoader.load(command, parent) ⇒ <code>Boolean</code>
 Load one command instance in the module.
 Validate and correct the command before registering it.
 
 **Kind**: instance method of [<code>CommandLoader</code>](#CommandLoader)  
 
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| command | <code>Command</code> |  | The command to load |
-| [parent] | <code>Command</code> | <code></code> | The optional parent command |
+| Param | Type | Description |
+| --- | --- | --- |
+| command | <code>Command</code> | The command to load |
+| parent | <code>CommandRegistry</code> | The registry to load the command into |
 
 <a name="CommandLoader+loadAll"></a>
 
 ### commandLoader.loadAll(commands) ⇒ <code>Boolean</code>
-Load all commands in the module.
+Load all non instantiated commands in the module.
 Instantiate all commands.
 
 **Kind**: instance method of [<code>CommandLoader</code>](#CommandLoader)  
 
-| Param | Type |
-| --- | --- |
-| commands | <code>Object.&lt;string, Command&gt;</code> | 
+| Param | Type | Description |
+| --- | --- | --- |
+| commands | <code>Object.&lt;string, Command&gt;</code> | Non instantiated Commands |
 
 <a name="CommandLoader+unload"></a>
 
@@ -96,7 +95,7 @@ Unload a Command from the client
 
 <a name="CommandLoader+registerCommand"></a>
 
-### commandLoader.registerCommand(command)
+### commandLoader.registerCommand(command, registry)
 Register a Command. Register its subcommands if it has any.
 
 **Kind**: instance method of [<code>CommandLoader</code>](#CommandLoader)  
@@ -104,18 +103,7 @@ Register a Command. Register its subcommands if it has any.
 | Param | Type | Description |
 | --- | --- | --- |
 | command | <code>Command</code> | Command object |
-
-<a name="CommandLoader+registerSubCommand"></a>
-
-### commandLoader.registerSubCommand(command, parent)
-Register a SubCommand.Register its subcommands if it has any
-
-**Kind**: instance method of [<code>CommandLoader</code>](#CommandLoader)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| command | <code>Command</code> | The subcommand to register |
-| parent | <code>Command</code> | The parent command |
+| registry | <code>CommandRegistry</code> | The registry to register the command into |
 
 <a name="CommandLoader+unregisterCommand"></a>
 
@@ -151,11 +139,10 @@ Remove a subcommand from a command
     * [new CommandLoader(module)](#new_CommandLoader_new)
     * [.axon](#CommandLoader+axon) : <code>AxonClient</code>
     * [.logger](#CommandLoader+logger) : <code>Logger</code>
-    * [.load(command, [parent])](#CommandLoader+load) ⇒ <code>Boolean</code>
+    * [.load(command, parent)](#CommandLoader+load) ⇒ <code>Boolean</code>
     * [.loadAll(commands)](#CommandLoader+loadAll) ⇒ <code>Boolean</code>
     * [.unload(label)](#CommandLoader+unload) ⇒ <code>Boolean</code>
-    * [.registerCommand(command)](#CommandLoader+registerCommand)
-    * [.registerSubCommand(command, parent)](#CommandLoader+registerSubCommand)
+    * [.registerCommand(command, registry)](#CommandLoader+registerCommand)
     * [.unregisterCommand(fullLabel)](#CommandLoader+unregisterCommand) ⇒ <code>Boolean</code>
     * [.unregisterSubCommand(command, subCommand)](#CommandLoader+unregisterSubCommand)
 
@@ -191,28 +178,28 @@ Returns the Logger instance
 **Read only**: true  
 <a name="CommandLoader+load"></a>
 
-### commandLoader.load(command, [parent]) ⇒ <code>Boolean</code>
+### commandLoader.load(command, parent) ⇒ <code>Boolean</code>
 Load one command instance in the module.
 Validate and correct the command before registering it.
 
 **Kind**: instance method of [<code>CommandLoader</code>](#CommandLoader)  
 
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| command | <code>Command</code> |  | The command to load |
-| [parent] | <code>Command</code> | <code></code> | The optional parent command |
+| Param | Type | Description |
+| --- | --- | --- |
+| command | <code>Command</code> | The command to load |
+| parent | <code>CommandRegistry</code> | The registry to load the command into |
 
 <a name="CommandLoader+loadAll"></a>
 
 ### commandLoader.loadAll(commands) ⇒ <code>Boolean</code>
-Load all commands in the module.
+Load all non instantiated commands in the module.
 Instantiate all commands.
 
 **Kind**: instance method of [<code>CommandLoader</code>](#CommandLoader)  
 
-| Param | Type |
-| --- | --- |
-| commands | <code>Object.&lt;string, Command&gt;</code> | 
+| Param | Type | Description |
+| --- | --- | --- |
+| commands | <code>Object.&lt;string, Command&gt;</code> | Non instantiated Commands |
 
 <a name="CommandLoader+unload"></a>
 
@@ -228,7 +215,7 @@ Unload a Command from the client
 
 <a name="CommandLoader+registerCommand"></a>
 
-### commandLoader.registerCommand(command)
+### commandLoader.registerCommand(command, registry)
 Register a Command. Register its subcommands if it has any.
 
 **Kind**: instance method of [<code>CommandLoader</code>](#CommandLoader)  
@@ -236,18 +223,7 @@ Register a Command. Register its subcommands if it has any.
 | Param | Type | Description |
 | --- | --- | --- |
 | command | <code>Command</code> | Command object |
-
-<a name="CommandLoader+registerSubCommand"></a>
-
-### commandLoader.registerSubCommand(command, parent)
-Register a SubCommand.Register its subcommands if it has any
-
-**Kind**: instance method of [<code>CommandLoader</code>](#CommandLoader)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| command | <code>Command</code> | The subcommand to register |
-| parent | <code>Command</code> | The parent command |
+| registry | <code>CommandRegistry</code> | The registry to register the command into |
 
 <a name="CommandLoader+unregisterCommand"></a>
 

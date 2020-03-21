@@ -8,7 +8,7 @@
 ## Typedefs
 
 <dl>
-<dt><a href="#Ctx">Ctx</a> : <code>Object</code></dt>
+<dt><a href="#AllowedMentions">AllowedMentions</a> : <code>Object</code></dt>
 <dd></dd>
 </dl>
 
@@ -138,7 +138,7 @@ Reject promise if not
 | user | <code>User</code> |  | User object to get the DM channel |
 | content | <code>String</code> \| <code>MessageObject</code> |  | String or object (embed) |
 | [options] | <code>Object</code> | <code>{}</code> | Options { disableEveryone: Boolean, delete: Boolean, delay: Number } |
-| [options.disableEveryone] | <code>Boolean</code> | <code>true</code> | Whether to allow mentioning everyone or not |
+| [options.allowedMentions] | [<code>AllowedMentions</code>](#AllowedMentions) |  | Custom allowed mentions object |
 | [options.delete] | <code>Boolean</code> | <code>false</code> | Whether to delete the message or not |
 | [options.delay] | <code>Number</code> | <code></code> | Delay after which the message will be deleted |
 
@@ -157,7 +157,7 @@ Doesn't support file
 | channel | <code>Channel</code> |  | The channel Object |
 | content | <code>String</code> \| <code>MessageObject</code> |  | Message content, String or Embed Object |
 | [options] | <code>Object</code> | <code>{}</code> | Options { disableEveryone: Boolean, delete: Boolean, delay: Number } |
-| [options.disableEveryone] | <code>Boolean</code> | <code>true</code> | Whether to allow mentioning everyone or not |
+| [options.allowedMentions] | [<code>AllowedMentions</code>](#AllowedMentions) |  | Custom allowed mentions object |
 | [options.delete] | <code>Boolean</code> | <code>false</code> | Whether to delete the message or not |
 | [options.delay] | <code>Number</code> | <code></code> | Delay after which the message will be deleted |
 
@@ -190,7 +190,7 @@ Await for sendMessage to throw correctly potential errors.
 | channel | <code>Channel</code> |  | The channel Object |
 | content | <code>String</code> \| <code>MessageObject</code> |  | Success message content |
 | [options] | <code>Object</code> | <code>{}</code> | Additional options |
-| [options.disableEveryone] | <code>Boolean</code> | <code>true</code> | Whether to allow mentioning everyone or not |
+| [options.allowedMentions] | [<code>AllowedMentions</code>](#AllowedMentions) |  | Custom allowed mentions object |
 | [options.delete] | <code>Boolean</code> | <code>false</code> | Whether to delete the message or not |
 | [options.delay] | <code>Number</code> | <code></code> | Delay after which the message will be deleted |
 | [options.triggerCooldown] | <code>Boolean</code> | <code>true</code> | Whether the command should trigger cooldown or not |
@@ -210,7 +210,7 @@ Await for sendMessage to throw correctly potential errors.
 | channel | <code>Channel</code> |  | The channel Object |
 | content | <code>String</code> \| <code>MessageObject</code> |  | Success message content |
 | [options] | <code>Object</code> | <code>{}</code> | Additional options |
-| [options.disableEveryone] | <code>Boolean</code> | <code>true</code> | Whether to allow mentioning everyone or not |
+| [options.allowedMentions] | [<code>AllowedMentions</code>](#AllowedMentions) |  | Custom allowed mentions object |
 | [options.delete] | <code>Boolean</code> | <code>false</code> | Whether to delete the message or not |
 | [options.delay] | <code>Number</code> | <code></code> | Delay after which the message will be deleted |
 | [options.triggerCooldown] | <code>Boolean</code> | <code>false</code> | Whether the command should trigger cooldown or not |
@@ -260,7 +260,7 @@ Creates an instance of Base.
 | --- | --- |
 | axonClient | <code>AxonClient</code> | 
 
-<a name="Ctx"></a>
+<a name="AllowedMentions"></a>
 
-## Ctx : <code>Object</code>
+## AllowedMentions : <code>Object</code>
 **Kind**: global typedef  

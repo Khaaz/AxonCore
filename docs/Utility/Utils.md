@@ -45,6 +45,7 @@
         * [.hasPerms(member, permissions)](#Utils+hasPerms) ⇒ <code>Boolean</code>
         * [.hasChannelPerms(channel, permissions, [user])](#Utils+hasChannelPerms) ⇒ <code>Boolean</code>
         * [.missingPerms(member, [permissions])](#Utils+missingPerms) ⇒ <code>Array.&lt;String&gt;</code>
+        * [.missingChannelPerms(channel, member, [permissions])](#Utils+missingChannelPerms) ⇒ <code>Array.&lt;String&gt;</code>
         * [.calculatePerms(data)](#Utils+calculatePerms) ⇒ <code>Object</code>
         * [.sleep(ms)](#Utils+sleep) ⇒ <code>Promise.&lt;void&gt;</code>
         * [.readFileAsync(path)](#Utils+readFileAsync) ⇒ <code>Promise.&lt;String&gt;</code>
@@ -211,6 +212,20 @@ List all missing permissions of the given user.
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
+| member | <code>Member</code> |  |  |
+| [permissions] | <code>Array.&lt;String&gt;</code> | <code>[]</code> | List of permissions to test |
+
+<a name="Utils+missingChannelPerms"></a>
+
+### utils.missingChannelPerms(channel, member, [permissions]) ⇒ <code>Array.&lt;String&gt;</code>
+List all missing permissions of the given user in the given channel.
+
+**Kind**: instance method of [<code>Utils</code>](#Utils)  
+**Returns**: <code>Array.&lt;String&gt;</code> - An array of missing permissions  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| channel | <code>Channel</code> |  |  |
 | member | <code>Member</code> |  |  |
 | [permissions] | <code>Array.&lt;String&gt;</code> | <code>[]</code> | List of permissions to test |
 

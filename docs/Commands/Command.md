@@ -28,12 +28,9 @@
 | [aliases] | <code>Array.&lt;String&gt;</code> | <code>[]</code> | Array of commands aliases (including the command label) |
 | [enabled] | <code>Boolean</code> | <code>module.enabled</code> | Whether the command is enabled |
 | [serverBypass] | <code>Boolean</code> | <code>module.serverBypass</code> | Whether the command can be disabled |
-| [isSubcmd] | <code>Boolean</code> | <code>false</code> | Whether the command IS a subcommand |
-| [parentCommand] | [<code>Command</code>](#Command) | <code></code> | Reference to the parent command (if isSubcmd = true) |
+| [parentCommand] | [<code>Command</code>](#Command) | <code></code> | Reference to the parent command |
 | [hasSubcmd] | <code>Boolean</code> | <code>false</code> | Whether the command HAS subcommands |
-| subcmds | <code>Array.&lt;Object&gt;</code> |  | Array of subcommand objects (deleted after init) |
-| [subCommands] | <code>CommandCollection</code> | <code></code> | Collection of subcommands |
-| [subCommandsAliases] | <code>Map</code> | <code></code> | Map of subcommand aliases |
+| [subCommands] | <code>CommandRegistry</code> | <code></code> | Registry of subcommands |
 | info | <code>Object</code> |  | Default info about the command |
 | [info.owners] | <code>Array.&lt;String&gt;</code> |  | Command authors |
 | [info.name] | <code>String</code> |  | Full command name |
@@ -51,6 +48,8 @@
         * [.template](#Command+template) : [<code>AxonTemplate</code>](#AxonTemplate)
         * [.library](#Command+library) : <code>LibraryInterface</code>
         * [.fullLabel](#Command+fullLabel) : <code>String</code>
+        * [.init()](#Command+init) ⇒
+        * [._init()](#Command+_init) ⇒ <code>Boolean</code>
         * [._process(env)](#Command+_process) ⇒ <code>Promise.&lt;CommandContext&gt;</code>
         * [._execute(env)](#Command+_execute) ⇒ <code>Promise.&lt;CommandContext&gt;</code>
         * [.execute(env)](#Command+execute) ⇒ <code>Promise.&lt;CommandResponse&gt;</code>
@@ -96,6 +95,16 @@ Returns the full label for this command (label + all parent labels)
 
 **Kind**: instance property of [<code>Command</code>](#Command)  
 **Read only**: true  
+<a name="Command+init"></a>
+
+### command.init() ⇒
+Returns all the subcommands for a command
+
+**Kind**: instance method of [<code>Command</code>](#Command)  
+<a name="Command+_init"></a>
+
+### command.\_init() ⇒ <code>Boolean</code>
+**Kind**: instance method of [<code>Command</code>](#Command)  
 <a name="Command+_process"></a>
 
 ### command.\_process(env) ⇒ <code>Promise.&lt;CommandContext&gt;</code>
@@ -215,11 +224,9 @@ Overrides the execute method. Execute method will be called every time the comma
 | [data] | <code>Object</code> | <code>{}</code> | All command parameters |
 | [data.label] | <code>String</code> |  | The command label |
 | [data.aliases] | <code>Array.&lt;String&gt;</code> |  | The command aliases |
-| [data.isSubcmd] | <code>Boolean</code> |  | Whether the command IS a subcommand |
 | [data.hasSubcmd] | <code>Boolean</code> |  | Whether the command HAS subcommands |
 | [data.enabled] | <code>Boolean</code> |  | Whether the command is enabled |
 | [data.serverBypass] | <code>Boolean</code> |  | Whether the command can be server disabled |
-|  |  |  |  |
 | [data.info] | <code>Object</code> |  |  |
 | [data.info.owners] | <code>Array.&lt;String&gt;</code> |  | Who created the command |
 | [data.info.description] | <code>String</code> |  | The command description |

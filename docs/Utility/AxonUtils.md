@@ -8,7 +8,7 @@
 ## Typedefs
 
 <dl>
-<dt><a href="#AxonTemplate">AxonTemplate</a> : <code>Object</code></dt>
+<dt><a href="#AllowedMentions">AllowedMentions</a> : <code>Object</code></dt>
 <dd></dd>
 </dl>
 
@@ -29,7 +29,7 @@
     * _instance_
         * [.axon](#AxonUtils+axon) : <code>AxonClient</code>
         * [.bot](#AxonUtils+bot) : <code>BotClient</code>
-        * [.template](#AxonUtils+template) : [<code>AxonTemplate</code>](#AxonTemplate)
+        * [.template](#AxonUtils+template) : <code>AxonTemplate</code>
         * [.logger](#AxonUtils+logger) : <code>ALogger</code>
         * [.utils](#AxonUtils+utils) : <code>Utils</code>
         * [.library](#AxonUtils+library) : <code>LibraryInterface</code>
@@ -71,7 +71,7 @@ Returns the BotClient instance
 **Read only**: true  
 <a name="AxonUtils+template"></a>
 
-### axonUtils.template : [<code>AxonTemplate</code>](#AxonTemplate)
+### axonUtils.template : <code>AxonTemplate</code>
 Returns the template object
 
 **Kind**: instance property of [<code>AxonUtils</code>](#AxonUtils)  
@@ -210,7 +210,7 @@ Reject promise if not
 | user | <code>User</code> |  | User object to get the DM channel |
 | content | <code>String</code> \| <code>MessageObject</code> |  | String or object (embed) |
 | [options] | <code>Object</code> | <code>{}</code> | Options { disableEveryone: Boolean, delete: Boolean, delay: Number } |
-| [options.disableEveryone] | <code>Boolean</code> | <code>true</code> | Whether to allow mentioning everyone or not |
+| [options.allowedMentions] | [<code>AllowedMentions</code>](#AllowedMentions) |  | Custom allowed mentions object |
 | [options.delete] | <code>Boolean</code> | <code>false</code> | Whether to delete the message or not |
 | [options.delay] | <code>Number</code> | <code></code> | Delay after which the message will be deleted |
 
@@ -229,7 +229,7 @@ Doesn't support file uploads.
 | channel | <code>Channel</code> |  | The channel Object |
 | content | <code>String</code> \| <code>MessageObject</code> |  | Message content: String or Embed Object |
 | [options] | <code>Object</code> | <code>{}</code> | Options { disableEveryone: Boolean, delete: Boolean, delay: Number } |
-| [options.disableEveryone] | <code>Boolean</code> | <code>true</code> | Whether to allow mentioning everyone or not |
+| [options.allowedMentions] | [<code>AllowedMentions</code>](#AllowedMentions) |  | Custom allowed mentions object |
 | [options.delete] | <code>Boolean</code> | <code>false</code> | Whether to delete the message or not |
 | [options.delay] | <code>Number</code> | <code></code> | Delay after which the message will be deleted |
 
@@ -261,7 +261,7 @@ Creates an AxonUtils instance.
 | --- | --- |
 | axon | <code>AxonClient</code> | 
 
-<a name="AxonTemplate"></a>
+<a name="AllowedMentions"></a>
 
-## AxonTemplate : <code>Object</code>
+## AllowedMentions : <code>Object</code>
 **Kind**: global typedef  
