@@ -475,6 +475,41 @@ denque@^1.4.1:
   resolved "https://registry.yarnpkg.com/denque/-/denque-1.4.1.tgz#6744ff7641c148c3f8a69c307e51235c1f4a37cf"
   integrity sha512-OfzPuSZKGcgr96rf1oODnfjqBFmr1DVoc/TrItj3Ohe0Ah1C5WX5Baquw/9U9KovnQ88EqmJbD66rKYUQYN1tQ==
 
+detritus-client-rest@^0.6.9:
+  version "0.6.9"
+  resolved "https://registry.yarnpkg.com/detritus-client-rest/-/detritus-client-rest-0.6.9.tgz#328ce3f671c8ed5b5825a80f8cfe98c8b63c17e1"
+  integrity sha512-3gLb2h2L4Le7z0rMUobRDo/UfYqQupp73anqxTucsE4WO5Sbze/M+Q0q+ltaNgXo9qmWMrY4QV2EIq+WpvX6mw==
+  dependencies:
+    detritus-rest "^0.3.1"
+    detritus-utils "^0.2.6"
+
+detritus-client-socket@^0.4.7:
+  version "0.4.7"
+  resolved "https://registry.yarnpkg.com/detritus-client-socket/-/detritus-client-socket-0.4.7.tgz#a2a12075bdb30cf5d3997771db862407e2412d67"
+  integrity sha512-atnVI0tG3xnC+Ph1G2Xg6cwZ6f+q8BZ0I21iqTc+ShUVBhsO/LTqkncYQq55ssaWXn0DYSP3abAQQDfcTwrrJg==
+  dependencies:
+    detritus-utils "^0.2.6"
+    ws "^7.2.0"
+
+detritus-client@^0.10.1:
+  version "0.10.1"
+  resolved "https://registry.yarnpkg.com/detritus-client/-/detritus-client-0.10.1.tgz#bff65a350d7dd0bc714cc14b22940d6b3be7076b"
+  integrity sha512-+XBehxwq0Kn9ukAmghsYIUWEj0V2uDevqv+Szi/fVDb7VLHbzGenRGtnceV1Lfk1G7ZIlyf9MowN9JovIlW65w==
+  dependencies:
+    detritus-client-rest "^0.6.9"
+    detritus-client-socket "^0.4.7"
+    detritus-utils "^0.2.6"
+
+detritus-rest@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/detritus-rest/-/detritus-rest-0.3.1.tgz#75969e95e9e2200134b397c5246df23b26d69726"
+  integrity sha512-DW7wu/trh/Oq+u/ky3xZMgGoZErC2VnEuZ9ZHrOZd973MVcIm9a8hRqIA/N53ygf5a2qExBzuv7UaPw8nwV7yw==
+
+detritus-utils@^0.2.6:
+  version "0.2.6"
+  resolved "https://registry.yarnpkg.com/detritus-utils/-/detritus-utils-0.2.6.tgz#9249850d769d8572de43690a111899d6c3961f6c"
+  integrity sha512-cjeZjmIPew0h4ZP+A9aGizGCNrUyYhSx4FkQXGa3bJ5dNunChSqzUR8a5c2Gq6PIerWldTbh9976WxMw3m6Ejw==
+
 diagnostics@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/diagnostics/-/diagnostics-1.1.1.tgz#cab6ac33df70c9d9a727490ae43ac995a769b22a"
@@ -1983,7 +2018,7 @@ write@1.0.3:
   dependencies:
     mkdirp "^0.5.1"
 
-ws@^7.2.1:
+ws@^7.2.0, ws@^7.2.1:
   version "7.2.3"
   resolved "https://registry.yarnpkg.com/ws/-/ws-7.2.3.tgz#a5411e1fb04d5ed0efee76d26d5c46d830c39b46"
   integrity sha512-HTDl9G9hbkNDk98naoR/cHDws7+EyYMOdL1BmjsZXRUjf7d+MficC4B7HLUPlSiho0vg+CWKrGIt/VJBd1xunQ==
