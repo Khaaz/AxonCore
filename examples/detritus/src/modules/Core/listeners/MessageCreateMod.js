@@ -17,7 +17,7 @@ class MessageCreateMod extends Listener {
         };
     }
 
-    execute(message, guildConfig) {
+    execute( { message }, guildConfig) {
         if (!message.channel.guild) {
             return Promise.resolve();
         }

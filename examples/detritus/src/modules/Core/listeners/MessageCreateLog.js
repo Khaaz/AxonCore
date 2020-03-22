@@ -17,7 +17,7 @@ class MessageCreateLog extends Listener {
         };
     }
 
-    execute(message, guildConfig) { // eslint-disable-line no-unused-vars
+    execute( { message }, guildConfig) { // eslint-disable-line no-unused-vars
         if (!message.channel.guild) {
             return Promise.resolve();
         }
