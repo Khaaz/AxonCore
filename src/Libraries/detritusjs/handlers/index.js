@@ -33,7 +33,7 @@ export { default as messageUpdate } from './MessageUpdateHandler';
 export { default as presenceUpdate } from './PresenceUpdateHandler';
 
 // export { default as shardGatewayDisconnect } from './ShardGatewayDisconnectHandler'; not implemented yet, see file
-export { default as shardGatewayReady } from './ShardReadyHandler';
+export { default as shardGatewayReady } from './ShardGatewayReadyHandler';
 
 export { default as typingStart } from './TypingStartHandler';
 
