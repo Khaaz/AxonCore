@@ -10,7 +10,7 @@ pm2.connect( (err) => {
     pm2.start( {
         script: 'index.js',
         args: ['--color'],
-        name: 'AxonCore.eris',
+        name: 'AxonCore.detritus',
         exec_mode: 'fork',
         max_memory_restart: '1G',
         cwd: 'example/src',

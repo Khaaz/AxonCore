@@ -45,8 +45,10 @@
     "docgen": "node ./scripts/gendoc.js && cp README.md ./docs/README.md",
     "start:eris": "node -r esm examples/eris/src/index.js",
     "start:djs": "node -r esm examples/djs/src/index.js",
+    "start:detritus": "node -r esm examples/detritus/src/index.js",
     "pm2start:eris": "node examples/eris/scripts/start.js",
     "pm2start:djs": "node examples/djs/scripts/start.js",
+    "pm2start:detritus": "node examples/detritus/scripts/start.js",
     "postinstall": "node ./scripts/typings.js",
     "dep": "yarn install --ignore-scripts"
   },
