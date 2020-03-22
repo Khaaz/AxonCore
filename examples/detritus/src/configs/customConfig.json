@@ -55,9 +55,9 @@
     },
 
     "settings": {
-        "lang": "french",
+        "lang": "english",
         "debugMode": true,
-        "library": 0,
+        "library": 2,
         "logger": 1,
         "db": 1,
         "guildConfigCache": 1000

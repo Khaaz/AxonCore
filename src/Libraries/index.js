@@ -46,7 +46,7 @@ class LibrarySelector extends ASelector {
                 break;
             }
 
-            case LIBRARY_TYPES.DETRITUS: {
+            case LIBRARY_TYPES.DETRITUSJS: {
                 libraryInterface = new DetritusInterface(axon.botClient);
                 axon.log('INFO', 'Selected Library Interface: DETRITUS.JS.');
                 break;
