@@ -1,6 +1,6 @@
 import {
     ADBProvider, AxonConfig, GuildConfig, Module, Command, Listener,
-} from '../../';
+} from '..';
 
 /**
  * A schema designed use an InMemory solution in AxonCore

@@ -1,4 +1,4 @@
-import { AxonLanguageResponse } from '../../';
+import { AxonLanguageResponse } from '..';
 
 /**
  * Parse a message and replace custom variable with arguments

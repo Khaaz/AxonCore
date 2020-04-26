@@ -1,4 +1,4 @@
-import { CommandContext } from '../../';
+import { CommandContext } from '..';
 /**
  * Custom error with better formatting and context informations.
  * Used for errors thrown by AxonCore commands.

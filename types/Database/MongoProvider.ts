@@ -1,7 +1,7 @@
 import { Model } from 'mongoose';
 import {
     ADBProvider, AxonConfig, GuildConfig, AxonOptions, GuildSchema, updateDBVal,
-} from '../../';
+} from '..';
 
 /**
  * DB interface to interact with a MongoDB Database.
