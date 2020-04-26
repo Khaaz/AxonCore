@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/ban-ts-ignore */
 import { ALogger } from '../';
+// @ts-ignore
 import { Signale } from 'signale';
 
 /**

@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/ban-ts-ignore */
 import { Member } from '../definitions/Member';
+// @ts-ignore
 import * as Eris from 'eris';
 import { DISCORD_LIB_PERMISSIONS } from './Enums';
 

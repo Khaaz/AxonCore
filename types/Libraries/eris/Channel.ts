@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/ban-ts-ignore */
 import { Channel } from '../definitions/Channel';
+// @ts-ignore
 import * as Eris from 'eris';
 import { DISCORD_LIB_PERMISSIONS } from './Enums';
 import { ErisContent } from '../../';

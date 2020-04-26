@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-ignore */
 import { LibraryInterface } from '../definitions/LibraryInterface';
 import { ErisUser } from './User';
 import { ErisMember } from './Member';
@@ -7,6 +8,7 @@ import { ErisMessage } from './Message';
 import { ErisResolver } from './Resolver';
 import { ErisClient } from './Client';
 import { ErisEnums } from './Enums';
+// @ts-ignore
 import * as Eris from 'eris';
 
 export declare class ErisInterface extends LibraryInterface {

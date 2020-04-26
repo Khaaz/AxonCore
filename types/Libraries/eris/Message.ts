@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/ban-ts-ignore */
 import { Message } from '../definitions/Message';
+// @ts-ignore
 import * as Eris from 'eris';
 import { ErisContent } from '../../';
 

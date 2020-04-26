@@ -1,4 +1,7 @@
+/* eslint-disable @typescript-eslint/ban-ts-ignore */
+// @ts-ignore
 import * as Eris from 'eris';
+// @ts-ignore
 import * as Djs from 'discord.js';
 
 declare type LibMessage = Eris.Message | Djs.Message;

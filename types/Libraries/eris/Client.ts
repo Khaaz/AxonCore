@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/ban-ts-ignore */
 import { Client } from '../definitions/Client';
+// @ts-ignore
 import * as Eris from 'eris';
 import { ErisPresenceGame, ErisWebhookContent, WebhookResponse } from '../../';
 

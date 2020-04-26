@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/ban-ts-ignore */
 import { Message } from '../definitions/Message';
+// @ts-ignore
 import * as djs from 'discord.js';
 import { DjsContent } from '../../';
 

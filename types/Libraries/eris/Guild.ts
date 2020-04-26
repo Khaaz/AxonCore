@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/ban-ts-ignore */
 import { Guild } from '../definitions/Guild';
+// @ts-ignore
 import * as Eris from 'eris';
 
 export declare class ErisGuild extends Guild {

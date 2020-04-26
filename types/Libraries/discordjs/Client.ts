@@ -1,6 +1,8 @@
-import { DjsPresenceGame, DjsWebhookContent, WebhookResponse } from '../../../';
+/* eslint-disable @typescript-eslint/ban-ts-ignore */
+import { DjsPresenceGame, DjsWebhookContent, WebhookResponse } from '../../';
 import { DjsInterface } from './LibraryInterface';
 import { Client } from '../definitions/Client';
+// @ts-ignore
 import * as djs from 'discord.js';
 
 export declare class DjsClient extends Client {

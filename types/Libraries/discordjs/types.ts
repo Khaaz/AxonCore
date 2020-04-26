@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/ban-ts-ignore */
 import {
     Message, GuildMember, Client, Guild, User, TextChannel, Role, Channel, DMChannel, PermissionOverwrites, MessageMentionOptions,
+    // @ts-ignore
 } from 'discord.js';
 
 declare type LibMessage = Message;

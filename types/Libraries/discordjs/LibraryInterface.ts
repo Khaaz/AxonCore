@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-ignore */
 import { LibraryInterface } from '../definitions/LibraryInterface';
 import { DjsUser } from './User';
 import { DjsMember } from './Member';
@@ -7,6 +8,7 @@ import { DjsGuild } from './Guild';
 import { DjsResolver } from './Resolver';
 import { DjsClient } from './Client';
 import { DjsEnums } from './Enums';
+// @ts-ignore
 import * as djs from 'discord.js';
 
 export declare class DjsInterface extends LibraryInterface {

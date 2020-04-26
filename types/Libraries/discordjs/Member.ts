@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/ban-ts-ignore */
 import { Member } from '../definitions/Member';
+// @ts-ignore
 import * as djs from 'discord.js';
 import { DISCORD_LIB_PERMISSIONS } from './Enums';
 

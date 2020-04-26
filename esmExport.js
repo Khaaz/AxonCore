@@ -87,11 +87,20 @@ export { default as LRUCache } from './src/Utility/External/LRUCache';
 export { default as ALogger } from './src/Loggers/ALogger';
 
 // == Constants ==
-export { default as AxonEnums } from './src/Utility/Constants/AxonEnums';
-export { default as DiscordEnums } from './src/Utility/Constants/DiscordEnums';
+export {
+    default as AxonEnums, HTTP_CODE, HTTP_MESSAGES, LIBRARY_TYPES, LOGGER_TYPES, DB_TYPES, COMMAND_EXECUTION_TYPES, COMMAND_EXECUTION_STATE,
+    AXON_PERMISSIONS_LEVELS, PERMISSION_ADMIN, PERMISSION_MANAGER, WEBHOOK_TYPES, LOG_LEVELS, WEBHOOK_TO_COLOR, TYPE_ERRORS, DEBUG_FLAGS,
+} from './src/Utility/Constants/AxonEnums';
+export {
+    default as DiscordEnums, DISCORD_GATEWAY_EVENTS, DISCORD_PERMISSIONS, PERMISSIONS_NUMBERS, EMBED_LIMITS, CHANNEL_TYPES, MESSAGE_TYPES, CLIENT_STATUS_TYPES,
+} from './src/Utility/Constants/DiscordEnums';
 // libs
-export { default as ErisEnums } from './src/Libraries/eris/lib/ErisEnums';
-export { default as DjsEnums } from './src/Libraries/discordjs/lib/DjsEnums';
+export {
+    default as ErisEnums, EVENTS as ERIS_EVENTS, DISCORD_LIB_PERMISSIONS as ERIS_DISCORD_LIB_PERMISSIONS, PERMISSIONS as ERIS_PERMIMSSIONS, PERMISSIONS_NAMES as ERIS_PERMISSIONS_NAMES,
+} from './src/Libraries/eris/lib/ErisEnums';
+export {
+    default as DjsEnums, EVENTS as DJS_EVENTS, DISCORD_LIB_PERMISSIONS as DJS_DISCORD_LIB_PERMISSIONS, PERMISSIONS as DJS_PERMIMSSIONS, PERMISSIONS_NAMES as DJS_PERMISSIONS_NAMES,
+} from './src/Libraries/discordjs/lib/DjsEnums';
 
 // Errors
 export { default as AxonError } from './src/Errors/AxonError';

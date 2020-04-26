@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/ban-ts-ignore */
 import { Resolver } from '../definitions/Resolver';
+// @ts-ignore
 import * as djs from 'discord.js';
 
 export declare class DjsResolver extends Resolver {

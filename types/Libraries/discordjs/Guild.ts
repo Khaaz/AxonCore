@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/ban-ts-ignore */
 import { Guild } from '../definitions/Guild';
+// @ts-ignore
 import * as djs from 'discord.js';
 
 export declare class DjsGuild extends Guild {
