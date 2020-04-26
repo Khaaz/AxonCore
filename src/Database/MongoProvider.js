@@ -156,7 +156,7 @@ class MongoProvider extends ADBProvider {
      * @memberof MongoProvider
      */
     async updateAxon(key, value) {
-        const data = await this.AxonSchema.findOneAndUpdate( {
+        return this.AxonSchema.updateOne( {
             id: '1',
         },
         {
@@ -164,13 +164,7 @@ class MongoProvider extends ADBProvider {
                 [key]: value,
                 updatedAt: new Date(),
             },
-        },
-        {
-            new: true,
-            upsert: true,
-        } ).lean();
-
-        return !!data;
+        } ).lean().then(res => !!res.nModified);
     }
 
     /**
@@ -187,7 +181,7 @@ class MongoProvider extends ADBProvider {
      * @memberof MongoProvider
      */
     async updateGuild(key, gID, value) {
-        const data = await this.GuildSchema.findOneAndUpdate( {
+        return this.GuildSchema.updateOne( {
             guildID: gID,
         },
         {
@@ -195,13 +189,7 @@ class MongoProvider extends ADBProvider {
                 [key]: value,
                 updatedAt: new Date(),
             },
-        },
-        {
-            new: true,
-            upsert: true,
-        } ).lean();
-
-        return !!data;
+        } ).lean().then(res => !!res.nModified);
     }
 
     /**
