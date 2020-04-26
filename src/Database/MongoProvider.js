@@ -65,7 +65,7 @@ class MongoProvider extends ADBProvider {
             new: true,
             upsert: true,
             setDefaultsOnInsert: true,
-        } ).lean();
+        } ).lean().exec();
 
         return data && new AxonConfig(this.axon, data);
     }
@@ -92,7 +92,7 @@ class MongoProvider extends ADBProvider {
             new: true,
             upsert: true,
             setDefaultsOnInsert: true,
-        } ).lean();
+        } ).lean().exec();
 
         return data && new GuildConfig(this.axon, data);
     }
@@ -108,7 +108,7 @@ class MongoProvider extends ADBProvider {
     async fetchAxon() {
         const data = await this.AxonSchema.findOne( {
             id: '1',
-        } ).lean();
+        } ).lean().exec();
         return data && new AxonConfig(this.axon, data);
     }
 
@@ -122,7 +122,7 @@ class MongoProvider extends ADBProvider {
     async fetchGuild(gID) {
         const data = await this.GuildSchema.findOne( {
             guildID: gID,
-        } ).lean();
+        } ).lean().exec();
         return data && new GuildConfig(this.axon, data);
     }
 
@@ -138,7 +138,7 @@ class MongoProvider extends ADBProvider {
     fetchGuildSchema(gID) {
         return this.GuildSchema.findOne( {
             guildID: gID,
-        } );
+        } ).exec();
     }
 
     // **** UPDATES **** //
@@ -164,7 +164,8 @@ class MongoProvider extends ADBProvider {
                 [key]: value,
                 updatedAt: new Date(),
             },
-        } ).lean().then(res => !!res.nModified);
+        } ).lean().exec()
+            .then(res => !!res.nModified);
     }
 
     /**
@@ -189,7 +190,8 @@ class MongoProvider extends ADBProvider {
                 [key]: value,
                 updatedAt: new Date(),
             },
-        } ).lean().then(res => !!res.nModified);
+        } ).lean().exec()
+            .then(res => !!res.nModified);
     }
 
     /**
@@ -210,7 +212,7 @@ class MongoProvider extends ADBProvider {
             new: true,
             upsert: true,
             setDefaultsOnInsert: true,
-        } ).lean();
+        } ).lean().exec();
 
         return res && new AxonConfig(this.axon, res);
     }
@@ -234,7 +236,7 @@ class MongoProvider extends ADBProvider {
             new: true,
             upsert: true,
             setDefaultsOnInsert: true,
-        } ).lean();
+        } ).lean().exec();
 
         return res && new GuildConfig(this.axon, res);
     }
