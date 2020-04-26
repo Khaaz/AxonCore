@@ -155,7 +155,7 @@ class MongoProvider extends ADBProvider {
      *
      * @memberof MongoProvider
      */
-    async updateAxon(key, value) {
+    updateAxon(key, value) {
         return this.AxonSchema.updateOne( {
             id: '1',
         },
@@ -180,7 +180,7 @@ class MongoProvider extends ADBProvider {
      *
      * @memberof MongoProvider
      */
-    async updateGuild(key, gID, value) {
+    updateGuild(key, gID, value) {
         return this.GuildSchema.updateOne( {
             guildID: gID,
         },
