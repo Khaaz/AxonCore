@@ -1,4 +1,5 @@
 import { Resolver } from '../definitions/Resolver';
+// @ts-ignore
 import * as Eris from 'eris';
 
 /**

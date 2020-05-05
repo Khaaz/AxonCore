@@ -1,4 +1,4 @@
-import { MessageManager, Languages, AxonLanguageResponse } from '../../';
+import { MessageManager, Languages, AxonLanguageResponse } from '..';
 
 /**
  * Class dedicated to manage translations.

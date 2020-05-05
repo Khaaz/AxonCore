@@ -2,9 +2,8 @@ import { EventEmitter } from 'events';
 import {
     AxonConfs, AxonParams, Info, AxonInfo, ALogger, AxonUtils, LibClient, LibraryInterface, Utils, ADBProvider, ModuleRegistry, CommandRegistry, ListenerRegistry,
     EventManager, GuildConfigCache, AxonConfig, ModuleLoader, CommandDispatcher, MessageManager, AxonStaffIDs, AxonOptions, Collection, AHandler, Listener, Resolver,
-    Webhooks, AxonTemplate, Module, Command, LOG_LEVELS, Ctx, LibMessage, GuildConfig, DEBUG_FLAGS,
+    Webhooks, AxonTemplate, Module, Command, LOG_LEVELS, Ctx, LibMessage, GuildConfig, DEBUG_FLAGS, Executor,
 } from './';
-import { Executor } from '..';
 
 export declare class AxonClient extends EventEmitter {
     /** Configs (webhooks, template, custom) */

@@ -1,5 +1,5 @@
 import * as djs from 'discord.js';
-import { DjsContent } from '../../../';
+import { DjsContent } from '../../';
 import { Channel } from '../definitions/Channel';
 import { DISCORD_LIB_PERMISSIONS } from './Enums';
 
