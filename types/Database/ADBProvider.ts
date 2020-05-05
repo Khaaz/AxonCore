@@ -1,6 +1,6 @@
 import {
     AxonClient, AxonOptions, AxonConfig, GuildConfig, updateDBVal,
-} from '../../';
+} from '..';
 
 /**
  * Abstract class for all DB services.

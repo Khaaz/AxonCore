@@ -1,5 +1,6 @@
 import {
     Message, Member, Client, Guild, User, TextableChannel, Role, Channel, PrivateChannel, Permission, PermissionOverwrite, AllowedMentions,
+    // @ts-ignore
 } from 'eris';
 
 declare type LibMessage = Message;

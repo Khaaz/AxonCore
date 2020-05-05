@@ -7,6 +7,7 @@ import { ErisMessage } from './Message';
 import { ErisResolver } from './Resolver';
 import { ErisClient } from './Client';
 import { ErisEnums } from './Enums';
+// @ts-ignore
 import * as Eris from 'eris';
 
 export declare class ErisInterface extends LibraryInterface {

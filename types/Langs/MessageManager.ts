@@ -1,6 +1,6 @@
 import {
     AxonClient, Languages, TranslationManager, MessageParser, AxonLanguageResponse,
-} from '../../';
+} from '..';
 
 /**
  * Holds all messages.

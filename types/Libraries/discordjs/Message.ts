@@ -1,4 +1,5 @@
 import { Message } from '../definitions/Message';
+// @ts-ignore
 import * as djs from 'discord.js';
 import { DjsContent } from '../../';
 

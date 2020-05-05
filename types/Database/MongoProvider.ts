@@ -1,7 +1,8 @@
+// @ts-ignore
 import { Model } from 'mongoose';
 import {
-    ADBProvider, AxonConfig, GuildConfig, AxonOptions, GuildSchema, updateDBVal,
-} from '../../';
+    ADBProvider, AxonConfig, GuildConfig, AxonOptions, GuildSchema, updateDBVal, AxonSchema,
+} from '..';
 
 /**
  * DB interface to interact with a MongoDB Database.
@@ -12,8 +13,8 @@ import {
  * @extends ADBProvider
  */
 export declare class MongoProvider extends ADBProvider {
-    public AxonSchema?: AxonConfig;
-    public GuildSchema?: GuildConfig;
+    public AxonSchema?: AxonSchema;
+    public GuildSchema?: GuildSchema;
 
     /**
      * Override init method.

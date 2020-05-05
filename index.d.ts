@@ -1,2 +1,6 @@
+/* eslint-disable @typescript-eslint/ban-ts-ignore */
 import * as AxonCore from './types';
-export = AxonCore;
+declare module 'axoncore' {
+    // @ts-ignore
+    export = AxonCore;
+}

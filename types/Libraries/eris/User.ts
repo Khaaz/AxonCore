@@ -1,4 +1,5 @@
 import { User } from '../definitions/User';
+// @ts-ignore
 import * as Eris from 'eris';
 
 export declare class ErisUser extends User {
