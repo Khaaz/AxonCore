@@ -1,7 +1,5 @@
-// @ts-ignore
-import { Model } from 'mongoose';
 import {
-    ADBProvider, AxonConfig, GuildConfig, AxonOptions, GuildSchema, updateDBVal, AxonSchema,
+    ADBProvider, AxonConfig, GuildConfig, AxonOptions, GuildSchema, updateDBVal, AxonSchema, GuildDocument,
 } from '..';
 
 /**
@@ -57,15 +55,15 @@ export declare class MongoProvider extends ADBProvider {
      */
     fetchGuild(gID: string): Promise<GuildConfig|null>;
     /**
-     * Retrieves the Guild **Schema** for the specified guild.
-     * Does not lean and return the actual mongoose Schema.
+     * Retrieves the Guild **Document** for the specified guild.
+     * Does not lean and returns the actual mongoose Document.
      * MongoProvider specific method.
      *
      * @param gID - Guild ID
-     * @returns GuildSchema or null
+     * @returns GuildDocument or null
      * @memberof MongoProvider
      */
-    fetchGuildSchema(gID: string): Promise<Model<GuildSchema> | null>;
+    fetchGuildDocument(gID: string): Promise<GuildDocument | null>;
 
     /**
      * Update AxonConfig in the DB.

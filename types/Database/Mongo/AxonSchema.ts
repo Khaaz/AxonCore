@@ -1,6 +1,6 @@
-import { Document } from 'mongoose';
+import { Document, Model } from 'mongoose';
 
-export declare interface AxonSchema extends Document {
+export declare interface AxonDocument extends Document {
     id: string;
     prefix: string;
     createdAt: Date;
@@ -8,3 +8,5 @@ export declare interface AxonSchema extends Document {
     bannedGuilds: string[];
     bannedUsers: string[];
 }
+
+export declare type AxonSchema = Model<AxonDocument>;
