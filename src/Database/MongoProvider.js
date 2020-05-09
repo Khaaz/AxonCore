@@ -135,7 +135,7 @@ class MongoProvider extends ADBProvider {
      * @returns {Promise<Object|null>} GuildSchema or null
      * @memberof MongoProvider
      */
-    fetchGuildSchema(gID) {
+    fetchGuildDocument(gID) {
         return this.GuildSchema.findOne( {
             guildID: gID,
         } ).exec();
