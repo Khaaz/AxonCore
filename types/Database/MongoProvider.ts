@@ -63,7 +63,7 @@ export declare class MongoProvider extends ADBProvider {
      * @returns GuildDocument or null
      * @memberof MongoProvider
      */
-    fetchGuildSchema(gID: string): Promise<GuildDocument | null>;
+    fetchGuildDocument(gID: string): Promise<GuildDocument | null>;
 
     /**
      * Update AxonConfig in the DB.
