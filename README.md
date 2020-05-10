@@ -73,8 +73,8 @@ It also comes with a lot of features for all possible usages and needs. AxonCore
 [Examples](./examples)  
 To get your application started easily, you can use the create-app boilerplate: **[create-axoncore-app](https://github.com/Khaazz/create-axoncore-app)**.  
 Here's how to use it:  
-`yarn create axoncore-app -lib <library> --type <module management type> <destination>`  
-`npm init axoncore-app -lib <library> --type <module management type> <destination>`
+`yarn create axoncore-app --lib <library> --type <module management type> <destination>`  
+`npm init axoncore-app --lib <library> --type <module management type> <destination>`
 
 - Available libraries: `eris`, `discordjs`.  
 - Available module types: `commonjs`, `esm`.

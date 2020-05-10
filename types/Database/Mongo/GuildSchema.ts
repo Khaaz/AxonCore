@@ -1,6 +1,6 @@
-import { Document } from 'mongoose';
+import { Document, Model } from 'mongoose';
 
-export declare interface GuildSchema extends Document {
+export declare interface GuildDocument extends Document {
     guildID: string;
     prefixes: string[];
     modules: string[];
@@ -15,3 +15,5 @@ export declare interface GuildSchema extends Document {
     modRoles: string[];
     modUsers: string[];
 }
+
+export declare type GuildSchema = Model<GuildDocument>;
