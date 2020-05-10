@@ -6,7 +6,8 @@ import GuildConfig from '../Core/Models/GuildConfig';
 /**
  * @typedef {import('../AxonOptions').default} AxonOptions
  * @typedef {import('./Mongo/AxonSchema').default} AxonSchema
- * @typedef {import('./Mongo/GuildSchema').default} GuildSchema
+ * @typedef {import('./Mongo/GuildSchema').default<GuildDocument>} GuildSchema
+ * @typedef {import('mongoose').Document} Document
  * @typedef {String|Boolean|Object.<string, any>|Array<any>|Number|Date} updateDBVal
  * @typedef {{
  * id: String, prefix: String, createdAt: Date, updatedAt: Date, bannedUsers: Array<String>, bannedGuilds: Array<String>
@@ -15,6 +16,7 @@ import GuildConfig from '../Core/Models/GuildConfig';
  * guildID: string, prefixes: Array<String>, createdAt: Date, updatedAt: Date, modules: Array<String>, commands: Array<String>, listeners: Array<String>,
  * ignoredUsers: Array<String>, ignoredRoles: Array<String>, ignoredChannels: Array<String>, modOnly: Boolean, modRoles: Array<String>, modUsers: Array<String>
  * }} GuildConfigRaw
+ * @typedef {Document & GuildConfigRaw} GuildDocument
  */
 
 /**
@@ -127,12 +129,12 @@ class MongoProvider extends ADBProvider {
     }
 
     /**
-     * Retrieves the Guild **Schema** for the specified guild.
-     * Does not lean and return the actual mongoose Schema.
+     * Retrieves the Guild **Document** for the specified guild.
+     * Does not lean and returns the actual mongoose Document.
      * MongoProvider specific method.
      *
      * @param {String} gID - Guild ID
-     * @returns {Promise<Object|null>} GuildSchema or null
+     * @returns {Promise<GuildDocument|null>} GuildDocument or null
      * @memberof MongoProvider
      */
     fetchGuildSchema(gID) {
