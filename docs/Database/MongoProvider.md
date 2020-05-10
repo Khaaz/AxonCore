@@ -33,7 +33,7 @@
     * [.initGuild(gID)](#MongoProvider+initGuild) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>
     * [.fetchAxon()](#MongoProvider+fetchAxon) ⇒ <code>Promise.&lt;(AxonConfig\|null)&gt;</code>
     * [.fetchGuild(gID)](#MongoProvider+fetchGuild) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>
-    * [.fetchGuildSchema(gID)](#MongoProvider+fetchGuildSchema) ⇒ <code>Promise.&lt;(Object\|null)&gt;</code>
+    * [.fetchGuildSchema(gID)](#MongoProvider+fetchGuildSchema) ⇒ <code>Promise.&lt;(GuildDocument\|null)&gt;</code>
     * [.updateAxon(key, value)](#MongoProvider+updateAxon) ⇒ <code>Promise.&lt;Boolean&gt;</code>
     * [.updateGuild(key, gID, value)](#MongoProvider+updateGuild) ⇒ <code>Promise.&lt;Boolean&gt;</code>
     * [.saveAxon(data)](#MongoProvider+saveAxon) ⇒ <code>Promise.&lt;(AxonConfig\|null)&gt;</code>
@@ -95,13 +95,13 @@ Retrieves the Guild config for the specified guild.
 
 <a name="MongoProvider+fetchGuildSchema"></a>
 
-### mongoProvider.fetchGuildSchema(gID) ⇒ <code>Promise.&lt;(Object\|null)&gt;</code>
-Retrieves the Guild **Schema** for the specified guild.
-Does not lean and return the actual mongoose Schema.
+### mongoProvider.fetchGuildSchema(gID) ⇒ <code>Promise.&lt;(GuildDocument\|null)&gt;</code>
+Retrieves the Guild **Document** for the specified guild.
+Does not lean and returns the actual mongoose Document.
 MongoProvider specific method.
 
 **Kind**: instance method of [<code>MongoProvider</code>](#MongoProvider)  
-**Returns**: <code>Promise.&lt;(Object\|null)&gt;</code> - GuildSchema or null  
+**Returns**: <code>Promise.&lt;(GuildDocument\|null)&gt;</code> - GuildDocument or null  
 
 | Param | Type | Description |
 | --- | --- | --- |
