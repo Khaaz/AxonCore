@@ -1,7 +1,6 @@
-import { Model } from 'mongoose';
 import {
-    ADBProvider, AxonConfig, GuildConfig, AxonOptions, GuildSchema, updateDBVal,
-} from '../../';
+    ADBProvider, AxonConfig, GuildConfig, AxonOptions, GuildSchema, updateDBVal, AxonSchema, GuildDocument,
+} from '..';
 
 /**
  * DB interface to interact with a MongoDB Database.
@@ -12,8 +11,8 @@ import {
  * @extends ADBProvider
  */
 export declare class MongoProvider extends ADBProvider {
-    public AxonSchema?: AxonConfig;
-    public GuildSchema?: GuildConfig;
+    public AxonSchema?: AxonSchema;
+    public GuildSchema?: GuildSchema;
 
     /**
      * Override init method.
@@ -56,15 +55,15 @@ export declare class MongoProvider extends ADBProvider {
      */
     fetchGuild(gID: string): Promise<GuildConfig|null>;
     /**
-     * Retrieves the Guild **Schema** for the specified guild.
-     * Does not lean and return the actual mongoose Schema.
+     * Retrieves the Guild **Document** for the specified guild.
+     * Does not lean and returns the actual mongoose Document.
      * MongoProvider specific method.
      *
      * @param gID - Guild ID
-     * @returns GuildSchema or null
+     * @returns GuildDocument or null
      * @memberof MongoProvider
      */
-    fetchGuildSchema(gID: string): Promise<Model<GuildSchema> | null>;
+    fetchGuildSchema(gID: string): Promise<GuildDocument | null>;
 
     /**
      * Update AxonConfig in the DB.

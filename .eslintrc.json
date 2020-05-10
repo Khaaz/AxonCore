@@ -27,7 +27,8 @@
               "requireLast": true
             }
           }
-        ]
+        ],
+        "@typescript-eslint/ban-ts-ignore": 0
       }
     }
   ]

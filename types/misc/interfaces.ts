@@ -2,7 +2,9 @@ import {
     CommandOptions, CommandPermissions, LibTextableChannel, LibMember, LibMessage, Command, LibGuild, LibUser, LIBRARY_TYPES, LOGGER_TYPES, DB_TYPES,
     Utils, ALogger, ADBProvider, AxonConfig, GuildConfig, User, Member, Message, Channel, Guild, Resolver, Embed, COMMAND_EXECUTION_TYPES, LibAllowedMentions,
 } from '../';
+// @ts-ignore
 import * as djs from 'discord.js';
+// @ts-ignore
 import * as Eris from 'eris';
 
 interface ModuleInfo {
@@ -380,6 +382,7 @@ interface CommandData {
 interface AxonTemplate {
     embeds: {[key: string]: number;};
     emotes: {[key: string]: string;};
+    [key: string]: {[key: string]: unknown;};
 }
 
 interface ListenerInfo {
@@ -719,11 +722,13 @@ interface AxonOptionsInfo {
     description: string;
     /** The application version */
     version: string;
+    [key: string]: string;
 }
 
 interface AxonOptionsStaff {
     owners: {name: string; id: string;}[];
     admins: {name: string; id: string;}[];
+    [key: string]: {name: string; id: string;}[];
 }
 
 interface AxonOptionsExtensions {

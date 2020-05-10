@@ -1,6 +1,6 @@
 export { JsonManager } from './Database/JSON/JsonManager';
-export { AxonSchema } from './Database/Mongo/AxonSchema';
-export { GuildSchema } from './Database/Mongo/GuildSchema';
+export { AxonDocument, AxonSchema } from './Database/Mongo/AxonSchema';
+export { GuildDocument, GuildSchema } from './Database/Mongo/GuildSchema';
 export { ADBProvider } from './Database/ADBProvider';
 export { DBSelector } from './Database/DBSelector';
 export { InMemoryProvider } from './Database/InMemoryProvider';

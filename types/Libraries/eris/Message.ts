@@ -1,4 +1,5 @@
 import { Message } from '../definitions/Message';
+// @ts-ignore
 import * as Eris from 'eris';
 import { ErisContent } from '../../';
 

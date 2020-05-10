@@ -1,4 +1,5 @@
 import { ALogger } from '../';
+// @ts-ignore
 import { Signale } from 'signale';
 
 /**
