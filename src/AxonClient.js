@@ -185,9 +185,11 @@ class AxonClient extends EventEmitter {
             /**
              * @type {ADBProvider}
              */
-            this.DBProvider = new axonOptions.extensions.DBProvider(this);
+            this.DBProvider = new axonOptions.extensions.DBProvider(this).init(axonOptions);
+            this.log('NOTICE', 'DB ready.');
         } else {
-            this.DBProvider = DBSelector.select(this, axonOptions);
+            this.DBProvider = DBSelector.select(this, axonOptions).init(axonOptions);
+            this.log('NOTICE', 'DB ready.');
         }
         this.DBProvider.init(axonOptions);
         this.log('NOTICE', 'DB ready.');
