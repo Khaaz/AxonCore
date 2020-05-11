@@ -55,7 +55,7 @@ class InMemoryProvider extends ADBProvider {
      * @returns {Promise<AxonConfig>}
      */
     async initAxon() {
-        return new this.axon._axonConfig(this.axon, {
+        return new this.AxonConfig(this.axon, {
             prefix: this.axon.settings.prefixes[0],
             createdAt: new Date(),
             updatedAt: new Date(),
@@ -68,7 +68,7 @@ class InMemoryProvider extends ADBProvider {
      * @returns {Promise<GuildConfig>}
      */
     async initGuild(gID) {
-        return new this.axon._guildConfig(this.axon, {
+        return new this.GuildConfig(this.axon, {
             guildID: gID,
             prefixes: [this.axon.settings.prefixes[0]],
             createAt: new Date(),
@@ -81,7 +81,7 @@ class InMemoryProvider extends ADBProvider {
      * @returns {Promise<AxonConfig>}
      */
     async saveAxon(axonSchema) {
-        return new this.axon._axonConfig(this.axon, axonSchema);
+        return new this.AxonConfig(this.axon, axonSchema);
     }
 
     /**
@@ -90,7 +90,7 @@ class InMemoryProvider extends ADBProvider {
      * @returns {Promise<GuildConfig>}
      */
     async saveGuild(gID, guildSchema) {
-        return new this.axon._guildConfig(this.axon, guildSchema);
+        return new this.GuildConfig(this.axon, guildSchema);
     }
 
     /**

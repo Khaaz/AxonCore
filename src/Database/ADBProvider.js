@@ -175,6 +175,14 @@ class ADBProvider {
     async saveGuild(gID, data) {
         throw new NotImplementedException();
     }
+
+    get GuildConfig() {
+        return this.axon._guildConfig;
+    }
+
+    get AxonConfig() {
+        return this.axon._axonConfig;
+    }
 }
 
 export default ADBProvider;

@@ -67,7 +67,7 @@ class MongoProvider extends ADBProvider {
             setDefaultsOnInsert: true,
         } ).lean().exec();
 
-        return data && new this.axon._axonConfig(this.axon, data);
+        return data && new this.AxonConfig(this.axon, data);
     }
 
     /**
@@ -94,7 +94,7 @@ class MongoProvider extends ADBProvider {
             setDefaultsOnInsert: true,
         } ).lean().exec();
 
-        return data && new this.axon._guildConfig(this.axon, data);
+        return data && new this.GuildConfig(this.axon, data);
     }
 
     // **** FETCHERS **** //
@@ -109,7 +109,7 @@ class MongoProvider extends ADBProvider {
         const data = await this.AxonSchema.findOne( {
             id: '1',
         } ).lean().exec();
-        return data && new this.axon._axonConfig(this.axon, data);
+        return data && new this.AxonConfig(this.axon, data);
     }
 
     /**
@@ -123,7 +123,7 @@ class MongoProvider extends ADBProvider {
         const data = await this.GuildSchema.findOne( {
             guildID: gID,
         } ).lean().exec();
-        return data && new this.axon._guildConfig(this.axon, data);
+        return data && new this.GuildConfig(this.axon, data);
     }
 
     /**
@@ -214,7 +214,7 @@ class MongoProvider extends ADBProvider {
             setDefaultsOnInsert: true,
         } ).lean().exec();
 
-        return res && new this.axon._axonConfig(this.axon, res);
+        return res && new this.AxonConfig(this.axon, res);
     }
 
     /**
@@ -238,7 +238,7 @@ class MongoProvider extends ADBProvider {
             setDefaultsOnInsert: true,
         } ).lean().exec();
 
-        return res && new this.axon._guildConfig(this.axon, res);
+        return res && new this.GuildConfig(this.axon, res);
     }
 }
 
