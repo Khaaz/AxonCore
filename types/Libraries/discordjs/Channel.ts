@@ -1,3 +1,4 @@
+// @ts-ignore
 import * as djs from 'discord.js';
 import { DjsContent } from '../../';
 import { Channel } from '../definitions/Channel';
