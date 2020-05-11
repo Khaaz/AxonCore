@@ -735,7 +735,7 @@ interface AxonOptionsExtensions {
     /** Custom utils. Needs to be an instance of AxonCore.Utils */
     utils?: new (...args: any[] ) => Utils;
     /** Custom logger */
-    logger?: new (...args: any[] ) => ALogger;
+    logger?: ALogger;
     /** DBProvider. Needs to be an instance of DBProvider */
     DBProvider?: new (...args: any[] ) => ADBProvider;
     /** Path to use as default location for usage of the JSONProvider */
