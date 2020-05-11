@@ -1,8 +1,5 @@
 import ADBProvider from './ADBProvider';
 
-import AxonConfig from '../Core/Models/AxonConfig';
-import GuildConfig from '../Core/Models/GuildConfig';
-
 /**
  * @typedef {import('../AxonOptions').default} AxonOptions
  * @typedef {import('./Mongo/AxonSchema').default} AxonSchema
@@ -70,7 +67,7 @@ class MongoProvider extends ADBProvider {
             setDefaultsOnInsert: true,
         } ).lean().exec();
 
-        return data && new AxonConfig(this.axon, data);
+        return data && new this.axon._axonConfig(this.axon, data);
     }
 
     /**
@@ -97,7 +94,7 @@ class MongoProvider extends ADBProvider {
             setDefaultsOnInsert: true,
         } ).lean().exec();
 
-        return data && new GuildConfig(this.axon, data);
+        return data && new this.axon._guildConfig(this.axon, data);
     }
 
     // **** FETCHERS **** //
@@ -112,7 +109,7 @@ class MongoProvider extends ADBProvider {
         const data = await this.AxonSchema.findOne( {
             id: '1',
         } ).lean().exec();
-        return data && new AxonConfig(this.axon, data);
+        return data && new this.axon._axonConfig(this.axon, data);
     }
 
     /**
@@ -126,7 +123,7 @@ class MongoProvider extends ADBProvider {
         const data = await this.GuildSchema.findOne( {
             guildID: gID,
         } ).lean().exec();
-        return data && new GuildConfig(this.axon, data);
+        return data && new this.axon._guildConfig(this.axon, data);
     }
 
     /**
@@ -217,7 +214,7 @@ class MongoProvider extends ADBProvider {
             setDefaultsOnInsert: true,
         } ).lean().exec();
 
-        return res && new AxonConfig(this.axon, res);
+        return res && new this.axon._axonConfig(this.axon, res);
     }
 
     /**
@@ -241,7 +238,7 @@ class MongoProvider extends ADBProvider {
             setDefaultsOnInsert: true,
         } ).lean().exec();
 
-        return res && new GuildConfig(this.axon, res);
+        return res && new this.axon._guildConfig(this.axon, res);
     }
 }
 

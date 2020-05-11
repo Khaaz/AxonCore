@@ -1,6 +1,4 @@
 import ADBProvider from './ADBProvider';
-import AxonConfig from '../Core/Models/AxonConfig';
-import GuildConfig from '../Core/Models/GuildConfig';
 
 /**
  * @typedef {String|Boolean|Object.<string, any>|Array<any>|Number|Date} updateDBVal
@@ -57,7 +55,7 @@ class InMemoryProvider extends ADBProvider {
      * @returns {Promise<AxonConfig>}
      */
     async initAxon() {
-        return new AxonConfig(this.axon, {
+        return new this.axon._axonConfig(this.axon, {
             prefix: this.axon.settings.prefixes[0],
             createdAt: new Date(),
             updatedAt: new Date(),
@@ -70,7 +68,7 @@ class InMemoryProvider extends ADBProvider {
      * @returns {Promise<GuildConfig>}
      */
     async initGuild(gID) {
-        return new GuildConfig(this.axon, {
+        return new this.axon._guildConfig(this.axon, {
             guildID: gID,
             prefixes: [this.axon.settings.prefixes[0]],
             createAt: new Date(),
@@ -79,11 +77,11 @@ class InMemoryProvider extends ADBProvider {
     }
 
     /**
-     * @param {AxonConfig|AxonCOnfigRaw} axonSchema
+     * @param {AxonConfig|AxonConfigRaw} axonSchema
      * @returns {Promise<AxonConfig>}
      */
     async saveAxon(axonSchema) {
-        return new AxonConfig(this.axon, axonSchema);
+        return new this.axon._axonConfig(this.axon, axonSchema);
     }
 
     /**
@@ -92,7 +90,7 @@ class InMemoryProvider extends ADBProvider {
      * @returns {Promise<GuildConfig>}
      */
     async saveGuild(gID, guildSchema) {
-        return new GuildConfig(this.axon, guildSchema);
+        return new this.axon._guildConfig(this.axon, guildSchema);
     }
 
     /**
