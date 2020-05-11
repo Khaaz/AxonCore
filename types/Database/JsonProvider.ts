@@ -22,7 +22,7 @@ export declare class JsonProvider extends ADBProvider {
      * @param {AxonOptions}
      * @memberof JsonProvider
      */
-    init(axonOptions?: AxonOptions): this
+    init(axonOptions?: AxonOptions): void;
     /**
      * Initialises a default Axon config.
      *

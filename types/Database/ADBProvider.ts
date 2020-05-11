@@ -31,7 +31,7 @@ export declare abstract class ADBProvider {
      *
      * @memberof ADBProvider
      */
-    public init(axonOptions?: AxonOptions): this; // Not Implemented
+    public init(axonOptions?: AxonOptions): void; // Not Implemented
     /**
      * Initialises a default Axon config.
      *
