@@ -24,7 +24,7 @@ import GuildConfig from '../Core/Models/GuildConfig';
  */
 class InMemoryProvider extends ADBProvider {
     init() {
-        return;
+        return this;
     }
 
     /**

@@ -11,7 +11,7 @@ import {
  * @extends ADBProvider
  */
 export declare class InMemoryProvider extends ADBProvider {
-    public init(): void;
+    public init(): this;
     public fetchAxon(): Promise<AxonConfig>;
     /**
      * @param gID Guild ID
