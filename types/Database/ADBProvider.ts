@@ -114,4 +114,7 @@ export declare abstract class ADBProvider {
      * @memberof ADBProvider
      */
     public saveGuild(gID: string, data: GuildConfig): Promise<GuildConfig | null>; // Not Implemented
+
+    public AxonConfig: new (...args: any) => AxonConfig;
+    public GuildConfig: new (...args: any) => GuildConfig;
 }
