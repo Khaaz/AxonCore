@@ -185,6 +185,8 @@ class AxonClient extends EventEmitter {
         } else {
             this.DBProvider = DBSelector.select(this, axonOptions);
         }
+        this.DBProvider.init(axonOptions);
+        this.log('NOTICE', 'DB ready.');
 
         if (this.settings.debugMode) {
             this.on('debug', this.onDebug);

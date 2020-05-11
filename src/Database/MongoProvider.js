@@ -44,6 +44,7 @@ class MongoProvider extends ADBProvider {
         // This will also only create the model at runtime, allowing to override the model if the MongoProvider is extended and the init method overridden
         this.AxonSchema = require('./Mongo/AxonSchema').default;
         this.GuildSchema = require('./Mongo/GuildSchema').default;
+        return this;
     }
 
     // **** INIT **** //

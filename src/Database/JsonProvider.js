@@ -37,6 +37,7 @@ class JsonProvider extends ADBProvider {
      */
     init(axonOptions = {} ) {
         this.manager = new JsonManager(axonOptions.extensions.DBLocation);
+        return this;
     }
 
     // **** INIT **** //

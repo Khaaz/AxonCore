@@ -60,9 +60,6 @@ class DBSelector extends ASelector {
                 break;
             }
         }
-
-        DBProvider.init(axonOptions);
-        axonClient.log('NOTICE', 'DB ready.');
         return DBProvider;
     }
 }
