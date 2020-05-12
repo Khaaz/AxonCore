@@ -31,17 +31,14 @@ class MongoProvider extends ADBProvider {
     /**
      * Override init method.
      *
-     * @param {AxonOptions} axonOptions
-     *
      * @memberof MongoProvider
      */
-    init(axonOptions = null) { // eslint-disable-line no-unused-vars
+    init() {
         // We use require to require the schema at runtime.
         // This will prevent the MongoProvider from DIRECTLY depending on mongoose and preventing to make it break the global export
         // This will also only create the model at runtime, allowing to override the model if the MongoProvider is extended and the init method overridden
         this.AxonSchema = require('./Mongo/AxonSchema').default;
         this.GuildSchema = require('./Mongo/GuildSchema').default;
-        return this;
     }
 
     // **** INIT **** //

@@ -29,12 +29,10 @@ class JsonProvider extends ADBProvider {
     /**
      * Override init method.
      *
-     * @param {AxonOptions}
      * @memberof JsonProvider
      */
-    init(axonOptions = {} ) {
-        this.manager = new JsonManager(axonOptions.extensions.DBLocation);
-        return this;
+    init() {
+        this.manager = new JsonManager(this.axon.extensions.DBLocation);
     }
 
     // **** INIT **** //

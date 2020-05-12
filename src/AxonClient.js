@@ -20,21 +20,14 @@ import ModuleLoader from './Core/Loaders/ModuleLoader';
 import ClientInitialiser from './Core/Loaders/ClientInitialiser';
 import Executor from './Core/Executor';
 
-import GuildConfig from './Core/Models/GuildConfig';
-import AxonConfig from './Core/Models/AxonConfig';
-
-import ADBProvider from './Database/ADBProvider'; // default ADBProvider
-
 // Utility
 import AxonUtils from './Utility/AxonUtils';
-import Utils from './Utility/Utils';
 
 import ALogger from './Loggers/ALogger';
 
 // Selector
 import LibrarySelector from './Libraries/index';
 import LoggerSelector from './Loggers/index';
-import DBSelector from './Database/index';
 
 // Misc
 import logo from './Configs/logo';
@@ -152,6 +145,8 @@ class AxonClient extends EventEmitter {
             github: packageJSON.link,
         };
 
+        this.extensions = ClientInitialiser.initExtensions(this, axonOptions);
+
         /* Logger */
         if (axonOptions.extensions.logger && axonOptions.extensions.logger instanceof ALogger) {
             this.logger = axonOptions.extensions.logger;
@@ -169,27 +164,12 @@ class AxonClient extends EventEmitter {
          */
         this._botClient = botClient;
         this.library = LibrarySelector.select(this, axonOptions);
-        this.log('NOTICE', `Library Interface ready. [TYPE: ${this.library.type}]`);
 
         /* Utils */
-        if (axonOptions.extensions.utils && axonOptions.extensions.utils.prototype instanceof Utils) {
-            /**
-             * @type {Utils}
-             */
-            this.utils = new axonOptions.extensions.utils(this); // eslint-disable-line new-cap
-        } else {
-            this.utils = new Utils(this);
-        }
+        this.utils = new this.extensions.Utils(this); // eslint-disable-line new-cap
         /* ADBProvider */
-        if (axonOptions.extensions.DBProvider && axonOptions.extensions.DBProvider.prototype instanceof ADBProvider) {
-            /**
-             * @type {ADBProvider}
-             */
-            this.DBProvider = new axonOptions.extensions.DBProvider(this);
-        } else {
-            this.DBProvider = DBSelector.select(this, axonOptions);
-        }
-        this.DBProvider.init(axonOptions);
+        this.DBProvider = new this.extensions.DBProvider(this);
+        this.DBProvider.init();
         this.log('NOTICE', 'DB ready.');
 
         if (this.settings.debugMode) {
@@ -203,11 +183,6 @@ class AxonClient extends EventEmitter {
         this.eventManager = new EventManager(this);
 
         /* GuildConfigs */
-        if (axonOptions.extensions.guildConfig && axonOptions.extensions.guildConfig.prototype instanceof GuildConfig) {
-            this._guildConfig = axonOptions.extensions.guildConfig;
-        } else {
-            this._guildConfig = GuildConfig;
-        }
         this.guildConfigs = new GuildConfigCache(this, axonOptions.settings.guildConfigCache); // Guild ID => guildConfig
 
         /* Core Logic */
@@ -221,11 +196,6 @@ class AxonClient extends EventEmitter {
         this.staff = ClientInitialiser.initStaff(axonOptions.staff, this.logger);
 
         /* AxonConfig */
-        if (axonOptions.extensions.axonConfig && axonOptions.extensions.axonConfig.prototype instanceof AxonConfig) {
-            this._axonConfig = axonOptions.extensions.axonConfig;
-        } else {
-            this._axonConfig = AxonConfig;
-        }
         /**
          * @type {AxonConfig}
          */

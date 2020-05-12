@@ -6,6 +6,9 @@ import { DB_TYPES } from './../Utility/Constants/AxonEnums';
 /**
  * @typedef {import('../AxonClient').default} AxonClient
  * @typedef {import('../AxonOptions').default} AxonOptions
+ * @typedef {import('./InMemoryProvider').default} InMemoryProvider
+ * @typedef {import('./JsonProvider').default} JsonProvider
+ * @typedef {import('./MongoProvider').default} MongoService
  */
 
 /**
@@ -22,6 +25,7 @@ class DBSelector extends ASelector {
      * Select the DB to use
      * @param {AxonClient} axonClient AxonClient
      * @param {AxonOptions} axonOptions AxonOptions
+     * @returns {new (...args) => (InMemoryProvider|JsonProvider|MongoService)}
      */
     static select(axonClient, axonOptions) {
         let DBProvider;
@@ -33,7 +37,7 @@ class DBSelector extends ASelector {
             case DB_TYPES.IN_MEMORY:
             default: {
                 const InMemoryProvider = require('./InMemoryProvider').default;
-                DBProvider = new InMemoryProvider(axonClient);
+                DBProvider = InMemoryProvider;
                 axonClient.log('INFO', 'Selected Database: In-Memory');
                 axonClient.log('WARN', 'Configs will not change.');
                 break;
@@ -41,7 +45,7 @@ class DBSelector extends ASelector {
 
             // Json Database
             case DB_TYPES.JSON: {
-                DBProvider = new JsonProvider(axonClient);
+                DBProvider = JsonProvider;
                 axonClient.log('INFO', 'Selected Database: JSON DB.');
                 break;
             }
@@ -50,10 +54,10 @@ class DBSelector extends ASelector {
             case DB_TYPES.MONGO: {
                 try {
                     const MongoService = require('./MongoProvider').default;
-                    DBProvider = new MongoService(axonClient);
+                    DBProvider = MongoService;
                     axonClient.log('INFO', 'Selected Database: MongoDB.');
                 } catch (err) {
-                    DBProvider = new JsonProvider(axonClient);
+                    DBProvider = JsonProvider;
                     axonClient.log('WARN', 'Mongoose wasn\'t found, using JSON DB instead.');
                     axonClient.log('INFO', 'Selected Database: JSON DB.');
                 }

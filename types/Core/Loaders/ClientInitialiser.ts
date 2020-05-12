@@ -1,4 +1,4 @@
-import { ALogger, AxonClient } from '../../';
+import { ALogger, AxonClient, AxonOptions, ExtentionInitReturn } from '../../';
 
 /**
  * Loads the AxonClient.
@@ -28,4 +28,6 @@ export declare class ClientInitialiser {
      * @memberof ClientInitialiser
      */
     static initAxon(axon: AxonClient): Promise<void>;
+
+    static initExtensions(axon: AxonClient, axonOptions: AxonOptions): ExtentionInitReturn;
 }
