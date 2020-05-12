@@ -168,7 +168,7 @@ class AxonClient extends EventEmitter {
          * @type {BotClient}
          */
         this._botClient = botClient;
-        this.library = LibrarySelector.select(this, axonOptions);
+        this.library = new LibrarySelector.select(this, axonOptions)(this.botClient, axonOptions._token);
         this.log('NOTICE', `Library Interface ready. [TYPE: ${this.library.type}]`);
 
         /* Utils */
@@ -187,7 +187,7 @@ class AxonClient extends EventEmitter {
              */
             this.DBProvider = new axonOptions.extensions.DBProvider(this);
         } else {
-            this.DBProvider = DBSelector.select(this, axonOptions);
+            this.DBProvider = new DBSelector.select(this, axonOptions)(this);
         }
         this.DBProvider.init(axonOptions);
         this.log('NOTICE', 'DB ready.');
