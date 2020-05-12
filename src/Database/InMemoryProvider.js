@@ -22,7 +22,7 @@ import ADBProvider from './ADBProvider';
  */
 class InMemoryProvider extends ADBProvider {
     init() {
-        return this;
+        return;
     }
 
     /**

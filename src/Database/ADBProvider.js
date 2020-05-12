@@ -57,11 +57,9 @@ class ADBProvider {
      * Init the ADBProvider.
      * Method called just after instantiation. Can be overridden with anything that will be used by the provider.
      *
-     * @param {AxonOptions} [axonOptions]
-     *
      * @memberof ADBProvider
      */
-    init(axonOptions = null) {
+    init() {
         throw new NotImplementedException();
     }
 
@@ -177,11 +175,11 @@ class ADBProvider {
     }
 
     get GuildConfig() {
-        return this.axon._guildConfig;
+        return this.axon.extensions.GuildConfig;
     }
 
     get AxonConfig() {
-        return this.axon._axonConfig;
+        return this.axon.extensions.AxonConfig;
     }
 }
 

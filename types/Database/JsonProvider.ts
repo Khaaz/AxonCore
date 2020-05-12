@@ -1,5 +1,5 @@
 import {
-    ADBProvider, JsonManager, AxonOptions, AxonConfig, GuildConfig, updateDBVal,
+    ADBProvider, JsonManager, AxonConfig, GuildConfig, updateDBVal,
 } from '..';
 
 /**
@@ -22,7 +22,7 @@ export declare class JsonProvider extends ADBProvider {
      * @param {AxonOptions}
      * @memberof JsonProvider
      */
-    init(axonOptions?: AxonOptions): void;
+    init(): void;
     /**
      * Initialises a default Axon config.
      *

@@ -930,6 +930,14 @@ interface Timeout {
     timeout: number;
 }
 
+interface ExtentionInitReturn {
+    Utils: new (...args: any[] ) => Utils;
+    DBProvider: new (...args: any[] ) => ADBProvider;
+    AxonConfig: new (...args: any[] ) => AxonConfig;
+    GuildConfig: new (...args: any[] ) => GuildConfig;
+    DBLocation: string;
+}
+
 export {
     ModuleInfo, ModuleData, AxonJSON, GuildJSON, AConfig, AxonConfigRaw, GConfig, GuildConfigRaw, CommandInfo,
     ACommandOptions, CommandPerms, CommandData, AxonTemplate, ListenerInfo, ListenerData, APIAxonMSGCont, AxonMSGCont, AxonMSGOpt, PermissionObject,
@@ -937,5 +945,5 @@ export {
     AxonOptionsSettings, AOptionsSettings, AxonLanguageResponse, Languages, AxonOptionsBase, WebhookConfig, Webhooks, AxonOptionsPrefixes,
     AxonOptionsInfo, AxonOptionsStaff, AxonOptionsExtensions, AxonConfs, AxonParams, Info, AxonInfo, AxonStaffIDs, LibraryInterfaceStructs, PresenceGame,
     RawAttachment, RawUser, WebhookResponse, DjsContent, DjsWebhookContent, DjsPresenceGame, ErisContent, ErisWebhookContent, ErisPresenceGame,
-    CommandEnvironmentProps, CommandEnvironmentParams, CollectorContainer, Timeout,
+    CommandEnvironmentProps, CommandEnvironmentParams, CollectorContainer, Timeout, ExtentionInitReturn,
 };

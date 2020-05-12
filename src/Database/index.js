@@ -6,6 +6,9 @@ import { DB_TYPES } from './../Utility/Constants/AxonEnums';
 /**
  * @typedef {import('../AxonClient').default} AxonClient
  * @typedef {import('../AxonOptions').default} AxonOptions
+ * @typedef {import('./InMemoryProvider').default} InMemoryProvider
+ * @typedef {import('./JsonProvider').default} JsonProvider
+ * @typedef {import('./MongoProvider').default} MongoService
  */
 
 /**
@@ -22,6 +25,7 @@ class DBSelector extends ASelector {
      * Select the DB to use
      * @param {AxonClient} axonClient AxonClient
      * @param {AxonOptions} axonOptions AxonOptions
+     * @returns {new (...args) => (InMemoryProvider|JsonProvider|MongoService)}
      */
     static select(axonClient, axonOptions) {
         let DBProvider;

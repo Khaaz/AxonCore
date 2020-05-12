@@ -1,7 +1,17 @@
 /**
  * @typedef {import('../../Loggers/ALogger').default} ALogger
  * @typedef {import('../../AxonClient').default} AxonClient
+ * @typedef {import('../../AxonOptions').default} AxonOptions
+ * @typedef {import('../../Database/ADBProvider').default} ADBProvider
+ * @typedef {import('../Models/GuildConfig').default} GuildConfig
+ * @typedef {import('../Models/AxonConfig').default} AxonConfig
  */
+
+import Utils from '../../Utility/Utils';
+import ADBProvider from '../../Database/ADBProvider';
+import DBSelector from '../../Database';
+import AxonConfig from '../Models/AxonConfig';
+import GuildConfig from '../Models/GuildConfig';
 
 /**
  * Loads the AxonClient.
@@ -58,6 +68,44 @@ class ClientInitialiser {
         axon.axonConfig = axonConf; // We have to do it here and not return the value because we need to unwrap the promise and actually assign the value.
         
         axon.logger.info('[INIT] Axon config initialised!');
+    }
+
+    /**
+     * Initialise AxonOptions Extensions.
+     * Returns uninstantiated classes without logger. These values should then be instantiated
+     * @param {AxonClient} axon - AxonClient
+     * @param {AxonOptions} axonOptions - AxonOptions
+     */
+    static initExtensions(axon, axonOptions) {
+        const extensions = {};
+
+        if (axonOptions.extensions.utils && axonOptions.extensions.utils.prototype instanceof Utils) {
+            extensions.Utils = axonOptions.extensions.utils;
+        } else {
+            extensions.Utils = Utils;
+        }
+
+        if (axonOptions.extensions.DBProvider && axonOptions.extensions.DBProvider.prototype instanceof ADBProvider) {
+            extensions.DBProvider = axonOptions.extensions.DBProvider;
+        } else {
+            extensions.DBProvider = DBSelector.select(axon, axonOptions);
+        }
+
+        if (axonOptions.extensions.axonConfig && axonOptions.extensions.axonConfig.prototype instanceof AxonConfig) {
+            extensions.AxonConfig = axonOptions.extensions.axonConfig;
+        } else {
+            extensions.AxonConfig = AxonConfig;
+        }
+
+        if (axonOptions.extensions.guildConfig && axonOptions.extensions.guildConfig.prototype instanceof GuildConfig) {
+            extensions.GuildConfig = axonOptions.extensions.guildConfig;
+        } else {
+            extensions.GuildConfig = GuildConfig;
+        }
+
+        extensions.DBLocation = axonOptions.extensions.DBLocation || null;
+
+        return extensions;
     }
 }
 

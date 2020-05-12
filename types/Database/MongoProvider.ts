@@ -1,5 +1,5 @@
 import {
-    ADBProvider, AxonConfig, GuildConfig, AxonOptions, GuildSchema, updateDBVal, AxonSchema, GuildDocument,
+    ADBProvider, AxonConfig, GuildConfig, GuildSchema, updateDBVal, AxonSchema, GuildDocument,
 } from '..';
 
 /**
@@ -21,7 +21,7 @@ export declare class MongoProvider extends ADBProvider {
      *
      * @memberof MongoProvider
      */
-    init(axonOptions?: AxonOptions): void;
+    init(): void;
     /**
      * Initialises a default Axon config.
      *

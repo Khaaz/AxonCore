@@ -1,5 +1,5 @@
 import {
-    AxonClient, AxonOptions, AxonConfig, GuildConfig, updateDBVal,
+    AxonClient, AxonConfig, GuildConfig, updateDBVal,
 } from '..';
 
 /**
@@ -31,7 +31,7 @@ export declare abstract class ADBProvider {
      *
      * @memberof ADBProvider
      */
-    public init(axonOptions?: AxonOptions): void; // Not Implemented
+    public init(): void; // Not Implemented
     /**
      * Initialises a default Axon config.
      *

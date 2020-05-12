@@ -38,7 +38,7 @@ export {
     AxonOptionsSettings, AOptionsSettings, AxonLanguageResponse, Languages, AxonOptionsBase, WebhookConfig, Webhooks, AxonOptionsPrefixes,
     AxonOptionsInfo, AxonOptionsStaff, AxonOptionsExtensions, AxonConfs, AxonParams, Info, AxonInfo, AxonStaffIDs, LibraryInterfaceStructs, PresenceGame,
     RawAttachment, RawUser, WebhookResponse, DjsContent, DjsWebhookContent, DjsPresenceGame, ErisContent, ErisWebhookContent, ErisPresenceGame,
-    CommandEnvironmentParams, CommandEnvironmentProps, CollectorContainer, Timeout,
+    CommandEnvironmentParams, CommandEnvironmentProps, CollectorContainer, Timeout, ExtentionInitReturn,
 } from './misc/interfaces';
 
 export { Command } from './Core/Command/Command';
