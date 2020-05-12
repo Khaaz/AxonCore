@@ -37,8 +37,10 @@ export declare class AxonClient extends EventEmitter {
 
     /** The Manager that handles GuildConfigs (cache / DB etc) */
     public guildConfigs: GuildConfigCache;
+    private _guildConfig: new (...args: any) => GuildConfig
     /** The AxonConfig object that handles globally blacklisted users and guilds */
     public axonConfig?: AxonConfig;
+    private _axonConfig: new (...args: any) => AxonConfig
 
     /** Load, unload modules. */
     public moduleLoader: ModuleLoader;

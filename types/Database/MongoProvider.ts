@@ -21,7 +21,7 @@ export declare class MongoProvider extends ADBProvider {
      *
      * @memberof MongoProvider
      */
-    init(axonOptions?: AxonOptions): this;
+    init(axonOptions?: AxonOptions): void;
     /**
      * Initialises a default Axon config.
      *

@@ -20,6 +20,9 @@ import ModuleLoader from './Core/Loaders/ModuleLoader';
 import ClientInitialiser from './Core/Loaders/ClientInitialiser';
 import Executor from './Core/Executor';
 
+import GuildConfig from './Core/Models/GuildConfig';
+import AxonConfig from './Core/Models/AxonConfig';
+
 import ADBProvider from './Database/ADBProvider'; // default ADBProvider
 
 // Utility
@@ -51,6 +54,7 @@ import { WEBHOOK_TYPES, LOG_LEVELS, WEBHOOK_TO_COLOR, DEBUG_FLAGS } from './Util
  * @typedef {import('./Core/Models/GuildConfig').default} GuildConfig
  * @typedef {import('./Core/Command/CommandEnvironment').default} CommandEnvironment
  * @typedef {import(./Libraries/definitions/LibraryInterface).default} LibraryInterface
+ * @typedef {import('./Core/Models/AxonConfig').default} AxonConfig
  */
 
 /**
@@ -199,6 +203,11 @@ class AxonClient extends EventEmitter {
         this.eventManager = new EventManager(this);
 
         /* GuildConfigs */
+        if (axonOptions.extensions.guildConfig && axonOptions.extensions.guildConfig.prototype instanceof GuildConfig) {
+            this._guildConfig = axonOptions.extensions.guildConfig;
+        } else {
+            this._guildConfig = GuildConfig;
+        }
         this.guildConfigs = new GuildConfigCache(this, axonOptions.settings.guildConfigCache); // Guild ID => guildConfig
 
         /* Core Logic */
@@ -212,6 +221,15 @@ class AxonClient extends EventEmitter {
         this.staff = ClientInitialiser.initStaff(axonOptions.staff, this.logger);
 
         /* AxonConfig */
+        if (axonOptions.extensions.axonConfig && axonOptions.extensions.axonConfig.prototype instanceof AxonConfig) {
+            this._axonConfig = axonOptions.extensions.axonConfig;
+        } else {
+            this._axonConfig = AxonConfig;
+        }
+        /**
+         * @type {AxonConfig}
+         */
+        this.axonConfig = null;
         ClientInitialiser.initAxon(this);
 
         /* Additional loading / properties */

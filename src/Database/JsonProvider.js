@@ -1,8 +1,5 @@
 import ADBProvider from './ADBProvider';
 
-import AxonConfig from '../Core/Models/AxonConfig';
-import GuildConfig from '../Core/Models/GuildConfig';
-
 import JsonManager from './JSON/JsonManager';
 
 /**
@@ -50,7 +47,7 @@ class JsonProvider extends ADBProvider {
      */
     async initAxon() {
         const data = await this.manager.createAxonSchema(this.axon.settings.prefixes[0] );
-        return data && new AxonConfig(this.axon, data);
+        return data && new this.AxonConfig(this.axon, data);
     }
 
     /**
@@ -64,7 +61,7 @@ class JsonProvider extends ADBProvider {
      */
     async initGuild(gID) {
         const data = await this.manager.createGuildSchema(this.axon.settings.prefixes, gID);
-        return data && new GuildConfig(this.axon, data);
+        return data && new this.GuildConfig(this.axon, data);
     }
 
     // **** FETCH **** //
@@ -77,7 +74,7 @@ class JsonProvider extends ADBProvider {
      */
     async fetchAxon() {
         const data = await this.manager.fetchAxonSchema();
-        return data && new AxonConfig(this.axon, data);
+        return data && new this.AxonConfig(this.axon, data);
     }
 
     /**
@@ -89,7 +86,7 @@ class JsonProvider extends ADBProvider {
      */
     async fetchGuild(gID) {
         const data = await this.manager.fetchGuildSchema(gID);
-        return data && new GuildConfig(this.axon, data);
+        return data && new this.GuildConfig(this.axon, data);
     }
 
     // **** UPDATE **** //
@@ -138,7 +135,7 @@ class JsonProvider extends ADBProvider {
      */
     async saveAxon(data) {
         const res = await this.manager.writeAxonSchema(data);
-        return res && new AxonConfig(this.axon, res);
+        return res && new this.AxonConfig(this.axon, res);
     }
 
     /**
@@ -151,7 +148,7 @@ class JsonProvider extends ADBProvider {
      */
     async saveGuild(gID, data) {
         const res = await this.manager.writeGuildSchema(gID, data);
-        return res && new GuildConfig(this.axon, res);
+        return res && new this.GuildConfig(this.axon, res);
     }
 }
 

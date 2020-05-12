@@ -1,8 +1,6 @@
 import LRUCache from './../../Utility/External/LRUCache';
 import Store from '../../Utility/Store';
 
-import GuildConfig from '../Models/GuildConfig';
-
 import AxonError from '../../Errors/AxonError';
 
 /**
@@ -28,7 +26,7 @@ class GuildConfigsCache extends Store {
      * @memberof GuildConfigsCache
      */
     constructor(axonClient) {
-        super(new LRUCache(1000, { base: GuildConfig } ) );
+        super(new LRUCache(1000, { base: axonClient._guildConfig } ) );
         this._axon = axonClient;
     }
 
