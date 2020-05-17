@@ -94,17 +94,17 @@ class CommandDispatcher {
         }
         env.setGuildConfig(guildConfig);
         
-        const prefix = this.resolvePrefix(msg, guildConfig, env.isAdmin, env.isOwner);
-        if (!prefix) {
-            return;
-        }
-        env.setPrefix(prefix);
-
         /* Formatting mention to replace <!@ mention to <@ mentions (uniform mentions) */
         const content = this.library.message
             .getContent(msg)
             .replace(this.mentionFormatter, '<@');
         this.library.message.setContent(msg, content);
+
+        const prefix = this.resolvePrefix(msg, guildConfig, env.isAdmin, env.isOwner);
+        if (!prefix) {
+            return;
+        }
+        env.setPrefix(prefix);
 
         /* IN GUILD | NOT ADMIN | Check if the user/role/channel is ignored in the guild */
         if (guildConfig && !env.isAdmin && guildConfig.isIgnored(msg) ) {
