@@ -26,7 +26,7 @@
 >__**Complete, Stable, Fast, Universal**__  
 > The best all-in-one framework for discord bots. The power of a fully featured framework, the simplicity of a predictable API.
 
-AxonCore is an all in one framework, built to make bot deveopment fast and easy. Focus only on what matters: creating commands for your users. AxonCore handles all the hard and annoying work for you. Take advantage of its stability and robustness to fasten your development.  
+AxonCore is an all in one framework, built to make bot development fast and easy. Focus only on what matters: creating commands for your users. AxonCore handles all the hard and annoying work for you. Take advantage of its stability and robustness to fasten your development.  
 AxonCore is opiniated to enforce good code practice and has all features you could possibly want in a framework, from command and event handlers, to full Database support, more details further down.  
 AxonCore is lib agnostic, which mean you can use it indifferently with [Eris](https://github.com/abalabahaha/eris), [Discord.js](https://github.com/discordjs/discord.js) or [Detritusjs](https://github.com/detritusjs/client).
 
@@ -77,7 +77,7 @@ Here's how to use it:
 `npm init axoncore-app --lib <library> --type <module management type> <destination>`
 
 - Available libraries: `eris`, `discordjs`.  
-- Available module types: `commonjs`, `esm`.
+- Available module types: `commonjs`, `esm`, `ts`.
 
 AxonCore has **FULL** typescript support.  
 When you install the package the first time, you can choose the library you are using, and the package will automatically link the library typings. That will allow you to have full and complete typings for your typescript project or for using intllisense.  
