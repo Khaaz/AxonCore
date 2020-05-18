@@ -208,8 +208,9 @@ All documentation can be found [here](https://khaaz.github.io/AxonCore/#/)!
 
 AxonCore is being used in these cool projects:
 
-- [Ease](https://github.com/AxonTeam/Ease) Enhance A Server Easily - A all in one modular bot that you can build and selfhost.
-- [WebSPELL](https://github.com/Khaaz/webSPELL) - A custom RSS bot made for a french community.
+- [Ease](https://github.com/AxonTeam/Ease) - Enhance A Server Easily - A all in one modular bot that you can build and selfhost.
+- [WebSPELL](https://github.com/reseau-webspell/webSPELL) - A custom RSS feed subscriber bot made for a french community.
+- [NookAmis](https://github.com/reseau-webspell/NookAmis) - A custom Animal Crossing companion bot made for a french community.
 
 ## Contributions
 
