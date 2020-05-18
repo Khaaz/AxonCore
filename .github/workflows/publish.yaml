@@ -46,7 +46,7 @@ jobs:
       with:
         node-version: 12
         registry-url: https://npm.pkg.github.com/
-        scope: '@khaazz'
+        scope: '@khaaz'
       env:
         NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
     - name: Dep install
@@ -54,9 +54,9 @@ jobs:
       env:
         CI: true
     - name: Autoscope package
-      uses: khaazz/action-autoscope@master
+      uses: khaaz/action-autoscope@master
     - name: Configure .npmrc
-      run: echo registry=https://npm.pkg.github.com/Khaazz >> .npmrc
+      run: echo registry=https://npm.pkg.github.com/Khaaz >> .npmrc
     - name: Publish
       run: npm publish
       env:
