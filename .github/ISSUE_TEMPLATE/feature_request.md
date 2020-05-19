@@ -1,3 +1,10 @@
+---
+name: Feature Request
+about: Request a new feature/idea that you'd like to see in AxonCore
+title: 'Feature Request: '
+
+---
+
 # FEATURE REQUEST
 
 ## **Overview**
