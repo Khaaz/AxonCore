@@ -1,3 +1,10 @@
+---
+name: Bug Report
+about: Create a bug report for us to fix
+title: 'BUG: '
+
+---
+
 # BUG REPORT
 
 ## **Overview**
