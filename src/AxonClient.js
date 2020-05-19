@@ -144,15 +144,15 @@ class AxonClient extends EventEmitter {
             author: packageJSON.author,
             github: packageJSON.link,
         };
-
-        this.extensions = ClientInitialiser.initExtensions(this, axonOptions);
-
+        
         /* Logger */
         if (axonOptions.extensions.logger && axonOptions.extensions.logger instanceof ALogger) {
             this.logger = axonOptions.extensions.logger;
         } else {
             this.logger = LoggerSelector.select(axonOptions.settings);
         }
+        
+        this.extensions = ClientInitialiser.initExtensions(this, axonOptions);
 
         /* AxonUtils */
         this.axonUtils = new AxonUtils(this);
