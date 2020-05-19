@@ -21,6 +21,10 @@ import ADBProvider from './ADBProvider';
  * @extends ADBProvider
  */
 class InMemoryProvider extends ADBProvider {
+    constructor(axon) {
+        super(axon, 0);
+    }
+
     init() {
         return;
     }

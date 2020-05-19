@@ -22,7 +22,7 @@ class ALogger {
     /**
      * Creates an instance of ALogger
      * @param out Can be Console, Winston or Signale. Chalk will go as Console
-     * @param {LOGGER_TYPES} type - The logger type
+     * @param {LOGGER_TYPES} [type=0] - The logger type
      * @memberof ALogger
      */
     constructor(out, type = 0) {

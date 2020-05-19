@@ -28,6 +28,10 @@ import ADBProvider from './ADBProvider';
  * @prop {GuildSchema} GuildSchema
  */
 class MongoProvider extends ADBProvider {
+    constructor(axon) {
+        super(axon, 2);
+    }
+    
     /**
      * Override init method.
      *

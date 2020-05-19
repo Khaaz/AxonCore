@@ -11,6 +11,8 @@ import {
  * @extends ADBProvider
  */
 export declare class InMemoryProvider extends ADBProvider {
+    public type: 0;
+    
     public init(): void;
     public fetchAxon(): Promise<AxonConfig>;
     /**

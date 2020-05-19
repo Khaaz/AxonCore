@@ -11,6 +11,8 @@ import {
  * @extends ADBProvider
  */
 export declare class JsonProvider extends ADBProvider {
+    public type: 1;
+    
     /**
      * Class responsible to read / write data to the DB as json.
      */

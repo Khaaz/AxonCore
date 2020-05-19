@@ -17,6 +17,7 @@ import NotImplementedException from '../Errors/NotImplementedException';
  * guildID: string, prefixes: Array<String>, createdAt: Date, updatedAt: Date, modules: Array<String>, commands: Array<String>, listeners: Array<String>,
  * ignoredUsers: Array<String>, ignoredRoles: Array<String>, ignoredChannels: Array<String>, modOnly: Boolean, modRoles: Array<String>, modUsers: Array<String>
  * }} GuildConfigRaw
+ * @typedef {import('../Utility/Constants/AxonEnums').DB_TYPES} DB_TYPES
  */
 
 /**
@@ -32,16 +33,17 @@ import NotImplementedException from '../Errors/NotImplementedException';
  * @class ADBProvider
  *
  * @prop {AxonClient} axon - The AxonClient
+ * @prop {DB_TYPES} type - The Database type
  */
 class ADBProvider {
     /**
      * Creates an instance of ADBProvider.
      *
      * @param {AxonClient} axonClient
-     *
+     * @param {DB_TYPES} [type=0]
      * @memberof ADBProvider
      */
-    constructor(axonClient) {
+    constructor(axonClient, type = 0) {
         if (this.constructor === 'ADBProvider') {
             throw new NoAbstractInstanceException();
         }
@@ -51,6 +53,7 @@ class ADBProvider {
         }
 
         this.axon = axonClient;
+        this.type = type;
     }
 
     /**

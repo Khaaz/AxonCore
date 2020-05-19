@@ -170,7 +170,7 @@ class AxonClient extends EventEmitter {
         /* ADBProvider */
         this.DBProvider = new this.extensions.DBProvider(this);
         this.DBProvider.init();
-        this.log('NOTICE', 'DB ready.');
+        this.log('NOTICE', `DB ready. [TYPE: ${this.DBProvider.type}]`);
 
         if (this.settings.debugMode) {
             this.on('debug', this.onDebug);

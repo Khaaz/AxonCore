@@ -1,5 +1,5 @@
 import {
-    AxonClient, AxonConfig, GuildConfig, updateDBVal,
+    AxonClient, AxonConfig, GuildConfig, updateDBVal, DB_TYPES,
 } from '..';
 
 /**
@@ -20,11 +20,15 @@ export declare abstract class ADBProvider {
      */
     public axon: AxonClient;
     /**
+     * The Database type
+     */
+    public type: DB_TYPES
+    /**
      * Creates an instance of ADBProvider.
      *
      * @memberof ADBProvider
      */
-    constructor(axonClient: AxonClient);
+    constructor(axonClient: AxonClient, type: DB_TYPES);
     /**
      * Init the ADBProvider.
      * Method called just after instantiation. Can be overridden with anything that will be used by the provider.

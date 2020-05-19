@@ -26,6 +26,10 @@ import JsonManager from './JSON/JsonManager';
  * @prop {JsonManager} manager - Class responsible to read / write data to the DB as json.
  */
 class JsonProvider extends ADBProvider {
+    constructor(axon) {
+        super(axon, 1);
+    }
+
     /**
      * Override init method.
      *

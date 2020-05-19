@@ -11,6 +11,8 @@ import {
  * @extends ADBProvider
  */
 export declare class MongoProvider extends ADBProvider {
+    public type: 1;
+
     public AxonSchema?: AxonSchema;
     public GuildSchema?: GuildSchema;
 
