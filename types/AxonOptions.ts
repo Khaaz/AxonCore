@@ -22,7 +22,7 @@ export declare class AxonOptions {
     /**
      * Custom function that will log a custom logo on startup
      */
-    public logo: ( () => void) | null;
+    public logo: ( (packageJSONversion: string) => void) | null;
     /**
      * General info about the bot
      */

@@ -109,7 +109,7 @@ class AxonClient extends EventEmitter {
      */
     constructor(botClient, axonOptions = {}, modules = {} ) {
         super();
-        axonOptions.logo ? axonOptions.logo() : logo(packageJSON.version);
+        axonOptions.logo ? axonOptions.logo(packageJSON.version) : logo(packageJSON.version);
 
         this._configs = {
             webhooks: axonOptions.webhooks,
