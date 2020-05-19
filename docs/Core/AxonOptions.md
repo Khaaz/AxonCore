@@ -158,12 +158,12 @@ Creates an instance of AxonOptions.
 | webhooks.INFO | <code>Object</code> |  |  |
 | webhooks.VERBOSE | <code>Object</code> |  | // Extensions |
 | [extensions] | <code>Object</code> | <code>{}</code> | Classes overrides |
-| extensions.utils | <code>Utils</code> |  | Custom utils. Needs to be an instance of AxonCore.Utils |
+|  |  |  |  |
 | extensions.logger | <code>ALogger</code> |  | Custom logger |
-| extensions.DBProvider | <code>ADBProvider</code> |  | DBProvider. Needs to be an instance of DBProvider |
+|  |  |  |  |
 | extensions.DBLocation | <code>String</code> |  | Path to use as default location for usage of the JSONProvider |
-| extensions.axonConfig | <code>AxonConfig</code> |  | Custom AxonConfig object to use instead of default AxonConfig |
-| extensions.guildConfig | <code>GuildConfig</code> |  | Custom GuildConfig object to use instead of default GuildConfig |
+|  |  |  |  |
+|  |  |  |  |
 
 <a name="Languages"></a>
 

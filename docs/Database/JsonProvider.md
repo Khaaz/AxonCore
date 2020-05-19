@@ -27,7 +27,7 @@
 
 * [JsonProvider](#JsonProvider) ⇐ <code>ADBProvider</code>
     * [new JsonProvider()](#new_JsonProvider_new)
-    * [.init(axonOptions)](#JsonProvider+init)
+    * [.init()](#JsonProvider+init)
     * [.initAxon()](#JsonProvider+initAxon) ⇒ <code>Promise.&lt;AxonConfig&gt;</code>
     * [.initGuild(gID)](#JsonProvider+initGuild) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>
     * [.fetchAxon()](#JsonProvider+fetchAxon) ⇒ <code>Promise.&lt;(AxonConfig\|null)&gt;</code>
@@ -44,15 +44,10 @@ DB interface to interact with a Json Database.
 
 <a name="JsonProvider+init"></a>
 
-### jsonProvider.init(axonOptions)
+### jsonProvider.init()
 Override init method.
 
 **Kind**: instance method of [<code>JsonProvider</code>](#JsonProvider)  
-
-| Param | Type |
-| --- | --- |
-| axonOptions | <code>AxonOptions</code> | 
-
 <a name="JsonProvider+initAxon"></a>
 
 ### jsonProvider.initAxon() ⇒ <code>Promise.&lt;AxonConfig&gt;</code>

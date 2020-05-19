@@ -22,12 +22,13 @@
 | Name | Type | Description |
 | --- | --- | --- |
 | axon | <code>AxonClient</code> | The AxonClient |
+| type | <code>DB\_TYPES</code> | The Database type |
 
 
 * *[ADBProvider](#ADBProvider)*
     * *[new ADBProvider()](#new_ADBProvider_new)*
     * _instance_
-        * *[.init([axonOptions])](#ADBProvider+init)*
+        * *[.init()](#ADBProvider+init)*
         * *[.initAxon()](#ADBProvider+initAxon) ⇒ <code>Promise.&lt;AxonConfig&gt;</code>*
         * *[.initGuild(gID)](#ADBProvider+initGuild) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>*
         * *[.fetchAxon()](#ADBProvider+fetchAxon) ⇒ <code>Promise.&lt;(AxonConfig\|null)&gt;</code>*
@@ -38,7 +39,7 @@
         * *[.saveGuild(gID, data)](#ADBProvider+saveGuild) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>*
     * _static_
         * *[.ADBProvider](#ADBProvider.ADBProvider)*
-            * [new ADBProvider(axonClient)](#new_ADBProvider.ADBProvider_new)
+            * [new ADBProvider(axonClient, [type])](#new_ADBProvider.ADBProvider_new)
 
 <a name="new_ADBProvider_new"></a>
 
@@ -51,16 +52,11 @@ The provider creates guildconfigs with DB data.
 
 <a name="ADBProvider+init"></a>
 
-### *adbProvider.init([axonOptions])*
+### *adbProvider.init()*
 Init the ADBProvider.
 Method called just after instantiation. Can be overridden with anything that will be used by the provider.
 
 **Kind**: instance method of [<code>ADBProvider</code>](#ADBProvider)  
-
-| Param | Type | Default |
-| --- | --- | --- |
-| [axonOptions] | <code>AxonOptions</code> | <code></code> | 
-
 <a name="ADBProvider+initAxon"></a>
 
 ### *adbProvider.initAxon() ⇒ <code>Promise.&lt;AxonConfig&gt;</code>*
@@ -162,13 +158,14 @@ Updates the given guild in the DB with a new schema object.
 **Kind**: static class of [<code>ADBProvider</code>](#ADBProvider)  
 <a name="new_ADBProvider.ADBProvider_new"></a>
 
-#### new ADBProvider(axonClient)
+#### new ADBProvider(axonClient, [type])
 Creates an instance of ADBProvider.
 
 
-| Param | Type |
-| --- | --- |
-| axonClient | <code>AxonClient</code> | 
+| Param | Type | Default |
+| --- | --- | --- |
+| axonClient | <code>AxonClient</code> |  | 
+| [type] | <code>DB\_TYPES</code> | <code>0</code> | 
 
 <a name="GuildConfigRaw"></a>
 

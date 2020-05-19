@@ -1,20 +1,20 @@
 <div align="center">
   <br />
   <p>
-    <a href="https://khaazz.github.io/AxonCore"> <img src="_images/axoncore_banner.png" width="546" alt="AxonCore" /> </a>
+    <a href="https://khaaz.github.io/AxonCore"> <img src="_images/axoncore_banner.png" width="546" alt="AxonCore" /> </a>
   </p>
   <p>
-    <a href="https://github.com/Khaazz/AxonCore/releases"> <img src="https://img.shields.io/github/release/Khaazz/AxonCore.svg?style=flat" alt="Release" /> </a>
+    <a href="https://github.com/Khaaz/AxonCore/releases"> <img src="https://img.shields.io/github/release/Khaaz/AxonCore.svg?style=flat" alt="Release" /> </a>
     <a href="https://www.npmjs.com/package/axoncore"> <img src="https://img.shields.io/npm/v/axoncore.svg?maxAge=3600" alt="NPM version" /> </a>
     <a href="https://www.npmjs.com/package/axoncore"><img src="https://img.shields.io/npm/dt/axoncore.svg?maxAge=3600" alt="NPM downloads" /></a>
     <a href="https://discord.gg/QZ6B5US"> <img src="https://discordapp.com/api/guilds/365236789855649814/embed.png" alt="Discord server" /> </a>
   </p>
   <p>
-    <a href="https://github.com/Khaazz/AxonCore/actions"> <img src="https://github.com/Khaazz/AxonCore/workflows/Test/badge.svg" alt="Test status" /> </a>
-    <a href="https://github.com/Khaazz/AxonCore/actions"> <img src="https://github.com/Khaazz/AxonCore/workflows/Docgen/badge.svg" alt="Docgen status" /> </a>
-    <a href="https://github.com/Khaazz/AxonCore/deployments"> <img alt="GitHub deployments" src="https://img.shields.io/github/deployments/khaazz/axoncore/github-pages?label=gh-pages" /> </a>
-    <a href="https://www.codefactor.io/repository/github/khaazz/axoncore"><img src="https://www.codefactor.io/repository/github/khaazz/axoncore/badge" alt="CodeFactor" /></a>
-    <a href="https://david-dm.org/khaazz/khaazz"><img src="https://img.shields.io/david/khaazz/axoncore.svg?maxAge=3600" alt="Dependencies" /></a>
+    <a href="https://github.com/Khaaz/AxonCore/actions"> <img src="https://github.com/Khaaz/AxonCore/workflows/Test/badge.svg" alt="Test status" /> </a>
+    <a href="https://github.com/Khaaz/AxonCore/actions"> <img src="https://github.com/Khaaz/AxonCore/workflows/Docgen/badge.svg" alt="Docgen status" /> </a>
+    <a href="https://github.com/Khaaz/AxonCore/deployments"> <img alt="GitHub deployments" src="https://img.shields.io/github/deployments/khaaz/axoncore/github-pages?label=gh-pages" /> </a>
+    <a href="https://www.codefactor.io/repository/github/khaaz/axoncore"><img src="https://www.codefactor.io/repository/github/khaaz/axoncore/badge" alt="CodeFactor" /></a>
+    <a href="https://david-dm.org/khaaz/khaaz"><img src="https://img.shields.io/david/khaaz/axoncore.svg?maxAge=3600" alt="Dependencies" /></a>
   </p>
   <p>
     <a href="https://nodei.co/npm/axoncore/"> <img src="https://nodei.co/npm/axoncore.png?downloads=true&stars=true" alt="NPM info" /> </a>
@@ -26,7 +26,7 @@
 >__**Complete, Stable, Fast, Universal**__  
 > The best all-in-one framework for discord bots. The power of a fully featured framework, the simplicity of a predictable API.
 
-AxonCore is an all in one framework, built to make bot deveopment fast and easy. Focus only on what matters: creating commands for your users. AxonCore handles all the hard and annoying work for you. Take advantage of its stability and robustness to fasten your development.  
+AxonCore is an all in one framework, built to make bot development fast and easy. Focus only on what matters: creating commands for your users. AxonCore handles all the hard and annoying work for you. Take advantage of its stability and robustness to fasten your development.  
 AxonCore is opiniated to enforce good code practice and has all features you could possibly want in a framework, from command and event handlers, to full Database support, more details further down.  
 AxonCore is lib agnostic, which mean you can use it indifferently with [Eris](https://github.com/abalabahaha/eris), [Discord.js](https://github.com/discordjs/discord.js) or [Detritusjs](https://github.com/detritusjs/client).
 
@@ -71,13 +71,13 @@ It also comes with a lot of features for all possible usages and needs. AxonCore
 ## Setup
 
 [Examples](./examples)  
-To get your application started easily, you can use the create-app boilerplate: **[create-axoncore-app](https://github.com/Khaazz/create-axoncore-app)**.  
+To get your application started easily, you can use the create-app boilerplate: **[create-axoncore-app](https://github.com/Khaaz/create-axoncore-app)**.  
 Here's how to use it:  
 `yarn create axoncore-app --lib <library> --type <module management type> <destination>`  
 `npm init axoncore-app --lib <library> --type <module management type> <destination>`
 
 - Available libraries: `eris`, `discordjs`.  
-- Available module types: `commonjs`, `esm`.
+- Available module types: `commonjs`, `esm`, `ts`.
 
 AxonCore has **FULL** typescript support.  
 When you install the package the first time, you can choose the library you are using, and the package will automatically link the library typings. That will allow you to have full and complete typings for your typescript project or for using intllisense.  
@@ -202,14 +202,15 @@ Github actions used in this project can be found here:
 
 ## Documentation
 
-All documentation can be found [here](https://khaazz.github.io/AxonCore/#/)!
+All documentation can be found [here](https://khaaz.github.io/AxonCore/#/)!
 
 ## Examples
 
 AxonCore is being used in these cool projects:
 
-- [Ease](https://github.com/AxonTeam/Ease) Enhance A Server Easily - A all in one modular bot that you can build and selfhost.
-- [WebSPELL](https://github.com/Khaazz/webSPELL) - A custom RSS bot made for a french community.
+- [Ease](https://github.com/AxonTeam/Ease) - Enhance A Server Easily - A all in one modular bot that you can build and selfhost.
+- [WebSPELL](https://github.com/reseau-webspell/webSPELL) - A custom RSS feed subscriber bot made for a french community.
+- [NookAmis](https://github.com/reseau-webspell/NookAmis) - A custom Animal Crossing companion bot made for a french community.
 
 ## Contributions
 

@@ -68,7 +68,7 @@ A schema designed use an InMemory solution in AxonCore
 
 | Param | Type |
 | --- | --- |
-| axonSchema | <code>AxonConfig</code> \| <code>AxonCOnfigRaw</code> | 
+| axonSchema | <code>AxonConfig</code> \| <code>AxonConfigRaw</code> | 
 
 <a name="InMemoryProvider+saveGuild"></a>
 

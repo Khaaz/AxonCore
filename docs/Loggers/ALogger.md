@@ -3,6 +3,13 @@
 ## *ALogger*
 **Kind**: global abstract class  
 **Author**: KhaaZ  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| out | <code>\*</code> | Can be Console, Winston or Signale. Chalk will go as Console |
+| type | <code>LOGGER\_TYPES</code> | The logger type |
+
 
 * *[ALogger](#ALogger)*
     * *[new ALogger()](#new_ALogger_new)*
@@ -16,7 +23,7 @@
         * *[.verbose(input, opt)](#ALogger+verbose)*
     * _static_
         * *[.ALogger](#ALogger.ALogger)*
-            * [new ALogger(out)](#new_ALogger.ALogger_new)
+            * [new ALogger(out, [type])](#new_ALogger.ALogger_new)
 
 <a name="new_ALogger_new"></a>
 
@@ -114,11 +121,12 @@ Other Logging - executed commands, etc...
 **Kind**: static class of [<code>ALogger</code>](#ALogger)  
 <a name="new_ALogger.ALogger_new"></a>
 
-#### new ALogger(out)
+#### new ALogger(out, [type])
 Creates an instance of ALogger
 
 
-| Param | Description |
-| --- | --- |
-| out | Can be Console, Winston or Signale. Chalk will go as Console |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| out |  |  | Can be Console, Winston or Signale. Chalk will go as Console |
+| [type] | <code>LOGGER\_TYPES</code> | <code>0</code> | The logger type |
 

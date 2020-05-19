@@ -54,8 +54,7 @@
     * _instance_
         * [.axoncore](#AxonClient+axoncore) : <code>Object</code>
         * [._botClient](#AxonClient+_botClient) : <code>BotClient</code>
-        * [.utils](#AxonClient+utils) : <code>Utils</code>
-        * [.DBProvider](#AxonClient+DBProvider) : <code>ADBProvider</code>
+        * [.axonConfig](#AxonClient+axonConfig) : <code>AxonConfig</code>
         * [.botClient](#AxonClient+botClient) : <code>BotClient</code>
         * [.handlers](#AxonClient+handlers) : <code>HandlerCollection</code>
         * [.Resolver](#AxonClient+Resolver) : <code>Resolver</code>
@@ -102,13 +101,9 @@ AxonCore - Client constructor
 
 ### axonClient.\_botClient : <code>BotClient</code>
 **Kind**: instance property of [<code>AxonClient</code>](#AxonClient)  
-<a name="AxonClient+utils"></a>
+<a name="AxonClient+axonConfig"></a>
 
-### axonClient.utils : <code>Utils</code>
-**Kind**: instance property of [<code>AxonClient</code>](#AxonClient)  
-<a name="AxonClient+DBProvider"></a>
-
-### axonClient.DBProvider : <code>ADBProvider</code>
+### axonClient.axonConfig : <code>AxonConfig</code>
 **Kind**: instance property of [<code>AxonClient</code>](#AxonClient)  
 <a name="AxonClient+botClient"></a>
 

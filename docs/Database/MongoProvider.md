@@ -28,12 +28,12 @@
 
 * [MongoProvider](#MongoProvider) ⇐ <code>ADBProvider</code>
     * [new MongoProvider()](#new_MongoProvider_new)
-    * [.init(axonOptions)](#MongoProvider+init)
+    * [.init()](#MongoProvider+init)
     * [.initAxon()](#MongoProvider+initAxon) ⇒ <code>Promise.&lt;AxonConfig&gt;</code>
     * [.initGuild(gID)](#MongoProvider+initGuild) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>
     * [.fetchAxon()](#MongoProvider+fetchAxon) ⇒ <code>Promise.&lt;(AxonConfig\|null)&gt;</code>
     * [.fetchGuild(gID)](#MongoProvider+fetchGuild) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>
-    * [.fetchGuildSchema(gID)](#MongoProvider+fetchGuildSchema) ⇒ <code>Promise.&lt;(GuildDocument\|null)&gt;</code>
+    * [.fetchGuildDocument(gID)](#MongoProvider+fetchGuildDocument) ⇒ <code>Promise.&lt;(GuildDocument\|null)&gt;</code>
     * [.updateAxon(key, value)](#MongoProvider+updateAxon) ⇒ <code>Promise.&lt;Boolean&gt;</code>
     * [.updateGuild(key, gID, value)](#MongoProvider+updateGuild) ⇒ <code>Promise.&lt;Boolean&gt;</code>
     * [.saveAxon(data)](#MongoProvider+saveAxon) ⇒ <code>Promise.&lt;(AxonConfig\|null)&gt;</code>
@@ -46,15 +46,10 @@ DB interface to interact with a MongoDB Database.
 
 <a name="MongoProvider+init"></a>
 
-### mongoProvider.init(axonOptions)
+### mongoProvider.init()
 Override init method.
 
 **Kind**: instance method of [<code>MongoProvider</code>](#MongoProvider)  
-
-| Param | Type | Default |
-| --- | --- | --- |
-| axonOptions | <code>AxonOptions</code> | <code></code> | 
-
 <a name="MongoProvider+initAxon"></a>
 
 ### mongoProvider.initAxon() ⇒ <code>Promise.&lt;AxonConfig&gt;</code>
@@ -93,9 +88,9 @@ Retrieves the Guild config for the specified guild.
 | --- | --- | --- |
 | gID | <code>String</code> | Guild ID |
 
-<a name="MongoProvider+fetchGuildSchema"></a>
+<a name="MongoProvider+fetchGuildDocument"></a>
 
-### mongoProvider.fetchGuildSchema(gID) ⇒ <code>Promise.&lt;(GuildDocument\|null)&gt;</code>
+### mongoProvider.fetchGuildDocument(gID) ⇒ <code>Promise.&lt;(GuildDocument\|null)&gt;</code>
 Retrieves the Guild **Document** for the specified guild.
 Does not lean and returns the actual mongoose Document.
 MongoProvider specific method.
