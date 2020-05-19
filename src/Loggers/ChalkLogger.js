@@ -14,7 +14,7 @@ import Context from './Context';
  */
 class ChalkLogger extends ALogger {
     constructor() {
-        super(console);
+        super(console, 1);
     }
 
     /**

@@ -10,7 +10,7 @@ import ALogger from './ALogger';
  */
 class DefLogger extends ALogger {
     constructor() {
-        super(console);
+        super(console, 0);
     }
 }
 

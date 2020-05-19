@@ -102,7 +102,7 @@ class Winston {
  */
 class WinstonLogger extends ALogger {
     constructor() {
-        super(new Winston() );
+        super(new Winston(), 3);
     }
 
     /**

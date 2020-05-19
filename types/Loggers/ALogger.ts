@@ -1,4 +1,4 @@
-import { Context } from '../';
+import { Context, LOGGER_TYPES } from '../';
 
 /**
  * Abstract Logger, based to create all loggers used in AxonCore.
@@ -14,11 +14,15 @@ export declare class ALogger {
      */
     public out: any;
     /**
+     * The Logger type.
+     */
+    public type: LOGGER_TYPES
+    /**
      * Creates an instance of ALogger
      * @param out Can be Console, Winston or Signale. Chalk will go as Console
      * @memberof ALogger
      */
-    constructor(out: any);
+    constructor(out: any, type: LOGGER_TYPES);
     /**
      * Major - Critical fault
      * Crashing bugs, unexpected errors...

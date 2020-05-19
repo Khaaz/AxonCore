@@ -29,7 +29,7 @@ const logOptions = {
  */
 class SignaleLogger extends ALogger {
     constructor() {
-        super(new Signale(logOptions) );
+        super(new Signale(logOptions), 2);
 
         this.out.config( {
             displayTimestamp: true,

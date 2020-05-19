@@ -11,4 +11,5 @@ import { ALogger } from '../';
 export declare class ChalkLogger extends ALogger {
     /** Console */
     public out: Console;
+    public type: 1;
 }

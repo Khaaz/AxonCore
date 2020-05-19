@@ -87,7 +87,7 @@ class LoggerSelector extends ASelector {
             Logger.info('Selected Logger: Default Logger.');
         }
 
-        Logger.notice('Logger ready.');
+        Logger.notice(`Logger ready. [TYPE: ${Logger.type}]`);
         return Logger;
     }
 

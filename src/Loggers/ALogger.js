@@ -5,24 +5,32 @@ import NoAbstractInstanceException from './../Errors/NoAbstractInstanceException
 import Context from './Context';
 
 /**
+ * @typedef {import('../Utility/Constants/AxonEnums').LOGGER_TYPES} LOGGER_TYPES
+ */
+
+/**
  * Abstract Logger, based to create all loggers used in AxonCore.
  *
  * @author KhaaZ
  *
  * @abstract
  * @class ALogger
+ * @property {*} out - Can be Console, Winston or Signale. Chalk will go as Console
+ * @property {LOGGER_TYPES} type - The logger type
  */
 class ALogger {
     /**
      * Creates an instance of ALogger
      * @param out Can be Console, Winston or Signale. Chalk will go as Console
+     * @param {LOGGER_TYPES} type - The logger type
      * @memberof ALogger
      */
-    constructor(out) {
-        this.out = out;
+    constructor(out, type = 0) {
         if (this.constructor === 'ALogger') {
             throw new NoAbstractInstanceException();
         }
+        this.out = out;
+        this.type = type;
     }
 
     /**

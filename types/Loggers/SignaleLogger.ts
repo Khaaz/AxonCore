@@ -14,4 +14,5 @@ import { Signale } from 'signale';
 export declare class SignaleLogger extends ALogger {
     /** Signale */
     public out: Signale;
+    public type: 2;
 }
