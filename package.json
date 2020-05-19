@@ -2,8 +2,8 @@
   "name": "axoncore",
   "version": "2.0.1",
   "description": "The best fully featured discord bot framework. Universal Client, Command and Event handler.",
-  "author": "KhaaZ#0001",
-  "link": "https://github.com/Khaazz/AxonCore",
+  "author": "Khaaz <khaaz.dev@gmail.com>",
+  "link": "https://github.com/Khaaz/AxonCore",
   "license": "MIT",
   "engines": {
     "node": ">=12.0.0"
@@ -51,12 +51,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Khaazz/AxonCore.git"
+    "url": "git+https://github.com/Khaaz/AxonCore.git"
   },
   "bugs": {
-    "url": "https://github.com/Khaazz/AxonCore/issues"
+    "url": "https://github.com/Khaaz/AxonCore/issues"
   },
-  "homepage": "https://github.com/Khaazz/AxonCore#readme",
+  "homepage": "https://github.com/Khaaz/AxonCore#readme",
   "keywords": [
     "discord",
     "bot",
