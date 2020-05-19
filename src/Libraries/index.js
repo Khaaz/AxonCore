@@ -51,7 +51,7 @@ class LibrarySelector extends ASelector {
             }
         }
 
-        this.log('NOTICE', `Library Interface ready. [TYPE: ${this.library.type}]`);
+        axon.log('NOTICE', `Library Interface ready. [TYPE: ${libraryInterface.type}]`);
         return libraryInterface;
     }
 }
