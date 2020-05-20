@@ -13,7 +13,7 @@
     "inquirer": "^7.1.0"
   },
   "devDependencies": {
-    "@axonteam/doc-gen": "git+https://github.com/AxonTeam/doc-gen",
+    "@axonteam/doc-gen": "^1.2.0",
     "@axonteam/eslint-config": "^2.2.0",
     "@types/mongoose": "^5.5.32",
     "@types/node": "^13.9.2",
