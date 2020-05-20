@@ -1,8 +1,13 @@
 const { prompt } = require('inquirer');
 const { copyFileSync, writeFileSync } = require('fs');
+const { basename, resolve } = require('path');
 
 if (process.env.CI) {
     console.log('Detected CI. Exiting process...');
+    process.exit(0);
+}
+
+if (basename(resolve(__dirname, '..', '..') ) !== 'node_modules') {
     process.exit(0);
 }
 
