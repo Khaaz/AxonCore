@@ -2,9 +2,10 @@
 # yarn lockfile v1
 
 
-"@axonteam/doc-gen@git+https://github.com/AxonTeam/doc-gen":
-  version "1.1.0"
-  resolved "git+https://github.com/AxonTeam/doc-gen#402b43d9a4605452cd0377051fa7dbbcf6b287ec"
+"@axonteam/doc-gen@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@axonteam/doc-gen/-/doc-gen-1.2.0.tgz#792b8b0d7efa9412bfb9fedcbf53276eea16324e"
+  integrity sha512-sYvuZ2myoXuypispgwR0VFDnKXPa47P1HqbJlY+bXYRJ3m6cPhLXcOMDfyaIC7DDWgv+daQptjov3eHxhR5tXA==
   dependencies:
     dmd "git+https://github.com/AxonTeam/dmd"
     jsdoc-api "git+https://github.com/AxonTeam/jsdoc-api"
@@ -497,9 +498,9 @@ discord.js@discordjs/discord.js:
     tweetnacl "^1.0.3"
     ws "^7.2.1"
 
-"dmd@git+https://github.com/AxonTeam/dmd":
+"dmd@git+https://github.com/AxonTeam/dmd.git":
   version "5.0.0"
-  resolved "git+https://github.com/AxonTeam/dmd#2de7ffa2a92322303bd2735ed6e67dfbfbc0dd7d"
+  resolved "git+https://github.com/AxonTeam/dmd.git#2de7ffa2a92322303bd2735ed6e67dfbfbc0dd7d"
   dependencies:
     array-back "^4.0.1"
     cache-point "^2.0.0"
@@ -979,9 +980,9 @@ js2xmlparser@^4.0.0:
   dependencies:
     xmlcreate "^2.0.3"
 
-"jsdoc-api@git+https://github.com/AxonTeam/jsdoc-api":
+"jsdoc-api@git+https://github.com/AxonTeam/jsdoc-api.git":
   version "5.0.4"
-  resolved "git+https://github.com/AxonTeam/jsdoc-api#2e6b93accec3261d5770d151813c2fde12c4e3d9"
+  resolved "git+https://github.com/AxonTeam/jsdoc-api.git#2e6b93accec3261d5770d151813c2fde12c4e3d9"
   dependencies:
     array-back "^4.0.1"
     cache-point "^2.0.0"
