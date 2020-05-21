@@ -33,7 +33,7 @@ Creates an instance of ModuleRegistry
 
 | Param | Type |
 | --- | --- |
-| axon | <code>AxonClient</code> | 
+| axon | <code>[AxonClient](AxonClient)</code> | 
 
 <a name="ModuleRegistry+register"></a>
 
@@ -45,7 +45,7 @@ Register a Module inside the ModuleRegistry
 | Param | Type | Description |
 | --- | --- | --- |
 | label | <code>String</code> | The module label |
-| module | <code>Module</code> | The module object |
+| module | <code>[Module](Modules/Module)</code> | The module object |
 
 <a name="ModuleRegistry+unregister"></a>
 
@@ -57,7 +57,7 @@ Unregister a Module from the ModuleRegistry
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | label | <code>String</code> |  | The module label |
-| [module] | <code>Module</code> | <code></code> | The module object |
+| [module] | <code>[Module](Modules/Module)</code> | <code></code> | The module object |
 
 <a name="ModuleRegistry"></a>
 
@@ -83,7 +83,7 @@ Creates an instance of ModuleRegistry
 
 | Param | Type |
 | --- | --- |
-| axon | <code>AxonClient</code> | 
+| axon | <code>[AxonClient](AxonClient)</code> | 
 
 <a name="ModuleRegistry+register"></a>
 
@@ -95,7 +95,7 @@ Register a Module inside the ModuleRegistry
 | Param | Type | Description |
 | --- | --- | --- |
 | label | <code>String</code> | The module label |
-| module | <code>Module</code> | The module object |
+| module | <code>[Module](Modules/Module)</code> | The module object |
 
 <a name="ModuleRegistry+unregister"></a>
 
@@ -107,5 +107,5 @@ Unregister a Module from the ModuleRegistry
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | label | <code>String</code> |  | The module label |
-| [module] | <code>Module</code> | <code></code> | The module object |
+| [module] | <code>[Module](Modules/Module)</code> | <code></code> | The module object |
 

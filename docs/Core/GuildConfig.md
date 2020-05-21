@@ -36,13 +36,13 @@
         * [.isModOnly()](#GuildConfig+isModOnly) ⇒ <code>Boolean</code>
         * [.isModRole(roleID)](#GuildConfig+isModRole) ⇒ <code>Boolean</code>
         * [.isModUser(userID)](#GuildConfig+isModUser) ⇒ <code>Boolean</code>
-        * [.update(guildConfig)](#GuildConfig+update) ⇒ [<code>Promise.&lt;GuildConfig&gt;</code>](#GuildConfig)
-        * [.updatePrefixes(prefixArr)](#GuildConfig+updatePrefixes) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>
-        * [.updateStateModule(label, [boolean])](#GuildConfig+updateStateModule) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>
-        * [.updateStateCommand(label, [boolean])](#GuildConfig+updateStateCommand) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>
-        * [.updateStateListener(label, [boolean])](#GuildConfig+updateStateListener) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>
-        * [.updateStateModRole(roleID, [boolean])](#GuildConfig+updateStateModRole) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>
-        * [.updateStateModUser(userID, [boolean])](#GuildConfig+updateStateModUser) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>
+        * [.update(guildConfig)](#GuildConfig+update) ⇒ <code>Promise.&lt;[GuildConfig](Core/GuildConfig)&gt;</code>
+        * [.updatePrefixes(prefixArr)](#GuildConfig+updatePrefixes) ⇒ <code>Promise.&lt;([GuildConfig](Core/GuildConfig)\|null)&gt;</code>
+        * [.updateStateModule(label, [boolean])](#GuildConfig+updateStateModule) ⇒ <code>Promise.&lt;([GuildConfig](Core/GuildConfig)\|null)&gt;</code>
+        * [.updateStateCommand(label, [boolean])](#GuildConfig+updateStateCommand) ⇒ <code>Promise.&lt;([GuildConfig](Core/GuildConfig)\|null)&gt;</code>
+        * [.updateStateListener(label, [boolean])](#GuildConfig+updateStateListener) ⇒ <code>Promise.&lt;([GuildConfig](Core/GuildConfig)\|null)&gt;</code>
+        * [.updateStateModRole(roleID, [boolean])](#GuildConfig+updateStateModRole) ⇒ <code>Promise.&lt;([GuildConfig](Core/GuildConfig)\|null)&gt;</code>
+        * [.updateStateModUser(userID, [boolean])](#GuildConfig+updateStateModUser) ⇒ <code>Promise.&lt;([GuildConfig](Core/GuildConfig)\|null)&gt;</code>
     * _static_
         * [.GuildConfig](#GuildConfig.GuildConfig)
             * [new GuildConfig(axon, values)](#new_GuildConfig.GuildConfig_new)
@@ -120,7 +120,7 @@ Check if the module is disabled on the specified guild.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| module | <code>Module</code> | The module object |
+| module | <code>[Module](Modules/Module)</code> | The module object |
 
 <a name="GuildConfig+isCommandDisabled"></a>
 
@@ -133,7 +133,7 @@ Check if the command is disabled on the specified guild.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| command | <code>Command</code> | The command object |
+| command | <code>[Command](Commands/Command)</code> | The command object |
 
 <a name="GuildConfig+isListenerDisabled"></a>
 
@@ -146,7 +146,7 @@ Check if the listener is disabled on the specified guild.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| listener | <code>Listener</code> | The listener object |
+| listener | <code>[Listener](Listeners/Listener)</code> | The listener object |
 
 <a name="GuildConfig+isModOnly"></a>
 
@@ -181,12 +181,12 @@ Whether the user ID is in the guild mod users.
 
 <a name="GuildConfig+update"></a>
 
-### guildConfig.update(guildConfig) ⇒ [<code>Promise.&lt;GuildConfig&gt;</code>](#GuildConfig)
+### guildConfig.update(guildConfig) ⇒ <code>Promise.&lt;[GuildConfig](Core/GuildConfig)&gt;</code>
 Update the guild config in the cache and DB.
 *not used internally*
 
 **Kind**: instance method of [<code>GuildConfig</code>](#GuildConfig)  
-**Returns**: [<code>Promise.&lt;GuildConfig&gt;</code>](#GuildConfig) - Updated guildSchema  
+**Returns**: <code>Promise.&lt;[GuildConfig](Core/GuildConfig)&gt;</code> - Updated guildSchema  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -194,12 +194,12 @@ Update the guild config in the cache and DB.
 
 <a name="GuildConfig+updatePrefixes"></a>
 
-### guildConfig.updatePrefixes(prefixArr) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>
+### guildConfig.updatePrefixes(prefixArr) ⇒ <code>Promise.&lt;([GuildConfig](Core/GuildConfig)\|null)&gt;</code>
 Register prefixes for this guild.
 *not used internally*
 
 **Kind**: instance method of [<code>GuildConfig</code>](#GuildConfig)  
-**Returns**: <code>Promise.&lt;(GuildConfig\|null)&gt;</code> - Updated guildConfig / error  
+**Returns**: <code>Promise.&lt;([GuildConfig](Core/GuildConfig)\|null)&gt;</code> - Updated guildConfig / error  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -207,13 +207,13 @@ Register prefixes for this guild.
 
 <a name="GuildConfig+updateStateModule"></a>
 
-### guildConfig.updateStateModule(label, [boolean]) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>
+### guildConfig.updateStateModule(label, [boolean]) ⇒ <code>Promise.&lt;([GuildConfig](Core/GuildConfig)\|null)&gt;</code>
 Updates the state of a module.
 true = disable the module, false = enable the module
 *not used internally*
 
 **Kind**: instance method of [<code>GuildConfig</code>](#GuildConfig)  
-**Returns**: <code>Promise.&lt;(GuildConfig\|null)&gt;</code> - Updated guildConfig / Error  
+**Returns**: <code>Promise.&lt;([GuildConfig](Core/GuildConfig)\|null)&gt;</code> - Updated guildConfig / Error  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -222,13 +222,13 @@ true = disable the module, false = enable the module
 
 <a name="GuildConfig+updateStateCommand"></a>
 
-### guildConfig.updateStateCommand(label, [boolean]) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>
+### guildConfig.updateStateCommand(label, [boolean]) ⇒ <code>Promise.&lt;([GuildConfig](Core/GuildConfig)\|null)&gt;</code>
 Updates the state of a command.
 true = disable the command, false = enable the command.
 *not used internally*
 
 **Kind**: instance method of [<code>GuildConfig</code>](#GuildConfig)  
-**Returns**: <code>Promise.&lt;(GuildConfig\|null)&gt;</code> - Updated guildConfig / Error  
+**Returns**: <code>Promise.&lt;([GuildConfig](Core/GuildConfig)\|null)&gt;</code> - Updated guildConfig / Error  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -237,13 +237,13 @@ true = disable the command, false = enable the command.
 
 <a name="GuildConfig+updateStateListener"></a>
 
-### guildConfig.updateStateListener(label, [boolean]) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>
+### guildConfig.updateStateListener(label, [boolean]) ⇒ <code>Promise.&lt;([GuildConfig](Core/GuildConfig)\|null)&gt;</code>
 Updates the state of a listener.
 true = disable the listener, false = enable the listener.
 *not used internally*
 
 **Kind**: instance method of [<code>GuildConfig</code>](#GuildConfig)  
-**Returns**: <code>Promise.&lt;(GuildConfig\|null)&gt;</code> - Updated guildConfig / Error  
+**Returns**: <code>Promise.&lt;([GuildConfig](Core/GuildConfig)\|null)&gt;</code> - Updated guildConfig / Error  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -252,13 +252,13 @@ true = disable the listener, false = enable the listener.
 
 <a name="GuildConfig+updateStateModRole"></a>
 
-### guildConfig.updateStateModRole(roleID, [boolean]) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>
+### guildConfig.updateStateModRole(roleID, [boolean]) ⇒ <code>Promise.&lt;([GuildConfig](Core/GuildConfig)\|null)&gt;</code>
 Updates the state of a mod role.
 true = add the role, false = remove the role.
 *not used internally*
 
 **Kind**: instance method of [<code>GuildConfig</code>](#GuildConfig)  
-**Returns**: <code>Promise.&lt;(GuildConfig\|null)&gt;</code> - Updated guildConfig / Error  
+**Returns**: <code>Promise.&lt;([GuildConfig](Core/GuildConfig)\|null)&gt;</code> - Updated guildConfig / Error  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -267,13 +267,13 @@ true = add the role, false = remove the role.
 
 <a name="GuildConfig+updateStateModUser"></a>
 
-### guildConfig.updateStateModUser(userID, [boolean]) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>
+### guildConfig.updateStateModUser(userID, [boolean]) ⇒ <code>Promise.&lt;([GuildConfig](Core/GuildConfig)\|null)&gt;</code>
 Updates the state of a mod user.
 true = add the user, false = remove the user.
 *not used internally*
 
 **Kind**: instance method of [<code>GuildConfig</code>](#GuildConfig)  
-**Returns**: <code>Promise.&lt;(GuildConfig\|null)&gt;</code> - Updated guildConfig / Error  
+**Returns**: <code>Promise.&lt;([GuildConfig](Core/GuildConfig)\|null)&gt;</code> - Updated guildConfig / Error  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -292,6 +292,6 @@ Creates an instance of GuildConfig.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| axon | <code>AxonClient</code> |  |
+| axon | <code>[AxonClient](AxonClient)</code> |  |
 | values | <code>GConfig</code> | DB values for the current guild |
 

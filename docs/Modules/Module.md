@@ -15,10 +15,10 @@
 | [info.name] | <code>String</code> |  |  |
 | [info.category] | <code>String</code> |  |  |
 | [info.description] | <code>String</code> |  |  |
-| permissions | <code>CommandPermissions</code> |  | Default values potentially used for CommandPermissions |
-| options | <code>CommandOptions</code> |  | Default values potentially used for CommandOptions |
-| commandLoader | <code>CommandLoader</code> |  | Load all commands in the module / register / unregister |
-| listenerLoader | <code>ListenerLoader</code> |  | Load all events in the module / register / unregister |
+| permissions | <code>[CommandPermissions](Commands/CommandPermissions)</code> |  | Default values potentially used for CommandPermissions |
+| options | <code>[CommandOptions](Commands/CommandOptions)</code> |  | Default values potentially used for CommandOptions |
+| commandLoader | <code>[CommandLoader](Commands/CommandLoader)</code> |  | Load all commands in the module / register / unregister |
+| listenerLoader | <code>[ListenerLoader](Listeners/ListenerLoader)</code> |  | Load all events in the module / register / unregister |
 
 
 * [Module](#Module) ⇐ <code>Base</code>
@@ -27,7 +27,7 @@
         * [.commands](#Module+commands) : <code>Collection.&lt;Command&gt;</code>
         * [.listeners](#Module+listeners) : <code>Collection.&lt;Listener&gt;</code>
         * [._init()](#Module+_init)
-        * [.init()](#Module+init) ⇒ <code>Object.&lt;string, (Command\|Listener)&gt;</code>
+        * [.init()](#Module+init) ⇒ <code>Object.&lt;string, ([Command](Commands/Command)\|[Listener](Listeners/Listener))&gt;</code>
     * _static_
         * [.Module](#Module.Module)
             * [new Module(client, [data])](#new_Module.Module_new)
@@ -61,11 +61,11 @@ Init a module with all commands and listeners.
 **Kind**: instance method of [<code>Module</code>](#Module)  
 <a name="Module+init"></a>
 
-### module.init() ⇒ <code>Object.&lt;string, (Command\|Listener)&gt;</code>
+### module.init() ⇒ <code>Object.&lt;string, ([Command](Commands/Command)\|[Listener](Listeners/Listener))&gt;</code>
 Override this method to returns { commands, listeners }
 
 **Kind**: instance method of [<code>Module</code>](#Module)  
-**Returns**: <code>Object.&lt;string, (Command\|Listener)&gt;</code> - An object containing commands and listeners to initialise. { commands, listeners}  
+**Returns**: <code>Object.&lt;string, ([Command](Commands/Command)\|[Listener](Listeners/Listener))&gt;</code> - An object containing commands and listeners to initialise. { commands, listeners}  
 <a name="Module.Module"></a>
 
 ### Module.Module
@@ -78,7 +78,7 @@ Creates a Module instance.
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| client | <code>AxonClient</code> |  |  |
+| client | <code>[AxonClient](AxonClient)</code> |  |  |
 | [data] | <code>Object</code> | <code>{}</code> | All module parameters |
 | [data.label] | <code>String</code> |  | The module label |
 | [data.enabled] | <code>Boolean</code> |  | Whether the module is enabled or not |
@@ -87,6 +87,6 @@ Creates a Module instance.
 | data.info.name | <code>String</code> |  | The module name |
 | data.info.description | <code>String</code> |  | The module description |
 | data.info.category | <code>String</code> |  | The module category |
-| [data.options] | <code>CommandOptions</code> |  | The default options for all commands in this module |
-| [data.permissions] | <code>CommandPermissions</code> |  | The default permissions for all commands in this module |
+| [data.options] | <code>[CommandOptions](Commands/CommandOptions)</code> |  | The default options for all commands in this module |
+| [data.permissions] | <code>[CommandPermissions](Commands/CommandPermissions)</code> |  | The default permissions for all commands in this module |
 

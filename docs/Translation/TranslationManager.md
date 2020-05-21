@@ -21,7 +21,7 @@
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| _manager | <code>MessageManager</code> |  |  |
+| _manager | <code>[MessageManager](Translation/MessageManager)</code> |  |  |
 | [lang] | <code>String</code> | <code>&#x27;english&#x27;</code> | The default lang |
 
 
@@ -83,7 +83,7 @@ Creates an instance of TranslationManager.
 
 | Param | Type |
 | --- | --- |
-| manager | <code>MessageManager</code> | 
+| manager | <code>[MessageManager](Translation/MessageManager)</code> | 
 | lang | <code>String</code> | 
 
 <a name="Languages"></a>

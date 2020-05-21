@@ -7,7 +7,7 @@
 
 | Name | Type |
 | --- | --- |
-| _axon | <code>AxonClient</code> | 
+| _axon | <code>[AxonClient](AxonClient)</code> | 
 | mentionFormatter | <code>RegExp</code> | 
 
 
@@ -83,7 +83,7 @@ It will otherwise regularly resolve the prefix for this particular guild.
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | msg | <code>Message</code> |  | The message object |
-| guildConfig | <code>GuildConfig</code> |  | The guildConfig Object |
+| guildConfig | <code>[GuildConfig](Core/GuildConfig)</code> |  | The guildConfig Object |
 | [isAdmin] | <code>Boolean</code> | <code>false</code> | Whether admin prefix was used |
 | [isOwner] | <code>Boolean</code> | <code>false</code> | Whether owner prefix was used |
 
@@ -100,7 +100,7 @@ Global prefixes will only take over if no prefix are specified in this guild.
 | Param | Type | Description |
 | --- | --- | --- |
 | msg | <code>Message</code> | The message object |
-| guildConfig | <code>GuildConfig</code> | The guildConfig Object |
+| guildConfig | <code>[GuildConfig](Core/GuildConfig)</code> | The guildConfig Object |
 
 <a name="CommandDispatcher.CommandDispatcher"></a>
 
@@ -114,5 +114,5 @@ Creates an instance of CommandDispatcher.
 
 | Param | Type |
 | --- | --- |
-| axon | <code>AxonClient</code> | 
+| axon | <code>[AxonClient](AxonClient)</code> | 
 

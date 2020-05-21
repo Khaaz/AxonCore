@@ -42,17 +42,17 @@
         * [.utils](#CommandPermissions+utils) : <code>Utils</code>
         * [.axonUtils](#CommandPermissions+axonUtils) : <code>AxonUtils</code>
         * [.library](#CommandPermissions+library) : <code>LibraryInterface</code>
-        * [.setBot([array], [toAdd])](#CommandPermissions+setBot) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
-        * [.setServerMod([boolean])](#CommandPermissions+setServerMod) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
-        * [.setServerManager([boolean])](#CommandPermissions+setServerManager) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
-        * [.setServerAdmin([boolean])](#CommandPermissions+setServerAdmin) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
-        * [.setServerOwner([boolean])](#CommandPermissions+setServerOwner) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
-        * [.setAuthor([object], [toAdd])](#CommandPermissions+setAuthor) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
-        * [.setUsers([object], [toAdd])](#CommandPermissions+setUsers) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
-        * [.setRoles([object], [toAdd])](#CommandPermissions+setRoles) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
-        * [.setChannels([object], [toAdd])](#CommandPermissions+setChannels) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
-        * [.setGuilds([object], [toAdd])](#CommandPermissions+setGuilds) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
-        * [.setStaff([object], [toAdd])](#CommandPermissions+setStaff) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
+        * [.setBot([array], [toAdd])](#CommandPermissions+setBot) ⇒ <code>[CommandPermissions](Commands/CommandPermissions)</code>
+        * [.setServerMod([boolean])](#CommandPermissions+setServerMod) ⇒ <code>[CommandPermissions](Commands/CommandPermissions)</code>
+        * [.setServerManager([boolean])](#CommandPermissions+setServerManager) ⇒ <code>[CommandPermissions](Commands/CommandPermissions)</code>
+        * [.setServerAdmin([boolean])](#CommandPermissions+setServerAdmin) ⇒ <code>[CommandPermissions](Commands/CommandPermissions)</code>
+        * [.setServerOwner([boolean])](#CommandPermissions+setServerOwner) ⇒ <code>[CommandPermissions](Commands/CommandPermissions)</code>
+        * [.setAuthor([object], [toAdd])](#CommandPermissions+setAuthor) ⇒ <code>[CommandPermissions](Commands/CommandPermissions)</code>
+        * [.setUsers([object], [toAdd])](#CommandPermissions+setUsers) ⇒ <code>[CommandPermissions](Commands/CommandPermissions)</code>
+        * [.setRoles([object], [toAdd])](#CommandPermissions+setRoles) ⇒ <code>[CommandPermissions](Commands/CommandPermissions)</code>
+        * [.setChannels([object], [toAdd])](#CommandPermissions+setChannels) ⇒ <code>[CommandPermissions](Commands/CommandPermissions)</code>
+        * [.setGuilds([object], [toAdd])](#CommandPermissions+setGuilds) ⇒ <code>[CommandPermissions](Commands/CommandPermissions)</code>
+        * [.setStaff([object], [toAdd])](#CommandPermissions+setStaff) ⇒ <code>[CommandPermissions](Commands/CommandPermissions)</code>
         * [._checkPermsBot(channel)](#CommandPermissions+_checkPermsBot) ⇒ <code>Boolean</code>
         * [._checkPermsUserBypass(member)](#CommandPermissions+_checkPermsUserBypass) ⇒ <code>Boolean</code>
         * [._checkPermsUserNeeded(member)](#CommandPermissions+_checkPermsUserNeeded) ⇒
@@ -141,7 +141,7 @@ Returns the LibraryInterface instance
 **Read only**: true  
 <a name="CommandPermissions+setBot"></a>
 
-### commandPermissions.setBot([array], [toAdd]) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
+### commandPermissions.setBot([array], [toAdd]) ⇒ <code>[CommandPermissions](Commands/CommandPermissions)</code>
 Set the permissions the bot needs to have to execute this command.
 
 **Kind**: instance method of [<code>CommandPermissions</code>](#CommandPermissions)  
@@ -153,7 +153,7 @@ Set the permissions the bot needs to have to execute this command.
 
 <a name="CommandPermissions+setServerMod"></a>
 
-### commandPermissions.setServerMod([boolean]) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
+### commandPermissions.setServerMod([boolean]) ⇒ <code>[CommandPermissions](Commands/CommandPermissions)</code>
 Set/unset the command to serverMod only.
 
 **Kind**: instance method of [<code>CommandPermissions</code>](#CommandPermissions)  
@@ -164,7 +164,7 @@ Set/unset the command to serverMod only.
 
 <a name="CommandPermissions+setServerManager"></a>
 
-### commandPermissions.setServerManager([boolean]) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
+### commandPermissions.setServerManager([boolean]) ⇒ <code>[CommandPermissions](Commands/CommandPermissions)</code>
 Set/unset the command to serverManager only.
 
 **Kind**: instance method of [<code>CommandPermissions</code>](#CommandPermissions)  
@@ -175,7 +175,7 @@ Set/unset the command to serverManager only.
 
 <a name="CommandPermissions+setServerAdmin"></a>
 
-### commandPermissions.setServerAdmin([boolean]) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
+### commandPermissions.setServerAdmin([boolean]) ⇒ <code>[CommandPermissions](Commands/CommandPermissions)</code>
 Set/unset the command to serverAdmin only.
 
 **Kind**: instance method of [<code>CommandPermissions</code>](#CommandPermissions)  
@@ -186,7 +186,7 @@ Set/unset the command to serverAdmin only.
 
 <a name="CommandPermissions+setServerOwner"></a>
 
-### commandPermissions.setServerOwner([boolean]) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
+### commandPermissions.setServerOwner([boolean]) ⇒ <code>[CommandPermissions](Commands/CommandPermissions)</code>
 Set/unset the command to serverOwner only.
 
 **Kind**: instance method of [<code>CommandPermissions</code>](#CommandPermissions)  
@@ -197,7 +197,7 @@ Set/unset the command to serverOwner only.
 
 <a name="CommandPermissions+setAuthor"></a>
 
-### commandPermissions.setAuthor([object], [toAdd]) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
+### commandPermissions.setAuthor([object], [toAdd]) ⇒ <code>[CommandPermissions](Commands/CommandPermissions)</code>
 Set the permissions the user needs to have to execute this command.
 
 **Kind**: instance method of [<code>CommandPermissions</code>](#CommandPermissions)  
@@ -209,7 +209,7 @@ Set the permissions the user needs to have to execute this command.
 
 <a name="CommandPermissions+setUsers"></a>
 
-### commandPermissions.setUsers([object], [toAdd]) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
+### commandPermissions.setUsers([object], [toAdd]) ⇒ <code>[CommandPermissions](Commands/CommandPermissions)</code>
 Set the user IDs the user needs to have to execute this command.
 
 **Kind**: instance method of [<code>CommandPermissions</code>](#CommandPermissions)  
@@ -221,7 +221,7 @@ Set the user IDs the user needs to have to execute this command.
 
 <a name="CommandPermissions+setRoles"></a>
 
-### commandPermissions.setRoles([object], [toAdd]) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
+### commandPermissions.setRoles([object], [toAdd]) ⇒ <code>[CommandPermissions](Commands/CommandPermissions)</code>
 Set the role IDs the user needs to have to execute this command.
 
 **Kind**: instance method of [<code>CommandPermissions</code>](#CommandPermissions)  
@@ -233,7 +233,7 @@ Set the role IDs the user needs to have to execute this command.
 
 <a name="CommandPermissions+setChannels"></a>
 
-### commandPermissions.setChannels([object], [toAdd]) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
+### commandPermissions.setChannels([object], [toAdd]) ⇒ <code>[CommandPermissions](Commands/CommandPermissions)</code>
 Set the channel IDs needed to be in to execute this command.
 
 **Kind**: instance method of [<code>CommandPermissions</code>](#CommandPermissions)  
@@ -245,7 +245,7 @@ Set the channel IDs needed to be in to execute this command.
 
 <a name="CommandPermissions+setGuilds"></a>
 
-### commandPermissions.setGuilds([object], [toAdd]) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
+### commandPermissions.setGuilds([object], [toAdd]) ⇒ <code>[CommandPermissions](Commands/CommandPermissions)</code>
 Set the guild IDs needed to be in to execute this command.
 
 **Kind**: instance method of [<code>CommandPermissions</code>](#CommandPermissions)  
@@ -257,7 +257,7 @@ Set the guild IDs needed to be in to execute this command.
 
 <a name="CommandPermissions+setStaff"></a>
 
-### commandPermissions.setStaff([object], [toAdd]) ⇒ [<code>CommandPermissions</code>](#CommandPermissions)
+### commandPermissions.setStaff([object], [toAdd]) ⇒ <code>[CommandPermissions](Commands/CommandPermissions)</code>
 Set the AxonCore staff members that can execute this command.
 
 **Kind**: instance method of [<code>CommandPermissions</code>](#CommandPermissions)  
@@ -424,7 +424,7 @@ Creates an instance of CommandPermissions.
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| command | <code>Command</code> \| <code>Module</code> |  | The base command/module |
+| command | <code>[Command](Commands/Command)</code> \| <code>[Module](Modules/Module)</code> |  | The base command/module |
 | [override] | <code>CommandPerms</code> | <code>{}</code> | The specific permissions for this command/module (format - CommandPermissions) |
 | [useModuleDefault] | <code>Boolean</code> | <code>false</code> | Whether to use or not the module's base permissions before applying override permissions |
 

@@ -55,12 +55,12 @@
 | webhooks.INFO | <code>Object</code> |  |
 | webhooks.VERBOSE | <code>Object</code> | // Extensions |
 | extensions | <code>Object</code> | Classes overrides |
-| extensions.utils | <code>Utils</code> | Custom utils. Needs to be an instance of AxonCore.Utils |
-| extensions.logger | <code>ALogger</code> | Custom logger |
+| extensions.utils | <code>[Utils](Utility/Utils)</code> | Custom utils. Needs to be an instance of AxonCore.Utils |
+| extensions.logger | <code>[ALogger](Loggers/ALogger)</code> | Custom logger |
 | extensions.DBProvider | <code>DBProvider</code> | DBProvider. Needs to be an instance of DBProvider |
 | extensions.DBLocation | <code>String</code> | Path to use as default location for usage of the JSONProvider |
-| extensions.axonConfig | <code>AxonConfig</code> | Custom AxonConfig object to use instead of default AxonConfig |
-| extensions.guildConfig | <code>GuildConfig</code> | Custom GuildConfig object to use instead of default GuildConfig |
+| extensions.axonConfig | <code>[AxonConfig](Core/AxonConfig)</code> | Custom AxonConfig object to use instead of default AxonConfig |
+| extensions.guildConfig | <code>[GuildConfig](Core/GuildConfig)</code> | Custom GuildConfig object to use instead of default GuildConfig |
 
 
 * [AxonOptions](#AxonOptions)
@@ -159,7 +159,7 @@ Creates an instance of AxonOptions.
 | webhooks.VERBOSE | <code>Object</code> |  | // Extensions |
 | [extensions] | <code>Object</code> | <code>{}</code> | Classes overrides |
 |  |  |  |  |
-| extensions.logger | <code>ALogger</code> |  | Custom logger |
+| extensions.logger | <code>[ALogger](Loggers/ALogger)</code> |  | Custom logger |
 |  |  |  |  |
 | extensions.DBLocation | <code>String</code> |  | Path to use as default location for usage of the JSONProvider |
 |  |  |  |  |

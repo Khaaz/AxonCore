@@ -111,7 +111,7 @@ Add a value in the LRU cache.
 | --- | --- | --- |
 | key | <code>String</code> |  |
 | value | <code>T</code> |  |
-|  | <code>LRUCache.&lt;T&gt;</code> | The current LRUCache |
+|  | <code>[LRUCache](Utility/LRUCache).&lt;T&gt;</code> | The current LRUCache |
 
 <a name="LRUCache+delete"></a>
 

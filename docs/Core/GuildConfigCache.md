@@ -8,16 +8,16 @@
 
 | Name | Type |
 | --- | --- |
-| _axon | <code>AxonClient</code> | 
-| guildConfigs | <code>LRUCache.&lt;GuildConfig&gt;</code> | 
+| _axon | <code>[AxonClient](AxonClient)</code> | 
+| guildConfigs | <code>[LRUCache](Utility/LRUCache).&lt;[GuildConfig](Core/GuildConfig)&gt;</code> | 
 
 
 * [GuildConfigsCache](#GuildConfigsCache) ⇐ <code>Store&lt;GuildConfig&gt;</code>
     * [new GuildConfigsCache()](#new_GuildConfigsCache_new)
     * _instance_
         * [.guildConfigs](#GuildConfigsCache+guildConfigs) : <code>LRUCache.&lt;GuildConfig&gt;</code>
-        * [.getOrFetch(key)](#GuildConfigsCache+getOrFetch) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>
-        * [.fetchGuildConf(gID)](#GuildConfigsCache+fetchGuildConf) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>
+        * [.getOrFetch(key)](#GuildConfigsCache+getOrFetch) ⇒ <code>Promise.&lt;([GuildConfig](Core/GuildConfig)\|null)&gt;</code>
+        * [.fetchGuildConf(gID)](#GuildConfigsCache+fetchGuildConf) ⇒ <code>Promise.&lt;([GuildConfig](Core/GuildConfig)\|null)&gt;</code>
     * _static_
         * [.GuildConfigsCache](#GuildConfigsCache.GuildConfigsCache)
             * [new GuildConfigsCache(axonClient)](#new_GuildConfigsCache.GuildConfigsCache_new)
@@ -37,7 +37,7 @@ Returns the cache
 **Read only**: true  
 <a name="GuildConfigsCache+getOrFetch"></a>
 
-### guildConfigsCache.getOrFetch(key) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>
+### guildConfigsCache.getOrFetch(key) ⇒ <code>Promise.&lt;([GuildConfig](Core/GuildConfig)\|null)&gt;</code>
 Get a GuildConfig from the cache or from the DB if not in the cache.
 
 **Kind**: instance method of [<code>GuildConfigsCache</code>](#GuildConfigsCache)  
@@ -48,11 +48,11 @@ Get a GuildConfig from the cache or from the DB if not in the cache.
 
 <a name="GuildConfigsCache+fetchGuildConf"></a>
 
-### guildConfigsCache.fetchGuildConf(gID) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>
+### guildConfigsCache.fetchGuildConf(gID) ⇒ <code>Promise.&lt;([GuildConfig](Core/GuildConfig)\|null)&gt;</code>
 Fetches and resolves the guild config of the given ID from the DB, creates a schema if none was found or there was an error.
 
 **Kind**: instance method of [<code>GuildConfigsCache</code>](#GuildConfigsCache)  
-**Returns**: <code>Promise.&lt;(GuildConfig\|null)&gt;</code> - Guild schema from the DB / Error  
+**Returns**: <code>Promise.&lt;([GuildConfig](Core/GuildConfig)\|null)&gt;</code> - Guild schema from the DB / Error  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -70,5 +70,5 @@ Creates an instance of GuildConfigsCache.
 
 | Param | Type |
 | --- | --- |
-| axonClient | <code>AxonClient</code> | 
+| axonClient | <code>[AxonClient](AxonClient)</code> | 
 

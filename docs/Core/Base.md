@@ -21,7 +21,7 @@
 
 | Name | Type | Description |
 | --- | --- | --- |
-| _axon | <code>AxonClient</code> | AxonClient |
+| _axon | <code>[AxonClient](AxonClient)</code> | AxonClient |
 
 
 * [Base](#Base)
@@ -34,14 +34,14 @@
         * [.axonUtils](#Base+axonUtils) : <code>AxonUtils</code>
         * [.utils](#Base+utils) : <code>Utils</code>
         * [.l](#Base+l) : <code>MessageManager</code>
-        * [.getModule(module)](#Base+getModule) ⇒ <code>Module</code> \| <code>null</code>
-        * [.getCommand(fullLabel)](#Base+getCommand) ⇒ <code>Command</code> \| <code>null</code>
+        * [.getModule(module)](#Base+getModule) ⇒ <code>[Module](Modules/Module)</code> \| <code>null</code>
+        * [.getCommand(fullLabel)](#Base+getCommand) ⇒ <code>[Command](Commands/Command)</code> \| <code>null</code>
         * [.sendDM(user, content, [options])](#Base+sendDM) ⇒ <code>Promise.&lt;?Message&gt;</code>
         * [.sendMessage(channel, content, [options])](#Base+sendMessage) ⇒ <code>Promise.&lt;?Message&gt;</code>
         * [.editMessage(message, content)](#Base+editMessage) ⇒ <code>Promise.&lt;?Message&gt;</code>
-        * [.sendSuccess(channel, content, [options])](#Base+sendSuccess) ⇒ <code>Promise.&lt;CommandResponse&gt;</code>
-        * [.sendError(channel, content, [options])](#Base+sendError) ⇒ <code>Promise.&lt;CommandResponse&gt;</code>
-        * [.error(msg, err, type, errMsg)](#Base+error) ⇒ <code>Promise.&lt;CommandResponse&gt;</code>
+        * [.sendSuccess(channel, content, [options])](#Base+sendSuccess) ⇒ <code>Promise.&lt;[CommandResponse](Commands/CommandResponse)&gt;</code>
+        * [.sendError(channel, content, [options])](#Base+sendError) ⇒ <code>Promise.&lt;[CommandResponse](Commands/CommandResponse)&gt;</code>
+        * [.error(msg, err, type, errMsg)](#Base+error) ⇒ <code>Promise.&lt;[CommandResponse](Commands/CommandResponse)&gt;</code>
         * [.toString()](#Base+toString) ⇒ <code>String</code>
         * [.toJSON()](#Base+toJSON) ⇒ <code>Object</code>
     * _static_
@@ -104,7 +104,7 @@ Returns the MessageManager instance
 **Read only**: true  
 <a name="Base+getModule"></a>
 
-### base.getModule(module) ⇒ <code>Module</code> \| <code>null</code>
+### base.getModule(module) ⇒ <code>[Module](Modules/Module)</code> \| <code>null</code>
 Get a module from AxonClient with the label
 
 **Kind**: instance method of [<code>Base</code>](#Base)  
@@ -115,7 +115,7 @@ Get a module from AxonClient with the label
 
 <a name="Base+getCommand"></a>
 
-### base.getCommand(fullLabel) ⇒ <code>Command</code> \| <code>null</code>
+### base.getCommand(fullLabel) ⇒ <code>[Command](Commands/Command)</code> \| <code>null</code>
 Get a command/subcommand from AxonClient with the full label
 
 **Kind**: instance method of [<code>Base</code>](#Base)  
@@ -177,13 +177,13 @@ Check for bot permissions + message embed/length
 
 <a name="Base+sendSuccess"></a>
 
-### base.sendSuccess(channel, content, [options]) ⇒ <code>Promise.&lt;CommandResponse&gt;</code>
+### base.sendSuccess(channel, content, [options]) ⇒ <code>Promise.&lt;[CommandResponse](Commands/CommandResponse)&gt;</code>
 Send a success message. If the content is a string, suffix the success emote to the content.
 Check for sendMessage perms.
 Await for sendMessage to throw correctly potential errors.
 
 **Kind**: instance method of [<code>Base</code>](#Base)  
-**Returns**: <code>Promise.&lt;CommandResponse&gt;</code> - The successful Command Response  
+**Returns**: <code>Promise.&lt;[CommandResponse](Commands/CommandResponse)&gt;</code> - The successful Command Response  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -197,13 +197,13 @@ Await for sendMessage to throw correctly potential errors.
 
 <a name="Base+sendError"></a>
 
-### base.sendError(channel, content, [options]) ⇒ <code>Promise.&lt;CommandResponse&gt;</code>
+### base.sendError(channel, content, [options]) ⇒ <code>Promise.&lt;[CommandResponse](Commands/CommandResponse)&gt;</code>
 Send an error message. If the content is a string, suffix the error emote to the content.
 Check for sendMessage perms.
 Await for sendMessage to throw correctly potential errors.
 
 **Kind**: instance method of [<code>Base</code>](#Base)  
-**Returns**: <code>Promise.&lt;CommandResponse&gt;</code> - The non successful Command Response  
+**Returns**: <code>Promise.&lt;[CommandResponse](Commands/CommandResponse)&gt;</code> - The non successful Command Response  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -218,12 +218,12 @@ Await for sendMessage to throw correctly potential errors.
 
 <a name="Base+error"></a>
 
-### base.error(msg, err, type, errMsg) ⇒ <code>Promise.&lt;CommandResponse&gt;</code>
+### base.error(msg, err, type, errMsg) ⇒ <code>Promise.&lt;[CommandResponse](Commands/CommandResponse)&gt;</code>
 Handles errors and sends an error message/log.
 Calls sendError().
 
 **Kind**: instance method of [<code>Base</code>](#Base)  
-**Returns**: <code>Promise.&lt;CommandResponse&gt;</code> - The non successful Command Response  
+**Returns**: <code>Promise.&lt;[CommandResponse](Commands/CommandResponse)&gt;</code> - The non successful Command Response  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -258,7 +258,7 @@ Creates an instance of Base.
 
 | Param | Type |
 | --- | --- |
-| axonClient | <code>AxonClient</code> | 
+| axonClient | <code>[AxonClient](AxonClient)</code> | 
 
 <a name="AllowedMentions"></a>
 

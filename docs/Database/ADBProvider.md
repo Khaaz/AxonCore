@@ -21,7 +21,7 @@
 
 | Name | Type | Description |
 | --- | --- | --- |
-| axon | <code>AxonClient</code> | The AxonClient |
+| axon | <code>[AxonClient](AxonClient)</code> | The AxonClient |
 | type | <code>DB\_TYPES</code> | The Database type |
 
 
@@ -29,14 +29,14 @@
     * *[new ADBProvider()](#new_ADBProvider_new)*
     * _instance_
         * *[.init()](#ADBProvider+init)*
-        * *[.initAxon()](#ADBProvider+initAxon) ⇒ <code>Promise.&lt;AxonConfig&gt;</code>*
-        * *[.initGuild(gID)](#ADBProvider+initGuild) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>*
-        * *[.fetchAxon()](#ADBProvider+fetchAxon) ⇒ <code>Promise.&lt;(AxonConfig\|null)&gt;</code>*
-        * *[.fetchGuild(gID)](#ADBProvider+fetchGuild) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>*
+        * *[.initAxon()](#ADBProvider+initAxon) ⇒ <code>Promise.&lt;[AxonConfig](Core/AxonConfig)&gt;</code>*
+        * *[.initGuild(gID)](#ADBProvider+initGuild) ⇒ <code>Promise.&lt;([GuildConfig](Core/GuildConfig)\|null)&gt;</code>*
+        * *[.fetchAxon()](#ADBProvider+fetchAxon) ⇒ <code>Promise.&lt;([AxonConfig](Core/AxonConfig)\|null)&gt;</code>*
+        * *[.fetchGuild(gID)](#ADBProvider+fetchGuild) ⇒ <code>Promise.&lt;([GuildConfig](Core/GuildConfig)\|null)&gt;</code>*
         * *[.updateAxon(key, value)](#ADBProvider+updateAxon) ⇒ <code>Promise.&lt;Boolean&gt;</code>*
         * *[.updateGuild(key, gID, value)](#ADBProvider+updateGuild) ⇒ <code>Promise.&lt;Boolean&gt;</code>*
-        * *[.saveAxon(data)](#ADBProvider+saveAxon) ⇒ <code>Promise.&lt;(AxonConfig\|null)&gt;</code>*
-        * *[.saveGuild(gID, data)](#ADBProvider+saveGuild) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>*
+        * *[.saveAxon(data)](#ADBProvider+saveAxon) ⇒ <code>Promise.&lt;([AxonConfig](Core/AxonConfig)\|null)&gt;</code>*
+        * *[.saveGuild(gID, data)](#ADBProvider+saveGuild) ⇒ <code>Promise.&lt;([GuildConfig](Core/GuildConfig)\|null)&gt;</code>*
     * _static_
         * *[.ADBProvider](#ADBProvider.ADBProvider)*
             * [new ADBProvider(axonClient, [type])](#new_ADBProvider.ADBProvider_new)
@@ -59,19 +59,19 @@ Method called just after instantiation. Can be overridden with anything that wil
 **Kind**: instance method of [<code>ADBProvider</code>](#ADBProvider)  
 <a name="ADBProvider+initAxon"></a>
 
-### *adbProvider.initAxon() ⇒ <code>Promise.&lt;AxonConfig&gt;</code>*
+### *adbProvider.initAxon() ⇒ <code>Promise.&lt;[AxonConfig](Core/AxonConfig)&gt;</code>*
 Initialises a default Axon config.
 
 **Kind**: instance method of [<code>ADBProvider</code>](#ADBProvider)  
-**Returns**: <code>Promise.&lt;AxonConfig&gt;</code> - Newly created Axon config from the DB  
+**Returns**: <code>Promise.&lt;[AxonConfig](Core/AxonConfig)&gt;</code> - Newly created Axon config from the DB  
 <a name="ADBProvider+initGuild"></a>
 
-### *adbProvider.initGuild(gID) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>*
+### *adbProvider.initGuild(gID) ⇒ <code>Promise.&lt;([GuildConfig](Core/GuildConfig)\|null)&gt;</code>*
 Initialises a default Guild config.
 Use default AxonClient prefix settings when creating the new guild config.
 
 **Kind**: instance method of [<code>ADBProvider</code>](#ADBProvider)  
-**Returns**: <code>Promise.&lt;(GuildConfig\|null)&gt;</code> - Newly created Guild config from the DB  
+**Returns**: <code>Promise.&lt;([GuildConfig](Core/GuildConfig)\|null)&gt;</code> - Newly created Guild config from the DB  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -79,14 +79,14 @@ Use default AxonClient prefix settings when creating the new guild config.
 
 <a name="ADBProvider+fetchAxon"></a>
 
-### *adbProvider.fetchAxon() ⇒ <code>Promise.&lt;(AxonConfig\|null)&gt;</code>*
+### *adbProvider.fetchAxon() ⇒ <code>Promise.&lt;([AxonConfig](Core/AxonConfig)\|null)&gt;</code>*
 Retrieves the axon config from the DB
 
 **Kind**: instance method of [<code>ADBProvider</code>](#ADBProvider)  
-**Returns**: <code>Promise.&lt;(AxonConfig\|null)&gt;</code> - AxonSchema Object or null  
+**Returns**: <code>Promise.&lt;([AxonConfig](Core/AxonConfig)\|null)&gt;</code> - AxonSchema Object or null  
 <a name="ADBProvider+fetchGuild"></a>
 
-### *adbProvider.fetchGuild(gID) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>*
+### *adbProvider.fetchGuild(gID) ⇒ <code>Promise.&lt;([GuildConfig](Core/GuildConfig)\|null)&gt;</code>*
 Retrieves the Guild config for the specified guild.
 
 **Kind**: instance method of [<code>ADBProvider</code>](#ADBProvider)  
@@ -129,28 +129,28 @@ Generic method to update Database.
 
 <a name="ADBProvider+saveAxon"></a>
 
-### *adbProvider.saveAxon(data) ⇒ <code>Promise.&lt;(AxonConfig\|null)&gt;</code>*
+### *adbProvider.saveAxon(data) ⇒ <code>Promise.&lt;([AxonConfig](Core/AxonConfig)\|null)&gt;</code>*
 Updates the Axon config in the DB with a new Axon config object.
 
 **Kind**: instance method of [<code>ADBProvider</code>](#ADBProvider)  
-**Returns**: <code>Promise.&lt;(AxonConfig\|null)&gt;</code> - Updated AxonConfig from the DB  
+**Returns**: <code>Promise.&lt;([AxonConfig](Core/AxonConfig)\|null)&gt;</code> - Updated AxonConfig from the DB  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| data | <code>AxonConfig</code> \| <code>AxonConfigRaw</code> | the schema object to update |
+| data | <code>[AxonConfig](Core/AxonConfig)</code> \| <code>AxonConfigRaw</code> | the schema object to update |
 
 <a name="ADBProvider+saveGuild"></a>
 
-### *adbProvider.saveGuild(gID, data) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>*
+### *adbProvider.saveGuild(gID, data) ⇒ <code>Promise.&lt;([GuildConfig](Core/GuildConfig)\|null)&gt;</code>*
 Updates the given guild in the DB with a new schema object.
 
 **Kind**: instance method of [<code>ADBProvider</code>](#ADBProvider)  
-**Returns**: <code>Promise.&lt;(GuildConfig\|null)&gt;</code> - Updated GuildConfig from the DB  
+**Returns**: <code>Promise.&lt;([GuildConfig](Core/GuildConfig)\|null)&gt;</code> - Updated GuildConfig from the DB  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | gID | <code>String</code> | Guild ID |
-| data | <code>GuildConfig</code> \| [<code>GuildConfigRaw</code>](#GuildConfigRaw) | The schema object to update |
+| data | <code>[GuildConfig](Core/GuildConfig)</code> \| [<code>GuildConfigRaw</code>](#GuildConfigRaw) | The schema object to update |
 
 <a name="ADBProvider.ADBProvider"></a>
 
@@ -164,7 +164,7 @@ Creates an instance of ADBProvider.
 
 | Param | Type | Default |
 | --- | --- | --- |
-| axonClient | <code>AxonClient</code> |  | 
+| axonClient | <code>[AxonClient](AxonClient)</code> |  | 
 | [type] | <code>DB\_TYPES</code> | <code>0</code> | 
 
 <a name="GuildConfigRaw"></a>

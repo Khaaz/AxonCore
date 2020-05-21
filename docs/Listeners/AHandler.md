@@ -7,9 +7,9 @@
 
 | Name | Type |
 | --- | --- |
-| _axon | <code>AxonClient</code> | 
+| _axon | <code>[AxonClient](AxonClient)</code> | 
 | name | <code>String</code> | 
-| _listeners | <code>Array.&lt;Listener&gt;</code> | 
+| _listeners | <code>Array.&lt;[Listener](Listeners/Listener)&gt;</code> | 
 
 
 * *[AHandler](#AHandler)*
@@ -58,7 +58,7 @@ Creates an instance of AHandler.
 
 | Param | Type |
 | --- | --- |
-| axon | <code>AxonClient</code> | 
+| axon | <code>[AxonClient](AxonClient)</code> | 
 | name | <code>String</code> | 
-| listeners | <code>Array.&lt;Listener&gt;</code> | 
+| listeners | <code>Array.&lt;[Listener](Listeners/Listener)&gt;</code> | 
 

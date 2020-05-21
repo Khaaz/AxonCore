@@ -19,15 +19,15 @@
         * [.values()](#Store+values) ⇒ <code>IterableIterator.&lt;T&gt;</code>
         * [.has(key)](#Store+has) ⇒ <code>Boolean</code>
         * [.get(key)](#Store+get) ⇒ <code>T</code>
-        * [.set(key, value)](#Store+set) ⇒ [<code>Store</code>](#Store)
+        * [.set(key, value)](#Store+set) ⇒ <code>[Store](Utility/Store)</code>
         * [.delete(key)](#Store+delete) ⇒ <code>Boolean</code>
         * [.toArray()](#Store+toArray) ⇒ <code>Array.&lt;T&gt;</code>
         * [.toObject()](#Store+toObject) ⇒ <code>Object.&lt;string, T&gt;</code>
         * [.first()](#Store+first) ⇒ <code>T</code>
-        * [.apply(key, func, ...args)](#Store+apply) ⇒ <code>Store.&lt;T&gt;</code>
-        * [.forEach(func)](#Store+forEach) ⇒ [<code>Store</code>](#Store)
-        * [.forEachAsync(func)](#Store+forEachAsync) ⇒ [<code>Promise.&lt;Store&gt;</code>](#Store)
-        * [.sweep(func)](#Store+sweep) ⇒ [<code>Store</code>](#Store)
+        * [.apply(key, func, ...args)](#Store+apply) ⇒ <code>[Store](Utility/Store).&lt;T&gt;</code>
+        * [.forEach(func)](#Store+forEach) ⇒ <code>[Store](Utility/Store)</code>
+        * [.forEachAsync(func)](#Store+forEachAsync) ⇒ <code>Promise.&lt;[Store](Utility/Store)&gt;</code>
+        * [.sweep(func)](#Store+sweep) ⇒ <code>[Store](Utility/Store)</code>
         * [.find(func)](#Store+find) ⇒ <code>T</code>
         * [.map(func)](#Store+map) ⇒ <code>Array.&lt;R&gt;</code>
         * [.filter(func)](#Store+filter) ⇒ <code>Array.&lt;T&gt;</code>
@@ -99,11 +99,11 @@ Get an element by key in the Store
 
 <a name="Store+set"></a>
 
-### store.set(key, value) ⇒ [<code>Store</code>](#Store)
+### store.set(key, value) ⇒ <code>[Store](Utility/Store)</code>
 Set an element in the Store
 
 **Kind**: instance method of [<code>Store</code>](#Store)  
-**Returns**: [<code>Store</code>](#Store) - - Current Store  
+**Returns**: <code>[Store](Utility/Store)</code> - - Current Store  
 
 | Param | Type |
 | --- | --- |
@@ -143,13 +143,13 @@ The first value of the Store
 **Returns**: <code>T</code> - - The first element  
 <a name="Store+apply"></a>
 
-### store.apply(key, func, ...args) ⇒ <code>Store.&lt;T&gt;</code>
+### store.apply(key, func, ...args) ⇒ <code>[Store](Utility/Store).&lt;T&gt;</code>
 Apply a function to the Store and returns a new Store.
 Usable over: `map`, `filter`, `toArray`.
 Using apply with toArray is pretty much "cloning" the Store.
 
 **Kind**: instance method of [<code>Store</code>](#Store)  
-**Returns**: <code>Store.&lt;T&gt;</code> - A new Store modified by the apply call  
+**Returns**: <code>[Store](Utility/Store).&lt;T&gt;</code> - A new Store modified by the apply call  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -159,11 +159,11 @@ Using apply with toArray is pretty much "cloning" the Store.
 
 <a name="Store+forEach"></a>
 
-### store.forEach(func) ⇒ [<code>Store</code>](#Store)
+### store.forEach(func) ⇒ <code>[Store](Utility/Store)</code>
 Execute a function over each element of the Store in a synchronous fashion
 
 **Kind**: instance method of [<code>Store</code>](#Store)  
-**Returns**: [<code>Store</code>](#Store) - The current Store  
+**Returns**: <code>[Store](Utility/Store)</code> - The current Store  
 
 | Param |
 | --- |
@@ -171,11 +171,11 @@ Execute a function over each element of the Store in a synchronous fashion
 
 <a name="Store+forEachAsync"></a>
 
-### store.forEachAsync(func) ⇒ [<code>Promise.&lt;Store&gt;</code>](#Store)
+### store.forEachAsync(func) ⇒ <code>Promise.&lt;[Store](Utility/Store)&gt;</code>
 Execute a function over each element of the Store in an asynchronous fashion
 
 **Kind**: instance method of [<code>Store</code>](#Store)  
-**Returns**: [<code>Promise.&lt;Store&gt;</code>](#Store) - The current Store  
+**Returns**: <code>Promise.&lt;[Store](Utility/Store)&gt;</code> - The current Store  
 
 | Param |
 | --- |
@@ -183,11 +183,11 @@ Execute a function over each element of the Store in an asynchronous fashion
 
 <a name="Store+sweep"></a>
 
-### store.sweep(func) ⇒ [<code>Store</code>](#Store)
+### store.sweep(func) ⇒ <code>[Store](Utility/Store)</code>
 Removes from the Store all element that satisfy the function in parameter
 
 **Kind**: instance method of [<code>Store</code>](#Store)  
-**Returns**: [<code>Store</code>](#Store) - - The current Store  
+**Returns**: <code>[Store](Utility/Store)</code> - - The current Store  
 
 | Param |
 | --- |

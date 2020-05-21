@@ -21,7 +21,7 @@
 
 | Name | Type | Description |
 | --- | --- | --- |
-| _axon | <code>AxonClient</code> | AxonClient |
+| _axon | <code>[AxonClient](AxonClient)</code> | AxonClient |
 | userMention | <code>RegExp</code> | Regular Expression to match a userMention |
 | roleMention | <code>RegExp</code> | Regular Expression to match a roleMention |
 | channelMention | <code>RegExp</code> | Regular Expression to match a channelMention |
@@ -289,7 +289,7 @@ Creates an instance of Utils.
 
 | Param | Type |
 | --- | --- |
-| client | <code>AxonClient</code> | 
+| client | <code>[AxonClient](AxonClient)</code> | 
 
 <a name="Utils.userMention"></a>
 

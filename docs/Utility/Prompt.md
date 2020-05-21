@@ -54,7 +54,7 @@ let prompt = new Prompt(this.axon, msg.author.id, msg.channel, { timeoutMessage:
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| client | <code>AxonClient</code> |  | The Axon client |
+| client | <code>[AxonClient](AxonClient)</code> |  | The Axon client |
 | uID | <code>String</code> |  | The user ID |
 | channel | <code>Channel</code> |  | The channel object |
 | [defaultOptions] | <code>Object</code> | <code>{}</code> | The default options for the prompt. |
@@ -217,7 +217,7 @@ let prompt = new Prompt(this.axon, msg.author.id, msg.channel, { timeoutMessage:
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| client | <code>AxonClient</code> |  | The Axon client |
+| client | <code>[AxonClient](AxonClient)</code> |  | The Axon client |
 | uID | <code>String</code> |  | The user ID |
 | channel | <code>Channel</code> |  | The channel object |
 | [defaultOptions] | <code>Object</code> | <code>{}</code> | The default options for the prompt. |

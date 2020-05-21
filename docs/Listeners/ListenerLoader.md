@@ -36,7 +36,7 @@ Creates an instance of ListenerLoader
 
 | Param | Type |
 | --- | --- |
-| module | <code>Module</code> | 
+| module | <code>[Module](Modules/Module)</code> | 
 
 <a name="ListenerLoader+axon"></a>
 
@@ -62,7 +62,7 @@ Validate and correct the event before registering it.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| listener | <code>Listener</code> | The event to load |
+| listener | <code>[Listener](Listeners/Listener)</code> | The event to load |
 
 <a name="ListenerLoader+loadAll"></a>
 
@@ -74,7 +74,7 @@ Instantiate all events.
 
 | Param | Type |
 | --- | --- |
-| listeners | <code>Object.&lt;string, Listener&gt;</code> | 
+| listeners | <code>Object.&lt;string, [Listener](Listeners/Listener)&gt;</code> | 
 
 <a name="ListenerLoader+unload"></a>
 
@@ -116,7 +116,7 @@ Creates an instance of ListenerLoader
 
 | Param | Type |
 | --- | --- |
-| module | <code>Module</code> | 
+| module | <code>[Module](Modules/Module)</code> | 
 
 <a name="ListenerLoader+axon"></a>
 
@@ -142,7 +142,7 @@ Validate and correct the event before registering it.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| listener | <code>Listener</code> | The event to load |
+| listener | <code>[Listener](Listeners/Listener)</code> | The event to load |
 
 <a name="ListenerLoader+loadAll"></a>
 
@@ -154,7 +154,7 @@ Instantiate all events.
 
 | Param | Type |
 | --- | --- |
-| listeners | <code>Object.&lt;string, Listener&gt;</code> | 
+| listeners | <code>Object.&lt;string, [Listener](Listeners/Listener)&gt;</code> | 
 
 <a name="ListenerLoader+unload"></a>
 

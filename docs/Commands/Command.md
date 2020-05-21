@@ -22,23 +22,23 @@
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| _module | <code>Module</code> |  | Module object |
+| _module | <code>[Module](Modules/Module)</code> |  | Module object |
 | _cooldown | <code>CommandCooldown</code> |  | Cooldown Object for the command (manage all command cooldowns) |
 | label | <code>String</code> |  | Command label (name/id) |
 | [aliases] | <code>Array.&lt;String&gt;</code> | <code>[]</code> | Array of commands aliases (including the command label) |
 | [enabled] | <code>Boolean</code> | <code>module.enabled</code> | Whether the command is enabled |
 | [serverBypass] | <code>Boolean</code> | <code>module.serverBypass</code> | Whether the command can be disabled |
-| [parentCommand] | [<code>Command</code>](#Command) | <code></code> | Reference to the parent command |
+| [parentCommand] | <code>[Command](Commands/Command)</code> | <code></code> | Reference to the parent command |
 | [hasSubcmd] | <code>Boolean</code> | <code>false</code> | Whether the command HAS subcommands |
-| [subCommands] | <code>CommandRegistry</code> | <code></code> | Registry of subcommands |
+| [subCommands] | <code>[CommandRegistry](Commands/CommandRegistry)</code> | <code></code> | Registry of subcommands |
 | info | <code>Object</code> |  | Default info about the command |
 | [info.owners] | <code>Array.&lt;String&gt;</code> |  | Command authors |
 | [info.name] | <code>String</code> |  | Full command name |
 | [info.description] | <code>String</code> |  | Command description |
 | [info.usage] | <code>String</code> |  | Command usage |
 | [info.example] | <code>Array.&lt;String&gt;</code> |  | Array of command examples |
-| options | <code>CommandOptions</code> |  | Options Object for the command (manage all command options) |
-| permissions | <code>CommandPermissions</code> |  | Permissions Object for the command (manage all command permissions) |
+| options | <code>[CommandOptions](Commands/CommandOptions)</code> |  | Options Object for the command (manage all command options) |
+| permissions | <code>[CommandPermissions](Commands/CommandPermissions)</code> |  | Permissions Object for the command (manage all command permissions) |
 
 
 * [Command](#Command) ⇐ <code>Base</code>
@@ -50,10 +50,10 @@
         * [.fullLabel](#Command+fullLabel) : <code>String</code>
         * [.init()](#Command+init) ⇒
         * [._init()](#Command+_init) ⇒ <code>Boolean</code>
-        * [._process(env)](#Command+_process) ⇒ <code>Promise.&lt;CommandContext&gt;</code>
-        * [._execute(env)](#Command+_execute) ⇒ <code>Promise.&lt;CommandContext&gt;</code>
-        * [.execute(env)](#Command+execute) ⇒ <code>Promise.&lt;CommandResponse&gt;</code>
-        * [.sendHelp(env)](#Command+sendHelp) ⇒ <code>Promise.&lt;CommandContext&gt;</code>
+        * [._process(env)](#Command+_process) ⇒ <code>Promise.&lt;[CommandContext](Commands/CommandContext)&gt;</code>
+        * [._execute(env)](#Command+_execute) ⇒ <code>Promise.&lt;[CommandContext](Commands/CommandContext)&gt;</code>
+        * [.execute(env)](#Command+execute) ⇒ <code>Promise.&lt;[CommandResponse](Commands/CommandResponse)&gt;</code>
+        * [.sendHelp(env)](#Command+sendHelp) ⇒ <code>Promise.&lt;[CommandContext](Commands/CommandContext)&gt;</code>
         * [.sendBotPerms(channel, [permissions])](#Command+sendBotPerms)
         * [.sendUserPerms(channel, member, [deleteTimeout], [missingPermission])](#Command+sendUserPerms)
         * [.sendTargetPerms(channel)](#Command+sendTargetPerms)
@@ -107,19 +107,19 @@ Returns all the subcommands for a command
 **Kind**: instance method of [<code>Command</code>](#Command)  
 <a name="Command+_process"></a>
 
-### command.\_process(env) ⇒ <code>Promise.&lt;CommandContext&gt;</code>
+### command.\_process(env) ⇒ <code>Promise.&lt;[CommandContext](Commands/CommandContext)&gt;</code>
 Process the command, and executes it if it can (permissions, options etc..).
 
 **Kind**: instance method of [<code>Command</code>](#Command)  
-**Returns**: <code>Promise.&lt;CommandContext&gt;</code> - Return a CommandContext or throw an AxonCommandError.  
+**Returns**: <code>Promise.&lt;[CommandContext](Commands/CommandContext)&gt;</code> - Return a CommandContext or throw an AxonCommandError.  
 
 | Param | Type |
 | --- | --- |
-| env | <code>CommandEnvironment</code> | 
+| env | <code>[CommandEnvironment](Commands/CommandEnvironment)</code> | 
 
 <a name="Command+_execute"></a>
 
-### command.\_execute(env) ⇒ <code>Promise.&lt;CommandContext&gt;</code>
+### command.\_execute(env) ⇒ <code>Promise.&lt;[CommandContext](Commands/CommandContext)&gt;</code>
 Execute the command.
 Get the CommandResponse from the command execution or create it in case of errors.
 Create the CommandContext and returns it.
@@ -128,24 +128,24 @@ Create the CommandContext and returns it.
 
 | Param | Type |
 | --- | --- |
-| env | <code>CommandEnvironment</code> | 
+| env | <code>[CommandEnvironment](Commands/CommandEnvironment)</code> | 
 
 <a name="Command+execute"></a>
 
-### command.execute(env) ⇒ <code>Promise.&lt;CommandResponse&gt;</code>
+### command.execute(env) ⇒ <code>Promise.&lt;[CommandResponse](Commands/CommandResponse)&gt;</code>
 Override this method in all Command child.
 Main method - command logic being executed when the command is actually ran.
 
 **Kind**: instance method of [<code>Command</code>](#Command)  
-**Returns**: <code>Promise.&lt;CommandResponse&gt;</code> - Returns a CommandResponse that will be used to create the CommandContext  
+**Returns**: <code>Promise.&lt;[CommandResponse](Commands/CommandResponse)&gt;</code> - Returns a CommandResponse that will be used to create the CommandContext  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| env | <code>CommandEnvironment</code> | The Command Environment object with all variables needed for the Commandexecution |
+| env | <code>[CommandEnvironment](Commands/CommandEnvironment)</code> | The Command Environment object with all variables needed for the Commandexecution |
 
 <a name="Command+sendHelp"></a>
 
-### command.sendHelp(env) ⇒ <code>Promise.&lt;CommandContext&gt;</code>
+### command.sendHelp(env) ⇒ <code>Promise.&lt;[CommandContext](Commands/CommandContext)&gt;</code>
 Send help message in the current channel with perm checks done before.
 Call a custom sendHelp method if it exists, use the default one if it doesn't.
 
@@ -153,7 +153,7 @@ Call a custom sendHelp method if it exists, use the default one if it doesn't.
 
 | Param | Type |
 | --- | --- |
-| env | <code>CommandEnvironment</code> | 
+| env | <code>[CommandEnvironment](Commands/CommandEnvironment)</code> | 
 
 <a name="Command+sendBotPerms"></a>
 
@@ -220,7 +220,7 @@ Overrides the execute method. Execute method will be called every time the comma
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| module | <code>Module</code> |  |  |
+| module | <code>[Module](Modules/Module)</code> |  |  |
 | [data] | <code>Object</code> | <code>{}</code> | All command parameters |
 | [data.label] | <code>String</code> |  | The command label |
 | [data.aliases] | <code>Array.&lt;String&gt;</code> |  | The command aliases |
@@ -233,8 +233,8 @@ Overrides the execute method. Execute method will be called every time the comma
 | [data.info.examples] | <code>Array.&lt;String&gt;</code> |  | Command examples |
 | [data.info.usage] | <code>String</code> |  | The command usage |
 | [data.info.name] | <code>String</code> |  | The full command name |
-| [data.options] | <code>CommandOptions</code> \| <code>Object</code> |  | The command options |
-| [data.permissions] | <code>CommandPermissions</code> \| <code>Object</code> |  | The command permissions |
+| [data.options] | <code>[CommandOptions](Commands/CommandOptions)</code> \| <code>Object</code> |  | The command options |
+| [data.permissions] | <code>[CommandPermissions](Commands/CommandPermissions)</code> \| <code>Object</code> |  | The command permissions |
 
 <a name="AxonTemplate"></a>
 

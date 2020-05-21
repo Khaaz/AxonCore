@@ -7,7 +7,7 @@
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| _functions | <code>Queue.&lt;function()&gt;</code> |  | The queue of function |
+| _functions | <code>[Queue](Utility/Queue).&lt;function()&gt;</code> |  | The queue of function |
 | [_running] | <code>Boolean</code> | <code>false</code> | Whether the FunctionQueue is running. |
 | [stopOnError] | <code>Boolean</code> | <code>false</code> | Whether to stop the FunctionQueue execution on error. |
 

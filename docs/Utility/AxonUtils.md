@@ -21,7 +21,7 @@
 
 | Name | Type | Description |
 | --- | --- | --- |
-| _axon | <code>AxonClient</code> | Axon Client |
+| _axon | <code>[AxonClient](AxonClient)</code> | Axon Client |
 
 
 * [AxonUtils](#AxonUtils)
@@ -108,7 +108,7 @@ Works directly with axon._configs.webhooks.
 | Param | Type | Description |
 | --- | --- | --- |
 | type | <code>String</code> | Type of the webhook [status, loader, error, misc] |
-| embed | <code>Embed</code> \| <code>EmbedBase</code> | Embed object |
+| embed | <code>[Embed](Utility/Embed)</code> \| <code>[Embed](Utility/Embed)[Base](Core/Base)</code> | Embed object |
 | opt | <code>String</code> | Optional string to use as bot username |
 
 <a name="AxonUtils+isBotOwner"></a>
@@ -156,7 +156,7 @@ Managers, Admins and Owner are automatically Mod.
 | Param | Type | Description |
 | --- | --- | --- |
 | member | <code>Member</code> | The member object |
-| guildConfig | <code>GuildConfig</code> | The guild Config from the DB |
+| guildConfig | <code>[GuildConfig](Core/GuildConfig)</code> | The guild Config from the DB |
 
 <a name="AxonUtils+isServerManager"></a>
 
@@ -259,7 +259,7 @@ Creates an AxonUtils instance.
 
 | Param | Type |
 | --- | --- |
-| axon | <code>AxonClient</code> | 
+| axon | <code>[AxonClient](AxonClient)</code> | 
 
 <a name="AllowedMentions"></a>
 

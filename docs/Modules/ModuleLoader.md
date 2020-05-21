@@ -37,7 +37,7 @@ Creates an instance of ModuleLoader
 
 | Param | Type |
 | --- | --- |
-| axonClient | <code>AxonClient</code> | 
+| axonClient | <code>[AxonClient](AxonClient)</code> | 
 
 <a name="ModuleLoader+axon"></a>
 
@@ -63,7 +63,7 @@ Validate and correct the module before registering it.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| module | <code>Module</code> | The module to load |
+| module | <code>[Module](Modules/Module)</code> | The module to load |
 
 <a name="ModuleLoader+loadAll"></a>
 
@@ -75,7 +75,7 @@ Instantiate all modules.
 
 | Param | Type |
 | --- | --- |
-| modules | <code>Object.&lt;string, Module&gt;</code> | 
+| modules | <code>Object.&lt;string, [Module](Modules/Module)&gt;</code> | 
 
 <a name="ModuleLoader+unload"></a>
 
@@ -117,7 +117,7 @@ Creates an instance of ModuleLoader
 
 | Param | Type |
 | --- | --- |
-| axonClient | <code>AxonClient</code> | 
+| axonClient | <code>[AxonClient](AxonClient)</code> | 
 
 <a name="ModuleLoader+axon"></a>
 
@@ -143,7 +143,7 @@ Validate and correct the module before registering it.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| module | <code>Module</code> | The module to load |
+| module | <code>[Module](Modules/Module)</code> | The module to load |
 
 <a name="ModuleLoader+loadAll"></a>
 
@@ -155,7 +155,7 @@ Instantiate all modules.
 
 | Param | Type |
 | --- | --- |
-| modules | <code>Object.&lt;string, Module&gt;</code> | 
+| modules | <code>Object.&lt;string, [Module](Modules/Module)&gt;</code> | 
 
 <a name="ModuleLoader+unload"></a>
 

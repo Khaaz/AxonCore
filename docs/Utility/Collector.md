@@ -21,8 +21,8 @@
 
 | Name | Type | Description |
 | --- | --- | --- |
-| _axon | <code>AxonClient</code> | The AxonClient instance |
-| collectors | <code>Collection.&lt;CollectorContainer.&lt;T&gt;&gt;</code> | Collection of CollectorContainer |
+| _axon | <code>[AxonClient](AxonClient)</code> | The AxonClient instance |
+| collectors | <code>[Collection](Utility/Collection).&lt;CollectorContainer.&lt;T&gt;&gt;</code> | Collection of CollectorContainer |
 | timeoutQueue | [<code>SortedList.&lt;Timeout&gt;</code>](#Timeout) | The current timeout sorted with the first timeout due at the top of the queue |
 | _INCREMENT | <code>Number</code> | Unique increment count used to generate ids |
 | running | <code>Boolean</code> | Whether the Collector is currently running |
@@ -203,7 +203,7 @@ Creates an instance of Collector.
 
 | Param | Type |
 | --- | --- |
-| axonClient | <code>AxonClient</code> | 
+| axonClient | <code>[AxonClient](AxonClient)</code> | 
 
 <a name="Timeout"></a>
 

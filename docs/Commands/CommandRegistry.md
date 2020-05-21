@@ -24,11 +24,11 @@
     * [new CommandRegistry()](#new_CommandRegistry_new)
     * [new CommandRegistry(axon)](#new_CommandRegistry_new)
     * [.aliases](#CommandRegistry+aliases) : <code>Map.&lt;(String\|Number), String&gt;</code>
-    * [.get(cmd)](#CommandRegistry+get) ⇒ <code>Command</code>
-    * [.getFull(splitLabel)](#CommandRegistry+getFull) ⇒ <code>Command</code> \| <code>null</code>
+    * [.get(cmd)](#CommandRegistry+get) ⇒ <code>[Command](Commands/Command)</code>
+    * [.getFull(splitLabel)](#CommandRegistry+getFull) ⇒ <code>[Command](Commands/Command)</code> \| <code>null</code>
     * [.register(label, command)](#CommandRegistry+register)
     * [.unregister(label, [command])](#CommandRegistry+unregister)
-    * [.resolve(label, args, [guildConfig])](#CommandRegistry+resolve) ⇒ <code>Command</code> \| <code>null</code>
+    * [.resolve(label, args, [guildConfig])](#CommandRegistry+resolve) ⇒ <code>[Command](Commands/Command)</code> \| <code>null</code>
 
 <a name="new_CommandRegistry_new"></a>
 
@@ -43,7 +43,7 @@ Creates an instance of CommandRegistry
 
 | Param | Type |
 | --- | --- |
-| axon | <code>AxonClient</code> | 
+| axon | <code>[AxonClient](AxonClient)</code> | 
 
 <a name="CommandRegistry+aliases"></a>
 
@@ -51,11 +51,11 @@ Creates an instance of CommandRegistry
 **Kind**: instance property of [<code>CommandRegistry</code>](#CommandRegistry)  
 <a name="CommandRegistry+get"></a>
 
-### commandRegistry.get(cmd) ⇒ <code>Command</code>
+### commandRegistry.get(cmd) ⇒ <code>[Command](Commands/Command)</code>
 Get a command with its label
 
 **Kind**: instance method of [<code>CommandRegistry</code>](#CommandRegistry)  
-**Returns**: <code>Command</code> - The found command  
+**Returns**: <code>[Command](Commands/Command)</code> - The found command  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -63,7 +63,7 @@ Get a command with its label
 
 <a name="CommandRegistry+getFull"></a>
 
-### commandRegistry.getFull(splitLabel) ⇒ <code>Command</code> \| <code>null</code>
+### commandRegistry.getFull(splitLabel) ⇒ <code>[Command](Commands/Command)</code> \| <code>null</code>
 Get a command/subcommand with the given full label.
 
 **Kind**: instance method of [<code>CommandRegistry</code>](#CommandRegistry)  
@@ -82,7 +82,7 @@ Register a Command inside the CommandRegistry
 | Param | Type | Description |
 | --- | --- | --- |
 | label | <code>String</code> | The command label |
-| command | <code>Command</code> | The command object |
+| command | <code>[Command](Commands/Command)</code> | The command object |
 
 <a name="CommandRegistry+unregister"></a>
 
@@ -94,22 +94,22 @@ Unregister a Command from the CommandRegistry
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | label | <code>String</code> |  | The command label |
-| [command] | <code>Command</code> | <code></code> | The command object |
+| [command] | <code>[Command](Commands/Command)</code> | <code></code> | The command object |
 
 <a name="CommandRegistry+resolve"></a>
 
-### commandRegistry.resolve(label, args, [guildConfig]) ⇒ <code>Command</code> \| <code>null</code>
+### commandRegistry.resolve(label, args, [guildConfig]) ⇒ <code>[Command](Commands/Command)</code> \| <code>null</code>
 Resolves the command Object. Only resolves the command if it's not globally disabled.
 Doesn't resolve the command if the command is guild disabled.
 
 **Kind**: instance method of [<code>CommandRegistry</code>](#CommandRegistry)  
-**Returns**: <code>Command</code> \| <code>null</code> - The command object or null if the command doesn't exist or is not enabled  
+**Returns**: <code>[Command](Commands/Command)</code> \| <code>null</code> - The command object or null if the command doesn't exist or is not enabled  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | label | <code>String</code> |  | The command label/ command alias |
 | args | <code>Array.&lt;String&gt;</code> |  | Array of arguments |
-| [guildConfig] | <code>GuildConfig</code> | <code></code> | GuildConfig |
+| [guildConfig] | <code>[GuildConfig](Core/GuildConfig)</code> | <code></code> | GuildConfig |
 
 <a name="CommandRegistry"></a>
 
@@ -120,11 +120,11 @@ Doesn't resolve the command if the command is guild disabled.
     * [new CommandRegistry()](#new_CommandRegistry_new)
     * [new CommandRegistry(axon)](#new_CommandRegistry_new)
     * [.aliases](#CommandRegistry+aliases) : <code>Map.&lt;(String\|Number), String&gt;</code>
-    * [.get(cmd)](#CommandRegistry+get) ⇒ <code>Command</code>
-    * [.getFull(splitLabel)](#CommandRegistry+getFull) ⇒ <code>Command</code> \| <code>null</code>
+    * [.get(cmd)](#CommandRegistry+get) ⇒ <code>[Command](Commands/Command)</code>
+    * [.getFull(splitLabel)](#CommandRegistry+getFull) ⇒ <code>[Command](Commands/Command)</code> \| <code>null</code>
     * [.register(label, command)](#CommandRegistry+register)
     * [.unregister(label, [command])](#CommandRegistry+unregister)
-    * [.resolve(label, args, [guildConfig])](#CommandRegistry+resolve) ⇒ <code>Command</code> \| <code>null</code>
+    * [.resolve(label, args, [guildConfig])](#CommandRegistry+resolve) ⇒ <code>[Command](Commands/Command)</code> \| <code>null</code>
 
 <a name="new_CommandRegistry_new"></a>
 
@@ -139,7 +139,7 @@ Creates an instance of CommandRegistry
 
 | Param | Type |
 | --- | --- |
-| axon | <code>AxonClient</code> | 
+| axon | <code>[AxonClient](AxonClient)</code> | 
 
 <a name="CommandRegistry+aliases"></a>
 
@@ -147,11 +147,11 @@ Creates an instance of CommandRegistry
 **Kind**: instance property of [<code>CommandRegistry</code>](#CommandRegistry)  
 <a name="CommandRegistry+get"></a>
 
-### commandRegistry.get(cmd) ⇒ <code>Command</code>
+### commandRegistry.get(cmd) ⇒ <code>[Command](Commands/Command)</code>
 Get a command with its label
 
 **Kind**: instance method of [<code>CommandRegistry</code>](#CommandRegistry)  
-**Returns**: <code>Command</code> - The found command  
+**Returns**: <code>[Command](Commands/Command)</code> - The found command  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -159,7 +159,7 @@ Get a command with its label
 
 <a name="CommandRegistry+getFull"></a>
 
-### commandRegistry.getFull(splitLabel) ⇒ <code>Command</code> \| <code>null</code>
+### commandRegistry.getFull(splitLabel) ⇒ <code>[Command](Commands/Command)</code> \| <code>null</code>
 Get a command/subcommand with the given full label.
 
 **Kind**: instance method of [<code>CommandRegistry</code>](#CommandRegistry)  
@@ -178,7 +178,7 @@ Register a Command inside the CommandRegistry
 | Param | Type | Description |
 | --- | --- | --- |
 | label | <code>String</code> | The command label |
-| command | <code>Command</code> | The command object |
+| command | <code>[Command](Commands/Command)</code> | The command object |
 
 <a name="CommandRegistry+unregister"></a>
 
@@ -190,20 +190,20 @@ Unregister a Command from the CommandRegistry
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | label | <code>String</code> |  | The command label |
-| [command] | <code>Command</code> | <code></code> | The command object |
+| [command] | <code>[Command](Commands/Command)</code> | <code></code> | The command object |
 
 <a name="CommandRegistry+resolve"></a>
 
-### commandRegistry.resolve(label, args, [guildConfig]) ⇒ <code>Command</code> \| <code>null</code>
+### commandRegistry.resolve(label, args, [guildConfig]) ⇒ <code>[Command](Commands/Command)</code> \| <code>null</code>
 Resolves the command Object. Only resolves the command if it's not globally disabled.
 Doesn't resolve the command if the command is guild disabled.
 
 **Kind**: instance method of [<code>CommandRegistry</code>](#CommandRegistry)  
-**Returns**: <code>Command</code> \| <code>null</code> - The command object or null if the command doesn't exist or is not enabled  
+**Returns**: <code>[Command](Commands/Command)</code> \| <code>null</code> - The command object or null if the command doesn't exist or is not enabled  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | label | <code>String</code> |  | The command label/ command alias |
 | args | <code>Array.&lt;String&gt;</code> |  | Array of arguments |
-| [guildConfig] | <code>GuildConfig</code> | <code></code> | GuildConfig |
+| [guildConfig] | <code>[GuildConfig](Core/GuildConfig)</code> | <code></code> | GuildConfig |
 

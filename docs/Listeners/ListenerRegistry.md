@@ -33,7 +33,7 @@ Creates an instance of ListenerRegistry
 
 | Param | Type |
 | --- | --- |
-| axon | <code>AxonClient</code> | 
+| axon | <code>[AxonClient](AxonClient)</code> | 
 
 <a name="ListenerRegistry+register"></a>
 
@@ -45,7 +45,7 @@ Register a Listener inside the ListenerRegistry
 | Param | Type | Description |
 | --- | --- | --- |
 | label | <code>String</code> | The listener label |
-| listener | <code>Listener</code> | The listener object |
+| listener | <code>[Listener](Listeners/Listener)</code> | The listener object |
 
 <a name="ListenerRegistry+unregister"></a>
 
@@ -57,7 +57,7 @@ Unregister a Listener from the ListenerRegistry
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | label | <code>String</code> |  | The listener label |
-| [listener] | <code>Listener</code> | <code></code> | The listener object |
+| [listener] | <code>[Listener](Listeners/Listener)</code> | <code></code> | The listener object |
 
 <a name="ListenerRegistry"></a>
 
@@ -83,7 +83,7 @@ Creates an instance of ListenerRegistry
 
 | Param | Type |
 | --- | --- |
-| axon | <code>AxonClient</code> | 
+| axon | <code>[AxonClient](AxonClient)</code> | 
 
 <a name="ListenerRegistry+register"></a>
 
@@ -95,7 +95,7 @@ Register a Listener inside the ListenerRegistry
 | Param | Type | Description |
 | --- | --- | --- |
 | label | <code>String</code> | The listener label |
-| listener | <code>Listener</code> | The listener object |
+| listener | <code>[Listener](Listeners/Listener)</code> | The listener object |
 
 <a name="ListenerRegistry+unregister"></a>
 
@@ -107,5 +107,5 @@ Unregister a Listener from the ListenerRegistry
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | label | <code>String</code> |  | The listener label |
-| [listener] | <code>Listener</code> | <code></code> | The listener object |
+| [listener] | <code>[Listener](Listeners/Listener)</code> | <code></code> | The listener object |
 

@@ -114,7 +114,7 @@ Creates an instance of MessageCollector
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| client | <code>AxonClient</code> |  | The axon client object |
+| client | <code>[AxonClient](AxonClient)</code> |  | The axon client object |
 | [options] | <code>Object</code> |  | The default options for the message collector instance |
 | [options.timeout] | <code>Number</code> | <code>10000</code> | The time before the collector times out in milliseconds |
 | [options.count] | <code>Number</code> | <code>10</code> | The amount of messages to collect before automatically ending |

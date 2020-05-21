@@ -29,15 +29,15 @@
 * [MongoProvider](#MongoProvider) ⇐ <code>ADBProvider</code>
     * [new MongoProvider()](#new_MongoProvider_new)
     * [.init()](#MongoProvider+init)
-    * [.initAxon()](#MongoProvider+initAxon) ⇒ <code>Promise.&lt;AxonConfig&gt;</code>
-    * [.initGuild(gID)](#MongoProvider+initGuild) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>
-    * [.fetchAxon()](#MongoProvider+fetchAxon) ⇒ <code>Promise.&lt;(AxonConfig\|null)&gt;</code>
-    * [.fetchGuild(gID)](#MongoProvider+fetchGuild) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>
+    * [.initAxon()](#MongoProvider+initAxon) ⇒ <code>Promise.&lt;[AxonConfig](Core/AxonConfig)&gt;</code>
+    * [.initGuild(gID)](#MongoProvider+initGuild) ⇒ <code>Promise.&lt;([GuildConfig](Core/GuildConfig)\|null)&gt;</code>
+    * [.fetchAxon()](#MongoProvider+fetchAxon) ⇒ <code>Promise.&lt;([AxonConfig](Core/AxonConfig)\|null)&gt;</code>
+    * [.fetchGuild(gID)](#MongoProvider+fetchGuild) ⇒ <code>Promise.&lt;([GuildConfig](Core/GuildConfig)\|null)&gt;</code>
     * [.fetchGuildDocument(gID)](#MongoProvider+fetchGuildDocument) ⇒ <code>Promise.&lt;(GuildDocument\|null)&gt;</code>
     * [.updateAxon(key, value)](#MongoProvider+updateAxon) ⇒ <code>Promise.&lt;Boolean&gt;</code>
     * [.updateGuild(key, gID, value)](#MongoProvider+updateGuild) ⇒ <code>Promise.&lt;Boolean&gt;</code>
-    * [.saveAxon(data)](#MongoProvider+saveAxon) ⇒ <code>Promise.&lt;(AxonConfig\|null)&gt;</code>
-    * [.saveGuild(gID, data)](#MongoProvider+saveGuild) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>
+    * [.saveAxon(data)](#MongoProvider+saveAxon) ⇒ <code>Promise.&lt;([AxonConfig](Core/AxonConfig)\|null)&gt;</code>
+    * [.saveGuild(gID, data)](#MongoProvider+saveGuild) ⇒ <code>Promise.&lt;([GuildConfig](Core/GuildConfig)\|null)&gt;</code>
 
 <a name="new_MongoProvider_new"></a>
 
@@ -52,19 +52,19 @@ Override init method.
 **Kind**: instance method of [<code>MongoProvider</code>](#MongoProvider)  
 <a name="MongoProvider+initAxon"></a>
 
-### mongoProvider.initAxon() ⇒ <code>Promise.&lt;AxonConfig&gt;</code>
+### mongoProvider.initAxon() ⇒ <code>Promise.&lt;[AxonConfig](Core/AxonConfig)&gt;</code>
 Initialises a default Axon config.
 
 **Kind**: instance method of [<code>MongoProvider</code>](#MongoProvider)  
-**Returns**: <code>Promise.&lt;AxonConfig&gt;</code> - Newly created Axon config from the DB  
+**Returns**: <code>Promise.&lt;[AxonConfig](Core/AxonConfig)&gt;</code> - Newly created Axon config from the DB  
 <a name="MongoProvider+initGuild"></a>
 
-### mongoProvider.initGuild(gID) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>
+### mongoProvider.initGuild(gID) ⇒ <code>Promise.&lt;([GuildConfig](Core/GuildConfig)\|null)&gt;</code>
 Initialises a default Guild config.
 Use default AxonClient prefix settings when creating the new guild config.
 
 **Kind**: instance method of [<code>MongoProvider</code>](#MongoProvider)  
-**Returns**: <code>Promise.&lt;(GuildConfig\|null)&gt;</code> - Newly created Guild config from the DB  
+**Returns**: <code>Promise.&lt;([GuildConfig](Core/GuildConfig)\|null)&gt;</code> - Newly created Guild config from the DB  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -72,14 +72,14 @@ Use default AxonClient prefix settings when creating the new guild config.
 
 <a name="MongoProvider+fetchAxon"></a>
 
-### mongoProvider.fetchAxon() ⇒ <code>Promise.&lt;(AxonConfig\|null)&gt;</code>
+### mongoProvider.fetchAxon() ⇒ <code>Promise.&lt;([AxonConfig](Core/AxonConfig)\|null)&gt;</code>
 Retrieves the axon config from the DB
 
 **Kind**: instance method of [<code>MongoProvider</code>](#MongoProvider)  
-**Returns**: <code>Promise.&lt;(AxonConfig\|null)&gt;</code> - AxonSchema Object or null  
+**Returns**: <code>Promise.&lt;([AxonConfig](Core/AxonConfig)\|null)&gt;</code> - AxonSchema Object or null  
 <a name="MongoProvider+fetchGuild"></a>
 
-### mongoProvider.fetchGuild(gID) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>
+### mongoProvider.fetchGuild(gID) ⇒ <code>Promise.&lt;([GuildConfig](Core/GuildConfig)\|null)&gt;</code>
 Retrieves the Guild config for the specified guild.
 
 **Kind**: instance method of [<code>MongoProvider</code>](#MongoProvider)  
@@ -136,28 +136,28 @@ Generic method to update Database.
 
 <a name="MongoProvider+saveAxon"></a>
 
-### mongoProvider.saveAxon(data) ⇒ <code>Promise.&lt;(AxonConfig\|null)&gt;</code>
+### mongoProvider.saveAxon(data) ⇒ <code>Promise.&lt;([AxonConfig](Core/AxonConfig)\|null)&gt;</code>
 Updates the Axon config in the DB with a new Axon config object.
 
 **Kind**: instance method of [<code>MongoProvider</code>](#MongoProvider)  
-**Returns**: <code>Promise.&lt;(AxonConfig\|null)&gt;</code> - Updated AxonConfig from the DB  
+**Returns**: <code>Promise.&lt;([AxonConfig](Core/AxonConfig)\|null)&gt;</code> - Updated AxonConfig from the DB  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| data | <code>AxonConfig</code> \| <code>AxonConfigRaw</code> | the schema object to update |
+| data | <code>[AxonConfig](Core/AxonConfig)</code> \| <code>AxonConfigRaw</code> | the schema object to update |
 
 <a name="MongoProvider+saveGuild"></a>
 
-### mongoProvider.saveGuild(gID, data) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>
+### mongoProvider.saveGuild(gID, data) ⇒ <code>Promise.&lt;([GuildConfig](Core/GuildConfig)\|null)&gt;</code>
 Updates the given guild in the DB with a new schema object.
 
 **Kind**: instance method of [<code>MongoProvider</code>](#MongoProvider)  
-**Returns**: <code>Promise.&lt;(GuildConfig\|null)&gt;</code> - Updated GuildConfig from the DB  
+**Returns**: <code>Promise.&lt;([GuildConfig](Core/GuildConfig)\|null)&gt;</code> - Updated GuildConfig from the DB  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | gID | <code>String</code> | Guid id |
-| data | <code>GuildConfig</code> \| [<code>GuildConfigRaw</code>](#GuildConfigRaw) | the schema object to update |
+| data | <code>[GuildConfig](Core/GuildConfig)</code> \| [<code>GuildConfigRaw</code>](#GuildConfigRaw) | the schema object to update |
 
 <a name="GuildConfigRaw"></a>
 

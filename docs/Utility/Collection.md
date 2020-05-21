@@ -20,7 +20,7 @@
     * _static_
         * [.Collection](#Collection.Collection)
             * [new Collection(options)](#new_Collection.Collection_new)
-        * [.from(array, key)](#Collection.from) ⇒ <code>Collection.&lt;R&gt;</code>
+        * [.from(array, key)](#Collection.from) ⇒ <code>[Collection](Utility/Collection).&lt;R&gt;</code>
 
 <a name="new_Collection_new"></a>
 
@@ -78,11 +78,11 @@ Creates an instance of Collection.
 
 <a name="Collection.from"></a>
 
-### Collection.from(array, key) ⇒ <code>Collection.&lt;R&gt;</code>
+### Collection.from(array, key) ⇒ <code>[Collection](Utility/Collection).&lt;R&gt;</code>
 Creates a collection from an array
 
 **Kind**: static method of [<code>Collection</code>](#Collection)  
-**Returns**: <code>Collection.&lt;R&gt;</code> - A newly created Collection  
+**Returns**: <code>[Collection](Utility/Collection).&lt;R&gt;</code> - A newly created Collection  
 
 | Param | Type | Description |
 | --- | --- | --- |

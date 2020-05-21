@@ -9,25 +9,25 @@
 | Name | Type | Description |
 | --- | --- | --- |
 | _botClient | <code>BotClient</code> | Discord library Client |
-| moduleRegistry | <code>ModuleRegistry</code> | Registry holding all modules |
-| commandRegistry | <code>CommandRegistry</code> | Registry holding all commands |
-| listenerRegistry | <code>ListenerRegistry</code> | Registry holding all listeners |
-| eventManager | <code>EventManager</code> | The EventManager instance that handle all AxonCore listeners |
-| guildConfigs | <code>GuildConfigCache</code> | The Manager that handles GuildConfigs (cache / DB etc) |
-| [axonConfig] | <code>AxonConfig</code> | The AxonConfig object that handles globally blacklisted users and guilds |
-| dispatcher | <code>CommandDispatcher</code> | Dispatch commands onMessageCreate. |
-| executor | <code>Executor</code> | Executor class that handles executing commands and listeners |
-| moduleLoader | <code>ModuleLoader</code> | Load, unload modules. |
-| _messageManager | <code>MessageManager</code> | Message manager object accessible with `<AxonClient>.l` |
+| moduleRegistry | <code>[ModuleRegistry](Modules/ModuleRegistry)</code> | Registry holding all modules |
+| commandRegistry | <code>[CommandRegistry](Commands/CommandRegistry)</code> | Registry holding all commands |
+| listenerRegistry | <code>[ListenerRegistry](Listeners/ListenerRegistry)</code> | Registry holding all listeners |
+| eventManager | <code>[EventManager](Listeners/EventManager)</code> | The EventManager instance that handle all AxonCore listeners |
+| guildConfigs | <code>[GuildConfigCache](Core/GuildConfigCache)</code> | The Manager that handles GuildConfigs (cache / DB etc) |
+| [axonConfig] | <code>[AxonConfig](Core/AxonConfig)</code> | The AxonConfig object that handles globally blacklisted users and guilds |
+| dispatcher | <code>[CommandDispatcher](Commands/CommandDispatcher)</code> | Dispatch commands onMessageCreate. |
+| executor | <code>[Executor](Core/Executor)</code> | Executor class that handles executing commands and listeners |
+| moduleLoader | <code>[ModuleLoader](Modules/ModuleLoader)</code> | Load, unload modules. |
+| _messageManager | <code>[MessageManager](Translation/MessageManager)</code> | Message manager object accessible with `<AxonClient>.l` |
 | library | <code>LibraryInterface</code> | LibraryInterface object depending the lib used |
-| logger | <code>ALogger</code> | The Logger instance |
-| axonUtils | <code>AxonUtils</code> | Util methods (AxonCore) |
-| utils | <code>Utils</code> | Utils methods (general) |
-| DBProvider | <code>ADBProvider</code> | The DBProvider instance |
+| logger | <code>[ALogger](Loggers/ALogger)</code> | The Logger instance |
+| axonUtils | <code>[Axon[Utils](Utility/Utils)](Utility/Axon[Utils](Utility/Utils))</code> | Util methods (AxonCore) |
+| utils | <code>[Utils](Utility/Utils)</code> | Utils methods (general) |
+| DBProvider | <code>[ADBProvider](Database/ADBProvider)</code> | The DBProvider instance |
 | _configs | <code>Object</code> | configs (webhooks, template, custom) |
 | _configs.webhooks | <code>Object.&lt;string, {id: String, token: String}&gt;</code> | Webhooks configs with all webhooks id and tokens |
 | _configs.template | <code>Object</code> | Template config |
-| _configs.custom | <code>AxonOptions</code> | Custom config object optionally passed via AxonOptions |
+| _configs.custom | <code>[AxonOptions](Core/AxonOptions)</code> | Custom config object optionally passed via AxonOptions |
 | staff | <code>Object</code> | Bot Staff (owners, admins, +...) |
 | staff.owners | <code>Array.&lt;String&gt;</code> | Array of user IDs with BotOwner permissions |
 | staff.admins | <code>Array.&lt;String&gt;</code> | Array of user IDs with BotAdmin permissions |
@@ -62,9 +62,9 @@
         * [.webhooks](#AxonClient+webhooks) : <code>Object</code>
         * [.template](#AxonClient+template) : <code>Object</code>
         * [.custom](#AxonClient+custom) : <code>Object.&lt;string, any&gt;</code>
-        * [.getListeners(eventName)](#AxonClient+getListeners) ⇒ <code>Array.&lt;Listener&gt;</code>
-        * [.getModule(module)](#AxonClient+getModule) ⇒ <code>Module</code> \| <code>null</code>
-        * [.getCommand(fullLabel)](#AxonClient+getCommand) ⇒ <code>Command</code> \| <code>null</code>
+        * [.getListeners(eventName)](#AxonClient+getListeners) ⇒ <code>Array.&lt;[Listener](Listeners/Listener)&gt;</code>
+        * [.getModule(module)](#AxonClient+getModule) ⇒ <code>[Module](Modules/Module)</code> \| <code>null</code>
+        * [.getCommand(fullLabel)](#AxonClient+getCommand) ⇒ <code>[Command](Commands/Command)</code> \| <code>null</code>
         * [.start()](#AxonClient+start)
         * [.onInit()](#AxonClient+onInit) ⇒ <code>Boolean</code>
         * [.onStart()](#AxonClient+onStart) ⇒ <code>Promise.&lt;Boolean&gt;</code>
@@ -76,7 +76,7 @@
         * [.initErrorListeners()](#AxonClient+initErrorListeners)
         * [.initStatus()](#AxonClient+initStatus)
         * [.sendFullHelp(msg, guildConfig)](#AxonClient+sendFullHelp)
-        * [.registerGuildPrefixes(gID, prefixArr)](#AxonClient+registerGuildPrefixes) ⇒ <code>Promise.&lt;GuildConfig&gt;</code>
+        * [.registerGuildPrefixes(gID, prefixArr)](#AxonClient+registerGuildPrefixes) ⇒ <code>Promise.&lt;[GuildConfig](Core/GuildConfig)&gt;</code>
         * [.toString()](#AxonClient+toString) ⇒ <code>String</code>
         * [.toJSON()](#AxonClient+toJSON) ⇒ <code>Object</code>
         * ["debug"](#AxonClient+event_debug)
@@ -157,7 +157,7 @@ Returns the custom config
 **Read only**: true  
 <a name="AxonClient+getListeners"></a>
 
-### axonClient.getListeners(eventName) ⇒ <code>Array.&lt;Listener&gt;</code>
+### axonClient.getListeners(eventName) ⇒ <code>Array.&lt;[Listener](Listeners/Listener)&gt;</code>
 Returns all registered listeners for the discord event name
 
 **Kind**: instance method of [<code>AxonClient</code>](#AxonClient)  
@@ -168,7 +168,7 @@ Returns all registered listeners for the discord event name
 
 <a name="AxonClient+getModule"></a>
 
-### axonClient.getModule(module) ⇒ <code>Module</code> \| <code>null</code>
+### axonClient.getModule(module) ⇒ <code>[Module](Modules/Module)</code> \| <code>null</code>
 Get a module from AxonClient with the given label.
 
 **Kind**: instance method of [<code>AxonClient</code>](#AxonClient)  
@@ -179,7 +179,7 @@ Get a module from AxonClient with the given label.
 
 <a name="AxonClient+getCommand"></a>
 
-### axonClient.getCommand(fullLabel) ⇒ <code>Command</code> \| <code>null</code>
+### axonClient.getCommand(fullLabel) ⇒ <code>[Command](Commands/Command)</code> \| <code>null</code>
 Get a command/subcommand from AxonClient with the given full label.
 
 **Kind**: instance method of [<code>AxonClient</code>](#AxonClient)  
@@ -291,16 +291,16 @@ This method can be overridden in child.
 | Param | Type | Description |
 | --- | --- | --- |
 | msg | <code>Message</code> | The message object |
-| guildConfig | <code>GuildConfig</code> |  |
+| guildConfig | <code>[GuildConfig](Core/GuildConfig)</code> |  |
 
 <a name="AxonClient+registerGuildPrefixes"></a>
 
-### axonClient.registerGuildPrefixes(gID, prefixArr) ⇒ <code>Promise.&lt;GuildConfig&gt;</code>
+### axonClient.registerGuildPrefixes(gID, prefixArr) ⇒ <code>Promise.&lt;[GuildConfig](Core/GuildConfig)&gt;</code>
 Register a guild prefix.
 Shortcut to guildConfig.registerPrefix()
 
 **Kind**: instance method of [<code>AxonClient</code>](#AxonClient)  
-**Returns**: <code>Promise.&lt;GuildConfig&gt;</code> - The guild Schema from the DB / Error if error  
+**Returns**: <code>Promise.&lt;[GuildConfig](Core/GuildConfig)&gt;</code> - The guild Schema from the DB / Error if error  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -348,9 +348,9 @@ Fired when a command is successfully ran
 | commandFullLabel | <code>String</code> | The command fullLabel |
 | data | <code>Object</code> |  |
 | data.msg | <code>Message</code> | The message that triggered the command |
-| data.command | <code>Command</code> | The Command that was executed |
-| data.guildConfig | <code>GuildConfig</code> | The GuildConfig |
-| data.context | <code>CommandContext</code> | The execution context |
+| data.command | <code>[Command](Commands/Command)</code> | The Command that was executed |
+| data.guildConfig | <code>[GuildConfig](Core/GuildConfig)</code> | The GuildConfig |
+| data.context | <code>[CommandContext](Commands/CommandContext)</code> | The execution context |
 
 <a name="AxonClient+event_commandError"></a>
 
@@ -365,9 +365,9 @@ Fired when a command fails
 | commandFullLabel | <code>String</code> | The command fullLabel |
 | data | <code>Object</code> |  |
 | data.msg | <code>Message</code> | The message that triggered the command |
-| data.command | <code>Command</code> | The Command that was executed |
-| data.guildConfig | <code>GuildConfig</code> | The GuildConfig |
-| data.error | <code>AxonCommandError</code> | The error |
+| data.command | <code>[Command](Commands/Command)</code> | The Command that was executed |
+| data.guildConfig | <code>[GuildConfig](Core/GuildConfig)</code> | The GuildConfig |
+| data.error | <code>[AxonCommandError](Errors/AxonCommandError)</code> | The error |
 
 <a name="AxonClient+event_listenerExecution"></a>
 
@@ -383,8 +383,8 @@ Fired when a listener is executed
 | eventName | <code>String</code> | The discord event name |
 | listenerName | <code>String</code> | The listener label |
 | data | <code>Object</code> | Additional information |
-| data.listener | <code>Listener</code> | The Listener that was executed |
-| data.guildConfig | <code>GuildConfig</code> | The GuildConfig object |
+| data.listener | <code>[Listener](Listeners/Listener)</code> | The Listener that was executed |
+| data.guildConfig | <code>[GuildConfig](Core/GuildConfig)</code> | The GuildConfig object |
 
 <a name="AxonClient+event_listenerError"></a>
 
@@ -399,8 +399,8 @@ Fired when a listener errors
 | eventName | <code>String</code> | The discord event name |
 | listenerName | <code>String</code> | The Listener label |
 | data | <code>Object</code> | Additional information |
-| data.listener | <code>Listener</code> | The Listener that was executed |
-| data.guildConfig | <code>GuildConfig</code> | The GuildConfig object |
+| data.listener | <code>[Listener](Listeners/Listener)</code> | The Listener that was executed |
+| data.guildConfig | <code>[GuildConfig](Core/GuildConfig)</code> | The GuildConfig object |
 | data.error | <code>Error</code> | The error |
 
 <a name="AxonClient.AxonClient"></a>
@@ -416,6 +416,6 @@ Creates an AxonClient instance.
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | botClient | <code>BotClient</code> |  | Eris or Discordjs Client instance |
-| [axonOptions] | <code>AxonOptions</code> | <code>{}</code> | Axon options |
-| [modules] | <code>Object.&lt;string, Module&gt;</code> | <code>{}</code> | Object with all modules to add in the bot |
+| [axonOptions] | <code>[AxonOptions](Core/AxonOptions)</code> | <code>{}</code> | Axon options |
+| [modules] | <code>Object.&lt;string, [Module](Modules/Module)&gt;</code> | <code>{}</code> | Object with all modules to add in the bot |
 

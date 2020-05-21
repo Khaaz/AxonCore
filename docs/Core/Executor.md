@@ -6,7 +6,7 @@
 
 | Name | Type |
 | --- | --- |
-| _axon | <code>AxonClient</code> | 
+| _axon | <code>[AxonClient](AxonClient)</code> | 
 
 
 * [Executor](#Executor)
@@ -32,8 +32,8 @@ Will emit events depending on the execution
 
 | Param | Type |
 | --- | --- |
-| listener | <code>Listener</code> | 
-| guildConfig | <code>GuildConfig</code> | 
+| listener | <code>[Listener](Listeners/Listener)</code> | 
+| guildConfig | <code>[GuildConfig](Core/GuildConfig)</code> | 
 | ...args | <code>any</code> | 
 
 <a name="Executor+command"></a>
@@ -43,8 +43,8 @@ Will emit events depending on the execution
 
 | Param | Type |
 | --- | --- |
-| command | <code>Command</code> | 
-| env | <code>CommandEnvironment</code> | 
+| command | <code>[Command](Commands/Command)</code> | 
+| env | <code>[CommandEnvironment](Commands/CommandEnvironment)</code> | 
 
 <a name="Executor+help"></a>
 
@@ -53,8 +53,8 @@ Will emit events depending on the execution
 
 | Param | Type |
 | --- | --- |
-| command | <code>Command</code> | 
-| env | <code>CommandEnvironment</code> | 
+| command | <code>[Command](Commands/Command)</code> | 
+| env | <code>[CommandEnvironment](Commands/CommandEnvironment)</code> | 
 
 <a name="Executor.Executor"></a>
 
@@ -68,5 +68,5 @@ Creates an instance of Executor.
 
 | Param | Type |
 | --- | --- |
-| axonClient | <code>AxonClient</code> | 
+| axonClient | <code>[AxonClient](AxonClient)</code> | 
 

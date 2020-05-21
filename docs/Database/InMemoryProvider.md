@@ -21,12 +21,12 @@
 
 * [InMemoryProvider](#InMemoryProvider) ⇐ <code>ADBProvider</code>
     * [new InMemoryProvider()](#new_InMemoryProvider_new)
-    * [.fetchAxon()](#InMemoryProvider+fetchAxon) ⇒ <code>Promise.&lt;AxonConfig&gt;</code>
-    * [.fetchGuild(gID)](#InMemoryProvider+fetchGuild) ⇒ <code>Promise.&lt;GuildConfig&gt;</code>
-    * [.initAxon()](#InMemoryProvider+initAxon) ⇒ <code>Promise.&lt;AxonConfig&gt;</code>
-    * [.initGuild(gID)](#InMemoryProvider+initGuild) ⇒ <code>Promise.&lt;GuildConfig&gt;</code>
-    * [.saveAxon(axonSchema)](#InMemoryProvider+saveAxon) ⇒ <code>Promise.&lt;AxonConfig&gt;</code>
-    * [.saveGuild(gID, guildSchema)](#InMemoryProvider+saveGuild) ⇒ <code>Promise.&lt;GuildConfig&gt;</code>
+    * [.fetchAxon()](#InMemoryProvider+fetchAxon) ⇒ <code>Promise.&lt;[AxonConfig](Core/AxonConfig)&gt;</code>
+    * [.fetchGuild(gID)](#InMemoryProvider+fetchGuild) ⇒ <code>Promise.&lt;[GuildConfig](Core/GuildConfig)&gt;</code>
+    * [.initAxon()](#InMemoryProvider+initAxon) ⇒ <code>Promise.&lt;[AxonConfig](Core/AxonConfig)&gt;</code>
+    * [.initGuild(gID)](#InMemoryProvider+initGuild) ⇒ <code>Promise.&lt;[GuildConfig](Core/GuildConfig)&gt;</code>
+    * [.saveAxon(axonSchema)](#InMemoryProvider+saveAxon) ⇒ <code>Promise.&lt;[AxonConfig](Core/AxonConfig)&gt;</code>
+    * [.saveGuild(gID, guildSchema)](#InMemoryProvider+saveGuild) ⇒ <code>Promise.&lt;[GuildConfig](Core/GuildConfig)&gt;</code>
     * [.updateGuild(key, gID, value)](#InMemoryProvider+updateGuild) ⇒ <code>Promise.&lt;Boolean&gt;</code>
     * [.updateAxon(key, value)](#InMemoryProvider+updateAxon) ⇒ <code>Promise.&lt;Boolean&gt;</code>
 
@@ -37,11 +37,11 @@ A schema designed use an InMemory solution in AxonCore
 
 <a name="InMemoryProvider+fetchAxon"></a>
 
-### inMemoryProvider.fetchAxon() ⇒ <code>Promise.&lt;AxonConfig&gt;</code>
+### inMemoryProvider.fetchAxon() ⇒ <code>Promise.&lt;[AxonConfig](Core/AxonConfig)&gt;</code>
 **Kind**: instance method of [<code>InMemoryProvider</code>](#InMemoryProvider)  
 <a name="InMemoryProvider+fetchGuild"></a>
 
-### inMemoryProvider.fetchGuild(gID) ⇒ <code>Promise.&lt;GuildConfig&gt;</code>
+### inMemoryProvider.fetchGuild(gID) ⇒ <code>Promise.&lt;[GuildConfig](Core/GuildConfig)&gt;</code>
 **Kind**: instance method of [<code>InMemoryProvider</code>](#InMemoryProvider)  
 
 | Param | Type | Description |
@@ -50,11 +50,11 @@ A schema designed use an InMemory solution in AxonCore
 
 <a name="InMemoryProvider+initAxon"></a>
 
-### inMemoryProvider.initAxon() ⇒ <code>Promise.&lt;AxonConfig&gt;</code>
+### inMemoryProvider.initAxon() ⇒ <code>Promise.&lt;[AxonConfig](Core/AxonConfig)&gt;</code>
 **Kind**: instance method of [<code>InMemoryProvider</code>](#InMemoryProvider)  
 <a name="InMemoryProvider+initGuild"></a>
 
-### inMemoryProvider.initGuild(gID) ⇒ <code>Promise.&lt;GuildConfig&gt;</code>
+### inMemoryProvider.initGuild(gID) ⇒ <code>Promise.&lt;[GuildConfig](Core/GuildConfig)&gt;</code>
 **Kind**: instance method of [<code>InMemoryProvider</code>](#InMemoryProvider)  
 
 | Param | Type | Description |
@@ -63,22 +63,22 @@ A schema designed use an InMemory solution in AxonCore
 
 <a name="InMemoryProvider+saveAxon"></a>
 
-### inMemoryProvider.saveAxon(axonSchema) ⇒ <code>Promise.&lt;AxonConfig&gt;</code>
+### inMemoryProvider.saveAxon(axonSchema) ⇒ <code>Promise.&lt;[AxonConfig](Core/AxonConfig)&gt;</code>
 **Kind**: instance method of [<code>InMemoryProvider</code>](#InMemoryProvider)  
 
 | Param | Type |
 | --- | --- |
-| axonSchema | <code>AxonConfig</code> \| <code>AxonConfigRaw</code> | 
+| axonSchema | <code>[AxonConfig](Core/AxonConfig)</code> \| <code>AxonConfigRaw</code> | 
 
 <a name="InMemoryProvider+saveGuild"></a>
 
-### inMemoryProvider.saveGuild(gID, guildSchema) ⇒ <code>Promise.&lt;GuildConfig&gt;</code>
+### inMemoryProvider.saveGuild(gID, guildSchema) ⇒ <code>Promise.&lt;[GuildConfig](Core/GuildConfig)&gt;</code>
 **Kind**: instance method of [<code>InMemoryProvider</code>](#InMemoryProvider)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | gID | <code>String</code> | Guild ID |
-| guildSchema | <code>GuildConfig</code> \| [<code>GuildConfigRaw</code>](#GuildConfigRaw) |  |
+| guildSchema | <code>[GuildConfig](Core/GuildConfig)</code> \| [<code>GuildConfigRaw</code>](#GuildConfigRaw) |  |
 
 <a name="InMemoryProvider+updateGuild"></a>
 

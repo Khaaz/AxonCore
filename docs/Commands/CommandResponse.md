@@ -14,9 +14,9 @@
 * [CommandResponse](#CommandResponse)
     * [new CommandResponse()](#new_CommandResponse_new)
     * _instance_
-        * [.resolve()](#CommandResponse+resolve) ⇒ [<code>Promise.&lt;CommandResponse&gt;</code>](#CommandResponse)
-        * [.resolveAsync()](#CommandResponse+resolveAsync) ⇒ [<code>Promise.&lt;CommandResponse&gt;</code>](#CommandResponse)
-        * [.resolveSync()](#CommandResponse+resolveSync) ⇒ [<code>CommandResponse</code>](#CommandResponse)
+        * [.resolve()](#CommandResponse+resolve) ⇒ <code>Promise.&lt;[CommandResponse](Commands/CommandResponse)&gt;</code>
+        * [.resolveAsync()](#CommandResponse+resolveAsync) ⇒ <code>Promise.&lt;[CommandResponse](Commands/CommandResponse)&gt;</code>
+        * [.resolveSync()](#CommandResponse+resolveSync) ⇒ <code>[CommandResponse](Commands/CommandResponse)</code>
     * _static_
         * [.CommandResponse](#CommandResponse.CommandResponse)
             * [new CommandResponse([data])](#new_CommandResponse.CommandResponse_new)
@@ -28,19 +28,19 @@ Build a Command Response - the formatted object used internally by the framework
 
 <a name="CommandResponse+resolve"></a>
 
-### commandResponse.resolve() ⇒ [<code>Promise.&lt;CommandResponse&gt;</code>](#CommandResponse)
+### commandResponse.resolve() ⇒ <code>Promise.&lt;[CommandResponse](Commands/CommandResponse)&gt;</code>
 By default returns the Command Response asynchronously.
 
 **Kind**: instance method of [<code>CommandResponse</code>](#CommandResponse)  
 <a name="CommandResponse+resolveAsync"></a>
 
-### commandResponse.resolveAsync() ⇒ [<code>Promise.&lt;CommandResponse&gt;</code>](#CommandResponse)
+### commandResponse.resolveAsync() ⇒ <code>Promise.&lt;[CommandResponse](Commands/CommandResponse)&gt;</code>
 Returns the Command Response in a Promise (asynchronously)
 
 **Kind**: instance method of [<code>CommandResponse</code>](#CommandResponse)  
 <a name="CommandResponse+resolveSync"></a>
 
-### commandResponse.resolveSync() ⇒ [<code>CommandResponse</code>](#CommandResponse)
+### commandResponse.resolveSync() ⇒ <code>[CommandResponse](Commands/CommandResponse)</code>
 Returns the Command Response (synchronously)
 
 **Kind**: instance method of [<code>CommandResponse</code>](#CommandResponse)  

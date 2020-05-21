@@ -30,10 +30,10 @@
     * [new CommandContext()](#new_CommandContext_new)
     * _instance_
         * [.raw](#CommandContext+raw) : <code>String</code>
-        * [.addResponseData(commandResponse)](#CommandContext+addResponseData) ⇒ [<code>CommandContext</code>](#CommandContext)
-        * [.resolve()](#CommandContext+resolve) ⇒ [<code>Promise.&lt;CommandContext&gt;</code>](#CommandContext)
-        * [.resolveAsync()](#CommandContext+resolveAsync) ⇒ [<code>Promise.&lt;CommandContext&gt;</code>](#CommandContext)
-        * [.resolveSync()](#CommandContext+resolveSync) ⇒ [<code>CommandContext</code>](#CommandContext)
+        * [.addResponseData(commandResponse)](#CommandContext+addResponseData) ⇒ <code>[CommandContext](Commands/CommandContext)</code>
+        * [.resolve()](#CommandContext+resolve) ⇒ <code>Promise.&lt;[CommandContext](Commands/CommandContext)&gt;</code>
+        * [.resolveAsync()](#CommandContext+resolveAsync) ⇒ <code>Promise.&lt;[CommandContext](Commands/CommandContext)&gt;</code>
+        * [.resolveSync()](#CommandContext+resolveSync) ⇒ <code>[CommandContext](Commands/CommandContext)</code>
     * _static_
         * [.CommandContext](#CommandContext.CommandContext)
             * [new CommandContext(command, triggerMessage, [data])](#new_CommandContext.CommandContext_new)
@@ -58,7 +58,7 @@ The last possibility is uncaught errors.
 **Kind**: instance property of [<code>CommandContext</code>](#CommandContext)  
 <a name="CommandContext+addResponseData"></a>
 
-### commandContext.addResponseData(commandResponse) ⇒ [<code>CommandContext</code>](#CommandContext)
+### commandContext.addResponseData(commandResponse) ⇒ <code>[CommandContext](Commands/CommandContext)</code>
 Add the command response data to the command context object.
 Add the state of the command success and optionally the error.
 
@@ -66,23 +66,23 @@ Add the state of the command success and optionally the error.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| commandResponse | <code>CommandResponse</code> | CommandResponse object obtained or created after the command execution |
+| commandResponse | <code>[CommandResponse](Commands/CommandResponse)</code> | CommandResponse object obtained or created after the command execution |
 
 <a name="CommandContext+resolve"></a>
 
-### commandContext.resolve() ⇒ [<code>Promise.&lt;CommandContext&gt;</code>](#CommandContext)
+### commandContext.resolve() ⇒ <code>Promise.&lt;[CommandContext](Commands/CommandContext)&gt;</code>
 By default returns the Command Context asynchronously.
 
 **Kind**: instance method of [<code>CommandContext</code>](#CommandContext)  
 <a name="CommandContext+resolveAsync"></a>
 
-### commandContext.resolveAsync() ⇒ [<code>Promise.&lt;CommandContext&gt;</code>](#CommandContext)
+### commandContext.resolveAsync() ⇒ <code>Promise.&lt;[CommandContext](Commands/CommandContext)&gt;</code>
 Returns the Command Context wrapped in a Promise (asynchronously)
 
 **Kind**: instance method of [<code>CommandContext</code>](#CommandContext)  
 <a name="CommandContext+resolveSync"></a>
 
-### commandContext.resolveSync() ⇒ [<code>CommandContext</code>](#CommandContext)
+### commandContext.resolveSync() ⇒ <code>[CommandContext](Commands/CommandContext)</code>
 Returns the Command Context (synchronously)
 
 **Kind**: instance method of [<code>CommandContext</code>](#CommandContext)  
@@ -98,7 +98,7 @@ Creates an instance of CommandContext.
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| command | <code>Command</code> |  |  |
+| command | <code>[Command](Commands/Command)</code> |  |  |
 | triggerMessage | <code>Message</code> |  |  |
 | [data] | <code>Object</code> | <code>{}</code> |  |
 | [data.executed] | <code>Boolean</code> | <code>true</code> |  |

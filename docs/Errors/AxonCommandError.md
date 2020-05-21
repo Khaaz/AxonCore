@@ -8,7 +8,7 @@
 
 | Name | Type | Description |
 | --- | --- | --- |
-| context | <code>CommandContext</code> | Command Context containing all informations about the command execution |
+| context | <code>[CommandContext](Commands/CommandContext)</code> | Command Context containing all informations about the command execution |
 
 
 * [AxonCommandError](#AxonCommandError) ⇐ <code>Error</code>
@@ -34,6 +34,6 @@ Creates an instance of AxonCommandError.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| commandContext | <code>CommandContext</code> | The command context that contains all information about the command execution |
+| commandContext | <code>[CommandContext](Commands/CommandContext)</code> | The command context that contains all information about the command execution |
 | err | <code>Error</code> | Discord Error (given by library/discord/other) |
 

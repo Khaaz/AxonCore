@@ -8,7 +8,7 @@
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| _module | <code>Module</code> |  | Module instance |
+| _module | <code>[Module](Modules/Module)</code> |  | Module instance |
 | eventName | <code>String</code> |  | The discord event name |
 | label | <code>String</code> |  | The listener name |
 | load | <code>Boolean</code> |  | Whether to load this event on start up or not |
@@ -51,7 +51,7 @@ Promisify the return execute return to prevent promise issue
 
 | Param | Type | Description |
 | --- | --- | --- |
-| guildConfig | <code>GuildConfig</code> | the guildConfig or undefined if not a guild event |
+| guildConfig | <code>[GuildConfig](Core/GuildConfig)</code> | the guildConfig or undefined if not a guild event |
 | ...args | <code>any</code> | Array of the events arguments |
 
 <a name="Listener+execute"></a>
@@ -64,7 +64,7 @@ Main execute function, need to be overridden in child.
 | Param | Type | Description |
 | --- | --- | --- |
 | args | <code>Array.&lt;any&gt;</code> | Array of the events arguments (as separate parameters) |
-| [guildConfig] | <code>GuildConfig</code> | The guildConfig or undefined if not a guild event |
+| [guildConfig] | <code>[GuildConfig](Core/GuildConfig)</code> | The guildConfig or undefined if not a guild event |
 
 <a name="Listener.Listener"></a>
 
@@ -78,7 +78,7 @@ Creates an Listener instance.
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| module | <code>Module</code> |  |  |
+| module | <code>[Module](Modules/Module)</code> |  |  |
 | [data] | <code>Object</code> | <code>{}</code> | All events parameters |
 | [data.eventName] | <code>String</code> |  |  |
 | [data.label] | <code>String</code> |  |  |

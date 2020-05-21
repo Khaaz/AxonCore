@@ -28,14 +28,14 @@
 * [JsonProvider](#JsonProvider) ⇐ <code>ADBProvider</code>
     * [new JsonProvider()](#new_JsonProvider_new)
     * [.init()](#JsonProvider+init)
-    * [.initAxon()](#JsonProvider+initAxon) ⇒ <code>Promise.&lt;AxonConfig&gt;</code>
-    * [.initGuild(gID)](#JsonProvider+initGuild) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>
-    * [.fetchAxon()](#JsonProvider+fetchAxon) ⇒ <code>Promise.&lt;(AxonConfig\|null)&gt;</code>
-    * [.fetchGuild(gID)](#JsonProvider+fetchGuild) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>
+    * [.initAxon()](#JsonProvider+initAxon) ⇒ <code>Promise.&lt;[AxonConfig](Core/AxonConfig)&gt;</code>
+    * [.initGuild(gID)](#JsonProvider+initGuild) ⇒ <code>Promise.&lt;([GuildConfig](Core/GuildConfig)\|null)&gt;</code>
+    * [.fetchAxon()](#JsonProvider+fetchAxon) ⇒ <code>Promise.&lt;([AxonConfig](Core/AxonConfig)\|null)&gt;</code>
+    * [.fetchGuild(gID)](#JsonProvider+fetchGuild) ⇒ <code>Promise.&lt;([GuildConfig](Core/GuildConfig)\|null)&gt;</code>
     * [.updateAxon(key, value)](#JsonProvider+updateAxon) ⇒ <code>Promise.&lt;Boolean&gt;</code>
     * [.updateGuild(key, gID, value)](#JsonProvider+updateGuild) ⇒ <code>Promise.&lt;Boolean&gt;</code>
-    * [.saveAxon(data)](#JsonProvider+saveAxon) ⇒ <code>Promise.&lt;(AxonConfig\|null)&gt;</code>
-    * [.saveGuild(gID, data)](#JsonProvider+saveGuild) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>
+    * [.saveAxon(data)](#JsonProvider+saveAxon) ⇒ <code>Promise.&lt;([AxonConfig](Core/AxonConfig)\|null)&gt;</code>
+    * [.saveGuild(gID, data)](#JsonProvider+saveGuild) ⇒ <code>Promise.&lt;([GuildConfig](Core/GuildConfig)\|null)&gt;</code>
 
 <a name="new_JsonProvider_new"></a>
 
@@ -50,19 +50,19 @@ Override init method.
 **Kind**: instance method of [<code>JsonProvider</code>](#JsonProvider)  
 <a name="JsonProvider+initAxon"></a>
 
-### jsonProvider.initAxon() ⇒ <code>Promise.&lt;AxonConfig&gt;</code>
+### jsonProvider.initAxon() ⇒ <code>Promise.&lt;[AxonConfig](Core/AxonConfig)&gt;</code>
 Initialises a default Axon config.
 
 **Kind**: instance method of [<code>JsonProvider</code>](#JsonProvider)  
-**Returns**: <code>Promise.&lt;AxonConfig&gt;</code> - Newly created Axon config from the DB  
+**Returns**: <code>Promise.&lt;[AxonConfig](Core/AxonConfig)&gt;</code> - Newly created Axon config from the DB  
 <a name="JsonProvider+initGuild"></a>
 
-### jsonProvider.initGuild(gID) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>
+### jsonProvider.initGuild(gID) ⇒ <code>Promise.&lt;([GuildConfig](Core/GuildConfig)\|null)&gt;</code>
 Initialises a default Guild config.
 Use default AxonClient prefix settings when creating the new guild config.
 
 **Kind**: instance method of [<code>JsonProvider</code>](#JsonProvider)  
-**Returns**: <code>Promise.&lt;(GuildConfig\|null)&gt;</code> - Newly created Guild config from the DB  
+**Returns**: <code>Promise.&lt;([GuildConfig](Core/GuildConfig)\|null)&gt;</code> - Newly created Guild config from the DB  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -70,14 +70,14 @@ Use default AxonClient prefix settings when creating the new guild config.
 
 <a name="JsonProvider+fetchAxon"></a>
 
-### jsonProvider.fetchAxon() ⇒ <code>Promise.&lt;(AxonConfig\|null)&gt;</code>
+### jsonProvider.fetchAxon() ⇒ <code>Promise.&lt;([AxonConfig](Core/AxonConfig)\|null)&gt;</code>
 Retrieves the axon config from the DB
 
 **Kind**: instance method of [<code>JsonProvider</code>](#JsonProvider)  
-**Returns**: <code>Promise.&lt;(AxonConfig\|null)&gt;</code> - AxonSchema Object or null  
+**Returns**: <code>Promise.&lt;([AxonConfig](Core/AxonConfig)\|null)&gt;</code> - AxonSchema Object or null  
 <a name="JsonProvider+fetchGuild"></a>
 
-### jsonProvider.fetchGuild(gID) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>
+### jsonProvider.fetchGuild(gID) ⇒ <code>Promise.&lt;([GuildConfig](Core/GuildConfig)\|null)&gt;</code>
 Retrieves the Guild config for the specified guild.
 
 **Kind**: instance method of [<code>JsonProvider</code>](#JsonProvider)  
@@ -120,28 +120,28 @@ Generic method to update Database.
 
 <a name="JsonProvider+saveAxon"></a>
 
-### jsonProvider.saveAxon(data) ⇒ <code>Promise.&lt;(AxonConfig\|null)&gt;</code>
+### jsonProvider.saveAxon(data) ⇒ <code>Promise.&lt;([AxonConfig](Core/AxonConfig)\|null)&gt;</code>
 Updates the Axon config in the DB with a new Axon config object.
 
 **Kind**: instance method of [<code>JsonProvider</code>](#JsonProvider)  
-**Returns**: <code>Promise.&lt;(AxonConfig\|null)&gt;</code> - Updated AxonConfig from the DB  
+**Returns**: <code>Promise.&lt;([AxonConfig](Core/AxonConfig)\|null)&gt;</code> - Updated AxonConfig from the DB  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| data | <code>AxonConfig</code> \| <code>AxonConfigRaw</code> | the schema object to update |
+| data | <code>[AxonConfig](Core/AxonConfig)</code> \| <code>AxonConfigRaw</code> | the schema object to update |
 
 <a name="JsonProvider+saveGuild"></a>
 
-### jsonProvider.saveGuild(gID, data) ⇒ <code>Promise.&lt;(GuildConfig\|null)&gt;</code>
+### jsonProvider.saveGuild(gID, data) ⇒ <code>Promise.&lt;([GuildConfig](Core/GuildConfig)\|null)&gt;</code>
 Updates the given guild in the DB with a new schema object.
 
 **Kind**: instance method of [<code>JsonProvider</code>](#JsonProvider)  
-**Returns**: <code>Promise.&lt;(GuildConfig\|null)&gt;</code> - Updated GuildConfig from the DB  
+**Returns**: <code>Promise.&lt;([GuildConfig](Core/GuildConfig)\|null)&gt;</code> - Updated GuildConfig from the DB  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | gID | <code>String</code> | Guild id |
-| data | <code>GuildConfig</code> \| [<code>GuildConfigRaw</code>](#GuildConfigRaw) | the schema object to update |
+| data | <code>[GuildConfig](Core/GuildConfig)</code> \| [<code>GuildConfigRaw</code>](#GuildConfigRaw) | the schema object to update |
 
 <a name="GuildConfigRaw"></a>
 

@@ -22,8 +22,8 @@
         * [.bannedGuilds](#AxonConfig+bannedGuilds) : <code>Array.&lt;String&gt;</code>
         * [.isBlacklistedUser(userID)](#AxonConfig+isBlacklistedUser) ⇒ <code>Boolean</code>
         * [.isBlacklistedGuild(guildID)](#AxonConfig+isBlacklistedGuild) ⇒ <code>Boolean</code>
-        * [.updateBlacklistUser(userID, [boolean])](#AxonConfig+updateBlacklistUser) ⇒ <code>Promise.&lt;(AxonConfig\|null)&gt;</code>
-        * [.updateBlacklistGuild(guildID, [boolean])](#AxonConfig+updateBlacklistGuild) ⇒ <code>Promise.&lt;(AxonConfig\|null)&gt;</code>
+        * [.updateBlacklistUser(userID, [boolean])](#AxonConfig+updateBlacklistUser) ⇒ <code>Promise.&lt;([AxonConfig](Core/AxonConfig)\|null)&gt;</code>
+        * [.updateBlacklistGuild(guildID, [boolean])](#AxonConfig+updateBlacklistGuild) ⇒ <code>Promise.&lt;([AxonConfig](Core/AxonConfig)\|null)&gt;</code>
     * _static_
         * [.AxonConfig](#AxonConfig.AxonConfig)
             * [new AxonConfig(axon, values)](#new_AxonConfig.AxonConfig_new)
@@ -69,13 +69,13 @@ Whether the guild is blacklisted or not
 
 <a name="AxonConfig+updateBlacklistUser"></a>
 
-### axonConfig.updateBlacklistUser(userID, [boolean]) ⇒ <code>Promise.&lt;(AxonConfig\|null)&gt;</code>
+### axonConfig.updateBlacklistUser(userID, [boolean]) ⇒ <code>Promise.&lt;([AxonConfig](Core/AxonConfig)\|null)&gt;</code>
 Updates the state of a blacklisted user.
 true = add the user, false = remove the user.
 *not used internally*
 
 **Kind**: instance method of [<code>AxonConfig</code>](#AxonConfig)  
-**Returns**: <code>Promise.&lt;(AxonConfig\|null)&gt;</code> - Updated axonConfig / Error  
+**Returns**: <code>Promise.&lt;([AxonConfig](Core/AxonConfig)\|null)&gt;</code> - Updated axonConfig / Error  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -84,13 +84,13 @@ true = add the user, false = remove the user.
 
 <a name="AxonConfig+updateBlacklistGuild"></a>
 
-### axonConfig.updateBlacklistGuild(guildID, [boolean]) ⇒ <code>Promise.&lt;(AxonConfig\|null)&gt;</code>
+### axonConfig.updateBlacklistGuild(guildID, [boolean]) ⇒ <code>Promise.&lt;([AxonConfig](Core/AxonConfig)\|null)&gt;</code>
 Updates the state of a blacklisted guild.
 true = add the guild, false = remove the guild.
 *not used internally*
 
 **Kind**: instance method of [<code>AxonConfig</code>](#AxonConfig)  
-**Returns**: <code>Promise.&lt;(AxonConfig\|null)&gt;</code> - Updated axonConfig / Error  
+**Returns**: <code>Promise.&lt;([AxonConfig](Core/AxonConfig)\|null)&gt;</code> - Updated axonConfig / Error  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -109,6 +109,6 @@ Creates an instance of AxonConfig.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| axon | <code>AxonClient</code> |  |
+| axon | <code>[AxonClient](AxonClient)</code> |  |
 | values | <code>AConfig</code> | DB values for the current Guild |
 

@@ -141,7 +141,7 @@ Whether we should send the invalid permission message or not
 
 | Param | Type |
 | --- | --- |
-| guildConfig | <code>GuildConfig</code> | 
+| guildConfig | <code>[GuildConfig](Core/GuildConfig)</code> | 
 
 <a name="CommandOptions+shouldDeleteCommand"></a>
 
@@ -180,7 +180,7 @@ Creates an instance of CommandOptions.
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| command | <code>Command</code> |  | The base command |
+| command | <code>[Command](Commands/Command)</code> |  | The base command |
 | [override] | <code>Object</code> | <code>{}</code> | - The specific options for this command (format - CommandOptions) |
 | useModuleDefault |  | <code>false</code> |  |
 | override.sendPermissionMessage | <code>Boolean</code> |  | Whether to trigger an error message on invalid permission (bot / user / custom etc) |

@@ -29,16 +29,16 @@
 * [Embed](#Embed)
     * [new Embed()](#new_Embed_new)
     * _instance_
-        * [.setTitle(title)](#Embed+setTitle) ⇒ [<code>Embed</code>](#Embed)
-        * [.setDescription(description)](#Embed+setDescription) ⇒ [<code>Embed</code>](#Embed)
-        * [.setURL(url)](#Embed+setURL) ⇒ [<code>Embed</code>](#Embed)
-        * [.setColor(color)](#Embed+setColor) ⇒ [<code>Embed</code>](#Embed)
-        * [.setAuthor(name, icon, url)](#Embed+setAuthor) ⇒ [<code>Embed</code>](#Embed)
-        * [.setTimestamp([timestamp])](#Embed+setTimestamp) ⇒ [<code>Embed</code>](#Embed)
-        * [.addField(name, value, [inline])](#Embed+addField) ⇒ [<code>Embed</code>](#Embed)
-        * [.setThumbnail(url)](#Embed+setThumbnail) ⇒ [<code>Embed</code>](#Embed)
-        * [.setImage(url)](#Embed+setImage) ⇒ [<code>Embed</code>](#Embed)
-        * [.setFooter(text, [icon])](#Embed+setFooter) ⇒ [<code>Embed</code>](#Embed)
+        * [.setTitle(title)](#Embed+setTitle) ⇒ <code>[Embed](Utility/Embed)</code>
+        * [.setDescription(description)](#Embed+setDescription) ⇒ <code>[Embed](Utility/Embed)</code>
+        * [.setURL(url)](#Embed+setURL) ⇒ <code>[Embed](Utility/Embed)</code>
+        * [.setColor(color)](#Embed+setColor) ⇒ <code>[Embed](Utility/Embed)</code>
+        * [.setAuthor(name, icon, url)](#Embed+setAuthor) ⇒ <code>[Embed](Utility/Embed)</code>
+        * [.setTimestamp([timestamp])](#Embed+setTimestamp) ⇒ <code>[Embed](Utility/Embed)</code>
+        * [.addField(name, value, [inline])](#Embed+addField) ⇒ <code>[Embed](Utility/Embed)</code>
+        * [.setThumbnail(url)](#Embed+setThumbnail) ⇒ <code>[Embed](Utility/Embed)</code>
+        * [.setImage(url)](#Embed+setImage) ⇒ <code>[Embed](Utility/Embed)</code>
+        * [.setFooter(text, [icon])](#Embed+setFooter) ⇒ <code>[Embed](Utility/Embed)</code>
     * _static_
         * [.Embed](#Embed.Embed)
             * [new Embed([data])](#new_Embed.Embed_new)
@@ -50,11 +50,11 @@ Embed class to create Embed without without using raw json format
 
 <a name="Embed+setTitle"></a>
 
-### embed.setTitle(title) ⇒ [<code>Embed</code>](#Embed)
+### embed.setTitle(title) ⇒ <code>[Embed](Utility/Embed)</code>
 Sets the title of this embed.
 
 **Kind**: instance method of [<code>Embed</code>](#Embed)  
-**Returns**: [<code>Embed</code>](#Embed) - This embed  
+**Returns**: <code>[Embed](Utility/Embed)</code> - This embed  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -66,11 +66,11 @@ Embed.setTitle('My New Embed');
 ```
 <a name="Embed+setDescription"></a>
 
-### embed.setDescription(description) ⇒ [<code>Embed</code>](#Embed)
+### embed.setDescription(description) ⇒ <code>[Embed](Utility/Embed)</code>
 Sets the description of this embed.
 
 **Kind**: instance method of [<code>Embed</code>](#Embed)  
-**Returns**: [<code>Embed</code>](#Embed) - This embed  
+**Returns**: <code>[Embed](Utility/Embed)</code> - This embed  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -82,11 +82,11 @@ Embed.setDescription('Hi, this is my description!!!');
 ```
 <a name="Embed+setURL"></a>
 
-### embed.setURL(url) ⇒ [<code>Embed</code>](#Embed)
+### embed.setURL(url) ⇒ <code>[Embed](Utility/Embed)</code>
 Sets the URL of this embed.
 
 **Kind**: instance method of [<code>Embed</code>](#Embed)  
-**Returns**: [<code>Embed</code>](#Embed) - This embed  
+**Returns**: <code>[Embed](Utility/Embed)</code> - This embed  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -94,11 +94,11 @@ Sets the URL of this embed.
 
 <a name="Embed+setColor"></a>
 
-### embed.setColor(color) ⇒ [<code>Embed</code>](#Embed)
+### embed.setColor(color) ⇒ <code>[Embed](Utility/Embed)</code>
 Sets the color of this embed.
 
 **Kind**: instance method of [<code>Embed</code>](#Embed)  
-**Returns**: [<code>Embed</code>](#Embed) - This embed  
+**Returns**: <code>[Embed](Utility/Embed)</code> - This embed  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -110,11 +110,11 @@ Embed.setColor(0xFFFFFF);
 ```
 <a name="Embed+setAuthor"></a>
 
-### embed.setAuthor(name, icon, url) ⇒ [<code>Embed</code>](#Embed)
+### embed.setAuthor(name, icon, url) ⇒ <code>[Embed](Utility/Embed)</code>
 Sets the author of this embed.
 
 **Kind**: instance method of [<code>Embed</code>](#Embed)  
-**Returns**: [<code>Embed</code>](#Embed) - This embed  
+**Returns**: <code>[Embed](Utility/Embed)</code> - This embed  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -128,11 +128,11 @@ Embed.setAuthor('KhaaZ', 'https://www.image.com/khaaz.png');
 ```
 <a name="Embed+setTimestamp"></a>
 
-### embed.setTimestamp([timestamp]) ⇒ [<code>Embed</code>](#Embed)
+### embed.setTimestamp([timestamp]) ⇒ <code>[Embed](Utility/Embed)</code>
 Sets the timestamp of this embed.
 
 **Kind**: instance method of [<code>Embed</code>](#Embed)  
-**Returns**: [<code>Embed</code>](#Embed) - This embed  
+**Returns**: <code>[Embed](Utility/Embed)</code> - This embed  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -140,11 +140,11 @@ Sets the timestamp of this embed.
 
 <a name="Embed+addField"></a>
 
-### embed.addField(name, value, [inline]) ⇒ [<code>Embed</code>](#Embed)
+### embed.addField(name, value, [inline]) ⇒ <code>[Embed](Utility/Embed)</code>
 Adds a field to the embed (max 25).
 
 **Kind**: instance method of [<code>Embed</code>](#Embed)  
-**Returns**: [<code>Embed</code>](#Embed) - This embed  
+**Returns**: <code>[Embed](Utility/Embed)</code> - This embed  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -158,11 +158,11 @@ Embed.addField('My Field', 'This is a new field!', true);
 ```
 <a name="Embed+setThumbnail"></a>
 
-### embed.setThumbnail(url) ⇒ [<code>Embed</code>](#Embed)
+### embed.setThumbnail(url) ⇒ <code>[Embed](Utility/Embed)</code>
 Set the thumbnail of this embed.
 
 **Kind**: instance method of [<code>Embed</code>](#Embed)  
-**Returns**: [<code>Embed</code>](#Embed) - This embed  
+**Returns**: <code>[Embed](Utility/Embed)</code> - This embed  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -170,11 +170,11 @@ Set the thumbnail of this embed.
 
 <a name="Embed+setImage"></a>
 
-### embed.setImage(url) ⇒ [<code>Embed</code>](#Embed)
+### embed.setImage(url) ⇒ <code>[Embed](Utility/Embed)</code>
 Sets the image of this embed
 
 **Kind**: instance method of [<code>Embed</code>](#Embed)  
-**Returns**: [<code>Embed</code>](#Embed) - This embed  
+**Returns**: <code>[Embed](Utility/Embed)</code> - This embed  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -186,11 +186,11 @@ Embed.setImage('https://www.image.com/myImageUrl.png');
 ```
 <a name="Embed+setFooter"></a>
 
-### embed.setFooter(text, [icon]) ⇒ [<code>Embed</code>](#Embed)
+### embed.setFooter(text, [icon]) ⇒ <code>[Embed](Utility/Embed)</code>
 Sets the footer of this embed.
 
 **Kind**: instance method of [<code>Embed</code>](#Embed)  
-**Returns**: [<code>Embed</code>](#Embed) - This embed  
+**Returns**: <code>[Embed](Utility/Embed)</code> - This embed  
 
 | Param | Type | Description |
 | --- | --- | --- |

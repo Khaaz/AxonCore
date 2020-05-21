@@ -8,7 +8,7 @@
 
 | Name | Type | Description |
 | --- | --- | --- |
-| _axon | <code>AxonClient</code> | The AxonClient |
+| _axon | <code>[AxonClient](AxonClient)</code> | The AxonClient |
 | _base | <code>T</code> | The base definition to use for the registry |
 
 
@@ -19,7 +19,7 @@
         * *[.registry](#ARegistry+registry) : <code>Map.&lt;String, T&gt;</code>*
         * *[.has(key)](#ARegistry+has) ⇒ <code>Boolean</code>*
         * *[.get(key)](#ARegistry+get) ⇒ <code>T</code>*
-        * *[.add(key, value)](#ARegistry+add) ⇒ <code>ARegistry.&lt;T&gt;</code>*
+        * *[.add(key, value)](#ARegistry+add) ⇒ <code>[ARegistry](Core/ARegistry).&lt;T&gt;</code>*
         * *[.remove(key)](#ARegistry+remove) ⇒ <code>Boolean</code>*
         * *[.register(key, value)](#ARegistry+register)*
         * *[.unregister(key, value)](#ARegistry+unregister)*
@@ -72,11 +72,11 @@ Get an item from the registry
 
 <a name="ARegistry+add"></a>
 
-### *aRegistry.add(key, value) ⇒ <code>ARegistry.&lt;T&gt;</code>*
+### *aRegistry.add(key, value) ⇒ <code>[ARegistry](Core/ARegistry).&lt;T&gt;</code>*
 Add an item to the registry
 
 **Kind**: instance method of [<code>ARegistry</code>](#ARegistry)  
-**Returns**: <code>ARegistry.&lt;T&gt;</code> - - The registry  
+**Returns**: <code>[ARegistry](Core/ARegistry).&lt;T&gt;</code> - - The registry  
 
 | Param | Type |
 | --- | --- |
@@ -131,6 +131,6 @@ Creates an instance of ARegistry.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| axon | <code>AxonClient</code> | The AxonClient |
+| axon | <code>[AxonClient](AxonClient)</code> | The AxonClient |
 | base | <code>T</code> | The base definition to use for the registry |
 

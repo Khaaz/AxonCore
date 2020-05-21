@@ -40,7 +40,7 @@ Creates an instance of CommandLoader
 
 | Param | Type |
 | --- | --- |
-| module | <code>Module</code> | 
+| module | <code>[Module](Modules/Module)</code> | 
 
 <a name="CommandLoader+axon"></a>
 
@@ -66,8 +66,8 @@ Validate and correct the command before registering it.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| command | <code>Command</code> | The command to load |
-| parent | <code>CommandRegistry</code> | The registry to load the command into |
+| command | <code>[Command](Commands/Command)</code> | The command to load |
+| parent | <code>[CommandRegistry](Commands/CommandRegistry)</code> | The registry to load the command into |
 
 <a name="CommandLoader+loadAll"></a>
 
@@ -79,7 +79,7 @@ Instantiate all commands.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| commands | <code>Object.&lt;string, Command&gt;</code> | Non instantiated Commands |
+| commands | <code>Object.&lt;string, [Command](Commands/Command)&gt;</code> | Non instantiated Commands |
 
 <a name="CommandLoader+unload"></a>
 
@@ -102,8 +102,8 @@ Register a Command. Register its subcommands if it has any.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| command | <code>Command</code> | Command object |
-| registry | <code>CommandRegistry</code> | The registry to register the command into |
+| command | <code>[Command](Commands/Command)</code> | Command object |
+| registry | <code>[CommandRegistry](Commands/CommandRegistry)</code> | The registry to register the command into |
 
 <a name="CommandLoader+unregisterCommand"></a>
 
@@ -126,8 +126,8 @@ Remove a subcommand from a command
 
 | Param | Type | Description |
 | --- | --- | --- |
-| command | <code>Command</code> | The parent Command |
-| subCommand | <code>Command</code> | The Subcommand to unregister |
+| command | <code>[Command](Commands/Command)</code> | The parent Command |
+| subCommand | <code>[Command](Commands/Command)</code> | The Subcommand to unregister |
 
 <a name="CommandLoader"></a>
 
@@ -160,7 +160,7 @@ Creates an instance of CommandLoader
 
 | Param | Type |
 | --- | --- |
-| module | <code>Module</code> | 
+| module | <code>[Module](Modules/Module)</code> | 
 
 <a name="CommandLoader+axon"></a>
 
@@ -186,8 +186,8 @@ Validate and correct the command before registering it.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| command | <code>Command</code> | The command to load |
-| parent | <code>CommandRegistry</code> | The registry to load the command into |
+| command | <code>[Command](Commands/Command)</code> | The command to load |
+| parent | <code>[CommandRegistry](Commands/CommandRegistry)</code> | The registry to load the command into |
 
 <a name="CommandLoader+loadAll"></a>
 
@@ -199,7 +199,7 @@ Instantiate all commands.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| commands | <code>Object.&lt;string, Command&gt;</code> | Non instantiated Commands |
+| commands | <code>Object.&lt;string, [Command](Commands/Command)&gt;</code> | Non instantiated Commands |
 
 <a name="CommandLoader+unload"></a>
 
@@ -222,8 +222,8 @@ Register a Command. Register its subcommands if it has any.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| command | <code>Command</code> | Command object |
-| registry | <code>CommandRegistry</code> | The registry to register the command into |
+| command | <code>[Command](Commands/Command)</code> | Command object |
+| registry | <code>[CommandRegistry](Commands/CommandRegistry)</code> | The registry to register the command into |
 
 <a name="CommandLoader+unregisterCommand"></a>
 
@@ -246,6 +246,6 @@ Remove a subcommand from a command
 
 | Param | Type | Description |
 | --- | --- | --- |
-| command | <code>Command</code> | The parent Command |
-| subCommand | <code>Command</code> | The Subcommand to unregister |
+| command | <code>[Command](Commands/Command)</code> | The parent Command |
+| subCommand | <code>[Command](Commands/Command)</code> | The Subcommand to unregister |
 

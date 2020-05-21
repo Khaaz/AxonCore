@@ -10,7 +10,7 @@
 | raw | <code>String</code> | The raw message content |
 | msg | <code>Message</code> | The message object from the lib |
 | args | <code>Array.&lt;String&gt;</code> | The array of arguments |
-| guildConfig | <code>GuildConfig</code> | The GuildConfig data-structure with all DB saved settings |
+| guildConfig | <code>[GuildConfig](Core/GuildConfig)</code> | The GuildConfig data-structure with all DB saved settings |
 | prefix | <code>String</code> | The prefix used for this command |
 | command | <code>String</code> | The full label of the command being executed |
 | executionType | <code>COMMAND\_EXECUTION\_TYPES</code> | Execution type: admin, owner, regular |
@@ -21,9 +21,9 @@
     * _instance_
         * [.isAdmin](#CommandEnvironment+isAdmin) : <code>Boolean</code>
         * [.isOwner](#CommandEnvironment+isOwner) : <code>Boolean</code>
-        * [.setPrefix(prefix)](#CommandEnvironment+setPrefix) ⇒ [<code>CommandEnvironment</code>](#CommandEnvironment)
-        * [.setGuildConfig(guildConfig)](#CommandEnvironment+setGuildConfig) ⇒ [<code>CommandEnvironment</code>](#CommandEnvironment)
-        * [.setCommand(command)](#CommandEnvironment+setCommand) ⇒ [<code>CommandEnvironment</code>](#CommandEnvironment)
+        * [.setPrefix(prefix)](#CommandEnvironment+setPrefix) ⇒ <code>[CommandEnvironment](Commands/CommandEnvironment)</code>
+        * [.setGuildConfig(guildConfig)](#CommandEnvironment+setGuildConfig) ⇒ <code>[CommandEnvironment](Commands/CommandEnvironment)</code>
+        * [.setCommand(command)](#CommandEnvironment+setCommand) ⇒ <code>[CommandEnvironment](Commands/CommandEnvironment)</code>
         * [.resolveArgs(parser, args)](#CommandEnvironment+resolveArgs)
     * _static_
         * [.CommandEnvironment](#CommandEnvironment.CommandEnvironment)
@@ -50,11 +50,11 @@ Whether this is an owner execution environment
 **Read only**: true  
 <a name="CommandEnvironment+setPrefix"></a>
 
-### commandEnvironment.setPrefix(prefix) ⇒ [<code>CommandEnvironment</code>](#CommandEnvironment)
+### commandEnvironment.setPrefix(prefix) ⇒ <code>[CommandEnvironment](Commands/CommandEnvironment)</code>
 Set the prefix
 
 **Kind**: instance method of [<code>CommandEnvironment</code>](#CommandEnvironment)  
-**Returns**: [<code>CommandEnvironment</code>](#CommandEnvironment) - This CommandEnvironment  
+**Returns**: <code>[CommandEnvironment](Commands/CommandEnvironment)</code> - This CommandEnvironment  
 
 | Param | Type |
 | --- | --- |
@@ -62,27 +62,27 @@ Set the prefix
 
 <a name="CommandEnvironment+setGuildConfig"></a>
 
-### commandEnvironment.setGuildConfig(guildConfig) ⇒ [<code>CommandEnvironment</code>](#CommandEnvironment)
+### commandEnvironment.setGuildConfig(guildConfig) ⇒ <code>[CommandEnvironment](Commands/CommandEnvironment)</code>
 Set the guildConfig
 
 **Kind**: instance method of [<code>CommandEnvironment</code>](#CommandEnvironment)  
-**Returns**: [<code>CommandEnvironment</code>](#CommandEnvironment) - This CommandEnvironment  
+**Returns**: <code>[CommandEnvironment](Commands/CommandEnvironment)</code> - This CommandEnvironment  
 
 | Param | Type |
 | --- | --- |
-| guildConfig | <code>GuildConfig</code> | 
+| guildConfig | <code>[GuildConfig](Core/GuildConfig)</code> | 
 
 <a name="CommandEnvironment+setCommand"></a>
 
-### commandEnvironment.setCommand(command) ⇒ [<code>CommandEnvironment</code>](#CommandEnvironment)
+### commandEnvironment.setCommand(command) ⇒ <code>[CommandEnvironment](Commands/CommandEnvironment)</code>
 Set the command label from the command object
 
 **Kind**: instance method of [<code>CommandEnvironment</code>](#CommandEnvironment)  
-**Returns**: [<code>CommandEnvironment</code>](#CommandEnvironment) - This CommandEnvironment  
+**Returns**: <code>[CommandEnvironment](Commands/CommandEnvironment)</code> - This CommandEnvironment  
 
 | Param | Type |
 | --- | --- |
-| command | <code>Command</code> | 
+| command | <code>[Command](Commands/Command)</code> | 
 
 <a name="CommandEnvironment+resolveArgs"></a>
 
@@ -112,8 +112,8 @@ Creates an instance of CommandEnvironment.
 | data | <code>Object</code> |  |
 | data.msg | <code>Message</code> | The message object from the lib |
 | data.args | <code>Array.&lt;String&gt;</code> | The array of arguments |
-| data.guildConfig | <code>GuildConfig</code> | The GuildConfig data-structure with all DB saved settings |
+| data.guildConfig | <code>[GuildConfig](Core/GuildConfig)</code> | The GuildConfig data-structure with all DB saved settings |
 | data.prefix | <code>String</code> | The prefix used for this command |
-| data.command | <code>Command</code> | The command object |
+| data.command | <code>[Command](Commands/Command)</code> | The command object |
 | data.executionType | <code>COMMAND\_EXECUTION\_TYPES</code> | Execution type: admin, owner, regular |
 
