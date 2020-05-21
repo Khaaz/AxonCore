@@ -48,10 +48,10 @@
   * [AutoQueue](Utility/AutoQueue.md)
   * [LRUCache](Utility/LRUCache.md)
 
-* **[Translation](Translations/index.md)**
-  * [MessageManager](Translations/MessageManager.md)
-  * [TranslationManager](Translations/TranslationManager.md)
-  * [MessageParser](Translations/MessageParser.md)
+* **[Translation](Translation/index.md)**
+  * [MessageManager](Translation/MessageManager.md)
+  * [TranslationManager](Translation/TranslationManager.md)
+  * [MessageParser](Translation/MessageParser.md)
 
 * **[Enums](Enums/index.md)**
   * [AxonEnums](Enums/AxonEnums.md)
