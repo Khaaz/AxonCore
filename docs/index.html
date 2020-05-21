@@ -9,11 +9,11 @@
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <link rel="stylesheet" type="text/css" href="style.css">
   <link 
-        rel="stylesheet"
-        href="//cdn.jsdelivr.net/npm/docsify-darklight-theme@latest/dist/style.min.css"
-        title="docsify-darklight-theme"
-        type="text/css"
-    />
+    rel="stylesheet"
+    href="//cdn.jsdelivr.net/npm/docsify-darklight-theme@latest/dist/style.min.css"
+    title="docsify-darklight-theme"
+    type="text/css"
+  />
   <style>
     nav.app-nav li ul {
       min-width: 100px;
@@ -42,41 +42,45 @@
         }
       },
       darklightTheme: {
-            siteFont : "PT Sans",
-            defaultTheme : 'dark',
-            codeFontFamily : 'Roboto Mono, Monaco, courier, monospace',
-            bodyFontSize : '17px',
-            dark: {
-                accent: '#42b983',
-                toogleBackground : '#ffffff',
-                background: '#091a28',
-                textColor: '#b4b4b4',
-                codeTextColor : '#ffffff',
-                codeBackgroudColor : '#0e2233',
-                borderColor : '#0d2538',
-                blockQuoteColour : '#858585',
-                highlightColor : '#d22778',
-                sidebarSublink : '#b4b4b4',
-                codeTypeColor : '#ffffff',
-                coverBackground : 'linear-gradient(to left bottom, hsl(118, 100%, 85%) 0%,hsl(181, 100%, 85%) 100%)',
-                toogleImage : 'url(https://cdn.jsdelivr.net/npm/docsify-darklight-theme@latest/icons/sun.svg)'
-            },
-            light: {
-                accent: '#42b983',
-                toogleBackground : '#091a28',
-                background: '#ffffff',
-                textColor: '#34495e',
-                codeTextColor : '#525252',
-                codeBackgroudColor : '#f8f8f8',
-                borderColor : 'rgba(0, 0, 0, 0.07)',
-                blockQuoteColor : '#858585',
-                highlightColor : '#d22778',
-                sidebarSublink : '#b4b4b4',
-                codeTypeColor : '#091a28',
-                coverBackground : 'linear-gradient(to left bottom, hsl(118, 100%, 85%) 0%,hsl(181, 100%, 85%) 100%)',
-                toogleImage : 'url(https://cdn.jsdelivr.net/npm/docsify-darklight-theme@latest/icons/moon.svg)'
-            }
+        siteFont : "PT Sans",
+        defaultTheme : 'dark',
+        codeFontFamily : 'Roboto Mono, Monaco, courier, monospace',
+        bodyFontSize : '17px',
+        dark: {
+          accent: '#42b983',
+          toogleBackground : '#ffffff',
+          background: '#091a28',
+          textColor: '#b4b4b4',
+          codeTextColor : '#ffffff',
+          codeBackgroudColor : '#0e2233',
+          borderColor : '#0d2538',
+          blockQuoteColour : '#858585',
+          highlightColor : '#d22778',
+          sidebarSublink : '#b4b4b4',
+          codeTypeColor : '#ffffff',
+          coverBackground : 'linear-gradient(to left bottom, hsl(118, 100%, 85%) 0%,hsl(181, 100%, 85%) 100%)',
+          toogleImage : 'url(https://cdn.jsdelivr.net/npm/docsify-darklight-theme@latest/icons/sun.svg)'
+        },
+        light: {
+          accent: '#42b983',
+          toogleBackground : '#091a28',
+          background: '#ffffff',
+          textColor: '#34495e',
+          codeTextColor : '#525252',
+          codeBackgroudColor : '#f8f8f8',
+          borderColor : 'rgba(0, 0, 0, 0.07)',
+          blockQuoteColor : '#858585',
+          highlightColor : '#d22778',
+          sidebarSublink : '#b4b4b4',
+          codeTypeColor : '#091a28',
+          coverBackground : 'linear-gradient(to left bottom, hsl(118, 100%, 85%) 0%,hsl(181, 100%, 85%) 100%)',
+          toogleImage : 'url(https://cdn.jsdelivr.net/npm/docsify-darklight-theme@latest/icons/moon.svg)'
         }
+      },
+      markdown: {
+        smartypants: true,
+        
+      }
     }
   </script>
   <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
