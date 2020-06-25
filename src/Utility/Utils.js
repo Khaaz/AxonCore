@@ -18,6 +18,7 @@ const ROLE_MENTION = /<@&([0-9]+)>$/;
 const CHANNEL_MENTION = /<#([0-9]+)>$/;
 const ID = /^[0-9]+$/;
 const HEX_CODE = /^#?([0-9A-Fa-f]{6})$/;
+const STRING_SPLIT = /[\s\S]{1,1950}([\n\r]|$)/g;
 
 /**
  * General Utility Class for AxonCore
@@ -49,6 +50,7 @@ class Utils {
         this.roleMention = ROLE_MENTION;
         this.channelMention = CHANNEL_MENTION;
         this.id = ID;
+        this.stringSplit = STRING_SPLIT;
 
         this.hexCode = HEX_CODE;
     }
@@ -150,14 +152,15 @@ class Utils {
 
     /**
      * Split the given content (String), according to correct linebreaks.
-     * Split at 1900 characters.
+     * Split at default 1900 characters.
      *
      * @param {String} content
-     * @returns {Array<String>|String} The array of content string splitted or the original String
+     * @param {Number} [length]
+     * @returns {Array<String>} The array of content string splitted
      * @memberof Utils
      */
-    splitMessage(content) {
-        return content.match(/[\s\S]{1,1900}[\n\r]/g) || [];
+    splitMessage(content, length) {
+        return content.match(typeof length === 'number' && length > 0 ? new RegExp(`[\\s\\S]{1,${length}}([\\n\\r]|$)`, 'g') : this.stringSplit);
     }
 
     /**

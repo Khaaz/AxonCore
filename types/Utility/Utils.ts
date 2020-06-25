@@ -108,12 +108,12 @@ export declare class Utils {
     readonly library: LibraryInterface;
     /**
      * Split the given content (String), according to correct linebreaks.
-     * Split at 1900 characters.
+     * Split at default 1900 characters.
      *
-     * @returns The array of content string splitted or the original String
+     * @returns The array of content string splitted
      * @memberof Utils
      */
-    public splitMessage(content: string): string[] | string;
+    public splitMessage(content: string, length?: number): string[];
     /**
      * Returns the guild prefix of the given msg.
      *
