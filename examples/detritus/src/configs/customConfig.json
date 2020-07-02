@@ -3,7 +3,7 @@
         "name": "Axon",
         "description": "AxonCore - Bot client, core module (eris lib)",
         "version": "1.0.0",
-        "library": "eris"
+        "library": "detritus"
     },
 
     "links": {
