@@ -13,7 +13,7 @@ pm2.connect( (err) => {
         name: 'AxonCore.detritus',
         exec_mode: 'fork',
         max_memory_restart: '1G',
-        cwd: 'example/src',
+        cwd: 'examples/src',
         error: '../logs/error.err',
         output: '../../logs/output.log',
         pid: '../../logs/pid.pid',
