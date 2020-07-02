@@ -148,28 +148,6 @@ class Command extends Base {
     }
 
     /**
-     * Returns the template object
-     *
-     * @readonly
-     * @type {AxonTemplate}
-     * @memberof Command
-     */
-    get template() {
-        return this.axon.template;
-    }
-
-    /**
-     * Returns the library Interface instance
-     *
-     * @readonly
-     * @type {LibraryInterface}
-     * @memberof Command
-     */
-    get library() {
-        return this.axon.library;
-    }
-
-    /**
      * Returns the full label for this command (label + all parent labels)
      *
      * @readonly
