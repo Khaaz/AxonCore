@@ -257,7 +257,7 @@ class AxonUtils {
      * @memberof AxonUtils
      */
     sendDM(user, content, options = {} ) {
-        this.library.user.getDM(user)
+        return this.library.user.getDM(user)
             .then(chan => this.sendMessage(chan, content, options) )
             .catch(err => {
                 this.logger.verbose(`DM disabled/Bot blocked [${user.username}#${user.discriminator} - ${user.id}]!`);
