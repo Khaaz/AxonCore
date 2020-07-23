@@ -223,8 +223,17 @@ class GuildConfig {
             this[key] = guildConfig[key];
         }
         this.updatedAt = new Date();
+        const update = {};
+        for (const [key, value] of Object.entries(this) ) {
+            try {
+                JSON.stringify(value);
+                update[key] = value;
+            } catch (e) {
+                // There is nothing we can do here
+            }
+        }
 
-        const newConf = await this._axon.DBProvider.saveGuild(this.guildID, this);
+        const newConf = await this._axon.DBProvider.saveGuild(this.guildID, update);
         return newConf ? this : null;
     }
 
