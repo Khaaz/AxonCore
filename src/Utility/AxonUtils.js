@@ -172,7 +172,7 @@ class AxonUtils {
      * @memberof AxonUtils
      */
     isBotStaff(uID) {
-        for (const rank in Object.values(this.axon.staff) ) {
+        for (const rank of Object.values(this.axon.staff) ) {
             if (rank.includes(uID) ) {
                 return true;
             }
