@@ -219,12 +219,17 @@ class GuildConfig {
         if (guildConfig.guildID !== this.guildID) {
             return Promise.resolve(null);
         }
+        const update = {};
         for (const key in guildConfig) {
             this[key] = guildConfig[key];
+            if (!key.startsWith('_') ) {
+                update[key] = guildConfig[key];
+            }
         }
         this.updatedAt = new Date();
+        update.updatedAt = new Date();
 
-        const newConf = await this._axon.DBProvider.saveGuild(this.guildID, this);
+        const newConf = await this._axon.DBProvider.saveGuild(this.guildID, update);
         return newConf ? this : null;
     }
 
