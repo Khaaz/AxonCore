@@ -222,11 +222,8 @@ class GuildConfig {
         const update = {};
         for (const key in guildConfig) {
             this[key] = guildConfig[key];
-            try {
-                JSON.stringify(this[key] );
+            if (!key.startsWith('_') ) {
                 update[key] = guildConfig[key];
-            } catch (e) {
-                // There is nothing we can do here
             }
         }
         this.updatedAt = new Date();
