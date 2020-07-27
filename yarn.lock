@@ -498,9 +498,9 @@ discord.js@discordjs/discord.js:
     tweetnacl "^1.0.3"
     ws "^7.2.1"
 
-"dmd@git+https://github.com/AxonTeam/dmd.git":
+"dmd@git+https://github.com/AxonTeam/dmd":
   version "5.0.0"
-  resolved "git+https://github.com/AxonTeam/dmd.git#2de7ffa2a92322303bd2735ed6e67dfbfbc0dd7d"
+  resolved "git+https://github.com/AxonTeam/dmd#2de7ffa2a92322303bd2735ed6e67dfbfbc0dd7d"
   dependencies:
     array-back "^4.0.1"
     cache-point "^2.0.0"
@@ -980,9 +980,9 @@ js2xmlparser@^4.0.0:
   dependencies:
     xmlcreate "^2.0.3"
 
-"jsdoc-api@git+https://github.com/AxonTeam/jsdoc-api.git":
+"jsdoc-api@git+https://github.com/AxonTeam/jsdoc-api":
   version "5.0.4"
-  resolved "git+https://github.com/AxonTeam/jsdoc-api.git#2e6b93accec3261d5770d151813c2fde12c4e3d9"
+  resolved "git+https://github.com/AxonTeam/jsdoc-api#2e6b93accec3261d5770d151813c2fde12c4e3d9"
   dependencies:
     array-back "^4.0.1"
     cache-point "^2.0.0"
