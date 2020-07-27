@@ -1,4 +1,4 @@
-import { MessageManager, Languages, AxonLanguageResponse } from '..';
+import { MessageManager, Languages, AxonLanguageResponse, DefaultLanguageResponse } from '..';
 
 /**
  * Class dedicated to manage translations.
@@ -8,15 +8,15 @@ import { MessageManager, Languages, AxonLanguageResponse } from '..';
  *
  * @class TranslationManager
  */
-export declare class TranslationManager {
-    private _manager: MessageManager;
+export declare class TranslationManager<L extends AxonLanguageResponse = DefaultLanguageResponse> {
+    private _manager: MessageManager<L>;
     /** The default lang */
     public lang: string;
     /**
      * Creates an instance of TranslationManager.
      * @memberof TranslationManager
      */
-    constructor(manager: MessageManager, lang: string);
+    constructor(manager: MessageManager<L>, lang: string);
 
     /**
      * Returns all messages (all langs)
@@ -24,17 +24,17 @@ export declare class TranslationManager {
      * @readonly
      * @memberof TranslationManager
      */
-    readonly messages: Languages;
+    readonly messages: Languages<L>;
     /**
      * Return all messages for the specified lang or the default lang if no specified lang.
      *
      * @memberof TranslationManager
      */
-    public getMessages(lang: string): AxonLanguageResponse;
+    public getMessages(lang: string): L;
     /**
      * Return a specified message for the specified lang or the default lang if no specified lang
      *
      * @memberof TranslationManager
      */
-    public getMessage(message: string, lang: string): string;
+    public getMessage(message: keyof L, lang?: string): string;
 }

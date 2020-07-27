@@ -645,16 +645,19 @@ interface AOptionsSettings extends AxonOptionsSettings {
 }
 
 interface AxonLanguageResponse {
-    ERR_BOT_PERM?: string;
-    ERR_CALLER_PERM?: string;
-    ERR_DESTINATION_PERM?: string;
-    ERR_COOLDOWN?: string;
-    ERR_GENERAL?: string;
-    [key: string]: string | undefined;
+    [p: string]: string;
 }
 
-interface Languages {
-    [language: string]: AxonLanguageResponse;
+interface DefaultLanguageResponse extends AxonLanguageResponse {
+    ERR_BOT_PERM: string;
+    ERR_CALLER_PERM: string;
+    ERR_DESTINATION_PERM: string;
+    ERR_COOLDOWN: string;
+    ERR_GENERAL: string;
+}
+
+interface Languages<L extends AxonLanguageResponse = DefaultLanguageResponse> {
+    [language: string]: L;
 }
 
 interface AxonOptionsBase {
@@ -942,7 +945,7 @@ export {
     ModuleInfo, ModuleData, AxonJSON, GuildJSON, AConfig, AxonConfigRaw, GConfig, GuildConfigRaw, CommandInfo,
     ACommandOptions, CommandPerms, CommandData, AxonTemplate, ListenerInfo, ListenerData, APIAxonMSGCont, AxonMSGCont, AxonMSGOpt, PermissionObject,
     Ctx, EmbedFields, EmbedAuthor, EmbedThumbnail, EmbedImage, EmbedFooter, EmbedData, PromptOptions, PromptOptionsData, CollectorOptions,
-    AxonOptionsSettings, AOptionsSettings, AxonLanguageResponse, Languages, AxonOptionsBase, WebhookConfig, Webhooks, AxonOptionsPrefixes,
+    AxonOptionsSettings, AOptionsSettings, AxonLanguageResponse, DefaultLanguageResponse, Languages, AxonOptionsBase, WebhookConfig, Webhooks, AxonOptionsPrefixes,
     AxonOptionsInfo, AxonOptionsStaff, AxonOptionsExtensions, AxonConfs, AxonParams, Info, AxonInfo, AxonStaffIDs, LibraryInterfaceStructs, PresenceGame,
     RawAttachment, RawUser, WebhookResponse, DjsContent, DjsWebhookContent, DjsPresenceGame, ErisContent, ErisWebhookContent, ErisPresenceGame,
     CommandEnvironmentProps, CommandEnvironmentParams, CollectorContainer, Timeout, ExtentionInitReturn,
