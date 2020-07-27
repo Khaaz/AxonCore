@@ -37,12 +37,12 @@ export declare class MessageCollector extends Collector<LibMessage> {
      * const messages = await collector.run(msg.channel, { caseInsensitive: false });
      * @memberof MessageCollector
      */
-    public run(channel: LibTextableChannel, options?: CollectorOptions): Promise<Map<string, LibMessage> >;
+    public run<T extends LibTextableChannel>(channel: T, options?: CollectorOptions): Promise<Map<string, LibMessage<T>>>;
     /**
      * Get all CollectorContainers that will collect from this particular message
      * @memberof MessageCollector
      */
-    public getCollectors(message: LibMessage): CollectorContainer<LibMessage>[];
+    public getCollectors<T extends LibTextableChannel>(message: LibMessage<T>): CollectorContainer<LibMessage<T>>[];
     /**
      * Function bound to messageCreate event.
      * Collect the message for all collectors that responds to the criteria.

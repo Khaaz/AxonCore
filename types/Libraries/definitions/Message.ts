@@ -49,7 +49,7 @@ export declare class Message {
      * Message channel
      * @memberof Message
      */
-    getChannel(message: LibMessage): LibTextableChannel;
+    getChannel<T extends LibTextableChannel>(message: LibMessage<T>): T;
     /**
      * Message channel ID
      * @memberof Message
@@ -79,10 +79,10 @@ export declare class Message {
      * Delete the message
      * @memberof Message
      */
-    delete(message: LibMessage): Promise<LibMessage | void>;
+    delete<T extends LibTextableChannel>(message: LibMessage<T>): Promise<LibMessage<T> | void>;
     /**
      * Edit the message
      * @memberof Message
      */
-    edit(message: LibMessage, content: AxonMSGCont): Promise<LibMessage>;
+    edit<T extends LibTextableChannel>(message: LibMessage<T>, content: AxonMSGCont): Promise<LibMessage<T>>;
 }

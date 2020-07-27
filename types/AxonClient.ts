@@ -1,8 +1,8 @@
 import { EventEmitter } from 'events';
 import {
-    AxonConfs, AxonParams, Info, AxonInfo, ALogger, AxonUtils, LibClient, LibraryInterface, Utils, ADBProvider, ModuleRegistry, CommandRegistry, ListenerRegistry,
-    EventManager, GuildConfigCache, AxonConfig, ModuleLoader, CommandDispatcher, MessageManagerType, AxonStaffIDs, AxonOptions, Collection, AHandler, Listener, Resolver,
-    Webhooks, AxonTemplate, Module, Command, LOG_LEVELS, Ctx, LibMessage, GuildConfig, DEBUG_FLAGS, Executor, ExtentionInitReturn, AxonLanguageResponse, DefaultLanguageResponse,
+    AxonConfs, AxonParams, Info, AxonInfo, ALogger, AxonUtils, LibClient, LibraryInterface, Utils, ADBProvider, ModuleRegistry, CommandRegistry, ListenerRegistry, EventManager,
+    GuildConfigCache, AxonConfig, ModuleLoader, CommandDispatcher, MessageManagerType, AxonStaffIDs, AxonOptions, Collection, AHandler, Listener, Resolver, Webhooks,
+    AxonTemplate, Module, Command, LOG_LEVELS, Ctx, LibMessage, GuildConfig, DEBUG_FLAGS, Executor, ExtentionInitReturn, AxonLanguageResponse, DefaultLanguageResponse, LibDMChannel,
 } from './';
 
 export declare class AxonClient<L extends AxonLanguageResponse = DefaultLanguageResponse> extends EventEmitter {
@@ -221,7 +221,7 @@ export declare class AxonClient<L extends AxonLanguageResponse = DefaultLanguage
      *
      * @memberof AxonClient
      */
-    public sendFullHelp(msg: LibMessage, guildConfig?: GuildConfig): Promise<void>;
+    public sendFullHelp(msg: LibMessage<LibDMChannel>, guildConfig?: GuildConfig): Promise<void>;
     /**
      * Register a guild prefix.
      * Shortcut to guildConfig.registerPrefix()

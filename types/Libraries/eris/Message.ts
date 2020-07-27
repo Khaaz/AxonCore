@@ -6,10 +6,10 @@ import { ErisContent } from '../../';
 export declare class ErisMessage extends Message {
     /**
      * @memberof ErisMessage
-     */
+     */ // @ts-ignore
     public delete(message: Eris.Message): Promise<void>;
     /**
      * @memberof ErisMessage
-     */
-    public edit(message: Eris.Message, content: ErisContent): Promise<Eris.Message>;
+     */ // @ts-ignore
+    public edit<T extends Eris.TextableChannel>(message: Eris.Message<T>, content: ErisContent): Promise<Eris.Message<T>>;
 }

@@ -895,9 +895,9 @@ interface ErisPresenceGame extends PresenceGame {
     type: 0 | 1 | 2 | 3 | 4;
 }
 
-interface CommandEnvironmentBase {
+interface CommandEnvironmentBase<T extends LibTextableChannel = LibTextableChannel> {
     /** The message object from the lib */
-    msg: LibMessage;
+    msg: LibMessage<T>;
     /** The array of arguments */
     args: string[];
     /** The prefix used for this command */

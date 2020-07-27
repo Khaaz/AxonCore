@@ -11,6 +11,6 @@ export declare class ErisChannel extends Channel {
     public hasPermission(channel: Eris.Channel, user: Eris.User, perm: DISCORD_LIB_PERMISSIONS): boolean;
     /**
      * @memberof ErisChannel
-     */
-    public sendMessage(channel: Eris.Channel, content: ErisContent): Promise<Eris.Message>;
+     */ // @ts-ignore
+    public sendMessage<T extends Eris.Textable = Eris.TextableChannel>(channel: T, content: ErisContent): Promise<Eris.Message<T>>;
 }
