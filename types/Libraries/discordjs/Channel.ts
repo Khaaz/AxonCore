@@ -11,6 +11,7 @@ export declare class DjsChannel extends Channel {
     hasPermission(channel: djs.Channel, user: djs.User, perm: DISCORD_LIB_PERMISSIONS): boolean;
     /**
      * @memberof DjsChannel
-     */ // @ts-ignore
+     */
+    // @ts-expect-error
     sendMessage<T>(channel: djs.TextChannel | djs.DMChannel, content: string | DjsContent): Promise<djs.Message | djs.Message[]>
 }
