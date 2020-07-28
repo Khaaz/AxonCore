@@ -1,5 +1,5 @@
 import {
-    COMMAND_EXECUTION_TYPES, CommandEnvironmentProps, CommandEnvironmentParams, LibMessage, GuildConfig, Command,
+    COMMAND_EXECUTION_TYPES, CommandEnvironmentProps, CommandEnvironmentParams, LibMessage, GuildConfig, Command, LibTextableChannel,
 } from '../../';
 
 /**
@@ -9,11 +9,11 @@ import {
  *
  * @class CommandEnvironment
  */
-export declare class CommandEnvironment implements CommandEnvironmentProps {
+export declare class CommandEnvironment<T extends LibTextableChannel = LibTextableChannel> implements CommandEnvironmentProps {
     /** The raw message content */
     public raw: string;
     public command: string;
-    public msg: LibMessage;
+    public msg: LibMessage<T>;
     public args: string[];
     public prefix: string;
     public guildConfig: GuildConfig;

@@ -1,5 +1,5 @@
 import {
-    AxonClient, Languages, TranslationManager, MessageParser, AxonLanguageResponse,
+    AxonClient, Languages, TranslationManager, MessageParser, AxonLanguageResponse, DefaultLanguageResponse,
 } from '..';
 
 /**
@@ -10,11 +10,11 @@ import {
  *
  * @class MessageManager
  */
-export declare class MessageManager {
+export declare class MessageManager<L extends AxonLanguageResponse = DefaultLanguageResponse> {
     private _axon: AxonClient;
     /** All messages (all langs) */
-    private _messages: Languages;
-    public translation: TranslationManager;
+    private _messages: Languages<L>;
+    public translation: TranslationManager<L>;
     public parser: MessageParser;
 
     /**
@@ -23,7 +23,7 @@ export declare class MessageManager {
      *
      * @memberof MessageManager
      */
-    constructor(axonClient: AxonClient, messages: Languages, baseLang: string)
+    constructor(axonClient: AxonClient, messages: Languages<L>, baseLang: string)
 
     /**
      * Returns all messages (all langs)
@@ -31,7 +31,7 @@ export declare class MessageManager {
      * @readonly
      * @memberof MessageManager
      */
-    readonly messages: Languages;
+    readonly messages: Languages<L>;
     /**
      * All message from the given lang (or default lang)
      *
@@ -45,12 +45,18 @@ export declare class MessageManager {
      * @returns The message
      * @memberof MessageManager
      */
-    public getMessage(message: string, lang?: string): string;
+    public getMessage(message: keyof L, lang?: string): string;
     /**
      * Get the message in the correct lang, parsed to replace {{key}} with the correct argument
      *
      * @returns The actual message
      * @memberof MessageManager
      */
-    public get(message: string, args: AxonLanguageResponse, lang: string): string;
+    public get(message: keyof L, args: AxonLanguageResponse, lang: string): string;
 }
+
+type DynamicMethods<L extends AxonLanguageResponse = DefaultLanguageResponse> = {
+    [P in keyof L]: (args: AxonLanguageResponse, lang: string) => string;
+}
+
+export declare type MessageManagerType<L extends AxonLanguageResponse = DefaultLanguageResponse> = MessageManager<L> & DynamicMethods<L>;

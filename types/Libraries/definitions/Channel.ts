@@ -1,5 +1,5 @@
 import {
-    LibraryInterface, LibChannel, LibGuild, LibUser, AxonMSGCont, LibMessage,
+    LibraryInterface, LibChannel, LibGuild, LibUser, AxonMSGCont, LibMessage, LibTextableChannel,
 } from '../../';
 
 export declare class Channel {
@@ -43,5 +43,5 @@ export declare class Channel {
      * Send a message in the channel
      * @memberof Channel
      */
-    public sendMessage(channel: LibChannel, content: AxonMSGCont): Promise<LibMessage | LibMessage[]>; // Not Implemented // LibMessage[] is for Discord.JS
+    public sendMessage<T extends LibTextableChannel = LibTextableChannel>(channel: T, content: AxonMSGCont): Promise<LibMessage<T> | LibMessage<T>[]>; // Not Implemented // LibMessage[] is for Discord.JS
 }

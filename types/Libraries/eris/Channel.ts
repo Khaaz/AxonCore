@@ -12,5 +12,6 @@ export declare class ErisChannel extends Channel {
     /**
      * @memberof ErisChannel
      */
-    public sendMessage(channel: Eris.Channel, content: ErisContent): Promise<Eris.Message>;
+    // @ts-expect-error
+    public sendMessage<T extends Eris.TextableChannel>(channel: T, content: ErisContent): Promise<Eris.Message<T>>;
 }

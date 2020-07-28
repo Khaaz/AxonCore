@@ -67,7 +67,7 @@ export declare class Prompt {
      */
     private _checker(msg: LibMessage): boolean;
     private _onInvalidEnd(): string;
-    private _onEnded(msg: LibMessage): LibMessage;
+    private _onEnded<T extends LibTextableChannel>(msg: LibMessage<T>): LibMessage<T>;
     private _onTimeout(): Promise<void>;
     /**
      * Message event for prompt

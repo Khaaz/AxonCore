@@ -12,5 +12,6 @@ export declare class DjsChannel extends Channel {
     /**
      * @memberof DjsChannel
      */
-    sendMessage(channel: djs.Channel, content: string | DjsContent): Promise<djs.Message | djs.Message[]>
+    // @ts-expect-error
+    sendMessage<T>(channel: djs.TextChannel | djs.DMChannel, content: string | DjsContent): Promise<djs.Message | djs.Message[]>
 }
