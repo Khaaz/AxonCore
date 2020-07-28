@@ -13,6 +13,7 @@ export declare class CommandEnvironment<T extends LibTextableChannel = LibTextab
     /** The raw message content */
     public raw: string;
     public command: string;
+    public usedLabel: string;
     public msg: LibMessage<T>;
     public args: string[];
     public prefix: string;
