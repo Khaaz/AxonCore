@@ -23,7 +23,7 @@ export declare class MessageParser {
   *
   * @param args - Custom object with all arguments that needs to be inserted in the string
   * @returns - The Parsed message
-  * @memb erof MessageParser
+  * @memberof MessageParser
   */
   public parse(message: string, args: AxonLanguageResponse): string;
   /**
