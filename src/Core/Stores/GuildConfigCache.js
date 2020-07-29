@@ -56,7 +56,6 @@ class GuildConfigsCache extends Store {
             } catch (err) {
                 throw new AxonError(`Cannot retrieve guildConfig from the DB: Guild: ${key}\n${err.stack}`, 'AxonClient', 'GuildConfigsCache');
             }
-            this.set(key, guildConfig);
         }
         return guildConfig;
     }
@@ -69,16 +68,19 @@ class GuildConfigsCache extends Store {
      * @memberof GuildConfigsCache
      */
     async fetch(gID) {
+        let guildConfig;
+        
         try {
-            let guildConfig = await this._axon.DBProvider.fetchGuild(gID);
+            guildConfig = await this._axon.DBProvider.fetchGuild(gID);
             if (!guildConfig) {
                 guildConfig = await this._axon.DBProvider.initGuild(gID);
             }
-            return guildConfig;
-        } catch (err) {
-            const newGuildConfig = await this._axon.DBProvider.initGuild(gID);
-            return newGuildConfig;
+        } catch (_) {
+            guildConfig = await this._axon.DBProvider.initGuild(gID);
         }
+
+        this.set(gID, guildConfig);
+        return guildConfig;
     }
 
     /**
