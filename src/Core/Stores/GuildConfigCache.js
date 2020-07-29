@@ -80,6 +80,24 @@ class GuildConfigsCache extends Store {
             return newGuildConfig;
         }
     }
+
+    /**
+     * Refresh the element by supressing it, fetching and caching it again
+     *
+     * @param {String} gID
+     * @returns {Boolean} Whether it worked
+     * @memberof GuildConfigsCache
+     */
+    async refresh(gID) {
+        this.delete(gID);
+        const guildConfig = await this.fetch(gID);
+        if (!guildConfig) {
+            return false;
+        }
+
+        this.set(gID, guildConfig);
+        return true;
+    }
 }
 
 export default GuildConfigsCache;

@@ -37,4 +37,12 @@ export declare class GuildConfigCache extends Store<GuildConfig> {
      * @memberof GuildConfigsCache
      */
     public fetch(gID: string): Promise<GuildConfig|null>;
+    /**
+     * Refresh the element by supressing it, fetching and caching it again
+     *
+     * @param gID
+     * @returns Whether it worked
+     * @memberof GuildConfigsCache
+     */
+    public refresh(gID: string): Promise<boolean>
 }
