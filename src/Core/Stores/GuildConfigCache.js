@@ -52,7 +52,7 @@ class GuildConfigsCache extends Store {
         let guildConfig = this.get(key);
         if (!guildConfig) {
             try {
-                guildConfig = await this.fetchGuildConf(key);
+                guildConfig = await this.fetch(key);
             } catch (err) {
                 throw new AxonError(`Cannot retrieve guildConfig from the DB: Guild: ${key}\n${err.stack}`, 'AxonClient', 'GuildConfigsCache');
             }
@@ -68,7 +68,7 @@ class GuildConfigsCache extends Store {
      * @returns {Promise<GuildConfig|null>} Guild schema from the DB / Error
      * @memberof GuildConfigsCache
      */
-    async fetchGuildConf(gID) {
+    async fetch(gID) {
         try {
             let guildConfig = await this._axon.DBProvider.fetchGuild(gID);
             if (!guildConfig) {
