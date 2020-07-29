@@ -5,6 +5,9 @@
  * @typedef {import('../../Database/ADBProvider').default} ADBProvider
  * @typedef {import('../Models/GuildConfig').default} GuildConfig
  * @typedef {import('../Models/AxonConfig').default} AxonConfig
+ * @typedef {{
+ * Utils: Utils, DBProvider: ADBProvider, AxonConfig: AxonConfig, GuildConfig: GuildConfig, DBLocation: String
+ * }} Extensions
  */
 
 import Utils from '../../Utility/Utils';
@@ -75,6 +78,7 @@ class ClientInitialiser {
      * Returns uninstantiated classes without logger. These values should then be instantiated
      * @param {AxonClient} axon - AxonClient
      * @param {AxonOptions} axonOptions - AxonOptions
+     * @returns {Extensions} extensions
      */
     static initExtensions(axon, axonOptions) {
         const extensions = {};

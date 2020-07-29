@@ -48,6 +48,9 @@ import { WEBHOOK_TYPES, LOG_LEVELS, WEBHOOK_TO_COLOR, DEBUG_FLAGS } from './Util
  * @typedef {import('./Core/Command/CommandEnvironment').default} CommandEnvironment
  * @typedef {import(./Libraries/definitions/LibraryInterface).default} LibraryInterface
  * @typedef {import('./Core/Models/AxonConfig').default} AxonConfig
+ * @typedef {{
+ * Utils: Utils, DBProvider: ADBProvider, AxonConfig: AxonConfig, GuildConfig: GuildConfig, DBLocation: String
+ * }} Extensions
  */
 
 /**
@@ -74,6 +77,7 @@ import { WEBHOOK_TYPES, LOG_LEVELS, WEBHOOK_TO_COLOR, DEBUG_FLAGS } from './Util
  * @prop {AxonUtils} axonUtils - Util methods (AxonCore)
  * @prop {Utils} utils - Utils methods (general)
  * @prop {ADBProvider} DBProvider - The DBProvider instance
+ * @prop {Extensions} extensions - AxonCore extensions
  * @prop {Object} _configs - configs (webhooks, template, custom)
  * @prop {Object.<string, {id: String, token: String}>} _configs.webhooks - Webhooks configs with all webhooks id and tokens
  * @prop {{ embeds: Object.<string, Number>, emotes: Object.<string, String> }} _configs.template - Template config
