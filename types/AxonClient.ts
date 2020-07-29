@@ -1,11 +1,11 @@
 import { EventEmitter } from 'events';
 import {
-    AxonConfs, AxonParams, Info, AxonInfo, ALogger, AxonUtils, LibClient, LibraryInterface, Utils, ADBProvider, ModuleRegistry, CommandRegistry, ListenerRegistry,
-    EventManager, GuildConfigCache, AxonConfig, ModuleLoader, CommandDispatcher, MessageManager, AxonStaffIDs, AxonOptions, Collection, AHandler, Listener, Resolver,
-    Webhooks, AxonTemplate, Module, Command, LOG_LEVELS, Ctx, LibMessage, GuildConfig, DEBUG_FLAGS, Executor, ExtentionInitReturn,
+    AxonConfs, AxonParams, Info, AxonInfo, ALogger, AxonUtils, LibClient, LibraryInterface, Utils, ADBProvider, ModuleRegistry, CommandRegistry, ListenerRegistry, EventManager,
+    GuildConfigCache, AxonConfig, ModuleLoader, CommandDispatcher, MessageManagerType, AxonStaffIDs, AxonOptions, Collection, AHandler, Listener, Resolver, Webhooks,
+    AxonTemplate, Module, Command, LOG_LEVELS, Ctx, LibMessage, GuildConfig, DEBUG_FLAGS, Executor, ExtentionInitReturn, AxonLanguageResponse, DefaultLanguageResponse, LibDMChannel,
 } from './';
 
-export declare class AxonClient extends EventEmitter {
+export declare class AxonClient<L extends AxonLanguageResponse = DefaultLanguageResponse> extends EventEmitter {
     /** Configs (webhooks, template, custom) */
     private _configs: AxonConfs;
     /** Bot settings */
@@ -49,7 +49,7 @@ export declare class AxonClient extends EventEmitter {
     public dispatcher: CommandDispatcher;
     public executor: Executor;
     /** Message manager object accessible with `<AxonClient>.l` */
-    private _messageManager: MessageManager;
+    private _messageManager: MessageManagerType<L>;
 
     /** Bot Staff (owners, admins, +...) */
     public staff: AxonStaffIDs;
@@ -119,7 +119,7 @@ export declare class AxonClient extends EventEmitter {
      * @readonly
      * @memberof AxonClient
      */
-    readonly l: MessageManager;
+    readonly l: MessageManagerType<L>;
 
     /**
      * Get a module from AxonClient with the given label.
@@ -221,7 +221,7 @@ export declare class AxonClient extends EventEmitter {
      *
      * @memberof AxonClient
      */
-    public sendFullHelp(msg: LibMessage, guildConfig?: GuildConfig): Promise<void>;
+    public sendFullHelp(msg: LibMessage<LibDMChannel>, guildConfig?: GuildConfig): Promise<void>;
     /**
      * Register a guild prefix.
      * Shortcut to guildConfig.registerPrefix()

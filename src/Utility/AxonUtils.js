@@ -172,8 +172,8 @@ class AxonUtils {
      * @memberof AxonUtils
      */
     isBotStaff(uID) {
-        for (const rank in this.axon.staff) {
-            if (rank.find(u => u === uID) ) {
+        for (const rank of Object.values(this.axon.staff) ) {
+            if (rank.includes(uID) ) {
                 return true;
             }
         }
@@ -257,7 +257,7 @@ class AxonUtils {
      * @memberof AxonUtils
      */
     sendDM(user, content, options = {} ) {
-        this.library.user.getDM(user)
+        return this.library.user.getDM(user)
             .then(chan => this.sendMessage(chan, content, options) )
             .catch(err => {
                 this.logger.verbose(`DM disabled/Bot blocked [${user.username}#${user.discriminator} - ${user.id}]!`);

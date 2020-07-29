@@ -1,6 +1,6 @@
 import {
-    AxonClient, LibClient, ALogger, Resolver, AxonUtils, Utils, MessageManager, Module, Command,
-    LOG_LEVELS, Ctx, LibUser, AxonMSGCont, AxonMSGOpt, LibMessage, LibTextableChannel, CommandResponse,
+    AxonClient, LibClient, ALogger, Resolver, AxonUtils, Utils, MessageManager, Module, Command, LOG_LEVELS,
+    Ctx, LibUser, AxonMSGCont, AxonMSGOpt, LibMessage, LibTextableChannel, CommandResponse, LibDMChannel,
 } from '../';
 
 /**
@@ -112,7 +112,7 @@ export declare class Base {
      * @returns Message Object
      * @memberof Base
      */
-    public sendDM(user: LibUser, content: AxonMSGCont, options?: AxonMSGOpt): Promise<LibMessage|void>;
+    public sendDM(user: LibUser, content: AxonMSGCont, options?: AxonMSGOpt): Promise<LibMessage<LibDMChannel>|void>;
     /**
      * Send a message.
      * Check for bot permissions + message/embed length
@@ -127,7 +127,7 @@ export declare class Base {
      * @returns Message Object
      * @memberof Base
      */
-    public sendMessage(channel: LibTextableChannel, content: AxonMSGCont, options?: AxonMSGOpt): Promise<LibMessage>;
+    public sendMessage<T extends LibTextableChannel>(channel: T, content: AxonMSGCont, options?: AxonMSGOpt): Promise<LibMessage<T>>;
     /**
      * Edit a message
      * Check for bot permissions + message embed/length
@@ -137,7 +137,7 @@ export declare class Base {
      * @returns Message Object
      * @memberof Base
      */
-    public editMessage(message: LibMessage, content: AxonMSGCont): Promise<LibMessage>;
+    public editMessage<T extends LibTextableChannel>(message: LibMessage<T>, content: AxonMSGCont): Promise<LibMessage<T>>;
     /**
      * Send a success message. If the content is a string, suffix the success emote to the content.
      * Check for sendMessage perms.

@@ -12,7 +12,7 @@ export { AxonError } from './Error/AxonError';
 export { NoAbstractInstanceException } from './Error/NoAbstractInstanceException';
 export { NotImplementedException } from './Error/NotImplementedException';
 
-export { MessageManager } from './Langs/MessageManager';
+export { MessageManager, MessageManagerType } from './Langs/MessageManager';
 export { MessageParser } from './Langs/MessageParser';
 export { TranslationManager } from './Langs/TranslationManager';
 
@@ -35,7 +35,7 @@ export {
     ModuleInfo, ModuleData, AxonJSON, GuildJSON, AConfig, AxonConfigRaw, GConfig, GuildConfigRaw, CommandInfo,
     ACommandOptions, CommandPerms, CommandData, AxonTemplate, ListenerInfo, ListenerData, APIAxonMSGCont, AxonMSGCont, AxonMSGOpt, PermissionObject,
     Ctx, EmbedFields, EmbedAuthor, EmbedThumbnail, EmbedImage, EmbedFooter, EmbedData, PromptOptions, PromptOptionsData, CollectorOptions,
-    AxonOptionsSettings, AOptionsSettings, AxonLanguageResponse, Languages, AxonOptionsBase, WebhookConfig, Webhooks, AxonOptionsPrefixes,
+    AxonOptionsSettings, AOptionsSettings, AxonLanguageResponse, DefaultLanguageResponse, Languages, AxonOptionsBase, WebhookConfig, Webhooks, AxonOptionsPrefixes,
     AxonOptionsInfo, AxonOptionsStaff, AxonOptionsExtensions, AxonConfs, AxonParams, Info, AxonInfo, AxonStaffIDs, LibraryInterfaceStructs, PresenceGame,
     RawAttachment, RawUser, WebhookResponse, DjsContent, DjsWebhookContent, DjsPresenceGame, ErisContent, ErisWebhookContent, ErisPresenceGame,
     CommandEnvironmentParams, CommandEnvironmentProps, CollectorContainer, Timeout, ExtentionInitReturn,

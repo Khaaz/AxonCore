@@ -1,9 +1,9 @@
 import {
-    Message, Member, Client, Guild, User, TextableChannel, Role, Channel, PrivateChannel, Permission, PermissionOverwrite, AllowedMentions,
+    Message, Member, Client, Guild, User, TextableChannel, Role, Channel, PrivateChannel, Permission, PermissionOverwrite, AllowedMentions, Textable,
     // @ts-ignore
 } from 'eris';
 
-declare type LibMessage = Message;
+declare type LibMessage<T extends Textable = LibTextableChannel> = Message<T>;
 declare type LibMember = Member;
 declare type LibClient = Client;
 declare type LibGuild = Guild;

@@ -1,6 +1,6 @@
 import {
     AxonClient, LibClient, AxonTemplate, ALogger, Utils, LibraryInterface, EmbedData, LibMember,
-    GuildConfig, LibGuild, LibUser, AxonMSGCont, AxonMSGOpt, LibTextableChannel, LibMessage,
+    GuildConfig, LibGuild, LibUser, AxonMSGCont, AxonMSGOpt, LibTextableChannel, LibMessage, LibDMChannel,
 } from '../';
 
 /**
@@ -147,7 +147,7 @@ export declare class AxonUtils {
      * @returns Message Object
      * @memberof AxonUtils
      */
-    public sendDM(user: LibUser, content: AxonMSGCont, options?: AxonMSGOpt): Promise<LibMessage>;
+    public sendDM(user: LibUser, content: AxonMSGCont, options?: AxonMSGOpt): Promise<LibMessage<LibDMChannel>>;
     /**
      * Send a message.
      * Checks for bot permissions + message/embed length.
@@ -162,7 +162,7 @@ export declare class AxonUtils {
      * @returns Message Object
      * @memberof AxonUtils
      */
-    public sendMessage(channel: LibTextableChannel, content: AxonMSGCont, options?: AxonMSGOpt): Promise<LibMessage>;
+    public sendMessage<T extends LibTextableChannel>(channel: T, content: AxonMSGCont, options?: AxonMSGOpt): Promise<LibMessage<T>>;
     /**
      * Edit a message.
      * Checks for bot permissions + message embed/length.
@@ -172,7 +172,7 @@ export declare class AxonUtils {
      * @returns Message Object
      * @memberof AxonUtils
      */
-    public editMessage(message: LibMessage, content: AxonMSGCont): Promise<LibMessage>;
+    public editMessage<T extends LibTextableChannel>(message: LibMessage<T>, content: AxonMSGCont): Promise<LibMessage<T>>;
 
     /**
      * Enables or disables a module globally.
