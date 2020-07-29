@@ -16,7 +16,7 @@ export declare class GuildConfigCache extends Store<GuildConfig> {
      *
      * @memberof GuildConfigsCache
      */
-    constructor(axonClient: AxonClient);
+    constructor(axonClient: AxonClient, limit: number);
     /**
      * Returns the cache
      * @readonly

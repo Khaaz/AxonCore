@@ -23,10 +23,11 @@ class GuildConfigsCache extends Store {
      * Creates an instance of GuildConfigsCache.
      *
      * @param {AxonClient} axonClient
+     * @param {Number} limit - The limit of item in the LRUCache
      * @memberof GuildConfigsCache
      */
-    constructor(axonClient) {
-        super(new LRUCache(1000, { base: axonClient._guildConfig } ) );
+    constructor(axonClient, limit) {
+        super(new LRUCache(limit || 1000, { base: axonClient._guildConfig } ) );
         this._axon = axonClient;
     }
 
