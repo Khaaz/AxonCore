@@ -131,7 +131,7 @@ class CommandDispatcher {
         if (!command) { // command doesn't exist or not globally enabled
             return;
         }
-        env.setCommand(command);
+        env.setCommand(command, label);
         env.resolveArgs(null, args.join(' ') );
 
         /* Send help for the resolved command */
