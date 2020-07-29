@@ -17,6 +17,7 @@ import { COMMAND_EXECUTION_TYPES } from '../../Utility/Constants/AxonEnums';
  * @prop {GuildConfig} guildConfig - The GuildConfig data-structure with all DB saved settings
  * @prop {String} prefix - The prefix used for this command
  * @prop {String} command - The full label of the command being executed
+ * @prop {String} usedCommandLabel - The used label of the command being executed
  * @prop {COMMAND_EXECUTION_TYPES} executionType - Execution type: admin, owner, regular
  */
 class CommandEnvironment {
@@ -40,6 +41,7 @@ class CommandEnvironment {
         this.prefix = data.prefix || null;
 
         this.command = data.command !== undefined ? data.command.fullLabel : null;
+        this.usedLabel = null;
 
         this.guildConfig = data.guildConfig || null;
         
@@ -96,11 +98,13 @@ class CommandEnvironment {
      * Set the command label from the command object
      *
      * @param {Command} command
+     * @param {String} usedLabel
      * @returns {CommandEnvironment} This CommandEnvironment
      * @memberof CommandEnvironment
      */
-    setCommand(command) {
+    setCommand(command, usedLabel) {
         this.command = command.fullLabel;
+        this.usedLabel = usedLabel;
         return this;
     }
 
