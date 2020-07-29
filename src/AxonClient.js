@@ -109,6 +109,13 @@ class AxonClient extends EventEmitter {
      */
     constructor(botClient, axonOptions = {}, modules = {} ) {
         super();
+
+        if (this.constructor === AxonClient) {
+            for (const modification of AxonClient.modifications.pre) {
+                modification.call(this);
+            }
+        }
+
         axonOptions.logo ? axonOptions.logo(packageJSON.version) : logo(packageJSON.version);
 
         this._configs = {
@@ -204,6 +211,12 @@ class AxonClient extends EventEmitter {
 
         /* Additional loading / properties */
         this.onInit();
+
+        if (this.constructor === AxonClient) {
+            for (const modification of AxonClient.modifications.post) {
+                modification.call(this);
+            }
+        }
 
         /* Load modules */
         console.log(' ');
@@ -651,7 +664,40 @@ class AxonClient extends EventEmitter {
     [util.inspect.custom]() {
         return Base.prototype[util.inspect.custom].call(this);
     }
+
+    /**
+     * Registers a modification to be loaded in the constructor
+     *
+     * @param {Object} mod
+     * @returns {AxonClient}
+     * @memberof AxonClient
+     * @static
+     */
+    static registerModification(mod) {
+        const preLoadMod = mod[AxonClient.modification.pre];
+        const postLoadMod = mod[AxonClient.modification.post];
+        if ( (typeof preLoadMod !== 'function') || (typeof postLoadMod !== 'function') ) {
+            throw new TypeError('The provided modification do not included any mod hooks');
+        }
+        if (preLoadMod) {
+            AxonClient.modifications.pre.add(preLoadMod);
+        }
+        if (postLoadMod) {
+            AxonClient.modifications.post.add(postLoadMod);
+        }
+        return AxonClient;
+    }
 }
+
+AxonClient.modification = {
+    pre: Symbol('AxonClientModificationPre'),
+    post: Symbol('AxonClientModificationPost'),
+};
+
+AxonClient.modifications = {
+    pre: new Set(),
+    post: new Set(),
+};
 
 /**
  * Fired when a debug message needs to be sent

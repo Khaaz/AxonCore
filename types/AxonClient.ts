@@ -247,4 +247,27 @@ export declare class AxonClient extends EventEmitter {
      * @memberof AxonClient
      */
     toJSON(): object;
+
+    public static readonly modification: {
+        readonly pre: unique symbol;
+        readonly post: unique symbol;
+    };
+
+	public static readonly modifications: {
+        pre: Set<(this: AxonClient) => void>;
+        post: Set<(this: AxonClient) => void>;
+    };
+
+	/**
+     * Registers a modification to be loaded in the constructor
+     *
+     * @memberof AxonClient
+     * @static
+     */
+	public static registerModification(mod: typeof Modification): typeof AxonClient;
+}
+
+export abstract class Modification {
+    static [AxonClient.modification.pre]: (this: AxonClient) => void;
+    static [AxonClient.modification.post]: (this: AxonClient) => void;
 }
