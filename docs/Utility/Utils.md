@@ -35,7 +35,7 @@
         * [.axon](#Utils+axon) : <code>AxonClient</code>
         * [.bot](#Utils+bot) : <code>BotClient</code>
         * [.library](#Utils+library) : <code>LibraryInterface</code>
-        * [.splitMessage(content)](#Utils+splitMessage) ⇒ <code>Array.&lt;String&gt;</code> \| <code>String</code>
+        * [.splitMessage(content, [length])](#Utils+splitMessage) ⇒ <code>Array.&lt;String&gt;</code>
         * [.getPrefix(msg)](#Utils+getPrefix) ⇒ <code>Promise.&lt;String&gt;</code>
         * [.getRoles(guild, member)](#Utils+getRoles) ⇒ <code>Array.&lt;Role&gt;</code>
         * [.getHighestRole(guild, member)](#Utils+getHighestRole) ⇒ <code>Role</code>
@@ -89,16 +89,17 @@ Returns the LibraryInterface instance
 **Read only**: true  
 <a name="Utils+splitMessage"></a>
 
-### utils.splitMessage(content) ⇒ <code>Array.&lt;String&gt;</code> \| <code>String</code>
+### utils.splitMessage(content, [length]) ⇒ <code>Array.&lt;String&gt;</code>
 Split the given content (String), according to correct linebreaks.
-Split at 1900 characters.
+Split at default 1900 characters.
 
 **Kind**: instance method of [<code>Utils</code>](#Utils)  
-**Returns**: <code>Array.&lt;String&gt;</code> \| <code>String</code> - The array of content string splitted or the original String  
+**Returns**: <code>Array.&lt;String&gt;</code> - The array of content string splitted  
 
 | Param | Type |
 | --- | --- |
 | content | <code>String</code> | 
+| [length] | <code>Number</code> | 
 
 <a name="Utils+getPrefix"></a>
 

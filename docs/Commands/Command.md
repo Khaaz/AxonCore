@@ -45,8 +45,6 @@
     * [new Command()](#new_Command_new)
     * _instance_
         * [.module](#Command+module) : <code>Module</code>
-        * [.template](#Command+template) : [<code>AxonTemplate</code>](#AxonTemplate)
-        * [.library](#Command+library) : <code>LibraryInterface</code>
         * [.fullLabel](#Command+fullLabel) : <code>String</code>
         * [.init()](#Command+init) ⇒
         * [._init()](#Command+_init) ⇒ <code>Boolean</code>
@@ -71,20 +69,6 @@ AxonCore - Command constructor
 
 ### command.module : <code>Module</code>
 Returns the parent module instance
-
-**Kind**: instance property of [<code>Command</code>](#Command)  
-**Read only**: true  
-<a name="Command+template"></a>
-
-### command.template : [<code>AxonTemplate</code>](#AxonTemplate)
-Returns the template object
-
-**Kind**: instance property of [<code>Command</code>](#Command)  
-**Read only**: true  
-<a name="Command+library"></a>
-
-### command.library : <code>LibraryInterface</code>
-Returns the library Interface instance
 
 **Kind**: instance property of [<code>Command</code>](#Command)  
 **Read only**: true  

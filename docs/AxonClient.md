@@ -1,3 +1,17 @@
+## Classes
+
+<dl>
+<dt><a href="#AxonClient">AxonClient</a> ⇐ <code>EventEmitter</code></dt>
+<dd></dd>
+</dl>
+
+## Typedefs
+
+<dl>
+<dt><a href="#Extensions">Extensions</a> : <code>Object</code></dt>
+<dd></dd>
+</dl>
+
 <a name="AxonClient"></a>
 
 ## AxonClient ⇐ <code>EventEmitter</code>
@@ -24,6 +38,7 @@
 | axonUtils | <code>[Axon[Utils](Utility/Utils)](Utility/Axon[Utils](Utility/Utils))</code> | Util methods (AxonCore) |
 | utils | <code>[Utils](Utility/Utils)</code> | Utils methods (general) |
 | DBProvider | <code>[ADBProvider](Database/ADBProvider)</code> | The DBProvider instance |
+| extensions | [<code>Extensions</code>](#Extensions) | AxonCore extensions |
 | _configs | <code>Object</code> | configs (webhooks, template, custom) |
 | _configs.webhooks | <code>Object.&lt;string, {id: String, token: String}&gt;</code> | Webhooks configs with all webhooks id and tokens |
 | _configs.template | <code>Object</code> | Template config |
@@ -419,3 +434,7 @@ Creates an AxonClient instance.
 | [axonOptions] | <code>[AxonOptions](Core/AxonOptions)</code> | <code>{}</code> | Axon options |
 | [modules] | <code>Object.&lt;string, [Module](Modules/Module)&gt;</code> | <code>{}</code> | Object with all modules to add in the bot |
 
+<a name="Extensions"></a>
+
+## Extensions : <code>Object</code>
+**Kind**: global typedef  

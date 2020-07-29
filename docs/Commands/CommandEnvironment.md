@@ -13,6 +13,7 @@
 | guildConfig | <code>[GuildConfig](Core/GuildConfig)</code> | The GuildConfig data-structure with all DB saved settings |
 | prefix | <code>String</code> | The prefix used for this command |
 | command | <code>String</code> | The full label of the command being executed |
+| usedCommandLabel | <code>String</code> | The used label of the command being executed |
 | executionType | <code>COMMAND\_EXECUTION\_TYPES</code> | Execution type: admin, owner, regular |
 
 
@@ -23,7 +24,7 @@
         * [.isOwner](#CommandEnvironment+isOwner) : <code>Boolean</code>
         * [.setPrefix(prefix)](#CommandEnvironment+setPrefix) ⇒ <code>[CommandEnvironment](Commands/CommandEnvironment)</code>
         * [.setGuildConfig(guildConfig)](#CommandEnvironment+setGuildConfig) ⇒ <code>[CommandEnvironment](Commands/CommandEnvironment)</code>
-        * [.setCommand(command)](#CommandEnvironment+setCommand) ⇒ <code>[CommandEnvironment](Commands/CommandEnvironment)</code>
+        * [.setCommand(command, usedLabel)](#CommandEnvironment+setCommand) ⇒ <code>[CommandEnvironment](Commands/CommandEnvironment)</code>
         * [.resolveArgs(parser, args)](#CommandEnvironment+resolveArgs)
     * _static_
         * [.CommandEnvironment](#CommandEnvironment.CommandEnvironment)
@@ -74,7 +75,7 @@ Set the guildConfig
 
 <a name="CommandEnvironment+setCommand"></a>
 
-### commandEnvironment.setCommand(command) ⇒ <code>[CommandEnvironment](Commands/CommandEnvironment)</code>
+### commandEnvironment.setCommand(command, usedLabel) ⇒ <code>[CommandEnvironment](Commands/CommandEnvironment)</code>
 Set the command label from the command object
 
 **Kind**: instance method of [<code>CommandEnvironment</code>](#CommandEnvironment)  
@@ -83,6 +84,7 @@ Set the command label from the command object
 | Param | Type |
 | --- | --- |
 | command | <code>[Command](Commands/Command)</code> | 
+| usedLabel | <code>String</code> | 
 
 <a name="CommandEnvironment+resolveArgs"></a>
 
