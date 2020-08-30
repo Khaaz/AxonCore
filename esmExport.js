@@ -82,6 +82,7 @@ export { default as FunctionQueue } from './src/Utility/External/FunctionQueue';
 export { default as AutoQueue } from './src/Utility/External/AutoQueue';
 export { default as AsyncQueue } from './src/Utility/External/AsyncQueue';
 export { default as LRUCache } from './src/Utility/External/LRUCache';
+export { default as BitwiseHandler } from './src/Utility/External/BitwiseHandler';
 
 // == Loggers ==
 export { default as ALogger } from './src/Loggers/ALogger';

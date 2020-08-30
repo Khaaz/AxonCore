@@ -81,7 +81,7 @@ export {
 } from './Utility/Constants/AxonEnums';
 export {
     DiscordEnums, DISCORD_GATEWAY_EVENTS, DISCORD_PERMISSIONS, PERMISSIONS_NUMBERS,
-    EMBED_LIMITS, CHANNEL_TYPES, MESSAGE_TYPES, CLIENT_STATUS_TYPES,
+    EMBED_LIMITS, CHANNEL_TYPES, MESSAGE_TYPES, CLIENT_STATUS_TYPES, PUBLIC_FLAGS,
 } from './Utility/Constants/DiscordEnums';
 
 export { Embed } from './Utility/Discord/Embed';
@@ -99,6 +99,7 @@ export { LRUCache } from './Utility/External/LRUCache';
 export { Queue } from './Utility/External/Queue';
 export { SortedList } from './Utility/External/SortedList';
 export { Stack } from './Utility/External/Stack';
+export { BitwiseHandler } from './Utility/External/BitwiseHandler';
 
 export { AxonUtils } from './Utility/AxonUtils';
 export { Collection } from './Utility/Collection';
