@@ -25,7 +25,7 @@ export default class BitwiseHandler {
      */
     has(enumName, bits, negative) {
         const hasEnum = !!(bits & this.enums[enumName] );
-        return (negative && !hasEnum) || hasEnum;
+        return (negative && !hasEnum) || (!negative && hasEnum);
     }
 
     /**
@@ -35,7 +35,7 @@ export default class BitwiseHandler {
      * @returns Array of enums as strings
      */
     hasArray(bits, negative) {
-        const enums = Object.keys(this.enums).filter(key => (negative && !(bits & this.enums[key] ) ) || bits & this.enums[key] );
+        const enums = Object.keys(this.enums).filter(key => (negative && !(bits & this.enums[key] ) ) || (!negative && (bits & this.enums[key] ) ) );
         return enums;
     }
 
