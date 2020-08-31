@@ -60,7 +60,7 @@ export declare class BitwiseHandler {
     /**
      * Turn JSON enums to bits
      * @param {Object} json JSON object to turn into bits
-     * @returns {number} Bits of true enums
+     * @returns {Object} Object of enums true and false
      */
-    fromJSON(json: object): number;
+    fromJSON(json: object): object;
 }
