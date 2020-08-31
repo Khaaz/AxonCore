@@ -56,4 +56,11 @@ export declare class BitwiseHandler {
      * @returns {Object} JSON object showing what enums bits do or do not have
      */
     json(bits: number, negative?: boolean): object;
+
+    /**
+     * Turn JSON enums to bits
+     * @param {Object} json JSON object to turn into bits
+     * @returns {number} Bits of true enums
+     */
+    fromJSON(json: object): number;
 }

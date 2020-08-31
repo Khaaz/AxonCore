@@ -76,4 +76,20 @@ export default class BitwiseHandler {
         }
         return enums;
     }
+
+    /**
+     * Turn JSON enums to bits
+     * @param {Object} json JSON object to turn into bits
+     * @returns {number} Bits of true enums
+     */
+    fromJSON(json) {
+        let bits = 0;
+        const { enums } = this;
+        Object.entries(json).forEach( ( [key, value] ) => {
+            if (value && enums[key] ) {
+                bits |= enums[key];
+            }
+        } );
+        return bits;
+    }
 }
