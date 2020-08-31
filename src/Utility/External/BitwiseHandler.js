@@ -62,12 +62,17 @@ export default class BitwiseHandler {
     /**
      * Turn bits into a JSON of enum keys and boolean values
      * @param {number} bits Bits to turn into JSON entries
+     * @param {boolean} [negative] Whether or not to reverse the checks
      * @returns {Object} JSON object showing what enums bits do or do not have
      */
-    json(bits) {
+    json(bits, negative) {
         const enums = {};
         for (const [key, value] of Object.entries(this.enums) ) {
-            enums[key] = !!(bits & value);
+            if (!negative) {
+                enums[key] = !!(bits & value);
+            } else {
+                enums[key] = !(bits & value);
+            }
         }
         return enums;
     }

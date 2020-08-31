@@ -52,7 +52,8 @@ export declare class BitwiseHandler {
     /**
      * Turn bits into a JSON of enum keys and boolean values
      * @param {number} bits Bits to turn into JSON entries
+     * @param {boolean} [negative] Whether or not to reverse the checks
      * @returns {Object} JSON object showing what enums bits do or do not have
      */
-    json(bits: number): object;
+    json(bits: number, negative?: boolean): object;
 }
