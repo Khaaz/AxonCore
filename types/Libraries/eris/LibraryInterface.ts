@@ -14,9 +14,9 @@ export declare class ErisInterface extends LibraryInterface {
     public user: ErisUser;
     public member: ErisMember;
     public guild: ErisGuild;
-    // @ts-expect-error
+    // @ts-ignore
     public channel: ErisChannel;
-    // @ts-expect-error
+    // @ts-ignore
     public message: ErisMessage;
     public resolver: ErisResolver
     public client: ErisClient;
