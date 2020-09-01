@@ -386,7 +386,7 @@ class Command extends Base {
         } else if (this.permissions.serverMod) {
             perm = '`Server Mod`';
         } else if (this.permissions.author.needed.length > 0) {
-            perm = this.permissions.author.permissions.author
+            perm = this.permissions.author.needed
                 .map(p => `\`${this.library.enums.PERMISSIONS_NAMES[p]}\``)
                 .join(', ');
         }
