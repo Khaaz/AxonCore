@@ -201,6 +201,15 @@ export declare class Utils {
     public calculatePerms(data: PermissionObject): { allow: number; deny: number; };
 
     /**
+     * Calculate a users flags based off of the flags byte.
+     *
+     * @param {number} bits Bits to calculate for
+     * @returns {Array<string>} String array of flags given bits hold.
+     * @memberof Utils
+     */
+    calculateUserFlags(bits: number): string[];
+
+    /**
      * Wait for a specified amount of milliseconds..
      *
      * @returns Resolve after the delay is passed
