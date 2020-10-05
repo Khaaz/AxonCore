@@ -15,6 +15,7 @@ declare type LibChannel = Eris.Channel | Djs.Channel;
 declare type LibDMChannel = Eris.PrivateChannel | Djs.DMChannel;
 declare type LibPermission = Eris.Permission | Eris.PermissionOverwrite | Djs.PermissionOverwrites;
 declare type LibAllowedMentions = Eris.AllowedMentions | Djs.MessageMentionOptions;
+declare type LibEmoji = Eris.PartialEmoji | Djs.Emoji;
 
 export {
     LibMessage,
@@ -28,4 +29,5 @@ export {
     LibDMChannel,
     LibPermission,
     LibAllowedMentions,
+    LibEmoji,
 };

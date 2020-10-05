@@ -1,5 +1,5 @@
 import {
-    Message, GuildMember, Client, Guild, User, TextChannel, Role, Channel, DMChannel, PermissionOverwrites, MessageMentionOptions, NewsChannel,
+    Message, GuildMember, Client, Guild, User, TextChannel, Role, Channel, DMChannel, PermissionOverwrites, MessageMentionOptions, NewsChannel, Emoji,
     // @ts-ignore
 } from 'discord.js';
 
@@ -14,6 +14,7 @@ declare type LibChannel = Channel;
 declare type LibDMChannel = DMChannel;
 declare type LibPermission = PermissionOverwrites;
 declare type LibAllowedMentions = MessageMentionOptions;
+declare type LibEmoji = Emoji;
 
 export {
     LibMessage,
@@ -27,4 +28,5 @@ export {
     LibDMChannel,
     LibPermission,
     LibAllowedMentions,
+    LibEmoji,
 };

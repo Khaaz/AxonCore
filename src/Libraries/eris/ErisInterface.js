@@ -91,6 +91,22 @@ class ErisInterface extends LibraryInterface {
     getMessageDelete(func) {
         return (msg) => func(msg);
     }
+
+    getMessageReactionAdd(func) {
+        return (msg, emoji, userID) => func(msg, emoji, userID);
+    }
+
+    getMessageReactionRemove(func) {
+        return (msg, emoji, userID) => func(msg, emoji, userID);
+    }
+
+    getMessageReactionRemoveAll(func) {
+        return (msg) => func(msg);
+    }
+
+    getMessageReactionRemoveEmoji(func) {
+        return (msg, emoji) => func(msg, emoji);
+    }
 }
 
 export default ErisInterface;

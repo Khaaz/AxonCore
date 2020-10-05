@@ -9,6 +9,6 @@ export { DjsMember as Member } from './discordjs/Member';
 export { DjsMessage as Message } from './discordjs/Message';
 export { DjsResolver as Resolver } from './discordjs/Resolver';
 export {
-    LibMessage, LibMember, LibClient, LibGuild, LibUser, LibTextableChannel, LibRole, LibChannel, LibDMChannel, LibPermission, LibAllowedMentions,
+    LibMessage, LibMember, LibClient, LibGuild, LibUser, LibTextableChannel, LibRole, LibChannel, LibDMChannel, LibPermission, LibAllowedMentions, LibEmoji,
 } from './discordjs/types';
 export { DjsUser as User } from './discordjs/User';

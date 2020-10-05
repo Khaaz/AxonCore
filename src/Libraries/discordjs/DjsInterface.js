@@ -93,6 +93,22 @@ class DjsInterface extends LibraryInterface {
     getMessageDelete(func) {
         return (msg) => func(msg);
     }
+
+    getMessageReactionAdd(func) {
+        return (msgReaction, user) => func(msgReaction.message, msgReaction.emoji, user.id);
+    }
+
+    getMessageReactionRemove(func) {
+        return (msgReaction, user) => func(msgReaction.message, msgReaction.emoji, user.id);
+    }
+
+    getMessageReactionRemoveAll(func) {
+        return (msg) => func(msg);
+    }
+
+    getMessageReactionRemoveEmoji(func) {
+        return (msgReaction) => func(msgReaction.message, msgReaction.emoji);
+    }
 }
 
 export default DjsInterface;
