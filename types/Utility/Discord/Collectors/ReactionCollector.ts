@@ -10,7 +10,7 @@ import {
  * @class ReactionCollector
  * @extends EventEmitter
  */
-export declare class ReactionCollector extends Collector<LibMessage> { // {msg: Message, emoji: Emoji, userID: string}
+export declare class ReactionCollector extends Collector<{msg: LibMessage; emoji: LibEmoji; userID: string;}> {
     public options: ReactionCollectorOptions;
     public onMessageReactionAdd: (msg: LibMessage, emoji: LibEmoji, userID: string) => void;
     public onMessageReactionRemove: (msg: LibMessage, emoji: LibEmoji, userID: string) => void;
@@ -38,12 +38,12 @@ export declare class ReactionCollector extends Collector<LibMessage> { // {msg: 
      * const messages = await collector.run(msg.channel, { caseInsensitive: false });
      * @memberof ReactionCollector
      */
-    public run<T extends LibTextableChannel>(channel: T, options?: ReactionCollectorOptions): Promise<Map<string, LibMessage<T>>>; // {msg: Message, emoji: Emoji, userID: string}
+    public run<T extends LibTextableChannel>(message: LibMessage<T>, options?: ReactionCollectorOptions): Promise<Map<string, {msg: LibMessage<T>; emoji: LibEmoji; userID: string;}>>;
     /**
      * Get all CollectorContainers that will collect from this particular message
      * @memberof ReactionCollector
      */
-    public getCollectors<T extends LibTextableChannel>(message: LibMessage<T>): CollectorContainer<LibMessage<T>>[]; // {msg: Message, emoji: Emoji, userID: string}
+    public getCollectors<T extends LibTextableChannel>(message: LibMessage<T>): CollectorContainer<{msg: LibMessage<T>; emoji: LibEmoji; userID: string;}>[];
     /**
      * Function bound to messageReactionAdd event.
      * Collect the reaction for all collectors that responds to the criteria.
