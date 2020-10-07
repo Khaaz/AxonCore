@@ -1,5 +1,5 @@
 import {
-    Message, Member, Client, Guild, User, TextableChannel, Role, Channel, PrivateChannel, Permission, PermissionOverwrite, AllowedMentions, Textable,
+    Message, Member, Client, Guild, User, TextableChannel, Role, Channel, PrivateChannel, Permission, PermissionOverwrite, AllowedMentions, Textable, PartialEmoji,
     // @ts-ignore
 } from 'eris';
 
@@ -14,6 +14,7 @@ declare type LibChannel = Channel;
 declare type LibDMChannel = PrivateChannel;
 declare type LibPermission = Permission | PermissionOverwrite;
 declare type LibAllowedMentions = AllowedMentions;
+declare type LibEmoji = PartialEmoji;
 
 export {
     LibMessage,
@@ -27,4 +28,5 @@ export {
     LibDMChannel,
     LibPermission,
     LibAllowedMentions,
+    LibEmoji,
 };

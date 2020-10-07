@@ -18,7 +18,7 @@ export { TranslationManager } from './Langs/TranslationManager';
 
 export {
     Channel, Client, Enums, Guild, LibraryInterface, Member, Message, Resolver, User,
-    LibMessage, LibMember, LibClient, LibGuild, LibUser, LibTextableChannel, LibRole, LibChannel, LibDMChannel, LibPermission, LibAllowedMentions,
+    LibMessage, LibMember, LibClient, LibGuild, LibUser, LibTextableChannel, LibRole, LibChannel, LibDMChannel, LibPermission, LibAllowedMentions, LibEmoji,
     EVENTS, DISCORD_LIB_PERMISSIONS, PERMISSIONS, PERMISSIONS_NAMES,
 } from './Libraries';
 export { LibrarySelector } from './Libraries/LibrarySelector';
@@ -34,7 +34,7 @@ export { WinstonLogger } from './Loggers/WinstonLogger';
 export {
     ModuleInfo, ModuleData, AxonJSON, GuildJSON, AConfig, AxonConfigRaw, GConfig, GuildConfigRaw, CommandInfo,
     ACommandOptions, CommandPerms, CommandData, AxonTemplate, ListenerInfo, ListenerData, APIAxonMSGCont, AxonMSGCont, AxonMSGOpt, PermissionObject,
-    Ctx, EmbedFields, EmbedAuthor, EmbedThumbnail, EmbedImage, EmbedFooter, EmbedData, PromptOptions, PromptOptionsData, CollectorOptions,
+    Ctx, EmbedFields, EmbedAuthor, EmbedThumbnail, EmbedImage, EmbedFooter, EmbedData, PromptOptions, PromptOptionsData, CollectorOptions, ReactionCollectorOptions,
     AxonOptionsSettings, AOptionsSettings, AxonLanguageResponse, DefaultLanguageResponse, Languages, AxonOptionsBase, WebhookConfig, Webhooks, AxonOptionsPrefixes,
     AxonOptionsInfo, AxonOptionsStaff, AxonOptionsExtensions, AxonConfs, AxonParams, Info, AxonInfo, AxonStaffIDs, LibraryInterfaceStructs, PresenceGame,
     RawAttachment, RawUser, WebhookResponse, DjsContent, DjsWebhookContent, DjsPresenceGame, ErisContent, ErisWebhookContent, ErisPresenceGame,
