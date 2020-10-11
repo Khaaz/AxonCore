@@ -574,7 +574,7 @@ class AxonClient extends EventEmitter {
 
         let commandList = '';
 
-        for (const module of this.axon.moduleRegistry.registry.values() ) {
+        for (const module of this.moduleRegistry.registry.values() ) {
             const commands = module.commands.filter(c => c.permissions.canExecute(msg, guildConfig)[0] );
             if (commands.length > 0) {
                 commandList += `\n**${module.label}**\n${commands.map(c => `• \`${prefix}${c.label}\` → ${c.info.description}`).join('\n ')}\n`;
