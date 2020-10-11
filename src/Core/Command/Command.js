@@ -202,7 +202,7 @@ class Command extends Base {
 
         const userID = this.library.message.getAuthorID(msg);
         const channel = this.library.message.getChannel(msg);
-        let canExecute = ''
+        let canExecute = '';
         if (!guildConfig) { // DM EXECUTION
             if (this.options.isGuildOnly() ) { // guild only
                 return new CommandContext(this, msg, {
