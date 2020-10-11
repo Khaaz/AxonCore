@@ -573,14 +573,9 @@ class AxonClient extends EventEmitter {
             : this.template.embeds.help;
 
         let commandList = '';
-        let params = '';
-        if (guildConfig) {
-            params = (msg, guildConfig);
-        } else {
-            params = msg;
-        }
+
         for (const module of this.axon.moduleRegistry.registry.values() ) {
-            const commands = module.commands.filter(c => c.permissions.canExecute(params)[0] );
+            const commands = module.commands.filter(c => c.permissions.canExecute(msg, guildConfig)[0] );
             if (commands.length > 0) {
                 commandList += `\n**${module.label}**\n${commands.map(c => `• \`${prefix}${c.label}\` → ${c.info.description}`).join('\n ')}\n`;
             }
