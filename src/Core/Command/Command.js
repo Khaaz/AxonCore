@@ -202,12 +202,20 @@ class Command extends Base {
 
         const userID = this.library.message.getAuthorID(msg);
         const channel = this.library.message.getChannel(msg);
-
+        let canExecute = ''
         if (!guildConfig) { // DM EXECUTION
             if (this.options.isGuildOnly() ) { // guild only
                 return new CommandContext(this, msg, {
                     executed: false,
                     executionType: env.executionType,
+                } ).resolveAsync();
+            }
+            canExecute = this.permissions.canExecute(msg);
+            if (!canExecute[0] ) {
+                return new CommandContext(this, msg, {
+                    executed: false,
+                    executionType: env.executionType,
+                    executionState: COMMAND_EXECUTION_STATE.INVALID_PERMISSIONS_USER,
                 } ).resolveAsync();
             }
         } else { // REGULAR EXECUTION
