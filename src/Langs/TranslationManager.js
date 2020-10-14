@@ -70,7 +70,7 @@ class TranslationManager {
      * @memberof TranslationManager
      */
     getMessage(message, lang) {
-        return this.getMessages(lang)[message];
+        return this.getMessages(lang)[message] || this.getMessages(this.lang)[message];
     }
 }
 
