@@ -202,7 +202,7 @@ class Command extends Base {
 
         const userID = this.library.message.getAuthorID(msg);
         const channel = this.library.message.getChannel(msg);
-        let canExecute = '';
+
         if (!guildConfig) { // DM EXECUTION
             if (this.options.isGuildOnly() ) { // guild only
                 return new CommandContext(this, msg, {
@@ -210,14 +210,7 @@ class Command extends Base {
                     executionType: env.executionType,
                 } ).resolveAsync();
             }
-            canExecute = this.permissions.canExecute(msg);
-            if (!canExecute[0] ) {
-                return new CommandContext(this, msg, {
-                    executed: false,
-                    executionType: env.executionType,
-                    executionState: COMMAND_EXECUTION_STATE.INVALID_PERMISSIONS_USER,
-                } ).resolveAsync();
-            }
+            
         } else { // REGULAR EXECUTION
             /* Permissions checkers */
             if (!this.permissions._checkPermsBot(channel) ) {
@@ -228,21 +221,21 @@ class Command extends Base {
                     executionState: COMMAND_EXECUTION_STATE.INVALID_PERMISSIONS_BOT,
                 } ).resolveAsync();
             }
+        }
 
-            /* Permissions checkers */
-            if (!env.isAdmin) {
-                canExecute = this.permissions.canExecute(msg, guildConfig);
-                if (!canExecute[0] ) {
-                /* Sends invalid perm message in case of invalid perm [option enabled] */
-                    if (this.options.shouldSendInvalidPermissionMessage(guildConfig) ) {
-                        this.sendUserPerms(channel, this.library.message.getMember(msg), this.options.invalidPermissionMessageTimeout, canExecute[1] );
-                    }
-                    return new CommandContext(this, msg, {
-                        executed: false,
-                        executionType: env.executionType,
-                        executionState: COMMAND_EXECUTION_STATE.INVALID_PERMISSIONS_USER,
-                    } ).resolveAsync();
+        /* Permissions checkers */
+        if (!env.isAdmin) {
+            const canExecute = this.permissions.canExecute(msg, guildConfig);
+            if (!canExecute[0] ) {
+            /* Sends invalid perm message in case of invalid perm [option enabled] */
+                if (this.options.shouldSendInvalidPermissionMessage(guildConfig) ) {
+                    this.sendUserPerms(channel, this.library.message.getMember(msg), this.options.invalidPermissionMessageTimeout, canExecute[1] );
                 }
+                return new CommandContext(this, msg, {
+                    executed: false,
+                    executionType: env.executionType,
+                    executionState: COMMAND_EXECUTION_STATE.INVALID_PERMISSIONS_USER,
+                } ).resolveAsync();
             }
         }
 
