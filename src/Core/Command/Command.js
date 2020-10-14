@@ -210,9 +210,9 @@ class Command extends Base {
                     executionType: env.executionType,
                 } ).resolveAsync();
             }
-
         } else { // REGULAR EXECUTION
             /* Permissions checkers */
+            // eslint-disable-next-line no-lonely-if
             if (!this.permissions._checkPermsBot(channel) ) {
                 this.sendBotPerms(channel);
                 return new CommandContext(this, msg, {
