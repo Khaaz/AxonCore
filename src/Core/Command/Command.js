@@ -223,22 +223,6 @@ class Command extends Base {
             }
         }
 
-        /* Permissions checkers */
-        if (!env.isAdmin) {
-            const canExecute = this.permissions.canExecute(msg, guildConfig);
-            if (!canExecute[0] ) {
-            /* Sends invalid perm message in case of invalid perm [option enabled] */
-                if (this.options.shouldSendInvalidPermissionMessage(guildConfig) ) {
-                    this.sendUserPerms(channel, this.library.message.getMember(msg), this.options.invalidPermissionMessageTimeout, canExecute[1] );
-                }
-                return new CommandContext(this, msg, {
-                    executed: false,
-                    executionType: env.executionType,
-                    executionState: COMMAND_EXECUTION_STATE.INVALID_PERMISSIONS_USER,
-                } ).resolveAsync();
-            }
-        }
-
         if (env.isAdmin) {
             if (!env.isOwner && !this.axonUtils.isBotOwner(userID)
                 && this.permissions.staff.permissions.author.length > 0
@@ -250,6 +234,19 @@ class Command extends Base {
                 } ).resolveAsync();
             }
         } else {
+            const canExecute = this.permissions.canExecute(msg, guildConfig);
+            if (!canExecute[0] ) {
+            /* Sends invalid perm message in case of invalid perm [option enabled] */
+                if (guildConfig && this.options.shouldSendInvalidPermissionMessage(guildConfig) ) {
+                    this.sendUserPerms(channel, this.library.message.getMember(msg), this.options.invalidPermissionMessageTimeout, canExecute[1] );
+                }
+                return new CommandContext(this, msg, {
+                    executed: false,
+                    executionType: env.executionType,
+                    executionState: COMMAND_EXECUTION_STATE.INVALID_PERMISSIONS_USER,
+                } ).resolveAsync();
+            }
+
             /* Test for Cooldown - Send Cooldown message */
             const [timeLeft, shouldSendCDMessage] = this._cooldown.shouldCooldown(userID);
             if (timeLeft) {
