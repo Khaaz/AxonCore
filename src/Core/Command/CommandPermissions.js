@@ -194,6 +194,14 @@ class CommandPermissions {
      * @memberof Command
      */
     canExecute(msg, guildConf) {
+        // If DM
+        if (!guildConf) {
+            if (this.staff.needed.length && !this.staff.needed.includes(this.library.message.getAuthorID(msg)) ) {
+                return [false, 'Bot Staff'];
+            }
+            return [true];
+        }
+
         const member = this.library.message.getMember(msg);
         const channel = this.library.message.getChannel(msg);
         const guild = this.library.channel.getGuild(channel);
@@ -205,14 +213,6 @@ class CommandPermissions {
             || this._checkChannelBypass(channel)
             || this._checkGuildBypass(guild)
             || this._checkStaffBypass(member) ) {
-            return [true];
-        }
-
-        // If DM
-        if (!guildConf) {
-            if (this.staff.needed.length && !this.staff.needed.includes(msg.author.id) ) {
-                return [false, 'Invalid permissions'];
-            }
             return [true];
         }
 
