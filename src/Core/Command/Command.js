@@ -210,7 +210,7 @@ class Command extends Base {
                     executionType: env.executionType,
                 } ).resolveAsync();
             }
-            
+
         } else { // REGULAR EXECUTION
             /* Permissions checkers */
             if (!this.permissions._checkPermsBot(channel) ) {
@@ -234,6 +234,7 @@ class Command extends Base {
                 } ).resolveAsync();
             }
         } else {
+            /* Permissions checkers */
             const canExecute = this.permissions.canExecute(msg, guildConfig);
             if (!canExecute[0] ) {
             /* Sends invalid perm message in case of invalid perm [option enabled] */
