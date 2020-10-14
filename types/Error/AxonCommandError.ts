@@ -12,6 +12,7 @@ import { CommandContext } from '..';
  */
 export declare class AxonCommandError extends Error {
     public context: CommandContext;
+    public err: Error;
     readonly short: string;
     public message: string;
     public stack: string;

@@ -41,7 +41,7 @@ class ModuleRegistry extends ARegistry {
         module._init();
 
         this.add(label, module);
-        this.axon.logger.info(`[MOD] => Registered: [${module.label}] | Commands loaded -${module.commands.size}-`);
+        this.axon.logger.info(`[MOD] => Registered: [${module.label}] | Commands: ${module.commands.size} - Listeners: ${module.listeners.size}`);
     }
 
     /**

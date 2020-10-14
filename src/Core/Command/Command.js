@@ -212,6 +212,7 @@ class Command extends Base {
             }
         } else { // REGULAR EXECUTION
             /* Permissions checkers */
+            // eslint-disable-next-line no-lonely-if
             if (!this.permissions._checkPermsBot(channel) ) {
                 this.sendBotPerms(channel);
                 return new CommandContext(this, msg, {
@@ -219,22 +220,6 @@ class Command extends Base {
                     executionType: env.executionType,
                     executionState: COMMAND_EXECUTION_STATE.INVALID_PERMISSIONS_BOT,
                 } ).resolveAsync();
-            }
-
-            /* Permissions checkers */
-            if (!env.isAdmin) {
-                const canExecute = this.permissions.canExecute(msg, guildConfig);
-                if (!canExecute[0] ) {
-                /* Sends invalid perm message in case of invalid perm [option enabled] */
-                    if (this.options.shouldSendInvalidPermissionMessage(guildConfig) ) {
-                        this.sendUserPerms(channel, this.library.message.getMember(msg), this.options.invalidPermissionMessageTimeout, canExecute[1] );
-                    }
-                    return new CommandContext(this, msg, {
-                        executed: false,
-                        executionType: env.executionType,
-                        executionState: COMMAND_EXECUTION_STATE.INVALID_PERMISSIONS_USER,
-                    } ).resolveAsync();
-                }
             }
         }
 
@@ -249,6 +234,20 @@ class Command extends Base {
                 } ).resolveAsync();
             }
         } else {
+            /* Permissions checkers */
+            const canExecute = this.permissions.canExecute(msg, guildConfig);
+            if (!canExecute[0] ) {
+            /* Sends invalid perm message in case of invalid perm [option enabled] */
+                if (guildConfig && this.options.shouldSendInvalidPermissionMessage(guildConfig) ) {
+                    this.sendUserPerms(channel, this.library.message.getMember(msg), this.options.invalidPermissionMessageTimeout, canExecute[1] );
+                }
+                return new CommandContext(this, msg, {
+                    executed: false,
+                    executionType: env.executionType,
+                    executionState: COMMAND_EXECUTION_STATE.INVALID_PERMISSIONS_USER,
+                } ).resolveAsync();
+            }
+
             /* Test for Cooldown - Send Cooldown message */
             const [timeLeft, shouldSendCDMessage] = this._cooldown.shouldCooldown(userID);
             if (timeLeft) {
@@ -386,7 +385,7 @@ class Command extends Base {
         } else if (this.permissions.serverMod) {
             perm = '`Server Mod`';
         } else if (this.permissions.author.needed.length > 0) {
-            perm = this.permissions.author.permissions.author
+            perm = this.permissions.author.needed
                 .map(p => `\`${this.library.enums.PERMISSIONS_NAMES[p]}\``)
                 .join(', ');
         }

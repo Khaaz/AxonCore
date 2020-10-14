@@ -16,7 +16,7 @@ export declare class GuildConfigCache extends Store<GuildConfig> {
      *
      * @memberof GuildConfigsCache
      */
-    constructor(axonClient: AxonClient);
+    constructor(axonClient: AxonClient, limit: number);
     /**
      * Returns the cache
      * @readonly
@@ -36,5 +36,13 @@ export declare class GuildConfigCache extends Store<GuildConfig> {
      * @returns Guild schema from the DB / Error
      * @memberof GuildConfigsCache
      */
-    public fetchGuildConf(gID: string): Promise<GuildConfig|null>;
+    public fetch(gID: string): Promise<GuildConfig|null>;
+    /**
+     * Refresh the element by supressing it, fetching and caching it again
+     *
+     * @param gID
+     * @returns Whether it worked
+     * @memberof GuildConfigsCache
+     */
+    public refresh(gID: string): Promise<boolean>
 }

@@ -3,7 +3,10 @@ import util from 'util';
 
 import AxonError from '../Errors/AxonError';
 
-import { PERMISSIONS_NUMBERS } from './Constants/DiscordEnums';
+import { PERMISSIONS_NUMBERS, PUBLIC_FLAGS } from './Constants/DiscordEnums';
+import BitwiseHandler from './External/BitwiseHandler';
+
+const FlagHandler = new BitwiseHandler(PUBLIC_FLAGS);
 
 /**
  * @typedef {import('../AxonClient').default} AxonClient
@@ -357,6 +360,17 @@ class Utils {
             }
         }
         return { allow, deny };
+    }
+
+    /**
+     * Calculate a users flags based off of the flags byte.
+     *
+     * @param {number} bits Bits to calculate for
+     * @returns {Array<string>} String array of flags given bits hold.
+     * @memberof Utils
+     */
+    calculateUserFlags(bits) {
+        return FlagHandler.hasArray(bits);
     }
 
     // **** GENERAL **** //

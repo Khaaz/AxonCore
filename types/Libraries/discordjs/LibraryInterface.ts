@@ -14,7 +14,7 @@ export declare class DjsInterface extends LibraryInterface {
     public user: DjsUser;
     public member: DjsMember;
     public message: DjsMessage;
-    // @ts-expect-error
+    // @ts-ignore
     public channel: DjsChannel;
     public guild: DjsGuild;
     public resolver: DjsResolver;

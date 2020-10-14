@@ -63,8 +63,12 @@ class ClientInitialiser {
             if (!axonConf) {
                 axonConf = await axon.DBProvider.initAxon();
             }
-        } catch (err) {
-            axonConf = await axon.DBProvider.initAxon();
+        } catch (_) {
+            try {
+                axonConf = await axon.DBProvider.initAxon();
+            } catch (__) {
+                process.exit(1);
+            }
         }
         
         // eslint-disable-next-line require-atomic-updates

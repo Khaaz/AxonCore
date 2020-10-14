@@ -46,10 +46,9 @@
         },
 
         "emotes": {
-            "error": "<:error:426906693624922113>",
-            "success": "<:success:426906630463160330>",
+            "error": ":x:",
+            "success": ":white_check_mark:",
             "loading": "<a:loading:397911964988342282>",
-            "update": "<:update:373546418952077323>",
             "info": ":information_source:"
         }
     },

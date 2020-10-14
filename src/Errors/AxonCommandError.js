@@ -25,6 +25,7 @@ class AxonCommandError extends Error {
         super();
 
         this.context = commandContext;
+        this.err = err;
 
         const short = `[${this.context.moduleLabel}] - ${this.context.commandLabel}] | `
             + `${this.context.dm ? `DM: ${this.context.callerID}` : `Guild: ${this.context.guildID}`} / Channel: ${this.context.channelID}\n`;

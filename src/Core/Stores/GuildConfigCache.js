@@ -23,10 +23,11 @@ class GuildConfigsCache extends Store {
      * Creates an instance of GuildConfigsCache.
      *
      * @param {AxonClient} axonClient
+     * @param {Number} limit - The limit of item in the LRUCache
      * @memberof GuildConfigsCache
      */
-    constructor(axonClient) {
-        super(new LRUCache(1000, { base: axonClient._guildConfig } ) );
+    constructor(axonClient, limit) {
+        super(new LRUCache(limit || 1000, { base: axonClient.extensions.guildConfig } ) );
         this._axon = axonClient;
     }
 
@@ -52,11 +53,10 @@ class GuildConfigsCache extends Store {
         let guildConfig = this.get(key);
         if (!guildConfig) {
             try {
-                guildConfig = await this.fetchGuildConf(key);
+                guildConfig = await this.fetch(key);
             } catch (err) {
                 throw new AxonError(`Cannot retrieve guildConfig from the DB: Guild: ${key}\n${err.stack}`, 'AxonClient', 'GuildConfigsCache');
             }
-            this.set(key, guildConfig);
         }
         return guildConfig;
     }
@@ -68,17 +68,38 @@ class GuildConfigsCache extends Store {
      * @returns {Promise<GuildConfig|null>} Guild schema from the DB / Error
      * @memberof GuildConfigsCache
      */
-    async fetchGuildConf(gID) {
+    async fetch(gID) {
+        let guildConfig;
+        
         try {
-            let guildConfig = await this._axon.DBProvider.fetchGuild(gID);
+            guildConfig = await this._axon.DBProvider.fetchGuild(gID);
             if (!guildConfig) {
                 guildConfig = await this._axon.DBProvider.initGuild(gID);
             }
-            return guildConfig;
-        } catch (err) {
-            const newGuildConfig = await this._axon.DBProvider.initGuild(gID);
-            return newGuildConfig;
+        } catch (_) {
+            guildConfig = await this._axon.DBProvider.initGuild(gID);
         }
+
+        this.set(gID, guildConfig);
+        return guildConfig;
+    }
+
+    /**
+     * Refresh the element by supressing it, fetching and caching it again
+     *
+     * @param {String} gID
+     * @returns {Boolean} Whether it worked
+     * @memberof GuildConfigsCache
+     */
+    async refresh(gID) {
+        this.delete(gID);
+        const guildConfig = await this.fetch(gID);
+        if (!guildConfig) {
+            return false;
+        }
+
+        this.set(gID, guildConfig);
+        return true;
     }
 }
 

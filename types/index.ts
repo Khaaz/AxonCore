@@ -18,7 +18,7 @@ export { TranslationManager } from './Langs/TranslationManager';
 
 export {
     Channel, Client, Enums, Guild, LibraryInterface, Member, Message, Resolver, User,
-    LibMessage, LibMember, LibClient, LibGuild, LibUser, LibTextableChannel, LibRole, LibChannel, LibDMChannel, LibPermission, LibAllowedMentions,
+    LibMessage, LibMember, LibClient, LibGuild, LibUser, LibTextableChannel, LibRole, LibChannel, LibDMChannel, LibPermission, LibAllowedMentions, LibEmoji,
     EVENTS, DISCORD_LIB_PERMISSIONS, PERMISSIONS, PERMISSIONS_NAMES,
 } from './Libraries';
 export { LibrarySelector } from './Libraries/LibrarySelector';
@@ -34,7 +34,7 @@ export { WinstonLogger } from './Loggers/WinstonLogger';
 export {
     ModuleInfo, ModuleData, AxonJSON, GuildJSON, AConfig, AxonConfigRaw, GConfig, GuildConfigRaw, CommandInfo,
     ACommandOptions, CommandPerms, CommandData, AxonTemplate, ListenerInfo, ListenerData, APIAxonMSGCont, AxonMSGCont, AxonMSGOpt, PermissionObject,
-    Ctx, EmbedFields, EmbedAuthor, EmbedThumbnail, EmbedImage, EmbedFooter, EmbedData, PromptOptions, PromptOptionsData, CollectorOptions,
+    Ctx, EmbedFields, EmbedAuthor, EmbedThumbnail, EmbedImage, EmbedFooter, EmbedData, PromptOptions, PromptOptionsData, CollectorOptions, ReactionCollectorOptions,
     AxonOptionsSettings, AOptionsSettings, AxonLanguageResponse, DefaultLanguageResponse, Languages, AxonOptionsBase, WebhookConfig, Webhooks, AxonOptionsPrefixes,
     AxonOptionsInfo, AxonOptionsStaff, AxonOptionsExtensions, AxonConfs, AxonParams, Info, AxonInfo, AxonStaffIDs, LibraryInterfaceStructs, PresenceGame,
     RawAttachment, RawUser, WebhookResponse, DjsContent, DjsWebhookContent, DjsPresenceGame, ErisContent, ErisWebhookContent, ErisPresenceGame,
@@ -81,7 +81,7 @@ export {
 } from './Utility/Constants/AxonEnums';
 export {
     DiscordEnums, DISCORD_GATEWAY_EVENTS, DISCORD_PERMISSIONS, PERMISSIONS_NUMBERS,
-    EMBED_LIMITS, CHANNEL_TYPES, MESSAGE_TYPES, CLIENT_STATUS_TYPES,
+    EMBED_LIMITS, CHANNEL_TYPES, MESSAGE_TYPES, CLIENT_STATUS_TYPES, PUBLIC_FLAGS,
 } from './Utility/Constants/DiscordEnums';
 
 export { Embed } from './Utility/Discord/Embed';
@@ -99,6 +99,7 @@ export { LRUCache } from './Utility/External/LRUCache';
 export { Queue } from './Utility/External/Queue';
 export { SortedList } from './Utility/External/SortedList';
 export { Stack } from './Utility/External/Stack';
+export { BitwiseHandler } from './Utility/External/BitwiseHandler';
 
 export { AxonUtils } from './Utility/AxonUtils';
 export { Collection } from './Utility/Collection';
