@@ -32,6 +32,11 @@
 ## CLIENT\_STATUS\_TYPES : <code>enum</code>
 **Kind**: global enum  
 **Read only**: true  
+<a name="PUBLIC_FLAGS"></a>
+
+## PUBLIC\_FLAGS : <code>enum</code>
+**Kind**: global enum  
+**Read only**: true  
 <a name="DISCORD_GATEWAY_EVENTS"></a>
 
 ## DISCORD\_GATEWAY\_EVENTS

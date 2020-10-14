@@ -99,13 +99,13 @@ You can create commands by extending [Command](src/Core/Command/Command.js), [Co
 
 ### Listeners
 
-You can also create listeners by extending [Listener](src/Core/Listener.js).  
+You can also create listeners by extending [Listener](src/Core/Event/Listener.js).  
 A **Listener** is a function that is run when a Discord-specific event occurs. Many listeners can be bound to one Discord event.  
 A **Handler** is an object responsible of running all listeners for a specific Discord event.
 
 ### Databases support
 
-All database interactions are done by AxonCore via a [DBProvider](src/Database/DBProvider.js).  
+All database interactions are done by AxonCore via an [ADBProvider](src/Database/ADBProvider.js).  
 There are specific providers for each type of Database, such as:
 
 - JSON
@@ -113,7 +113,7 @@ There are specific providers for each type of Database, such as:
 - SQL ([sequelize](https://github.com/sequelize/sequelize)) [TODO]
 - SQLite () [TODO]
 
-The only thing you will handle is a [GuildConfig](src/Core/Models/GuildConfig.js) and an [AxonConfig](src/Core/Models/AxonConfig.js) object. Those are stored in the [GuildConfigCache](src/Core/GuildConfigCache.js).
+The only thing you will handle is a [GuildConfig](src/Core/Models/GuildConfig.js) and an [AxonConfig](src/Core/Models/AxonConfig.js) object. Those are stored in the [GuildConfigCache](src/Core/Stores/GuildConfigCache.js).
 
 ### Translation support
 
@@ -163,7 +163,7 @@ axonClient.on('listenerError', (eventName: String, listenerName: String, { liste
 
 ### Utilities
 
-- [Embed](src/Utility/External/Embed.js)
+- [Embed](src/Utility/Discord/Embed.js)
 - [Resolver](src/Libraries/definitions/Resolver.js)
 - [Utility](src/Utility/Utils.js)
 - [Collectors](src/Utility/Discord/Collectors/Collector.js)
@@ -186,7 +186,7 @@ axonClient.on('listenerError', (eventName: String, listenerName: String, { liste
 See [here](https://www.npmjs.com/package/esm#getting-started) on how to use ESM.  
 You don't however need ESM to use this framework, using require is also compatible.
 
-You can use any Database you want. If support for this Database isn't built-in, you can create your own by extending [DBProvider](src/Database/DBProvider.js) and passing it in [AxonOptions](src/AxonOptions.js).  
+You can use any Database you want. If support for this Database isn't built-in, you can create your own by extending [ADBProvider](src/Database/ADBProvider.js) and passing it in [AxonOptions](src/AxonOptions.js).  
 There is currently support for: [Mongoose](https://github.com/Automattic/mongoose).  
 You can also use the available JSON variant, if you don't need a DB solution.
 

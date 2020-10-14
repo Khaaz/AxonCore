@@ -47,6 +47,7 @@
         * [.missingPerms(member, [permissions])](#Utils+missingPerms) ⇒ <code>Array.&lt;String&gt;</code>
         * [.missingChannelPerms(channel, member, [permissions])](#Utils+missingChannelPerms) ⇒ <code>Array.&lt;String&gt;</code>
         * [.calculatePerms(data)](#Utils+calculatePerms) ⇒ <code>Object</code>
+        * [.calculateUserFlags(bits)](#Utils+calculateUserFlags) ⇒ <code>Array.&lt;string&gt;</code>
         * [.sleep(ms)](#Utils+sleep) ⇒ <code>Promise.&lt;void&gt;</code>
         * [.readFileAsync(path)](#Utils+readFileAsync) ⇒ <code>Promise.&lt;String&gt;</code>
         * [.writeFileAsync(path, content)](#Utils+writeFileAsync) ⇒ <code>Promise.&lt;void&gt;</code>
@@ -241,6 +242,18 @@ Calculate permissions using a object of perms
 | Param | Type | Description |
 | --- | --- | --- |
 | data | <code>Object</code> | The permissions to calculate for |
+
+<a name="Utils+calculateUserFlags"></a>
+
+### utils.calculateUserFlags(bits) ⇒ <code>Array.&lt;string&gt;</code>
+Calculate a users flags based off of the flags byte.
+
+**Kind**: instance method of [<code>Utils</code>](#Utils)  
+**Returns**: <code>Array.&lt;string&gt;</code> - String array of flags given bits hold.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| bits | <code>number</code> | Bits to calculate for |
 
 <a name="Utils+sleep"></a>
 
