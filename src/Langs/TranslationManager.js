@@ -62,7 +62,8 @@ class TranslationManager {
     }
 
     /**
-     * Return a specified message for the specified lang or the default lang if no specified lang
+     * Return a specified message for the specified lang or for the default lang if no specified lang
+     * If specified message doesn't exist in the specified lang return the specified message for the default lang instead.
      *
      * @param {String} message
      * @param {String} lang
@@ -70,7 +71,7 @@ class TranslationManager {
      * @memberof TranslationManager
      */
     getMessage(message, lang) {
-        return this.getMessages(lang)[message];
+        return this.getMessages(lang)[message] || this.getMessages(this.lang)[message];
     }
 }
 
