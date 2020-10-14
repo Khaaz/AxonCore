@@ -196,7 +196,7 @@ class CommandPermissions {
     canExecute(msg, guildConf) {
         // If DM
         if (!guildConf) {
-            if (this.staff.needed.length && !this.staff.needed.includes(this.library.message.getAuthorID(msg)) ) {
+            if (this.staff.needed.length && !this.staff.needed.includes(this.library.message.getAuthorID(msg) ) ) {
                 return [false, 'Bot Staff'];
             }
             return [true];
