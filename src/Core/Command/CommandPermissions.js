@@ -208,6 +208,14 @@ class CommandPermissions {
             return [true];
         }
 
+        // If DM
+        if (!guildConf) {
+            if (this.staff.needed.length && !this.staff.needed.includes(msg.author.id) ) {
+                return [false, 'Invalid permissions'];
+            }
+            return [true];
+        }
+
         // Needed: server staff
         if ( (guildConf.modOnly || this.serverMod) && !this.axonUtils.isServerMod(member, guildConf) ) {
             return [false, 'Server Mod'];
