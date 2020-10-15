@@ -1,7 +1,7 @@
 import { EventEmitter } from 'events';
 import {
     AxonConfs, AxonParams, Info, AxonInfo, ALogger, AxonUtils, LibClient, LibraryInterface, Utils, ADBProvider, ModuleRegistry, CommandRegistry, ListenerRegistry, EventManager,
-    GuildConfigCache, AxonConfig, ModuleLoader, CommandDispatcher, MessageManagerType, AxonStaffIDs, AxonOptions, Collection, AHandler, Listener, Resolver, Webhooks,
+    GuildConfigCache, AxonConfig, ModuleLoader, CommandDispatcher, MessageManagerType, AxonStaffIDs, AxonOptions, Collection, AHandler, Listener, Resolver, Webhooks, Proxify,
     AxonTemplate, Module, Command, LOG_LEVELS, Ctx, LibMessage, GuildConfig, DEBUG_FLAGS, Executor, ExtentionInitReturn, AxonLanguageResponse, DefaultLanguageResponse, LibDMChannel,
 } from './';
 
@@ -120,6 +120,13 @@ export declare class AxonClient<L extends AxonLanguageResponse = DefaultLanguage
      * @memberof AxonClient
      */
     readonly l: MessageManagerType<L>;
+    /**
+     * Get the message in the correct lang dynamically
+     *
+     * @readonly
+     * @memberof AxonClient
+     */
+    readonly t: Proxify<L>
 
     /**
      * Get a module from AxonClient with the given label.

@@ -71,7 +71,10 @@ class TranslationManager {
      * @memberof TranslationManager
      */
     getMessage(message, lang) {
-        return this.getMessages(lang)[message] || this.getMessages(this.lang)[message];
+        const paths = message.split('.');
+        let toReturn = this.getMessages(lang) || this.getMessages(this.lang);
+        paths.forEach( (p) => (toReturn = toReturn[p] ) );
+        return toReturn;
     }
 }
 

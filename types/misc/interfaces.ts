@@ -649,7 +649,7 @@ interface AOptionsSettings extends AxonOptionsSettings {
 }
 
 interface AxonLanguageResponse {
-    [p: string]: string;
+    [p: string]: Record<string, unknown> | string;
 }
 
 interface DefaultLanguageResponse extends AxonLanguageResponse {
@@ -658,6 +658,7 @@ interface DefaultLanguageResponse extends AxonLanguageResponse {
     ERR_DESTINATION_PERM: string;
     ERR_COOLDOWN: string;
     ERR_GENERAL: string;
+    [x: string]: DefaultLanguageResponse | string;
 }
 
 interface Languages<L extends AxonLanguageResponse = DefaultLanguageResponse> {
@@ -945,6 +946,10 @@ interface ExtentionInitReturn {
     DBLocation: string;
 }
 
+type Proxify<T extends AxonLanguageResponse> = {
+    [P in keyof T]: T[P] extends string ? (args: AxonLanguageResponse, lang: string) => string : Proxify<Pick<T, P>>;
+}
+
 export {
     ModuleInfo, ModuleData, AxonJSON, GuildJSON, AConfig, AxonConfigRaw, GConfig, GuildConfigRaw, CommandInfo,
     ACommandOptions, CommandPerms, CommandData, AxonTemplate, ListenerInfo, ListenerData, APIAxonMSGCont, AxonMSGCont, AxonMSGOpt, PermissionObject,
@@ -952,5 +957,5 @@ export {
     AxonOptionsSettings, AOptionsSettings, AxonLanguageResponse, DefaultLanguageResponse, Languages, AxonOptionsBase, WebhookConfig, Webhooks, AxonOptionsPrefixes,
     AxonOptionsInfo, AxonOptionsStaff, AxonOptionsExtensions, AxonConfs, AxonParams, Info, AxonInfo, AxonStaffIDs, LibraryInterfaceStructs, PresenceGame,
     RawAttachment, RawUser, WebhookResponse, DjsContent, DjsWebhookContent, DjsPresenceGame, ErisContent, ErisWebhookContent, ErisPresenceGame,
-    CommandEnvironmentProps, CommandEnvironmentParams, CollectorContainer, Timeout, ExtentionInitReturn,
+    CommandEnvironmentProps, CommandEnvironmentParams, CollectorContainer, Timeout, ExtentionInitReturn, Proxify,
 };
