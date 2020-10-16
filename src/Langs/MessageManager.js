@@ -44,7 +44,10 @@ class MessageManager {
 
         // creating method for every message to make access easier
         for (const message in this.translation.getMessages() ) {
-            this[message] = (args, lang) => this.get(message, args, lang);
+            this[message] = (args, lang) => {
+                this._axon.emit('debug', '[DEPRECATED] Use AxonClient.t for dynamic access to translation strings');
+                return this.get(message, args, lang);
+            };
         }
     }
 
