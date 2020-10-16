@@ -649,7 +649,7 @@ interface AOptionsSettings extends AxonOptionsSettings {
 }
 
 interface AxonLanguageResponse {
-    [p: string]: Record<string, unknown> | string;
+    [p: string]: AxonLanguageResponse | string;
 }
 
 interface DefaultLanguageResponse extends AxonLanguageResponse {
@@ -676,9 +676,9 @@ interface AxonOptionsBase {
      */
     settings?: AxonOptionsSettings;
     /**
-     * Translation file
+     * Translation file/folder
      */
-    lang?: Languages;
+    lang?: Languages | string;
     /**
      * Custom function that will log a custom logo on startup
      */

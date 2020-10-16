@@ -100,7 +100,7 @@ class AxonOptions {
      * @param {DB_TYPES} data.settings.db - DB type
      * @param {Number} data.settings.guildConfigCache - max amount of guildConfigs cached at the same time (LRUCache)
      *
-     * @param {Languages} data.lang - Translation file
+     * @param {Languages | String} data.lang - Translation file/folder
      * @param {() => void} data.logo - Custom function that will log a custom logo on startup
      * // Info
      * @param {Object} data.info - General info about the bot
@@ -164,12 +164,23 @@ class AxonOptions {
             guildConfigCache: settings.guildConfigCache || 10000,
         };
 
-        /**
-         * @type {Languages}
-         */
-        this.lang = Utils.compareObject(defaultLang, data.lang)
-            ? data.lang
-            : defaultLang;
+        if (typeof data.lang === 'string') {
+            const path = `${process.cwd()}/${data.lang}`;
+            const files = require('fs').readdirSync(path).filter(p => p.endsWith('.json') );
+            if (files.length === 0) {
+                /**
+                 * @type {Languages}
+                 */
+                this.lang = defaultLang;
+            }
+            const langs = {};
+            files.forEach(l => (langs[l.split('.')[0]] = require(`${path}/${l}`) ) );
+            this.lang = langs;
+        } else {
+            this.lang = Utils.compareObject(defaultLang, data.lang)
+                ? data.lang
+                : defaultLang;
+        }
 
         this.logo = data.logo || null;
         /**
