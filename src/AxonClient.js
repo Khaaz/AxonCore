@@ -38,7 +38,7 @@ import { WEBHOOK_TYPES, LOG_LEVELS, WEBHOOK_TO_COLOR, DEBUG_FLAGS } from './Util
 function createMessageManagerProxy(_messageManager) {
     const handler = {
         get(t, name) {
-            if (name === undefined) {
+            if (name === undefined || typeof prop === 'symbol') {
                 return t;
             }
             const path = [];
@@ -46,7 +46,7 @@ function createMessageManagerProxy(_messageManager) {
 
             const handlerLoop = {
                 get(obj, prop) {
-                    if (prop === undefined) {
+                    if (prop === undefined || typeof prop === 'symbol') {
                         return obj;
                     }
                     return prop in obj ? obj[prop] : (path.push(prop) && new Proxy(target, handlerLoop) );
