@@ -36,14 +36,20 @@ import { EMBED_LIMITS } from './Utility/Constants/DiscordEnums';
 import { WEBHOOK_TYPES, LOG_LEVELS, WEBHOOK_TO_COLOR, DEBUG_FLAGS } from './Utility/Constants/AxonEnums';
 
 function createMessageManagerProxy(_messageManager) {
-    const path = [];
-    const target = (args, lang) => _messageManager.get(path.join('.'), args, lang);
     const handler = {
         get(t, name) {
             if (!name) {
                 return t;
             }
-            return name in t ? t[name] : (path.push(name) && new Proxy(target, handler) );
+            const path = [];
+            const target = (args, lang) => _messageManager.get(path.join('.'), args, lang);
+
+            const handlerLoop = {
+                get(obj, prop) {
+                    return prop in obj ? obj[prop] : (path.push(prop) && new Proxy(target, handlerLoop) );
+                },
+            };
+            return name in t ? t[name] : (path.push(name) && new Proxy(target, handlerLoop) );
         },
     };
     return new Proxy(_messageManager, handler);
