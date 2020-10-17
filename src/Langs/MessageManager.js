@@ -27,6 +27,24 @@ class MessageManager {
     /**
      * Creates an instance of MessageManager.
      *
+     * Accessing this class from <AxonClient>.l will allow you to use a proxy enabling you to directly
+     * access the translation strings, calling the method when have reached the desired translation string, e.g.
+     * ```js
+     * this.axon.l.general.messages.greetings[2]({ user: 'Bsian' }, 'english');
+     * ```
+     * where your translation file would look like (or equivalent for folder translations)
+     * ```json
+     * {
+     *   "english": {
+     *     "general": {
+     *       "messages": {
+     *         "greetings": ["Hello there {{user}}", "Welcome {{user}}", "Is that {{user}}? Hi!", "{{user}}, nice to meet you"]
+     *       }
+     *     }
+     *   }
+     * }
+     * ```
+     *
      * @param {AxonClient} axonClient
      * @param {Languages} messages
      * @param {String} baseLang
