@@ -26,7 +26,6 @@ import MessageParser from './MessageParser';
 class MessageManager {
     /**
      * Creates an instance of MessageManager.
-     * Dynamically create one method for each message so we can use <this>.MESSAGE_CONSTANT() directly. It will actually call the get method.
      *
      * @param {AxonClient} axonClient
      * @param {Languages} messages
@@ -41,14 +40,6 @@ class MessageManager {
     
         this.translation = new TranslationManager(this, baseLang);
         this.parser = new MessageParser();
-
-        // creating method for every message to make access easier
-        for (const message in this.translation.getMessages() ) {
-            this[message] = (args, lang) => {
-                this._axon.emit('warn', '[DEPRECATED] Use AxonClient.t for dynamic access to translation strings');
-                return this.get(message, args, lang);
-            };
-        }
     }
 
     /**

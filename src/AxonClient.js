@@ -270,26 +270,17 @@ class AxonClient extends EventEmitter {
      * @memberof AxonClient
      */
     get l() {
-        return this._messageManager;
-    }
-
-    /**
-     * Get the message in the correct lang dynamically
-     *
-     * @readonly
-     * @type {Object.<string, unknown> | (args: Object.<string, string>, lang: string) => String}
-     * @memberof AxonClient
-     */
-    get t() {
         const path = [];
         const target = (args, lang) => this.l.get(path.join('.'), args, lang);
         const handler = {
             get(t, name) {
-                path.push(name);
-                return new Proxy(target, handler);
+                if (!name) {
+                    return t;
+                }
+                return name in t ? t[name] : (path.push(name) && new Proxy(target, handler) );
             },
         };
-        return new Proxy(target, handler);
+        return new Proxy(this._messageManager, handler);
     }
 
     /**

@@ -947,8 +947,11 @@ interface ExtentionInitReturn {
 }
 
 type Proxify<T extends AxonLanguageResponse> = {
-    [P in keyof T]: T[P] extends string ? (args: AxonLanguageResponse, lang: string) => string : Proxify<Pick<T, P>>;
+    [P in keyof Exclude<T, ReversedNames>]: Exclude<T, ReversedNames>[P] extends string ? (args: AxonLanguageResponse, lang: string) => string : Proxify<Pick<Exclude<T, ReversedNames>, P>>;
 }
+
+type ReversedNames = 'apply' | 'bind' | 'call' | 'toString' | '__defineGetter__' | '__defineSetter__' | '__lookupGetter__'| '__lookupSetter__'
+    | 'hasOwnProperty' | 'isPrototypeOf' | 'propertyIsEnumerable' | 'toLocaleString' | 'toString' | 'valueOf' | 'setPrototypeOf';
 
 export {
     ModuleInfo, ModuleData, AxonJSON, GuildJSON, AConfig, AxonConfigRaw, GConfig, GuildConfigRaw, CommandInfo,
