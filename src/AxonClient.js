@@ -35,6 +35,20 @@ import packageJSON from '../package.json';
 import { EMBED_LIMITS } from './Utility/Constants/DiscordEnums';
 import { WEBHOOK_TYPES, LOG_LEVELS, WEBHOOK_TO_COLOR, DEBUG_FLAGS } from './Utility/Constants/AxonEnums';
 
+function createMessageManagerProxy(_messageManager) {
+    const path = [];
+    const target = (args, lang) => _messageManager.get(path.join('.'), args, lang);
+    const handler = {
+        get(t, name) {
+            if (!name) {
+                return t;
+            }
+            return name in t ? t[name] : (path.push(name) && new Proxy(target, handler) );
+        },
+    };
+    return new Proxy(_messageManager, handler);
+}
+
 /**
  * @typedef {import('./AxonOptions').default} AxonOptions
  * @typedef {import('./Core/Module').default} Module
@@ -194,7 +208,7 @@ class AxonClient extends EventEmitter {
         this.dispatcher = new CommandDispatcher(this);
         this.executor = new Executor(this);
 
-        this._messageManager = new MessageManager(this, axonOptions.lang, axonOptions.settings.lang);
+        this._messageManager = createMessageManagerProxy(new MessageManager(this, axonOptions.lang, axonOptions.settings.lang) );
 
         /* General */
         this.staff = ClientInitialiser.initStaff(axonOptions.staff, this.logger);
@@ -270,17 +284,7 @@ class AxonClient extends EventEmitter {
      * @memberof AxonClient
      */
     get l() {
-        const path = [];
-        const target = (args, lang) => this.l.get(path.join('.'), args, lang);
-        const handler = {
-            get(t, name) {
-                if (!name) {
-                    return t;
-                }
-                return name in t ? t[name] : (path.push(name) && new Proxy(target, handler) );
-            },
-        };
-        return new Proxy(this._messageManager, handler);
+        return this._messageManager;
     }
 
     /**
