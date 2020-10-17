@@ -174,7 +174,10 @@ class AxonOptions {
                 this.lang = defaultLang;
             }
             const langs = {};
-            files.forEach(l => (langs[l.split('.')[0]] = require(`${path}/${l}`) ) );
+            files.forEach(l => {
+                const customFile = require(`${path}/${l}`);
+                langs[l.split('.')[0]] = Utils.compareObject(defaultLang, customFile) ? customFile : defaultLang;
+            } );
             this.lang = langs;
         } else {
             this.lang = Utils.compareObject(defaultLang, data.lang)
