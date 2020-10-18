@@ -2,7 +2,7 @@ import AHandler from 'axoncore/src/Core/Event/AHandler';
 
 class RawHandler extends AHandler {
     handle(payload) {
-        return payload;
+        return null;
     }
 }
 
