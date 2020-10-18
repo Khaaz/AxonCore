@@ -1,5 +1,10 @@
 import Chunker from './Chunker';
 
+/**
+ * Paginator Constructor
+ * @param {Chunker|any[]} data 
+ * @param {number} pages
+ */
 class Paginator {
      /** @var {Chunker} chunker */
      #chunker;
@@ -8,9 +13,18 @@ class Paginator {
      #page;
 
      constructor(data = [], pages = 2) {
-          this.#chunker = new Chunker(data);
-          this.#chunker.chunk(pages);
-          this.#page = 0;
+          // check type of data.
+          if (data instanceof Chunker) {
+               this.#chunker = data;
+          }
+
+          if (data instanceof Array) {
+               this.#chunker = new Chunker(data);
+          } else {
+               throw new TypeError('Parameter "data" must be a type of Chunker or Array');
+          }
+
+          this.pages = pages;
      }
 
      /**

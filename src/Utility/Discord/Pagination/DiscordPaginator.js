@@ -1,4 +1,5 @@
 import NoAbstractInstanceException from '../../../Errors/NoAbstractInstanceException';
+import Paginator from './Paginator';
 
 /**
  * To Do:
@@ -8,8 +9,14 @@ import NoAbstractInstanceException from '../../../Errors/NoAbstractInstanceExcep
  * - you need to be able to call the paginator with just the page number for both react and message and it shows the called page. Then it acts as a regular paginator.
  * - There should be a different way to call the paginator (maybe can be when you create a paginator and not a MessagePaginator / ReactionPaginator but not sure about that). The only thing I want is that when you call this Paginator with a different method, you get the correct page rendered but it doesn't await anything, doesn't put reaction or anything
  **/
-class DiscordPaginator {
-     constructor() {
+class DiscordPaginator extends Paginator {
+     /**
+      * 
+      * @param {Collector} collector - Any collector
+      * @param {Chunker|any[]|any} data - Data option 
+      * @param {} options 
+      */
+     constructor(collector, data, options) {
           if (this.constructor.name === 'DiscordPaginator') {
                throw new NoAbstractInstanceException();
           }
