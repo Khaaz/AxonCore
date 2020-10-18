@@ -2,7 +2,11 @@ import AHandler from 'axoncore/src/Core/Event/AHandler';
 
 class RawHandler extends AHandler {
     handle(payload) {
-        return null;
+        return payload.d.guild_id
+            ? payload.d.guild_id
+            : (payload.d.guild
+                ? payload.d.guild.id
+                : null);
     }
 }
 
