@@ -194,6 +194,14 @@ class CommandPermissions {
      * @memberof Command
      */
     canExecute(msg, guildConf) {
+        // If DM
+        if (!guildConf) {
+            if (this.staff.needed.length && !this.staff.needed.includes(this.library.message.getAuthorID(msg) ) ) {
+                return [false, 'Bot Staff'];
+            }
+            return [true];
+        }
+
         const member = this.library.message.getMember(msg);
         const channel = this.library.message.getChannel(msg);
         const guild = this.library.channel.getGuild(channel);

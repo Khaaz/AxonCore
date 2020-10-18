@@ -174,7 +174,7 @@ class Prompt {
             this._emitter.once('invalidEnd', () => reject(this._onInvalidEnd() ) ); // When the prompt ends as "invalid"
 
             // listen to the even, start the prompt
-            this.client.on('messageCreate', this._boundEvent); // Bind the event
+            this.client.on(this.axon.library.enums.EVENTS.MESSAGE_CREATE, this._boundEvent); // Bind the event
 
             this._startTimeout();
         } );
@@ -241,7 +241,7 @@ class Prompt {
         if (this._actualOptions.deletePrompt) {
             this._deletePrompt();
         }
-        this.client.off('messageCreate', this._boundEvent);
+        this.client.off(this.axon.library.enums.EVENTS.MESSAGE_CREATE, this._boundEvent);
 
         if (!this._actualOptions.caseSensitive) {
             msg.content = msg.content.toLowerCase();
@@ -258,7 +258,7 @@ class Prompt {
                 msg.delete(); // Delete the timeout message
             }
         }
-        this.client.off('messageCreate', this._boundEvent);
+        this.client.off(this.axon.library.enums.EVENTS.MESSAGE_CREATE, this._boundEvent);
     }
 
     /**
