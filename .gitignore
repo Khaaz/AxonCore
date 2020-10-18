@@ -74,3 +74,6 @@ typings/
 
 # next.js build output
 .next
+
+# Ignore package-lock?
+package-lock.json
