@@ -3,7 +3,7 @@ import { Utils } from 'axoncore';
 class MyUtils extends Utils {
     constructor(...args) {
         super(...args);
-        this.invite = /^(discord.gg\/|discordapp.com\/invite\/)([a-z0-9]+)$/gi;
+        this.invite = /^(discord.gg\/|discordapp.com|discord.com\/invite\/)([a-z0-9]+)$/gi;
     }
 
     /**
