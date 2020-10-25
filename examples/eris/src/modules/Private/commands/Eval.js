@@ -12,6 +12,7 @@ import {
     Embed,
     Prompt,
     MessageCollector,
+    ReactionCollector,
     SortedList,
     Stack,
     Queue,
@@ -65,7 +66,7 @@ class Eval extends Command {
                 evalString = String(evalString);
             }
         } catch (err) {
-            this.logger.debug(err.stack);
+            this.logger.debug(err.stack ? err.stack : err);
             return this.sendError(msg.channel, err.message ? err.message : err);
         }
 
