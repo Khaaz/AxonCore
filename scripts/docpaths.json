@@ -141,6 +141,10 @@
         "output": "Utility/Collector.md"
     },
     {
+        "input": "Utility/Discord/Collectors/CollectorContainer.js",
+        "output": "Utility/CollectorContainer.md"
+    },
+    {
         "input": "Utility/Discord/Collectors/MessageCollector.js",
         "output": "Utility/MessageCollector.md"
     },
