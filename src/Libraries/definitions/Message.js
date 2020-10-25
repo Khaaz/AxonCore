@@ -23,6 +23,16 @@ class Message {
     /**
      * Message ID
      * @param {Message} message
+     * @returns {Boolean}
+     * @memberof Message
+     */
+    isAuthorBot(message) {
+        return this.getAuthor(message).bot;
+    }
+
+    /**
+     * Message ID
+     * @param {Message} message
      * @returns {String}
      * @memberof Message
      */

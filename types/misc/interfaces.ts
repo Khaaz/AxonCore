@@ -585,6 +585,12 @@ interface PromptOptionsData extends PromptOptions {
     resendWhenInvalid: boolean;
 }
 
+interface CollectorContainerSettings {
+    timeout: number|null;
+    count: number|null;
+    filter: (param: object) => {};
+}
+
 interface CollectorOptions {
     /**
      * The time before the collector times out in milliseconds
@@ -595,21 +601,27 @@ interface CollectorOptions {
      */
     count?: number;
     /**
+     * Filter function to filter elements that needs to be collected
+     */
+    filter?: (param: object) => {};
+    /**
      * Whether or not to ignore bots
      */
     ignoreBots?: boolean;
     /**
-     * The user id to listen for (listens to all messages if not specified)
+     * Whether or not to ignore seld
      */
-    userID?: string;
-    /**
-     * Whether or not to return messages with lowercase content. Default: content unchanged
-     */
-    caseInsensitive?: boolean;
+    ignoreSelf?: boolean;
 }
 
-interface ReactionCollectorOptions extends CollectorOptions {
-    emojis: string[];
+interface CollectorFullOptions extends CollectorOptions {
+    users: string[]|string;
+    channels: string[]|string;
+}
+
+interface ReactionCollectorOptions extends CollectorFullOptions {
+    emotes: string[]|string;
+    messages: string[]|string;
 }
 
 interface AxonOptionsSettings {
@@ -923,15 +935,6 @@ interface CommandEnvironmentParams extends CommandEnvironmentBase {
     command: Command;
 }
 
-interface CollectorContainer<T> {
-    id: string;
-    collected: Map<string, T>;
-    options: object;
-    resolve<U>(value: U | PromiseLike<U>): Promise<U>;
-    resolve(): Promise<void>;
-    reject<U = never>(reason?: any): Promise<U>;
-}
-
 interface Timeout {
     id: string;
     timeout: number;
@@ -948,9 +951,9 @@ interface ExtentionInitReturn {
 export {
     ModuleInfo, ModuleData, AxonJSON, GuildJSON, AConfig, AxonConfigRaw, GConfig, GuildConfigRaw, CommandInfo,
     ACommandOptions, CommandPerms, CommandData, AxonTemplate, ListenerInfo, ListenerData, APIAxonMSGCont, AxonMSGCont, AxonMSGOpt, PermissionObject,
-    Ctx, EmbedFields, EmbedAuthor, EmbedThumbnail, EmbedImage, EmbedFooter, EmbedData, PromptOptions, PromptOptionsData, CollectorOptions, ReactionCollectorOptions,
+    Ctx, EmbedFields, EmbedAuthor, EmbedThumbnail, EmbedImage, EmbedFooter, EmbedData, PromptOptions, PromptOptionsData, CollectorContainerSettings, CollectorOptions, CollectorFullOptions, ReactionCollectorOptions,
     AxonOptionsSettings, AOptionsSettings, AxonLanguageResponse, DefaultLanguageResponse, Languages, AxonOptionsBase, WebhookConfig, Webhooks, AxonOptionsPrefixes,
     AxonOptionsInfo, AxonOptionsStaff, AxonOptionsExtensions, AxonConfs, AxonParams, Info, AxonInfo, AxonStaffIDs, LibraryInterfaceStructs, PresenceGame,
     RawAttachment, RawUser, WebhookResponse, DjsContent, DjsWebhookContent, DjsPresenceGame, ErisContent, ErisWebhookContent, ErisPresenceGame,
-    CommandEnvironmentProps, CommandEnvironmentParams, CollectorContainer, Timeout, ExtentionInitReturn,
+    CommandEnvironmentProps, CommandEnvironmentParams, Timeout, ExtentionInitReturn,
 };

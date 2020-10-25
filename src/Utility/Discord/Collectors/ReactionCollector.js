@@ -2,21 +2,26 @@ import Collector from './Collector';
 
 /**
  * @typedef {import('../../../AxonClient').default} AxonClient
+ * @typedef {{message: Message, emote: Emoji, userID: String}} CollectedItem
  */
 
 /**
- * Collect bunch of message object according to chosen options
+ * Collect bunch of items object according to chosen options
+ * The collected item is from the following format:
+ * { message: Message, emote: Emoji, userID: String}
+ * ID of the item in the container is formatted as: `messageID-emojiID-userID`. If the emojiID is undefined (default emote), emojiName is used instead.
  *
  * @author Bsian, KhaaZ
  *
  * @class ReactionCollector
- * @extends Collector<Message>
+ * @extends Collector<CollectedItem>
  *
  * @prop {Object} options
  * @prop {Number} options.timeout - Number of ms before timing out
  * @prop {Number} options.count - Number of reactions to collect
+ * @prop {Number} options.filter - Custom filter function that the reaction need to validate in order to be collected
  * @prop {Boolean} options.ignoreBots - Whether to ignore bots
- * @prop {String} options.userID - Specify a userID to only collect message from this user
+ * @prop {Boolean} options.ignoreSelf - Whether or not to ignore self (the bot itself)
  */
 class ReactionCollector extends Collector {
     /**
@@ -26,9 +31,9 @@ class ReactionCollector extends Collector {
      * @param {Object} [options] - The default options for the reaction collector instance
      * @param {Number} [options.timeout=10000] - The time before the collector times out in milliseconds
      * @param {Number} [options.count=10] - The amount of reactions to collect before automatically ending
+     * @param {Number} [options.filter] - A custom filter function that the Message need to validate in order to be collected
      * @param {Boolean} [options.ignoreBots=true] - Whether or not to ignore bots
-     * @param {String} [options.userID] - The user id to listen for (listens to all reactions if not specified)
-     * @param {Array<String>} [options.emojis] - The specific reactions to collect (collects all reactions if not specified)
+     * @param {Boolean} [options.ignoreSelf=true] - Whether or not to ignore self (the bot itself)
      * @memberof ReactionCollector
      * @example
      * const collector = new ReactionCollector(this.axon, { count: 10, ignoreBots: false });
@@ -36,7 +41,15 @@ class ReactionCollector extends Collector {
     constructor(axonClient, options = {} ) {
         super(axonClient);
         this.options = {
-            timeout: options.timeout || 10000, // eslint-disable-line no-magic-numbers
+            timeout: options.timeout || 10000,
+            count: options.count || 10,
+            filter: options.filter,
+            
+            ignoreBots: options.ignoreBots === undefined ? true : !!options.ignoreBots,
+            ignoreSelf: options.ignoreSelf === undefined ? true : !!options.ignoreSelf,
+        };
+        this.options = {
+            timeout: options.timeout || 10000,
             count: options.count || 10,
             ignoreBots: options.ignoreBots === undefined ? true : !!options.ignoreBots,
             userID: options.userID || null,
@@ -64,28 +77,73 @@ class ReactionCollector extends Collector {
     }
 
     /**
-     * Runs the message collector
+     * Runs the Collector with the given options and resolve once the task is finished with a Map of CollectedItems collected.
+     * If a timeout is provided, will resolve with all Messages collectors until the timeout.
+     * If no timeout is provided, will only resolve when enough element have been collected
      *
      * @param {Message} message - The message object to listen to
      * @param {Object} [options] - The options for the reaction collector
      * @param {Number} [options.timeout] - The time before the collector times out in milliseconds
      * @param {Number} [options.count] - The amount of reactions to collect before automatically ending
      * @param {Boolean} [options.ignoreBots] - Whether or not to ignore bots
-     * @param {String} [options.userID] - The user id to listen for (listens to all messages if not specified)
-     * @param {Array<String>} [options.emojis] - The specific reactions to collect (collects all reactions if not specified)
-     * @returns {Promise<Map<String, Message>>} Map of messages collected.
+     * @param {Boolean} [options.ignoreSelf] - Whether or not to ignore self
+     * @param {Array<String>|String} [options.channels] - The channel ids to listen for (listens to all reactions if not specified)
+     * @param {Array<String>|String} [options.messages] - The message ids to listen for (listens to all reactions if not specified)
+     * @param {Array<String>|String} [options.users] - The user ids to listen for (listens to all reactions if not specified)
+     * @param {Array<String>|String} [options.emojis] - The emoji ids or names to collect (collects all reactions if not specified)
+     * @returns {Promise<Map<String, CollectedItem>>} Map of messages collected.
      * @memberof ReactionCollector
      * @example
-     * const reactions = await collector.run(msg, { count: 10 });
+     * const reactions = await collector.run({ count: 10 });
      */
-    run(message, options = {} ) {
+    run(options = {} ) {
         return this._run( {
-            channel: message,
             timeout: options.timeout !== undefined ? options.timeout : this.options.timeout,
             count: options.count !== undefined ? options.count : this.options.count,
+            filter: options.filter !== undefined ? options.filter : this.options.filter,
+        },
+        {
+            messages: this._makeArray(options.messages),
+            channels: this._makeArray(options.channels),
+            users: this._makeArray(options.users),
+            emotes: this._makeArray(options.emotes),
             ignoreBots: options.ignoreBots !== undefined ? options.ignoreBots : this.options.ignoreBots,
-            userID: options.userID !== undefined ? options.userID : this.options.userID,
-            emojis: options.emojis !== undefined ? options.emojis : this.options.emojis,
+            ignoreSelf: options.ignoreSelf !== undefined ? options.ignoreSelf : this.options.ignoreSelf,
+        } );
+    }
+
+    /**
+     * Runs the Collector with the given options and return a container object that can be used to manually control Reactions collected.
+     * If no timeout nor count is provided, will run forever until the user manually stops the collector.
+     *
+     * @param {Message} message - The message object to listen to
+     * @param {Object} [options] - The options for the reaction collector
+     * @param {Number} [options.timeout] - The time before the collector times out in milliseconds
+     * @param {Number} [options.count] - The amount of reactions to collect before automatically ending
+     * @param {Boolean} [options.ignoreBots] - Whether or not to ignore bots
+     * @param {Boolean} [options.ignoreSelf] - Whether or not to ignore self
+     * @param {Array<String>|String} [options.channels] - The channel ids to listen for (listens to all reactions if not specified)
+     * @param {Array<String>|String} [options.messages] - The message ids to listen for (listens to all reactions if not specified)
+     * @param {Array<String>|String} [options.users] - The user ids to listen for (listens to all reactions if not specified)
+     * @param {Array<String>|String} [options.emojis] - The emoji ids or names to collect (collects all reactions if not specified)
+     * @returns {CollectorContainer<CollectedItem>} CollectorContainer
+     * @memberof ReactionCollector
+     * @example
+     * const reactions = await collector.run({ count: 10 });
+     */
+    collect(options = {} ) {
+        return this._collect( {
+            timeout: options.timeout !== undefined ? options.timeout : this.options.timeout,
+            count: options.count !== undefined ? options.count : this.options.count,
+            filter: options.filter !== undefined ? options.filter : this.options.filter,
+        },
+        {
+            messages: this._makeArray(options.messages),
+            channels: this._makeArray(options.channels),
+            users: this._makeArray(options.users),
+            emotes: this._makeArray(options.emotes),
+            ignoreBots: options.ignoreBots !== undefined ? options.ignoreBots : this.options.ignoreBots,
+            ignoreSelf: options.ignoreSelf !== undefined ? options.ignoreSelf : this.options.ignoreSelf,
         } );
     }
 
@@ -93,20 +151,33 @@ class ReactionCollector extends Collector {
      * Get all CollectorContainers that will collect from this particular message
      *
      * @param {Message} message
-     * @returns {Array<CollectorContainer<Message>>}
+     * @param {Emoji} emoji
+     * @returns {Array<CollectorContainer<CollectedItem>>}
      * @memberof ReactionCollector
      */
-    getCollectors(message) {
-        if (message.author.id === this.lib.client.getID() ) {
-            return [];
-        }
-
-        return this.collectors
-            .filter(e => (
-                e.options.channel.id === message.channel.id
-                && (message.author.bot ? !e.options.ignoreBots : true)
-                && (e.options.userID ? message.author.id === e.options.userID : true)
-            ) );
+    getCollectors(message, emoji) {
+        return this.containers
+            .filter(e => {
+                if (e.options.ignoreSelf && this.lib.message.getAuthorID(message) === this.lib.client.getID() ) {
+                    return false;
+                }
+                if (e.options.ignoreBots && this.lib.message.isAuthorBot(message) ) {
+                    return false;
+                }
+                if (e.options.channels.length > 0 && !e.options.channels.includes(this.lib.message.getChannelID(message) ) ) {
+                    return false;
+                }
+                if (e.options.messages.length > 0 && !e.options.messages.includes(this.lib.message.getID(message) ) ) {
+                    return false;
+                }
+                if (e.options.users.length > 0 && !e.options.users.includes(this.lib.message.getAuthorID(message) ) ) {
+                    return false;
+                }
+                if (emoji && e.options.emotes.length > 0 && !e.options.emotes.includes(emoji.id || emoji.name) ) {
+                    return false;
+                }
+                return true;
+            } );
     }
 
     /**
@@ -120,8 +191,8 @@ class ReactionCollector extends Collector {
      * @memberof ReactionCollector
      */
     _onMessageReactionAdd(msg, emoji, userID) {
-        const collectors = this.getCollectors(msg);
-        this.emit('collect', collectors, { id: `${msg.id}-${emoji.id || emoji.name}-${userID}`, collected: { msg, emoji, userID } } );
+        const collectors = this.getCollectors(msg, emoji);
+        this.emit('collect', collectors, { id: `${msg.id}-${emoji.id || emoji.name}-${userID}`, collected: { message: msg, emoji, userID } } );
     }
 
     /**
@@ -134,7 +205,7 @@ class ReactionCollector extends Collector {
      * @memberof ReactionCollector
      */
     _onMessageReactionRemove(msg, emoji, userID) {
-        const collectors = this.getCollectors(msg);
+        const collectors = this.getCollectors(msg, emoji, userID);
 
         for (const c of collectors) {
             if (c.collected.has(`${msg.id}-${emoji.id || emoji.name}-${userID}`) ) {
@@ -171,7 +242,7 @@ class ReactionCollector extends Collector {
      * @memberof ReactionCollector
      */
     _onMessageReactionRemoveEmoji(msg, emoji) {
-        const collectors = this.getCollectors(msg);
+        const collectors = this.getCollectors(msg, emoji);
 
         for (const c of collectors) {
             c.collected.forEach( ( { msg: m, userID } ) => {
