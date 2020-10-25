@@ -36,6 +36,7 @@ export { default as messageUpdate } from './MessageUpdateHandler';
 
 export { default as presenceUpdate } from './PresenceUpdateHandler';
 
+export { default as raw } from './RawHandler';
 export { default as roleCreate } from './RoleCreateHandler';
 export { default as roleDelete } from './RoleDeleteHandler';
 export { default as roleUpdate } from './RoleUpdateHandler';
