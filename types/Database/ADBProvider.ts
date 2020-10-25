@@ -43,7 +43,7 @@ export declare abstract class ADBProvider {
      *
      * @memberof ADBProvider
      */
-    public initAxon(): Promise<AxonConfig>; // Not Implemented
+    public initAxon(): Promise<AxonConfig | null>; // Not Implemented
     /**
      * Initialises a default Guild config.
      * Use default AxonClient prefix settings when creating the new guild config.
@@ -54,7 +54,7 @@ export declare abstract class ADBProvider {
      *
      * @memberof ADBProvider
      */
-    public initGuild(gID: string): Promise<GuildConfig>; // Not Implemented
+    public initGuild(gID: string): Promise<GuildConfig | null>; // Not Implemented
     
     /**
      * Retrieves the axon config from the DB
