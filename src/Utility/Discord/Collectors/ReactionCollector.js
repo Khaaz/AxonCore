@@ -32,7 +32,6 @@ class ReactionCollector extends Collector {
      * @param {Number} [options.timeout=10000] - The time before the collector times out in milliseconds
      * @param {Number} [options.count=10] - The amount of reactions to collect before automatically ending
      * @param {Number} [options.filter] - A custom filter function that the Message need to validate in order to be collected
-     * @param {Boolean} [options.ignoreBots=true] - Whether or not to ignore bots
      * @param {Boolean} [options.ignoreSelf=true] - Whether or not to ignore self (the bot itself)
      * @memberof ReactionCollector
      * @example
@@ -45,15 +44,7 @@ class ReactionCollector extends Collector {
             count: options.count || 10,
             filter: options.filter,
             
-            ignoreBots: options.ignoreBots === undefined ? true : !!options.ignoreBots,
             ignoreSelf: options.ignoreSelf === undefined ? true : !!options.ignoreSelf,
-        };
-        this.options = {
-            timeout: options.timeout || 10000,
-            count: options.count || 10,
-            ignoreBots: options.ignoreBots === undefined ? true : !!options.ignoreBots,
-            userID: options.userID || null,
-            emojis: options.emojis && options.emojis.length ? options.emojis : null,
         };
 
         this.onMessageReactionAdd = this.lib.getMessageReactionAdd(this._onMessageReactionAdd.bind(this) );
@@ -63,17 +54,17 @@ class ReactionCollector extends Collector {
     }
 
     setListeners() {
-        this.bot.on(this.lib.enums.EVENTS.MESSAGE_REACTION_ADD, this.onMessageReactionAdd);
-        this.bot.on(this.lib.enums.EVENTS.MESSAGE_REACTION_REMOVE, this.onMessageReactionRemove);
-        this.bot.on(this.lib.enums.EVENTS.MESSAGE_REACTION_REMOVE_ALL, this.onMessageReactionRemoveAll);
-        this.bot.on(this.lib.enums.EVENTS.MESSAGE_REACTION_REMOVE_EMOJI, this.onMessageReactionRemoveEmoji);
+        this.lib.onReactionAdd(this.onMessageReactionAdd, true);
+        this.lib.onReactionRemove(this.onMessageReactionRemove, true);
+        this.lib.onReactionRemoveAll(this.onMessageReactionRemoveAll, true);
+        this.lib.onReactionRemoveEmoji(this.onMessageReactionRemoveEmoji, true);
     }
 
     unsetListeners() {
-        this.bot.off(this.lib.enums.EVENTS.MESSAGE_REACTION_ADD, this.onMessageReactionAdd);
-        this.bot.off(this.lib.enums.EVENTS.MESSAGE_REACTION_REMOVE, this.onMessageReactionRemove);
-        this.bot.off(this.lib.enums.EVENTS.MESSAGE_REACTION_REMOVE_ALL, this.onMessageReactionRemoveAll);
-        this.bot.off(this.lib.enums.EVENTS.MESSAGE_REACTION_REMOVE_EMOJI, this.onMessageReactionRemoveEmoji);
+        this.lib.onReactionAdd(this.onMessageReactionAdd, false);
+        this.lib.onReactionRemove(this.onMessageReactionRemove, false);
+        this.lib.onReactionRemoveAll(this.onMessageReactionRemoveAll, false);
+        this.lib.onReactionRemoveEmoji(this.onMessageReactionRemoveEmoji, false);
     }
 
     /**
@@ -142,7 +133,6 @@ class ReactionCollector extends Collector {
             channels: this._makeArray(options.channels),
             users: this._makeArray(options.users),
             emotes: this._makeArray(options.emotes),
-            ignoreBots: options.ignoreBots !== undefined ? options.ignoreBots : this.options.ignoreBots,
             ignoreSelf: options.ignoreSelf !== undefined ? options.ignoreSelf : this.options.ignoreSelf,
         } );
     }
@@ -155,13 +145,10 @@ class ReactionCollector extends Collector {
      * @returns {Array<CollectorContainer<CollectedItem>>}
      * @memberof ReactionCollector
      */
-    getCollectors(message, emoji) {
+    getCollectors(message, emoji, userID) {
         return this.containers
             .filter(e => {
-                if (e.options.ignoreSelf && this.lib.message.getAuthorID(message) === this.lib.client.getID() ) {
-                    return false;
-                }
-                if (e.options.ignoreBots && this.lib.message.isAuthorBot(message) ) {
+                if (userID && e.options.ignoreSelf && userID === this.lib.client.getID() ) {
                     return false;
                 }
                 if (e.options.channels.length > 0 && !e.options.channels.includes(this.lib.message.getChannelID(message) ) ) {
@@ -170,7 +157,7 @@ class ReactionCollector extends Collector {
                 if (e.options.messages.length > 0 && !e.options.messages.includes(this.lib.message.getID(message) ) ) {
                     return false;
                 }
-                if (e.options.users.length > 0 && !e.options.users.includes(this.lib.message.getAuthorID(message) ) ) {
+                if (userID && e.options.users.length > 0 && !e.options.users.includes(userID) ) {
                     return false;
                 }
                 if (emoji && e.options.emotes.length > 0 && !e.options.emotes.includes(emoji.id || emoji.name) ) {

@@ -609,7 +609,7 @@ interface CollectorOptions {
      */
     ignoreBots?: boolean;
     /**
-     * Whether or not to ignore seld
+     * Whether or not to ignore self
      */
     ignoreSelf?: boolean;
 }
