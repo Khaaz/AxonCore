@@ -17,7 +17,12 @@ import DjsResolver from './lib/DjsResolver';
  * @typedef {import('discord.js').Message} Message
  */
 
-const LIST_PAYLOADS = ['MESSAGE_REACTION_ADD', 'MESSAGE_REACTION_REMOVE'];
+const EVENTS_LIST = [
+    'MESSAGE_REACTION_ADD',
+    'MESSAGE_REACTION_REMOVE',
+    'MESSAGE_REACTION_REMOVE_ALL',
+    'MESSAGE_REACTION_REMOVE_EMOJI',
+];
 
 const RAW_LISTENERS = {};
 
@@ -119,7 +124,7 @@ class DjsInterface extends LibraryInterface {
     
     _handleRaw() {
         this.botClient.on('raw', (packet) => {
-            if (LIST_PAYLOADS.includes(packet.t) ) {
+            if (EVENTS_LIST.includes(packet.t) ) {
                 for (const l of RAW_LISTENERS[packet.t] ) {
                     l(packet.d);
                 }
