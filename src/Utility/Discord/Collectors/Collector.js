@@ -20,6 +20,8 @@ import CollectorContainer from './CollectorContainer';
  * It is advised to only use one instance per Collector type.
  * This Collector handles using only one Collector instance with many containers running.
  *
+ * @author KhaaZ
+ *
  * @template T
  *
  * @class Collector
