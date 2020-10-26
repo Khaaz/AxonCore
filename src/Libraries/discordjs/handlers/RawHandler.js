@@ -1,4 +1,4 @@
-import AHandler from 'axoncore/src/Core/Event/AHandler';
+import AHandler from '../../../Core/Event/AHandler';
 
 class RawHandler extends AHandler {
     handle(payload) {
