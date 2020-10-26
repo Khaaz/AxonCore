@@ -13,6 +13,8 @@ import {
     Prompt,
     MessageCollector,
     ReactionCollector,
+    NextMessage,
+    NextReaction,
     SortedList,
     Stack,
     Queue,
