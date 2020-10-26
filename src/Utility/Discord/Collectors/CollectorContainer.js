@@ -4,6 +4,8 @@ import { EventEmitter } from 'events';
  * Contains all elements collected respecting settings and options.
  * Emit end, timeout, collect events.
  *
+ * @author KhaaZ
+ *
  * @template T
  *
  * @class CollectorContainer
