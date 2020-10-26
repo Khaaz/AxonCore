@@ -624,6 +624,19 @@ interface ReactionCollectorOptions extends CollectorFullOptions {
     messages: string[]|string;
 }
 
+interface CollectorHelperOptions {
+    timeout: number;
+    count: number;
+    filter?: (param: object) => {};
+    users: string[]|string;
+    channels: string[]|string;
+}
+
+interface ReactionCollectorHelperOptions extends CollectorHelperOptions {
+    emotes: string[]|string;
+    messages: string[]|string;
+}
+
 interface AxonOptionsSettings {
     /**
      * Default lang for the bot
@@ -951,7 +964,7 @@ interface ExtentionInitReturn {
 export {
     ModuleInfo, ModuleData, AxonJSON, GuildJSON, AConfig, AxonConfigRaw, GConfig, GuildConfigRaw, CommandInfo,
     ACommandOptions, CommandPerms, CommandData, AxonTemplate, ListenerInfo, ListenerData, APIAxonMSGCont, AxonMSGCont, AxonMSGOpt, PermissionObject,
-    Ctx, EmbedFields, EmbedAuthor, EmbedThumbnail, EmbedImage, EmbedFooter, EmbedData, PromptOptions, PromptOptionsData, CollectorContainerSettings, CollectorOptions, CollectorFullOptions, ReactionCollectorOptions,
+    Ctx, EmbedFields, EmbedAuthor, EmbedThumbnail, EmbedImage, EmbedFooter, EmbedData, PromptOptions, PromptOptionsData, CollectorContainerSettings, CollectorOptions, CollectorFullOptions, ReactionCollectorOptions, CollectorHelperOptions, ReactionCollectorHelperOptions,
     AxonOptionsSettings, AOptionsSettings, AxonLanguageResponse, DefaultLanguageResponse, Languages, AxonOptionsBase, WebhookConfig, Webhooks, AxonOptionsPrefixes,
     AxonOptionsInfo, AxonOptionsStaff, AxonOptionsExtensions, AxonConfs, AxonParams, Info, AxonInfo, AxonStaffIDs, LibraryInterfaceStructs, PresenceGame,
     RawAttachment, RawUser, WebhookResponse, DjsContent, DjsWebhookContent, DjsPresenceGame, ErisContent, ErisWebhookContent, ErisPresenceGame,
