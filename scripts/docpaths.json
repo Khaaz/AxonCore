@@ -157,6 +157,14 @@
         "output": "Utility/Prompt.md"
     },
     {
+        "input": "Utility/Discord/NextMessage.js",
+        "output": "Utility/NextMessage.md"
+    },
+    {
+        "input": "Utility/Discord/NextReaction.js",
+        "output": "Utility/NextMessage.md"
+    },
+    {
         "input": "Utility/External/Stack.js",
         "output": "Utility/Stack.md"
     },

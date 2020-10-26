@@ -72,7 +72,6 @@ class ReactionCollector extends Collector {
      * If a timeout is provided, will resolve with all Messages collectors until the timeout.
      * If no timeout is provided, will only resolve when enough element have been collected
      *
-     * @param {Message} message - The message object to listen to
      * @param {Object} [options] - The options for the reaction collector
      * @param {Number} [options.timeout] - The time before the collector times out in milliseconds
      * @param {Number} [options.count] - The amount of reactions to collect before automatically ending
@@ -81,7 +80,7 @@ class ReactionCollector extends Collector {
      * @param {Array<String>|String} [options.channels] - The channel ids to listen for (listens to all reactions if not specified)
      * @param {Array<String>|String} [options.messages] - The message ids to listen for (listens to all reactions if not specified)
      * @param {Array<String>|String} [options.users] - The user ids to listen for (listens to all reactions if not specified)
-     * @param {Array<String>|String} [options.emojis] - The emoji ids or names to collect (collects all reactions if not specified)
+     * @param {Array<String>|String} [options.emotes] - The emoji ids or names to collect (collects all reactions if not specified)
      * @returns {Promise<Map<String, CollectedItem>>} Map of messages collected.
      * @memberof ReactionCollector
      * @example
@@ -107,7 +106,6 @@ class ReactionCollector extends Collector {
      * Runs the Collector with the given options and return a container object that can be used to manually control Reactions collected.
      * If no timeout nor count is provided, will run forever until the user manually stops the collector.
      *
-     * @param {Message} message - The message object to listen to
      * @param {Object} [options] - The options for the reaction collector
      * @param {Number} [options.timeout] - The time before the collector times out in milliseconds
      * @param {Number} [options.count] - The amount of reactions to collect before automatically ending
@@ -116,7 +114,7 @@ class ReactionCollector extends Collector {
      * @param {Array<String>|String} [options.channels] - The channel ids to listen for (listens to all reactions if not specified)
      * @param {Array<String>|String} [options.messages] - The message ids to listen for (listens to all reactions if not specified)
      * @param {Array<String>|String} [options.users] - The user ids to listen for (listens to all reactions if not specified)
-     * @param {Array<String>|String} [options.emojis] - The emoji ids or names to collect (collects all reactions if not specified)
+     * @param {Array<String>|String} [options.emotes] - The emoji ids or names to collect (collects all reactions if not specified)
      * @returns {CollectorContainer<CollectedItem>} CollectorContainer
      * @memberof ReactionCollector
      * @example
