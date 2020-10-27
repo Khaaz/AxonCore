@@ -25,7 +25,7 @@ export declare class MessageParser {
   * @returns - The Parsed message
   * @memberof MessageParser
   */
-  public parse(message: string, args: AxonLanguageResponse): string;
+  public parse(message: string, args?: AxonLanguageResponse): string;
   /**
    * Same as above but arguments are unnamed and passed as parameters instead of inside one object.
    *

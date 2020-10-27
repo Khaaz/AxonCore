@@ -34,44 +34,7 @@ import logo from './Configs/logo';
 import packageJSON from '../package.json';
 import { EMBED_LIMITS } from './Utility/Constants/DiscordEnums';
 import { WEBHOOK_TYPES, LOG_LEVELS, WEBHOOK_TO_COLOR, DEBUG_FLAGS } from './Utility/Constants/AxonEnums';
-
-function createMessageManagerProxy(_messageManager) {
-    const handler = {
-        get(t, name) {
-            const path = [];
-            const MessageManagerProxy = (args, lang) => {
-                console.log(path);
-                /*
-                if (path[path.length - 1] === 'then' && typeof args === 'function' && typeof lang === 'function') {
-                    console.log('ASYNC_AWAIT_EXECUTION_DETECTED');
-                    console.log(handlerLoop);
-                    return Promise.resolve(new Proxy(MessageManagerProxy, handlerLoop)); // Async special case
-                }
-                */
-                if ( (args !== undefined && typeof args !== 'object') || (lang !== undefined && typeof lang !== 'string') ) {
-                    throw new TypeError('INVALID_TYPE_IN_PARAMETER');
-                }
-                return path.length ? _messageManager.get(path.join('.'), args, lang) : _messageManager;
-            };
-            
-            if (name === undefined || typeof name === 'symbol' || (!path.length && name === 'then') ) {
-                return t; // MessageManager
-            }
-
-            const handlerLoop = {
-                get(obj, prop) {
-                    console.log('handlerLoop prop: ', prop); console.log('path: ', path);
-                    if (prop === undefined || typeof prop === 'symbol') {
-                        return obj;
-                    }
-                    return prop in obj ? obj[prop] : (path.push(prop) && new Proxy(MessageManagerProxy, handlerLoop) );
-                },
-            };
-            return name in t ? t[name] : (path.push(name) && new Proxy(MessageManagerProxy, handlerLoop) );
-        },
-    };
-    return new Proxy(_messageManager, handler);
-}
+import createMessageManagerProxy from './Langs/MessageManagerProxy';
 
 /**
  * @typedef {import('./AxonOptions').default} AxonOptions
