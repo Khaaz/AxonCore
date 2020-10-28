@@ -286,7 +286,6 @@ class Collector extends EventEmitter {
             return;
         }
 
-        console.log(c);
         c.break();
     }
 }
