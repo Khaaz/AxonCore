@@ -3,18 +3,18 @@
  */
 class Chunker {
      /** @var {any[]} - An array of chunked data */
-     #chunks;
+     chunks;
      /** @var {number} */
-     #lastSize;
+     lastSize;
 
      /**
       * @param {any[]} data - An array of data to chunk
       */
      constructor(data) {
           this.data = data;
-          this.#chunks = [];
-          this.#currentIndex = 0;
-          this.#lastSize = 0;
+          this.chunks = [];
+          this.currentIndex = 0;
+          this.lastSize = 0;
      }
 
      /**
@@ -24,8 +24,8 @@ class Chunker {
       */
      chunk(chunks) {
           // reset chunks
-          this.#chunks = [];
-          this.#lastSize = number;
+          this.chunks = [];
+          this.lastSize = number;
 
           if (chunks <= 0) {
                throw 'The chunk size can not be less than or equal to 0';
@@ -34,11 +34,11 @@ class Chunker {
           for (let i = 0; i < this.data.length; i++) {
                const chunkIndex = Math.floor(i / chunks);
 
-               if (!this.#chunks[chunkIndex]) {
-                    this.#chunks[chunkIndex] = [];
+               if (!this.chunks[chunkIndex]) {
+                    this.chunks[chunkIndex] = [];
                }
 
-               this.#chunks[chunkIndex].push(this.data[i]);
+               this.chunks[chunkIndex].push(this.data[i]);
           }
 
           return this.chunks;
@@ -50,15 +50,11 @@ class Chunker {
       */
      add(data) {
           this.data.push(data);
-          return this.chunk(this.#lastSize);
+          return this.chunk(this.lastSize);
      }
 
      get chunkSize() {
-          this.#chunks.length;
-     }
-
-     get chunks() {
-          return this.#chunks;
+          this.chunks.length;
      }
 }
 export default Chunker;
