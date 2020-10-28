@@ -94,10 +94,15 @@
     "@types/mongodb" "*"
     "@types/node" "*"
 
-"@types/node@*", "@types/node@^13.9.2":
+"@types/node@*":
   version "13.9.2"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-13.9.2.tgz#ace1880c03594cc3e80206d96847157d8e7fa349"
   integrity sha512-bnoqK579sAYrQbp73wwglccjJ4sfRdKU7WNEZ5FW4K2U6Kc0/eZ5kvXG0JKsEKFB50zrFmfFt52/cvBbZa7eXg==
+
+"@types/node@^13.13.26":
+  version "13.13.30"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-13.13.30.tgz#1ed6e01e4ca576d5aec9cc802cc3bcf94c274192"
+  integrity sha512-HmqFpNzp3TSELxU/bUuRK+xzarVOAsR00hzcvM0TXrMlt/+wcSLa5q6YhTb6/cA6wqDCZLDcfd8fSL95x5h7AA==
 
 "@types/signale@^1.2.1":
   version "1.4.0"
@@ -509,7 +514,6 @@ discord.js@discordjs/discord.js:
 
 "dmd@git+https://github.com/AxonTeam/dmd":
   version "5.0.0"
-  uid "2de7ffa2a92322303bd2735ed6e67dfbfbc0dd7d"
   resolved "git+https://github.com/AxonTeam/dmd#2de7ffa2a92322303bd2735ed6e67dfbfbc0dd7d"
   dependencies:
     array-back "^4.0.1"
@@ -992,7 +996,6 @@ js2xmlparser@^4.0.0:
 
 "jsdoc-api@git+https://github.com/AxonTeam/jsdoc-api":
   version "5.0.4"
-  uid "2e6b93accec3261d5770d151813c2fde12c4e3d9"
   resolved "git+https://github.com/AxonTeam/jsdoc-api#2e6b93accec3261d5770d151813c2fde12c4e3d9"
   dependencies:
     array-back "^4.0.1"
