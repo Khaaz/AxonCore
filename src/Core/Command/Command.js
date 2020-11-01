@@ -238,7 +238,7 @@ class Command extends Base {
             const canExecute = this.permissions.canExecute(msg, guildConfig);
             if (!canExecute[0] ) {
             /* Sends invalid perm message in case of invalid perm [option enabled] */
-                if (guildConfig && this.options.shouldSendInvalidPermissionMessage(guildConfig) ) {
+                if (this.options.shouldSendInvalidPermissionMessage(guildConfig) ) {
                     this.sendUserPerms(channel, this.library.message.getMember(msg), this.options.invalidPermissionMessageTimeout, canExecute[1] );
                 }
                 return new CommandContext(this, msg, {
