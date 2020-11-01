@@ -176,7 +176,7 @@ class ReactionCollector extends Collector {
      * @memberof ReactionCollector
      */
     _onMessageReactionAdd(msg, emoji, userID) {
-        const collectors = this.getCollectors(msg, emoji);
+        const collectors = this.getCollectors(msg, emoji, userID);
         this.emit('collect', collectors, { id: `${msg.id}-${emoji.id || emoji.name}-${userID}`, collected: { message: msg, emoji, userID } } );
     }
 
