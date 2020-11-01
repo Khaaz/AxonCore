@@ -44,7 +44,6 @@ import { COMMAND_EXECUTION_STATE } from '../../Utility/Constants/AxonEnums';
  * @prop {CommandRegistry} [subCommands=null] - Registry of subcommands
  *
  * @prop {Object} info - Default info about the command
- * @prop {Array<String>} [info.owners] - Command authors
  * @prop {String} [info.name] - Full command name
  * @prop {String} [info.description] - Command description
  * @prop {String} [info.usage] - Command usage
@@ -67,7 +66,6 @@ class Command extends Base {
      * @param {Boolean} [data.enabled] - Whether the command is enabled
      * @param {Boolean} [data.serverBypass] - Whether the command can be server disabled
      * @param {Object} [data.info]
-     * @param {Array<String>} [data.info.owners] - Who created the command
      * @param {String} [data.info.description] - The command description
      * @param {Array<String>} [data.info.examples] - Command examples
      * @param {String} [data.info.usage] - The command usage
@@ -106,7 +104,6 @@ class Command extends Base {
 
         /* Command info (help command) */
         this.info = data.info || {
-            owners: [], // ['KhaaZ'] or ['KhaaZ', 'Jack']
             name: null, // Full name of the command
             description: null, // 'A cool command that does things.'
             usage: null, // Full usage of the command
