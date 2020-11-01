@@ -311,7 +311,7 @@ class Command extends Base {
         return this.execute(env)
             /* Successful and failed execution + caught errors (this.error()) */
             .then( (response) => {
-                this._cooldown.shouldSetCooldown(response) && this._cooldown.setCooldown(this.library.message.getAuthorID(msg) );
+                !env.isAdmin && this._cooldown.shouldSetCooldown(response) && this._cooldown.setCooldown(this.library.message.getAuthorID(msg) );
                 
                 return context.addResponseData(response);
             } )
