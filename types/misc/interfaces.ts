@@ -179,10 +179,6 @@ interface CommandInfo {
      * Command usage
      */
     usage?: string;
-    /**
-     * Full command name
-     */
-    name?: string;
 }
 
 interface ACommandOptions {

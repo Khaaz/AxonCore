@@ -43,11 +43,10 @@ import { COMMAND_EXECUTION_STATE } from '../../Utility/Constants/AxonEnums';
  * @prop {Boolean} [hasSubcmd=false] - Whether the command HAS subcommands
  * @prop {CommandRegistry} [subCommands=null] - Registry of subcommands
  *
- * @prop {Object} info - Default info about the command
- * @prop {String} [info.name] - Full command name
- * @prop {String} [info.description] - Command description
- * @prop {String} [info.usage] - Command usage
- * @prop {Array<String>} [info.example] - Array of command examples
+ * @prop {Object} info - The command info
+ * @prop {String} [info.description] - The command description
+ * @prop {String} [info.usage] - The command usage
+ * @prop {Array<String>} [info.example] - The command examples
  *
  * @prop {CommandOptions} options - Options Object for the command (manage all command options)
  * @prop {CommandPermissions} permissions - Permissions Object for the command (manage all command permissions)
@@ -65,11 +64,10 @@ class Command extends Base {
      * @param {Boolean} [data.hasSubcmd] - Whether the command HAS subcommands
      * @param {Boolean} [data.enabled] - Whether the command is enabled
      * @param {Boolean} [data.serverBypass] - Whether the command can be server disabled
-     * @param {Object} [data.info]
+     * @param {Object} [data.info] - The command info
      * @param {String} [data.info.description] - The command description
-     * @param {Array<String>} [data.info.examples] - Command examples
+     * @param {Array<String>} [data.info.examples] - The command examples
      * @param {String} [data.info.usage] - The command usage
-     * @param {String} [data.info.name] - The full command name
      * @param {CommandOptions|Object} [data.options] - The command options
      * @param {CommandPermissions|Object} [data.permissions] - The command permissions
      * @memberof Command
@@ -358,7 +356,7 @@ class Command extends Base {
 
         const embed = {};
         embed.author = {
-            name: `Help for ${this.info.name || this.fullLabel}`,
+            name: `Help for ${this.fullLabel}`,
             icon_url: this.library.client.getAvatar(),
         };
 
