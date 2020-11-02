@@ -59,8 +59,6 @@ class CommandUserLock {
         return true;
     }
 
-
-
     /**
      * Unlock a user.
      *
