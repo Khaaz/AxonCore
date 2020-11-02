@@ -328,7 +328,6 @@ class Command extends Base {
             .catch(err => {
                 !env.isAdmin && this._cooldown.shouldSetCooldown() && this._cooldown.setCooldown(this.library.message.getAuthorID(msg) );
                 this._userLock.unLock(this.library.message.getAuthorID(msg) );
-
                 context.addResponseData(new CommandResponse( { success: false, triggerCooldown: true, error: err } ) );
                 throw new AxonCommandError(context, err);
             } );
