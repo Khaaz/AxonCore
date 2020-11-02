@@ -207,7 +207,7 @@ class Command extends Base {
         const channel = this.library.message.getChannel(msg);
 
         /* Test for userLock */
-        const userIsLocked = this._userLock.shouldLock(userID);
+        const userIsLocked = this._userLock.isLocked(userID);
         if (userIsLocked) {
             return new CommandContext(this, msg, {
                 executed: false,

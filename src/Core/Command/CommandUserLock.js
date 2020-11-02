@@ -47,7 +47,7 @@ class CommandUserLock {
      *
      * @memberof CommandUserLock
      */
-    shouldLock(userID) {
+    isLocked(userID) {
         const lock = this._usersLocked.has(userID);
 
         // Not locked yet
@@ -85,7 +85,7 @@ class CommandUserLock {
      * @param {String} userID
      * @memberof CommandUserLock
      */
-    setLock(userID) {
+    _setLock(userID) {
         this._usersLocked.add(userID); // User is now locked.
     }
 }
