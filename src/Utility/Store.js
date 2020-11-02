@@ -228,6 +228,24 @@ class Store {
     }
 
     /**
+     * Removes from the Store all element that satisfy the function in parameter and returns all elements deleted
+     *
+     * @param {(value: T, key: String) => Boolean} func
+     * @returns {Array<T>} - All deleted elements
+     * @memberof Store
+     */
+    removeAll(func) {
+        const deleted = [];
+        for (const [key, val] of this.entries() ) {
+            if (func(val, key) ) {
+                deleted.push(val);
+                this.delete(key);
+            }
+        }
+        return deleted;
+    }
+
+    /**
      * Return the first object to make the function evaluate true
      *
      * @param {(i: T) => Boolean} func - A function that takes an object and returns true if it matches

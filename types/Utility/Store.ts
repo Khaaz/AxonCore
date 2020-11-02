@@ -97,6 +97,12 @@ export declare class Store<T> {
      */
     public sweep(func: (value: T, key: string) => boolean): this;
     /**
+     * Removes from the Store all element that satisfy the function in parameter
+     * @returns All deleted elements
+     * @memberof Store
+     */
+    public removeAll(func: (value: T, key: string) => boolean): T[];
+    /**
      * Return the first object to make the function evaluate true
      * @param func A function that takes an object and returns true if it matches
      * @returns The first matching object, or null if no match
