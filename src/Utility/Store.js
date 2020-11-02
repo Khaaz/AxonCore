@@ -246,6 +246,22 @@ class Store {
     }
 
     /**
+     * Removes an element from the Store
+     *
+     * @param {String} key - The ID of the object
+     * @returns {T} The removed object, or null if nothing was removed
+     * @memberof Store
+     */
+    remove(key) {
+        const item = this.get(key);
+        if (!item) {
+            return null;
+        }
+        this.delete(key);
+        return item;
+    }
+
+    /**
      * Return the first object to make the function evaluate true
      *
      * @param {(i: T) => Boolean} func - A function that takes an object and returns true if it matches

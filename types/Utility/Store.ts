@@ -103,6 +103,13 @@ export declare class Store<T> {
      */
     public removeAll(func: (value: T, key: string) => boolean): T[];
     /**
+     * Removes an element from the Store
+     * @param {String} key - The ID of the object
+     * @returns {T} The removed object, or null if nothing was removed
+     * @memberof Store
+     */
+    public remove(key: string): T | null;
+    /**
      * Return the first object to make the function evaluate true
      * @param func A function that takes an object and returns true if it matches
      * @returns The first matching object, or null if no match

@@ -74,22 +74,6 @@ class Collection extends Store {
         return value;
     }
 
-    /**
-     * Remove an object
-     *
-     * @param {String} key - The ID of the object
-     * @returns {T} The removed object, or null if nothing was removed
-     * @memberof Collection
-     */
-    remove(key) {
-        const item = this.get(key);
-        if (!item) {
-            return null;
-        }
-        this.delete(key);
-        return item;
-    }
-
     toString() {
         return `[Collection<${this.baseObject.name}>]`;
     }
