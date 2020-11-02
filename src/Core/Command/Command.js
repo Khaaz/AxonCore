@@ -213,7 +213,7 @@ class Command extends Base {
                 executed: false,
                 executionType: env.executionType,
                 executionState: COMMAND_EXECUTION_STATE.USERLOCK,
-            } ).resolveAsync();                
+            } ).resolveAsync();
         }
 
         if (!guildConfig) { // DM EXECUTION
