@@ -255,7 +255,7 @@ export const COMMAND_EXECUTION_TYPES = {
  * INVALID_PERMISSIONS_USER: 4
  * }}
  * @readonly
- * @enum {0|1|2|3|4}
+ * @enum {0|1|2|3|4|5}
  */
 export const COMMAND_EXECUTION_STATE = {
     NO_ERROR: 0,
