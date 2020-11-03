@@ -1,3 +1,25 @@
+/**
+Message Manager proxy - this allows the user to efficiently access the translation strings directly and dynamically by doing <Base>.l.transationProps().
+The user will map to the translation string they want then call a function on that string which will return that translation.
+
+E.g. if the user had the following in the translation file:
+```json
+{
+    "english": {
+        "greeting": {
+            "join": "Hello there {{user}}!"
+        }
+    }
+}
+```
+They would use `this.l.greeting.join({ user: joinedMember.mention }, 'english')`. They can also view the default translation by calling the function without any arguments.
+
+Due to how JavaScript works, evaluating a non resolved translation (i.e. `this.axon.l.function.not.called`) using `await` will cause an error to throw.
+This is unavoidable and you will just need to put up with it.
+
+However, if normal properties of MessageManager or itself need to be accessed, then the MessageManager class will be resolved instead.
+This allows the user to still access whatever they need with flexibility and full control.
+*/
 function createMessageManagerProxy(_messageManager) {
     const handler = {
         get(t, name) {
