@@ -41,7 +41,7 @@ class CommandUserLock {
 
     /**
      * Checks if the user is locked.
-     *
+     * Lock the user if not locked.
      * @param {String} userID - The userID
      * @returns {Boolean} Whether the user is locked or not.
      *
