@@ -253,9 +253,10 @@ export const COMMAND_EXECUTION_TYPES = {
  * INVALID_USAGE: 2
  * INVALID_PERMISSIONS_BOT: 3
  * INVALID_PERMISSIONS_USER: 4
+ * USERLOCK: 5
  * }}
  * @readonly
- * @enum {0|1|2|3|4}
+ * @enum {0|1|2|3|4|5}
  */
 export const COMMAND_EXECUTION_STATE = {
     NO_ERROR: 0,
@@ -263,6 +264,7 @@ export const COMMAND_EXECUTION_STATE = {
     INVALID_USAGE: 2,
     INVALID_PERMISSIONS_BOT: 3,
     INVALID_PERMISSIONS_USER: 4,
+    USERLOCK: 5,
 };
 
 // Permissions

@@ -12,6 +12,7 @@ import AxonError from '../../Errors/AxonError';
 import AxonCommandError from '../../Errors/AxonCommandError';
 
 import { COMMAND_EXECUTION_STATE } from '../../Utility/Constants/AxonEnums';
+import CommandUserLock from './CommandUserLock';
 
 /**
  * @typedef {import('../Module').default} Module
@@ -76,6 +77,8 @@ class Command extends Base {
         super(module.axon);
 
         this._module = module;
+
+        this._userLock = new CommandUserLock(this);
 
         this._cooldown = new CommandCooldown(this);
 
@@ -198,6 +201,16 @@ class Command extends Base {
         const userID = this.library.message.getAuthorID(msg);
         const channel = this.library.message.getChannel(msg);
 
+        /* Test for userLock */
+        const userIsLocked = this._userLock.isLocked(userID);
+        if (userIsLocked) {
+            return new CommandContext(this, msg, {
+                executed: false,
+                executionType: env.executionType,
+                executionState: COMMAND_EXECUTION_STATE.USERLOCK,
+            } ).resolveAsync();
+        }
+
         if (!guildConfig) { // DM EXECUTION
             if (this.options.isGuildOnly() ) { // guild only
                 return new CommandContext(this, msg, {
@@ -307,12 +320,14 @@ class Command extends Base {
             /* Successful and failed execution + caught errors (this.error()) */
             .then( (response) => {
                 !env.isAdmin && this._cooldown.shouldSetCooldown(response) && this._cooldown.setCooldown(this.library.message.getAuthorID(msg) );
-                
+                this._userLock.unLock(this.library.message.getAuthorID(msg) );
+          
                 return context.addResponseData(response);
             } )
             /* UNEXPECTED ERRORS ONLY (non caught) */
             .catch(err => {
                 !env.isAdmin && this._cooldown.shouldSetCooldown() && this._cooldown.setCooldown(this.library.message.getAuthorID(msg) );
+                this._userLock.unLock(this.library.message.getAuthorID(msg) );
 
                 context.addResponseData(new CommandResponse( { success: false, triggerCooldown: true, error: err } ) );
                 throw new AxonCommandError(context, err);
