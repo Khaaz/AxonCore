@@ -10,7 +10,7 @@
  * @class CommandUserLock
  *
  * @prop {Command} _command - The base command
- * @prop {Set} _usersLocked - Set of user IDs
+ * @prop {Set<String>} _usersLocked - All user IDs currently locked
  *  */
 class CommandUserLock {
     /**
