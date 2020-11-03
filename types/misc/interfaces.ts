@@ -225,6 +225,11 @@ interface ACommandOptions {
      * Cooldown between each usage of this command for a specific user (in ms)
      */
     cooldown?: number;
+
+    /**
+     *  Prevents a user from initiating several instances of the same command.
+     */
+    userLock?: boolean;
 }
 
 interface CommandPerms {
