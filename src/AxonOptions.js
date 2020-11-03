@@ -1,3 +1,4 @@
+import { readdirSync } from 'fs';
 import Utils from './Utility/Utils';
 
 import { LIBRARY_TYPES, DB_TYPES, LOGGER_TYPES } from './Utility/Constants/AxonEnums';
@@ -166,7 +167,7 @@ class AxonOptions {
 
         if (typeof data.lang === 'string') {
             const path = `${process.cwd()}/${data.lang}`;
-            const files = require('fs').readdirSync(path).filter(p => p.endsWith('.json') );
+            const files = readdirSync(path).filter(p => p.endsWith('.json') );
             if (files.length === 0) {
                 /**
                  * @type {Languages}
