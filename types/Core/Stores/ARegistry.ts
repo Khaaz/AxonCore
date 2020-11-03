@@ -54,10 +54,10 @@ export declare class ARegistry<T> extends Store<T> {
     public add(key: string, value: T): this;
     /**
      * Remove an item from the registry
-     * @returns Whether it removed the item or not
+     * @returns The removed item
      * @memberof ARegistry
      */
-    public remove(key: string): boolean;
+    public remove(key: string): T;
     /**
      * Register correctly an item in the registry
      * @memberof ARegistry

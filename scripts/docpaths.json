@@ -141,6 +141,10 @@
         "output": "Utility/Collector.md"
     },
     {
+        "input": "Utility/Discord/Collectors/CollectorContainer.js",
+        "output": "Utility/CollectorContainer.md"
+    },
+    {
         "input": "Utility/Discord/Collectors/MessageCollector.js",
         "output": "Utility/MessageCollector.md"
     },
@@ -151,6 +155,14 @@
     {
         "input": "Utility/Discord/Prompt.js",
         "output": "Utility/Prompt.md"
+    },
+    {
+        "input": "Utility/Discord/NextMessage.js",
+        "output": "Utility/NextMessage.md"
+    },
+    {
+        "input": "Utility/Discord/NextReaction.js",
+        "output": "Utility/NextMessage.md"
     },
     {
         "input": "Utility/External/Stack.js",

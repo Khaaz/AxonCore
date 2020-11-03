@@ -1,13 +1,14 @@
 import { EventEmitter } from 'events';
 import {
-    Collection, SortedList, AxonClient, CollectorContainer, LibClient, LibraryInterface, Timeout,
+    Collection, SortedList, AxonClient, LibClient, LibraryInterface, Timeout,
 } from '../../../';
+import { CollectorContainer } from './CollectorContainer';
 
 /**
- * @param collectors The collectors that will collect the element
+ * @param containers The containers that will collect the element
  * @param obj Collected element and id
  */
-type collectListener<T> = (collectors: CollectorContainer<T>[], obj: {
+type collectListener<T> = (containers: CollectorContainer<T>[], obj: {
     /** The collected element id */ id: string;
     /** The collected element */ collected: T;
 } ) => void
@@ -24,7 +25,7 @@ type timeoutListener = (id: string) => void;
  * Timeout if needed.
  *
  * It is advised only to use one instance per Collector type.
- * This Collector handles using only one Collector instance with many collectors running.
+ * This Collector handles using only one Collector instance with many containers running.
  *
  * @class Collector
  * @extends {EventEmitter}
@@ -33,7 +34,7 @@ export declare class Collector<T> extends EventEmitter {
     /** The AxonClient instance */
     private _axon: AxonClient;
     /** Collection of CollectorContainer */
-    public collectors: Collection<CollectorContainer<T>>;
+    public containers: Collection<CollectorContainer<T>>;
     /** The current timeout queue sorted with the first timeout due at the top of the queue */
     public timeoutQueue: SortedList<Timeout>;
     /** Unique increment count used to generate ids */
@@ -67,24 +68,15 @@ export declare class Collector<T> extends EventEmitter {
      */
     readonly lib: LibraryInterface;
     /**
-     * The current INCREMENT count.
-     * Reset at 9999
-     * @readonly
-     * @memberof Collector
-     */
-    readonly INCREMENT: number;
-
-    /**
-     * Generate a unique ID by using the current timestamp and appending a count (INCREMENT)
-     * @returns The unique ID generated
-     * @memberof Collector
-     */
-    private _genID(): string;
-    /**
      * Run this Collector with the given options
      * @returns Collection of elements to resolve
      */
-    public run(...args: any[] ): Promise<Map<string, T>>; // Not Implemented
+    public run(...args: any[] ): Promise<Collection<T>>; // Not Implemented
+    /**
+     * Run this Collector with the given options
+     * @returns CollectorContainer
+     */
+    public collect(...args: any[] ): CollectorContainer<T>; // Not Implemented
     /**
      * Set all listeners to the relevant function (listen to the event)
      * @memberof Collector
@@ -98,7 +90,13 @@ export declare class Collector<T> extends EventEmitter {
     private _run(options: {
         /** Number of milliseconds before timing out */ timeout?: number;
         /** Number of elements to collect before resolving */ count?: number;
+        /** Custom function to filter all element that should be collected */ filter?: number;
     } ): Promise<Map<string, T>>;
+    private _collect(options: {
+        /** Number of milliseconds before timing out */ timeout?: number;
+        /** Number of elements to collect before resolving */ count?: number;
+        /** Custom function to filter all element that should be collected */ filter?: number;
+    } ): CollectorContainer<T>;
     private _preRun<U, V = never>(options: {
         /** Number of milliseconds before timing out */ timeout?: number;
         /** Number of elements to collect before resolving */ count?: number;
@@ -126,7 +124,7 @@ export declare class Collector<T> extends EventEmitter {
      * Handles on collect action
      * @memberof Collector
      */
-    public onCollect(collectors: CollectorContainer<T>[], param: {
+    public onCollect(containers: CollectorContainer<T>[], param: {
         id: string;
         /** Element collected */ collected: T;
     } ): void;
