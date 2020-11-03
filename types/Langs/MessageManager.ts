@@ -1,5 +1,5 @@
 import {
-    AxonClient, Languages, TranslationManager, MessageParser, AxonLanguageResponse, DefaultLanguageResponse,
+    AxonClient, Languages, TranslationManager, MessageParser, AxonLanguageResponse, DefaultLanguageResponse, Proxify,
 } from '..';
 
 /**
@@ -55,8 +55,4 @@ export declare class MessageManager<L extends AxonLanguageResponse = DefaultLang
     public get(message: keyof L, args: AxonLanguageResponse, lang: string): string;
 }
 
-type DynamicMethods<L extends AxonLanguageResponse = DefaultLanguageResponse> = {
-    [P in keyof L]: (args: AxonLanguageResponse, lang: string) => string;
-}
-
-export declare type MessageManagerType<L extends AxonLanguageResponse = DefaultLanguageResponse> = MessageManager<L> & DynamicMethods<L>;
+export declare type MessageManagerType<L extends AxonLanguageResponse = DefaultLanguageResponse> = MessageManager<L> & Proxify<L>;

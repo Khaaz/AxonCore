@@ -671,7 +671,7 @@ interface AOptionsSettings extends AxonOptionsSettings {
 }
 
 interface AxonLanguageResponse {
-    [p: string]: string;
+    [p: string]: AxonLanguageResponse | string;
 }
 
 interface DefaultLanguageResponse extends AxonLanguageResponse {
@@ -680,6 +680,7 @@ interface DefaultLanguageResponse extends AxonLanguageResponse {
     ERR_DESTINATION_PERM: string;
     ERR_COOLDOWN: string;
     ERR_GENERAL: string;
+    [x: string]: DefaultLanguageResponse | string;
 }
 
 interface Languages<L extends AxonLanguageResponse = DefaultLanguageResponse> {
@@ -697,9 +698,9 @@ interface AxonOptionsBase {
      */
     settings?: AxonOptionsSettings;
     /**
-     * Translation file
+     * Translation file/folder
      */
-    lang?: Languages;
+    lang?: Languages | string;
     /**
      * Custom function that will log a custom logo on startup
      */
@@ -958,6 +959,13 @@ interface ExtentionInitReturn {
     DBLocation: string;
 }
 
+type Proxify<T extends AxonLanguageResponse> = {
+    [P in keyof Exclude<T, ReversedNames>]: Exclude<T, ReversedNames>[P] extends string ? (args: AxonLanguageResponse, lang: string) => string : Proxify<Pick<Exclude<T, ReversedNames>, P>>;
+}
+
+type ReversedNames = 'apply' | 'bind' | 'call' | 'toString' | '__defineGetter__' | '__defineSetter__' | '__lookupGetter__'| '__lookupSetter__'
+    | 'hasOwnProperty' | 'isPrototypeOf' | 'propertyIsEnumerable' | 'toLocaleString' | 'toString' | 'valueOf' | 'setPrototypeOf';
+
 export {
     ModuleInfo, ModuleData, AxonJSON, GuildJSON, AConfig, AxonConfigRaw, GConfig, GuildConfigRaw, CommandInfo,
     ACommandOptions, CommandPerms, CommandData, AxonTemplate, ListenerInfo, ListenerData, APIAxonMSGCont, AxonMSGCont, AxonMSGOpt, PermissionObject,
@@ -965,5 +973,5 @@ export {
     AxonOptionsSettings, AOptionsSettings, AxonLanguageResponse, DefaultLanguageResponse, Languages, AxonOptionsBase, WebhookConfig, Webhooks, AxonOptionsPrefixes,
     AxonOptionsInfo, AxonOptionsStaff, AxonOptionsExtensions, AxonConfs, AxonParams, Info, AxonInfo, AxonStaffIDs, LibraryInterfaceStructs, PresenceGame,
     RawAttachment, RawUser, WebhookResponse, DjsContent, DjsWebhookContent, DjsPresenceGame, ErisContent, ErisWebhookContent, ErisPresenceGame,
-    CommandEnvironmentProps, CommandEnvironmentParams, Timeout, ExtentionInitReturn,
+    CommandEnvironmentProps, CommandEnvironmentParams, Timeout, ExtentionInitReturn, Proxify,
 };
