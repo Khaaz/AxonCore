@@ -185,7 +185,7 @@ class CommandOptions {
      * @memberof CommandOptions
      */
     shouldSendInvalidPermissionMessage(guildConfig) {
-        return (!guildConfig.isModOnly() && this.sendPermissionMessage);
+        return guildConfig && (!guildConfig.isModOnly() && this.sendPermissionMessage);
     }
 
     /**

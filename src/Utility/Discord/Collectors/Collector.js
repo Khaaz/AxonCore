@@ -91,7 +91,7 @@ class Collector extends EventEmitter {
      * Should be overriden in any child that extends this class.
      *
      * @param {...any}
-     * @returns {Promise<Map<String, T>>} - Map of elements resolved
+     * @returns {Promise<Collection<String, T>>} - Collection of elements resolved
      * @memberof Collector
      */
     run(...args) { // eslint-disable-line no-unused-vars

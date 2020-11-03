@@ -102,11 +102,11 @@ class ARegistry extends Store {
      * Remove an item from the registry
      *
      * @param {String} key
-     * @returns {Boolean} - Whether it removed the item or not
+     * @returns {T} - The removed item
      * @memberof ARegistry
      */
     remove(key) {
-        return this.registry.delete(key.toLowerCase() );
+        return super.remove(key.toLowerCase() );
     }
 
     /**

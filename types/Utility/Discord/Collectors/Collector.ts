@@ -71,7 +71,7 @@ export declare class Collector<T> extends EventEmitter {
      * Run this Collector with the given options
      * @returns Collection of elements to resolve
      */
-    public run(...args: any[] ): Promise<Map<string, T>>; // Not Implemented
+    public run(...args: any[] ): Promise<Collection<T>>; // Not Implemented
     /**
      * Run this Collector with the given options
      * @returns CollectorContainer

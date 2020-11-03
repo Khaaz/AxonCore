@@ -168,10 +168,6 @@ interface GuildConfigRaw extends GConfig {
 
 interface CommandInfo {
     /**
-     * Command authors
-     */
-    owners?: string[];
-    /**
      * Command description
      */
     description?: string;
@@ -183,10 +179,6 @@ interface CommandInfo {
      * Command usage
      */
     usage?: string;
-    /**
-     * Full command name
-     */
-    name?: string;
 }
 
 interface ACommandOptions {

@@ -41,14 +41,5 @@ export declare class Collection<T> extends Store<T> {
      */
     public add(key: string, value: T, replace?: boolean): T;
 
-    /**
-     * Remove an object
-     *
-     * @param {String} key - The ID of the object
-     * @returns {T} The removed object, or null if nothing was removed
-     * @memberof Collection
-     */
-    public remove(key: string): T | null;
-
     public toString(): `[Collection<Name>]`;
 }
