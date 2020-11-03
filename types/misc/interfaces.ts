@@ -946,15 +946,6 @@ interface CommandEnvironmentParams extends CommandEnvironmentBase {
     command: Command;
 }
 
-interface CollectorContainer<T> {
-    id: string;
-    collected: Map<string, T>;
-    options: object;
-    resolve<U>(value: U | PromiseLike<U>): Promise<U>;
-    resolve(): Promise<void>;
-    reject<U = never>(reason?: any): Promise<U>;
-}
-
 interface Timeout {
     id: string;
     timeout: number;
@@ -982,5 +973,5 @@ export {
     AxonOptionsSettings, AOptionsSettings, AxonLanguageResponse, DefaultLanguageResponse, Languages, AxonOptionsBase, WebhookConfig, Webhooks, AxonOptionsPrefixes,
     AxonOptionsInfo, AxonOptionsStaff, AxonOptionsExtensions, AxonConfs, AxonParams, Info, AxonInfo, AxonStaffIDs, LibraryInterfaceStructs, PresenceGame,
     RawAttachment, RawUser, WebhookResponse, DjsContent, DjsWebhookContent, DjsPresenceGame, ErisContent, ErisWebhookContent, ErisPresenceGame,
-    CommandEnvironmentProps, CommandEnvironmentParams, Timeout, ExtentionInitReturn, CollectorContainer, Proxify,
+    CommandEnvironmentProps, CommandEnvironmentParams, Timeout, ExtentionInitReturn, Proxify,
 };
