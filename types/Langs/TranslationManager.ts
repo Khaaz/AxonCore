@@ -36,5 +36,5 @@ export declare class TranslationManager<L extends AxonLanguageResponse = Default
      *
      * @memberof TranslationManager
      */
-    public getMessage(message: keyof L, lang?: string): string;
+    public getMessage(message: string, lang?: string): string;
 }

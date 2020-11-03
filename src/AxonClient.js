@@ -34,6 +34,7 @@ import logo from './Configs/logo';
 import packageJSON from '../package.json';
 import { EMBED_LIMITS } from './Utility/Constants/DiscordEnums';
 import { WEBHOOK_TYPES, LOG_LEVELS, WEBHOOK_TO_COLOR, DEBUG_FLAGS } from './Utility/Constants/AxonEnums';
+import createMessageManagerProxy from './Langs/MessageManagerProxy';
 
 /**
  * @typedef {import('./AxonOptions').default} AxonOptions
@@ -194,7 +195,7 @@ class AxonClient extends EventEmitter {
         this.dispatcher = new CommandDispatcher(this);
         this.executor = new Executor(this);
 
-        this._messageManager = new MessageManager(this, axonOptions.lang, axonOptions.settings.lang);
+        this._messageManager = createMessageManagerProxy(new MessageManager(this, axonOptions.lang, axonOptions.settings.lang) );
 
         /* General */
         this.staff = ClientInitialiser.initStaff(axonOptions.staff, this.logger);

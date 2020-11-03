@@ -1,3 +1,4 @@
+import { readdirSync } from 'fs';
 import Utils from './Utility/Utils';
 
 import { LIBRARY_TYPES, DB_TYPES, LOGGER_TYPES } from './Utility/Constants/AxonEnums';
@@ -100,7 +101,7 @@ class AxonOptions {
      * @param {DB_TYPES} data.settings.db - DB type
      * @param {Number} data.settings.guildConfigCache - max amount of guildConfigs cached at the same time (LRUCache)
      *
-     * @param {Languages} data.lang - Translation file
+     * @param {Languages | String} data.lang - Translation file/folder
      * @param {() => void} data.logo - Custom function that will log a custom logo on startup
      * // Info
      * @param {Object} data.info - General info about the bot
@@ -164,12 +165,27 @@ class AxonOptions {
             guildConfigCache: settings.guildConfigCache || 10000,
         };
 
-        /**
-         * @type {Languages}
-         */
-        this.lang = Utils.compareObject(defaultLang, data.lang)
-            ? data.lang
-            : defaultLang;
+        if (typeof data.lang === 'string') {
+            const path = `${process.cwd()}/${data.lang}`;
+            const files = readdirSync(path).filter(p => p.endsWith('.json') );
+            if (files.length === 0) {
+                /**
+                 * @type {Languages}
+                 */
+                this.lang = defaultLang;
+            } else {
+                const langs = {};
+                files.forEach(l => {
+                    const customFile = require(`${path}/${l}`);
+                    langs[l.split('.')[0]] = Utils.compareObject(defaultLang, customFile) ? customFile : defaultLang;
+                } );
+                this.lang = langs;
+            }
+        } else {
+            this.lang = Utils.compareObject(defaultLang, data.lang)
+                ? data.lang
+                : defaultLang;
+        }
 
         this.logo = data.logo || null;
         /**
