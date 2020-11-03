@@ -75,7 +75,7 @@ class Collection extends Store {
     }
 
     toString() {
-        return `[Collection<${this.baseObject.name}>]`;
+        return `[Collection<${this.baseObject && this.baseObject.name}>]`;
     }
 }
 
