@@ -81,7 +81,7 @@ class ReactionCollector extends Collector {
      * @param {Array<String>|String} [options.messages] - The message ids to listen for (listens to all reactions if not specified)
      * @param {Array<String>|String} [options.users] - The user ids to listen for (listens to all reactions if not specified)
      * @param {Array<String>|String} [options.emotes] - The emoji ids or names to collect (collects all reactions if not specified)
-     * @returns {Promise<Map<String, CollectedItem>>} Map of messages collected.
+     * @returns {Promise<Collection<String, CollectedItem>>} Collection of reactions collected.
      * @memberof ReactionCollector
      * @example
      * const reactions = await collector.run({ count: 10 });
@@ -193,9 +193,7 @@ class ReactionCollector extends Collector {
         const collectors = this.getCollectors(msg, emoji, userID);
 
         for (const c of collectors) {
-            if (c.collected.has(`${msg.id}-${emoji.id || emoji.name}-${userID}`) ) {
-                c.collected.delete(`${msg.id}-${emoji.id || emoji.name}-${userID}`);
-            }
+            c.remove( ( { message: m, emoji: e, userID: uID } ) => m.id === msg.id && e.id === emoji.id && uID === userID);
         }
     }
 
@@ -210,11 +208,7 @@ class ReactionCollector extends Collector {
         const collectors = this.getCollectors(msg);
 
         for (const c of collectors) {
-            c.collected.forEach( ( { msg: m, emoji, userID } ) => {
-                if (c.collected.has(`${m.id}-${emoji.id || emoji.name}-${userID}`) ) {
-                    c.collected.delete(`${m.id}-${emoji.id || emoji.name}-${userID}`);
-                }
-            } );
+            c.remove( ( { message: m } ) => m.id === msg.id);
         }
     }
 
@@ -230,11 +224,7 @@ class ReactionCollector extends Collector {
         const collectors = this.getCollectors(msg, emoji);
 
         for (const c of collectors) {
-            c.collected.forEach( ( { msg: m, userID } ) => {
-                if (c.collected.has(`${m.id}-${emoji.id || emoji.name}-${userID}`) ) {
-                    c.collected.delete(`${m.id}-${emoji.id || emoji.name}-${userID}`);
-                }
-            } );
+            c.remove( ( { message: m, emoji: e } ) => m.id === msg.id && e.id === emoji.id);
         }
     }
 }

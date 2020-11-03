@@ -1,4 +1,5 @@
 import { EventEmitter } from 'events';
+import Collection from '../../Collection';
 
 /**
  * Contains all elements collected respecting settings and options.
@@ -16,7 +17,7 @@ import { EventEmitter } from 'events';
  * @prop {Number} timeout - The time before the collector times out in milliseconds
  * @prop {Number} count - The amount of elements to collect before automatically ending
  * @prop {Object} options - Other options
- * @prop {Map<String, T>} collected - All collected elements
+ * @prop {Collection<String, T>} collected - All collected elements
  */
 class CollectorContainer extends EventEmitter {
     /**
@@ -42,7 +43,7 @@ class CollectorContainer extends EventEmitter {
 
         this.options = options;
         
-        this.collected = new Map();
+        this.collected = new Collection();
     }
     
     /**
@@ -68,8 +69,14 @@ class CollectorContainer extends EventEmitter {
      * @memberof CollectorContainer
      */
     /**
-     * Fired when an the collector timeout
+     * Fired when the container timeout
      * @event CollectorContainer#timeout
+     * @memberof CollectorContainer
+     */
+    /**
+     * Fired when the container removes an element
+     * @event CollectorContainer#remove
+     * @param {Array<T>} elements - All the elements removed
      * @memberof CollectorContainer
      */
 
@@ -88,9 +95,19 @@ class CollectorContainer extends EventEmitter {
         this.collected.set(id, collected);
         this.emit('collect', collected);
         
-        if (this.options.count !== null && this.isFull() ) {
+        if (this.count !== null && this.isFull() ) {
             this.end();
         }
+    }
+
+    /**
+     * Emits a raw event for this event
+     * @param {(value: T, key: String) => Boolean} func
+     * @memberof CollectorContainer
+     */
+    remove(filter) {
+        const elements = this.collected.removeAll(filter);
+        this.emit('remove', elements);
     }
 
     /**
@@ -100,14 +117,14 @@ class CollectorContainer extends EventEmitter {
      * @memberof CollectorContainer
      */
     isFull() {
-        return this.count ? this.collected.size === this.count : false;
+        return this.count ? this.collected.size >= this.count : false;
     }
     
     /**
      * Wait for the CollectorContainer to resolve.
      * Returns a Promise once the container ends or timeout.
      *
-     * @returns {Promise<Map<String, T>>}
+     * @returns {Promise<Collection<String, T>>}
      * @memberof CollectorContainer
      */
     wait() {

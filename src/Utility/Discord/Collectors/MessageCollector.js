@@ -74,7 +74,7 @@ class MessageCollector extends Collector {
      * @param {Boolean} [options.ignoreSelf] - Whether or not to ignore self
      * @param {String} [options.channels=[]] - The channel ids to listen for (listens to all messages if not specified)
      * @param {String} [options.users=[]] - The user ids to listen for (listens to all messages if not specified)
-     * @returns {Promise<Map<String, Message>>} Map of messages collected.
+     * @returns {Promise<Collection<String, Message>>} Collection of messages collected.
      * @memberof MessageCollector
      * @example
      * const messages = await collector.run({ channels: msg.channel.id, caseInsensitive: false });
@@ -173,9 +173,7 @@ class MessageCollector extends Collector {
         const collectors = this.getCollectors(msg);
 
         for (const c of collectors) {
-            if (c.collected.has(msg.id) ) {
-                c.collected.delete(msg.id);
-            }
+            c.remove(m => m.id === msg.id);
         }
     }
 

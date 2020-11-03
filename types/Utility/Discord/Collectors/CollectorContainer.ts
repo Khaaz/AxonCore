@@ -1,11 +1,16 @@
 import { EventEmitter } from 'events';
 
 import { CollectorContainerSettings } from '../../../';
+import { Collection } from '../../Collection';
 
 /**
  * @param collected Collected element
  */
 type collectListener<T> = (collected: T) => void
+/**
+ * @param removed Removed elements
+ */
+type removeListener<T> = (removed: T[] ) => void
 type timeoutListener = () => void;
 type endListener = () => void;
 
@@ -27,7 +32,7 @@ export declare class CollectorContainer<T> extends EventEmitter {
     /** The amount of elements to collect before automatically ending */
     public count: number|null;
     /** All collected elements */
-    public collected: Map<string, T>;
+    public collected: Collection<T>;
     /**
      * Creates an instance of CollectorContainer.
      * Contains all elements that respect the container options
@@ -46,6 +51,12 @@ export declare class CollectorContainer<T> extends EventEmitter {
      * @memberof Collector
      */
     on(event: 'collect', listener: collectListener<T>): this;
+    /**
+     * Fired when one or many elements are removed
+     * @event Collector#remove
+     * @memberof Collector
+     */
+    on(event: 'remove', listener: removeListener<T>): this;
     /**
      * Fired when an element si collected
      * @event Collector#collect
@@ -73,7 +84,7 @@ export declare class CollectorContainer<T> extends EventEmitter {
      * Returns a Promise once the container ends or timeout.
      * @memberof CollectorContainer
      */
-    wait(): Promise<Map<string, T>>;
+    wait(): Promise<Collection<T>>;
     /**
      * End the CollectorContainer. Emits 'end' event.
      * @memberof CollectorContainer

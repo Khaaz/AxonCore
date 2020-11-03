@@ -1,6 +1,7 @@
 import {
     CollectorOptions, ReactionCollectorOptions, AxonClient, LibMessage, LibTextableChannel, Collector, LibEmoji,
 } from '../../..';
+import { Collection } from '../../Collection';
 import { CollectorContainer } from './CollectorContainer';
 
 /**
@@ -34,7 +35,7 @@ export declare class ReactionCollector extends Collector<{message: LibMessage; e
      * const messages = await collector.run({ caseInsensitive: false });
      * @memberof ReactionCollector
      */
-    public run<T extends LibTextableChannel>(options?: ReactionCollectorOptions): Promise<Map<string, {message: LibMessage<T>; emoji: LibEmoji; userID: string;}>>;
+    public run<T extends LibTextableChannel>(options?: ReactionCollectorOptions): Promise<Collection<{message: LibMessage<T>; emoji: LibEmoji; userID: string;}>>;
     /**
      * Runs the message collector
      * @example

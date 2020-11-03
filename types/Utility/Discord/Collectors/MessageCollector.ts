@@ -1,6 +1,7 @@
 import {
     CollectorOptions, CollectorFullOptions, AxonClient, LibMessage, LibTextableChannel, Collector,
 } from '../../..';
+import { Collection } from '../../Collection';
 import { CollectorContainer } from './CollectorContainer';
 
 /**
@@ -33,7 +34,7 @@ export declare class MessageCollector extends Collector<LibMessage> {
      * const messages = await collector.run({ caseInsensitive: false });
      * @memberof MessageCollector
      */
-    public run<T extends LibTextableChannel>(options?: CollectorFullOptions): Promise<Map<string, LibMessage<T>>>;
+    public run<T extends LibTextableChannel>(options?: CollectorFullOptions): Promise<Collection<LibMessage<T>>>;
     /**
      * Runs the message collector
      * @example
