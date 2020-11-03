@@ -93,11 +93,11 @@ class ErisInterface extends LibraryInterface {
     }
 
     getMessageReactionAdd(func) {
-        return (msg, emoji, userID) => func(msg, emoji, userID);
+        return (msg, emoji, userID) => func(msg, emoji, typeof userID === 'string' ? userID : userID.id);
     }
 
     getMessageReactionRemove(func) {
-        return (msg, emoji, userID) => func(msg, emoji, userID);
+        return (msg, emoji, userID) => func(msg, emoji, typeof userID === 'string' ? userID : userID.id);
     }
 
     getMessageReactionRemoveAll(func) {
