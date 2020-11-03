@@ -22,6 +22,7 @@ export declare class CommandOptions implements ACommandOptions {
 
     public deleteCommand?: boolean;
     public hidden?: boolean;
+
     public userLock?: boolean;
     public cooldown?: number;
 
