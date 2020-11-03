@@ -23,7 +23,7 @@ class CommandUserLock {
         this._command = command;
 
         /**
-         * @type {Set<string>}>}
+         * @type {Set<string>}
          */
         this._usersLocked = new Set();
     }
