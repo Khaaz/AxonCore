@@ -42,7 +42,7 @@ class MessageParser {
      * @returns {String} - The Parsed message
      * @memberof MessageParser
      */
-    parse(message, args) {
+    parse(message, args = {} ) {
         let parsedMessage = message;
         for (const match of this.matchAll(message) ) {
             const toChange = args[match[1].trim()];

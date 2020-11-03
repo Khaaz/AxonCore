@@ -7,7 +7,7 @@ import Collector from './Collector';
 /**
  * Collect bunch of message object according to chosen options
  *
- * @author VoidNull, KhaaZ
+ * @author KhaaZ, VoidNull
  *
  * @class MessageCollector
  * @extends Collector<Message>
@@ -15,8 +15,9 @@ import Collector from './Collector';
  * @prop {Object} options
  * @prop {Number} options.timeout - Number of ms before timing out
  * @prop {Number} options.count - Number of messages to collect
+ * @prop {Number} options.filter - Custom filter function that the Message need to validate in order to be collected
  * @prop {Boolean} options.ignoreBots - Whether to ignore bots
- * @prop {String} options.userID - Specify a userID to only collect message from this user
+ * @prop {Boolean} options.ignoreSelf - Whether or not to ignore self (the bot itself)
  */
 class MessageCollector extends Collector {
     /**
@@ -26,8 +27,9 @@ class MessageCollector extends Collector {
      * @param {Object} [options] - The default options for the message collector instance
      * @param {Number} [options.timeout=10000] - The time before the collector times out in milliseconds
      * @param {Number} [options.count=10] - The amount of messages to collect before automatically ending
+     * @param {Number} [options.filter] - A custom filter function that the Message need to validate in order to be collected
      * @param {Boolean} [options.ignoreBots=true] - Whether or not to ignore bots
-     * @param {String} [options.userID] - The user id to listen for (listens to all messages if not specified)
+     * @param {Boolean} [options.ignoreSelf=true] - Whether or not to ignore self (the bot itself)
      * @memberof MessageCollector
      * @example
      * const collector = new MessageCollector(this.axon, { count: 10, ignoreBots: false });
@@ -35,10 +37,12 @@ class MessageCollector extends Collector {
     constructor(axonClient, options = {} ) {
         super(axonClient);
         this.options = {
-            timeout: options.timeout || 10000, // eslint-disable-line no-magic-numbers
+            timeout: options.timeout || 10000,
             count: options.count || 10,
+            filter: options.filter,
+            
             ignoreBots: options.ignoreBots === undefined ? true : !!options.ignoreBots,
-            userID: options.userID || null,
+            ignoreSelf: options.ignoreSelf === undefined ? true : !!options.ignoreSelf,
         };
 
         this.onMessageCreate = this.lib.getMessageCreate(this._onMessageCreate.bind(this) );
@@ -59,27 +63,63 @@ class MessageCollector extends Collector {
     }
 
     /**
-     * Runs the message collector
+     * Runs the Collector with the given options and resolve once the task is finished with a Map of Messages collected.
+     * If a timeout is provided, will resolve with all Messages collectors until the timeout.
+     * If no timeout is provided, will only resolve when enough element have been collected
      *
-     * @param {Channel} channel - The channel object to listen to
-     * @param {Object} [options] - The options for the message collector
+     * @param {Object} [options] - The options for the message collector, use default options if not specified
      * @param {Number} [options.timeout] - The time before the collector times out in milliseconds
      * @param {Number} [options.count] - The amount of messages to collect before automatically ending
      * @param {Boolean} [options.ignoreBots] - Whether or not to ignore bots
-     * @param {String} [options.userID] - The user id to listen for (listens to all messages if not specified)
-     * @returns {Promise<Map<String, Message>>} Map of messages collected.
+     * @param {Boolean} [options.ignoreSelf] - Whether or not to ignore self
+     * @param {String} [options.channels=[]] - The channel ids to listen for (listens to all messages if not specified)
+     * @param {String} [options.users=[]] - The user ids to listen for (listens to all messages if not specified)
+     * @returns {Promise<Collection<String, Message>>} Collection of messages collected.
      * @memberof MessageCollector
      * @example
-     * const messages = await collector.run(msg.channel, { caseInsensitive: false });
+     * const messages = await collector.run({ channels: msg.channel.id, caseInsensitive: false });
      */
-    run(channel, options = {} ) {
+    run(options = {} ) {
         return this._run( {
-            channel,
             timeout: options.timeout !== undefined ? options.timeout : this.options.timeout,
             count: options.count !== undefined ? options.count : this.options.count,
+            filter: options.filter !== undefined ? options.filter : this.options.filter,
+        },
+        {
+            channels: this._makeArray(options.channels),
+            users: this._makeArray(options.users),
             ignoreBots: options.ignoreBots !== undefined ? options.ignoreBots : this.options.ignoreBots,
-            userID: options.userID !== undefined ? options.userID : this.options.userID,
-            
+            ignoreSelf: options.ignoreSelf !== undefined ? options.ignoreSelf : this.options.ignoreSelf,
+        } );
+    }
+
+    /**
+    * Runs the Collector with the given options and return a container object that can be used to manually control Messages collected.
+    * If no timeout nor count is provided, will run forever until the user manually stops the collector.
+    *
+    * @param {Object} [options] - The options for the message collector, use default options if not specified
+    * @param {Number} [options.timeout] - The time before the collector times out in milliseconds
+    * @param {Number} [options.count] - The amount of messages to collect before automatically ending
+    * @param {Boolean} [options.ignoreBots] - Whether or not to ignore bots
+    * @param {Boolean} [options.ignoreSelf] - Whether or not to ignore self
+    * @param {Array<String>|String} [options.channels=[]] - The channel ids to listen for (listens to all messages if not specified)
+    * @param {Array<String>|String} [options.users=[]] - The user ids to listen for (listens to all messages if not specified)
+    * @returns {CollectorContainer<Message>} CollectorContainer
+    * @memberof MessageCollector
+    * @example
+    * const container = await collector.collect({ channels: [msg.channel.id], caseInsensitive: false });
+    */
+    collect(options = {} ) {
+        return this._collect( {
+            timeout: options.timeout !== undefined ? options.timeout : this.options.timeout,
+            count: options.count !== undefined ? options.count : this.options.count,
+            filter: options.filter !== undefined ? options.filter : this.options.filter,
+        },
+        {
+            channels: this._makeArray(options.channels),
+            users: this._makeArray(options.users),
+            ignoreBots: options.ignoreBots !== undefined ? options.ignoreBots : this.options.ignoreBots,
+            ignoreSelf: options.ignoreSelf !== undefined ? options.ignoreSelf : this.options.ignoreSelf,
         } );
     }
 
@@ -91,16 +131,22 @@ class MessageCollector extends Collector {
      * @memberof MessageCollector
      */
     getCollectors(message) {
-        if (message.author.id === this.lib.client.getID() ) {
-            return [];
-        }
-
-        return this.collectors
-            .filter(e => (
-                e.options.channel.id === message.channel.id
-                && (message.author.bot ? !e.options.ignoreBots : true)
-                && (e.options.userID ? message.author.id === e.options.userID : true)
-            ) );
+        return this.containers
+            .filter(e => {
+                if (e.options.ignoreSelf && this.lib.message.getAuthorID(message) === this.lib.client.getID() ) {
+                    return false;
+                }
+                if (e.options.ignoreBots && message.author.bot) {
+                    return false;
+                }
+                if (e.options.channels.length > 0 && !e.options.channels.includes(this.lib.message.getChannelID(message) ) ) {
+                    return false;
+                }
+                if (e.options.users.length > 0 && !e.options.users.includes(this.lib.message.getAuthorID(message) ) ) {
+                    return false;
+                }
+                return true;
+            } );
     }
 
     /**
@@ -127,9 +173,7 @@ class MessageCollector extends Collector {
         const collectors = this.getCollectors(msg);
 
         for (const c of collectors) {
-            if (c.collected.has(msg.id) ) {
-                c.collected.delete(msg.id);
-            }
+            c.remove(m => m.id === msg.id);
         }
     }
 

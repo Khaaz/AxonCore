@@ -1,17 +1,19 @@
 import {
-    ReactionCollectorOptions, AxonClient, LibMessage, LibTextableChannel, Collector, CollectorContainer, LibEmoji,
+    CollectorOptions, ReactionCollectorOptions, AxonClient, LibMessage, LibTextableChannel, Collector, LibEmoji,
 } from '../../..';
+import { Collection } from '../../Collection';
+import { CollectorContainer } from './CollectorContainer';
 
 /**
  * Collect bunch of message object according to chosen options
  *
- * @author VoidNull, KhaaZ
+ * @author KhaaZ, VoidNull
  *
  * @class ReactionCollector
  * @extends EventEmitter
  */
-export declare class ReactionCollector extends Collector<{msg: LibMessage; emoji: LibEmoji; userID: string;}> {
-    public options: ReactionCollectorOptions;
+export declare class ReactionCollector extends Collector<{message: LibMessage; emoji: LibEmoji; userID: string;}> {
+    public options: CollectorOptions;
     public onMessageReactionAdd: (msg: LibMessage, emoji: LibEmoji, userID: string) => void;
     public onMessageReactionRemove: (msg: LibMessage, emoji: LibEmoji, userID: string) => void;
     public onMessageReactionRemoveAll: (msg: LibMessage) => void
@@ -25,25 +27,27 @@ export declare class ReactionCollector extends Collector<{msg: LibMessage; emoji
      * const collector = new ReactionCollector(this.axon, { count: 10, ignoreBots: false });
      * @memberof ReactionCollector
      */
-    constructor(client: AxonClient, options?: ReactionCollectorOptions);
+    constructor(client: AxonClient, options?: CollectorOptions);
 
     /**
      * Runs the message collector
-     *
-     * @param channel The channel object to listen to
-     * @param options The options for the message collector
-     * @returns Map of messages collected.
-     *
      * @example
-     * const messages = await collector.run(msg.channel, { caseInsensitive: false });
+     * const messages = await collector.run({ caseInsensitive: false });
      * @memberof ReactionCollector
      */
-    public run<T extends LibTextableChannel>(message: LibMessage<T>, options?: ReactionCollectorOptions): Promise<Map<string, {msg: LibMessage<T>; emoji: LibEmoji; userID: string;}>>;
+    public run<T extends LibTextableChannel>(options?: ReactionCollectorOptions): Promise<Collection<{message: LibMessage<T>; emoji: LibEmoji; userID: string;}>>;
+    /**
+     * Runs the message collector
+     * @example
+     * const messages = await collector.collect({ caseInsensitive: false });
+     * @memberof ReactionCollector
+     */
+    public collect<T extends LibTextableChannel>(options?: ReactionCollectorOptions): CollectorContainer<{message: LibMessage<T>; emoji: LibEmoji; userID: string;}>;
     /**
      * Get all CollectorContainers that will collect from this particular message
      * @memberof ReactionCollector
      */
-    public getCollectors<T extends LibTextableChannel>(message: LibMessage<T>): CollectorContainer<{msg: LibMessage<T>; emoji: LibEmoji; userID: string;}>[];
+    public getCollectors<T extends LibTextableChannel>(message: LibMessage<T>, emoji: LibEmoji): CollectorContainer<{message: LibMessage<T>; emoji: LibEmoji; userID: string;}>[];
     /**
      * Function bound to messageReactionAdd event.
      * Collect the reaction for all collectors that responds to the criteria.

@@ -71,4 +71,14 @@ export declare class LibraryInterface {
      * @memberof LibraryInterface
      */
     public getMessageDelete(func: (msg: LibMessage) => void): Function;
+
+    public getMessageReactionAdd(func: (msg: LibMessage, emoji: {id: string|null; name: string;}, userID: string) => void, on: boolean): Function
+    public getMessageReactionRemove(func: (msg: LibMessage, emoji: {id: string|null; name: string;}, userID: string) => void, on: boolean): Function
+    public getMessageReactionRemoveAll(func: (msg: LibMessage) => void, on: boolean): Function
+    public getMessageReactionRemoveEmoji(func: (msg: LibMessage, emoji: {id: string|null; name: string;} ) => void, on: boolean): Function
+
+    public onReactionAdd(func: (msg: LibMessage, emoji: {id: string|null; name: string;}, userID: string) => void, on: boolean): void
+    public onReactionRemove(func: (msg: LibMessage, emoji: {id: string|null; name: string;}, userID: string) => void, on: boolean): void
+    public onReactionRemoveAll(func: (msg: LibMessage) => void, on: boolean): void
+    public onReactionRemoveEmoji(func: (msg: LibMessage, emoji: {id: string|null; name: string;} ) => void, on: boolean): void
 }

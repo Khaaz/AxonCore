@@ -168,10 +168,6 @@ interface GuildConfigRaw extends GConfig {
 
 interface CommandInfo {
     /**
-     * Command authors
-     */
-    owners?: string[];
-    /**
      * Command description
      */
     description?: string;
@@ -183,10 +179,6 @@ interface CommandInfo {
      * Command usage
      */
     usage?: string;
-    /**
-     * Full command name
-     */
-    name?: string;
 }
 
 interface ACommandOptions {
@@ -233,6 +225,11 @@ interface ACommandOptions {
      * Cooldown between each usage of this command for a specific user (in ms)
      */
     cooldown?: number;
+
+    /**
+     *  Prevents a user from initiating several instances of the same command.
+     */
+    userLock?: boolean;
 }
 
 interface CommandPerms {
@@ -585,6 +582,12 @@ interface PromptOptionsData extends PromptOptions {
     resendWhenInvalid: boolean;
 }
 
+interface CollectorContainerSettings {
+    timeout: number|null;
+    count: number|null;
+    filter: (param: object) => {};
+}
+
 interface CollectorOptions {
     /**
      * The time before the collector times out in milliseconds
@@ -595,21 +598,40 @@ interface CollectorOptions {
      */
     count?: number;
     /**
+     * Filter function to filter elements that needs to be collected
+     */
+    filter?: (param: object) => {};
+    /**
      * Whether or not to ignore bots
      */
     ignoreBots?: boolean;
     /**
-     * The user id to listen for (listens to all messages if not specified)
+     * Whether or not to ignore self
      */
-    userID?: string;
-    /**
-     * Whether or not to return messages with lowercase content. Default: content unchanged
-     */
-    caseInsensitive?: boolean;
+    ignoreSelf?: boolean;
 }
 
-interface ReactionCollectorOptions extends CollectorOptions {
-    emojis: string[];
+interface CollectorFullOptions extends CollectorOptions {
+    users: string[]|string;
+    channels: string[]|string;
+}
+
+interface ReactionCollectorOptions extends CollectorFullOptions {
+    emotes: string[]|string;
+    messages: string[]|string;
+}
+
+interface CollectorHelperOptions {
+    timeout: number;
+    count: number;
+    filter?: (param: object) => {};
+    users: string[]|string;
+    channels: string[]|string;
+}
+
+interface ReactionCollectorHelperOptions extends CollectorHelperOptions {
+    emotes: string[]|string;
+    messages: string[]|string;
 }
 
 interface AxonOptionsSettings {
@@ -924,15 +946,6 @@ interface CommandEnvironmentParams extends CommandEnvironmentBase {
     command: Command;
 }
 
-interface CollectorContainer<T> {
-    id: string;
-    collected: Map<string, T>;
-    options: object;
-    resolve<U>(value: U | PromiseLike<U>): Promise<U>;
-    resolve(): Promise<void>;
-    reject<U = never>(reason?: any): Promise<U>;
-}
-
 interface Timeout {
     id: string;
     timeout: number;
@@ -956,9 +969,9 @@ type ReversedNames = 'apply' | 'bind' | 'call' | 'toString' | '__defineGetter__'
 export {
     ModuleInfo, ModuleData, AxonJSON, GuildJSON, AConfig, AxonConfigRaw, GConfig, GuildConfigRaw, CommandInfo,
     ACommandOptions, CommandPerms, CommandData, AxonTemplate, ListenerInfo, ListenerData, APIAxonMSGCont, AxonMSGCont, AxonMSGOpt, PermissionObject,
-    Ctx, EmbedFields, EmbedAuthor, EmbedThumbnail, EmbedImage, EmbedFooter, EmbedData, PromptOptions, PromptOptionsData, CollectorOptions, ReactionCollectorOptions,
+    Ctx, EmbedFields, EmbedAuthor, EmbedThumbnail, EmbedImage, EmbedFooter, EmbedData, PromptOptions, PromptOptionsData, CollectorContainerSettings, CollectorOptions, CollectorFullOptions, ReactionCollectorOptions, CollectorHelperOptions, ReactionCollectorHelperOptions,
     AxonOptionsSettings, AOptionsSettings, AxonLanguageResponse, DefaultLanguageResponse, Languages, AxonOptionsBase, WebhookConfig, Webhooks, AxonOptionsPrefixes,
     AxonOptionsInfo, AxonOptionsStaff, AxonOptionsExtensions, AxonConfs, AxonParams, Info, AxonInfo, AxonStaffIDs, LibraryInterfaceStructs, PresenceGame,
     RawAttachment, RawUser, WebhookResponse, DjsContent, DjsWebhookContent, DjsPresenceGame, ErisContent, ErisWebhookContent, ErisPresenceGame,
-    CommandEnvironmentProps, CommandEnvironmentParams, CollectorContainer, Timeout, ExtentionInitReturn, Proxify,
+    CommandEnvironmentProps, CommandEnvironmentParams, Timeout, ExtentionInitReturn, Proxify,
 };

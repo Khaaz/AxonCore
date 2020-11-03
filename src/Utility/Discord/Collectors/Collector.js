@@ -3,32 +3,32 @@ import NotImplementedException from '../../../Errors/NotImplementedException';
 import Collection from '../../Collection';
 import SortedList from '../../External/SortedList';
 import AxonError from '../../../Errors/AxonError';
+import CollectorContainer from './CollectorContainer';
 
 /**
  * @typedef {import('../../../AxonClient').default} AxonClient
  * @typedef {import('../../../Libraries/definitions/LibraryInterface').default} LibraryInterface
- * @typedef {{
- * id: String, collected: Map<String, T>, options: Object, resolve: (T) => Promise<T>, reject: (T) => Promise<T>),
- * }} CollectorContainer<T>
+ * @typedef {import('./CollectorContainer').default} CollectorContainer
  * @typedef {{ id: String, timeout: Number }} Timeout
  */
 
 /**
- * Base Collector class
+ * Base Collector class. Doesn't emit 'collect' event, this is up to subclass to implement the emition logic
  * Collect a specific number of an element.
  * Resolve with a Collection of the element collected.
  * Timeout if needed.
  * It is advised to only use one instance per Collector type.
- * This Collector handles using only one Collector instance with many collectors running.
+ * This Collector handles using only one Collector instance with many containers running.
+ *
+ * @author KhaaZ
  *
  * @template T
  *
  * @class Collector
  * @extends {EventEmitter}
  * @prop {AxonClient} _axon - The AxonClient instance
- * @prop {Collection<CollectorContainer<T>>} collectors - Collection of CollectorContainer
+ * @prop {Collection<CollectorContainer<T>>} containers - Collection of CollectorContainer
  * @prop {SortedList<Timeout>} timeoutQueue - The current timeout sorted with the first timeout due at the top of the queue
- * @prop {Number} _INCREMENT - Unique increment count used to generate ids
  * @prop {Boolean} running - Whether the Collector is currently running
  * @prop {String} _intervalID - setInterval ID used to clear setinterval
  */
@@ -43,10 +43,9 @@ class Collector extends EventEmitter {
         super();
         this._axon = axonClient;
 
-        this.collectors = new Collection();
+        this.containers = new Collection();
         this.timeoutQueue = new SortedList( ( (toInsert, baseElement) => toInsert.timeout >= baseElement.timeout) );
 
-        this._INCREMENT = 0;
         this.running = false;
         this._intervalID = null;
 
@@ -88,46 +87,26 @@ class Collector extends EventEmitter {
     }
 
     /**
-     * The current INCREMENT count.
-     * Reset at 9999
-     *
-     * @readonly
-     * @type {Number}
-     * @memberof Collector
-     */
-    get INCREMENT() {
-        // eslint-disable-next-line no-magic-numbers
-        this._INCREMENT === 9999
-            ? this._INCREMENT = 0
-            : this._INCREMENT += 1;
-        return this._INCREMENT;
-    }
-
-    /**
-     * Generate a unique ID by using the current timestamp and appending a count (INCREMENT)
-     *
-     * @returns {String} The unique ID generated
-     * @memberof Collector
-     */
-    _genID() {
-        const timestamp = `${Date.now()}`;
-        
-        let inc = `${this.INCREMENT}`;
-        for (let i = inc.length; i < 4; i++) {
-            inc = `0${inc}`;
-        }
-        return `${timestamp}${inc}`;
-    }
-
-    /**
-     * Run this Collector. Main method (called by the user).
+     * Run this Collector and return a Promise with all elements collected. Main method (called by the user).
      * Should be overriden in any child that extends this class.
      *
      * @param {...any}
-     * @returns {Promise<Map<String, T>>} - Map of elements resolved
+     * @returns {Promise<Collection<String, T>>} - Collection of elements resolved
      * @memberof Collector
      */
     run(...args) { // eslint-disable-line no-unused-vars
+        throw new NotImplementedException();
+    }
+
+    /**
+     * Run this Collector and return a container. Main method (called by the user).
+     * Should be overriden in any child that extends this class.
+     *
+     * @param {...any}
+     * @returns {CollectorContainer} - A CollectorContainer
+     * @memberof Collector
+     */
+    collect(...args) { // eslint-disable-line no-unused-vars
         throw new NotImplementedException();
     }
 
@@ -149,60 +128,96 @@ class Collector extends EventEmitter {
         throw new NotImplementedException();
     }
 
+    _makeArray(param) {
+        if (param === undefined || param === null) {
+            return [];
+        }
+
+        if (Array.isArray(param) ) {
+            return param;
+        }
+        return Array(param);
+    }
+
     /**
-     * Run this Collector with the given options
+     * Runs the Collector with the given options and resolve once the task is finished with a Map of elements collected.
+     * If a timeout is provided, will resolve with all elements collected until the timeout.
+     * If no timeout is provided, will only resolve when enough element have been collected
      *
-     * @param {Object} [options={}]
-     * @param {Number} options.timeout - Number of milliseconds before timing out
-     * @param {Number} options.count - Number of elements to collect before resolving
+     * @param {Object} settings - Mandatory settings used by the collector
+     * @param {Number} settings.count - Number of elements to collect before resolving
+     * @param {Number} [settings.timeout=null] - Number of milliseconds before timing out
+     * @param {Function} [settings.filter=() => true] - A filter function that an element need to pass to get collected
+     * @param {Object} options - Additional options to pass to the collector
      * @returns {Promise<Map<String, T>>} - Map of elements resolved
      * @memberof Collector
      */
-    _run(options) {
-        if (!options.timeout) {
-            throw new AxonError('Please specify a valid timeout time.', 'Collector');
-        }
-        if (!options.count) {
+    _run(settings, options) {
+        if (!settings.count) {
             throw new AxonError('Please specify a valid count limit.', 'Collector');
         }
 
-        const promise = new Promise( (resolve, reject) => {
-            this._preRun(options, resolve, reject);
-        } );
-
-        return promise
+        const container = this._preRun(settings, options);
+    
+        return container.wait()
             .then( (e) => {
-                this._postRun();
+                this._postRun(container.id);
                 return e;
             } )
             .catch( (e) => {
-                this._postRun();
+                this._postRun(container.id);
                 throw e;
             } );
     }
 
-    _preRun(options, resolve, reject) {
-        const id = this._genID();
-        this.collectors.set(id, {
-            id,
-            collected: new Map(),
-            options,
-            resolve,
-            reject,
+    /**
+     * Runs the Collector with the given options and return a container object that can be used to manually control elements collected.
+     * If no timeout nor count is provided, will run forever until the user manually stops the collector.
+     *
+     * @param {Object} settings - Mandatory settings used by the collector
+     * @param {Number} [settings.count=null] - Number of elements to collect before resolving
+     * @param {Number} [settings.timeout=null] - Number of milliseconds before timing out
+     * @param {Function} [settings.filter=() => true] - A filter function that an element need to pass to get collected
+     * @param {Object} options - Additional options to pass to the collector
+     * @returns {CollectorContainer} - Map of elements resolved
+     * @memberof Collector
+     */
+    _collect(settings, options) {
+        const container = this._preRun(settings, options);
+        
+        container.on('end', () => {
+            this._postRun(container.id);
+        } );
+        
+        container.on('timeout', () => {
+            this._postRun(container.id);
         } );
 
-        const timestamp = Date.now() + options.timeout;
-        this.timeoutQueue.add( { id, timeout: timestamp } );
+        return container;
+    }
+
+    _preRun(settings, options) {
+        const container = new CollectorContainer(settings, options);
+        this.containers.set(container.id, container);
+
+        if (container.timeout !== null) {
+            const timestamp = Date.now() + container.timeout;
+            this.timeoutQueue.add( { id: container.id, timeout: timestamp } );
+        }
 
         if (!this.running) {
             this.setListeners();
             this.timeout();
             this.running = true;
         }
+
+        return container;
     }
 
-    _postRun() {
-        if (this.collectors.size === 0) {
+    _postRun(id) {
+        this.containers.delete(id);
+        
+        if (this.containers.size === 0) {
             this.unsetListeners();
             clearInterval(this._intervalID);
             this.running = false;
@@ -210,7 +225,7 @@ class Collector extends EventEmitter {
     }
 
     /**
-     * Handles checking for timeout via setInterval
+     * Handles checking for timeout via setInterval every 100 ms
      *
      * @memberof Collector
      */
@@ -220,7 +235,7 @@ class Collector extends EventEmitter {
         }
         
         this._intervalID = setInterval( () => {
-            while (this.timeoutQueue.first() && Date.now() > this.timeoutQueue.first().timeout) {
+            while (this.timeoutQueue.first() && (Date.now() > this.timeoutQueue.first().timeout) ) {
                 const { id }  = this.timeoutQueue.shift();
                 this.emit('timeout', id);
             }
@@ -230,7 +245,7 @@ class Collector extends EventEmitter {
     /**
      * Fired to collect an element
      * @event Collector#collect
-     * @param {Array<CollectorContainer<T>>} collectors - The collectors that will collect the element
+     * @param {Array<CollectorContainer<T>>} containers - The containers that will collect the element
      * @param {Object} obj
      * @param {String} obj.id - The collected element id
      * @param {T} obj.collected - The collected element
@@ -240,19 +255,15 @@ class Collector extends EventEmitter {
     /**
      * Handles on collect action
      *
-     * @param {Array<CollectorContainer>} collectors
+     * @param {Array<CollectorContainer>} containers
      * @param {Object} param - { id, collected }
      * @param {String} param.id - The collected element id
-     * @param {T} collected - Element collected
+     * @param {T} param.collected - Element collected
      * @memberof Collector
      */
-    onCollect(collectors, { id, collected } ) {
-        for (const c of collectors) {
-            c.collected.set(id, collected);
-            if (c.collected.size === c.options.count) {
-                this.collectors.delete(c.id);
-                c.resolve(c.collected);
-            }
+    onCollect(containers, { id, collected } ) {
+        for (const c of containers) {
+            c.collect(id, collected);
         }
     }
 
@@ -260,6 +271,7 @@ class Collector extends EventEmitter {
      * Fired on timeout for a CollectorContainer
      * @event Collector#timeout
      * @param {String} id - The id of the CollectorContainer that timed out
+     * @memberof Collector
      */
 
     /**
@@ -269,13 +281,12 @@ class Collector extends EventEmitter {
      * @memberof Collector
      */
     onTimeout(id) {
-        const c = this.collectors.get(id);
+        const c = this.containers.get(id);
         if (!c) {
             return;
         }
 
-        this.collectors.delete(c.id);
-        c.reject(c.collected);
+        c.break();
     }
 }
 

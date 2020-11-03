@@ -12,6 +12,7 @@ import AxonError from '../../Errors/AxonError';
 import AxonCommandError from '../../Errors/AxonCommandError';
 
 import { COMMAND_EXECUTION_STATE } from '../../Utility/Constants/AxonEnums';
+import CommandUserLock from './CommandUserLock';
 
 /**
  * @typedef {import('../Module').default} Module
@@ -43,12 +44,10 @@ import { COMMAND_EXECUTION_STATE } from '../../Utility/Constants/AxonEnums';
  * @prop {Boolean} [hasSubcmd=false] - Whether the command HAS subcommands
  * @prop {CommandRegistry} [subCommands=null] - Registry of subcommands
  *
- * @prop {Object} info - Default info about the command
- * @prop {Array<String>} [info.owners] - Command authors
- * @prop {String} [info.name] - Full command name
- * @prop {String} [info.description] - Command description
- * @prop {String} [info.usage] - Command usage
- * @prop {Array<String>} [info.example] - Array of command examples
+ * @prop {Object} info - The command info
+ * @prop {String} [info.description] - The command description
+ * @prop {String} [info.usage] - The command usage
+ * @prop {Array<String>} [info.example] - The command examples
  *
  * @prop {CommandOptions} options - Options Object for the command (manage all command options)
  * @prop {CommandPermissions} permissions - Permissions Object for the command (manage all command permissions)
@@ -66,12 +65,10 @@ class Command extends Base {
      * @param {Boolean} [data.hasSubcmd] - Whether the command HAS subcommands
      * @param {Boolean} [data.enabled] - Whether the command is enabled
      * @param {Boolean} [data.serverBypass] - Whether the command can be server disabled
-     * @param {Object} [data.info]
-     * @param {Array<String>} [data.info.owners] - Who created the command
+     * @param {Object} [data.info] - The command info
      * @param {String} [data.info.description] - The command description
-     * @param {Array<String>} [data.info.examples] - Command examples
+     * @param {Array<String>} [data.info.examples] - The command examples
      * @param {String} [data.info.usage] - The command usage
-     * @param {String} [data.info.name] - The full command name
      * @param {CommandOptions|Object} [data.options] - The command options
      * @param {CommandPermissions|Object} [data.permissions] - The command permissions
      * @memberof Command
@@ -80,6 +77,8 @@ class Command extends Base {
         super(module.axon);
 
         this._module = module;
+
+        this._userLock = new CommandUserLock(this);
 
         this._cooldown = new CommandCooldown(this);
 
@@ -106,7 +105,6 @@ class Command extends Base {
 
         /* Command info (help command) */
         this.info = data.info || {
-            owners: [], // ['KhaaZ'] or ['KhaaZ', 'Jack']
             name: null, // Full name of the command
             description: null, // 'A cool command that does things.'
             usage: null, // Full usage of the command
@@ -203,6 +201,16 @@ class Command extends Base {
         const userID = this.library.message.getAuthorID(msg);
         const channel = this.library.message.getChannel(msg);
 
+        /* Test for userLock */
+        const userIsLocked = this._userLock.isLocked(userID);
+        if (userIsLocked) {
+            return new CommandContext(this, msg, {
+                executed: false,
+                executionType: env.executionType,
+                executionState: COMMAND_EXECUTION_STATE.USERLOCK,
+            } ).resolveAsync();
+        }
+
         if (!guildConfig) { // DM EXECUTION
             if (this.options.isGuildOnly() ) { // guild only
                 return new CommandContext(this, msg, {
@@ -238,7 +246,7 @@ class Command extends Base {
             const canExecute = this.permissions.canExecute(msg, guildConfig);
             if (!canExecute[0] ) {
             /* Sends invalid perm message in case of invalid perm [option enabled] */
-                if (guildConfig && this.options.shouldSendInvalidPermissionMessage(guildConfig) ) {
+                if (this.options.shouldSendInvalidPermissionMessage(guildConfig) ) {
                     this.sendUserPerms(channel, this.library.message.getMember(msg), this.options.invalidPermissionMessageTimeout, canExecute[1] );
                 }
                 return new CommandContext(this, msg, {
@@ -311,13 +319,15 @@ class Command extends Base {
         return this.execute(env)
             /* Successful and failed execution + caught errors (this.error()) */
             .then( (response) => {
-                this._cooldown.shouldSetCooldown(response) && this._cooldown.setCooldown(this.library.message.getAuthorID(msg) );
-                
+                !env.isAdmin && this._cooldown.shouldSetCooldown(response) && this._cooldown.setCooldown(this.library.message.getAuthorID(msg) );
+                this._userLock.unLock(this.library.message.getAuthorID(msg) );
+          
                 return context.addResponseData(response);
             } )
             /* UNEXPECTED ERRORS ONLY (non caught) */
             .catch(err => {
                 !env.isAdmin && this._cooldown.shouldSetCooldown() && this._cooldown.setCooldown(this.library.message.getAuthorID(msg) );
+                this._userLock.unLock(this.library.message.getAuthorID(msg) );
 
                 context.addResponseData(new CommandResponse( { success: false, triggerCooldown: true, error: err } ) );
                 throw new AxonCommandError(context, err);
@@ -361,7 +371,7 @@ class Command extends Base {
 
         const embed = {};
         embed.author = {
-            name: `Help for ${this.info.name || this.fullLabel}`,
+            name: `Help for ${this.fullLabel}`,
             icon_url: this.library.client.getAvatar(),
         };
 

@@ -93,11 +93,11 @@ class ErisInterface extends LibraryInterface {
     }
 
     getMessageReactionAdd(func) {
-        return (msg, emoji, userID) => func(msg, emoji, userID);
+        return (msg, emoji, userID) => func(msg, emoji, typeof userID === 'string' ? userID : userID.id);
     }
 
     getMessageReactionRemove(func) {
-        return (msg, emoji, userID) => func(msg, emoji, userID);
+        return (msg, emoji, userID) => func(msg, emoji, typeof userID === 'string' ? userID : userID.id);
     }
 
     getMessageReactionRemoveAll(func) {
@@ -106,6 +106,30 @@ class ErisInterface extends LibraryInterface {
 
     getMessageReactionRemoveEmoji(func) {
         return (msg, emoji) => func(msg, emoji);
+    }
+
+    onReactionAdd(f, on = true) {
+        on
+            ? this.botClient.on(this.enums.EVENTS.MESSAGE_REACTION_ADD, f)
+            : this.botClient.off(this.enums.EVENTS.MESSAGE_REACTION_ADD, f);
+    }
+
+    onReactionRemove(f, on = true) {
+        on
+            ? this.botClient.on(this.enums.EVENTS.MESSAGE_REACTION_REMOVE, f)
+            : this.botClient.off(this.enums.EVENTS.MESSAGE_REACTION_REMOVE, f);
+    }
+
+    onReactionRemoveAll(f, on = true) {
+        on
+            ? this.botClient.on(this.enums.EVENTS.MESSAGE_REACTION_REMOVE_ALL, f)
+            : this.botClient.off(this.enums.EVENTS.MESSAGE_REACTION_REMOVE_ALL, f);
+    }
+
+    onReactionRemoveEmoji(f, on = true) {
+        on
+            ? this.botClient.on(this.enums.EVENTS.MESSAGE_REACTION_REMOVE_EMOJI, f)
+            : this.botClient.off(this.enums.EVENTS.MESSAGE_REACTION_REMOVE_EMOJI, f);
     }
 }
 
