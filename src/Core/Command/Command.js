@@ -290,7 +290,7 @@ class Command extends Base {
 
         /** Doesn't delete the input if any other condition didn't pass through. */
         if (this.options.shouldDeleteCommand() ) {
-            this.library.message.delete(msg).catch(this.logger.warn);
+            this.library.message.delete(msg).catch( (err) => this.logger.warn(err) );
         }
 
         return this._execute(env);
