@@ -286,7 +286,6 @@ class Command extends Base {
             }
             return ctx.resolveAsync();
         }
-              
         /** Doesn't delete the input if any other condition didn't pass through. */
         if (this.options.shouldDeleteCommand() ) {
             this.library.message.delete(msg).catch(this.logger.warn);
