@@ -204,7 +204,7 @@ class Command extends Base {
         /* Test for userLock */
         const userIsLocked = this._userLock.isLocked(userID);
 
-        /** If user is lock then retunr */
+        /** If user is locked, return */
         if (userIsLocked) {
             return new CommandContext(this, msg, {
                 executed: false,
