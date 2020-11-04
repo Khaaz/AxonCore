@@ -34,7 +34,7 @@ class CommandUserLock {
      * @memberof CommandUserLock
      */
     get userLock() {
-        return this._command.options.userLock;
+        return this._command.options.shouldLock();
     }
 
     /**
