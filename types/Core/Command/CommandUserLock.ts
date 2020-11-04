@@ -12,6 +12,7 @@ export declare class CommandUserLock {
      * The base command
      */
     private _command: Command;
+    
     /**
      * All user IDs currently locked
      */
@@ -30,15 +31,13 @@ export declare class CommandUserLock {
      * @readonly
      * @memberof CommandUserLock
      */
-    readonly userLock: boolean;
+    readonly shouldLock: boolean;
 
     // METHODS
     /**
      * Checks if the user is locked.
-     * Lock the user if not locked.
      * @param {String} userID - The userID
      * @returns {Boolean} Whether the user is locked or not.
-     *
      * @memberof CommandUserLock
      */
     public isLocked(userID: string): boolean;
@@ -56,5 +55,5 @@ export declare class CommandUserLock {
      * @param {String} userID
      * @memberof CommandUserLock
      */
-    private _setLock(userID: string): void;
+    public setLock(userID: string): void;
 }

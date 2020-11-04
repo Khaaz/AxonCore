@@ -43,6 +43,7 @@ export {
 
 export { Command } from './Core/Command/Command';
 export { CommandContext } from './Core/Command/CommandContext';
+export { CommandUserLock } from './Core/Command/CommandUserLock';
 export { CommandCooldown } from './Core/Command/CommandCooldown';
 export { CommandEnvironment } from './Core/Command/CommandEnvironment';
 export { CommandOptions } from './Core/Command/CommandOptions';
