@@ -151,7 +151,7 @@ class CommandOptions {
      * @returns {Boolean}
      * @memberof CommandOptions
      */
-    shouldLock() {
+    shouldUserLock() {
         return this.userLock;
     }
 

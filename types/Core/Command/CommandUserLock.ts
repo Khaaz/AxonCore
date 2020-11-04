@@ -31,7 +31,7 @@ export declare class CommandUserLock {
      * @readonly
      * @memberof CommandUserLock
      */
-    readonly userLock: boolean;
+    readonly shouldLock: boolean;
 
     // METHODS
     /**

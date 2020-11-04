@@ -33,8 +33,8 @@ class CommandUserLock {
      * @type {Boolean} Options of userLock.
      * @memberof CommandUserLock
      */
-    get userLock() {
-        return this._command.options.shouldLock();
+    get shouldLock() {
+        return this._command.options.shouldUserLock();
     }
 
     /**
