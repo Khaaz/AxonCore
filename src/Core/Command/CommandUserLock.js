@@ -48,7 +48,7 @@ class CommandUserLock {
 
         // Not locked yet
         if (!lock) {
-             return false;
+            return false;
         }
 
         return true;

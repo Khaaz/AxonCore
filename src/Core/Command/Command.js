@@ -291,9 +291,9 @@ class Command extends Base {
         }
         
         /** Locking the user to one command instance. */
-         this._userLock.setLock(userID)
+        this._userLock.setLock(userID);
         
-         /** Doesn't delete the input if any other condition didn't pass through. */
+        /** Doesn't delete the input if any other condition didn't pass through. */
         if (this.options.shouldDeleteCommand() ) {
             this.library.message.delete(msg).catch(this.logger.warn);
         }
