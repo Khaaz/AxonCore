@@ -1,5 +1,5 @@
 import {
-    Base, CommandData, Module, CommandCooldown, CommandInfo, CommandOptions, CommandPermissions, CommandRegistry,
+    Base, CommandData, Module, CommandUserLock, CommandCooldown, CommandInfo, CommandOptions, CommandPermissions, CommandRegistry,
     AxonTemplate, LibraryInterface, CommandContext, CommandResponse, LibTextableChannel, LibMember, CommandEnvironment,
 } from '../../';
 
@@ -16,6 +16,9 @@ export declare class Command extends Base implements CommandData {
      * Module object
      */
     private _module: Module;
+
+    private _userLock: CommandUserLock;
+
     /**
      * Cooldown Object for the command (manage all command cooldowns)
      */
