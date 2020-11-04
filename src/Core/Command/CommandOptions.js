@@ -146,6 +146,16 @@ class CommandOptions {
     }
 
     /**
+     * Whether the userLock option is enabled or not.
+     *
+     * @returns {Boolean}
+     * @memberof CommandOptions
+     */
+    shouldLock() {
+        return this.userLock;
+    }
+
+    /**
      * Whether the command is hidden or not
      *
      * @returns {Boolean}
