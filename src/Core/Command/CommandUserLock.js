@@ -41,17 +41,11 @@ class CommandUserLock {
      * Checks if the user is locked.
      * @param {String} userID - The userID
      * @returns {Boolean} Whether the user is locked or not.
+     * 
      * @memberof CommandUserLock
      */
     isLocked(userID) {
-        const lock = this._usersLocked.has(userID);
-
-        // Not locked yet
-        if (!lock) {
-            return false;
-        }
-
-        return true;
+        return this._usersLocked.has(userID)
     }
 
     /**
@@ -63,7 +57,7 @@ class CommandUserLock {
     unLock(userID) {
         const lock = this._usersLocked.has(userID);
         
-        if (lock) {
+        if (this._usersLocked.has(userID)) {
             this._usersLocked.delete(userID); // User is now unlocked.
             return true;
         }
