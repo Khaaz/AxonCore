@@ -54,7 +54,7 @@ class CommandUserLock {
      * @returns {Boolean} Whether the user is unlocked or not.
      * @memberof CommandUserLock
      */
-    unLock(userID) {      
+    unLock(userID) {
         if (this._usersLocked.has(userID) ) {
             this._usersLocked.delete(userID); // User is now unlocked.
             return true;
