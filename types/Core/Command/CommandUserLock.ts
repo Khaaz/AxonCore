@@ -12,6 +12,7 @@ export declare class CommandUserLock {
      * The base command
      */
     private _command: Command;
+    
     /**
      * All user IDs currently locked
      */
