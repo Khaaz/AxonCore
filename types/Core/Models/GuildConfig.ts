@@ -1,3 +1,4 @@
+import { AModel } from './AModel';
 import {
     GuildConfigRaw, AxonClient, GConfig, LibMessage, LibMember, Module, Command, Listener, updateDBVal,
 } from '../../';
@@ -10,9 +11,9 @@ import {
  * @author KhaaZ
  *
  * @class GuildConfig
+ * @extends AModel
  */
-export declare class GuildConfig implements GuildConfigRaw {
-    private _axon: AxonClient;
+export declare class GuildConfig extends AModel implements GuildConfigRaw {
     public guildID: string;
     public prefixes: string[];
 
@@ -204,5 +205,5 @@ export declare class GuildConfig implements GuildConfigRaw {
      */
     public updateStateModUser(userID: string, boolean: boolean): Promise<this|null>;
 
-    private _req(key: string, value: updateDBVal): Promise<this|null>
+    protected _req(key: string, value: updateDBVal): Promise<this|null>
 }

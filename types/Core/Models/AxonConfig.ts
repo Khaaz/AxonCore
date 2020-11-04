@@ -1,3 +1,4 @@
+import { AModel } from './AModel';
 import { AxonConfigRaw, AxonClient, AConfig, updateDBVal } from '../../';
 
 /**
@@ -8,10 +9,9 @@ import { AxonConfigRaw, AxonClient, AConfig, updateDBVal } from '../../';
  * @author KhaaZ
  *
  * @class AxonConfig
+ * @extends AModel
  */
-export declare class AxonConfig implements AxonConfigRaw {
-    private _axon: AxonClient;
-
+export declare class AxonConfig extends AModel implements AxonConfigRaw {
     public id: string;
     public prefix: string;
 
@@ -66,5 +66,5 @@ export declare class AxonConfig implements AxonConfigRaw {
      * @memberof AxonConfig
      */
     public updateBlacklistGuild(guildID: string, boolean: boolean): Promise<this|null>;
-    private _req(key: string, value: updateDBVal): Promise<this|null>;
+    protected _req(key: string, value: updateDBVal): Promise<this|null>;
 }

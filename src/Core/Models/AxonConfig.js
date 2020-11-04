@@ -1,9 +1,12 @@
+import AModel from './AModel';
+
 /**
  * @typedef {import('../../AxonClient').default} AxonClient
  * @typedef {{
  * id?: String, prefix?: String, createdAt?: Date, updatedAt?: Date, bannedUsers?: Array<String>, bannedGuilds?: Array<String>
  * }} AConfig
  */
+
 
 /**
  * Default AxonConfig data structure used in AxonCore.
@@ -13,6 +16,7 @@
  * @author KhaaZ
  *
  * @class AxonConfig
+ * @extends AModel
  *
  * @prop {String} id
  * @prop {String} prefix
@@ -22,7 +26,7 @@
  * @prop {Array<String>} [bannedUsers=[]] - Array of users that can't use bot commands
  * @prop {Array<String>} [bannedGuilds=[]] - Array of guilds where bot commands cannot be used
  */
-class AxonConfig {
+class AxonConfig extends AModel {
     /**
      * Creates an instance of AxonConfig.
      *
@@ -32,7 +36,7 @@ class AxonConfig {
      * @memberof AxonConfig
      */
     constructor(axon, values) {
-        this._axon = axon;
+        super(axon);
 
         this.id = values.id || '1';
         this.prefix = values.prefix || axon.settings.prefixes[0];

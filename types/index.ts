@@ -49,6 +49,7 @@ export { CommandOptions } from './Core/Command/CommandOptions';
 export { CommandPermissions } from './Core/Command/CommandPermissions';
 export { CommandResponse } from './Core/Command/CommandResponse';
 
+export { AModel } from './Core/Models/AModel';
 export { AxonConfig } from './Core/Models/AxonConfig';
 export { GuildConfig } from './Core/Models/GuildConfig';
 

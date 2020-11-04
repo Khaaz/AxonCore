@@ -1,3 +1,5 @@
+import AModel from './AModel';
+
 /**
  * @typedef {import('../../AxonClient').default} AxonClient
  * @typedef {import('../Module').default} Module
@@ -18,6 +20,7 @@
  * @author KhaaZ
  *
  * @class GuildConfig
+ * @extends AModel
  *
  * @prop {String} guildID
  * @prop {Array<String>} prefixes
@@ -33,7 +36,7 @@
  * @prop {Array<String>} modRoles - Roles able to execute mod commands: Roles ids
  * @prop {Array<String>} modUsers - Users able to execute mod commands: Users ids
  */
-class GuildConfig {
+class GuildConfig extends AModel {
     /**
      * Creates an instance of GuildConfig.
      *
@@ -42,7 +45,7 @@ class GuildConfig {
      * @memberof GuildConfig
      */
     constructor(axon, values) {
-        this._axon = axon;
+        super(axon);
 
         this.guildID = values.guildID || '';
         this.prefixes = values.prefixes || [];

@@ -36,6 +36,7 @@ export { default as ListenerLoader } from './src/Core/Loaders/ListenerLoader';
 export { default as ModuleLoader } from './src/Core/Loaders/ModuleLoader';
 
 // Models
+export { default as AModel } from './src/Core/Models/AModel';
 export { default as AxonConfig } from './src/Core/Models/AxonConfig';
 export { default as GuildConfig } from './src/Core/Models/GuildConfig';
 
