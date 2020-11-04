@@ -201,6 +201,18 @@ class Command extends Base {
         const userID = this.library.message.getAuthorID(msg);
         const channel = this.library.message.getChannel(msg);
 
+        /* Test for userLock */
+        const userIsLocked = this._userLock.isLocked(userID);
+
+        /** If user is lock then retunr */
+        if (userIsLocked) {
+            return new CommandContext(this, msg, {
+                executed: false,
+                executionType: env.executionType,
+                executionState: COMMAND_EXECUTION_STATE.USERLOCK,
+            } ).resolveAsync();
+        }
+
         if (!guildConfig) { // DM EXECUTION
             if (this.options.isGuildOnly() ) { // guild only
                 return new CommandContext(this, msg, {
@@ -278,17 +290,10 @@ class Command extends Base {
             return ctx.resolveAsync();
         }
         
-        /* Test for userLock */
-        const userIsLocked = this._userLock.isLocked(userID);
-        if (userIsLocked) {
-            return new CommandContext(this, msg, {
-                executed: false,
-                executionType: env.executionType,
-                executionState: COMMAND_EXECUTION_STATE.USERLOCK,
-            } ).resolveAsync();
-        }
-
-        /** Doesn't delete the input if any other condition didn't pass through. */
+        /** Locking the user to one command instance. */
+         this._userLock.setLock(userID)
+        
+         /** Doesn't delete the input if any other condition didn't pass through. */
         if (this.options.shouldDeleteCommand() ) {
             this.library.message.delete(msg).catch(this.logger.warn);
         }
