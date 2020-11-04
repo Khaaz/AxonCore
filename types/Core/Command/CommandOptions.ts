@@ -55,7 +55,7 @@ export declare class CommandOptions implements ACommandOptions {
      *
      * @memberof CommandOptions
      */
-    shouldLock(): boolean;
+    shouldUserLock(): boolean;
     /**
      * Whether the command is hidden or not
      *
