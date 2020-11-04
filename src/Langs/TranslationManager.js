@@ -62,7 +62,7 @@ class TranslationManager {
 
     /**
      * Return a specified message for the specified lang or for the default lang if no specified lang
-     * If specified message doesn't exist in the specified lang return the specified message for the default lang instead.
+     * If the specified path or message doesn't exist in the specified lang return the specified path or message for the default lang instead.
      *
      * @param {String} message
      * @param {String} lang

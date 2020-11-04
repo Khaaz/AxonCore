@@ -19,6 +19,11 @@ This is unavoidable and you will just need to put up with it.
 
 However, if normal properties of MessageManager or itself need to be accessed, then the MessageManager class will be resolved instead.
 This allows the user to still access whatever they need with flexibility and full control.
+
+Technical overview:
+We are creating one Proxy wrapping the MessageManager. This Proxy will create an empty `path` upon every call to MessageManager.
+If there is any property called after MessageManager we will enter in a second Proxy: the Proxy-Loop which will loop through all properties to create an array of string properties.
+This allows us then to call messageManager.get() method to resolve the actual property in the language object.
 */
 function createMessageManagerProxy(_messageManager) {
     const handler = {
