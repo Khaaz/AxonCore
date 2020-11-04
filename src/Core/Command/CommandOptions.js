@@ -44,7 +44,7 @@ class CommandOptions {
      * @param {Boolean} override.guildOnly - Whether to allow executing this command outside of guilds
      * @param {Boolean} override.hidden - Whether to hide this command from help command (general / subcommands)
      * @param {Number} override.cooldown - Cooldown between each usage of this command for a specific user (in ms)
-     * @prop {Boolean} override.userLock - One user can only run one instance of the command at a time across all guilds
+     * @param {Boolean} override.userLock - One user can only run one instance of the command at a time across all guilds
      * @param {Boolean} [useModuleDefault=false] - Whether to use or not the module's base options before applying override permissions
      * @memberof CommandOptions
      */
