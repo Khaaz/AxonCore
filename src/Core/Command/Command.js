@@ -309,7 +309,7 @@ class Command extends Base {
      */
     _execute(env) {
         /** Locking the user to one command instance. */
-        this._userLock.setLock(env.msg.author.id);
+        this._userLock.setLock(this.library.message.getAuthorID(env.msg) );
 
         const { msg } = env;
         const context = new CommandContext(this, msg, {
