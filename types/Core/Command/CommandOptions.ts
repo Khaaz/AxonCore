@@ -51,6 +51,12 @@ export declare class CommandOptions implements ACommandOptions {
      */
     public isGuildOnly(): boolean;
     /**
+     * Whether the userLock option is enabled or not.
+     *
+     * @memberof CommandOptions
+     */
+    shouldUserLock(): boolean;
+    /**
      * Whether the command is hidden or not
      *
      * @memberof CommandOptions

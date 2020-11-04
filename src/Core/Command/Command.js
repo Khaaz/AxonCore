@@ -201,9 +201,8 @@ class Command extends Base {
         const userID = this.library.message.getAuthorID(msg);
         const channel = this.library.message.getChannel(msg);
 
-        /* Test for userLock */
-        const userIsLocked = this._userLock.isLocked(userID);
-        if (userIsLocked) {
+        /** Test for userLock. If user is locked, return */
+        if (this._userLock.isLocked(userID) ) {
             return new CommandContext(this, msg, {
                 executed: false,
                 executionType: env.executionType,
@@ -287,7 +286,6 @@ class Command extends Base {
             }
             return ctx.resolveAsync();
         }
-
         /** Doesn't delete the input if any other condition didn't pass through. */
         if (this.options.shouldDeleteCommand() ) {
             this.library.message.delete(msg).catch(this.logger.warn);
@@ -310,6 +308,9 @@ class Command extends Base {
      * @memberof Command
      */
     _execute(env) {
+        /** Locking the user to one command instance. */
+        this._userLock.setLock(this.library.message.getAuthorID(env.msg) );
+
         const { msg } = env;
         const context = new CommandContext(this, msg, {
             executed: true,
@@ -328,7 +329,6 @@ class Command extends Base {
             .catch(err => {
                 !env.isAdmin && this._cooldown.shouldSetCooldown() && this._cooldown.setCooldown(this.library.message.getAuthorID(msg) );
                 this._userLock.unLock(this.library.message.getAuthorID(msg) );
-
                 context.addResponseData(new CommandResponse( { success: false, triggerCooldown: true, error: err } ) );
                 throw new AxonCommandError(context, err);
             } );

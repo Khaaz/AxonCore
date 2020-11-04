@@ -15,7 +15,6 @@
 class CommandUserLock {
     /**
      * Creates an instance of CommandUserLock.
-     *
      * @param {Command} command
      * @memberof CommandUserLock
      */
@@ -30,46 +29,33 @@ class CommandUserLock {
 
     /**
      * Returns the status of the userlock option.
-     *
      * @readonly
      * @type {Boolean} Options of userLock.
      * @memberof CommandUserLock
      */
-    get userLock() {
-        return this._command.options.userLock;
+    get shouldLock() {
+        return this._command.options.shouldUserLock();
     }
 
     /**
      * Checks if the user is locked.
-     * Lock the user if not locked.
      * @param {String} userID - The userID
      * @returns {Boolean} Whether the user is locked or not.
      *
      * @memberof CommandUserLock
      */
     isLocked(userID) {
-        const lock = this._usersLocked.has(userID);
-
-        // Not locked yet
-        if (!lock) {
-            this._setLock(userID); // lock the user.
-            return false;
-        }
-
-        return true;
+        return this._usersLocked.has(userID);
     }
 
     /**
      * Unlock a user.
-     *
      * @param {String} userID - The userID
      * @returns {Boolean} Whether the user is unlocked or not.
      * @memberof CommandUserLock
      */
     unLock(userID) {
-        const lock = this._usersLocked.has(userID);
-        
-        if (lock) {
+        if (this._usersLocked.has(userID) ) {
             this._usersLocked.delete(userID); // User is now unlocked.
             return true;
         }
@@ -83,7 +69,7 @@ class CommandUserLock {
      * @param {String} userID
      * @memberof CommandUserLock
      */
-    _setLock(userID) {
+    setLock(userID) {
         this._usersLocked.add(userID); // User is now locked.
     }
 }
