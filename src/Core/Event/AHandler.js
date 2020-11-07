@@ -56,22 +56,27 @@ class AHandler {
         const guildID = this.handle(...args);
 
         // Tries to resolve guildConf if there is a guild
-        const guildConfig = guildID ? await this._axon.guildConfigs.getOrFetch(guildID) : null;
+        try {
+            const guildConfig = guildID ? await this._axon.guildConfigs.getOrFetch(guildID) : null;
 
-        // Ignore blacklisted guilds
-        if (guildID && this._axon.axonConfig.isBlacklistedGuild(guildID) ) {
-            return;
-        }
-        for (const listener of this._listeners) {
-            if (!listener.load || !listener.module.enabled || !listener.enabled) { // globally disabled
-                continue;
+            // Ignore blacklisted guilds
+            if (guildID && this._axon.axonConfig.isBlacklistedGuild(guildID) ) {
+                return;
             }
-            // Ignore guild disabled Module/Event
-            if (guildConfig && (
-                (guildConfig.isModuleDisabled(listener.module) && !listener.module.serverBypass) || (guildConfig.isListenerDisabled(listener) && !listener.serverBypass) ) ) {
-                continue;
+            for (const listener of this._listeners) {
+                if (!listener.load || !listener.module.enabled || !listener.enabled) { // globally disabled
+                    continue;
+                }
+                // Ignore guild disabled Module/Event
+                if (guildConfig && (
+                    (guildConfig.isModuleDisabled(listener.module) && !listener.module.serverBypass) || (guildConfig.isListenerDisabled(listener) && !listener.serverBypass) ) ) {
+                    continue;
+                }
+                this._axon.executor.listener(listener, guildConfig, ...args);
             }
-            this._axon.executor.listener(listener, guildConfig, ...args);
+        } catch (err) {
+            // this should never happen but exist for safety reason in order to not crash all other currently running listeners
+            console.error('AHandler::_handle - ', err);
         }
     }
 

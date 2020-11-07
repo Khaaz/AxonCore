@@ -125,8 +125,14 @@ class DjsInterface extends LibraryInterface {
     _handleRaw() {
         this.botClient.on('raw', (packet) => {
             if (EVENTS_LIST.includes(packet.t) ) {
-                for (const l of RAW_LISTENERS[packet.t] ) {
-                    l(packet.d);
+                if (RAW_LISTENERS[packet.t] && RAW_LISTENERS[packet.t].length > 0) {
+                    for (const l of RAW_LISTENERS[packet.t] ) {
+                        try {
+                            l(packet.d);
+                        } catch (err) { // this shouldn't happen but exists in order to prevent crashin all other raw listeners
+                            console.error('DJSInterface::_handleRaw - ', err);
+                        }
+                    }
                 }
             }
         } );
