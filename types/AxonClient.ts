@@ -5,7 +5,7 @@ import {
     AxonTemplate, Module, Command, LOG_LEVELS, Ctx, LibMessage, GuildConfig, DEBUG_FLAGS, Executor, ExtentionInitReturn, AxonLanguageResponse, DefaultLanguageResponse, LibDMChannel,
     CommandContext, AxonCommandError,
 } from './';
-import util from 'util';
+import * as util from 'util';
 
 export declare class AxonClient<L extends AxonLanguageResponse = DefaultLanguageResponse, DB extends ADBProvider = ADBProvider> extends EventEmitter {
     /** Configs (webhooks, template, custom) */
