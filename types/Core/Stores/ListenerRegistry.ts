@@ -13,7 +13,7 @@ export declare class ListenerRegistry extends ARegistry<Listener> {
      * Creates an instance of ListenerRegistry
      */
     constructor(axon: AxonClient);
-    /** 
+    /**
      * Register a Listener inside the ListenerRegistry
      *
      * @param label - The listener label
