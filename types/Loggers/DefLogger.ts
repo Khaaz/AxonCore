@@ -1,4 +1,4 @@
-import { ALogger } from '../';
+import { ALogger, LOGGER_TYPES } from '../';
 
 /**
  * Default Logger with timestamps and custom methods. Doesn't use any dependencies.
@@ -11,5 +11,5 @@ import { ALogger } from '../';
 export declare class DefLogger extends ALogger {
     /** Console */
     public out: Console;
-    public type: 0;
+    public type: LOGGER_TYPES.DEFAULT;
 }

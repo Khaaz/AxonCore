@@ -1,5 +1,5 @@
 import {
-    LibMessage, LibEmoji, ReactionCollectorHelperOptions,
+    AxonReaction, ReactionCollectorHelperOptions,
 } from '../..';
 import { MessageCollector } from './Collectors/MessageCollector';
 
@@ -24,7 +24,7 @@ export declare class NextReaction {
      * @static
      * @memberof NextReaction
      */
-    static for(collector: MessageCollector, options: object): Promise<{message: LibMessage; emoji: LibEmoji; userID: string;}>;
+    static for(collector: MessageCollector, options: object): Promise<AxonReaction>;
     /**
      * The messages to listen
      * @memberof NextReaction
@@ -59,7 +59,7 @@ export declare class NextReaction {
      * Executes the collector and returns the next reaction collected
      * @memberof NextReaction
      */
-    exec(): Promise<{message: LibMessage; emoji: LibEmoji; userID: string;}>;
+    exec(): Promise<AxonReaction>;
 }
 
 export default NextReaction;

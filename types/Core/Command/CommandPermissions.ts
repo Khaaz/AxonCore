@@ -2,6 +2,12 @@ import {
     CommandPerms, Command, LibMessage, Module, AxonClient, Utils, AxonUtils, LibraryInterface, GuildConfig, LibTextableChannel, LibMember, LibGuild,
 } from '../../';
 
+interface Permissions {
+    needed: string[]; bypass: string[];
+}
+
+type PermissionSetter = Partial<Permissions>;
+
 /**
  * CommandPermissions.
  * Holds permissions for a command and all necessary checkers.
@@ -15,37 +21,19 @@ import {
  * @class CommandPermissions
  */
 export declare class CommandPermissions implements CommandPerms {
-    private _command: Command;
+    private _command: Command | Module;
 
     public bot: string[]
     public serverMod: boolean;
     public serverManager: boolean;
     public serverAdmin: boolean;
     public serverOwner: boolean;
-    public author: {
-        needed: string[];
-        bypass: string[];
-    };
-    public users: {
-        needed: string[];
-        bypass: string[];
-    };
-    public roles: {
-        needed: string[];
-        bypass: string[];
-    };
-    public channels: {
-        needed: string[];
-        bypass: string[];
-    };
-    public guilds: {
-        needed: string[];
-        bypass: string[];
-    };
-    public staff: {
-        needed: string[];
-        bypass: string[];
-    };
+    public author: Permissions;
+    public users: Permissions;
+    public roles: Permissions;
+    public channels: Permissions;
+    public guilds: Permissions;
+    public staff: Permissions;
     public custom: (msg: LibMessage) => boolean;
     /**
      * Creates an instance of CommandPermissions.
@@ -55,7 +43,7 @@ export declare class CommandPermissions implements CommandPerms {
      * @param useModuleDefault - Whether to use or not the module's base permissions before applying override permissions
      * @memberof CommandPermissions
      */
-    constructor(command: Command|Module, override?: CommandPerms, userModuleDefault?: boolean);
+    constructor(command: Command|Module, override?: CommandPerms, useModuleDefault?: boolean);
     // GETTERS
     /**
      * Returns the AxonClient instance
@@ -102,7 +90,7 @@ export declare class CommandPermissions implements CommandPerms {
      * @returns True if the user can execute command / False if not. Second element is the missing permission || null
      * @memberof Command
      */
-    public canExecute(msg: LibMessage, guildConf: GuildConfig): [false, string | null] | [true, null?];
+    public canExecute(msg: LibMessage, guildConf?: GuildConfig): [false, string | null] | [true, null?];
 
     /**
      * Set the permissions the bot needs to have to execute this command.
@@ -147,7 +135,7 @@ export declare class CommandPermissions implements CommandPerms {
      * @param toAdd - Whether to add the permissions to the existing permissions
      * @memberof CommandPermissions
      */
-    public setAuthor(object?: { bypass?: string[]; needed?: string[]; }, toAdd?: boolean): this;
+    public setAuthor(object?: PermissionSetter, toAdd?: boolean): this;
     /**
      * Set the user IDs the user needs to have to execute this command.
      *
@@ -155,7 +143,7 @@ export declare class CommandPermissions implements CommandPerms {
      * @param toAdd - Whether to add the permissions to the existing permissions
      * @memberof CommandPermissions
      */
-    public setUsers(object?: { bypass?: string[]; needed?: string[]; }, toAdd?: boolean): this;
+    public setUsers(object?: PermissionSetter, toAdd?: boolean): this;
     /**
      * Set the role IDs the user needs to have to execute this command.
      *
@@ -163,7 +151,7 @@ export declare class CommandPermissions implements CommandPerms {
      * @param toAdd - Whether to add the permissions to the existing permissions
      * @memberof CommandPermissions
      */
-    public setRoles(object?: { bypass?: string[]; needed?: string[]; }, toAdd?: boolean): this;
+    public setRoles(object?: PermissionSetter, toAdd?: boolean): this;
     /**
      * Set the channel IDs needed to be in to execute this command.
      *
@@ -171,7 +159,7 @@ export declare class CommandPermissions implements CommandPerms {
      * @param toAdd - Whether to add the permissions to the existing permissions
      * @memberof CommandPermissions
      */
-    public setChannels(object?: { bypass?: string[]; needed?: string[]; }, toAdd?: boolean): this;
+    public setChannels(object?: PermissionSetter, toAdd?: boolean): this;
     /**
      * Set the guild IDs needed to be in to execute this command.
      *
@@ -186,7 +174,7 @@ export declare class CommandPermissions implements CommandPerms {
      * @param toAdd - Whether to add the permissions to the existing permissions
      * @memberof CommandPermissions
      */
-    public setStaff(object?: { bypass?: string[]; needed?: string[]; }, toAdd?: boolean): this;
+    public setStaff(object?: PermissionSetter, toAdd?: boolean): this;
 
     // CHECK FOR IF PERMISSIONS ARE MET
 

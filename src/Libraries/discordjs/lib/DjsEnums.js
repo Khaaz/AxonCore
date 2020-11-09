@@ -1,6 +1,6 @@
 /**
  * @type {{
- * HELLO: 'ready'
+ * HELLO: ''
  * READY: 'shardReady'
  * RESUMED: 'shardResume'
  * RECONNECT: 'shardReconnecting'

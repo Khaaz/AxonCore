@@ -12,12 +12,12 @@ import {
 export declare class CommandEnvironment<T extends LibTextableChannel = LibTextableChannel> implements CommandEnvironmentProps {
     /** The raw message content */
     public raw: string;
-    public command: string;
-    public usedLabel: string;
     public msg: LibMessage<T>;
     public args: string[];
     public prefix: string;
-    public guildConfig: GuildConfig;
+    public command: string;
+    public usedLabel: string;
+    public guildConfig: GuildConfig | null;
     public executionType: COMMAND_EXECUTION_TYPES;
     /**
      * Creates an instance of CommandEnvironment.
@@ -51,7 +51,7 @@ export declare class CommandEnvironment<T extends LibTextableChannel = LibTextab
      * @returns This CommandEnvironment
      * @memberof CommandEnvironment
      */
-    public setGuildConfig(guildConfig: GuildConfig): this;
+    public setGuildConfig(guildConfig: GuildConfig | null): this;
 
     /**
      * Set the command label from the command object
@@ -66,5 +66,5 @@ export declare class CommandEnvironment<T extends LibTextableChannel = LibTextab
      * @param args - Arguments string
      * @memberof CommandEnvironment
      */
-    public resolveArgs(parser: object, args: string): void;
+    public resolveArgs(parser: { parse: (args: string) => string[]; } | null, args: string): void;
 }

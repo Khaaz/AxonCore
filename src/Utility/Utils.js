@@ -390,7 +390,7 @@ class Utils {
      * Promisified readFile method
      *
      * @param {String} path
-     * @returns {Promise<String>} content
+     * @returns {Promise<Buffer>} content
      * @memberof Utils
      */
     readFileAsync(path) {

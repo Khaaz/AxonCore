@@ -21,7 +21,7 @@ class Message {
     // **** GETTERS / SETTERS **** //
 
     /**
-     * Message ID
+     * If author is a bot
      * @param {Message} message
      * @returns {Boolean}
      * @memberof Message
@@ -84,7 +84,7 @@ class Message {
     /**
      * Member who sent the message
      * @param {Message} message
-     * @returns {Member}
+     * @returns {Member?}
      * @memberof Message
      */
     getMember(message) {
@@ -94,7 +94,7 @@ class Message {
     /**
      * Member ID who sent the message
      * @param {Message} message
-     * @returns {String}
+     * @returns {String|null}
      * @memberof Message
      */
     getMemberID(message) {

@@ -12,8 +12,8 @@ import {
  * @class CommandDispatcher
  */
 export declare class CommandDispatcher {
-    public mentionFormatter: RegExp;
     private _axon: AxonClient;
+    public mentionFormatter: RegExp;
     /**
      * Creates an instance of CommandDispatcher.
      *
@@ -59,10 +59,10 @@ export declare class CommandDispatcher {
      * @param guildConfig - The guildConfig Object
      * @param isAdmin - Whether admin prefix was used
      * @param isOwner - Whether owner prefix was used
-     * @returns {String?} The prefix if found / Undefined if not
+     * @returns The prefix if found / Undefined if not
      * @memberof CommandDispatcher
      */
-    public resolvePrefix(msg: LibMessage, guildConfig: GuildConfig, isAdmin?: boolean, isOwner?: boolean): string;
+    public resolvePrefix(msg: LibMessage, guildConfig?: GuildConfig, isAdmin?: boolean, isOwner?: boolean): string;
     /**
      * Resolves the prefix for the guild of the message.
      * If the message starts with one of the guild prefixes it returns the prefix, otherwise it returns undefined.
@@ -73,5 +73,5 @@ export declare class CommandDispatcher {
      * @returns The prefix if found / Undefined if not
      * @memberof CommandDispatcher
      */
-    public resolveGuildPrefix(msg: LibMessage, guildConfig: GuildConfig): string;
+    public resolveGuildPrefix(msg: LibMessage, guildConfig?: GuildConfig): string;
 }

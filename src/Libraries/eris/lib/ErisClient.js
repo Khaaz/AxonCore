@@ -32,7 +32,7 @@ class ErisClient extends Client {
     }
 
     /**
-     * @returns {String}
+     * @returns {String | null}
      * @memberof ErisClient
      */
     getAvatar() {

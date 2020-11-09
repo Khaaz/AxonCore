@@ -9,6 +9,7 @@ import { DjsClient } from './Client';
 import { DjsEnums } from './Enums';
 // @ts-ignore
 import * as djs from 'discord.js';
+import { LIBRARY_TYPES, EmojiInfo } from '../..';
 
 export declare class DjsInterface extends LibraryInterface {
     public user: DjsUser;
@@ -19,7 +20,7 @@ export declare class DjsInterface extends LibraryInterface {
     public guild: DjsGuild;
     public resolver: DjsResolver;
     public client: DjsClient;
-    public type: 1;
+    public type: LIBRARY_TYPES.DISCORDJS;
     /**
      * Creats an instance of DjsInterface
      * @memberof DjsInterface
@@ -40,6 +41,10 @@ export declare class DjsInterface extends LibraryInterface {
     /**
      * @memberof DjsInterface
      */
+    public onceReady(func: () => void): void;
+    /**
+     * @memberof DjsInterface
+     */
     public getMessageCreate(func: (msg: djs.Message) => void): (msg: djs.Message) => void;
     /**
      * @memberof DjsInterface
@@ -49,4 +54,49 @@ export declare class DjsInterface extends LibraryInterface {
      * @memberof DjsInterface
      */
     public getMessageDelete(func: (msg: djs.Message) => void): (msg: djs.Message) => void;
+    /**
+     * @memberof DjsInterface
+     */
+    private _addRawListener(t: string, f: (...args: any[] ) => void): void;
+    /**
+     * @memberof DjsInterface
+     */
+    private _removeRawListener(t: string, f: (...args: any[] ) => void): void;
+    /**
+     * @memberof DjsInterface
+     */
+    private _handleRaw(): void;
+    /**
+     * @memberof DjsInterface
+     */
+    public getMessageReactionAdd(func: (msg: djs.Message, emoji: EmojiInfo, userID: string) => void): Function;
+    /**
+     * @memberof DjsInterface
+     */
+    public getMessageReactionRemove(func: (msg: djs.Message, emoji: EmojiInfo, userID: string) => void): Function;
+    /**
+     * @memberof DjsInterface
+     */
+    public getMessageReactionRemoveAll(func: (msg: djs.Message, emoji: EmojiInfo, userID: string) => void): Function;
+    /**
+     * @memberof DjsInterface
+     */
+    public getMessageReactionRemoveEmoji(func: (msg: djs.Message, emoji: EmojiInfo, userID: string) => void): Function;
+
+    /**
+     * @memberof DjsInterface
+     */
+    public onReactionAdd(func: (msg: djs.Message, emoji: EmojiInfo, userID: string) => void, on?: boolean): void
+    /**
+     * @memberof DjsInterface
+     */
+    public onReactionRemove(func: (msg: djs.Message, emoji: EmojiInfo, userID: string) => void, on?: boolean): void
+    /**
+     * @memberof DjsInterface
+     */
+    public onReactionRemoveAll(func: (msg: djs.Message) => void, on?: boolean): void
+    /**
+     * @memberof DjsInterface
+     */
+    public onReactionRemoveEmoji(func: (msg: djs.Message, emoji: EmojiInfo) => void, on?: boolean): void
 }

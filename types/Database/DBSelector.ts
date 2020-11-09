@@ -17,5 +17,5 @@ export declare class DBSelector extends ASelector {
      * @param axonClient AxonClient
      * @param axonOptions AxonOptions
      */
-    select(axonClient: AxonClient, axonOptions: AxonOptions): new (...args: any[] ) => (InMemoryProvider | JsonProvider | MongoProvider);
+    select(axonClient: AxonClient, axonOptions: AxonOptions): typeof InMemoryProvider | typeof JsonProvider | typeof MongoProvider;
 }

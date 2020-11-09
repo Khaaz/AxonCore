@@ -1,5 +1,5 @@
 import {
-    ADBProvider, AxonConfig, GuildConfig, Module, Command, Listener,
+    ADBProvider, AxonConfig, GuildConfig, Module, Command, Listener, DB_TYPES,
 } from '..';
 
 /**
@@ -11,7 +11,7 @@ import {
  * @extends ADBProvider
  */
 export declare class InMemoryProvider extends ADBProvider {
-    public type: 0;
+    public type: DB_TYPES.IN_MEMORY;
     
     public init(): void;
     public fetchAxon(): Promise<AxonConfig>;

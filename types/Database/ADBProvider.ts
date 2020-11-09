@@ -28,7 +28,7 @@ export declare abstract class ADBProvider {
      *
      * @memberof ADBProvider
      */
-    constructor(axonClient: AxonClient, type: DB_TYPES);
+    constructor(axonClient: AxonClient, type?: DB_TYPES);
     /**
      * Init the ADBProvider.
      * Method called just after instantiation. Can be overridden with anything that will be used by the provider.

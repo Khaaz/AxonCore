@@ -24,7 +24,7 @@ export declare class EventManager extends Base {
      *
      * @memberof EventManager
      */
-    constructor(axon: AxonClient, name: string, listeners: Listener[] );
+    constructor(axon: AxonClient);
     // GETTERS
     /**
      * Returns all Handlers base

@@ -20,7 +20,7 @@ export declare class AxonError extends Error {
      * @param subModule Module in which the error originated from
      * @memberof AxonError
      */
-    constructor(message: string, module: Module | string, subModule?: string);
+    constructor(message: string, module: Module | string, subModule?: string | null);
     readonly short: string;
     readonly message: string;
     readonly name: string;

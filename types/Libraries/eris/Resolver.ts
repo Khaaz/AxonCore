@@ -46,7 +46,7 @@ export declare class ErisResolver extends Resolver {
      * @returns The channel object / Null if not found / Error
      * @memberof ErisResolver
      */
-    static channel(guild: Eris.Guild, args: string | string[] ): Eris.GuildChannel;
+    static channel(guild: Eris.Guild, args: string | string[] ): Eris.GuildChannel | null;
     /**
      * Resolve a guild within all guilds the bot is in.
      *
@@ -55,5 +55,5 @@ export declare class ErisResolver extends Resolver {
      * @returns The guild object / Null if not found / Error
      * @memberof ErisResolver
      */
-    static guild(client: Eris.Client, args: string[] ): Eris.Guild;
+    static guild(client: Eris.Client, args: string[] ): Eris.Guild | null;
 }

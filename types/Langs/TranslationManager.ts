@@ -30,7 +30,7 @@ export declare class TranslationManager<L extends AxonLanguageResponse = Default
      *
      * @memberof TranslationManager
      */
-    public getMessages(lang: string): L;
+    public getMessages(lang?: string): L;
     /**
      * Return a specified message for the specified lang or the default lang if no specified lang
      *

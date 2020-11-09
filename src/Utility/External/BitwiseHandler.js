@@ -20,7 +20,7 @@ export default class BitwiseHandler {
      * See if the bits contain a specific enum
      * @param {string} enumName Name of enum to check for
      * @param {number} bits Current bits
-     * @param {boolean} negative Whether or not to inverse the output
+     * @param {boolean} [negative] Whether or not to inverse the output
      * @returns Whether or not the bits include a specific enum
      */
     has(enumName, bits, negative) {

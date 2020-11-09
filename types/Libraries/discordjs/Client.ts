@@ -19,6 +19,10 @@ export declare class DjsClient extends Client {
     /**
      * @memberof DjsClient
      */
+    public getAvatar(): string | null;
+    /**
+     * @memberof DjsClient
+     */
     public getMember(guild: djs.Guild): djs.GuildMember;
     /**
      * @memberof DjsClient

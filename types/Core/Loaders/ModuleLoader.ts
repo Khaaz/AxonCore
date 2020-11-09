@@ -12,7 +12,7 @@ import { ALoader, AxonClient, ALogger, Module } from '../../';
 export declare class ModuleLoader extends ALoader<AxonClient> {
     /**
      * Creates an instance of ModuleLoader
-     * @param {AxonClient} axonClient
+     * @param axonClient
      */
     constructor(axonClient: AxonClient);
     /**

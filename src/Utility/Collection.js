@@ -57,7 +57,7 @@ class Collection extends Store {
      *
      * @param {String} key - The ID of the object
      * @param {T} value - The object data
-     * @param {Boolean} replace - Whether to replace an existing object with the same ID
+     * @param {Boolean} [replace] - Whether to replace an existing object with the same ID
      * @returns {T} The existing or newly created object
      * @memberof Collection
      */

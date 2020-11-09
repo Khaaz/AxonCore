@@ -79,7 +79,7 @@ class Listener extends Base {
     /**
      * Promisify the return execute return to prevent promise issue
      *
-     * @param {GuildConfig} guildConfig - the guildConfig or undefined if not a guild event
+     * @param {GuildConfig} [guildConfig] - the guildConfig or undefined if not a guild event
      * @param {...any} args - Array of the events arguments
      * @returns {Promise}
      * @memberof Listener

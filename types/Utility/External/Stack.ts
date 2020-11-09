@@ -7,7 +7,7 @@
  */
 export declare class Stack<T> {
     private _elements: T[];
-    public max: number;
+    public max: number | null;
     public replaceOnMax: boolean;
     /**
      * Creates an instance of Stack.
@@ -43,5 +43,5 @@ export declare class Stack<T> {
      *
      * @memberof Stack
      */
-    public destack(): T;
+    public unstack(): T;
 }

@@ -159,7 +159,7 @@ export declare class GuildConfig extends AModel implements GuildConfigRaw {
      * @returns Updated guildConfig / Error
      * @memberof GuildConfig
      */
-    public updateStateModule(label: string, boolean: boolean): Promise<this|null>;
+    public updateStateModule(label: string, boolean?: boolean): Promise<this|null>;
     /**
      * Updates the state of a command.
      *
@@ -170,7 +170,7 @@ export declare class GuildConfig extends AModel implements GuildConfigRaw {
      * @returns Updated guildConfig / Error
      * @memberof GuildConfig
      */
-    public updateStateCommand(label: string, boolean: boolean): Promise<this|null>;
+    public updateStateCommand(label: string, boolean?: boolean): Promise<this|null>;
     /**
      * Updates the state of a listener.
      *
@@ -181,7 +181,7 @@ export declare class GuildConfig extends AModel implements GuildConfigRaw {
      * @returns Updated guildConfig / Error
      * @memberof GuildConfig
      */
-    public updateStateListener(label: string, boolean: boolean): Promise<this|null>;
+    public updateStateListener(label: string, boolean?: boolean): Promise<this|null>;
     /**
      * Updates the state of a mod role.
      *
@@ -192,7 +192,7 @@ export declare class GuildConfig extends AModel implements GuildConfigRaw {
      * @returns Updated guildConfig / Error
      * @memberof GuildConfig
      */
-    public updateStateModRole(roleID: string, boolean: boolean): Promise<this|null>;
+    public updateStateModRole(roleID: string, boolean?: boolean): Promise<this|null>;
     /**
      * Updates the state of a mod user.
      *
@@ -203,7 +203,7 @@ export declare class GuildConfig extends AModel implements GuildConfigRaw {
      * @returns Updated guildConfig / Error
      * @memberof GuildConfig
      */
-    public updateStateModUser(userID: string, boolean: boolean): Promise<this|null>;
+    public updateStateModUser(userID: string, boolean?: boolean): Promise<this|null>;
 
     protected _req(key: string, value: updateDBVal): Promise<this|null>
 }

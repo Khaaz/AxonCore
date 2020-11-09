@@ -3,75 +3,43 @@ import {
 } from '../../';
 
 export declare class CommandContext {
-    /**
-     * Raw input
-     */
+    /** Raw input */
     public raw: string;
-    /**
-     * The command full label
-     */
+    /** The command full label */
     public commandLabel: string;
-    /**
-     * The module name
-     */
+    /** The module name */
     public moduleLabel: string;
 
-    /**
-     * Whether the command was actually executed or not
-     */
-    public execute: boolean;
+    /** Whether the command was actually executed or not */
+    public executed: boolean;
     public helpExecution: boolean;
-    /**
-     * The state of execution (no error, cooldown, invalid usage, invalid permission)
-     */
-    public executionState: number;
-    /**
-     * The type of execution (Owner, Admin, Regular)
-     */
-    public executionType: number;
-    /**
-     * Whether the command was successfully executed or not
-     */
-    public success: boolean;
-    /**
-     * Optional error object in case of bad command execution
-     */
-    public error: string|Error;
+    /** The state of execution (no error, cooldown, invalid usage, invalid permission) */
+    public executionState: COMMAND_EXECUTION_STATE;
+    /** The type of execution (Owner, Admin, Regular) */
+    public executionType: COMMAND_EXECUTION_TYPES;
+    /** Whether the command was successfully executed or not */
+    public success?: boolean;
+    /** Optional error object in case of bad command execution */
+    public error?: Error | null;
 
-    /**
-     * Whether the command was executed in DM or not
-     */
+    /** Whether the command was executed in DM or not */
     public dm: boolean;
-    /**
-     * Context: guild where the command was executed ID
-     */
-    public guildID: string;
-    /**
-     * Context: guild where the command was executed name
-     */
-    public guildName: string;
+    /** Context: guild where the command was executed ID */
+    public guildID: string | null;
+    /** Context: guild where the command was executed name */
+    public guildName: string | null;
 
-    /**
-     * Context: channel where the command was executed ID
-     */
+    /** Context: channel where the command was executed ID */
     public channelID: string;
-    /**
-     * Context: channel where the command was executed name
-     */
-    public channelName: string;
+    /** Context: channel where the command was executed name */
+    public channelName?: string;
 
-    /**
-     * Context: user that called the command ID
-     */
-    public callerID: string;
-    /**
-     * Context: user that called the command name
-     */
-    public callerName: string;
+    /** Context: user that called the command ID */
+    public callerID: string | null;
+    /** Context: user that called the command name */
+    public callerName: string | null;
 
-    /**
-     * The execution time
-     */
+    /** The execution time */
     public calledAt: Date;
 
     /**

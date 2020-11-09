@@ -37,12 +37,12 @@ export declare class Collector<T> extends EventEmitter {
     public containers: Collection<CollectorContainer<T>>;
     /** The current timeout queue sorted with the first timeout due at the top of the queue */
     public timeoutQueue: SortedList<Timeout>;
-    /** Unique increment count used to generate ids */
-    private _INCREMENT: number;
     /** Whether the Collector is currently running */
     public running: boolean;
     /** setInterval ID used to clear setinterval */
-    private _intervalID: string|null;
+    private _intervalID: NodeJS.Timeout|null;
+    /** Unique increment count used to generate ids */
+    private _INCREMENT: number;
     /**
      * Creates an instance of Collector.
      * @memberof Collector
@@ -87,6 +87,8 @@ export declare class Collector<T> extends EventEmitter {
      * @memberof Collector
      */
     public unsetListeners(): void;
+    /** @memberof Collector */
+    private _makeArray<T>(param?: T | T[] | null): T[];
     private _run(options: {
         /** Number of milliseconds before timing out */ timeout?: number;
         /** Number of elements to collect before resolving */ count?: number;

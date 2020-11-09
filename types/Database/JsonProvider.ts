@@ -1,5 +1,5 @@
 import {
-    ADBProvider, JsonManager, AxonConfig, GuildConfig, updateDBVal,
+    ADBProvider, JsonManager, AxonConfig, GuildConfig, updateDBVal, DB_TYPES,
 } from '..';
 
 /**
@@ -11,7 +11,7 @@ import {
  * @extends ADBProvider
  */
 export declare class JsonProvider extends ADBProvider {
-    public type: 1;
+    public type: DB_TYPES.JSON;
     
     /**
      * Class responsible to read / write data to the DB as json.
@@ -31,7 +31,7 @@ export declare class JsonProvider extends ADBProvider {
      * @returns Newly created Axon config from the DB
      * @memberof JsonProvider
      */
-    initAxon(): Promise<AxonConfig>;
+    initAxon(): Promise<AxonConfig | null>;
     /**
      * Initialises a default Guild config.
      * Use default AxonClient prefix settings when creating the new guild config.
@@ -41,7 +41,7 @@ export declare class JsonProvider extends ADBProvider {
      * @returns Newly created Guild config from the DB
      * @memberof JsonProvider
      */
-    initGuild(gID: string): Promise<GuildConfig>;
+    initGuild(gID: string): Promise<GuildConfig | null>;
 
     /**
      * Retrieves the axon config from the DB
@@ -49,14 +49,14 @@ export declare class JsonProvider extends ADBProvider {
      * @returns AxonSchema Object or null
      * @memberof JsonProvider
      */
-    fetchAxon(): Promise<AxonConfig>;
+    fetchAxon(): Promise<AxonConfig | null>;
     /**
      * Retrieves the Guild config for the specified guild.
      *
      * @param gID - guild ID
      * @memberof JsonProvider
      */
-    fetchGuild(gID: string): Promise<GuildConfig>;
+    fetchGuild(gID: string): Promise<GuildConfig | null>;
 
     /**
      * Update AxonConfig in the DB.

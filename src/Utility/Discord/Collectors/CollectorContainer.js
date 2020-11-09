@@ -101,8 +101,8 @@ class CollectorContainer extends EventEmitter {
     }
 
     /**
-     * Emits a raw event for this event
-     * @param {(value: T, key: String) => Boolean} func
+     * Removes elements. Emits 'remove' event.
+     * @param {(value: T, key: String) => Boolean} filter
      * @memberof CollectorContainer
      */
     remove(filter) {

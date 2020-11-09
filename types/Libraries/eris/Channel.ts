@@ -8,7 +8,7 @@ export declare class ErisChannel extends Channel {
     /**
      * @memberof ErisChannel
      */
-    public hasPermission(channel: Eris.Channel, user: Eris.User, perm: DISCORD_LIB_PERMISSIONS): boolean;
+    public hasPermission(channel: Eris.GuildChannel, user: Eris.User | Eris.Member, perm: DISCORD_LIB_PERMISSIONS): boolean;
     /**
      * @memberof ErisChannel
      */

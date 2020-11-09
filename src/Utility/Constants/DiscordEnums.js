@@ -336,6 +336,7 @@ export const CLIENT_STATUS_TYPES = {
     CUSTOM: 4,
 };
 
+/* eslint-disable no-magic-numbers */
 /**
  * @type {{
  * NONE: 0,

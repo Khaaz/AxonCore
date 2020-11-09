@@ -52,7 +52,7 @@ class TranslationManager {
     /**
      * Return all messages for the specified lang or the default lang if no specified lang.
      *
-     * @param {String} lang
+     * @param {String} [lang]
      * @returns {AxonLanguageResponse}
      * @memberof TranslationManager
      */
@@ -65,7 +65,7 @@ class TranslationManager {
      * If the specified path or message doesn't exist in the specified lang return the specified path or message for the default lang instead.
      *
      * @param {String} message
-     * @param {String} lang
+     * @param {String} [lang]
      * @returns {String}
      * @memberof TranslationManager
      */

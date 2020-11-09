@@ -1,12 +1,13 @@
 import {
-    AxonOptionsPrefixes, AOptionsSettings, Languages, AxonOptionsInfo, AxonOptionsStaff, AxonTemplate, Webhooks, AxonOptionsExtensions, AxonOptionsBase,
+    AxonOptionsPrefixes, AOptionsSettings, Languages, AxonOptionsInfo, AxonOptionsStaff,
+    AxonTemplate, Webhooks, AxonOptionsExtensions, AxonOptionsBase, AxonExtensions,
 } from './';
 
 export declare class AxonOptions {
     /**
      * The discord token to automatically connect the bot client
      */
-    private _token: string;
+    private _token: string | null;
     /**
      * Bot prefixes
      */
@@ -46,7 +47,7 @@ export declare class AxonOptions {
     /**
      * Classes overrides
      */
-    public extensions: AxonOptionsExtensions;
+    public extensions: AxonExtensions;
     /**
      * Creates an instance of AxonOptions.
      *
@@ -55,5 +56,5 @@ export declare class AxonOptions {
      * @param extensions - Classes overrides
      * @memberof AxonOptions
      */
-    constructor(data?: AxonOptionsBase | {}, webhooks?: Webhooks | {}, extensions?: AxonOptionsExtensions | {} )
+    constructor(data?: AxonOptionsBase, webhooks?: Webhooks, extensions?: AxonOptionsExtensions)
 }

@@ -16,7 +16,7 @@ export declare class Collection<T> extends Store<T> {
      * Creates an instance of Collection.
      * @memberof Collection
      */
-    public constructor(base: { base?: new (...args: any[] ) => T; iterable?: {[key: string]: T;} | [string, T][]; } );
+    constructor(options?: { base?: new (...args: any[] ) => T; iterable?: {[key: string]: T;} | [string, T][]; } );
 
     /**
      * Creates a collection from an array
@@ -41,5 +41,5 @@ export declare class Collection<T> extends Store<T> {
      */
     public add(key: string, value: T, replace?: boolean): T;
 
-    public toString(): `[Collection<Name>]`;
+    public toString(): string;
 }
