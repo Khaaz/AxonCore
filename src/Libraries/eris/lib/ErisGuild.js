@@ -9,7 +9,7 @@ class ErisGuild extends Guild {
     /**
      * @param {guild} guild
      * @param {String} userID
-     * @returns {Member}
+     * @returns {Member?}
      * @memberof ErisGuild
      */
     getMember(guild, userID) {

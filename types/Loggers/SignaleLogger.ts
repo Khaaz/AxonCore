@@ -1,4 +1,4 @@
-import { ALogger } from '../';
+import { ALogger, LOGGER_TYPES } from '../';
 // @ts-ignore
 import { Signale } from 'signale';
 
@@ -14,5 +14,5 @@ import { Signale } from 'signale';
 export declare class SignaleLogger extends ALogger {
     /** Signale */
     public out: Signale;
-    public type: 2;
+    public type: LOGGER_TYPES.SIGNALE;
 }

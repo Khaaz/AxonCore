@@ -12,6 +12,10 @@ export declare class ErisClient extends Client {
     /**
      * @memberof ErisClient
      */
+    public getAvatar(): string | null;
+    /**
+     * @memberof ErisClient
+     */
     public getMember(guild: Eris.Guild): Eris.Member;
     /**
      * @memberof ErisClient
@@ -20,7 +24,7 @@ export declare class ErisClient extends Client {
     /**
      * @memberof ErisClient
      */
-    public setPresence(status: 'online' | 'idle' | 'dnd' | 'invisible', game: ErisPresenceGame): Promise<void>;
+    public setPresence(status: Eris.Status, game: ErisPresenceGame): Promise<void>;
     /**
      * @memberof ErisClient
      */

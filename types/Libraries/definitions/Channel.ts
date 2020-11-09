@@ -1,5 +1,5 @@
 import {
-    LibraryInterface, LibChannel, LibGuild, LibUser, AxonMSGCont, LibMessage, LibTextableChannel,
+    LibraryInterface, LibChannel, LibGuild, LibUser, AxonMSGCont, LibMessage, LibTextableChannel, LibMember,
 } from '../../';
 
 export declare class Channel {
@@ -18,12 +18,12 @@ export declare class Channel {
      * Gets the channel name
      * @memberof Channel
      */
-    public getName(channel: LibChannel): string;
+    public getName(channel: LibChannel): string | undefined;
     /**
      * Gets the guild the channel belongs to
      * @memberof Channel
      */
-    public getGuild(channel: LibChannel): LibGuild;
+    public getGuild(channel: LibChannel): LibGuild | undefined;
     /**
      * Gets the guild ID the channel belongs to
      * @memberof Channel
@@ -38,7 +38,7 @@ export declare class Channel {
      * Whether the user has the perm in the channel
      * @memberof Channel
      */
-    public hasPermission(channel: LibChannel, user: LibUser, perm: string): boolean; // Not Implemented
+    public hasPermission(channel: LibChannel, user: LibUser | LibMember, perm: string): boolean; // Not Implemented
     /**
      * Send a message in the channel
      * @memberof Channel

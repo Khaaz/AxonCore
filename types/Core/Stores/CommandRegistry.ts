@@ -10,7 +10,7 @@ import { ARegistry, Command, AxonClient, GuildConfig } from '../../';
  */
 export declare class CommandRegistry extends ARegistry<Command> {
     /** All commands aliases. */
-    public aliases: Map<string | number, string>;
+    public aliases: Map<string, string>;
     /**
      * Creates an instance of CommandRegistry
      */

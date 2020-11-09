@@ -1,6 +1,7 @@
 import {
-    AxonClient, LibClient, ALogger, Resolver, AxonUtils, Utils, MessageManager, Module, Command, LOG_LEVELS,
+    AxonClient, LibClient, ALogger, Resolver, AxonUtils, Utils, Module, Command, LOG_LEVELS,
     Ctx, LibUser, AxonMSGCont, AxonMSGOpt, LibMessage, LibTextableChannel, CommandResponse, LibDMChannel,
+    AxonTemplate, LibraryInterface, MessageManagerType,
 } from '../';
 
 /**
@@ -14,7 +15,14 @@ export declare class Base {
     /**
      * AxonClient
      */
-    public _axon: AxonClient;
+    private _axon: AxonClient;
+
+    /**
+     * Creates an instance of Base.
+     *
+     * @memberof Base
+     */
+    constructor(axonClient: AxonClient);
 
     /**
      * Returns the AxonClient instance
@@ -59,18 +67,26 @@ export declare class Base {
      */
     readonly utils: Utils;
     /**
+     * Returns the template object
+     *
+     * @readonly
+     * @memberof Command
+     */
+    readonly template: AxonTemplate
+    /**
+     * Returns the library Interface instance
+     *
+     * @readonly
+     * @memberof Command
+     */
+    readonly library: LibraryInterface
+    /**
      * Returns the MessageManager instance
      *
      * @readonly
      * @memberof Base
      */
-    readonly l: MessageManager;
-    /**
-     * Creates an instance of Base.
-     *
-     * @memberof Base
-     */
-    constructor(axonClient: AxonClient);
+    readonly l: MessageManagerType;
     
     // Methods
     /**
@@ -106,9 +122,6 @@ export declare class Base {
      * @param user - User object to get the DM channel
      * @param content - String or object (embed)
      * @param options - Options
-     * @param options.allowedMentions - Custom allowed mentions object
-     * @param options.delete - Whether to delete the message or not
-     * @param options.delay - Delay after which the message will be deleted
      * @returns Message Object
      * @memberof Base
      */
@@ -121,9 +134,6 @@ export declare class Base {
      * @param channel - The channel Object
      * @param content - Message content, String or Embed Object
      * @param options - Options { disableEveryone: Boolean, delete: Boolean, delay: Number }
-     * @param options.allowedMentions - Custom allowed mentions object
-     * @param options.delete - Whether to delete the message or not
-     * @param options.delay - Delay after which the message will be deleted
      * @returns Message Object
      * @memberof Base
      */
@@ -146,10 +156,6 @@ export declare class Base {
      * @param channel - The channel Object
      * @param content - Success message content
      * @param options - Additional options
-     * @param options.allowedMentions - Custom allowed mentions object
-     * @param options.delete - Whether to delete the message or not
-     * @param options.delay - Delay after which the message will be deleted
-     * @param options.triggerCooldown - Whether the command should trigger cooldown or not
      * @returns The successful Command Response
      * @memberof Base
      */
@@ -162,11 +168,6 @@ export declare class Base {
      * @param channel - The channel Object
      * @param content - Success message content
      * @param options - Additional options
-     * @param options.allowedMentions - Custom allowed mentions object
-     * @param options.delete - Whether to delete the message or not
-     * @param options.delay - Delay after which the message will be deleted
-     * @param options.triggerCooldown - Whether the command should trigger cooldown or not
-     * @param options.error - Whether the command should trigger cooldown or not
      * @returns The non successful Command Response
      * @memberof Base
      */

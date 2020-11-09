@@ -26,13 +26,15 @@ export declare class Command extends Base implements CommandData {
 
     public label: string;
     public aliases: string[];
-    public hasSubcmd: boolean;
     public enabled: boolean;
-    public serverBypass: boolean;
     /** Reference to the parent command */
     public parentCommand: Command | null;
+    public hasSubcmd: boolean;
     /** Registry of subcommands */
     public subCommands: CommandRegistry | null;
+    /** @deprecated */
+    public subcmds: (typeof Command)[];
+    public serverBypass: boolean;
     public info: CommandInfo;
     public options: CommandOptions;
     public permissions: CommandPermissions;
@@ -45,20 +47,6 @@ export declare class Command extends Base implements CommandData {
      * @memberof Command
      */
     readonly module: Module;
-    /**
-     * Returns the template object
-     *
-     * @readonly
-     * @memberof Command
-     */
-    readonly template: AxonTemplate;
-    /**
-     * Returns the library Interface instance
-     *
-     * @readonly
-     * @memberof Command
-     */
-    readonly library: LibraryInterface;
     /**
      * Returns the full label for this command (label + all parent labels)
      *
@@ -82,7 +70,7 @@ export declare class Command extends Base implements CommandData {
      * @returns An array of Command class (non instantiated)
      * @memberof Command
      */
-    init(): (new (...args: any[] ) => Command)[]
+    init(): (typeof Command)[]
 
     _init(): boolean;
 
@@ -102,7 +90,6 @@ export declare class Command extends Base implements CommandData {
      * @memberof Command
      */
     private _execute(env: CommandEnvironment): Promise<CommandContext>;
-    private _postExecute(): void; // Blank function
 
     // External
     /**
@@ -114,6 +101,7 @@ export declare class Command extends Base implements CommandData {
      * @memberof Command
      */
     public execute(env: CommandEnvironment): Promise<CommandResponse>; // Not implemented
+    private _postExecute(): void; // Blank function
     /**
      * Send help message in the current channel with perm checks done before.
      * Call a custom sendHelp method if it exists, use the default one if it doesn't.

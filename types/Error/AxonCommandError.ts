@@ -8,14 +8,14 @@ import { CommandContext } from '..';
  * @class AxonCommandError
  * @extends Error
  *
- * @prop {CommandContext} context - Command Context containing all informations about the command execution
+ * @prop context - Command Context containing all informations about the command execution
  */
 export declare class AxonCommandError extends Error {
     public context: CommandContext;
     public err: Error;
     readonly short: string;
-    public message: string;
-    public stack: string;
+    readonly message: string;
+    readonly stack: string;
 
     constructor(commandContext: CommandContext, err: Error);
     readonly name: string;

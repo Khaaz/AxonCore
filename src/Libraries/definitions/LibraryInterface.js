@@ -24,11 +24,11 @@ class LibraryInterface {
      *
      * @param {BotClient} botClient - The bot client (lib specific)
      * @param {Object} structs - Object with all Core to use in lib interface
-     * @param {new (...args: Array<any>) => User} structs.User
-     * @param {new (...args: Array<any>) => Member} structs.Member
-     * @param {new (...args: Array<any>) => Message} structs.Message
-     * @param {new (...args: Array<any>) => Channel} structs.Channel
-     * @param {new (...args: Array<any>) => Guild} structs.Guild
+     * @param {typeof User} structs.User
+     * @param {typeof Member} structs.Member
+     * @param {typeof Message} structs.Message
+     * @param {typeof Channel} structs.Channel
+     * @param {typeof Guild} structs.Guild
      * @param {Resolver} structs.Resolver
      *
      * @memberof LibraryInterface
@@ -84,6 +84,34 @@ class LibraryInterface {
     }
 
     /**
+     * @memberof LibraryInterface
+     */
+    onReactionAdd(func, on) {
+        throw new NotImplementedException();
+    }
+
+    /**
+     * @memberof LibraryInterface
+     */
+    onReactionRemove(func, on) {
+        throw new NotImplementedException();
+    }
+
+    /**
+     * @memberof LibraryInterface
+     */
+    onReactionRemoveAll(func, on) {
+        throw new NotImplementedException();
+    }
+
+    /**
+     * @memberof LibraryInterface
+     */
+    onReactionRemoveEmoji(func, on) {
+        throw new NotImplementedException();
+    }
+
+    /**
      * @param {() => void}
      * @returns {void}
      * @memberof LibraryInterface
@@ -116,6 +144,34 @@ class LibraryInterface {
      * @memberof LibraryInterface
      */
     getMessageDelete(func) {
+        throw new NotImplementedException();
+    }
+
+    /**
+     * @memberof LibraryInterface
+     */
+    getMessageReactionAdd(func) {
+        throw new NotImplementedException();
+    }
+
+    /**
+     * @memberof LibraryInterface
+     */
+    getMessageReactionRemove(func) {
+        throw new NotImplementedException();
+    }
+
+    /**
+     * @memberof LibraryInterface
+     */
+    getMessageReactionRemoveAll(func) {
+        throw new NotImplementedException();
+    }
+
+    /**
+     * @memberof LibraryInterface
+     */
+    getMessageReactionRemoveEmoji(func) {
         throw new NotImplementedException();
     }
 }

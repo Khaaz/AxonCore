@@ -26,7 +26,11 @@ export declare class Module extends Base {
      * Whether the module can be disabled or not (will bypass guild disabled)
      */
     public serverBypass: boolean;
-    
+
+    /**
+     * Default info about the module
+     */
+    public info: ModuleInfo;
     /**
      * Default values potentially used for CommandOptions
      */
@@ -35,11 +39,6 @@ export declare class Module extends Base {
      * Default values potentially used for CommandPermissions
      */
     public permissions: CommandPermissions;
-
-    /**
-     * Default info about the module
-     */
-    public info: ModuleInfo;
 
     /**
      * Load all commands in the module / register / unregister
@@ -81,18 +80,18 @@ export declare class Module extends Base {
      * @readonly
      * @memberof Module
      */
-    readonly listeners?: Collection<Listener>;
+    readonly listeners: Collection<Listener>;
 
-    /**
-     * Override this method to returns { commands, listeners }
-     *
-     * @returns {Object.<string, Command|Listener>} An object containing commands and listeners to initialise. { commands, listeners}
-     * @memberof Module
-     */
-    public init(): { commands?: {[key: string]: new (...args: any[] ) => Command;}; listeners?: {[key: string]: new (...args: any[] ) => Listener;}; };
     /**
      * Init a module with all commands and listeners.
      * @memberof Module
      */
     private _init(): void;
+    /**
+     * Override this method to returns { commands, listeners }
+     *
+     * @returns An object containing commands and listeners to initialise. { commands, listeners}
+     * @memberof Module
+     */
+    public init(): { commands?: {[key: string]: typeof Command;}; listeners?: {[key: string]: typeof Listener;}; };
 }

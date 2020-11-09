@@ -1,4 +1,4 @@
-import { ALogger } from '../';
+import { ALogger, LOGGER_TYPES } from '../';
 
 /**
  * Logger with timestamps, custom methods and terminal colors with Chalk.
@@ -11,5 +11,5 @@ import { ALogger } from '../';
 export declare class ChalkLogger extends ALogger {
     /** Console */
     public out: Console;
-    public type: 1;
+    public type: LOGGER_TYPES.CHALK;
 }

@@ -32,5 +32,5 @@ export declare class MessageParser {
    * @returns The Parsed message
    * @memberof MessageParser
    */
-  public parse2(message: string, args: string[] ): string;
+  public parse2(message: string, ...args: string[] ): string;
 }

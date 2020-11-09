@@ -272,7 +272,7 @@ class Base {
      * @param {Boolean} [options.delete=false] - Whether to delete the message or not
      * @param {Number} [options.delay=null] - Delay after which the message will be deleted
      * @param {Boolean} [options.triggerCooldown=false] - Whether the command should trigger cooldown or not
-     * @param {Boolean} [options.error=null] - Whether the command should trigger cooldown or not
+     * @param {Error} [options.error=null] - The error that may have occurred
      * @returns {Promise<CommandResponse>} The non successful Command Response
      * @memberof Base
      */
@@ -293,7 +293,7 @@ class Base {
      * @param {Message} msg - The message Object
      * @param {Error} err - The error message
      * @param {String} type - Type of error (api, db, internal)
-     * @param {String} errMsg - Optional error message
+     * @param {String} [errMsg] - Optional error message
      * @returns {Promise<CommandResponse>} The non successful Command Response
      * @memberof Base
      */

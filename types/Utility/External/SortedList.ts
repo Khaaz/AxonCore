@@ -4,9 +4,9 @@
  * @class SortedList
  */
 export declare class SortedList<T> {
-    public ascending: boolean;
     /** Whether toInsert is bigger than baseElement */
     public comparator: (toInsert: T, baseElement: T) => boolean;
+    public ascending: boolean;
     public list: T[];
     /**
      * Creates an instance of SortedList

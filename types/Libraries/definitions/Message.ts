@@ -10,6 +10,11 @@ export declare class Message {
      */
     constructor(lib: LibraryInterface);
     /**
+     * If author is a bot
+     * @memberof Message
+     */
+    isAuthorBot(message: LibMessage): boolean;
+    /**
      * Message ID
      * @memberof Message
      */
@@ -39,12 +44,12 @@ export declare class Message {
      * Member who sent the message
      * @memberof Message
      */
-    getMember(message: LibMessage): LibMember;
+    getMember(message: LibMessage): LibMember | undefined;
     /**
      * Member ID who sent the message
      * @memberof Message
      */
-    getMemberID(message: LibMessage): string;
+    getMemberID(message: LibMessage): string | null;
     /**
      * Message channel
      * @memberof Message
@@ -59,22 +64,22 @@ export declare class Message {
      * Message channel name
      * @memberof Message
      */
-    getChannelName(message: LibMessage): string;
+    getChannelName(message: LibMessage): string | undefined;
     /**
      * Guild the message belongs to
      * @memberof Message
      */
-    getGuild(message: LibMessage): LibGuild;
+    getGuild(message: LibMessage): LibGuild | undefined;
     /**
      * Guild ID the message belongs to
      * @memberof Message
      */
-    getGuildID(message: LibMessage): string;
+    getGuildID(message: LibMessage): string | null;
     /**
      * Guild name the message belongs to
      * @memberof Message
      */
-    getGuildName(message: LibMessage): string;
+    getGuildName(message: LibMessage): string | null;
     /**
      * Delete the message
      * @memberof Message

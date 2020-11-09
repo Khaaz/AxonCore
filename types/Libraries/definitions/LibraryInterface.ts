@@ -1,5 +1,5 @@
 import {
-    LibClient, LibraryInterfaceStructs, LibMessage, LIBRARY_TYPES,
+    LibClient, LibraryInterfaceStructs, LibMessage, LIBRARY_TYPES, EmojiInfo,
 } from '../../';
 import { User } from './User';
 import { Member } from './Member';
@@ -23,9 +23,9 @@ export declare class LibraryInterface {
     private _botClient: LibClient;
     public user: User;
     public member: Member;
-    public guild: Guild;
-    public channel: Channel;
     public message: Message;
+    public channel: Channel;
+    public guild: Guild;
     public resolver: Resolver;
     public client: Client;
     public type: LIBRARY_TYPES;
@@ -40,14 +40,6 @@ export declare class LibraryInterface {
      * @memberof LibraryInterface
      */
     readonly botClient: LibClient;
-    /**
-     * @memberof LibraryInterface
-     */
-    public enums: Enums | DjsEnums | ErisEnums;
-    /**
-     * @memberof LibraryInterface
-     */
-    public HANDLERS: object;
     /**
      * @memberof LibraryInterface
      */
@@ -72,13 +64,22 @@ export declare class LibraryInterface {
      */
     public getMessageDelete(func: (msg: LibMessage) => void): Function;
 
-    public getMessageReactionAdd(func: (msg: LibMessage, emoji: {id: string|null; name: string;}, userID: string) => void, on: boolean): Function
-    public getMessageReactionRemove(func: (msg: LibMessage, emoji: {id: string|null; name: string;}, userID: string) => void, on: boolean): Function
-    public getMessageReactionRemoveAll(func: (msg: LibMessage) => void, on: boolean): Function
-    public getMessageReactionRemoveEmoji(func: (msg: LibMessage, emoji: {id: string|null; name: string;} ) => void, on: boolean): Function
+    /**
+     * @memberof LibraryInterface
+     */
+    public enums: Enums | DjsEnums | ErisEnums;
+    /**
+     * @memberof LibraryInterface
+     */
+    public HANDLERS: object;
 
-    public onReactionAdd(func: (msg: LibMessage, emoji: {id: string|null; name: string;}, userID: string) => void, on: boolean): void
-    public onReactionRemove(func: (msg: LibMessage, emoji: {id: string|null; name: string;}, userID: string) => void, on: boolean): void
-    public onReactionRemoveAll(func: (msg: LibMessage) => void, on: boolean): void
-    public onReactionRemoveEmoji(func: (msg: LibMessage, emoji: {id: string|null; name: string;} ) => void, on: boolean): void
+    public getMessageReactionAdd(func: (msg: LibMessage, emoji: EmojiInfo, userID: string) => void): Function
+    public getMessageReactionRemove(func: (msg: LibMessage, emoji: EmojiInfo, userID: string) => void): Function
+    public getMessageReactionRemoveAll(func: (msg: LibMessage) => void): Function
+    public getMessageReactionRemoveEmoji(func: (msg: LibMessage, emoji: EmojiInfo) => void): Function
+
+    public onReactionAdd(func: (msg: LibMessage, emoji: EmojiInfo, userID: string) => void, on?: boolean): void
+    public onReactionRemove(func: (msg: LibMessage, emoji: EmojiInfo, userID: string) => void, on?: boolean): void
+    public onReactionRemoveAll(func: (msg: LibMessage) => void, on?: boolean): void
+    public onReactionRemoveEmoji(func: (msg: LibMessage, emoji: EmojiInfo) => void, on?: boolean): void
 }

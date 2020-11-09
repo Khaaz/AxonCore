@@ -42,7 +42,7 @@ class LRUCache extends Store {
      * Creates an instance of LRUCache.
      *
      * @param {Number} limit - Max number of elements in the cache
-     * @param {Object} options - Options used to construct the cache
+     * @param {Object} [options] - Options used to construct the cache
      * @param {Object.<string, T>|Array<[string, T]>} [options.iterable=null]
      * @memberof LRUCache
      */
@@ -76,7 +76,7 @@ class LRUCache extends Store {
      * Retrieve a value from the LRU cache
      *
      * @param {String} key
-     * @returns {T} value
+     * @returns {T | null} value
      * @memberof LRUCache
      */
     get(key) {
@@ -98,7 +98,7 @@ class LRUCache extends Store {
      *
      * @param {String} key
      * @param {T} value
-     * @param {LRUCache<T>} - The current LRUCache
+     * @returns {LRUCache<T>} - The current LRUCache
      * @memberof LRUCache
      */
     set(key, value) {

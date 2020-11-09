@@ -141,10 +141,10 @@ class JsonManager {
     }
 
     /**
-     * Read a file and return the string of the file content or null
+     * Read a file and return the buffer of the file content or null
      *
      * @param {String} path
-     * @returns {Promise<String|null>}
+     * @returns {Promise<Buffer|null>}
      *
      * @memberof JsonManager
      */
@@ -190,7 +190,7 @@ class JsonManager {
     /**
      * Create a file and schema for Axon global file.
      * @param {String} defaultPrefix Default prefix
-     * @returns {Promise<AxonJSON>} The newly created Schema || null
+     * @returns {Promise<AxonJSON | null>} The newly created Schema || null
      *
      * @memberof JsonManager
      */
@@ -208,7 +208,7 @@ class JsonManager {
      *
      * @param {Array<String>} prefixes Array of prefixes
      * @param {String} gID Guild ID
-     * @returns {Promise<GuildJSON>} The newly created Schema || null
+     * @returns {Promise<GuildJSON | null>} The newly created Schema || null
      *
      * @memberof JsonManager
      */
@@ -227,7 +227,7 @@ class JsonManager {
     /**
      * Fetch the axon schema
      *
-     * @returns {Promise<AxonJSON>} AxonSchema || null
+     * @returns {Promise<AxonJSON | null>} AxonSchema || null
      *
      * @memberof JsonManager
      */
@@ -243,7 +243,7 @@ class JsonManager {
      * Fetch the guild schema for the given guild
      *
      * @param {String} gID Guild ID
-     * @returns {Promise<GuildJSON>} GuildSchema || null
+     * @returns {Promise<GuildJSON | null>} GuildSchema || null
      *
      * @memberof JsonManager
      */
@@ -263,7 +263,7 @@ class JsonManager {
      * @param {String} gID Guild ID
      * @param {String} key Value to update
      * @param {updateDBVal} value - The value to update for the given key (can be anything)
-     * @returns {Promise<GuildJSON>} GuildSchema || null
+     * @returns {Promise<GuildJSON | null>} GuildSchema || null
      *
      * @memberof JsonManager
      */
@@ -282,7 +282,7 @@ class JsonManager {
      *
      * @param {String} key Value to update
      * @param {Object} value - The value to update for the given key (can be anything)
-     * @returns {Promise<AxonJSON>} AxonSchema || null
+     * @returns {Promise<AxonJSON | null>} AxonSchema || null
      *
      * @memberof JsonManager
      */
@@ -302,7 +302,7 @@ class JsonManager {
      * Write the updated schema in the file.
      *
      * @param {AxonJSON} schema AxonSchema
-     * @returns {Promise<AxonJSON>} AxonSchema || null
+     * @returns {Promise<AxonJSON | null>} AxonSchema || null
      *
      * @memberof JsonManager
      */
@@ -321,7 +321,7 @@ class JsonManager {
      *
      * @param {String} gID Guild ID
      * @param {GuildJSON} schema GuildSchema
-     * @returns {Promise<GuildJSON>} GuildSchema || null
+     * @returns {Promise<GuildJSON | null>} GuildSchema || null
      *
      * @memberof JsonManager
      */

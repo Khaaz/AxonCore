@@ -33,7 +33,7 @@ export declare class Prompt {
      * Whether the Prompt ended
      */
     public ended: boolean;
-    private _boundEvent(): void;
+    private _boundEvent(msg: LibMessage): void;
     constructor(client: AxonClient, uID: string, channel: LibTextableChannel, defaultOptions?: PromptOptions);
     /**
      * @readonly

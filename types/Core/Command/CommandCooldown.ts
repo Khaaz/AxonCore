@@ -53,7 +53,7 @@ export declare class CommandCooldown {
     /**
      * @memberof CommandCooldown
      */
-    public shouldSetCooldown(response: { triggerCooldown: boolean; } | null): boolean;
+    public shouldSetCooldown(response?: { triggerCooldown: boolean; } | null): boolean;
     /**
      * Set the cooldown for a user for this command.
      *

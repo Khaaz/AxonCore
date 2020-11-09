@@ -29,7 +29,7 @@ class Executor {
 
     /**
      * @param {Listener} listener
-     * @param {GuildConfig} guildConfig
+     * @param {GuildConfig} [guildConfig]
      * @param {...any} args
      */
     listener(listener, guildConfig, ...args) {
