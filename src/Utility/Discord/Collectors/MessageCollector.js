@@ -70,6 +70,7 @@ class MessageCollector extends Collector {
      * @param {Object} [options] - The options for the message collector, use default options if not specified
      * @param {Number} [options.timeout] - The time before the collector times out in milliseconds
      * @param {Number} [options.count] - The amount of messages to collect before automatically ending
+     * @param {Number} [options.filter] - Custom filter function that the Message need to validate in order to be collected
      * @param {Boolean} [options.ignoreBots] - Whether or not to ignore bots
      * @param {Boolean} [options.ignoreSelf] - Whether or not to ignore self
      * @param {String} [options.channels=[]] - The channel ids to listen for (listens to all messages if not specified)
@@ -94,21 +95,22 @@ class MessageCollector extends Collector {
     }
 
     /**
-    * Runs the Collector with the given options and return a container object that can be used to manually control Messages collected.
-    * If no timeout nor count is provided, will run forever until the user manually stops the collector.
-    *
-    * @param {Object} [options] - The options for the message collector, use default options if not specified
-    * @param {Number} [options.timeout] - The time before the collector times out in milliseconds
-    * @param {Number} [options.count] - The amount of messages to collect before automatically ending
-    * @param {Boolean} [options.ignoreBots] - Whether or not to ignore bots
-    * @param {Boolean} [options.ignoreSelf] - Whether or not to ignore self
-    * @param {Array<String>|String} [options.channels=[]] - The channel ids to listen for (listens to all messages if not specified)
-    * @param {Array<String>|String} [options.users=[]] - The user ids to listen for (listens to all messages if not specified)
-    * @returns {CollectorContainer<Message>} CollectorContainer
-    * @memberof MessageCollector
-    * @example
-    * const container = await collector.collect({ channels: [msg.channel.id], caseInsensitive: false });
-    */
+     * Runs the Collector with the given options and return a container object that can be used to manually control Messages collected.
+     * If no timeout nor count is provided, will run forever until the user manually stops the collector.
+     *
+     * @param {Object} [options] - The options for the message collector, use default options if not specified
+     * @param {Number} [options.timeout] - The time before the collector times out in milliseconds
+     * @param {Number} [options.count] - The amount of messages to collect before automatically ending
+     * @param {Number} [options.filter] - Custom filter function that the Message need to validate in order to be collected
+     * @param {Boolean} [options.ignoreBots] - Whether or not to ignore bots
+     * @param {Boolean} [options.ignoreSelf] - Whether or not to ignore self
+     * @param {Array<String>|String} [options.channels=[]] - The channel ids to listen for (listens to all messages if not specified)
+     * @param {Array<String>|String} [options.users=[]] - The user ids to listen for (listens to all messages if not specified)
+     * @returns {CollectorContainer<Message>} CollectorContainer
+     * @memberof MessageCollector
+     * @example
+     * const container = await collector.collect({ channels: [msg.channel.id], caseInsensitive: false });
+     */
     collect(options = {} ) {
         return this._collect( {
             timeout: options.timeout !== undefined ? options.timeout : this.options.timeout,

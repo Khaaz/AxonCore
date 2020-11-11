@@ -1,8 +1,8 @@
 import { EventEmitter } from 'events';
 import {
-    Collection, SortedList, AxonClient, LibClient, LibraryInterface, Timeout,
+    Collection, SortedList, AxonClient, LibClient, LibraryInterface, Timeout, CollectorContainerSettings,
+    CollectorContainer, CollectorContainerSettingsRun,
 } from '../../../';
-import { CollectorContainer } from './CollectorContainer';
 
 /**
  * @param containers The containers that will collect the element
@@ -41,8 +41,6 @@ export declare class Collector<T> extends EventEmitter {
     public running: boolean;
     /** setInterval ID used to clear setinterval */
     private _intervalID: NodeJS.Timeout|null;
-    /** Unique increment count used to generate ids */
-    private _INCREMENT: number;
     /**
      * Creates an instance of Collector.
      * @memberof Collector
@@ -89,21 +87,10 @@ export declare class Collector<T> extends EventEmitter {
     public unsetListeners(): void;
     /** @memberof Collector */
     private _makeArray<T>(param?: T | T[] | null): T[];
-    private _run(options: {
-        /** Number of milliseconds before timing out */ timeout?: number;
-        /** Number of elements to collect before resolving */ count?: number;
-        /** Custom function to filter all element that should be collected */ filter?: number;
-    } ): Promise<Map<string, T>>;
-    private _collect(options: {
-        /** Number of milliseconds before timing out */ timeout?: number;
-        /** Number of elements to collect before resolving */ count?: number;
-        /** Custom function to filter all element that should be collected */ filter?: number;
-    } ): CollectorContainer<T>;
-    private _preRun<U, V = never>(options: {
-        /** Number of milliseconds before timing out */ timeout?: number;
-        /** Number of elements to collect before resolving */ count?: number;
-    }, resolve: (value?: U | PromiseLike<U>) => Promise<U>|Promise<void>, reject: (reason: any) => Promise<V>): void;
-    private _postRun(): void;
+    private _run(settings: CollectorContainerSettingsRun<T>, options?: object): Promise<Map<string, T>>;
+    private _collect(settings: CollectorContainerSettings<T>, options?: object): CollectorContainer<T>;
+    private _preRun(settings: CollectorContainerSettings<T>, options?: object): CollectorContainer<T>;
+    private _postRun(id: string): void;
     /**
      * Handles checking for timeout via setInterval
      * @fires Collectir#collect

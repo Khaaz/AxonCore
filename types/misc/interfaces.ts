@@ -568,43 +568,34 @@ interface PromptOptions {
 
 type PromptOptionsData = Required<PromptOptions>;
 
-interface CollectorContainerSettings {
-    timeout: number|null;
-    count: number|null;
-    filter: (param: object) => {};
+interface CollectorContainerSettings<T> {
+    /** The time before the collector times out in milliseconds */
+    timeout?: number|null;
+    /** The amount of elements to collect before automatically ending */
+    count?: number|null;
+    /** Filter function to filter elements that needs to be collected */
+    filter?: (param: T) => boolean;
 }
 
-interface CollectorOptions<T> {
-    /**
-     * The time before the collector times out in milliseconds
-     */
-    timeout: number;
-    /**
-     * The amount of messages to collect before automatically ending
-     */
+interface CollectorContainerSettingsRun<T> extends CollectorContainerSettings<T> {
     count: number;
-    /**
-     * Filter function to filter elements that needs to be collected
-     */
-    filter: (param: T) => boolean;
-    /**
-     * Whether or not to ignore bots
-     */
-    ignoreBots: boolean;
-    /**
-     * Whether or not to ignore self
-     */
-    ignoreSelf: boolean;
+}
+
+interface CollectorOptions<T> extends CollectorContainerSettings<T> {
+    /** Whether or not to ignore bots */
+    ignoreBots?: boolean;
+    /** Whether or not to ignore self */
+    ignoreSelf?: boolean;
 }
 
 interface CollectorFullOptions<T> extends CollectorOptions<T> {
-    users: string[]|string;
-    channels: string[]|string;
+    users?: string[]|string;
+    channels?: string[]|string;
 }
 
-interface ReactionCollectorOptions<T> extends CollectorFullOptions<T> {
-    emotes: string[]|string;
-    messages: string[]|string;
+interface ReactionCollectorOptions extends CollectorFullOptions<AxonReaction> {
+    emotes?: string[]|string;
+    messages?: string[]|string;
 }
 
 interface CollectorHelperOptions<T> {
@@ -957,8 +948,8 @@ interface EmojiInfo {
     name: string;
 }
 
-interface AxonReaction {
-    message: LibMessage;
+interface AxonReaction<T = LibTextableChannel> {
+    message: LibMessage<T>;
     emoji: LibEmoji;
     userID: string;
 }
@@ -977,5 +968,5 @@ export {
     AxonOptionsSettings, AOptionsSettings, AxonLanguageResponse, DefaultLanguageResponse, Languages, AxonOptionsBase, WebhookConfig, Webhooks, AxonOptionsPrefixes,
     AxonOptionsInfo, AxonOptionsStaff, AxonOptionsExtensions, AxonConfs, AxonParams, Info, AxonInfo, AxonStaffIDs, LibraryInterfaceStructs, PresenceGame,
     RawAttachment, RawUser, WebhookResponse, DjsContent, DjsWebhookContent, DjsPresenceGame, ErisContent, ErisWebhookContent, ErisPresenceGame,
-    CommandEnvironmentProps, CommandEnvironmentParams, Timeout, ExtentionInitReturn, Proxify, EmojiInfo, AxonReaction, AxonExtensions,
+    CommandEnvironmentProps, CommandEnvironmentParams, Timeout, ExtentionInitReturn, Proxify, EmojiInfo, AxonReaction, AxonExtensions, CollectorContainerSettingsRun,
 };

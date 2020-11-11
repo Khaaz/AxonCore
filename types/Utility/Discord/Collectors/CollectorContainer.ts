@@ -39,7 +39,7 @@ export declare class CollectorContainer<T> extends EventEmitter {
      * Contains all elements that respect the container options
      * @memberof CollectorContainer
      */
-    constructor(settings?: CollectorContainerSettings, options?: object);
+    constructor(settings?: CollectorContainerSettings<T>, options?: object);
     /**
      * The non serialisable id used to identify this container.
      * @readonly
