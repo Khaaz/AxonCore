@@ -12,7 +12,7 @@ import {
  * @extends EventEmitter
  */
 export declare class MessageCollector extends Collector<LibMessage> {
-    public options: CollectorOptions<LibMessage>;
+    public options: Required<CollectorOptions<LibMessage>>;
     public onMessageCreate: (msg: LibMessage) => void;
     public onMessageDelete: (msg: LibMessage) => void;
     public onMessageUpdate: (msg: LibMessage, msg1: LibMessage) => void

@@ -13,7 +13,7 @@ import { CollectorContainer } from './CollectorContainer';
  * @extends EventEmitter
  */
 export declare class ReactionCollector extends Collector<AxonReaction> {
-    public options: CollectorOptions<AxonReaction>;
+    public options: Required<CollectorOptions<AxonReaction>>;
     public onMessageReactionAdd: (msg: LibMessage, emoji: LibEmoji, userID: string) => void;
     public onMessageReactionRemove: (msg: LibMessage, emoji: LibEmoji, userID: string) => void;
     public onMessageReactionRemoveAll: (msg: LibMessage) => void
