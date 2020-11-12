@@ -42,10 +42,10 @@ export declare class Listener extends Base implements ListenerData {
     private _execute(guildConf: GuildConfig | null, ...args: any[] ): Promise<any>;
 
     /**
-     * Main execute function, need to be overridden in child.
+     * Main execute function, need to be overridden in child. The GuildConfig will always be the last parameter of an event
      *
      * @param args - Array of the events arguments (as separate parameters)
-     * @param guildConfig - The guildConfig or undefined if not a guild event - This will always be the last parameter of an event
+     * @param guildConfig - The guildConfig or undefined if not a guild event
      * @memberof Listener
      */
     public execute(...args: any[] ): Promise<any>;
