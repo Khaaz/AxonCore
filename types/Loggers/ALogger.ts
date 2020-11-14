@@ -30,48 +30,48 @@ export declare class ALogger {
      * @param opt - context object
      * @memberof ALogger
      */
-    public fatal(input: string, opt: Context): void;
+    public fatal(input: string, opt?: Context): void;
     /**
      * Major - critical error
      *
      * @param opt - context object
      * @memberof ALogger
      */
-    public error(input: string, opt: Context): void;
+    public error(input: string, opt?: Context): void;
     /**
      * Warns - expected errors
      *
      * @param opt - context object
      * @memberof ALogger
      */
-    public warn(input: string, opt: Context): void;
+    public warn(input: string, opt?: Context): void;
     /**
      * Eval - Debugging logs
      *
      * @param opt - context object
      * @memberof ALogger
      */
-    public debug(input: string, opt: Context): void;
+    public debug(input: string, opt?: Context): void;
     /**
      * Important information
      *
      * @param opt - context object
      * @memberof ALogger
      */
-    public notice(input: string, opt: Context): void;
+    public notice(input: string, opt?: Context): void;
     /**
      * Default information
      *
      * @param opt - context object
      * @memberof ALogger
      */
-    public info(input: string, opt: Context): void;
+    public info(input: string, opt?: Context): void;
     /**
      * Other Logging - executed commands, etc...
      *
      * @param opt - context object
      * @memberof ALogger
      */
-    public verbose(input: string, opt: Context): void;
+    public verbose(input: string, opt?: Context): void;
     private _parseTime(): string;
 }
