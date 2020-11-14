@@ -378,7 +378,7 @@ interface CommandData {
 }
 
 interface AxonTemplate {
-    embeds: {[key: string]: number;};
+    embeds: {[key: string]: number | string;};
     emotes: {[key: string]: string;};
     [key: string]: {[key: string]: unknown;};
 }
@@ -681,7 +681,7 @@ interface AxonOptionsBase {
     /**
      * Custom function that will log a custom logo on startup
      */
-    logo?: () => void;
+    logo?: ( () => void) | null;
     /**
      * General info about the bot
      */
@@ -948,7 +948,7 @@ interface EmojiInfo {
     name: string;
 }
 
-interface AxonReaction<T = LibTextableChannel> {
+interface AxonReaction<T extends LibTextableChannel = LibTextableChannel> {
     message: LibMessage<T>;
     emoji: LibEmoji;
     userID: string;

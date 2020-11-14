@@ -45,7 +45,7 @@ export declare class ARegistry<T> extends Store<T> {
      * @returns The item
      * @memberof ARegistry
      */
-    public get(key: string): T|null;
+    public get(key: string): T|undefined;
     /**
      * Add an item to the registry
      * @returns The registry

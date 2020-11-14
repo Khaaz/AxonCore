@@ -44,6 +44,7 @@ export declare class LRUCache<T> extends Store<T> {
      * Retrieve a value from the LRU cache
      * @memberof LRUCache
      */
+    // @ts-ignore
     public get(key: string): T | null;
     /**
      * Add a value in the LRU cache.
