@@ -22,6 +22,7 @@ export declare class CommandRegistry extends ARegistry<Command> {
      * @returns The found command
      * @memberof CommandRegistry
      */
+    // @ts-ignore Needs separate PR
     get(cmd: string): Command | null;
     /**
      * Get a command/subcommand with the given full label.

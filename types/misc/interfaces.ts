@@ -703,14 +703,14 @@ interface AxonOptionsBase {
 interface WebhookConfig { id: string; token: string; }
 
 interface Webhooks {
-    FATAL: WebhookConfig;
-    ERROR: WebhookConfig;
-    WARN: WebhookConfig;
-    DEBUG: WebhookConfig;
-    NOTICE: WebhookConfig;
-    INFO: WebhookConfig;
-    VERBOSE: WebhookConfig;
-    [key: string]: WebhookConfig;
+    FATAL?: WebhookConfig;
+    ERROR?: WebhookConfig;
+    WARN?: WebhookConfig;
+    DEBUG?: WebhookConfig;
+    NOTICE?: WebhookConfig;
+    INFO?: WebhookConfig;
+    VERBOSE?: WebhookConfig;
+    [key: string]: WebhookConfig | undefined;
 }
 
 interface AxonOptionsPrefixes {
