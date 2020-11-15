@@ -50,7 +50,7 @@ class MongoProvider extends ADBProvider {
     /**
      * Initialises a default Axon config.
      *
-     * @returns {Promise<AxonConfig>} Newly created Axon config from the DB
+     * @returns {Promise<AxonConfig | null>} Newly created Axon config from the DB
      * @memberof MongoProvider
      */
     async initAxon() {

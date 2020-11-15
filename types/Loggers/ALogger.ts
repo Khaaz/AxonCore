@@ -12,7 +12,7 @@ export declare class ALogger {
     /**
      * Can be Console, Winston or Signale. Chalk will go as Console
      */
-    public out: any;
+    public out: unknown;
     /**
      * The Logger type.
      */
@@ -22,7 +22,7 @@ export declare class ALogger {
      * @param out Can be Console, Winston or Signale. Chalk will go as Console
      * @memberof ALogger
      */
-    constructor(out: any, type: LOGGER_TYPES);
+    constructor(out: unknown, type?: LOGGER_TYPES);
     /**
      * Major - Critical fault
      * Crashing bugs, unexpected errors...

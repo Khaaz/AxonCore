@@ -5,7 +5,7 @@ import {
 
 export declare class Client {
     public lib: LibraryInterface;
-    public baseWebhookURL: 'https://discordapp.com/api/webhooks/';
+    public baseWebhookURL: 'https://discord.com/api/webhooks/';
     /**
      * Creates an instance of Client
      * @memberof Client
@@ -36,7 +36,7 @@ export declare class Client {
      * Bot avatar
      * @memberof Client
      */
-    public getAvatar(): string; // Not Implemented
+    public getAvatar(): string | null; // Not Implemented
     /**
      * Bot user
      * @memberof Client
@@ -62,5 +62,5 @@ export declare class Client {
      * @memberof Client
      */
     public triggerWebhook(id: string, token: string, data: ErisWebhookContent | DjsWebhookContent): Promise<WebhookResponse | null>;
-    private _request(url: string, params: RequestOptions, postData: any): any;
+    private _request(url: string, params: RequestOptions, postData: any): Promise<any>;
 }

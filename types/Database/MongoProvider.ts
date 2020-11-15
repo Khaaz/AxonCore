@@ -30,7 +30,7 @@ export declare class MongoProvider extends ADBProvider {
      * @returns Newly created Axon config from the DB
      * @memberof MongoProvider
      */
-    initAxon(): Promise<AxonConfig>;
+    initAxon(): Promise<AxonConfig | null>;
     /**
      * Initialises a default Guild config.
      * Use default AxonClient prefix settings when creating the new guild config.
@@ -40,7 +40,7 @@ export declare class MongoProvider extends ADBProvider {
      * @returns Newly created Guild config from the DB
      * @memberof MongoProvider
      */
-    initGuild(gID: string): Promise<GuildConfig>;
+    initGuild(gID: string): Promise<GuildConfig | null>;
 
     /**
      * Retrieves the axon config from the DB

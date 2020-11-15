@@ -1,8 +1,7 @@
 import {
     CollectorOptions, CollectorFullOptions, AxonClient, LibMessage, LibTextableChannel, Collector,
+    Collection, CollectorContainer,
 } from '../../..';
-import { Collection } from '../../Collection';
-import { CollectorContainer } from './CollectorContainer';
 
 /**
  * Collect bunch of message object according to chosen options
@@ -13,7 +12,7 @@ import { CollectorContainer } from './CollectorContainer';
  * @extends EventEmitter
  */
 export declare class MessageCollector extends Collector<LibMessage> {
-    public options: CollectorOptions;
+    public options: Required<CollectorOptions<LibMessage>>;
     public onMessageCreate: (msg: LibMessage) => void;
     public onMessageDelete: (msg: LibMessage) => void;
     public onMessageUpdate: (msg: LibMessage, msg1: LibMessage) => void
@@ -26,22 +25,24 @@ export declare class MessageCollector extends Collector<LibMessage> {
      * const collector = new MessageCollector(this.axon, { count: 10, ignoreBots: false });
      * @memberof MessageCollector
      */
-    constructor(client: AxonClient, options?: CollectorOptions);
+    constructor(client: AxonClient, options?: CollectorOptions<LibMessage>);
 
+    setListeners(): void;
+    unsetListeners(): void;
     /**
      * Runs the message collector
      * @example
      * const messages = await collector.run({ caseInsensitive: false });
      * @memberof MessageCollector
      */
-    public run<T extends LibTextableChannel>(options?: CollectorFullOptions): Promise<Collection<LibMessage<T>>>;
+    public run<T extends LibTextableChannel>(options?: CollectorFullOptions<LibMessage<T>>): Promise<Collection<LibMessage<T>>>;
     /**
      * Runs the message collector
      * @example
      * const messages = await collector.collect({ caseInsensitive: false });
      * @memberof MessageCollector
      */
-    public collect<T extends LibTextableChannel>(options?: CollectorFullOptions): CollectorContainer<LibMessage<T>>;
+    public collect<T extends LibTextableChannel>(options?: CollectorFullOptions<LibMessage<T>>): CollectorContainer<LibMessage<T>>;
     /**
      * Get all CollectorContainers that will collect from this particular message
      * @memberof MessageCollector

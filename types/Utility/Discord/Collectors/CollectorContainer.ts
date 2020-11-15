@@ -26,11 +26,12 @@ export declare class CollectorContainer<T> extends EventEmitter {
     /** Non serialisable id only used for internal usage. */
     private _id: symbol;
     /** Custom filter function that the element need to validate in order to be collected */
-    public _filter: (param: object) => {};;
+    private _filter: (param: T) => boolean;
     /** The time before the collector times out in milliseconds */
     public timeout: number|null;
     /** The amount of elements to collect before automatically ending */
     public count: number|null;
+    public options: object;
     /** All collected elements */
     public collected: Collection<T>;
     /**
@@ -38,7 +39,7 @@ export declare class CollectorContainer<T> extends EventEmitter {
      * Contains all elements that respect the container options
      * @memberof CollectorContainer
      */
-    constructor(settings: CollectorContainerSettings, options: object);
+    constructor(settings?: CollectorContainerSettings<T>, options?: object);
     /**
      * The non serialisable id used to identify this container.
      * @readonly
@@ -74,6 +75,11 @@ export declare class CollectorContainer<T> extends EventEmitter {
      * @memberof CollectorContainer
      */
     collect(id: string, collected: T): void;
+    /**
+     * Removes elements. Emits 'remove' event.
+     * @memberof CollectorContainer
+     */
+    remove(filter: (value: T, key: string) => boolean): void;
     /**
      * Wether the container is full or not
      * @memberof CollectorContainer

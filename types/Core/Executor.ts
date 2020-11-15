@@ -56,6 +56,10 @@ export declare class Executor {
      */
     constructor(axonClient: AxonClient);
     
+    public listener(listener: Listener, guildConfig: GuildConfig, ...args: any[] ): void;
+    public command(command: Command, env: CommandEnvironment): void;
+    public help(command: Command, env: CommandEnvironment): void;
+    
     /**
      * Fired when a debug message needs to be sent
      * @event AxonClient#debug
@@ -86,8 +90,4 @@ export declare class Executor {
      * @memberof Executor
      */
     on(event: 'listenerError', listener: listenerErrorListener): this;
-    
-    public listener(listener: Listener, guildConfig: GuildConfig, ...args: any[] ): void;
-    public execCommand(command: Command, env: CommandEnvironment): void;
-    public help(command: Command, env: CommandEnvironment): void;
 }

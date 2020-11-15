@@ -36,23 +36,23 @@ export declare class CommandUserLock {
     // METHODS
     /**
      * Checks if the user is locked.
-     * @param {String} userID - The userID
-     * @returns {Boolean} Whether the user is locked or not.
+     * @param userID - The userID
+     * @returns Whether the user is locked or not.
      * @memberof CommandUserLock
      */
     public isLocked(userID: string): boolean;
 
     /**
      * Unlock a user.
-     * @param {String} userID - The userID
-     * @returns {Boolean} Whether the user is unlocked or not.
+     * @param userID - The userID
+     * @returns Whether the user is unlocked or not.
      * @memberof CommandUserLock
      */
     public unLock(userID: string): boolean;
 
     /**
      * Lock the user.
-     * @param {String} userID
+     * @param userID
      * @memberof CommandUserLock
      */
     public setLock(userID: string): void;

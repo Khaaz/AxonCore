@@ -3,7 +3,9 @@ import {
     AxonConfs, AxonParams, Info, AxonInfo, ALogger, AxonUtils, LibClient, LibraryInterface, Utils, ADBProvider, ModuleRegistry, CommandRegistry, ListenerRegistry, EventManager,
     GuildConfigCache, AxonConfig, ModuleLoader, CommandDispatcher, MessageManagerType, AxonStaffIDs, AxonOptions, Collection, AHandler, Listener, Resolver, Webhooks,
     AxonTemplate, Module, Command, LOG_LEVELS, Ctx, LibMessage, GuildConfig, DEBUG_FLAGS, Executor, ExtentionInitReturn, AxonLanguageResponse, DefaultLanguageResponse, LibDMChannel,
+    CommandContext, AxonCommandError,
 } from './';
+import * as util from 'util';
 
 export declare class AxonClient<L extends AxonLanguageResponse = DefaultLanguageResponse, DB extends ADBProvider = ADBProvider> extends EventEmitter {
     /** Configs (webhooks, template, custom) */
@@ -13,9 +15,9 @@ export declare class AxonClient<L extends AxonLanguageResponse = DefaultLanguage
     /** General infos about the current application */
     public info: Info;
     public axoncore: AxonInfo;
-    public extensions: ExtentionInitReturn;
     /** The Logger instance */
     public logger: ALogger;
+    public extensions: ExtentionInitReturn;
     /** Util methods (AxonCore) */
     public axonUtils: AxonUtils;
 
@@ -38,10 +40,6 @@ export declare class AxonClient<L extends AxonLanguageResponse = DefaultLanguage
 
     /** The Manager that handles GuildConfigs (cache / DB etc) */
     public guildConfigs: GuildConfigCache;
-    private _guildConfig: new (...args: any) => GuildConfig
-    /** The AxonConfig object that handles globally blacklisted users and guilds */
-    public axonConfig?: AxonConfig;
-    private _axonConfig: new (...args: any) => AxonConfig
 
     /** Load, unload modules. */
     public moduleLoader: ModuleLoader;
@@ -53,6 +51,8 @@ export declare class AxonClient<L extends AxonLanguageResponse = DefaultLanguage
 
     /** Bot Staff (owners, admins, +...) */
     public staff: AxonStaffIDs;
+    /** The AxonConfig object that handles globally blacklisted users and guilds */
+    public axonConfig?: AxonConfig;
 
     /**
      * Creates an AxonClient instance.
@@ -62,7 +62,7 @@ export declare class AxonClient<L extends AxonLanguageResponse = DefaultLanguage
      * @param modules - Object with all modules to add in the bot
      * @memberof AxonClient
      */
-    constructor(botClient: LibClient, axonOptions: AxonOptions, modules: object);
+    constructor(botClient: LibClient, axonOptions?: AxonOptions, modules?: object);
 
     /**
      * Returns the bot client instance
@@ -83,7 +83,7 @@ export declare class AxonClient<L extends AxonLanguageResponse = DefaultLanguage
      *
      * @memberof AxonClient
      */
-    getListeners(eventName: string): Listener[];
+    public getListeners(eventName: string): Listener[];
     /**
      * Returns all the resolver for the default current library used.
      * Can be easily overridden with a custom Resolver by overriding this getter.
@@ -92,6 +92,13 @@ export declare class AxonClient<L extends AxonLanguageResponse = DefaultLanguage
      * @memberof AxonClient
      */
     readonly Resolver: Resolver;
+    /**
+     * Return the MessageManager instance
+     *
+     * @readonly
+     * @memberof AxonClient
+     */
+    readonly l: MessageManagerType<L>;
     /**
      * Return the webhooks config
      *
@@ -113,13 +120,6 @@ export declare class AxonClient<L extends AxonLanguageResponse = DefaultLanguage
      * @memberof AxonClient
      */
     readonly custom: object | null;
-    /**
-     * Return the MessageManager instance
-     *
-     * @readonly
-     * @memberof AxonClient
-     */
-    readonly l: MessageManagerType<L>;
 
     /**
      * Get a module from AxonClient with the given label.
@@ -127,14 +127,14 @@ export declare class AxonClient<L extends AxonLanguageResponse = DefaultLanguage
      * @param module - Module label
      * @memberof AxonClient
      */
-    getModule(module: string): Module | null;
+    public getModule(module: string): Module | null;
     /**
      * Get a command/subcommand from AxonClient with the given full label.
      *
      * @param fullLabel - Full command (or subcommand) label
      * @memberof AxonClient
      */
-    getCommand(fullLabel: string): Command | null;
+    public getCommand(fullLabel: string): Command | null;
     
     /**
      * Start AxonClient.
@@ -238,7 +238,7 @@ export declare class AxonClient<L extends AxonLanguageResponse = DefaultLanguage
      *
      * @memberof AxonClient
      */
-    toString(): string;
+    public toString(): string;
     /**
      * Custom ToJSON method.
      * (Based of Eris')
@@ -246,5 +246,37 @@ export declare class AxonClient<L extends AxonLanguageResponse = DefaultLanguage
      * @returns JSON-like Object
      * @memberof AxonClient
      */
-    toJSON(): object;
+    public toJSON(): object;
+
+    /**
+     * Custom inspect method
+     * Doesn't list prefixed property and undefined property.
+     * (Based of Eris')
+     *
+     * @returns Object to inspect
+     * @memberof AxonClient
+     */
+    public [util.inspect.custom](): object;
+    on(event: 'debug', listener: (flags: DEBUG_FLAGS, debugMessage: string) => void): this;
+    on(event: 'commandExecution', listener: (status: boolean, commandFullLabel: string, data: {
+        msg: LibMessage;
+        command: Command;
+        guildConfig: GuildConfig;
+        context: CommandContext;
+    } ) => void): this;
+    on(event: 'commandError', listener: (commandFullLabel: string, data: {
+        msg: LibMessage;
+        command: Command;
+        guildConfig: GuildConfig;
+        error: AxonCommandError;
+    } ) => void): this;
+    on(event: 'listenerExecution', listener: (status: boolean, eventName: string, listenerName: string, data: {
+        listener: Listener;
+        guildConfig: GuildConfig;
+    } ) => void): this;
+    on(event: 'listenerError', listener: (eventName: string, listenerName: string, data: {
+        listener: Listener;
+        guildConfig: GuildConfig;
+        error: AxonCommandError;
+    } ) => void): this;
 }

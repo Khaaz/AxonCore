@@ -139,7 +139,7 @@ class Module extends Base {
     /**
      * Override this method to returns { commands, listeners }
      *
-     * @returns {Object.<string, Command|Listener>} An object containing commands and listeners to initialise. { commands, listeners}
+     * @returns {Object.<string, typeof Command|typeof Listener>} An object containing commands and listeners to initialise. { commands, listeners}
      * @memberof Module
      */
     init() {

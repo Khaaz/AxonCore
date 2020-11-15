@@ -30,7 +30,7 @@ import CollectorContainer from './CollectorContainer';
  * @prop {Collection<CollectorContainer<T>>} containers - Collection of CollectorContainer
  * @prop {SortedList<Timeout>} timeoutQueue - The current timeout sorted with the first timeout due at the top of the queue
  * @prop {Boolean} running - Whether the Collector is currently running
- * @prop {String} _intervalID - setInterval ID used to clear setinterval
+ * @prop {NodeJS.Timeout} _intervalID - setInterval ID used to clear setinterval
  */
 class Collector extends EventEmitter {
     /**

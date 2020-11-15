@@ -1,6 +1,6 @@
 import { LibraryInterface, LibGuild, LibMember } from '../../';
 export declare class Guild {
-    public lib: LibraryInterface
+    public lib: LibraryInterface;
     /**
      * Creates an instance of Guild
      * @memberof Guild
@@ -25,5 +25,5 @@ export declare class Guild {
      * Guild member
      * @memberof Guild
      */
-    getMember(guild: LibGuild, userID: string): LibMember;
+    getMember(guild: LibGuild, userID: string): LibMember | undefined;
 }

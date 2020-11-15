@@ -6,7 +6,7 @@
 export declare class CommandResponse {
     public success: boolean;
     public triggerCooldown: boolean;
-    public error?: Error;
+    public error: Error | null;
     /**
      * Creates an instance of CommandResponse.
      * Build the CommandResponse from all options given in parameters

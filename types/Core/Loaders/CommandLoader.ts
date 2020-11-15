@@ -56,7 +56,7 @@ export declare class CommandLoader extends ALoader<Command> {
      * @returns Whether it loaded the subcommands or not
      * @memberof Command
      */
-    public loadSubCommands(parentCommand: Command, subCommands: (new (...args: any[] ) => Command)[] ): boolean;
+    public loadSubCommands(parentCommand: Command, subCommands: (typeof Command)[] ): boolean;
     /**
      * Unload a Command from the client
      *
@@ -73,14 +73,6 @@ export declare class CommandLoader extends ALoader<Command> {
      * @memberof CommandLoader
      */
     public registerCommand(command: Command, registry: CommandRegistry): void;
-    /**
-     * Register a SubCommand.Register its subcommands if it has any
-     *
-     * @param command - The subcommand to register
-     * @param parent - The parent command
-     * @memberof CommandLoader
-     */
-    public registerSubCommand(command: Command, parent: Command): void;
     /**
      * Remove a command from the module and the global cache.
      *

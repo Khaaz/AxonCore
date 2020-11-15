@@ -17,7 +17,7 @@ class Client {
      */
     constructor(lib) {
         this.lib = lib;
-        this.baseWebhookURL = 'https://discordapp.com/api/webhooks/';
+        this.baseWebhookURL = 'https://discord.com/api/webhooks/';
 
         if (this.constructor === 'Client') {
             throw new NoAbstractInstanceException();
@@ -65,7 +65,7 @@ class Client {
 
     /**
      * Bot avatar
-     * @returns {String}
+     * @returns {String | null}
      * @memberof Client
      */
     getAvatar() {

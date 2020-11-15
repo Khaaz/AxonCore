@@ -11,7 +11,7 @@ export declare class DjsResolver extends Resolver {
      * @returns The user object / Null if not found / Error
      * @memberof DjsResolver
      */
-    static user(client: djs.Client, args: string | string[] ): djs.User;
+    static user(client: djs.Client, args: string | string[] ): djs.User | null;
     /**
      * Resolve a member within a guild.
      *
@@ -20,7 +20,7 @@ export declare class DjsResolver extends Resolver {
      * @returns The member object / Null if not found / Error
      * @memberof DjsResolver
      */
-    static member(guild: djs.Guild, args: string | string[] ): djs.GuildMember;
+    static member(guild: djs.Guild, args: string | string[] ): djs.GuildMember | null;
     /**
      * Resolve a role within a guild.
      *
@@ -29,7 +29,7 @@ export declare class DjsResolver extends Resolver {
      * @returns The role object / Null if not found / Error
      * @memberof DjsResolver
      */
-    static role(guild: djs.Guild, args: string | string[] ): djs.Role;
+    static role(guild: djs.Guild, args: string | string[] ): djs.Role | null;
     /**
      * Resolve a channel within a guild.
      *
@@ -38,7 +38,7 @@ export declare class DjsResolver extends Resolver {
      * @returns The channel object / Null if not found / Error
      * @memberof DjsResolver
      */
-    static channel(guild: djs.Guild, args: string | string[] ): djs.GuildChannel;
+    static channel(guild: djs.Guild, args: string | string[] ): djs.GuildChannel | null;
     /**
      * Resolve a guild within all guilds the bot is in.
      *
@@ -47,5 +47,5 @@ export declare class DjsResolver extends Resolver {
      * @returns The guild object / Null if not found / Error
      * @memberof DjsResolver
      */
-    static guild(client: djs.Client, args: string[] ): djs.Guild;
+    static guild(client: djs.Client, args: string[] ): djs.Guild | null;
 }

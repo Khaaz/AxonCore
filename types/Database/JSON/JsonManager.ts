@@ -51,12 +51,14 @@ export declare class JsonManager {
      * @returns Parsed array/object or input string if failed
      */
     public toJSON(string: string): string | object | any[];
+    public toJSON(): null;
     /**
      * Parse object/array as JSON string
      * @param json Object/array to be parsed into JSON string
      * @returns JSON string or parsed array/object if failed
      */
     public toString(json: object): string | object | any[];
+    public toString(): null;
 
     /**
      * Get guild config path
@@ -71,7 +73,7 @@ export declare class JsonManager {
      *
      * @memberof JsonManager
      */
-    public readFile(path: string): Promise<string>;
+    public readFile(path: string): Promise<Buffer>;
     /**
      * Write a file
      *
@@ -79,7 +81,7 @@ export declare class JsonManager {
      *
      * @memberof JsonManager
      */
-    public writeFile(path: string, content: string): Promise<boolean>;
+    public writeFile(path: string, content?: string): Promise<boolean>;
 
     /**
      * Create a file and schema for Axon global file.
@@ -88,7 +90,7 @@ export declare class JsonManager {
      *
      * @memberof JsonManager
      */
-    public createAxonSchema(defaultPrefix: string): Promise<AxonJSON>;
+    public createAxonSchema(defaultPrefix: string): Promise<AxonJSON | null>;
     /**
      * Create a file and schema for the given guild.
      *
@@ -98,7 +100,7 @@ export declare class JsonManager {
      *
      * @memberof JsonManager
      */
-    public createGuildSchema(prefixes: string[], gID: string): Promise<GuildJSON>;
+    public createGuildSchema(prefixes: string[], gID: string): Promise<GuildJSON | null>;
 
     /**
      * Fetch the axon schema
@@ -107,7 +109,7 @@ export declare class JsonManager {
      *
      * @memberof JsonManager
      */
-    public fetchAxonSchema(): Promise<AxonJSON>;
+    public fetchAxonSchema(): Promise<AxonJSON | null>;
     /**
      * Fetch the guild schema for the given guild
      *
@@ -116,7 +118,7 @@ export declare class JsonManager {
      *
      * @memberof JsonManager
      */
-    public fetchGuildSchema(gID: string): Promise<GuildJSON>;
+    public fetchGuildSchema(gID: string): Promise<GuildJSON | null>;
 
     /**
      * Update the schema with the given value for the given guild
@@ -128,7 +130,7 @@ export declare class JsonManager {
      *
      * @memberof JsonManager
      */
-    public updateGuildKey(gID: string, key: string, value: updateDBVal): Promise<GuildJSON>;
+    public updateGuildKey(gID: string, key: string, value: updateDBVal): Promise<GuildJSON | null>;
     /**
      * Update the schema with the given value
      *
@@ -138,7 +140,7 @@ export declare class JsonManager {
      *
      * @memberof JsonManager
      */
-    public updateAxonKey(key: string, value: updateDBVal): Promise<AxonJSON>;
+    public updateAxonKey(key: string, value: updateDBVal): Promise<AxonJSON | null>;
 
     /**
      * Write the updated schema in the file.
@@ -148,7 +150,7 @@ export declare class JsonManager {
      *
      * @memberof JsonManager
      */
-    public writeAxonSchema(schema: object): Promise<AxonJSON>;
+    public writeAxonSchema(schema: object): Promise<AxonJSON | null>;
     /**
      * Write the updated schema in the file (for the given guild).
      *
@@ -158,5 +160,5 @@ export declare class JsonManager {
      *
      * @memberof JsonManager
      */
-    public writeGuildSchema(gID: string, schema: object): Promise<GuildJSON>;
+    public writeGuildSchema(gID: string, schema: object): Promise<GuildJSON | null>;
 }

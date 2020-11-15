@@ -36,6 +36,14 @@ export declare class Utils {
      * Regular Expression to match a hexCode
      */
     public hexCode: RegExp;
+
+    /**
+     * Creates an instance of Utils.
+     *
+     * @memberof Utils
+     */
+    constructor(client: AxonClient);
+
     /**
      * Returns the UserMention regex
      *
@@ -77,13 +85,6 @@ export declare class Utils {
      * @memberof Utils
      */
     static readonly hexCode: RegExp;
-
-    /**
-     * Creates an instance of Utils.
-     *
-     * @memberof Utils
-     */
-    constructor(client: AxonClient);
     
     /**
      * Returns the AxonClient instance
@@ -203,11 +204,11 @@ export declare class Utils {
     /**
      * Calculate a users flags based off of the flags byte.
      *
-     * @param {number} bits Bits to calculate for
-     * @returns {Array<string>} String array of flags given bits hold.
+     * @param bits Bits to calculate for
+     * @returns String array of flags given bits hold.
      * @memberof Utils
      */
-    calculateUserFlags(bits: number): string[];
+    public calculateUserFlags(bits: number): string[];
 
     /**
      * Wait for a specified amount of milliseconds..
@@ -222,7 +223,7 @@ export declare class Utils {
      * @returns Content
      * @memberof Utils
      */
-    public readFileAsync(path: string): Promise<string>;
+    public readFileAsync(path: string): Promise<Buffer>;
     /**
      * Promisified writeFile method
      *

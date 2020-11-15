@@ -189,7 +189,7 @@ class CommandPermissions {
      * ServerMod
      *
      * @param {Message} msg - The Message Object
-     * @param {GuildConfig} guildConf - GuildConfig
+     * @param {GuildConfig} [guildConf] - GuildConfig
      * @returns {Array<Boolean, String|null>} True if the user can execute command / False if not. Second element is the missing permission || null
      * @memberof Command
      */

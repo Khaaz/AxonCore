@@ -19,7 +19,7 @@ class Store {
     /**
      * Creates an instance of Store.
      *
-     * @param {Map<string, T>} cache - Key => Value data structure
+     * @param {Map<string, T>} [cache] - Key => Value data structure
      * @memberof Store
      */
     constructor(cache) {

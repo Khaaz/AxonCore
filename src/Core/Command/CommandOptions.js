@@ -72,7 +72,7 @@ class CommandOptions {
         // invalid permissions
         if (typeof base.invalidPermissionMessage === 'string') {
             /**
-             * @type {() => String}
+             * @type {(channel?: Channel, member?: Member) => String}
              */
             this.invalidPermissionMessage = () => base.invalidPermissionMessage;
         } else if (typeof base.invalidPermissionMessage === 'function') {

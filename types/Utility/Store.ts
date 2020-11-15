@@ -5,11 +5,18 @@
  *
  * @author KhaaZ
  * @class Store
- * @prop {Map} cache - Key => Value Data structure
+ * @prop cache - Key => Value Data structure
  */
 export declare class Store<T> {
     /** Key => Value data structure */
     public cache: Map<string, T>;
+
+    /**
+     * Creates an instance of Store.
+     * @param cache - Key => Value data structure
+     * @memberof Store
+     */
+    constructor(cache?: Map<string, T>);
 
     /**
      * Current size of the cache
@@ -47,7 +54,7 @@ export declare class Store<T> {
      * Get an element by key in the store
      * @memberof Store
      */
-    public get(key: string): T | null;
+    public get(key: string): T | undefined;
     /**
      * Set an element in the store
      * @returns Current store
@@ -77,6 +84,16 @@ export declare class Store<T> {
      */
     public first(): T;
     /**
+     * Apply a function to the Store and returns a new Store.
+     * Usable over: `map`, `filter`, `toArray`
+     * @param key The property to use as key for the new Store
+     * @param func The function name to apply to the Store
+     * @param fn A function that takes an object and returns it (map) or true if it matches (filter)
+     */
+    public apply<R>(key: string, func: 'map', fn: (i: T) => R): Store<R>;
+    public apply(key: string, func: 'filter', fn: (i: T) => boolean): Store<T>;
+    public apply(key: string, func: 'toArray'): Store<T>;
+    /**
      * Execute a function over each element of the Store in a synchronous fashion
      * @param func A function that takes an object and do something on it
      * @returns The current store
@@ -104,8 +121,8 @@ export declare class Store<T> {
     public removeAll(func: (value: T, key: string) => boolean): T[];
     /**
      * Removes an element from the Store
-     * @param {String} key - The ID of the object
-     * @returns {T} The removed object, or null if nothing was removed
+     * @param key - The ID of the object
+     * @returns The removed object, or null if nothing was removed
      * @memberof Store
      */
     public remove(key: string): T | null;
@@ -158,17 +175,6 @@ export declare class Store<T> {
      * @memberof Store
      */
     public random(): T;
-
-    /**
-     * Apply a function to the Store and returns a new Store.
-     * Usable over: `map`, `filter`, `toArray`
-     * @param key The property to use as key for the new Store
-     * @param func The function name to apply to the Store
-     * @param fn A function that takes an object and returns it (map) or true if it matches (filter)
-     */
-    public apply<R>(key: string, func: 'map', fn: (i: T) => R): Store<R>;
-    public apply(key: string, func: 'filter', fn: (i: T) => boolean): Store<T>;
-    public apply(key: string, func: 'toArray'): Store<T>;
 
     public toString(): string;
 }

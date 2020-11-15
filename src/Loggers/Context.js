@@ -12,9 +12,9 @@
 class Context {
     /**
      * Creates an instance of Context.
-     * @param {{name: String, id: String}|String} guild
-     * @param {String} cmd
-     * @param {{username: String, discriminator: String, id: String}|String} user
+     * @param {{name: String, id: String}|String} [guild]
+     * @param {String} [cmd]
+     * @param {{username: String, discriminator: String, id: String}|String} [user]
      * @memberof Context
      */
     constructor(guild, cmd, user) {

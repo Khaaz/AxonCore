@@ -8,7 +8,7 @@ export declare class DjsChannel extends Channel {
     /**
      * @memberof DjsChannel
      */
-    hasPermission(channel: djs.Channel, user: djs.User, perm: DISCORD_LIB_PERMISSIONS): boolean;
+    hasPermission(channel: djs.Channel, user: djs.User | djs.GuildMember, perm: DISCORD_LIB_PERMISSIONS): boolean;
     /**
      * @memberof DjsChannel
      */

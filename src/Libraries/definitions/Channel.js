@@ -33,7 +33,7 @@ class Channel {
     /**
      * Gets the channel name
      * @param {Channel} channel
-     * @returns {String}
+     * @returns {String?}
      * @memberof Channel
      */
     getName(channel) {
@@ -43,7 +43,7 @@ class Channel {
     /**
      * Gets the guild the channel belongs to
      * @param {Channel} channel
-     * @returns {Guild}
+     * @returns {Guild?}
      * @memberof Channel
      */
     getGuild(channel) {

@@ -25,7 +25,7 @@ class DBSelector extends ASelector {
      * Select the DB to use
      * @param {AxonClient} axonClient AxonClient
      * @param {AxonOptions} axonOptions AxonOptions
-     * @returns {new (...args) => (InMemoryProvider|JsonProvider|MongoService)}
+     * @returns {typeof InMemoryProvider|typeof JsonProvider|typeof MongoService}
      */
     static select(axonClient, axonOptions) {
         let DBProvider;

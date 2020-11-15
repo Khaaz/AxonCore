@@ -173,7 +173,7 @@ class CommandDispatcher {
      * It will otherwise regularly resolve the prefix for this particular guild.
      *
      * @param {Message} msg - The message object
-     * @param {GuildConfig} guildConfig - The guildConfig Object
+     * @param {GuildConfig} [guildConfig] - The guildConfig Object
      * @param {Boolean} [isAdmin=false] - Whether admin prefix was used
      * @param {Boolean} [isOwner=false] - Whether owner prefix was used
      * @returns {String?} The prefix if found / Undefined if not
@@ -191,7 +191,7 @@ class CommandDispatcher {
      * Global prefixes will only take over if no prefix are specified in this guild.
      *
      * @param {Message} msg - The message object
-     * @param {GuildConfig} guildConfig - The guildConfig Object
+     * @param {GuildConfig} [guildConfig] - The guildConfig Object
      * @returns {String?} The prefix if found / Undefined if not
      * @memberof CommandDispatcher
      */

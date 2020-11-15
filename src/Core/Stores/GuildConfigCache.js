@@ -5,6 +5,7 @@ import AxonError from '../../Errors/AxonError';
 
 /**
  * @typedef {import('../../AxonClient').default} AxonClient
+ * @typedef {import('../Models/GuildConfig').default} GuildConfig
  */
 
 /**

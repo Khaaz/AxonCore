@@ -7,8 +7,8 @@ import { Store } from '../../';
 declare class Node<T> {
     public key: string;
     public value: T;
-    public next: Node<T>;
-    public prev: Node<T>;
+    public next: Node<T> | null;
+    public prev: Node<T> | null;
     /**
      * Creates an instance of Node
      */
@@ -38,12 +38,13 @@ export declare class LRUCache<T> extends Store<T> {
      * @param options - Options used to construct the cache
      * @memberof LRUCache
      */
-    constructor(limit: number, options: { iterable?: {[key: string]: T;} | [string, T][]; } );
+    constructor(limit: number, options?: { iterable?: {[key: string]: T;} | [string, T][]; } );
 
     /**
      * Retrieve a value from the LRU cache
      * @memberof LRUCache
      */
+    // @ts-ignore
     public get(key: string): T | null;
     /**
      * Add a value in the LRU cache.

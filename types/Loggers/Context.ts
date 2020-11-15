@@ -7,21 +7,21 @@ import { LibGuild, LibUser } from '../';
  * @class Context
  */
 export declare class Context {
-    public guild: string;
-    public cmd: string;
-    public user: string;
+    public guild?: string;
+    public cmd?: string;
+    public user?: string;
 
     /**
      * Creates an instance of Context.
      * @memberof Context
      */
-    constructor(guild: string | LibGuild, cmd: string, user: LibUser | string);
+    constructor(guild?: string | LibGuild, cmd?: string, user?: LibUser | string);
 
     /**
      * @static
      * @returns A new instance of Context
      * @memberof Context
      */
-    static from(ctx?: { guild: string | LibGuild; cmd: string; user: string | LibUser; } ): Context;
+    static from(ctx?: { guild?: string | LibGuild; cmd?: string; user?: string | LibUser; } ): Context;
     public get(): string;
 }

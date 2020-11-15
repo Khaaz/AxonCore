@@ -1,5 +1,5 @@
 import {
-    ACommandOptions, Command, LibTextableChannel, LibMember, MessageManager, GuildConfig,
+    ACommandOptions, Command, LibTextableChannel, LibMember, MessageManagerType, GuildConfig, Module,
 } from '../../';
 
 /**
@@ -12,19 +12,21 @@ import {
  */
 export declare class CommandOptions implements ACommandOptions {
     private _command: Command;
-    public guildOnly?: boolean;
-    public argsMin?: number;
-
-    public invalidUsageMessage: string;
-    public invalidPermissionMessage: ( (channel: LibTextableChannel, member: LibMember) => string) | null;
+    
+    public invalidPermissionMessage: ( (channel?: LibTextableChannel, member?: LibMember) => string) | null;
     public sendPermissionMessage: boolean;
     public invalidPermissionMessageTimeout: number;
 
-    public deleteCommand?: boolean;
-    public hidden?: boolean;
+    public argsMin: number;
+    public invalidUsageMessage: string | null;
+    public sendUsageMessage: boolean;
 
-    public userLock?: boolean;
-    public cooldown?: number;
+    public deleteCommand: boolean;
+    public guildOnly: boolean;
+
+    public hidden: boolean;
+    public cooldown: number;
+    public userLock: boolean;
 
     /**
      * Creates an instance of CommandOptions.
@@ -34,7 +36,7 @@ export declare class CommandOptions implements ACommandOptions {
      * @param useModuleDefault - Whether to use or not the module's base options before applying override permissions
      * @memberof CommandOptions
      */
-    constructor(command: Command, override: ACommandOptions, useModuleDefault?: boolean);
+    constructor(command: Command | Module, override: ACommandOptions, useModuleDefault?: boolean);
 
     /**
      * Returns the MessageManager instance
@@ -42,7 +44,7 @@ export declare class CommandOptions implements ACommandOptions {
      * @readonly
      * @memberof CommandOptions
      */
-    readonly l: MessageManager;
+    readonly l: MessageManagerType;
 
     /**
      * Whether the command is guild only or not
