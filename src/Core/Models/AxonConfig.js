@@ -97,10 +97,10 @@ class AxonConfig {
         if (boolean) {
             !this.isBlacklistedUser(userID) && this.bannedUsers.push(userID);
         } else {
-            this.isBlacklistedUser(userID) && (this.bannedUsers = this.bannedUsers.filter(g => g === userID) );
+            this.isBlacklistedUser(userID) && (this.bannedUsers = this.bannedUsers.filter(g => g !== userID) );
         }
 
-        return this._req('bannedGuilds', this.bannedUsers);
+        return this._req('bannedUsers', this.bannedUsers);
     }
 
     /**
@@ -117,7 +117,7 @@ class AxonConfig {
         if (boolean) {
             !this.isBlacklistedGuild(guildID) && this.bannedGuilds.push(guildID);
         } else {
-            this.isBlacklistedGuild(guildID) && (this.bannedGuilds = this.bannedGuilds.filter(g => g === guildID) );
+            this.isBlacklistedGuild(guildID) && (this.bannedGuilds = this.bannedGuilds.filter(g => g !== guildID) );
         }
 
         return this._req('bannedGuilds', this.bannedGuilds);
