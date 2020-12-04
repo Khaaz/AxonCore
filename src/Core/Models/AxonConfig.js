@@ -98,10 +98,12 @@ class AxonConfig extends AModel {
      * @memberof AxonConfig
      */
     async updateBlacklistUser(userID, boolean = true) {
+        const idx = this.bannedUsers.indexOf(userID);
+
         if (boolean) {
-            !this.isBlacklistedUser(userID) && this.bannedUsers.push(userID);
+            idx === -1 && this.bannedUsers.push(userID);
         } else {
-            this.isBlacklistedUser(userID) && this.bannedUsers.splice(this.bannedUsers.indexOf(userID), 1);
+            idx >= 0 && this.bannedUsers.splice(idx, 1);
         }
 
         return this._req('bannedUsers', this.bannedUsers);
@@ -118,10 +120,12 @@ class AxonConfig extends AModel {
      * @memberof AxonConfig
      */
     async updateBlacklistGuild(guildID, boolean = true) {
+        const idx = this.bannedGuilds.indexOf(guildID);
+
         if (boolean) {
-            !this.isBlacklistedGuild(guildID) && this.bannedGuilds.push(guildID);
+            idx === -1 && this.bannedGuilds.push(guildID);
         } else {
-            this.isBlacklistedGuild(guildID) && this.bannedGuilds.splice(this.bannedGuilds.indexOf(guildID), 1);
+            idx >= 0 && this.bannedGuilds.splice(idx, 1);
         }
 
         return this._req('bannedGuilds', this.bannedGuilds);
