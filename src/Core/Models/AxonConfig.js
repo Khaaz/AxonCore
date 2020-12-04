@@ -101,7 +101,7 @@ class AxonConfig extends AModel {
         if (boolean) {
             !this.isBlacklistedUser(userID) && this.bannedUsers.push(userID);
         } else {
-            this.isBlacklistedUser(userID) && (this.bannedUsers = this.bannedUsers.filter(g => g !== userID) );
+            this.isBlacklistedUser(userID) && this.bannedUsers.splice(this.bannedUsers.indexOf(userID), 1);
         }
 
         return this._req('bannedUsers', this.bannedUsers);
@@ -121,7 +121,7 @@ class AxonConfig extends AModel {
         if (boolean) {
             !this.isBlacklistedGuild(guildID) && this.bannedGuilds.push(guildID);
         } else {
-            this.isBlacklistedGuild(guildID) && (this.bannedGuilds = this.bannedGuilds.filter(g => g !== guildID) );
+            this.isBlacklistedGuild(guildID) && this.bannedGuilds.splice(this.bannedGuilds.indexOf(guildID), 1);
         }
 
         return this._req('bannedGuilds', this.bannedGuilds);
