@@ -202,13 +202,14 @@ export const HTTP_MESSAGES = {
 
 // Types - Selector
 /**
- * @type {{ ERIS: 0, DISCORDJS: 1 }}
+ * @type {{ ERIS: 0, DISCORDJS: 1, DETRITUSJS: 2 }}
  * @readonly
- * @enum {0|1}
+ * @enum {0|1|2}
  */
 export const LIBRARY_TYPES = {
     ERIS: 0,
     DISCORDJS: 1,
+    DETRITUSJS: 2,
 };
 
 /**

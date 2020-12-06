@@ -485,6 +485,44 @@ denque@^1.4.1:
   resolved "https://registry.yarnpkg.com/denque/-/denque-1.4.1.tgz#6744ff7641c148c3f8a69c307e51235c1f4a37cf"
   integrity sha512-OfzPuSZKGcgr96rf1oODnfjqBFmr1DVoc/TrItj3Ohe0Ah1C5WX5Baquw/9U9KovnQ88EqmJbD66rKYUQYN1tQ==
 
+detritus-client-rest@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/detritus-client-rest/-/detritus-client-rest-0.8.0.tgz#04441ad6bfa90ca2e4c6db55dacc6b25831ed189"
+  integrity sha512-mYRRy8LsPX3aBKDNZQFBFc6RaZgZYaYedetCsTeBstYxvxWBZpMxf1y/ekzkpf7g2hFxRmexVFM9DcWh+6whHw==
+  dependencies:
+    detritus-rest "^0.6.0"
+    detritus-utils "^0.2.6"
+
+detritus-client-socket@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/detritus-client-socket/-/detritus-client-socket-0.6.0.tgz#293bf7ab563de15cbb33ad520d877730a5f6680e"
+  integrity sha512-HPBE53TMTYhM1xUS1ZEVAXrbPKqz03ptQf1oxZPF7oi6SUDOgHN0VFWBGfLBj8KGiTzb4eX9gQcq3HX71jQlZQ==
+  dependencies:
+    detritus-utils "^0.2.6"
+    ws "^7.3.1"
+
+detritus-client@^0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/detritus-client/-/detritus-client-0.11.0.tgz#fa63e6ec200174acb54340f800758dd9ebfab77d"
+  integrity sha512-syOCq0Ho4a6dvFmfnXRhd1oeMexqbKj2INwwRgQHkYvZ7I6QzsXc6R/Nt3VRz88y62Vm8jikktUCDDkR4tXKHg==
+  dependencies:
+    detritus-client-rest "^0.8.0"
+    detritus-client-socket "^0.6.0"
+    detritus-utils "^0.2.6"
+
+detritus-rest@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/detritus-rest/-/detritus-rest-0.6.0.tgz#84dedd25bc978230952f00e8f282460ade7ea197"
+  integrity sha512-Y4XjabNqbOPpoSVvEwbEslGbWfa9BT0vhqnhuWKMwJcCHkA2MAatt6rhTA11mJq/8dFcHS9ysSxPaJ7lU7HuGg==
+  dependencies:
+    form-data "^3.0.0"
+    node-fetch "^2.6.0"
+
+detritus-utils@^0.2.6:
+  version "0.2.6"
+  resolved "https://registry.yarnpkg.com/detritus-utils/-/detritus-utils-0.2.6.tgz#9249850d769d8572de43690a111899d6c3961f6c"
+  integrity sha512-cjeZjmIPew0h4ZP+A9aGizGCNrUyYhSx4FkQXGa3bJ5dNunChSqzUR8a5c2Gq6PIerWldTbh9976WxMw3m6Ejw==
+
 diagnostics@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/diagnostics/-/diagnostics-1.1.1.tgz#cab6ac33df70c9d9a727490ae43ac995a769b22a"
@@ -1999,6 +2037,11 @@ ws@^7.2.1:
   version "7.2.3"
   resolved "https://registry.yarnpkg.com/ws/-/ws-7.2.3.tgz#a5411e1fb04d5ed0efee76d26d5c46d830c39b46"
   integrity sha512-HTDl9G9hbkNDk98naoR/cHDws7+EyYMOdL1BmjsZXRUjf7d+MficC4B7HLUPlSiho0vg+CWKrGIt/VJBd1xunQ==
+
+ws@^7.3.1:
+  version "7.3.1"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-7.3.1.tgz#d0547bf67f7ce4f12a72dfe31262c68d7dc551c8"
+  integrity sha512-D3RuNkynyHmEJIpD2qrgVkc9DQ23OrN/moAwZX4L8DfvszsJxpjQuUq3LMx6HoYji9fbIOBY18XWBsAux1ZZUA==
 
 xmlcreate@^2.0.3:
   version "2.0.3"

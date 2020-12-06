@@ -2,6 +2,8 @@ import ASelector from '../Core/ASelector';
 
 import ErisInterface from './eris/ErisInterface';
 import DjsInterface from './discordjs/DjsInterface';
+import DetritusInterface from './detritusjs/DetritusInterface';
+
 
 import { LIBRARY_TYPES } from '../Utility/Constants/AxonEnums';
 
@@ -41,6 +43,12 @@ class LibrarySelector extends ASelector {
             case LIBRARY_TYPES.DISCORDJS: {
                 libraryInterface = new DjsInterface(axon.botClient, axonOptions._token);
                 axon.log('INFO', 'Selected Library Interface: DISCORD.JS.');
+                break;
+            }
+
+            case LIBRARY_TYPES.DETRITUSJS: {
+                libraryInterface = new DetritusInterface(axon.botClient);
+                axon.log('INFO', 'Selected Library Interface: DETRITUS.JS.');
                 break;
             }
 

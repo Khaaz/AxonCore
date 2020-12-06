@@ -1,12 +1,14 @@
 # configs file
 examples/eris/src/configs/tokenConfig.json
 examples/djs/src/configs/tokenConfig.json
+examples/detritus/src/configs/tokenConfig.json
 examples/tokenConfig.json
 
 # json db
 src/Database/JSON/Database/*.json
 examples/eris/src/Database/*.json
 examples/djs/src/Database/*.json
+examples/detritus/src/Database/*.json
 
 # Logs
 logs
