@@ -163,7 +163,7 @@ class Utils {
      * @memberof Utils
      */
     splitMessage(content, length) {
-        return content.match(typeof length === 'number' && length > 0 ? new RegExp(`[\\s\\S]{1,${length}}([\\n\\r]|$)`, 'g') : this.stringSplit);
+        return content.match(typeof length === 'number' && length > 0 ? new RegExp(`[\\s\\S]{1,${length}}(?:[\\n\\r]|$)`, 'g') : this.stringSplit);
     }
 
     /**
